@@ -43,6 +43,7 @@ const STORE_BY_CRC = 'gamesByCrc';
 const STORE_BY_MD5 = 'gamesByMd5';
 const STORE_BY_SHA1 = 'gamesBySha1';
 const META_STORE = 'datasetsMeta';
+const DATASET_FORMAT_VERSION = 2;
 
 export class ROMDatasetService {
   private static db: IDBDatabase | null = null;
@@ -154,7 +155,7 @@ export class ROMDatasetService {
       req.onerror = () => reject(req.error);
     });
 
-    if (existing) {
+    if (existing?.formatVersion === DATASET_FORMAT_VERSION) {
       console.log(`✓ Dataset already loaded: ${filename}`);
       return;
     }
@@ -197,6 +198,7 @@ export class ROMDatasetService {
     metaStoreWrite.put({
       ...dataset.meta,
       source: filename,
+      formatVersion: DATASET_FORMAT_VERSION,
       loadedAt: new Date().toISOString()
     });
 
