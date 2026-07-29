@@ -37,12 +37,20 @@ function parseDat(datContent) {
     }
     if (openIdx >= datContent.length) break;
     
-    // Find balanced closing paren starting from the opening paren
+    // Find balanced closing paren starting from the opening paren. Quoted
+    // strings are skipped because game names may contain unbalanced
+    // parenthesis, e.g. "Odekake Lester - Lelele no Le (^^; (Japan)".
     let parenIdx = openIdx;
     let depth = 0;
     
     while (parenIdx < datContent.length) {
       const ch = datContent[parenIdx];
+      if (ch === '"') {
+        const closingQuote = datContent.indexOf('"', parenIdx + 1);
+        if (closingQuote === -1) break;
+        parenIdx = closingQuote + 1;
+        continue;
+      }
       if (ch === '(') depth++;
       else if (ch === ')') {
         depth--;
