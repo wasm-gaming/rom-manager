@@ -8,7 +8,6 @@ export interface Origin {
   id: string;
   name: string;
   path: string;
-  files: string[];
   selectedFile?: string;
   metadata?: Map<string, ROMMetadata>;
 }
@@ -80,23 +79,6 @@ export class StoreService {
   }
 
   // File management for active origin
-  setFiles(files: string[]): void {
-    const originId = activeOriginIdSignal.value;
-    if (!originId) return;
-
-    const origins = new Map(this.getOriginsMap());
-    const origin = origins.get(originId);
-    if (origin) {
-      origin.files = files;
-      origins.set(originId, origin);
-      originsSignal.value = origins;
-    }
-  }
-
-  getFiles(): string[] {
-    return this.getActiveOrigin()?.files || [];
-  }
-
   setSelectedFile(file: string | undefined): void {
     const originId = activeOriginIdSignal.value;
     if (!originId) return;

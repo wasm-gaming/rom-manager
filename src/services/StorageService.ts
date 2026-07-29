@@ -1,6 +1,19 @@
 import { VFSNode, FSAAdapter } from '@cloudauthn/vfs-sync';
 
 /**
+ * A single file or folder inside an opened origin.
+ */
+export interface StorageEntry {
+  name: string;
+  /** Path relative to the origin root, POSIX separators, no leading slash. */
+  path: string;
+  kind: 'file' | 'directory';
+}
+
+/** Bookkeeping folder created by VFSNode, which must stay out of the browser. */
+const VFS_METADATA_DIR = '.vfs';
+
+/**
  * StorageNode wraps a single VFSNode instance for a folder
  */
 export class StorageNode {
@@ -33,33 +46,47 @@ export class StorageNode {
     return this.node;
   }
 
-  async listFiles(): Promise<string[]> {
+  private requireNode(): VFSNode {
     if (!this.node) throw new Error('Storage not initialized');
-    const entries = await this.node.adapter.list('');
+    return this.node;
+  }
+
+  /**
+   * Shallow listing of a directory, `''` being the origin root. Folders come
+   * first so the result reads like a file browser.
+   */
+  async list(path: string = ''): Promise<StorageEntry[]> {
+    const entries = await this.requireNode().adapter.list(path);
+
     return entries
-      .filter((entry) => entry.kind === 'file')
-      .map((entry) => entry.path)
-      .sort((left, right) => left.localeCompare(right));
+      .filter((entry) => entry.name !== VFS_METADATA_DIR)
+      .map(({ name, path, kind }) => ({ name, path, kind }))
+      .sort((left, right) => {
+        if (left.kind !== right.kind) return left.kind === 'directory' ? -1 : 1;
+        return left.name.localeCompare(right.name);
+      });
   }
 
   async readFile(path: string): Promise<Uint8Array> {
-    if (!this.node) throw new Error('Storage not initialized');
-    return this.node.read(path);
+    return this.requireNode().read(path);
   }
 
   async writeFile(path: string, content: Uint8Array): Promise<void> {
-    if (!this.node) throw new Error('Storage not initialized');
-    await this.node.write(path, content);
+    await this.requireNode().write(path, content);
   }
 
-  async deleteFile(path: string): Promise<void> {
-    if (!this.node) throw new Error('Storage not initialized');
-    await this.node.delete(path);
+  async createDirectory(path: string): Promise<void> {
+    await this.requireNode().mkdir(path);
   }
 
-  async renameFile(oldPath: string, newPath: string): Promise<void> {
-    if (!this.node) throw new Error('Storage not initialized');
-    await this.node.rename(oldPath, newPath);
+  /** Removes a file or a folder with everything below it. */
+  async remove(path: string): Promise<void> {
+    await this.requireNode().delete(path);
+  }
+
+  /** Moves or renames a file or a folder. */
+  async move(oldPath: string, newPath: string): Promise<void> {
+    await this.requireNode().rename(oldPath, newPath);
   }
 }
 

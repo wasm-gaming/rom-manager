@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks';
 import { JSX } from 'preact';
 import { Tabs } from '../components/Tabs';
-import { FileList } from '../components/FileList';
+import { FileTree } from '../components/FileTree';
 import { MetadataEditor } from '../components/MetadataEditor';
-import { storageService } from '../services/StorageService';
+import { storageService, StorageNode } from '../services/StorageService';
 import { romMetadataService, ROMMetadata } from '../services/ROMMetadataService';
 import {
   storeService,
@@ -14,12 +14,13 @@ import {
 } from '../services/StoreService';
 
 export function ROMExplorer(): JSX.Element {
-  const [storageNodes, setStorageNodes] = useState<Map<string, any>>(new Map());
+  const [storageNodes, setStorageNodes] = useState<Map<string, StorageNode>>(new Map());
   const [selectedFileContent, setSelectedFileContent] = useState<ArrayBuffer | undefined>();
 
   const originsMap = originsSignal.value instanceof Map ? originsSignal.value : new Map<string, any>();
-  const activeOrigin = activeOriginIdSignal.value ? originsMap.get(activeOriginIdSignal.value) : undefined;
-  const files = activeOrigin?.files || [];
+  const activeOriginId = activeOriginIdSignal.value;
+  const activeOrigin = activeOriginId ? originsMap.get(activeOriginId) : undefined;
+  const activeNode = activeOriginId ? storageNodes.get(activeOriginId) : undefined;
   const selectedFile = activeOrigin?.selectedFile;
   const selectedMetadata = selectedFile ? activeOrigin?.metadata?.get(selectedFile) : undefined;
 
@@ -44,15 +45,11 @@ export function ROMExplorer(): JSX.Element {
       nodes.set(originId, nodeInstance);
       setStorageNodes(nodes);
 
-      // Load files
-      const fileList = await nodeInstance.listFiles();
-
       // Create and add origin
       const newOrigin = {
         id: originId,
         name,
         path,
-        files: fileList,
         metadata: new Map(),
       };
 
@@ -83,9 +80,12 @@ export function ROMExplorer(): JSX.Element {
       const node = storageNodes.get(activeOriginIdSignal.value!);
       if (!node) return;
 
-      const content = await node.readFile(file);
+      const bytes = await node.readFile(file);
+      // Checksums work on a plain ArrayBuffer, so detach the view from the pool.
+      const content = new ArrayBuffer(bytes.byteLength);
+      new Uint8Array(content).set(bytes);
       setSelectedFileContent(content);
-      
+
       const metadata = romMetadataService.parseMetadata(file, content.byteLength);
       storeService.setMetadata(file, metadata);
     } catch (err) {
@@ -97,6 +97,17 @@ export function ROMExplorer(): JSX.Element {
     if (selectedFile) {
       storeService.setMetadata(selectedFile, metadata);
     }
+  };
+
+  const handleRemoved = (paths: string[]) => {
+    const removesSelection =
+      selectedFile &&
+      paths.some((path) => selectedFile === path || selectedFile.startsWith(`${path}/`));
+
+    if (!removesSelection) return;
+
+    storeService.setSelectedFile(undefined);
+    setSelectedFileContent(undefined);
   };
 
   return (
@@ -123,7 +134,15 @@ export function ROMExplorer(): JSX.Element {
         </div>
       ) : (
         <div class="explorer-container">
-          <FileList files={files} selected={selectedFile} onSelect={handleSelectFile} />
+          {activeNode && (
+            <FileTree
+              key={activeOriginId}
+              node={activeNode}
+              selectedFile={selectedFile}
+              onSelectFile={handleSelectFile}
+              onRemoved={handleRemoved}
+            />
+          )}
 
           <div class="details-pane">
             {selectedMetadata ? (

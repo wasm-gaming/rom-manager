@@ -4,7 +4,6 @@ export interface Origin {
   id: string;
   name: string;
   path: string;
-  files: string[];
   selectedFile?: string;
   metadata?: Map<string, any>;
 }
