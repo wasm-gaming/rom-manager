@@ -1,0 +1,27 @@
+{
+  "files": [
+    "Atari - 2600.json",
+    "Atari - 5200.json",
+    "Atari - 7800.json",
+    "Atari - Lynx.json",
+    "Commodore - 64.json",
+    "Commodore - Amiga.json",
+    "Nintendo - Game Boy Advance.json",
+    "Nintendo - Game Boy Color.json",
+    "Nintendo - Game Boy.json",
+    "Nintendo - GameCube.json",
+    "Nintendo - SNES.json",
+    "Nintendo - Wii.json",
+    "Sega - Dreamcast.json",
+    "Sega - Game Gear.json",
+    "Sega - Genesis.json",
+    "Sega - Saturn.json",
+    "Sony - PSP.json",
+    "Sony - PlayStation 2.json",
+    "Sony - PlayStation.json"
+  ],
+  "description": "ROM metadata datasets (auto-indexed on app startup)",
+  "source": "Generated from Libretro database DAT files",
+  "generatedAt": "2026-07-29T12:20:42.667Z",
+  "systemCount": 19
+}

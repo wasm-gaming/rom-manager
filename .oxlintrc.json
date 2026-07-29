@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "jsx-a11y": {
+      "polymorphicComponent": "span"
+    }
+  },
+  "rules": {
+    "correctness": "warn",
+    "perf": "warn",
+    "suspicious": "warn",
+    "style": "off"
+  }
+}
