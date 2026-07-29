@@ -4,8 +4,14 @@ import { StorageEntry, StorageNode } from '../services/StorageService';
 
 interface FileTreeProps {
   node: StorageNode;
-  selectedFile?: string;
-  onSelectFile?: (path: string) => void;
+  /** ROM files the details pane is showing, so the rows can mirror it. */
+  selectedFiles?: string[];
+  /** Fires with every selected file, in tree order. Folders are left out. */
+  onSelectionChange?: (paths: string[]) => void;
+  /** Rows currently painted, so the owner can prefetch what they need. */
+  onVisibleChange?: (paths: string[]) => void;
+  /** True once a ROM has a record in the library. */
+  isInitialized?: (path: string) => boolean;
   onRemoved?: (paths: string[]) => void;
 }
 
@@ -48,8 +54,10 @@ function parseDraggedPaths(payload: string): string[] {
 
 export function FileTree({
   node,
-  selectedFile,
-  onSelectFile,
+  selectedFiles,
+  onSelectionChange,
+  onVisibleChange,
+  isInitialized,
   onRemoved,
 }: FileTreeProps): JSX.Element {
   const [children, setChildren] = useState<Map<string, StorageEntry[]>>(new Map());
@@ -135,6 +143,28 @@ export function FileTree({
     return result;
   }, [children, expanded]);
 
+  useEffect(() => {
+    onVisibleChange?.(rows.map((row) => row.entry.path));
+  }, [rows, onVisibleChange]);
+
+  /**
+   * Applies a selection and reports the files in it. Folders take part in the
+   * selection — they can be dragged and deleted — but they carry no metadata,
+   * so the details pane never hears about them.
+   */
+  const selectPaths = useCallback(
+    (paths: Set<string>) => {
+      setSelection(paths);
+
+      const files = rows
+        .filter((row) => row.entry.kind === 'file' && paths.has(row.entry.path))
+        .map((row) => row.entry.path);
+
+      onSelectionChange?.(files);
+    },
+    [rows, onSelectionChange],
+  );
+
   /** Where new folders and uploads land: the selected folder, or root. */
   const targetDirectory = (): string => {
     const [path] = Array.from(selection);
@@ -171,29 +201,26 @@ export function FileTree({
 
       if (from !== -1 && to !== -1) {
         const [start, end] = from < to ? [from, to] : [to, from];
-        setSelection(new Set(paths.slice(start, end + 1)));
+        selectPaths(new Set(paths.slice(start, end + 1)));
         return;
       }
     }
 
     if (event.ctrlKey || event.metaKey) {
-      setSelection((current) => {
-        const next = new Set(current);
-        if (next.has(entry.path)) next.delete(entry.path);
-        else next.add(entry.path);
-        return next;
-      });
+      const next = new Set(selection);
+      if (next.has(entry.path)) next.delete(entry.path);
+      else next.add(entry.path);
+
+      selectPaths(next);
       setAnchor(entry.path);
       return;
     }
 
-    setSelection(new Set([entry.path]));
+    selectPaths(new Set([entry.path]));
     setAnchor(entry.path);
 
     if (entry.kind === 'directory') {
       void toggleDirectory(entry.path);
-    } else {
-      onSelectFile?.(entry.path);
     }
   };
 
@@ -235,7 +262,7 @@ export function FileTree({
     void run(async () => {
       for (const path of paths) await node.remove(path);
 
-      setSelection(new Set());
+      selectPaths(new Set());
       setExpanded((current) => {
         const next = new Set(current);
         for (const path of current) {
@@ -245,8 +272,7 @@ export function FileTree({
       });
 
       onRemoved?.(paths);
-      await refresh();
-    });
+      await refresh();    });
   };
 
   const moveInto = async (directory: string, paths: string[]) => {
@@ -261,7 +287,7 @@ export function FileTree({
         await node.move(path, target);
       }
 
-      setSelection(new Set());
+      selectPaths(new Set());
       await revealDirectory(directory);
       await refresh();
     });
@@ -272,7 +298,7 @@ export function FileTree({
 
     // Dragging an unselected row starts a fresh selection, like a file manager.
     const dragged = selection.has(entry.path) ? Array.from(selection) : [entry.path];
-    if (!selection.has(entry.path)) setSelection(new Set([entry.path]));
+    if (!selection.has(entry.path)) selectPaths(new Set([entry.path]));
 
     event.dataTransfer.setData(DRAG_MIME, JSON.stringify(dragged));
     event.dataTransfer.effectAllowed = 'move';
@@ -363,7 +389,7 @@ export function FileTree({
               'tree-item',
               entry.kind,
               selection.has(entry.path) ? 'selected' : '',
-              selectedFile === entry.path ? 'active' : '',
+              selectedFiles?.includes(entry.path) ? 'active' : '',
               dropTarget === entry.path ? 'drop-target' : '',
             ]
               .filter(Boolean)
@@ -393,8 +419,13 @@ export function FileTree({
             ) : (
               <span class="tree-caret" />
             )}
-            <span class="tree-icon">{entry.kind === 'directory' ? '📁' : '📄'}</span>
+            <span class="tree-icon">{entry.kind === 'directory' ? '📁' : '🎮'}</span>
             <span class="tree-name">{entry.name}</span>
+            {entry.kind === 'file' && isInitialized?.(entry.path) && (
+              <span class="tree-badge" title="Has library metadata">
+                ●
+              </span>
+            )}
           </li>
         ))}
 

@@ -46,6 +46,13 @@ export const ROM_REGIONS: readonly string[] = [
   'USA',
 ];
 
+/**
+ * Television standards a release can target. A cartridge is sometimes built
+ * for more than one, which the datasets express as a combined value rather
+ * than as a guess at a single one.
+ */
+export const VIDEO_STANDARDS: readonly string[] = ['NTSC', 'PAL', 'PAL, NTSC', 'SECAM'];
+
 export interface ROMMetadata {
   filename: string;
   path: string;

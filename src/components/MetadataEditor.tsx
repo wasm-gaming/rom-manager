@@ -1,14 +1,21 @@
 import { JSX } from 'preact';
-import { useState, useEffect } from 'preact/hooks';
-import { ROMMetadata, ROM_REGIONS } from '../services/ROMMetadataService';
+import { useState } from 'preact/hooks';
+import { ROM_REGIONS, VIDEO_STANDARDS } from '../services/ROMMetadataService';
+import { RomRecord, gameNameOf } from '../services/RomLibraryService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { calculateCRC32, calculateMD5, calculateSHA1 } from '../services/ChecksumService';
 
 interface MetadataEditorProps {
-  metadata: ROMMetadata;
-  onChange?: (metadata: ROMMetadata) => void;
-  fileName?: string;
-  fileContent?: ArrayBuffer;
+  romPath: string;
+  record: RomRecord;
+  /** Resolved cover of the saved record, if it already has one. */
+  coverUrl?: string;
+  /** Reads the ROM bytes. Only called when a checksum actually needs them. */
+  loadContent: () => Promise<ArrayBuffer>;
+  /** False when the ROM is too large to hash on demand. */
+  canChecksum: boolean;
+  onSave: (record: RomRecord) => Promise<void>;
+  onCancel: () => void;
 }
 
 interface DatasetResult {
@@ -22,47 +29,56 @@ interface DatasetResult {
 
 type LookupPhase = 'idle' | 'crc32' | 'md5' | 'sha1' | 'complete';
 
+/** Fields a dataset match can fill in, in the order the modal lists them. */
+const LOOKUP_FIELDS = ['title', 'description', 'region', 'videoStandard', 'cover'] as const;
+
 export function MetadataEditor({
-  metadata,
-  onChange,
-  fileName,
-  fileContent,
+  romPath,
+  record,
+  coverUrl,
+  loadContent,
+  canChecksum,
+  onSave,
+  onCancel,
 }: MetadataEditorProps): JSX.Element {
-  const [isLoading, setIsLoading] = useState(false);
+  const [draft, setDraft] = useState<RomRecord>(record);
+  const [saving, setSaving] = useState(false);
+  const [busy, setBusy] = useState(false);
   const [lookupPhase, setLookupPhase] = useState<LookupPhase>('idle');
   const [lookupResult, setLookupResult] = useState<DatasetResult | null>(null);
   const [selectedFields, setSelectedFields] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
-  const [localCRC32, setLocalCRC32] = useState<string | undefined>(undefined);
-  const [crc32Loading, setCRC32Loading] = useState(false);
 
-  // Compute CRC32 lazily when fileContent changes
-  useEffect(() => {
-    if (!fileContent) {
-      setLocalCRC32(undefined);
-      return;
-    }
+  // A cover the lookup just proposed is still a remote URL: it only becomes a
+  // file in the library once the record is saved.
+  const previewUrl = draft.cover?.startsWith('https://') ? draft.cover : coverUrl;
 
-    setCRC32Loading(true);
-    calculateCRC32(fileContent)
-      .then((crc32) => {
-        setLocalCRC32(crc32);
-        setCRC32Loading(false);
-      })
-      .catch((err) => {
-        console.error('Failed to calculate CRC32:', err);
-        setCRC32Loading(false);
-      });
-  }, [fileContent]);
-
-  const handleChange = (field: keyof ROMMetadata, value: any) => {
-    const updated = { ...metadata, [field]: value };
-    onChange?.(updated);
+  const update = <K extends keyof RomRecord>(field: K, value: RomRecord[K]) => {
+    setDraft((current) => ({ ...current, [field]: value }));
   };
 
-  /**
-   * Show a match and pre-select every field the dataset can fill in.
-   */
+  /** The CRC32 the editor works with, computing it on first request. */
+  const ensureChecksum = async (): Promise<string> => {
+    if (draft.crc32) return draft.crc32;
+
+    const crc32 = await calculateCRC32(await loadContent());
+    update('crc32', crc32);
+    return crc32;
+  };
+
+  const handleComputeChecksum = async () => {
+    try {
+      setBusy(true);
+      setError(null);
+      await ensureChecksum();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Checksum failed');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /** Shows a match with every field it can fill in pre-selected. */
   const showLookupResult = (result: DatasetResult) => {
     setLookupResult(result);
 
@@ -77,132 +93,128 @@ export function MetadataEditor({
     setLookupPhase('complete');
   };
 
+  /**
+   * Walks the checksums from cheapest to dearest, stopping at the first hit —
+   * MD5 and SHA1 are only paid for when CRC32 comes back empty.
+   */
   const handleLookup = async () => {
-    if (!fileContent || !fileName) {
-      setError('No file selected');
-      return;
-    }
-
     try {
-      setIsLoading(true);
+      setBusy(true);
       setError(null);
       setLookupResult(null);
       setSelectedFields(new Set());
       setLookupPhase('crc32');
 
-      // Use pre-computed CRC32 or calculate if needed
-      const crc32 = localCRC32 || (await calculateCRC32(fileContent));
+      const content = await loadContent();
+      const crc32 = draft.crc32 || (await calculateCRC32(content));
+      if (!draft.crc32) update('crc32', crc32);
 
-      // Step 2: Try CRC32 lookup
       let result = await ROMDatasetService.lookupByCrc(crc32);
-
       if (result) {
         showLookupResult(result);
         return;
       }
 
-      // Step 3: CRC32 miss → calculate MD5
       setLookupPhase('md5');
-      const md5 = await calculateMD5(fileContent);
-
-      // Step 4: Try MD5 lookup
-      result = await ROMDatasetService.lookupByMd5(md5);
-
+      result = await ROMDatasetService.lookupByMd5(await calculateMD5(content));
       if (result) {
         showLookupResult(result);
         return;
       }
 
-      // Step 5: MD5 miss → calculate SHA1
       setLookupPhase('sha1');
-      const sha1 = await calculateSHA1(fileContent);
-
-      // Step 6: Try SHA1 lookup
-      result = await ROMDatasetService.lookupBySha1(sha1);
-
+      result = await ROMDatasetService.lookupBySha1(await calculateSHA1(content));
       if (result) {
         showLookupResult(result);
-      } else {
-        setError('No match found in datasets');
-        setLookupPhase('complete');
+        return;
       }
+
+      setError('No match found in datasets');
+      setLookupPhase('complete');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Lookup failed');
       setLookupPhase('complete');
     } finally {
-      setIsLoading(false);
+      setBusy(false);
     }
   };
 
-  const handleFieldToggle = (field: string) => {
-    const newFields = new Set(selectedFields);
-    if (newFields.has(field)) {
-      newFields.delete(field);
-    } else {
-      newFields.add(field);
-    }
-    setSelectedFields(newFields);
+  const toggleField = (field: string) => {
+    setSelectedFields((current) => {
+      const next = new Set(current);
+      if (next.has(field)) next.delete(field);
+      else next.add(field);
+      return next;
+    });
   };
 
   const handleApplySelected = () => {
     if (!lookupResult) return;
 
-    const updated = { ...metadata };
+    setDraft((current) => ({
+      ...current,
+      title: selectedFields.has('title') && lookupResult.name ? lookupResult.name : current.title,
+      description:
+        selectedFields.has('description') && lookupResult.description
+          ? lookupResult.description
+          : current.description,
+      region:
+        selectedFields.has('region') && lookupResult.region ? lookupResult.region : current.region,
+      videoStandard:
+        selectedFields.has('videoStandard') && lookupResult.videoStandard
+          ? lookupResult.videoStandard
+          : current.videoStandard,
+      cover: selectedFields.has('cover') && lookupResult.cover ? lookupResult.cover : current.cover,
+    }));
 
-    if (selectedFields.has('title') && lookupResult.name) {
-      updated.title = lookupResult.name;
-    }
-
-    if (selectedFields.has('description') && lookupResult.description) {
-      updated.description = lookupResult.description;
-    }
-
-    if (selectedFields.has('region') && lookupResult.region) {
-      updated.region = lookupResult.region;
-    }
-
-    if (selectedFields.has('videoStandard') && lookupResult.videoStandard) {
-      updated.videoStandard = lookupResult.videoStandard;
-    }
-
-    if (selectedFields.has('cover') && lookupResult.cover) {
-      updated.cover = lookupResult.cover;
-    }
-
-    onChange?.(updated);
     setLookupResult(null);
     setSelectedFields(new Set());
   };
 
-  const getButtonLabel = () => {
-    if (!isLoading) return '🔍 Lookup Dataset';
-    if (lookupPhase === 'crc32') return '🔍 Checking CRC32...';
-    if (lookupPhase === 'md5') return '⏳ Calculating MD5...';
-    if (lookupPhase === 'sha1') return '⏳ Calculating SHA1...';
-    return '🔍 Looking...';
+  const handleSave = async () => {
+    try {
+      setSaving(true);
+      setError(null);
+      await onSave(draft);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not save the record');
+      setSaving(false);
+    }
+  };
+
+  const lookupLabel = () => {
+    if (lookupPhase === 'crc32' && busy) return '🔍 Checking CRC32...';
+    if (lookupPhase === 'md5' && busy) return '⏳ Calculating MD5...';
+    if (lookupPhase === 'sha1' && busy) return '⏳ Calculating SHA1...';
+    return '🔍 Lookup Dataset';
   };
 
   return (
     <div class="metadata-editor">
       <div class="metadata-header">
-        <h3>Metadata</h3>
-        {fileContent && (
-          <button
-            onClick={handleLookup}
-            disabled={isLoading}
-            class="btn-lookup"
-            title="Look up game info from dataset (CRC32 → MD5 → SHA1)"
-          >
-            {getButtonLabel()}
-          </button>
-        )}
+        <div>
+          <h3>{draft.title || gameNameOf(romPath)}</h3>
+          <p class="metadata-subtitle">{romPath}</p>
+        </div>
+        <button
+          onClick={handleLookup}
+          disabled={busy || saving || !canChecksum}
+          class="btn-lookup"
+          title={
+            canChecksum
+              ? 'Look up game info from dataset (CRC32 → MD5 → SHA1)'
+              : 'The file is too large to checksum'
+          }
+        >
+          {lookupLabel()}
+        </button>
       </div>
 
       {error && <div class="lookup-error">{error}</div>}
 
       {lookupResult && (
         <div class="lookup-modal-overlay" onClick={() => setLookupResult(null)}>
-          <div class="lookup-modal" onClick={(e) => e.stopPropagation()}>
+          <div class="lookup-modal" onClick={(event) => event.stopPropagation()}>
             <div class="modal-header">
               <h3>Dataset Match Found</h3>
               <button class="modal-close" onClick={() => setLookupResult(null)}>
@@ -215,121 +227,48 @@ export function MetadataEditor({
                 <strong>Match:</strong> {lookupResult.name}
               </p>
 
-              {lookupResult.description && (
-                <p class="match-description">
-                  <strong>Description:</strong> {lookupResult.description}
-                </p>
-              )}
-
               <div class="update-fields">
                 <h4>Select fields to update:</h4>
 
-                <div class="field-option">
-                  <label class="checkbox-label">
-                    <input
-                      type="checkbox"
-                      checked={selectedFields.has('title')}
-                      onChange={() => handleFieldToggle('title')}
-                    />
-                    <span class="checkbox-text">
-                      <strong>Title:</strong>
-                      <div class="field-preview">
-                        <div class="current">
-                          Current: <span class="value">{metadata.title || '(empty)'}</span>
-                        </div>
-                        <div class="new">
-                          New: <span class="value">{lookupResult.name}</span>
-                        </div>
-                      </div>
-                    </span>
-                  </label>
-                </div>
+                {LOOKUP_FIELDS.map((field) => {
+                  const incoming =
+                    field === 'title' ? lookupResult.name : (lookupResult[field] as string | undefined);
+                  if (!incoming) return null;
 
-                {lookupResult.description && (
-                  <div class="field-option">
-                    <label class="checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={selectedFields.has('description')}
-                        onChange={() => handleFieldToggle('description')}
-                      />
-                      <span class="checkbox-text">
-                        <strong>Description:</strong>
-                        <div class="field-preview">
-                          <div class="current">
-                            Current: <span class="value">{metadata.description || '(empty)'}</span>
-                          </div>
-                          <div class="new">
-                            New: <span class="value">{lookupResult.description}</span>
-                          </div>
-                        </div>
-                      </span>
-                    </label>
-                  </div>
-                )}
+                  const current = (draft[field] as string | undefined) || '(empty)';
 
-                {lookupResult.region && (
-                  <p>
-                    <strong>Region:</strong> {lookupResult.region}
-                  </p>
-                )}
-
-                {lookupResult.videoStandard && (
-                  <p>
-                    <strong>Video:</strong> {lookupResult.videoStandard}
-                  </p>
-                )}
-
-                {lookupResult.region && (
-                  <div class="field-option">
-                    <label class="checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={selectedFields.has('region')}
-                        onChange={() => handleFieldToggle('region')}
-                      />
-                      <span class="checkbox-text">
-                        <strong>Region:</strong> {lookupResult.region}
-                      </span>
-                    </label>
-                  </div>
-                )}
-
-                {lookupResult.videoStandard && (
-                  <div class="field-option">
-                    <label class="checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={selectedFields.has('videoStandard')}
-                        onChange={() => handleFieldToggle('videoStandard')}
-                      />
-                      <span class="checkbox-text">
-                        <strong>Video:</strong> {lookupResult.videoStandard}
-                      </span>
-                    </label>
-                  </div>
-                )}
-
-                {lookupResult.cover && (
-                  <div class="field-option">
-                    <label class="checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={selectedFields.has('cover')}
-                        onChange={() => handleFieldToggle('cover')}
-                      />
-                      <span class="checkbox-text">
-                        <strong>Cover:</strong>
-                        <img
-                          class="cover-preview"
-                          src={lookupResult.cover}
-                          alt={`${lookupResult.name} boxart`}
-                          loading="lazy"
+                  return (
+                    <div class="field-option" key={field}>
+                      <label class="checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={selectedFields.has(field)}
+                          onChange={() => toggleField(field)}
                         />
-                      </span>
-                    </label>
-                  </div>
-                )}
+                        <span class="checkbox-text">
+                          <strong>{field}</strong>
+                          {field === 'cover' ? (
+                            <img
+                              class="cover-preview"
+                              src={incoming}
+                              alt={`${lookupResult.name} boxart`}
+                              loading="lazy"
+                            />
+                          ) : (
+                            <span class="field-preview">
+                              <span class="current">
+                                Current: <span class="value">{current}</span>
+                              </span>
+                              <span class="new">
+                                New: <span class="value">{incoming}</span>
+                              </span>
+                            </span>
+                          )}
+                        </span>
+                      </label>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -348,15 +287,19 @@ export function MetadataEditor({
           </div>
         </div>
       )}
-      {metadata.cover && (
+
+      {previewUrl && (
         <div class="form-group">
           <label>Cover</label>
           <img
             class="cover-image"
-            src={metadata.cover}
-            alt={`${metadata.title || metadata.filename} boxart`}
+            src={previewUrl}
+            alt={`${draft.title || gameNameOf(romPath)} boxart`}
             loading="lazy"
           />
+          <button class="btn-inline" onClick={() => update('cover', undefined)}>
+            Remove cover
+          </button>
         </div>
       )}
 
@@ -364,25 +307,17 @@ export function MetadataEditor({
         <label>Title</label>
         <input
           type="text"
-          value={metadata.title || ''}
-          onInput={(e) => handleChange('title', (e.target as HTMLInputElement).value)}
+          value={draft.title || ''}
+          onInput={(event) => update('title', (event.target as HTMLInputElement).value)}
         />
       </div>
 
       <div class="form-group">
-        <label>Format</label>
-        <input type="text" value={metadata.format} disabled />
-      </div>
-
-      <div class="form-group">
-        <label>CRC32</label>
-        <input 
-          type="text" 
-          value={localCRC32 || ''} 
-          placeholder={crc32Loading ? '⏳ Calculating...' : '(computing)'}
-          disabled 
-          class={`checksum-field ${crc32Loading ? 'loading' : ''}`}
-          title="File checksum (for ROM identification)"
+        <label>Description</label>
+        <textarea
+          rows={4}
+          value={draft.description || ''}
+          onInput={(event) => update('description', (event.target as HTMLTextAreaElement).value)}
         />
       </div>
 
@@ -390,8 +325,8 @@ export function MetadataEditor({
         <label>Release Date</label>
         <input
           type="date"
-          value={metadata.releaseDate || ''}
-          onInput={(e) => handleChange('releaseDate', (e.target as HTMLInputElement).value)}
+          value={draft.releaseDate || ''}
+          onInput={(event) => update('releaseDate', (event.target as HTMLInputElement).value)}
         />
       </div>
 
@@ -399,21 +334,21 @@ export function MetadataEditor({
         <label>Publisher</label>
         <input
           type="text"
-          value={metadata.publisher || ''}
-          onInput={(e) => handleChange('publisher', (e.target as HTMLInputElement).value)}
+          value={draft.publisher || ''}
+          onInput={(event) => update('publisher', (event.target as HTMLInputElement).value)}
         />
       </div>
 
       <div class="form-group">
         <label>Region</label>
         <select
-          value={metadata.region || ''}
-          onChange={(e) => handleChange('region', (e.target as HTMLSelectElement).value)}
+          value={draft.region || ''}
+          onChange={(event) => update('region', (event.target as HTMLSelectElement).value)}
         >
           <option value="">Select...</option>
           {/* Keep an unknown value selectable so a lookup result is never silently dropped. */}
-          {metadata.region && !ROM_REGIONS.includes(metadata.region) && (
-            <option value={metadata.region}>{metadata.region}</option>
+          {draft.region && !ROM_REGIONS.includes(draft.region) && (
+            <option value={draft.region}>{draft.region}</option>
           )}
           {ROM_REGIONS.map((region) => (
             <option key={region} value={region}>
@@ -425,23 +360,47 @@ export function MetadataEditor({
 
       <div class="form-group">
         <label>Video Standard</label>
-        <input
-          type="text"
-          value={metadata.videoStandard || ''}
-          onInput={(e) => handleChange('videoStandard', (e.target as HTMLInputElement).value)}
-        />
+        <select
+          value={draft.videoStandard || ''}
+          onChange={(event) => update('videoStandard', (event.target as HTMLSelectElement).value)}
+        >
+          <option value="">Select...</option>
+          {draft.videoStandard && !VIDEO_STANDARDS.includes(draft.videoStandard) && (
+            <option value={draft.videoStandard}>{draft.videoStandard}</option>
+          )}
+          {VIDEO_STANDARDS.map((standard) => (
+            <option key={standard} value={standard}>
+              {standard}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div class="form-group">
-        <label>Rating</label>
-        <input
-          type="number"
-          min="0"
-          max="10"
-          step="0.5"
-          value={metadata.rating || ''}
-          onInput={(e) => handleChange('rating', parseFloat((e.target as HTMLInputElement).value))}
-        />
+        <label>CRC32</label>
+        <div class="field-with-action">
+          <input
+            type="text"
+            value={draft.crc32 || ''}
+            placeholder={canChecksum ? 'Not calculated' : 'File too large'}
+            disabled
+            class="checksum-field"
+          />
+          {canChecksum && !draft.crc32 && (
+            <button class="btn-inline" onClick={handleComputeChecksum} disabled={busy}>
+              Calculate
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div class="editor-actions">
+        <button class="btn-primary" onClick={handleSave} disabled={saving}>
+          {saving ? 'Saving...' : '💾 Save'}
+        </button>
+        <button class="btn-cancel" onClick={onCancel} disabled={saving}>
+          Cancel
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import { signal } from '@preact/signals';
-import { ROMMetadata } from './ROMMetadataService';
 
 /**
  * Origin represents an opened folder/location
@@ -8,8 +7,8 @@ export interface Origin {
   id: string;
   name: string;
   path: string;
-  selectedFile?: string;
-  metadata?: Map<string, ROMMetadata>;
+  /** ROM files currently selected in the tree, in tree order. */
+  selection?: string[];
 }
 
 /**
@@ -79,41 +78,20 @@ export class StoreService {
   }
 
   // File management for active origin
-  setSelectedFile(file: string | undefined): void {
+  setSelection(paths: string[]): void {
     const originId = activeOriginIdSignal.value;
     if (!originId) return;
 
     const origins = new Map(this.getOriginsMap());
     const origin = origins.get(originId);
     if (origin) {
-      origin.selectedFile = file;
-      origins.set(originId, origin);
+      origins.set(originId, { ...origin, selection: paths });
       originsSignal.value = origins;
     }
   }
 
-  getSelectedFile(): string | undefined {
-    return this.getActiveOrigin()?.selectedFile;
-  }
-
-  setMetadata(path: string, metadata: ROMMetadata): void {
-    const originId = activeOriginIdSignal.value;
-    if (!originId) return;
-
-    const origins = new Map(this.getOriginsMap());
-    const origin = origins.get(originId);
-    if (origin) {
-      if (!origin.metadata) {
-        origin.metadata = new Map();
-      }
-      origin.metadata.set(path, metadata);
-      origins.set(originId, origin);
-      originsSignal.value = origins;
-    }
-  }
-
-  getMetadata(path: string): ROMMetadata | undefined {
-    return this.getActiveOrigin()?.metadata?.get(path);
+  getSelection(): string[] {
+    return this.getActiveOrigin()?.selection || [];
   }
 
   // Loading state

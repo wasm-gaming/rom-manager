@@ -10,8 +10,18 @@ export interface StorageEntry {
   kind: 'file' | 'directory';
 }
 
-/** Bookkeeping folder created by VFSNode, which must stay out of the browser. */
-const VFS_METADATA_DIR = '.vfs';
+export interface StorageStat {
+  kind: 'file' | 'directory';
+  size: number;
+  /** Epoch milliseconds. The File System Access API exposes no creation time. */
+  mtime: number;
+}
+
+/**
+ * Bookkeeping folders that back the app itself: the VFSNode journal and the
+ * ROM library. Neither belongs in the file browser.
+ */
+const HIDDEN_DIRS = new Set(['.vfs', '.roms']);
 
 /**
  * StorageNode wraps a single VFSNode instance for a folder
@@ -59,12 +69,20 @@ export class StorageNode {
     const entries = await this.requireNode().adapter.list(path);
 
     return entries
-      .filter((entry) => entry.name !== VFS_METADATA_DIR)
+      .filter((entry) => !HIDDEN_DIRS.has(entry.name))
       .map(({ name, path, kind }) => ({ name, path, kind }))
       .sort((left, right) => {
         if (left.kind !== right.kind) return left.kind === 'directory' ? -1 : 1;
         return left.name.localeCompare(right.name);
       });
+  }
+
+  async stat(path: string): Promise<StorageStat | null> {
+    return this.requireNode().stat(path);
+  }
+
+  async exists(path: string): Promise<boolean> {
+    return (await this.stat(path)) !== null;
   }
 
   async readFile(path: string): Promise<Uint8Array> {
@@ -86,7 +104,22 @@ export class StorageNode {
 
   /** Moves or renames a file or a folder. */
   async move(oldPath: string, newPath: string): Promise<void> {
-    await this.requireNode().rename(oldPath, newPath);
+    const node = this.requireNode();
+    const info = await node.stat(oldPath);
+
+    // The adapter renames through a file handle, so a folder has to be walked.
+    if (info?.kind === 'directory') {
+      await node.mkdir(newPath);
+
+      for (const entry of await node.adapter.list(oldPath)) {
+        await this.move(entry.path, `${newPath}/${entry.name}`);
+      }
+
+      await node.delete(oldPath);
+      return;
+    }
+
+    await node.rename(oldPath, newPath);
   }
 }
 
