@@ -1,27 +1,103 @@
 {
   "files": [
-    "Atari - 2600.json",
-    "Atari - 5200.json",
-    "Atari - 7800.json",
-    "Atari - Lynx.json",
-    "Commodore - 64.json",
-    "Commodore - Amiga.json",
-    "Nintendo - Game Boy Advance.json",
-    "Nintendo - Game Boy Color.json",
-    "Nintendo - Game Boy.json",
-    "Nintendo - GameCube.json",
-    "Nintendo - SNES.json",
-    "Nintendo - Wii.json",
-    "Sega - Dreamcast.json",
-    "Sega - Game Gear.json",
-    "Sega - Genesis.json",
-    "Sega - Saturn.json",
-    "Sony - PSP.json",
-    "Sony - PlayStation 2.json",
-    "Sony - PlayStation.json"
+    {
+      "system": "Atari - 2600",
+      "path": "Atari - 2600/dataset.json",
+      "crc32": "C61F51BF"
+    },
+    {
+      "system": "Atari - 5200",
+      "path": "Atari - 5200/dataset.json",
+      "crc32": "AF56D7FD"
+    },
+    {
+      "system": "Atari - 7800",
+      "path": "Atari - 7800/dataset.json",
+      "crc32": "094BD9DD"
+    },
+    {
+      "system": "Atari - Lynx",
+      "path": "Atari - Lynx/dataset.json",
+      "crc32": "A8840D5B"
+    },
+    {
+      "system": "Commodore - 64",
+      "path": "Commodore - 64/dataset.json",
+      "crc32": "65D73ACE"
+    },
+    {
+      "system": "Commodore - Amiga",
+      "path": "Commodore - Amiga/dataset.json",
+      "crc32": "E20E2855"
+    },
+    {
+      "system": "Nintendo - Game Boy",
+      "path": "Nintendo - Game Boy/dataset.json",
+      "crc32": "850761AB"
+    },
+    {
+      "system": "Nintendo - Game Boy Advance",
+      "path": "Nintendo - Game Boy Advance/dataset.json",
+      "crc32": "64B7830C"
+    },
+    {
+      "system": "Nintendo - Game Boy Color",
+      "path": "Nintendo - Game Boy Color/dataset.json",
+      "crc32": "9240ED7F"
+    },
+    {
+      "system": "Nintendo - GameCube",
+      "path": "Nintendo - GameCube/dataset.json",
+      "crc32": "8BD036AF"
+    },
+    {
+      "system": "Nintendo - SNES",
+      "path": "Nintendo - SNES/dataset.json",
+      "crc32": "031C74AB"
+    },
+    {
+      "system": "Nintendo - Wii",
+      "path": "Nintendo - Wii/dataset.json",
+      "crc32": "47D0F546"
+    },
+    {
+      "system": "Sega - Dreamcast",
+      "path": "Sega - Dreamcast/dataset.json",
+      "crc32": "497863E9"
+    },
+    {
+      "system": "Sega - Game Gear",
+      "path": "Sega - Game Gear/dataset.json",
+      "crc32": "BCCD5AF4"
+    },
+    {
+      "system": "Sega - Genesis",
+      "path": "Sega - Genesis/dataset.json",
+      "crc32": "9CB74ADE"
+    },
+    {
+      "system": "Sega - Saturn",
+      "path": "Sega - Saturn/dataset.json",
+      "crc32": "4B1B2B7B"
+    },
+    {
+      "system": "Sony - PSP",
+      "path": "Sony - PSP/dataset.json",
+      "crc32": "2B382719"
+    },
+    {
+      "system": "Sony - PlayStation",
+      "path": "Sony - PlayStation/dataset.json",
+      "crc32": "FA660855"
+    },
+    {
+      "system": "Sony - PlayStation 2",
+      "path": "Sony - PlayStation 2/dataset.json",
+      "crc32": "252491C2"
+    }
   ],
   "description": "ROM metadata datasets (auto-indexed on app startup)",
   "source": "Generated from Libretro database DAT files",
-  "generatedAt": "2026-07-29T12:20:42.667Z",
+  "generatedAt": "2026-07-29T14:26:14.743Z",
   "systemCount": 19
 }

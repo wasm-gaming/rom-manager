@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * JSON to SQLite converter - Converts ROM metadata JSON to SQLite database
+ * JSON to SQLite converter - Converts game file metadata JSON to SQLite database
  * Usage: node scripts/json-to-sqlite.mjs input.json output.db
  * 
  * Note: Requires better-sqlite3 to be installed:
@@ -57,7 +57,7 @@ async function main() {
         crc TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         description TEXT,
-        romName TEXT,
+        fileName TEXT,
         size INTEGER,
         sha1 TEXT
       );
@@ -66,7 +66,7 @@ async function main() {
         sha1 TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         description TEXT,
-        romName TEXT,
+        fileName TEXT,
         size INTEGER,
         crc TEXT
       );
@@ -78,40 +78,46 @@ async function main() {
     // Insert data using transaction for performance
     console.log('⏳ Inserting data...');
     const insertCrc = db.prepare(`
-      INSERT INTO games_by_crc (crc, name, description, romName, size, sha1)
+      INSERT INTO games_by_crc (crc, name, description, fileName, size, sha1)
       VALUES (?, ?, ?, ?, ?, ?)
     `);
     
     const insertSha1 = db.prepare(`
-      INSERT INTO games_by_sha1 (sha1, name, description, romName, size, crc)
+      INSERT INTO games_by_sha1 (sha1, name, description, fileName, size, crc)
       VALUES (?, ?, ?, ?, ?, ?)
     `);
     
-    const transaction = db.transaction((gamesByCrc, gamesBySha1) => {
-      for (const [crc, game] of Object.entries(gamesByCrc)) {
+    const transaction = db.transaction((list) => {
+      for (const game of list) {
+        if (!game.crc) continue;
         insertCrc.run(
-          crc,
+          game.crc,
           game.name,
           game.description || null,
-          game.romName || null,
+          game.fileName || null,
           game.size || null,
           game.sha1 || null
         );
       }
       
-      for (const [sha1, game] of Object.entries(gamesBySha1)) {
+      for (const game of list) {
+        if (!game.sha1) continue;
         insertSha1.run(
-          sha1,
+          game.sha1,
           game.name,
           game.description || null,
-          game.romName || null,
+          game.fileName || null,
           game.size || null,
           game.crc || null
         );
       }
     });
     
-    transaction(jsonContent.gamesByCrc, jsonContent.gamesBySha1);
+    if (!Array.isArray(jsonContent.list)) {
+      throw new Error('Invalid dataset format: expected a list');
+    }
+
+    transaction(jsonContent.list);
     
     // Optimize database
     console.log('🔧 Optimizing database...');
@@ -123,8 +129,8 @@ async function main() {
     const dbSize = fs.statSync(outputFile).size;
     const dbSizeKB = (dbSize / 1024).toFixed(2);
     const dbSizeMB = (dbSize / 1024 / 1024).toFixed(2);
-    const crcCount = Object.keys(jsonContent.gamesByCrc).length;
-    const sha1Count = Object.keys(jsonContent.gamesBySha1).length;
+    const crcCount = jsonContent.list.filter((game) => game.crc).length;
+    const sha1Count = jsonContent.list.filter((game) => game.sha1).length;
     
     console.log('\n✅ Conversion successful!');
     console.log(`   CRC entries: ${crcCount}`);

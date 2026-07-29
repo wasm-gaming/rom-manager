@@ -23,9 +23,10 @@
     "lint": "oxlint",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "dataset:fetch-dat": "node scripts/download-dats.mjs",
-    "dataset:to-json": "node scripts/build-datasets.mjs --skip-download",
-    "dataset:to-sqlite": "node scripts/json-to-sqlite.mjs",
+    "dataset:fetch-dat": "node --use-system-ca --use-env-proxy scripts/download-dats.mjs",
+    "dataset:fetch-covers": "node --use-system-ca --use-env-proxy scripts/fetch-covers.mjs",
+    "dataset:to-json": "node --use-system-ca --use-env-proxy scripts/build-datasets.mjs --skip-download",
+    "dataset:json-to-sqlite": "node scripts/json-to-sqlite.mjs",
     "dataset:sample": "node scripts/create-sample-datasets.mjs"
   },
   "dependencies": {
@@ -45,6 +46,6 @@
     "vitest": "^2.1.8"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=24.0.0"
   }
 }

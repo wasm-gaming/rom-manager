@@ -2,6 +2,50 @@
  * ROM metadata service - singleton for parsing and managing ROM metadata
  */
 
+/**
+ * Regions published by the No-Intro/Redump DAT files, which is the vocabulary
+ * the dataset lookup writes into the region field. The television standard is
+ * tracked separately in `videoStandard`.
+ */
+export const ROM_REGIONS: readonly string[] = [
+  'Asia',
+  'Australia',
+  'Austria',
+  'Belgium',
+  'Brazil',
+  'Canada',
+  'China',
+  'Croatia',
+  'Denmark',
+  'Europe',
+  'Finland',
+  'France',
+  'Germany',
+  'Greece',
+  'Hong Kong',
+  'India',
+  'Ireland',
+  'Israel',
+  'Italy',
+  'Japan',
+  'Korea',
+  'Mexico',
+  'Netherlands',
+  'Norway',
+  'Peru',
+  'Poland',
+  'Portugal',
+  'Russia',
+  'South Africa',
+  'Spain',
+  'Sweden',
+  'Switzerland',
+  'Taiwan',
+  'Turkey',
+  'United Kingdom',
+  'USA',
+];
+
 export interface ROMMetadata {
   filename: string;
   path: string;
@@ -13,6 +57,7 @@ export interface ROMMetadata {
   publisher?: string;
   region?: string;
   videoStandard?: string;
+  cover?: string;
   rating?: number;
   customTags?: string[];
   lastModified?: Date;

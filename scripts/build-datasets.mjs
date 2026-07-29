@@ -1,31 +1,65 @@
 #!/usr/bin/env node
 /**
  * Build ROM datasets - Master script
- * Downloads DAT files, converts to JSON, and generates index
- * 
- * Usage: node scripts/build-datasets.mjs [--skip-download] [--systems system1,system2]
+ *
+ * Converts every downloaded DAT into the dataset consumed by the application,
+ * joining it with the scraped boxarts, and regenerates the index.
+ *
+ * Usage: node scripts/build-datasets.mjs [--skip-download] [--systems=a,b]
  *
  * npm scripts:
- * - npm run dataset:fetch-dat  Download the source DAT files.
- * - npm run dataset:to-json    Convert every available DAT file to JSON.
+ * - npm run dataset:fetch-dat     Download the source DAT files.
+ * - npm run dataset:fetch-covers  Scrape the boxart listings.
+ * - npm run dataset:to-json       Convert every available DAT file to JSON.
  */
 
 import fs from 'fs';
 import path from 'path';
 import { spawn } from 'child_process';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const projectRoot = path.join(__dirname, '..');
-const datasetsDir = path.join(projectRoot, 'static', 'datasets');
+import {
+  COVERS_FILE,
+  DATASETS_DIR,
+  DATASET_FILE,
+  DAT_FILE,
+  INDEX_FILE,
+  PROJECT_ROOT,
+  selectSystems,
+  systemDir,
+} from './systems.mjs';
 
 /**
- * Run a shell command and return promise
+ * Calculate the CRC32 of a file so clients can detect changed datasets without
+ * downloading their contents.
  */
-function runCommand(command, args, options = {}) {
+function calculateCRC32(content) {
+  let crc = 0xffffffff;
+
+  for (let i = 0; i < content.length; i++) {
+    crc ^= content[i];
+    for (let bit = 0; bit < 8; bit++) {
+      crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+    }
+  }
+
+  return ((crc ^ 0xffffffff) >>> 0).toString(16).padStart(8, '0').toUpperCase();
+}
+
+function calculateDatasetCRC32(content) {
+  const dataset = JSON.parse(content.toString('utf-8'));
+
+  // `generated` is volatile and must not invalidate an otherwise unchanged cache.
+  delete dataset.meta?.generated;
+  return calculateCRC32(Buffer.from(JSON.stringify(dataset), 'utf-8'));
+}
+
+/**
+ * Run a script in a child process, inheriting the Node flags of this run so
+ * options such as `--use-system-ca` keep applying.
+ */
+function runScript(script, args, options = {}) {
   return new Promise((resolve, reject) => {
-    const child = spawn(command, args, {
-      cwd: projectRoot,
+    const child = spawn(process.execPath, [...process.execArgv, script, ...args], {
+      cwd: PROJECT_ROOT,
       stdio: 'inherit',
       ...options
     });
@@ -34,7 +68,7 @@ function runCommand(command, args, options = {}) {
       if (code === 0) {
         resolve();
       } else {
-        reject(new Error(`Command failed with code ${code}: ${command} ${args.join(' ')}`));
+        reject(new Error(`Command failed with code ${code}: ${script} ${args.join(' ')}`));
       }
     });
 
@@ -43,14 +77,25 @@ function runCommand(command, args, options = {}) {
 }
 
 /**
- * Generate index.json from available JSON files
+ * Generate index.json from the datasets available on disk.
+ *
+ * Every system is listed with the path of its dataset, relative to the datasets
+ * folder, so the application can fetch it directly.
  */
-async function generateIndex() {
+function generateIndex() {
   console.log('\n📋 Generating index.json...');
 
   const files = fs
-    .readdirSync(datasetsDir)
-    .filter((f) => f.endsWith('.json') && f !== 'index.json');
+    .readdirSync(DATASETS_DIR, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .filter((entry) => fs.existsSync(path.join(DATASETS_DIR, entry.name, DATASET_FILE)))
+    .map((entry) => ({
+      system: entry.name,
+      path: `${entry.name}/${DATASET_FILE}`,
+      crc32: calculateDatasetCRC32(
+        fs.readFileSync(path.join(DATASETS_DIR, entry.name, DATASET_FILE)),
+      ),
+    }));
 
   const index = {
     files,
@@ -61,71 +106,79 @@ async function generateIndex() {
   };
 
   fs.writeFileSync(
-    path.join(datasetsDir, 'index.json'),
+    path.join(DATASETS_DIR, INDEX_FILE),
     JSON.stringify(index, null, 2),
     'utf-8'
   );
 
   console.log(`✅ Index generated with ${files.length} datasets`);
-  files.forEach((f) => console.log(`   - ${f}`));
+  files.forEach(({ path: datasetPath, crc32 }) => console.log(`   - ${datasetPath} (${crc32})`));
 }
 
 async function main() {
   const args = process.argv.slice(2);
   const skipDownload = args.includes('--skip-download');
-  const systemsArg = args.find((a) => a.startsWith('--systems='));
-  const systems = systemsArg ? systemsArg.split('=')[1].split(',') : null;
+  const systems = selectSystems(args);
+  const systemsArg = args.filter((value) => value.startsWith('--systems='));
 
   console.log('🚀 ROM Dataset Builder');
-  console.log(`📁 Output: ${datasetsDir}\n`);
+  console.log(`📁 Output: ${DATASETS_DIR}\n`);
 
   try {
     // Step 1: Download DAT files (optional)
     if (!skipDownload) {
       console.log('Step 1️⃣ : Download DAT files');
       console.log('━'.repeat(50));
-      await runCommand('node', ['scripts/download-dats.mjs', datasetsDir]);
+      await runScript('scripts/download-dats.mjs', [DATASETS_DIR, ...systemsArg]);
     } else {
       console.log('⏭️  Skipping download (--skip-download)');
     }
 
-    // Step 2: Convert DAT to JSON
-    const datFiles = fs
-      .readdirSync(datasetsDir)
-      .filter((f) => f.endsWith('.dat'));
+    // Step 2: Convert DAT to JSON, joining the scraped boxarts when available
+    const pending = systems
+      .map((system) => ({ system, dir: systemDir(DATASETS_DIR, system.name) }))
+      .filter(({ dir }) => fs.existsSync(path.join(dir, DAT_FILE)));
 
-    if (datFiles.length === 0) {
-      console.log('\n⚠️  No DAT files found. Run without --skip-download to download them.');
-      console.log('   Or place .dat files in:', datasetsDir);
+    if (pending.length === 0) {
+      console.log('\n⚠️  No DAT files found. Run: npm run dataset:fetch-dat');
       process.exit(1);
     }
 
-    console.log(`\nStep 2️⃣ : Convert DAT → JSON (${datFiles.length} files)`);
+    console.log(`\nStep 2️⃣ : Convert DAT → JSON (${pending.length} systems)`);
     console.log('━'.repeat(50));
 
-    for (const datFile of datFiles) {
-      const baseName = path.basename(datFile, '.dat');
-      const jsonFile = `${baseName}.json`;
-      const datPath = path.join(datasetsDir, datFile);
-      const jsonPath = path.join(datasetsDir, jsonFile);
+    let missingCovers = 0;
 
-      console.log(`\n📦 ${baseName}`);
-      await runCommand('node', ['scripts/dat-to-json.mjs', datPath, jsonPath]);
+    for (const { system, dir } of pending) {
+      const coversPath = path.join(dir, COVERS_FILE);
+      const hasCovers = fs.existsSync(coversPath);
 
-      // Remove DAT after conversion (optional - comment out to keep)
-      // fs.unlinkSync(datPath);
+      if (!hasCovers) missingCovers++;
+
+      console.log(`\n📦 ${system.name}`);
+      await runScript('scripts/dat-to-json.mjs', [
+        path.join(dir, DAT_FILE),
+        path.join(dir, DATASET_FILE),
+        ...(hasCovers ? [`--covers=${coversPath}`] : []),
+      ]);
     }
 
     // Step 3: Generate index
     console.log('\n');
-    await generateIndex();
+    generateIndex();
+
+    if (missingCovers > 0) {
+      console.log(
+        `\n⚠️  ${missingCovers} system(s) built without boxarts. Run: npm run dataset:fetch-covers`,
+      );
+    }
 
     console.log('\n✅ All done!');
     console.log('\n📝 Next steps:');
-    console.log('   1. The JSON files are ready in:', datasetsDir);
+    console.log('   1. The datasets are ready in:', DATASETS_DIR);
     console.log('   2. Datasets will auto-load on app startup');
     console.log('   3. To convert to SQLite later:');
-    console.log('      npm run dataset:to-sqlite <file.json> <file.db>');
+    console.log('      npm run dataset:json-to-sqlite <dataset.json> <file.db>');
 
   } catch (error) {
     console.error('\n❌ Error:', error.message);

@@ -1,15 +1,33 @@
 #!/usr/bin/env node
 /**
  * Create sample datasets for testing
- * Generates minimal JSON datasets with common ROMs
+ * Generates minimal JSON datasets with common game files
  */
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { DATASETS_DIR, DATASET_FILE, INDEX_FILE, systemDir } from './systems.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const datasetsDir = path.join(__dirname, '..', 'static', 'datasets');
+const datasetsDir = DATASETS_DIR;
+
+function calculateCRC32(content) {
+  let crc = 0xffffffff;
+
+  for (let i = 0; i < content.length; i++) {
+    crc ^= content[i];
+    for (let bit = 0; bit < 8; bit++) {
+      crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+    }
+  }
+
+  return ((crc ^ 0xffffffff) >>> 0).toString(16).padStart(8, '0').toUpperCase();
+}
+
+function calculateDatasetCRC32(dataset) {
+  const copy = structuredClone(dataset);
+  delete copy.meta.generated;
+  return calculateCRC32(Buffer.from(JSON.stringify(copy), 'utf-8'));
+}
 
 // Sample ROMs for testing
 const SAMPLE_DATASETS = {
@@ -17,64 +35,56 @@ const SAMPLE_DATASETS = {
     'AFE05EEE': {
       name: 'Super Mario Bros.',
       description: 'Classic platformer',
-      romName: 'Super Mario Bros.nes'
+      fileName: 'Super Mario Bros.nes'
     },
     '5F6B266B': {
       name: 'The Legend of Zelda',
       description: 'Classic adventure',
-      romName: 'The Legend of Zelda.nes'
+      fileName: 'The Legend of Zelda.nes'
     },
     '24667E4D': {
       name: 'Donkey Kong',
       description: 'Original arcade port',
-      romName: 'Donkey Kong.nes'
+      fileName: 'Donkey Kong.nes'
     }
   },
   'Nintendo - SNES': {
     'ABC123DE': {
       name: 'Super Mario World',
       description: 'SNES platformer',
-      romName: 'Super Mario World.smc'
+      fileName: 'Super Mario World.smc'
     },
     'DEF45678': {
       name: 'The Legend of Zelda: A Link to the Past',
       description: 'SNES adventure',
-      romName: 'Zelda ALttP.smc'
+      fileName: 'Zelda ALttP.smc'
     }
   },
   'Sega - Genesis': {
     '123456AB': {
       name: 'Sonic the Hedgehog',
       description: 'Genesis platformer',
-      romName: 'Sonic.md'
+      fileName: 'Sonic.md'
     },
     'CD789EF0': {
       name: 'Altered Beast',
       description: 'Genesis beat-em-up',
-      romName: 'Altered Beast.md'
+      fileName: 'Altered Beast.md'
     }
   }
 };
 
 function generateDataset(systemName, roms) {
-  const gamesByCrc = {};
-  const gamesBySha1 = {};
-
-  // Use CRC as both key and fallback SHA1 for demo
-  Object.entries(roms).forEach(([crc, data]) => {
-    gamesByCrc[crc] = { ...data, sha1: crc };
-    gamesBySha1[crc] = { ...data, crc };
-  });
+  const list = Object.entries(roms).map(([crc, data]) => ({ ...data, crc }));
 
   return {
     meta: {
       source: `${systemName}.dat`,
       totalGames: Object.keys(roms).length,
-      totalRoms: Object.keys(roms).length,
+      totalFiles: Object.keys(roms).length,
       generated: new Date().toISOString()
     },
-    gamesByCrc,
-    gamesBySha1
+    list
   };
 }
 
@@ -90,17 +100,23 @@ async function main() {
 
   for (const [systemName, roms] of Object.entries(SAMPLE_DATASETS)) {
     const dataset = generateDataset(systemName, roms);
-    const filename = `${systemName}.json`;
-    const filepath = path.join(datasetsDir, filename);
+    const targetDir = systemDir(datasetsDir, systemName);
+    const datasetPath = `${systemName}/${DATASET_FILE}`;
+    const filepath = path.join(targetDir, DATASET_FILE);
 
+    fs.mkdirSync(targetDir, { recursive: true });
     fs.writeFileSync(filepath, JSON.stringify(dataset, null, 2), 'utf-8');
     
     const size = fs.statSync(filepath).size;
-    files.push(filename);
+    files.push({
+      system: systemName,
+      path: datasetPath,
+      crc32: calculateDatasetCRC32(dataset),
+    });
     totalROMs += Object.keys(roms).length;
 
     console.log(`✅ ${systemName}`);
-    console.log(`   File: ${filename}`);
+    console.log(`   File: ${datasetPath}`);
     console.log(`   ROMs: ${Object.keys(roms).length}`);
     console.log(`   Size: ${(size / 1024).toFixed(2)} KB\n`);
   }
@@ -115,7 +131,7 @@ async function main() {
     totalROMCount: totalROMs
   };
 
-  const indexPath = path.join(datasetsDir, 'index.json');
+  const indexPath = path.join(datasetsDir, INDEX_FILE);
   fs.writeFileSync(indexPath, JSON.stringify(index, null, 2), 'utf-8');
 
   console.log('='.repeat(50));

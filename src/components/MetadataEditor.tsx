@@ -1,6 +1,6 @@
 import { JSX } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
-import { ROMMetadata } from '../services/ROMMetadataService';
+import { ROMMetadata, ROM_REGIONS } from '../services/ROMMetadataService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { calculateCRC32, calculateMD5, calculateSHA1 } from '../services/ChecksumService';
 
@@ -14,9 +14,10 @@ interface MetadataEditorProps {
 interface DatasetResult {
   name: string;
   description?: string;
-  romName?: string;
+  fileName?: string;
   region?: string;
   videoStandard?: string;
+  cover?: string;
 }
 
 type LookupPhase = 'idle' | 'crc32' | 'md5' | 'sha1' | 'complete';
@@ -59,6 +60,23 @@ export function MetadataEditor({
     onChange?.(updated);
   };
 
+  /**
+   * Show a match and pre-select every field the dataset can fill in.
+   */
+  const showLookupResult = (result: DatasetResult) => {
+    setLookupResult(result);
+
+    const fields = new Set<string>();
+    if (result.name) fields.add('title');
+    if (result.description) fields.add('description');
+    if (result.region) fields.add('region');
+    if (result.videoStandard) fields.add('videoStandard');
+    if (result.cover) fields.add('cover');
+
+    setSelectedFields(fields);
+    setLookupPhase('complete');
+  };
+
   const handleLookup = async () => {
     if (!fileContent || !fileName) {
       setError('No file selected');
@@ -79,15 +97,7 @@ export function MetadataEditor({
       let result = await ROMDatasetService.lookupByCrc(crc32);
 
       if (result) {
-        setLookupResult(result);
-        // Pre-select fields that have values
-        const fields = new Set<string>();
-        if (result.name) fields.add('title');
-        if (result.description) fields.add('description');
-        if (result.region) fields.add('region');
-        if (result.videoStandard) fields.add('videoStandard');
-        setSelectedFields(fields);
-        setLookupPhase('complete');
+        showLookupResult(result);
         return;
       }
 
@@ -99,14 +109,7 @@ export function MetadataEditor({
       result = await ROMDatasetService.lookupByMd5(md5);
 
       if (result) {
-        setLookupResult(result);
-        const fields = new Set<string>();
-        if (result.name) fields.add('title');
-        if (result.description) fields.add('description');
-        if (result.region) fields.add('region');
-        if (result.videoStandard) fields.add('videoStandard');
-        setSelectedFields(fields);
-        setLookupPhase('complete');
+        showLookupResult(result);
         return;
       }
 
@@ -118,15 +121,7 @@ export function MetadataEditor({
       result = await ROMDatasetService.lookupBySha1(sha1);
 
       if (result) {
-        setLookupResult(result);
-        // Pre-select fields that have values
-        const fields = new Set<string>();
-        if (result.name) fields.add('title');
-        if (result.description) fields.add('description');
-        if (result.region) fields.add('region');
-        if (result.videoStandard) fields.add('videoStandard');
-        setSelectedFields(fields);
-        setLookupPhase('complete');
+        showLookupResult(result);
       } else {
         setError('No match found in datasets');
         setLookupPhase('complete');
@@ -168,6 +163,10 @@ export function MetadataEditor({
 
     if (selectedFields.has('videoStandard') && lookupResult.videoStandard) {
       updated.videoStandard = lookupResult.videoStandard;
+    }
+
+    if (selectedFields.has('cover') && lookupResult.cover) {
+      updated.cover = lookupResult.cover;
     }
 
     onChange?.(updated);
@@ -310,6 +309,27 @@ export function MetadataEditor({
                     </label>
                   </div>
                 )}
+
+                {lookupResult.cover && (
+                  <div class="field-option">
+                    <label class="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={selectedFields.has('cover')}
+                        onChange={() => handleFieldToggle('cover')}
+                      />
+                      <span class="checkbox-text">
+                        <strong>Cover:</strong>
+                        <img
+                          class="cover-preview"
+                          src={lookupResult.cover}
+                          alt={`${lookupResult.name} boxart`}
+                          loading="lazy"
+                        />
+                      </span>
+                    </label>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -328,6 +348,18 @@ export function MetadataEditor({
           </div>
         </div>
       )}
+      {metadata.cover && (
+        <div class="form-group">
+          <label>Cover</label>
+          <img
+            class="cover-image"
+            src={metadata.cover}
+            alt={`${metadata.title || metadata.filename} boxart`}
+            loading="lazy"
+          />
+        </div>
+      )}
+
       <div class="form-group">
         <label>Title</label>
         <input
@@ -379,10 +411,15 @@ export function MetadataEditor({
           onChange={(e) => handleChange('region', (e.target as HTMLSelectElement).value)}
         >
           <option value="">Select...</option>
-          <option value="NTSC-U">NTSC-U (North America)</option>
-          <option value="NTSC-J">NTSC-J (Japan)</option>
-          <option value="PAL">PAL (Europe)</option>
-          <option value="NTSC-K">NTSC-K (Korea)</option>
+          {/* Keep an unknown value selectable so a lookup result is never silently dropped. */}
+          {metadata.region && !ROM_REGIONS.includes(metadata.region) && (
+            <option value={metadata.region}>{metadata.region}</option>
+          )}
+          {ROM_REGIONS.map((region) => (
+            <option key={region} value={region}>
+              {region}
+            </option>
+          ))}
         </select>
       </div>
 

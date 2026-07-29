@@ -14,36 +14,43 @@
 export interface ROMMetadata {
   name: string;
   description?: string;
-  romName?: string;
+  fileName?: string;
   size?: number;
   crc?: string;
     md5?: string;
   sha1?: string;
     region?: string;
     videoStandard?: string;
+    cover?: string;
 }
 
 interface DatasetMeta {
   source: string;
   totalGames: number;
-  totalRoms: number;
+  totalFiles: number;
   generated: string;
 }
 
 interface DatasetJSON {
   meta: DatasetMeta;
-  gamesByCrc: Record<string, ROMMetadata>;
-  gamesByMd5?: Record<string, ROMMetadata>;
-  gamesBySha1: Record<string, ROMMetadata>;
+  list: ROMMetadata[];
+}
+
+interface DatasetIndexEntry {
+  system: string;
+  path: string;
+  crc32: string;
+}
+
+interface DatasetIndex {
+  files: DatasetIndexEntry[];
 }
 
 const DB_NAME = 'rom-manager-datasets';
-const DB_VERSION = 2;
-const STORE_BY_CRC = 'gamesByCrc';
-const STORE_BY_MD5 = 'gamesByMd5';
-const STORE_BY_SHA1 = 'gamesBySha1';
+const DB_VERSION = 3;
+const STORE_ROMS = 'roms';
 const META_STORE = 'datasetsMeta';
-const DATASET_FORMAT_VERSION = 2;
+const DATASET_FORMAT_VERSION = 5;
 
 export class ROMDatasetService {
   private static db: IDBDatabase | null = null;
@@ -79,22 +86,18 @@ export class ROMDatasetService {
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
 
-        // Store: gamesByCrc
-        if (!db.objectStoreNames.contains(STORE_BY_CRC)) {
-          const crcStore = db.createObjectStore(STORE_BY_CRC, { keyPath: 'crc' });
-          crcStore.createIndex('name', 'name', { unique: false });
+        // Replace the duplicated checksum stores with one ROM store and indexes.
+        for (const storeName of ['gamesByCrc', 'gamesByMd5', 'gamesBySha1']) {
+          if (db.objectStoreNames.contains(storeName)) {
+            db.deleteObjectStore(storeName);
+          }
         }
 
-        // Store: gamesByMd5
-        if (!db.objectStoreNames.contains(STORE_BY_MD5)) {
-          const md5Store = db.createObjectStore(STORE_BY_MD5, { keyPath: 'md5' });
-          md5Store.createIndex('name', 'name', { unique: false });
-        }
-
-        // Store: gamesBySha1
-        if (!db.objectStoreNames.contains(STORE_BY_SHA1)) {
-          const sha1Store = db.createObjectStore(STORE_BY_SHA1, { keyPath: 'sha1' });
-          sha1Store.createIndex('name', 'name', { unique: false });
+        if (!db.objectStoreNames.contains(STORE_ROMS)) {
+          const romStore = db.createObjectStore(STORE_ROMS, { keyPath: 'crc' });
+          romStore.createIndex('md5', 'md5', { unique: false });
+          romStore.createIndex('sha1', 'sha1', { unique: false });
+          romStore.createIndex('name', 'name', { unique: false });
         }
 
         // Store: metadata tracking
@@ -122,89 +125,122 @@ export class ROMDatasetService {
 
     // Get list of datasets
     const datasetsIndex = await fetch('/datasets/index.json')
-      .then((r) => (r.ok ? r.json() : null))
+      .then((r) => (r.ok ? (r.json() as Promise<DatasetIndex>) : null))
       .catch(() => null);
 
-    if (!datasetsIndex || !datasetsIndex.files) {
+    if (!datasetsIndex || !Array.isArray(datasetsIndex.files)) {
       console.log('No dataset index found, skipping auto-load');
       return;
     }
 
     // Load each dataset
-    for (const filename of datasetsIndex.files) {
+    for (const dataset of datasetsIndex.files) {
+      if (!this.isValidDatasetIndexEntry(dataset)) {
+        console.warn('Skipping invalid dataset index entry');
+        continue;
+      }
+
       try {
-        await this.loadDataset(filename);
+        await this.loadDataset(dataset);
       } catch (error) {
-        console.warn(`Failed to load dataset ${filename}:`, error);
+        console.warn(`Failed to load dataset ${dataset.path}:`, error);
       }
     }
+  }
+
+  private static isValidDatasetIndexEntry(value: unknown): value is DatasetIndexEntry {
+    if (!value || typeof value !== 'object') return false;
+
+    const entry = value as Record<string, unknown>;
+    return (
+      typeof entry.system === 'string' &&
+      entry.system.length > 0 &&
+      typeof entry.path === 'string' &&
+      // Datasets live one folder deep, so anything else is a traversal attempt.
+      /^[^/\\]+\/[^/\\]+\.json$/.test(entry.path) &&
+      !entry.path.includes('..') &&
+      typeof entry.crc32 === 'string' &&
+      /^[A-Fa-f0-9]{8}$/.test(entry.crc32)
+    );
+  }
+
+  private static isValidROMMetadata(value: unknown): value is ROMMetadata & { crc: string } {
+    if (!value || typeof value !== 'object') return false;
+
+    const rom = value as Record<string, unknown>;
+    return (
+      typeof rom.name === 'string' &&
+      typeof rom.crc === 'string' &&
+      /^[A-Fa-f0-9]{8}$/.test(rom.crc) &&
+      (rom.md5 === undefined || (typeof rom.md5 === 'string' && /^[A-Fa-f0-9]{32}$/.test(rom.md5))) &&
+      (rom.sha1 === undefined || (typeof rom.sha1 === 'string' && /^[A-Fa-f0-9]{40}$/.test(rom.sha1)))
+    );
   }
 
   /**
    * Load a single dataset JSON file into IndexedDB
    */
-  private static async loadDataset(filename: string): Promise<void> {
+  private static async loadDataset({ system, path, crc32 }: DatasetIndexEntry): Promise<void> {
     const db = await this.getDB();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
     // Check if already loaded
     const metaStore = db.transaction([META_STORE], 'readonly').objectStore(META_STORE);
     const existing = await new Promise<any>((resolve, reject) => {
-      const req = metaStore.get(filename);
+      const req = metaStore.get(path);
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => reject(req.error);
     });
 
-    if (existing?.formatVersion === DATASET_FORMAT_VERSION) {
-      console.log(`✓ Dataset already loaded: ${filename}`);
+    if (
+      existing?.formatVersion === DATASET_FORMAT_VERSION &&
+      existing.crc32 === crc32
+    ) {
+      console.log(`✓ Dataset already loaded: ${path}`);
       return;
     }
 
     // Fetch dataset
-    const response = await fetch(`/datasets/${filename}`);
+    const response = await fetch(`/datasets/${path}`);
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${filename}`);
+      throw new Error(`HTTP ${response.status}: ${path}`);
     }
 
     const dataset: DatasetJSON = await response.json();
-    console.log(`📥 Loading dataset: ${filename} (${dataset.meta.totalRoms} ROMs)`);
-
-    // Insert into IndexedDB with transaction
-    const transaction = db.transaction(
-      [STORE_BY_CRC, STORE_BY_MD5, STORE_BY_SHA1, META_STORE],
-      'readwrite'
-    );
-
-    // Insert CRC data
-    const crcStore = transaction.objectStore(STORE_BY_CRC);
-    for (const [crc, metadata] of Object.entries(dataset.gamesByCrc)) {
-      crcStore.put({ crc, ...metadata });
+    if (!Array.isArray(dataset.list)) {
+      throw new Error(`Invalid dataset format: ${path}`);
     }
 
-    // Insert MD5 data. Older generated datasets may not include this index.
-    const md5Store = transaction.objectStore(STORE_BY_MD5);
-    for (const [md5, metadata] of Object.entries(dataset.gamesByMd5 ?? {})) {
-      md5Store.put({ md5, ...metadata });
-    }
+    console.log(`📥 Loading dataset: ${path} (${dataset.meta.totalFiles} files)`);
 
-    // Insert SHA1 data
-    const sha1Store = transaction.objectStore(STORE_BY_SHA1);
-    for (const [sha1, metadata] of Object.entries(dataset.gamesBySha1)) {
-      sha1Store.put({ sha1, ...metadata });
+    // Build the checksum lookup indexes locally while inserting each ROM once.
+    const transaction = db.transaction([STORE_ROMS, META_STORE], 'readwrite');
+    const romStore = transaction.objectStore(STORE_ROMS);
+    for (const rom of dataset.list) {
+      if (this.isValidROMMetadata(rom)) {
+        romStore.put({
+          ...rom,
+          crc: rom.crc.toUpperCase(),
+          md5: rom.md5?.toUpperCase(),
+          sha1: rom.sha1?.toUpperCase(),
+          cover: this.sanitizeCoverUrl(rom.cover),
+        });
+      }
     }
 
     // Record metadata
     const metaStoreWrite = transaction.objectStore(META_STORE);
     metaStoreWrite.put({
       ...dataset.meta,
-      source: filename,
+      source: path,
+      system,
+      crc32,
       formatVersion: DATASET_FORMAT_VERSION,
       loadedAt: new Date().toISOString()
     });
 
     return new Promise((resolve, reject) => {
       transaction.oncomplete = () => {
-        console.log(`✅ Dataset loaded: ${filename}`);
+        console.log(`✅ Dataset loaded: ${path}`);
         resolve();
       };
       transaction.onerror = () => reject(transaction.error);
@@ -212,14 +248,21 @@ export class ROMDatasetService {
   }
 
   /**
+   * Only keep boxart URLs that are safe to feed to an <img> tag.
+   */
+  private static sanitizeCoverUrl(cover: unknown): string | undefined {
+    return typeof cover === 'string' && cover.startsWith('https://') ? cover : undefined;
+  }
+
+  /**
    * Lookup ROM by MD5 checksum
    */
   static async lookupByMd5(md5: string): Promise<ROMMetadata | null> {
     const db = await this.getDB();
-    const store = db.transaction([STORE_BY_MD5], 'readonly').objectStore(STORE_BY_MD5);
+    const index = db.transaction([STORE_ROMS], 'readonly').objectStore(STORE_ROMS).index('md5');
 
     return new Promise((resolve, reject) => {
-      const request = store.get(md5.toUpperCase());
+      const request = index.get(md5.toUpperCase());
       request.onsuccess = () => {
         const result = request.result;
         if (result) {
@@ -238,7 +281,7 @@ export class ROMDatasetService {
    */
   static async lookupByCrc(crc: string): Promise<ROMMetadata | null> {
     const db = await this.getDB();
-    const store = db.transaction([STORE_BY_CRC], 'readonly').objectStore(STORE_BY_CRC);
+    const store = db.transaction([STORE_ROMS], 'readonly').objectStore(STORE_ROMS);
 
     return new Promise((resolve, reject) => {
       const request = store.get(crc.toUpperCase());
@@ -260,10 +303,10 @@ export class ROMDatasetService {
    */
   static async lookupBySha1(sha1: string): Promise<ROMMetadata | null> {
     const db = await this.getDB();
-    const store = db.transaction([STORE_BY_SHA1], 'readonly').objectStore(STORE_BY_SHA1);
+    const index = db.transaction([STORE_ROMS], 'readonly').objectStore(STORE_ROMS).index('sha1');
 
     return new Promise((resolve, reject) => {
-      const request = store.get(sha1.toUpperCase());
+      const request = index.get(sha1.toUpperCase());
       request.onsuccess = () => {
         const result = request.result;
         if (result) {
@@ -282,7 +325,7 @@ export class ROMDatasetService {
    */
   static async searchByName(query: string, limit = 10): Promise<ROMMetadata[]> {
     const db = await this.getDB();
-    const store = db.transaction([STORE_BY_CRC], 'readonly').objectStore(STORE_BY_CRC);
+    const store = db.transaction([STORE_ROMS], 'readonly').objectStore(STORE_ROMS);
     const nameIndex = store.index('name');
 
     const results: ROMMetadata[] = [];
@@ -310,42 +353,24 @@ export class ROMDatasetService {
    * Get dataset statistics
    */
   static async getStats(): Promise<{
-    totalRomsByCrc: number;
-    totalRomsByMd5: number;
-    totalRomsBySha1: number;
-    datasets: Array<{ source: string; romCount: number }>;
+    totalFilesByCrc: number;
+    totalFilesByMd5: number;
+    totalFilesBySha1: number;
+    datasets: Array<{ source: string; fileCount: number }>;
   }> {
     const db = await this.getDB();
 
-    const crcCount = await new Promise<number>((resolve, reject) => {
+    const fileCount = await new Promise<number>((resolve, reject) => {
       const request = db
-        .transaction([STORE_BY_CRC], 'readonly')
-        .objectStore(STORE_BY_CRC)
-        .count();
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-
-    const sha1Count = await new Promise<number>((resolve, reject) => {
-      const request = db
-        .transaction([STORE_BY_SHA1], 'readonly')
-        .objectStore(STORE_BY_SHA1)
-        .count();
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-
-    const md5Count = await new Promise<number>((resolve, reject) => {
-      const request = db
-        .transaction([STORE_BY_MD5], 'readonly')
-        .objectStore(STORE_BY_MD5)
+        .transaction([STORE_ROMS], 'readonly')
+        .objectStore(STORE_ROMS)
         .count();
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
     });
 
     const metaStore = db.transaction([META_STORE], 'readonly').objectStore(META_STORE);
-    const datasets: Array<{ source: string; romCount: number }> = [];
+    const datasets: Array<{ source: string; fileCount: number }> = [];
 
     return new Promise((resolve, reject) => {
       const request = metaStore.openCursor();
@@ -354,14 +379,14 @@ export class ROMDatasetService {
         if (cursor) {
           datasets.push({
             source: cursor.value.source,
-            romCount: cursor.value.totalRoms
+            fileCount: cursor.value.totalFiles
           });
           cursor.continue();
         } else {
           resolve({
-            totalRomsByCrc: crcCount,
-            totalRomsByMd5: md5Count,
-            totalRomsBySha1: sha1Count,
+            totalFilesByCrc: fileCount,
+            totalFilesByMd5: fileCount,
+            totalFilesBySha1: fileCount,
             datasets
           });
         }
@@ -375,14 +400,9 @@ export class ROMDatasetService {
    */
   static async clearData(): Promise<void> {
     const db = await this.getDB();
-    const transaction = db.transaction(
-      [STORE_BY_CRC, STORE_BY_MD5, STORE_BY_SHA1, META_STORE],
-      'readwrite'
-    );
+    const transaction = db.transaction([STORE_ROMS, META_STORE], 'readwrite');
 
-    transaction.objectStore(STORE_BY_CRC).clear();
-    transaction.objectStore(STORE_BY_MD5).clear();
-    transaction.objectStore(STORE_BY_SHA1).clear();
+    transaction.objectStore(STORE_ROMS).clear();
     transaction.objectStore(META_STORE).clear();
 
     return new Promise((resolve, reject) => {

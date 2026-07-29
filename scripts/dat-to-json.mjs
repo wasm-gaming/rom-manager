@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 /**
  * DAT to JSON converter - Parses clrmamepro DAT files from Libretro
- * Usage: node scripts/dat-to-json.mjs input.dat output.json
+ * Usage: node scripts/dat-to-json.mjs input.dat output.json [--covers=covers.json]
+ *
+ * When a covers file is supplied, every entry gets the URL of its published
+ * boxart. Only scraped names are used, so the generated URLs never 404.
  */
 
 import fs from 'fs';
@@ -121,15 +124,46 @@ function inferVideoStandard(region) {
   return standards.length > 0 ? standards.join(', ') : undefined;
 }
 
+/**
+ * Reproduce the sanitization Libretro applies when publishing a thumbnail, so a
+ * DAT game name can be matched against the scraped file names.
+ */
+function toThumbnailName(name) {
+  return name.replace(/[&*/:`<>?\\|"]/g, '_');
+}
+
+/**
+ * Build a `sanitized game name -> boxart URL` lookup from a scraped covers file.
+ */
+function loadCovers(coversFile) {
+  if (!coversFile) return new Map();
+
+  const covers = JSON.parse(fs.readFileSync(coversFile, 'utf-8'));
+  const baseUrl = covers?.meta?.baseUrl;
+
+  if (typeof baseUrl !== 'string' || !Array.isArray(covers.list)) {
+    throw new Error(`Invalid covers file: ${coversFile}`);
+  }
+
+  return new Map(
+    covers.list.map((name) => [name, `${baseUrl}/${encodeURIComponent(`${name}.png`)}`]),
+  );
+}
+
 async function main() {
   const args = process.argv.slice(2);
-  
-  if (args.length < 2) {
-    console.error('Usage: node scripts/dat-to-json.mjs <input.dat> <output.json>');
+  const positional = args.filter((value) => !value.startsWith('--'));
+  const coversArg = args.find((value) => value.startsWith('--covers='));
+
+  if (positional.length < 2) {
+    console.error(
+      'Usage: node scripts/dat-to-json.mjs <input.dat> <output.json> [--covers=<covers.json>]',
+    );
     process.exit(1);
   }
-  
-  const [inputFile, outputFile] = args;
+
+  const [inputFile, outputFile] = positional;
+  const coversFile = coversArg?.slice('--covers='.length);
   
   try {
     // Read DAT file
@@ -139,44 +173,48 @@ async function main() {
     // Parse DAT
     console.log('⏳ Parsing DAT format...');
     const games = parseDat(datContent);
-    
-    // Create lookup index by CRC
-    const gamesByCrc = {};
-    const gamesByMd5 = {};
-    const gamesBySha1 = {};
+
+    const covers = loadCovers(coversFile);
+    if (coversFile) {
+      console.log(`🖼️  Loaded ${covers.size} boxarts from: ${coversFile}`);
+    }
+
+    // Keep every ROM once. The application builds its lookup indexes in IndexedDB.
+    const filesByCrc = new Map();
     
     games.forEach(game => {
+      const cover = covers.get(toThumbnailName(game.name));
+
       game.roms.forEach(rom => {
         const metadata = {
           name: game.name,
           description: game.description,
-          romName: rom.name,
+          fileName: rom.name,
           size: rom.size,
           crc: rom.crc,
           md5: rom.md5,
           sha1: rom.sha1,
           region: game.region,
-          videoStandard: game.videoStandard
+          videoStandard: game.videoStandard,
+          cover
         };
 
-        if (rom.crc) gamesByCrc[rom.crc] = metadata;
-        if (rom.md5) gamesByMd5[rom.md5] = metadata;
-        if (rom.sha1) {
-          gamesBySha1[rom.sha1] = metadata;
-        }
+        filesByCrc.set(rom.crc, metadata);
       });
     });
+
+    const list = Array.from(filesByCrc.values());
+    const withCover = list.filter((entry) => entry.cover).length;
     
     const output = {
       meta: {
         source: path.basename(inputFile),
         totalGames: games.length,
-        totalRoms: Object.keys(gamesByCrc).length,
+        totalFiles: list.length,
+        totalCovers: withCover,
         generated: new Date().toISOString()
       },
-      gamesByCrc,
-      gamesByMd5,
-      gamesBySha1
+      list
     };
     
     // Write JSON
@@ -189,9 +227,8 @@ async function main() {
     
     console.log('\n✅ Conversion successful!');
     console.log(`   Games: ${games.length}`);
-    console.log(`   Checksums (CRC): ${Object.keys(gamesByCrc).length}`);
-    console.log(`   Checksums (MD5): ${Object.keys(gamesByMd5).length}`);
-    console.log(`   Checksums (SHA1): ${Object.keys(gamesBySha1).length}`);
+    console.log(`   Files: ${list.length}`);
+    console.log(`   Covers: ${withCover}`);
     console.log(`   File size: ${fileSizeKB} KB`);
     
   } catch (error) {
