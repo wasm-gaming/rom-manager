@@ -411,7 +411,8 @@ code {
 }
 
 .file-tree {
-  width: 300px;
+  flex: 0 0 380px;
+  width: 380px;
   border-right: 1px solid var(--border);
   background-color: var(--surface);
   display: flex;
@@ -486,6 +487,9 @@ code {
   list-style: none;
   flex: 1;
   overflow-y: auto;
+  /* Keep the room for the scrollbar so unfolding a folder does not reflow the
+     rows the moment the list grows past the pane. */
+  scrollbar-gutter: stable;
 }
 
 .file-tree-body.drop-target {
@@ -551,6 +555,37 @@ code {
 .tree-item.group > .tree-name {
   color: var(--game);
   font-weight: 500;
+}
+
+/* A grouped folder whose games are still being read: nothing to act on. */
+.tree-item.pending {
+  color: var(--text-dim);
+  cursor: default;
+}
+
+.tree-item.pending:hover {
+  background-color: transparent;
+}
+
+.tree-spinner {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: tree-spin 0.7s linear infinite;
+}
+
+@keyframes tree-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-spinner {
+    animation-duration: 2s;
+  }
 }
 
 .tree-status {

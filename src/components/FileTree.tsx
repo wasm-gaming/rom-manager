@@ -49,6 +49,8 @@ const ICONS: Record<VisibleRow['kind'], string> = {
   directory: '📁',
   file: '🎮',
   group: '📦',
+  // The spinner is drawn by the stylesheet, so the row leaves the slot empty.
+  pending: '',
 };
 
 const STATUS_TITLES = {
@@ -64,12 +66,15 @@ const STATUS_TITLES = {
  * reading fifteen files as one game is the point of grouping — so its releases
  * are read in the details pane, and the row itself acts on every file of the
  * game at once: selecting it selects them, and so do dragging and deleting.
+ *
+ * It also adds a `pending` row, which stands in for a grouped folder whose games
+ * are still being worked out. It holds no path, so nothing can be done to it.
  */
 interface VisibleRow {
   key: string;
   depth: number;
   label: string;
-  kind: 'directory' | 'file' | 'group';
+  kind: 'directory' | 'file' | 'group' | 'pending';
   /** Real filesystem path, for the rows that are a single file or folder. */
   path?: string;
   /** Files on disk the row acts on. A game row has one per release it holds. */
@@ -227,6 +232,21 @@ export function FileTree({
       const grouped = groupedRows?.get(path);
 
       if (!grouped) {
+        // Hashing a whole system takes a while. Painting its files meanwhile
+        // would show the very listing grouping is there to replace, and then
+        // swap it out under the pointer once the games are known.
+        if (isGrouped?.(path)) {
+          result.push({
+            key: `${path}/…`,
+            depth,
+            label: 'Reading games…',
+            kind: 'pending',
+            paths: [],
+            expandable: false,
+          });
+          return;
+        }
+
         for (const entry of children.get(path) || []) pushEntry(entry, depth);
         return;
       }
@@ -252,7 +272,7 @@ export function FileTree({
 
     walk(ROOT, 0);
     return result;
-  }, [children, expanded, groupedRows]);
+  }, [children, expanded, groupedRows, isGrouped]);
 
   useEffect(() => {
     onVisibleChange?.(rows.flatMap((row) => row.paths));
@@ -571,7 +591,7 @@ export function FileTree({
             ]
               .filter(Boolean)
               .join(' ')}
-            style={{ paddingLeft: `${0.5 + row.depth}rem` }}
+            style={{ paddingLeft: `${0.5 + row.depth * 0.6}rem` }}
             draggable={row.paths.length > 0}
             onClick={(event) => handleRowClick(event, row)}
             onDragStart={(event) => handleDragStart(event, row)}
@@ -594,7 +614,9 @@ export function FileTree({
             ) : (
               <span class="tree-caret" />
             )}
-            <span class="tree-icon">{ICONS[row.kind]}</span>
+            <span class={row.kind === 'pending' ? 'tree-icon tree-spinner' : 'tree-icon'}>
+              {ICONS[row.kind]}
+            </span>
             <span class="tree-name">{row.label}</span>
 
             {row.status && row.status !== 'complete' && (
