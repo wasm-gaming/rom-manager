@@ -4,13 +4,13 @@
       "system": "NES",
       "media": "cartridge",
       "path": "NES/dataset.json",
-      "crc32": "36274D1A"
+      "crc32": "AEA19D9C"
     },
     {
       "system": "SNES",
       "media": "cartridge",
       "path": "SNES/dataset.json",
-      "crc32": "4CC69718"
+      "crc32": "ACB1F09E"
     },
     {
       "system": "GAMEBOY",
@@ -22,43 +22,43 @@
       "system": "GBC",
       "media": "cartridge",
       "path": "GBC/dataset.json",
-      "crc32": "6D4C81D5"
+      "crc32": "9A3C3A80"
     },
     {
       "system": "GBA",
       "media": "cartridge",
       "path": "GBA/dataset.json",
-      "crc32": "FC4ED5C1"
+      "crc32": "4D8A22D3"
     },
     {
       "system": "N64",
       "media": "cartridge",
       "path": "N64/dataset.json",
-      "crc32": "AB0FB4C6"
+      "crc32": "76436704"
     },
     {
       "system": "PokemonMini",
       "media": "cartridge",
       "path": "PokemonMini/dataset.json",
-      "crc32": "548FEC74"
+      "crc32": "6139D741"
     },
     {
       "system": "SMS",
       "media": "cartridge",
       "path": "SMS/dataset.json",
-      "crc32": "0BE6A393"
+      "crc32": "CE1C7809"
     },
     {
       "system": "GameGear",
       "media": "cartridge",
       "path": "GameGear/dataset.json",
-      "crc32": "0E3612EB"
+      "crc32": "F09CCA52"
     },
     {
       "system": "MegaDrive",
       "media": "cartridge",
       "path": "MegaDrive/dataset.json",
-      "crc32": "96762824"
+      "crc32": "5A817734"
     },
     {
       "system": "MegaCD",
@@ -70,7 +70,7 @@
       "system": "S32X",
       "media": "cartridge",
       "path": "S32X/dataset.json",
-      "crc32": "CC2DC435"
+      "crc32": "89397F97"
     },
     {
       "system": "Saturn",
@@ -100,13 +100,13 @@
       "system": "NeoGeo-CD",
       "media": "disc",
       "path": "NeoGeo-CD/dataset.json",
-      "crc32": "771AEF57"
+      "crc32": "F458B526"
     },
     {
       "system": "Atari2600",
       "media": "cartridge",
       "path": "Atari2600/dataset.json",
-      "crc32": "09D2E913"
+      "crc32": "F64EDB89"
     },
     {
       "system": "ATARI5200",
@@ -124,7 +124,7 @@
       "system": "AtariLynx",
       "media": "cartridge",
       "path": "AtariLynx/dataset.json",
-      "crc32": "99E6D582"
+      "crc32": "9E5042AC"
     },
     {
       "system": "WonderSwan",
@@ -141,6 +141,6 @@
   ],
   "description": "ROM metadata datasets (auto-indexed on app startup)",
   "source": "Generated from Libretro database DAT files",
-  "generatedAt": "2026-07-30T12:24:59.636Z",
+  "generatedAt": "2026-07-30T14:07:29.504Z",
   "systemCount": 23
 }

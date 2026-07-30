@@ -4,9 +4,9 @@
     "totalGames": 4256,
     "totalFiles": 4256,
     "totalCovers": 3326,
-    "totalGameCovers": 48,
-    "totalGameCoverUrls": 52,
-    "generated": "2026-07-30T12:24:57.619Z"
+    "totalGameCovers": 44,
+    "totalGameCoverUrls": 44,
+    "generated": "2026-07-30T14:07:27.562Z"
   },
   "covers": {
     "3-jigen Kakutou Ballz": {
@@ -54,15 +54,6 @@
     "Mask": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mask%20(Japan).png"
     },
-    "Mega Man X": {
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mega%20Man%20X%20(World)%20(Rev%201)%20(Mega%20Man%20X%20Legacy%20Collection).png"
-    },
-    "Mega Man X2": {
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mega%20Man%20X2%20(World)%20(Mega%20Man%20X%20Legacy%20Collection).png"
-    },
-    "Mega Man X3": {
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mega%20Man%20X3%20(World)%20(Mega%20Man%20X%20Legacy%20Collection).png"
-    },
     "Mr. Do!": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mr.%20Do!%20(Japan).png"
     },
@@ -96,10 +87,6 @@
     "SpellCraft - Aspects of Valor": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/SpellCraft%20-%20Aspects%20of%20Valor%20(USA)%20(Proto).png"
     },
-    "Star Fox 2": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Star%20Fox%202%20(USA%2C%20Europe).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Star%20Fox%202%20(USA%2C%20Europe).png"
-    },
     "Starwing - Competition": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Starwing%20-%20Competition%20(Europe).png"
     },
@@ -128,16 +115,13 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Pinball%20-%20Behind%20the%20Mask%20(Japan).png"
     },
     "Super Puyo Puyo 2": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Puyo%20Puyo%202%20(USA%2C%20Europe)%20(Ja)%20(Switch%20Online).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Puyo%20Puyo%202%20(USA%2C%20Europe)%20(Ja)%20(Switch%20Online).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Puyo%20Puyo%202%20(USA%2C%20Europe)%20(Ja)%20(Switch%20Online).png"
     },
     "Super Star Fox Weekend": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Star%20Fox%20Weekend%20(USA).png"
     },
     "Supercooked!": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png"
     },
     "Superman": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Superman%20(USA)%20(Demo)%20(1992-05-25).png"

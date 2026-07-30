@@ -4,6 +4,7 @@ import { Tabs } from '../components/Tabs';
 import { FileTree } from '../components/FileTree';
 import { OrganizePanel } from '../components/OrganizePanel';
 import { PreferencesModal } from '../components/PreferencesModal';
+import { MediaDropModal, type DropTarget, type DroppedImage } from '../components/MediaDropModal';
 import { RomDetails } from '../components/RomDetails';
 import { storageService, StorageNode, StorageStat } from '../services/StorageService';
 import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
@@ -14,7 +15,8 @@ import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
 import { setThemeMode, themeModeSignal } from '../services/ThemeService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
-import { pickCover } from '../core/rom-covers';
+import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
+import { imageExtensionOf, regionOfScope } from '../core/rom-media';
 import type { Region } from '../core/rom-regions';
 import type { OrganizePlan } from '../core/rom-organize';
 import {
@@ -43,6 +45,41 @@ function systemFolderOf(path: string): string {
   return separator === -1 ? path : path.slice(0, separator);
 }
 
+/** The folder a file is in, `''` being the root of the opened folder. */
+function parentOf(path: string): string {
+  const separator = path.lastIndexOf('/');
+  return separator === -1 ? '' : path.slice(0, separator);
+}
+
+/**
+ * The regions of the release one of whose files is open.
+ *
+ * A release is what carries a region, so the box shown for one of its files is
+ * chosen among *its* regions and not among the game's: opening the Japanese dump
+ * of a game you also have in Europe should show the Japanese box.
+ */
+function regionsOfFile(game: WizardGame, path?: string): Region[] | undefined {
+  if (!path) return undefined;
+
+  return game.variants.find((variant) => variant.files.some((file) => file.path === path))?.regions;
+}
+
+/** What a drop is about to do, held while the user reads it and says so. */
+interface DropRequest {
+  files: File[];
+  target: DropTarget;
+  /** Where the images go, absent when the target is a plain folder. */
+  game?: { id: string; system: string };
+}
+
+/**
+ * True for a drop of files from outside the app. An internal drag carries paths
+ * instead, and moving a ROM onto the details pane means nothing.
+ */
+function isFileDrag(event: DragEvent): boolean {
+  return Array.from(event.dataTransfer?.types ?? []).includes('Files');
+}
+
 export function ROMExplorer(): JSX.Element {
   const [storageNodes, setStorageNodes] = useState<Map<string, StorageNode>>(new Map());
   const [records, setRecords] = useState<Map<string, RomRecord | null>>(new Map());
@@ -56,8 +93,20 @@ export function ROMExplorer(): JSX.Element {
   const [game, setGame] = useState<WizardGame | undefined>();
   /** One file of that game, opened from its details. */
   const [gameFile, setGameFile] = useState<string | undefined>();
+  /** The folder picked in the tree, which is where a dropped file would go. */
+  const [folder, setFolder] = useState<string | undefined>();
   /** The boxart on screen for that game, and the region it is the box of. */
   const [gameCover, setGameCover] = useState<{ url: string; region?: Region } | undefined>();
+  /** A drop waiting to be confirmed, and what is being written once it is. */
+  const [drop, setDrop] = useState<DropRequest | undefined>();
+  const [dropBusy, setDropBusy] = useState<string | undefined>();
+  const [dropError, setDropError] = useState<string | undefined>();
+  /** True while files are over the details pane, so it can say it takes them. */
+  const [dropping, setDropping] = useState(false);
+  /** Bumped when an image is written, so the pane picks the new boxart up. */
+  const [mediaVersion, setMediaVersion] = useState(0);
+  /** Bumped when a file is written, so the tree lists it without remounting. */
+  const [refreshToken, setRefreshToken] = useState(0);
   /** The organize preview, once one has been worked out and not yet dismissed. */
   const [organize, setOrganize] = useState<
     { system: string; plan: OrganizePlan; applied?: UndoRecord } | undefined
@@ -108,9 +157,13 @@ export function ROMExplorer(): JSX.Element {
   }, [activeNode]);
 
   /**
-   * The boxart of the game on screen, chosen by the region preference: the copy
-   * in `.meta` when there is one, the published image otherwise — and browsing
-   * is what puts a copy there.
+   * The boxart of the game on screen, chosen by the region preference over what
+   * the catalogue publishes *and* what is already in `.meta` — an image added by
+   * hand is the boxart of its region, so it takes part in the choice rather than
+   * only serving it. Browsing is what puts the published ones there.
+   *
+   * With one file of the game open it is that release's regions the preference
+   * chooses among, so the panel of a Japanese dump shows the Japanese box.
    */
   useEffect(() => {
     // The cover of the game left behind is about to be revoked, so it stops
@@ -125,28 +178,45 @@ export function ROMExplorer(): JSX.Element {
       if (url?.startsWith('blob:')) URL.revokeObjectURL(url);
     };
 
-    const cover = pickCover(game.covers, {
-      present: game.presentRegions,
-      order: regionOrder,
-    });
+    const show = async () => {
+      const system = systemOf(game.paths[0]);
+      const stored: StoredCovers | undefined = await CoverService.storedCovers(
+        activeNode,
+        system,
+        game.id,
+      ).catch(() => undefined);
 
-    CoverService.resolve(activeNode, systemOf(game.paths[0]), game.id, cover)
-      .then((resolved) => {
-        if (cancelled) {
-          revoke(resolved?.url);
-          return;
-        }
+      const cover = pickCover(game.covers, {
+        present: regionsOfFile(game, gameFile) ?? game.presentRegions,
+        order: regionOrder,
+        stored,
+      });
 
-        shown = resolved?.url;
-        setGameCover(resolved ? { url: resolved.url, region: cover?.region } : undefined);
-      })
-      .catch(() => setGameCover(undefined));
+      const resolved = await CoverService.resolve(activeNode, system, game.id, cover);
+
+      if (cancelled) {
+        revoke(resolved?.url);
+        return;
+      }
+
+      shown = resolved?.url;
+
+      // Which box it is only gets said when the image is that region's own: a
+      // world release's single scan is the box of the game, whichever region the
+      // order happened to pick it for.
+      const region =
+        cover && !isSharedCover(game.covers, cover) ? cover.region : undefined;
+
+      setGameCover(resolved ? { url: resolved.url, region } : undefined);
+    };
+
+    show().catch(() => setGameCover(undefined));
 
     return () => {
       cancelled = true;
       revoke(shown);
     };
-  }, [activeNode, game, regionOrder]);
+  }, [activeNode, game, gameFile, regionOrder, mediaVersion]);
 
   /**
    * Every boxart of a game already in the library is kept on disk, so its other
@@ -432,6 +502,113 @@ export function ROMExplorer(): JSX.Element {
     setGameFile(path);
   }, []);
 
+  const handleFolderChange = useCallback((path?: string) => setFolder(path), []);
+
+  /**
+   * Where a file dropped on the details pane would go: the game on screen takes
+   * images into its metadata and files into the folder its ROMs live in, and a
+   * folder picked in the tree takes anything as it is.
+   *
+   * Anything else — a plain ROM, several of them, nothing at all — is not
+   * somewhere a file can be put, and saying so is better than guessing.
+   */
+  const dropDestination = ():
+    | { target: DropTarget; game?: { id: string; system: string } }
+    | undefined => {
+    if (game) {
+      return {
+        target: { kind: 'game', title: game.title, folder: parentOf(game.paths[0]) },
+        game: { id: game.id, system: systemOf(game.paths[0]) },
+      };
+    }
+
+    return folder === undefined ? undefined : { target: { kind: 'folder', path: folder } };
+  };
+
+  const handlePaneDragOver = (event: DragEvent) => {
+    if (!isFileDrag(event)) return;
+
+    event.preventDefault();
+    if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+    setDropping(true);
+  };
+
+  const handlePaneDrop = (event: DragEvent) => {
+    if (!isFileDrag(event)) return;
+
+    event.preventDefault();
+    setDropping(false);
+
+    const files = Array.from(event.dataTransfer?.files ?? []);
+    if (files.length === 0 || !activeNode) return;
+
+    const destination = dropDestination();
+    if (!destination) {
+      storeService.setError(
+        'No hay acciones disponibles: elige un juego para añadirle imágenes, o una carpeta para copiar los ficheros dentro.',
+      );
+      return;
+    }
+
+    storeService.setError(undefined);
+    setDropError(undefined);
+    setDrop({ files, ...destination });
+  };
+
+  /**
+   * Writes what the drop said it would: images into the metadata of the game,
+   * under the name their kind and region give them, and everything else into the
+   * folder exactly as it is.
+   */
+  const handleDropConfirm = async (images: DroppedImage[], files: File[]) => {
+    if (!activeNode || !drop) return;
+
+    const { target } = drop;
+    const directory = target.kind === 'game' ? target.folder : target.path;
+
+    try {
+      setDropError(undefined);
+
+      for (const image of images) {
+        if (!drop.game) break;
+
+        setDropBusy(`Guardando ${image.file.name}...`);
+        await CoverService.save(
+          activeNode,
+          drop.game.system,
+          drop.game.id,
+          {
+            kind: image.kind,
+            region: regionOfScope(image.scope),
+            extension: imageExtensionOf(image.file.name),
+          },
+          new Uint8Array(await image.file.arrayBuffer()),
+        );
+      }
+
+      for (const file of files) {
+        setDropBusy(`Copiando ${file.name}...`);
+        const path = directory ? `${directory}/${file.name}` : file.name;
+        await activeNode.writeFile(path, new Uint8Array(await file.arrayBuffer()));
+      }
+
+      setDrop(undefined);
+      if (images.length > 0) setMediaVersion((version) => version + 1);
+
+      if (files.length > 0) {
+        // A ROM that has just landed is a file nothing has hashed, so the rows
+        // it belongs in have to be worked out again.
+        grouping.current.clear();
+        setGroupedRows(new Map());
+        setRefreshToken((token) => token + 1);
+      }
+    } catch (err) {
+      setDropError(err instanceof Error ? err.message : 'No se pudieron guardar los ficheros');
+    } finally {
+      setDropBusy(undefined);
+    }
+  };
+
   const handleSelectionChange = async (paths: string[]) => {
     setEditing(false);
     storeService.setSelection(paths);
@@ -591,6 +768,7 @@ export function ROMExplorer(): JSX.Element {
               selectedFiles={selection}
               onSelectionChange={handleSelectionChange}
               onGameChange={handleGameChange}
+              onFolderChange={handleFolderChange}
               onVisibleChange={handleVisibleChange}
               isInitialized={(path) => initialised.has(gameKey(path))}
               onRemoved={handleRemoved}
@@ -601,10 +779,21 @@ export function ROMExplorer(): JSX.Element {
               onToggleGrouping={handleToggleGrouping}
               onOrganize={handleOrganize}
               notice={notice ?? (organize ? undefined : organizeBusy)}
+              refreshToken={refreshToken}
             />
           )}
 
-          <div class="details-pane">
+          {/* The pane takes files from outside: an image for the game on screen,
+              or anything at all for the folder picked in the tree. */}
+          <div
+            class={`details-pane ${dropping ? 'drop-target' : ''}`}
+            onDragOver={handlePaneDragOver}
+            onDragLeave={(event) => {
+              const leaving = event.relatedTarget as Node | null;
+              if (!leaving || !event.currentTarget.contains(leaving)) setDropping(false);
+            }}
+            onDrop={handlePaneDrop}
+          >
             <RomDetails
               paths={gameFile ? [gameFile] : selection}
               game={gameFile ? undefined : game}
@@ -641,6 +830,23 @@ export function ROMExplorer(): JSX.Element {
         onRegionOrderChange={activeNode ? handleRegionOrderChange : undefined}
         onClose={() => setPreferences(false)}
       />
+
+      {/* Only while there is a drop to read: what it says depends entirely on
+          which files were dropped and where. */}
+      {drop && (
+        <MediaDropModal
+          files={drop.files}
+          target={drop.target}
+          busy={dropBusy}
+          error={dropError}
+          onConfirm={handleDropConfirm}
+          onCancel={() => {
+            if (dropBusy) return;
+            setDrop(undefined);
+            setDropError(undefined);
+          }}
+        />
+      )}
 
       {organize && (
         <OrganizePanel

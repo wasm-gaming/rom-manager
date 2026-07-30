@@ -4,11 +4,14 @@
     "totalGames": 42,
     "totalFiles": 42,
     "totalCovers": 39,
-    "totalGameCovers": 1,
-    "totalGameCoverUrls": 1,
-    "generated": "2026-07-30T12:24:57.997Z"
+    "totalGameCovers": 2,
+    "totalGameCoverUrls": 2,
+    "generated": "2026-07-30T14:07:27.936Z"
   },
   "covers": {
+    "Pokemon Pinball Mini": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Pinball%20Mini%20(USA)%20(GameCube%20Preview).png"
+    },
     "Pokemon Tetris": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Tetris%20(Europe)%20(En%2CJa%2CFr).png"
     }

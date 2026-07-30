@@ -4,19 +4,61 @@
     "totalGames": 145,
     "totalFiles": 111,
     "totalCovers": 98,
-    "totalGameCovers": 3,
-    "totalGameCoverUrls": 3,
-    "generated": "2026-07-30T12:24:58.773Z"
+    "totalGameCovers": 17,
+    "totalGameCoverUrls": 17,
+    "generated": "2026-07-30T14:07:28.691Z"
   },
   "covers": {
     "Fighter's History Dynamite ~ Karnov's Revenge": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Fighter's%20History%20Dynamite%20~%20Karnov's%20Revenge%20(Japan)%20(En%2CJa).png"
     },
+    "Fuuun Mokushiroku - Kakutou Sousei ~ Savage Reign": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Fuuun%20Mokushiroku%20-%20Kakutou%20Sousei%20~%20Savage%20Reign%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+    },
+    "Ghost Pilots": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ghost%20Pilots%20(Japan).png"
+    },
+    "King of Fighters '94, The": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'94%2C%20The%20(Japan)%20(En%2CJa).png"
+    },
+    "King of Fighters '96, The": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'96%2C%20The%20(Japan)%20(En%2CJa).png"
+    },
+    "King of Fighters '99, The ~ The King of Fighters '99 - Millennium Battle": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'99%2C%20The%20~%20The%20King%20of%20Fighters%20'99%20-%20Millennium%20Battle%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+    },
     "Last Hope": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Last%20Hope%20(World).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Last%20Hope%20(World).png"
+    },
+    "Metal Slug 2": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Metal%20Slug%202%20(Japan).png"
+    },
+    "Real Bout Garou Densetsu Special ~ Real Bout Fatal Fury Special": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20Special%20~%20Real%20Bout%20Fatal%20Fury%20Special%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+    },
+    "Real Bout Garou Densetsu ~ Real Bout Fatal Fury": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20~%20Real%20Bout%20Fatal%20Fury%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+    },
+    "Ryuuko no Ken 2 ~ Art of Fighting 2": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ryuuko%20no%20Ken%202%20~%20Art%20of%20Fighting%202%20(Japan)%20(En%2CJa%2CEs).png"
+    },
+    "Samurai Spirits - Amakusa Kourin ~ Samurai Shodown IV - Amakusa's Revenge": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Samurai%20Spirits%20-%20Amakusa%20Kourin%20~%20Samurai%20Shodown%20IV%20-%20Amakusa's%20Revenge%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+    },
+    "Samurai Spirits - Zankurou Musouken ~ Samurai Shodown III": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Samurai%20Spirits%20-%20Zankurou%20Musouken%20~%20Samurai%20Shodown%20III%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+    },
+    "Soccer Brawl": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Soccer%20Brawl%20(Japan).png"
+    },
+    "Sonic Wings 2 ~ Aero Fighters 2": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Sonic%20Wings%202%20~%20Aero%20Fighters%202%20(Japan)%20(En%2CJa).png"
     },
     "Top Hunter - Roddy _ Cathy": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Top%20Hunter%20-%20Roddy%20%26%20Cathy%20(Japan).png"
+    },
+    "Tsuukai Gangan Koushinkyoku ~ Aggressors of Dark Kombat": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Tsuukai%20Gangan%20Koushinkyoku%20~%20Aggressors%20of%20Dark%20Kombat%20(Japan)%20(En%2CJa).png"
     }
   },
   "list": [

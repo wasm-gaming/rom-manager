@@ -4,13 +4,25 @@
     "totalGames": 620,
     "totalFiles": 620,
     "totalCovers": 124,
-    "totalGameCovers": 1,
-    "totalGameCoverUrls": 1,
-    "generated": "2026-07-30T12:24:59.024Z"
+    "totalGameCovers": 5,
+    "totalGameCoverUrls": 5,
+    "generated": "2026-07-30T14:07:28.938Z"
   },
   "covers": {
     "Eye of the Beholder": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Eye%20of%20the%20Beholder%20(USA)%20(Unl).png"
+    },
+    "Lexis": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lexis%20(USA).png"
+    },
+    "Lode Runner": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lode%20Runner%20(USA)%20(Proto%201).png"
+    },
+    "Loopz": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Loopz%20(USA)%20(Proto)%20(1992-11-05).png"
+    },
+    "Zaku": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Zaku%20(USA)%20(Unl).png"
     }
   },
   "list": [

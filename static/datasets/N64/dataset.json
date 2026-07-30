@@ -4,11 +4,14 @@
     "totalGames": 2468,
     "totalFiles": 2461,
     "totalCovers": 1960,
-    "totalGameCovers": 17,
-    "totalGameCoverUrls": 17,
-    "generated": "2026-07-30T12:24:57.938Z"
+    "totalGameCovers": 18,
+    "totalGameCoverUrls": 18,
+    "generated": "2026-07-30T14:07:27.874Z"
   },
   "covers": {
+    "1080 Snowboarding": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_64/HEAD/Named_Boxarts/1080%20Snowboarding%20(USA)%20(En%2CJa)%20(LodgeNet).png"
+    },
     "40 Winks": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Nintendo_64/HEAD/Named_Boxarts/40%20Winks%20(Europe)%20(En%2CEs%2CIt)%20(Proto)%20(1999-10-07).png"
     },

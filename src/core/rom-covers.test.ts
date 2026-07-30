@@ -4,6 +4,7 @@ import {
   coverFileNameOf,
   coverKeyOf,
   coversOf,
+  isSharedCover,
   pickCover,
   storableCoversOf,
   storedCoverNamesOf,
@@ -61,12 +62,47 @@ describe('coversOf', () => {
     expect(coversOf(group).byRegion.US).toBe(`${BOXARTS}/Sonic%20(USA).png`);
   });
 
-  it('turns the one boxart of a world release into the boxart of the game', () => {
-    // It ships to all three regions, so three copies of it would be the same
-    // image stored three times.
+  it('gives every region a world release ships to its boxart', () => {
+    // It ships to all three, so all three have one — and the preference order
+    // has something to choose among, which is why it exists.
     const group = groupOf([game('Sonic (World)', 'AAAA1111', `${BOXARTS}/Sonic%20(World).png`)]);
 
-    expect(coversOf(group)).toEqual({ byRegion: {}, game: `${BOXARTS}/Sonic%20(World).png` });
+    expect(coversOf(group)).toEqual({
+      byRegion: {
+        EU: `${BOXARTS}/Sonic%20(World).png`,
+        US: `${BOXARTS}/Sonic%20(World).png`,
+        JP: `${BOXARTS}/Sonic%20(World).png`,
+      },
+    });
+  });
+
+  it('lets the box of a region beat the world release it ships alongside', () => {
+    // Sonic 2 on Mega Drive: the DAT lists only world releases, and the box
+    // published under the world name is the Japanese scan. A preference of EU
+    // asked for the European box, and there is one published.
+    const group = groupOf([
+      game('Sonic 2 (World)', 'AAAA1111', `${BOXARTS}/Sonic%202%20(World).png`),
+      game('Sonic 2 (Europe)', 'BBBB2222', `${BOXARTS}/Sonic%202%20(Europe).png`),
+    ]);
+
+    expect(coversOf(group).byRegion).toEqual({
+      EU: `${BOXARTS}/Sonic%202%20(Europe).png`,
+      US: `${BOXARTS}/Sonic%202%20(World).png`,
+      JP: `${BOXARTS}/Sonic%202%20(World).png`,
+    });
+  });
+
+  it('lets the box the dataset knows for a region beat a world release too', () => {
+    // The European box of a release this DAT does not list is still the
+    // European box; the world release's is only standing in for it.
+    const group = groupOf([game('Sonic 2 (World)', 'AAAA1111', `${BOXARTS}/Sonic%202%20(World).png`)]);
+    const covers = coversOf(group, { byRegion: { EU: `${BOXARTS}/Sonic%202%20(Europe).png` } });
+
+    expect(covers.byRegion).toEqual({
+      EU: `${BOXARTS}/Sonic%202%20(Europe).png`,
+      US: `${BOXARTS}/Sonic%202%20(World).png`,
+      JP: `${BOXARTS}/Sonic%202%20(World).png`,
+    });
   });
 
   it('keeps the regions apart when only some of them share a boxart', () => {
@@ -187,6 +223,82 @@ describe('pickCover', () => {
   it('has nothing to show for a game with no boxart at all', () => {
     expect(pickCover({ byRegion: {} })).toBeUndefined();
   });
+
+  it('prefers the copy on disk to the published image of the same region', () => {
+    const stored = { byRegion: { EU: 'Sonic.EU.case.png' } };
+
+    expect(pickCover(covers, { order: ['EU', 'US', 'JP'], stored })).toEqual({
+      url: 'eu.png',
+      file: 'Sonic.EU.case.png',
+      region: 'EU',
+    });
+  });
+
+  it('counts a boxart added by hand as the boxart of its region', () => {
+    // The catalogue has nothing for this game, so without the stored copy there
+    // would be no region to choose and nothing to show.
+    const stored = { byRegion: { JP: 'Sonic.JP.case.jpg' } };
+
+    expect(pickCover({ byRegion: {} }, { order: ['EU', 'US', 'JP'], stored })).toEqual({
+      file: 'Sonic.JP.case.jpg',
+      region: 'JP',
+    });
+  });
+
+  it('shows an image added for the whole game before any published one', () => {
+    // Someone put it there on purpose, and it serves every region — otherwise a
+    // game the catalogue already has three covers for would never show it.
+    const stored = { byRegion: {}, game: 'Sonic.case.png' };
+
+    expect(pickCover(covers, { order: ['EU', 'US', 'JP'], stored })).toEqual({
+      file: 'Sonic.case.png',
+    });
+  });
+
+  it('still lets the order pick a region whose own image was added by hand', () => {
+    const stored = { byRegion: { JP: 'Sonic.JP.case.png' }, game: 'Sonic.case.png' };
+
+    expect(pickCover(covers, { order: ['JP', 'EU', 'US'], stored })).toEqual({
+      url: 'jp.png',
+      file: 'Sonic.JP.case.png',
+      region: 'JP',
+    });
+  });
+
+  it('falls back to a boxart added by hand for the game as a whole', () => {
+    expect(pickCover({ byRegion: {} }, { stored: { byRegion: {}, game: 'Sonic.case.png' } })).toEqual(
+      { file: 'Sonic.case.png' },
+    );
+  });
+});
+
+describe('isSharedCover', () => {
+  const world = { byRegion: { EU: 'world.png', US: 'world.png', JP: 'world.png' } };
+
+  it('is the box of the game when every region has that same image', () => {
+    // One scan for a world release: naming a region for it would claim more
+    // than the catalogue knows.
+    expect(isSharedCover(world, { url: 'world.png', region: 'EU' })).toBe(true);
+  });
+
+  it('is the box of a region as soon as another region has a different one', () => {
+    const covers = { byRegion: { EU: 'eu.png', US: 'world.png', JP: 'world.png' } };
+
+    expect(isSharedCover(covers, { url: 'eu.png', region: 'EU' })).toBe(false);
+    expect(isSharedCover(covers, { url: 'world.png', region: 'JP' })).toBe(false);
+  });
+
+  it('is never shared for an image added by hand, whose region the user said', () => {
+    expect(isSharedCover(world, { url: 'world.png', file: 'Sonic.EU.case.png', region: 'EU' })).toBe(
+      false,
+    );
+  });
+
+  it('says nothing about a game with a boxart in one region only', () => {
+    expect(isSharedCover({ byRegion: { JP: 'jp.png' } }, { url: 'jp.png', region: 'JP' })).toBe(
+      false,
+    );
+  });
 });
 
 describe('coverKeyOf', () => {
@@ -246,6 +358,16 @@ describe('storedCoverNamesOf', () => {
   it('looks for the game boxart when the dataset offers no URL at all', () => {
     // A boxart the user dropped in `.meta` by hand is still worth showing.
     expect(storedCoverNamesOf('Sonic')).toEqual(['Sonic.case.png']);
+  });
+
+  it('reads a stored copy under its own name, whatever format it is in', () => {
+    const cover = { file: 'Sonic.US.case.webp', url: `${BOXARTS}/Sonic%20(USA).png`, region: 'US' as const };
+
+    expect(storedCoverNamesOf('Sonic', cover)).toEqual([
+      'Sonic.US.case.webp',
+      'Sonic.US.case.png',
+      'Sonic.case.png',
+    ]);
   });
 });
 

@@ -4,13 +4,17 @@
     "totalGames": 3359,
     "totalFiles": 3359,
     "totalCovers": 1380,
-    "totalGameCovers": 190,
-    "totalGameCoverUrls": 250,
-    "generated": "2026-07-30T12:24:58.215Z"
+    "totalGameCovers": 391,
+    "totalGameCoverUrls": 444,
+    "generated": "2026-07-30T14:07:28.144Z"
   },
   "covers": {
     "007 Shitou - The Duel": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/007%20Shitou%20-%20The%20Duel%20(Japan).png"
+    },
+    "688 Attack Sub": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/688%20Attack%20Sub%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/688%20Attack%20Sub%20(USA).png"
     },
     "Action 52": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Action%2052%20(USA)%20(Unl).png"
@@ -18,30 +22,76 @@
     "Addams Family Values": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Addams%20Family%20Values%20(USA)%20(En%2CFr%2CDe)%20(Proto).png"
     },
+    "Addams Family, The": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Addams%20Family%2C%20The%20(Europe).png"
+    },
     "Aero Blasters": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Aero%20Blasters%20(Japan).png"
     },
     "After Burner II": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/After%20Burner%20II%20(USA).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/After%20Burner%20II%20(Japan).png"
     },
     "Air Diver": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Air%20Diver%20(Japan).png"
     },
-    "Altered Beast": {
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Altered%20Beast%20(Japan%2C%20USA)%20(En)%20(Rev%20A).png"
+    "Alien Storm": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Alien%20Storm%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Alien%20Storm%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Alien%20Storm%20(Japan).png"
+    },
+    "Aquatic Games Starring James Pond and the Aquabats, The": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Aquatic%20Games%20Starring%20James%20Pond%20and%20the%20Aquabats%2C%20The%20(USA).png"
+    },
+    "Arcade Classics": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Arcade%20Classics%20(Europe).png"
+    },
+    "Arch Rivals - The Arcade Game": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Arch%20Rivals%20-%20The%20Arcade%20Game%20(Europe).png"
+    },
+    "Arnold Palmer Tournament Golf": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Arnold%20Palmer%20Tournament%20Golf%20(USA).png"
+    },
+    "Art Alive": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Art%20Alive%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Art%20Alive%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Art%20Alive%20(Japan).png"
     },
     "Awesome Possum": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Awesome%20Possum%20(Japan)%20(En).png"
     },
+    "Ayrton Senna's Super Monaco GP II": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ayrton%20Senna's%20Super%20Monaco%20GP%20II%20(Japan).png"
+    },
+    "B.O.B": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/B.O.B.%20(USA)%20(Beta).png"
+    },
+    "Ball Jacks": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ball%20Jacks%20(Japan).png"
+    },
+    "Barkley Shut Up and Jam!": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Barkley%20Shut%20Up%20and%20Jam!%20(Europe).png"
+    },
     "Batman": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Batman%20(Japan).png"
+    },
+    "Batman Forever": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Batman%20Forever%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Batman%20Forever%20(Japan).png"
+    },
+    "Batman Returns": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Batman%20Returns%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Batman%20Returns%20(Japan).png"
+    },
+    "Battletoads": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Battletoads%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Battletoads%20(Japan).png"
     },
     "Beast Wrestler": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Beast%20Wrestler%20(Japan)%20(Beta)%20(1991-09-13).png"
     },
     "Beggar Prince": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Beggar%20Prince%20(World)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Beggar%20Prince%20(World)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Beggar%20Prince%20(World)%20(Unl).png"
     },
     "Best of the Best - Championship Karate": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Best%20of%20the%20Best%20-%20Championship%20Karate%20(Europe).png"
@@ -49,20 +99,67 @@
     "Bible Adventures": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Bible%20Adventures%20(USA)%20(Unl).png"
     },
+    "Bill Walsh College Football": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Bill%20Walsh%20College%20Football%20(Europe).png"
+    },
+    "Bio Hazard Battle": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Bio%20Hazard%20Battle%20(USA).png"
+    },
+    "Blades of Vengeance": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Blades%20of%20Vengeance%20(Europe).png"
+    },
+    "Blockout": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Blockout%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Blockout%20(Japan).png"
+    },
+    "Bubsy II": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Bubsy%20II%20(Europe).png"
+    },
+    "Buck Rogers - Countdown to Doomsday": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Buck%20Rogers%20-%20Countdown%20to%20Doomsday%20(Europe).png"
+    },
+    "Bulls versus Blazers and the NBA Playoffs": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Bulls%20versus%20Blazers%20and%20the%20NBA%20Playoffs%20(USA).png"
+    },
     "Burning Force": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Burning%20Force%20(Japan).png"
     },
+    "California Games": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/California%20Games%20(USA).png"
+    },
     "Canon - The Legend of the New Gods": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Canon%20-%20The%20Legend%20of%20the%20New%20Gods%20(World)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Canon%20-%20The%20Legend%20of%20the%20New%20Gods%20(World)%20(Aftermarket)%20(Unl).png"
+    },
+    "Castle of Illusion Starring Mickey Mouse": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Castle%20of%20Illusion%20Starring%20Mickey%20Mouse%20(USA).png"
+    },
+    "Centurion - Defender of Rome": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Centurion%20-%20Defender%20of%20Rome%20(USA).png"
+    },
+    "Chakan": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Chakan%20(USA).png"
+    },
+    "Champions World Class Soccer": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Champions%20World%20Class%20Soccer%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Champions%20World%20Class%20Soccer%20(Japan).png"
     },
     "Chess": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Chess%20(Russia)%20(En)%20(Unl).png"
+    },
+    "Chiki Chiki Boys": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Chiki%20Chiki%20Boys%20(USA).png"
     },
     "Chou Touryuu Retsuden - Dino Land": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Chou%20Touryuu%20Retsuden%20-%20Dino%20Land%20(Japan).png"
     },
     "Chuck Rock II": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Chuck%20Rock%20II%20(Japan).png"
+    },
+    "Columns": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Columns%20(USA).png"
+    },
+    "Combat Cars": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Combat%20Cars%20(Europe).png"
     },
     "Cool Spot": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Cool%20Spot%20(Japan%2C%20Korea).png"
@@ -73,6 +170,9 @@
     "Crue Ball": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Crue%20Ball%20(Japan).png"
     },
+    "Crue Ball - Heavy Metal Pinball": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Crue%20Ball%20-%20Heavy%20Metal%20Pinball%20(USA).png"
+    },
     "Crying - Aseimei Sensou": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Crying%20-%20Aseimei%20Sensou%20(Japan).png"
     },
@@ -80,12 +180,16 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Curse%20(Japan).png"
     },
     "Cursed Knight, The": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Cursed%20Knight%2C%20The%20(World)%20(En%2CFr)%20(Aftermarket)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Cursed%20Knight%2C%20The%20(World)%20(En%2CFr)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Cursed%20Knight%2C%20The%20(World)%20(En%2CFr)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Cursed%20Knight%2C%20The%20(World)%20(En%2CFr)%20(Aftermarket)%20(Unl).png"
+    },
+    "CutThroat Island": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/CutThroat%20Island%20(USA).png"
     },
     "Cyber Police - ESWAT": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Cyber%20Police%20-%20ESWAT%20(Japan).png"
+    },
+    "Cyborg Justice": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Cyborg%20Justice%20(Europe).png"
     },
     "DJ Boy": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/DJ%20Boy%20(Japan).png"
@@ -94,22 +198,32 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dangerous%20Seed%20(Japan).png"
     },
     "Darius - Extra Version": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Darius%20-%20Extra%20Version%20(World)%20(Aftermarket)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Darius%20-%20Extra%20Version%20(World)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Darius%20-%20Extra%20Version%20(World)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Darius%20-%20Extra%20Version%20(World)%20(Aftermarket)%20(Unl).png"
     },
-    "Darius II": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Darius%20II%20(World)%20(Darius%20Cozmic%20Collection).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Darius%20II%20(World)%20(Darius%20Cozmic%20Collection).png"
+    "Dark Castle": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dark%20Castle%20(USA).png"
     },
     "David Robinson Basketball": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/David%20Robinson%20Basketball%20(Japan).png"
+    },
+    "David Robinson's Supreme Court": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/David%20Robinson's%20Supreme%20Court%20(Europe).png"
+    },
+    "Demolition Man": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Demolition%20Man%20(USA)%20(Beta).png"
+    },
+    "Desert Demolition Starring Road Runner and Wile E. Coyote": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Desert%20Demolition%20Starring%20Road%20Runner%20and%20Wile%20E.%20Coyote%20(Europe).png"
     },
     "Devil Crash MD": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Devil%20Crash%20MD%20(Japan).png"
     },
     "Dial Q o Mawase!": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dial%20Q%20o%20Mawase!%20(Japan)%20(Unl).png"
+    },
+    "Dick Tracy": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dick%20Tracy%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dick%20Tracy%20(Japan).png"
     },
     "Divine Sealing": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Divine%20Sealing%20(Japan)%20(Unl).png"
@@ -118,14 +232,41 @@
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Donald%20in%20Maui%20Mallard%20(Brazil).png"
     },
     "Double Dragon": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Double%20Dragon%20(USA%2C%20Europe)%20(Unl).png",
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Double%20Dragon%20(USA).png"
+    },
+    "Double Dragon 3 - The Arcade Game": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Double%20Dragon%203%20-%20The%20Arcade%20Game%20(Europe).png"
+    },
+    "Dragon's Fury": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dragon's%20Fury%20(Europe).png"
+    },
+    "Dragon's Revenge": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dragon's%20Revenge%20(USA).png"
+    },
+    "Dungeons _ Dragons - Warriors of the Eternal Sun": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dungeons%20_%20Dragons%20-%20Warriors%20of%20the%20Eternal%20Sun%20(USA).png"
+    },
+    "Dynamite Duke": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dynamite%20Duke%20(USA).png"
+    },
+    "Dynamite Headdy": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Dynamite%20Headdy%20(Europe).png"
     },
     "EA Hockey": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/EA%20Hockey%20(Japan).png"
     },
+    "Ecco the Dolphin": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ecco%20the%20Dolphin%20(USA).png"
+    },
     "Eliminate Down": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Eliminate%20Down%20(Japan).png"
+    },
+    "Evander Holyfield's 'Real Deal' Boxing": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Evander%20Holyfield's%20'Real%20Deal'%20Boxing%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Evander%20Holyfield's%20'Real%20Deal'%20Boxing%20(Japan).png"
+    },
+    "Ex-Mutants": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ex-Mutants%20(USA).png"
     },
     "Ex-Ranza": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ex-Ranza%20(Japan).png"
@@ -133,40 +274,115 @@
     "Exodus - Journey to the Promised Land": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Exodus%20-%20Journey%20to%20the%20Promised%20Land%20(USA)%20(Unl).png"
     },
+    "F-117 Night Storm": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/F-117%20Night%20Storm%20(USA).png"
+    },
+    "F-22 Interceptor - Advanced Tactical Fighter": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/F-22%20Interceptor%20-%20Advanced%20Tactical%20Fighter%20(USA)%20(F-205).png"
+    },
+    "FIFA International Soccer": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/FIFA%20International%20Soccer%20(USA).png"
+    },
+    "FIFA Soccer 95": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/FIFA%20Soccer%2095%20(USA).png"
+    },
+    "FIFA Soccer 96": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/FIFA%20Soccer%2096%20(USA).png"
+    },
+    "FIFA Soccer 97": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/FIFA%20Soccer%2097%20(USA).png"
+    },
+    "Faery Tale Adventure, The": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Faery%20Tale%20Adventure%2C%20The%20(USA).png"
+    },
+    "Fantasia": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Fantasia%20(Japan).png"
+    },
+    "Fantastic Dizzy": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Fantastic%20Dizzy%20(USA).png"
+    },
     "Fastest 1": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Fastest%201%20(Japan).png"
+    },
+    "Fatal Fury": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Fatal%20Fury%20(Europe).png"
+    },
+    "Fatal Labyrinth": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Fatal%20Labyrinth%20(USA).png"
+    },
+    "Fatal Rewind": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Fatal%20Rewind%20(Europe).png"
     },
     "Fatman": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Fatman%20(Japan).png"
     },
     "Final Zone": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Final%20Zone%20(Japan%2C%20USA).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Final%20Zone%20(Japan%2C%20USA).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Final%20Zone%20(Japan%2C%20USA).png"
+    },
+    "Flicky": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Flicky%20(USA).png"
+    },
+    "Foreman for Real": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Foreman%20for%20Real%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Foreman%20for%20Real%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Foreman%20for%20Real%20(Japan).png"
     },
     "Forgotten Worlds": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Forgotten%20Worlds%20(World).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Forgotten%20Worlds%20(World).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Forgotten%20Worlds%20(World).png"
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Forgotten%20Worlds%20(Europe).png"
+    },
+    "Frank Thomas Big Hurt Baseball": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Frank%20Thomas%20Big%20Hurt%20Baseball%20(Europe).png"
     },
     "Funny World _ Balloon Boy": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Funny%20World%20_%20Balloon%20Boy%20(USA)%20(Unl).png"
     },
-    "Galaxy Force II": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Galaxy%20Force%20II%20(World).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Galaxy%20Force%20II%20(World).png"
+    "Gaiares": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Gaiares%20(USA).png"
+    },
+    "Garfield - Caught in the Act": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Garfield%20-%20Caught%20in%20the%20Act%20(USA).png"
+    },
+    "General Chaos": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/General%20Chaos%20(Europe).png"
+    },
+    "Generations Lost": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Generations%20Lost%20(Europe).png"
     },
     "Ghostbusters": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ghostbusters%20(Japan).png"
     },
+    "Golden Axe": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Golden%20Axe%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Golden%20Axe%20(Japan).png"
+    },
+    "Golden Axe II": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Golden%20Axe%20II%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Golden%20Axe%20II%20(USA).png"
+    },
+    "Granada": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Granada%20(Japan).png"
+    },
     "Greatest Heavyweights": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Greatest%20Heavyweights%20(Japan).png"
+    },
+    "Greendog - The Beached Surfer Dude!": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Greendog%20-%20The%20Beached%20Surfer%20Dude!%20(USA).png"
     },
     "Gynoug": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Gynoug%20(Japan).png"
     },
+    "Hard Drivin'": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Hard%20Drivin'%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Hard%20Drivin'%20(USA).png"
+    },
+    "HardBall '94": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/HardBall%20'94%20(Europe).png"
+    },
     "HardBall!": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/HardBall!%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/HardBall!%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/HardBall!%20(USA%2C%20Europe)%20(Unl).png"
+    },
+    "Haunting Starring Polterguy": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Haunting%20Starring%20Polterguy%20(Europe).png"
     },
     "Heavy Unit - Mega Drive Special": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Heavy%20Unit%20-%20Mega%20Drive%20Special%20(Japan).png"
@@ -177,23 +393,67 @@
     "Hellfire": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Hellfire%20(Japan).png"
     },
+    "Herzog Zwei": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Herzog%20Zwei%20(Europe).png"
+    },
     "High Seas Havoc": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/High%20Seas%20Havoc%20(USA).png"
+    },
+    "Home Alone": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Home%20Alone%20(USA)%20(Beta).png"
     },
     "Hyper Dunk - The Playoff Edition": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Hyper%20Dunk%20-%20The%20Playoff%20Edition%20(Japan).png"
     },
+    "IMG International Tour Tennis": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/IMG%20International%20Tour%20Tennis%20(Europe).png"
+    },
+    "Immortal, The": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Immortal%2C%20The%20(USA).png"
+    },
+    "Incredible Crash Dummies, The": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Incredible%20Crash%20Dummies%2C%20The%20(USA)%20(Beta).png"
+    },
+    "Incredible Hulk, The": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Incredible%20Hulk%2C%20The%20(Europe).png"
+    },
     "Insector X": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Insector%20X%20(Japan).png"
     },
+    "International Superstar Soccer Deluxe": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/International%20Superstar%20Soccer%20Deluxe%20(Europe).png"
+    },
     "Ishido - The Way of Stones": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ishido%20-%20The%20Way%20of%20Stones%20(USA)%20(Unl).png"
+    },
+    "Izzy's Quest for the Olympic Rings": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Izzy's%20Quest%20for%20the%20Olympic%20Rings%20(USA).png"
+    },
+    "Jack Nicklaus' Power Challenge Golf": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Jack%20Nicklaus'%20Power%20Challenge%20Golf%20(USA).png"
+    },
+    "James 'Buster' Douglas Knockout Boxing": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/James%20'Buster'%20Douglas%20Knockout%20Boxing%20(USA).png"
+    },
+    "James Pond - Underwater Agent": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/James%20Pond%20-%20Underwater%20Agent%20(USA).png"
     },
     "Jashin Draxos": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Jashin%20Draxos%20(Japan%2C%20Korea).png"
     },
     "Jewel Master": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Jewel%20Master%20(USA).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Jewel%20Master%20(Japan).png"
+    },
+    "Joe Montana Football": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Joe%20Montana%20Football%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Joe%20Montana%20Football%20(Japan).png"
+    },
+    "John Madden Football '92": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/John%20Madden%20Football%20'92%20(Europe).png"
+    },
+    "John Madden Football '93": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/John%20Madden%20Football%20'93%20(Europe).png"
     },
     "John Madden Football - Pro Football": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/John%20Madden%20Football%20-%20Pro%20Football%20(Japan).png"
@@ -201,24 +461,61 @@
     "Joshua _ the Battle of Jericho": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Joshua%20_%20the%20Battle%20of%20Jericho%20(USA)%20(Unl).png"
     },
+    "Judge Dredd": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Judge%20Dredd%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Judge%20Dredd%20(Japan).png"
+    },
+    "Jungle Strike": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Jungle%20Strike%20(USA)%20(Beta).png"
+    },
     "Jurassic Park": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Jurassic%20Park%20(Japan).png"
+    },
+    "Jurassic Park - Rampage Edition": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Jurassic%20Park%20-%20Rampage%20Edition%20(Europe).png"
+    },
+    "Justice League Task Force": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Justice%20League%20Task%20Force%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Justice%20League%20Task%20Force%20(Japan).png"
     },
     "Juuouki": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Juuouki%20(Japan).png"
     },
+    "Kawasaki Superbike Challenge": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Kawasaki%20Superbike%20Challenge%20(USA)%20(Beta).png"
+    },
+    "Kid Chameleon": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Kid%20Chameleon%20(USA).png"
+    },
     "Killing Game Show, The": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Killing%20Game%20Show%2C%20The%20(Japan).png"
+    },
+    "King's Bounty - The Conqueror's Quest": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/King's%20Bounty%20-%20The%20Conqueror's%20Quest%20(Europe).png"
     },
     "Kiss Shot": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Kiss%20Shot%20(Japan)%20(SegaNet).png"
     },
+    "Klax": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Klax%20(Europe).png"
+    },
+    "Krusty's Super Fun House": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Krusty's%20Super%20Fun%20House%20(Europe).png"
+    },
     "Kyuukyoku Tiger": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Kyuukyoku%20Tiger%20(Japan).png"
     },
+    "LHX Attack Chopper": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/LHX%20Attack%20Chopper%20(USA).png"
+    },
+    "Last Battle": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Last%20Battle%20(Europe).png"
+    },
+    "Lawnmower Man, The": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Lawnmower%20Man%2C%20The%20(USA).png"
+    },
     "Legend of Wukong": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Legend%20of%20Wukong%20(World)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Legend%20of%20Wukong%20(World)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Legend%20of%20Wukong%20(World)%20(Unl).png"
     },
     "Lethal Enforcers": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Lethal%20Enforcers%20(Japan).png"
@@ -226,8 +523,43 @@
     "Link Dragon": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Link%20Dragon%20(Taiwan)%20(En)%20(Unl).png"
     },
+    "Lion King, The": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Lion%20King%2C%20The%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Lion%20King%2C%20The%20(Japan).png"
+    },
+    "Lost World, The - Jurassic Park": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Lost%20World%2C%20The%20-%20Jurassic%20Park%20(USA).png"
+    },
+    "Lotus II": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Lotus%20II%20(USA).png"
+    },
+    "Lotus Turbo Challenge": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Lotus%20Turbo%20Challenge%20(Europe).png"
+    },
+    "M-1 Abrams Battle Tank": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/M-1%20Abrams%20Battle%20Tank%20(USA).png"
+    },
+    "Madden NFL '94": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Madden%20NFL%20'94%20(Europe).png"
+    },
+    "Madden NFL 95": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Madden%20NFL%2095%20(Europe).png"
+    },
+    "Madden NFL 96": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Madden%20NFL%2096%20(Europe).png"
+    },
+    "Madden NFL 97": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Madden%20NFL%2097%20(Europe).png"
+    },
     "Marble Madness": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Marble%20Madness%20(Europe).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Marble%20Madness%20(Japan).png"
+    },
+    "Mario Andretti Racing": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mario%20Andretti%20Racing%20(Europe).png"
+    },
+    "Mario Lemieux Hockey": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mario%20Lemieux%20Hockey%20(USA).png"
     },
     "Master of Weapon": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Master%20of%20Weapon%20(Japan).png"
@@ -245,33 +577,96 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/MegaTrax%20(Japan).png"
     },
     "Mercs": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mercs%20(World).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mercs%20(USA).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mercs%20(World).png"
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mercs%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mercs%20(USA).png"
+    },
+    "Michael Jackson's Moonwalker": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Michael%20Jackson's%20Moonwalker%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Michael%20Jackson's%20Moonwalker%20(Japan)%20(En).png"
+    },
+    "Might and Magic - Gates to Another World": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Might%20and%20Magic%20-%20Gates%20to%20Another%20World%20(USA).png"
     },
     "Mike Ditka Power Football": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mike%20Ditka%20Power%20Football%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mike%20Ditka%20Power%20Football%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mike%20Ditka%20Power%20Football%20(USA%2C%20Europe)%20(Unl).png"
     },
     "Miniplanets": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20(World)%20(Rev%203)%20(Aftermarket)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20(World)%20(Rev%203)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20(World)%20(Rev%203)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20(World)%20(Rev%203)%20(Aftermarket)%20(Unl).png"
     },
     "Miniplanets Remix": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20Remix%20(World)%20(Aftermarket)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20Remix%20(World)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20Remix%20(World)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Miniplanets%20Remix%20(World)%20(Aftermarket)%20(Unl).png"
+    },
+    "Monster World IV": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Monster%20World%20IV%20(USA)%20(Genesis%20Mini).png"
+    },
+    "Mortal Kombat": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mortal%20Kombat%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mortal%20Kombat%20(Japan).png"
+    },
+    "Mortal Kombat II": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mortal%20Kombat%20II%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mortal%20Kombat%20II%20(Japan).png"
+    },
+    "Ms. Pac-Man": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ms.%20Pac-Man%20(Europe).png"
+    },
+    "Mutant League Football": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mutant%20League%20Football%20(Europe).png"
+    },
+    "Mutant League Hockey": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mutant%20League%20Hockey%20(Europe).png"
     },
     "Mystic Defender": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mystic%20Defender%20(USA%2C%20Europe).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mystic%20Defender%20(USA%2C%20Europe).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Mystic%20Defender%20(USA%2C%20Europe).png"
+    },
+    "NBA Action '95 Starring David Robinson": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Action%20'95%20Starring%20David%20Robinson%20(Europe).png"
+    },
+    "NBA All-Star Challenge": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20All-Star%20Challenge%20(Europe).png"
     },
     "NBA Jam": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Jam%20(Japan).png"
     },
+    "NBA Jam - Tournament Edition": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Jam%20-%20Tournament%20Edition%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Jam%20-%20Tournament%20Edition%20(Japan).png"
+    },
+    "NBA Live 95": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Live%2095%20(Europe).png"
+    },
+    "NBA Live 96": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Live%2096%20(Europe).png"
+    },
+    "NBA Live 97": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Live%2097%20(Europe).png"
+    },
+    "NBA Showdown '94": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NBA%20Showdown%20'94%20(Europe).png"
+    },
     "NFL Football '94": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NFL%20Football%20'94%20(Japan).png"
+    },
+    "NFL Quarterback Club": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NFL%20Quarterback%20Club%20(Europe).png"
+    },
+    "NFL Quarterback Club 96": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NFL%20Quarterback%20Club%2096%20(Europe).png"
+    },
+    "NHL '94": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NHL%20'94%20(Europe).png"
+    },
+    "NHL 95": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NHL%2095%20(Europe).png"
+    },
+    "NHL 96": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NHL%2096%20(Europe).png"
+    },
+    "NHL 97": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NHL%2097%20(Europe).png"
+    },
+    "NHLPA Hockey 93": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NHLPA%20Hockey%2093%20(USA).png"
     },
     "NewZealand Story, The": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/NewZealand%20Story%2C%20The%20(Japan).png"
@@ -283,21 +678,23 @@
     "Ninja Gaiden": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ninja%20Gaiden%20(Beta).png"
     },
+    "Normy's Beach Babe-O-Rama": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Normy's%20Beach%20Babe-O-Rama%20(USA).png"
+    },
     "Oh Mummy Genesis": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Oh%20Mummy%20Genesis%20(World)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Oh%20Mummy%20Genesis%20(World)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Oh%20Mummy%20Genesis%20(World)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Oh%20Mummy%20Genesis%20(World)%20(Unl).png"
     },
     "Old Towers": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Old%20Towers%20(World)%20(v1.2)%20(Aftermarket)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Old%20Towers%20(World)%20(v1.2)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Old%20Towers%20(World)%20(v1.2)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Old%20Towers%20(World)%20(v1.2)%20(Aftermarket)%20(Unl).png"
     },
     "Onslaught": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Onslaught%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Onslaught%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Onslaught%20(USA%2C%20Europe)%20(Unl).png"
+    },
+    "Ooze, The": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ooze%2C%20The%20(Japan).png"
     },
     "OutRun": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/OutRun%20(USA).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/OutRun%20(Japan).png"
     },
     "OutRun 2019": {
@@ -309,12 +706,30 @@
     "Outback Joey": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Outback%20Joey%20(USA).png"
     },
+    "PGA European Tour": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/PGA%20European%20Tour%20(USA).png"
+    },
+    "PGA Tour 96": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/PGA%20Tour%2096%20(USA).png"
+    },
     "PGA Tour Golf": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/PGA%20Tour%20Golf%20(USA%2C%20Europe)%20(PGA07).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/PGA%20Tour%20Golf%20(USA%2C%20Europe)%20(PGA07).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/PGA%20Tour%20Golf%20(USA%2C%20Europe)%20(PGA07).png"
+    },
+    "PGA Tour Golf III": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/PGA%20Tour%20Golf%20III%20(USA).png"
+    },
+    "Pac-Mania": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pac-Mania%20(Europe).png"
     },
     "Paperboy": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Paperboy%20(Europe).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Paperboy%20(Japan).png"
+    },
+    "Paperboy 2": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Paperboy%202%20(Europe).png"
+    },
+    "Pele II - World Tournament Soccer": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pele%20II%20-%20World%20Tournament%20Soccer%20(USA).png"
     },
     "Pepenga Pengo": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pepenga%20Pengo%20(Japan).png"
@@ -335,9 +750,13 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Phelios%20(Japan).png"
     },
     "Pier Solar and the Great Architects": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pier%20Solar%20and%20the%20Great%20Architects%20(World)%20(En%2CFr%2CEs)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pier%20Solar%20and%20the%20Great%20Architects%20(World)%20(En%2CFr%2CEs)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pier%20Solar%20and%20the%20Great%20Architects%20(World)%20(En%2CFr%2CEs)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pier%20Solar%20and%20the%20Great%20Architects%20(World)%20(En%2CFr%2CEs)%20(Unl).png"
+    },
+    "Pink Goes to Hollywood": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pink%20Goes%20to%20Hollywood%20(USA)%20(Beta).png"
+    },
+    "Pit-Fighter": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pit-Fighter%20(Japan).png"
     },
     "Populous": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Populous%20(Japan).png"
@@ -345,10 +764,17 @@
     "Power Athlete": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Power%20Athlete%20(Japan%2C%20Korea).png"
     },
+    "Power Monger": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Power%20Monger%20(USA).png"
+    },
+    "Predator 2": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Predator%202%20(Europe).png"
+    },
+    "Primal Rage": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Primal%20Rage%20(USA).png"
+    },
     "Puzzli": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Puzzli%20(World)%20(v1.1)%20(Aftermarket)%20(Homebrew).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Puzzli%20(World)%20(v1.1)%20(Aftermarket)%20(Homebrew).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Puzzli%20(World)%20(v1.1)%20(Aftermarket)%20(Homebrew).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Puzzli%20(World)%20(v1.1)%20(Aftermarket)%20(Homebrew).png"
     },
     "Pyramid Magic II": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pyramid%20Magic%20II%20(Japan)%20(SegaNet).png"
@@ -360,9 +786,10 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Pyramid%20Magic%20Special%20(Japan)%20(SegaNet).png"
     },
     "QuackShot Starring Donald Duck": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/QuackShot%20Starring%20Donald%20Duck%20(World).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/QuackShot%20Starring%20Donald%20Duck%20(World).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/QuackShot%20Starring%20Donald%20Duck%20(World).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/QuackShot%20Starring%20Donald%20Duck%20(World).png"
+    },
+    "R.B.I. Baseball '94": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/R.B.I.%20Baseball%20'94%20(Europe).png"
     },
     "R.B.I. Baseball 4": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/R.B.I.%20Baseball%204%20(Japan).png"
@@ -374,24 +801,44 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rainbow%20Islands%20Extra%20(Japan).png"
     },
     "Rambo III": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rambo%20III%20(World)%20(Rev%20A).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rambo%20III%20(World)%20(Rev%20A).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rambo%20III%20(Japan)%20(En).png"
     },
     "Rastan Saga II": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rastan%20Saga%20II%20(Japan).png"
     },
+    "Red Zone": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Red%20Zone%20(Europe).png"
+    },
+    "Revenge of Shinobi, The": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Revenge%20of%20Shinobi%2C%20The%20(USA).png"
+    },
+    "Revolution X": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Revolution%20X%20(Europe).png"
+    },
     "Riddle Wired": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Riddle%20Wired%20(Japan)%20(SegaNet).png"
+    },
+    "Rings of Power": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rings%20of%20Power%20(USA).png"
+    },
+    "Risky Woods": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Risky%20Woods%20(USA).png"
     },
     "Ristar - The Shooting Star": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ristar%20-%20The%20Shooting%20Star%20(Japan).png"
     },
-    "Road Rash II": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Road%20Rash%20II%20(USA%2C%20Europe)%20(RR205).png"
+    "Road Rash": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Road%20Rash%20(USA).png"
+    },
+    "Road Rash 3": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Road%20Rash%203%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Road%20Rash%203%20(USA)%20(Alpha).png"
     },
     "RoadBlasters": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/RoadBlasters%20(Japan).png"
+    },
+    "RoboCop 3": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/RoboCop%203%20(Europe).png"
     },
     "Robot Battler": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Robot%20Battler%20(Japan)%20(SegaNet).png"
@@ -402,6 +849,12 @@
     "Rolling Thunder 2": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rolling%20Thunder%202%20(Japan).png"
     },
+    "Rolo to the Rescue": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rolo%20to%20the%20Rescue%20(USA).png"
+    },
+    "Rugby World Cup 95": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Rugby%20World%20Cup%2095%20(USA).png"
+    },
     "Saint Sword": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Saint%20Sword%20(Japan).png"
     },
@@ -411,14 +864,33 @@
     "San Guo Zhi Lie Zhuan - Luan Shi Qun Ying": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/San%20Guo%20Zhi%20Lie%20Zhuan%20-%20Luan%20Shi%20Qun%20Ying%20(Hong%20Kong).png"
     },
+    "Shadow Dancer - The Secret of Shinobi": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Shadow%20Dancer%20-%20The%20Secret%20of%20Shinobi%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Shadow%20Dancer%20-%20The%20Secret%20of%20Shinobi%20(USA).png"
+    },
+    "Shadow of the Beast": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Shadow%20of%20the%20Beast%20(USA).png"
+    },
     "Shadow of the Beast - Mashou no Okite": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Shadow%20of%20the%20Beast%20-%20Mashou%20no%20Okite%20(Japan).png"
+    },
+    "Shadow of the Beast II": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Shadow%20of%20the%20Beast%20II%20(USA).png"
+    },
+    "Shaq-Fu": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Shaq-Fu%20(Europe).png"
     },
     "Shi no Meikyuu - Labyrinth of Death": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Shi%20no%20Meikyuu%20-%20Labyrinth%20of%20Death%20(Japan)%20(SegaNet).png"
     },
     "Side Pocket": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Side%20Pocket%20(Japan%2C%20Korea).png"
+    },
+    "Simpsons, The - Bart's Nightmare": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Simpsons%2C%20The%20-%20Bart's%20Nightmare%20(Europe).png"
+    },
+    "Skitchin'": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Skitchin'%20(USA).png"
     },
     "Slap Fight MD": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Slap%20Fight%20MD%20(Japan).png"
@@ -429,15 +901,15 @@
     "Snow Bros. - Nick _ Tom": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Snow%20Bros.%20-%20Nick%20_%20Tom%20(Japan).png"
     },
+    "Sonic _ Knuckles": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20(Europe).png"
+    },
     "Sonic _ Knuckles + Sonic The Hedgehog": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%20(USA%2C%20Europe).png",
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%20(USA).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%20(Japan%2C%20Korea).png"
     },
     "Sonic _ Knuckles + Sonic The Hedgehog 2": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%202%20(World).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%202%20(World).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%202%20(World).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%202%20(World).png"
     },
     "Sonic _ Knuckles + Sonic The Hedgehog 3": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%203%20(Europe).png",
@@ -445,15 +917,25 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20_%20Knuckles%20%2B%20Sonic%20The%20Hedgehog%203%20(Japan)%20(En).png"
     },
     "Sonic 3D Blast - Director's Cut": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%203D%20Blast%20-%20Director's%20Cut%20(World)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%203D%20Blast%20-%20Director's%20Cut%20(World)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%203D%20Blast%20-%20Director's%20Cut%20(World)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%203D%20Blast%20-%20Director's%20Cut%20(World)%20(Unl).png"
     },
     "Sonic Eraser": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20Eraser%20(Japan)%20(SegaNet).png"
     },
+    "Sonic The Hedgehog": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%20(Japan)%20(En)%20(Virtual%20Console).png"
+    },
+    "Sonic The Hedgehog 2": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%202%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%202%20(USA).png"
+    },
     "Sonic The Hedgehog 3": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%203%20(Japan%2C%20Korea).png"
+    },
+    "Space Harrier II": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Space%20Harrier%20II%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Space%20Harrier%20II%20(Japan)%20(Launch%20Cart).png"
     },
     "Space Invaders 90": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Space%20Invaders%2090%20(Japan).png"
@@ -463,6 +945,10 @@
     },
     "Speedball 2": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Speedball%202%20(Japan).png"
+    },
+    "Spider-Man": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Spider-Man%20(Europe)%20(Acclaim).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Spider-Man%20(USA)%20(Sega).png"
     },
     "Spiritual Warfare": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Spiritual%20Warfare%20(USA)%20(Unl).png"
@@ -474,24 +960,38 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Squirrel%20King%20(China)%20(Unl).png"
     },
     "Star Control": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Star%20Control%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Star%20Control%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Star%20Control%20(USA%2C%20Europe)%20(Unl).png"
     },
     "Star Odyssey": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Star%20Odyssey%20(World)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Star%20Odyssey%20(World)%20(Unl).png"
+    },
+    "Stargate": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Stargate%20(Europe)%20(Beta).png"
     },
     "Steel Talons": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Steel%20Talons%20(USA)%20(Beta).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Steel%20Talons%20(Japan%2C%20Korea).png"
     },
     "Stormlord": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Stormlord%20(Japan).png"
     },
+    "Street Smart": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Street%20Smart%20(USA).png"
+    },
+    "Streets of Rage": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Streets%20of%20Rage%20(USA).png"
+    },
+    "Strider": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Strider%20(USA).png"
+    },
     "Summer Challenge": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Summer%20Challenge%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Summer%20Challenge%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Summer%20Challenge%20(USA%2C%20Europe)%20(Unl).png"
     },
     "Super Airwolf": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Airwolf%20(Japan).png"
+    },
+    "Super Baseball 2020": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Baseball%202020%20(USA).png"
     },
     "Super Bubble Bobble": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Bubble%20Bobble%20(Taiwan)%20(En)%20(Unl).png"
@@ -500,9 +1000,14 @@
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Fantasy%20Zone%20(USA)%20(Ja)%20(Genesis%20Mini).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Fantasy%20Zone%20(Japan).png"
     },
+    "Super Hang-On": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Hang-On%20(Japan).png"
+    },
+    "Super Monaco GP": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Monaco%20GP%20(USA)%20(En%2CJa).png"
+    },
     "Super Off Road": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Off%20Road%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Off%20Road%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Off%20Road%20(USA%2C%20Europe)%20(Unl).png"
     },
     "Super Real Basketball": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Real%20Basketball%20(Japan%2C%20Korea).png"
@@ -510,31 +1015,55 @@
     "Super Shinobi, The": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Shinobi%2C%20The%20(Japan).png"
     },
+    "Super Smash T.V": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Smash%20T.V.%20(Europe).png"
+    },
     "Super Street Fighter II - The New Challengers": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Street%20Fighter%20II%20-%20The%20New%20Challengers%20(USA).png"
+    },
+    "Super Thunder Blade": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Thunder%20Blade%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Thunder%20Blade%20(Japan)%20(Launch%20Cart).png"
     },
     "Super Volley Ball": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Super%20Volley%20Ball%20(USA).png"
     },
     "Sword of Sodan": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sword%20of%20Sodan%20(USA).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sword%20of%20Sodan%20(Japan).png"
     },
+    "Sword of Vermilion": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Sword%20of%20Vermilion%20(USA).png"
+    },
+    "Syndicate": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Syndicate%20(Europe).png"
+    },
+    "T2 - Terminator 2 - Judgment Day": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/T2%20-%20Terminator%202%20-%20Judgment%20Day%20(USA)%20(Beta).png"
+    },
     "T2 - The Arcade Game": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/T2%20-%20The%20Arcade%20Game%20(Europe).png",
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/T2%20-%20The%20Arcade%20Game%20(Japan).png"
     },
     "TNN Bass Tournament of Champions": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/TNN%20Bass%20Tournament%20of%20Champions%20(USA).png"
     },
     "Tanglewood": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tanglewood%20(World)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tanglewood%20(USA)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tanglewood%20(World)%20(Unl).png"
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tanglewood%20(Europe)%20(Unl).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tanglewood%20(USA)%20(Unl).png"
     },
     "Tanzer": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tanzer.png"
     },
     "Task Force Harrier EX": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Task%20Force%20Harrier%20EX%20(Japan).png"
+    },
+    "Taz-Mania": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Taz-Mania%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Taz-Mania%20(Japan).png"
+    },
+    "Team USA Basketball": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Team%20USA%20Basketball%20(USA).png"
     },
     "Tecmo Super Bowl": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tecmo%20Super%20Bowl%20(Japan).png"
@@ -552,22 +1081,31 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Teddy%20Boy%20Blues%20(Japan)%20(SegaNet).png"
     },
     "Test Drive II - The Duel": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Test%20Drive%20II%20-%20The%20Duel%20(USA%2C%20Europe)%20(Unl).png",
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Test%20Drive%20II%20-%20The%20Duel%20(USA).png"
+    },
+    "Theme Park": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Theme%20Park%20(Europe).png"
+    },
+    "Thunder Force II": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Thunder%20Force%20II%20(Europe).png"
     },
     "Thunder Force II MD": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Thunder%20Force%20II%20MD%20(Japan).png"
     },
+    "Thunder Force III": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Thunder%20Force%20III%20(USA).png"
+    },
     "Thunder Paw": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Thunder%20Paw%20(World)%20(Aftermarket)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Thunder%20Paw%20(World)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Thunder%20Paw%20(World)%20(Aftermarket)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Thunder%20Paw%20(World)%20(Aftermarket)%20(Unl).png"
     },
     "Time Dominator 1st": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Time%20Dominator%201st%20(Japan%2C%20Korea).png"
     },
     "Tinhead": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Tinhead%20(USA)%20(Spectrum%20HoloByte)%20(October%2C%201995).png"
+    },
+    "Toki - Going Ape Spit": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Toki%20-%20Going%20Ape%20Spit%20(USA).png"
     },
     "Top Pro Golf": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Top%20Pro%20Golf%20(Japan).png"
@@ -581,13 +1119,21 @@
     "Truco '96": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Truco%20'96%20(Argentina)%20(Unl).png"
     },
+    "True Lies": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/True%20Lies%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/True%20Lies%20(Japan).png"
+    },
+    "Truxton": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Truxton%20(Europe).png"
+    },
+    "Turbo OutRun": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Turbo%20OutRun%20(Japan).png"
+    },
     "Turrican": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Turrican%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Turrican%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Turrican%20(USA%2C%20Europe)%20(Unl).png"
     },
     "Twin Hawk": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Twin%20Hawk%20(Japan%2C%20Europe).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Twin%20Hawk%20(Japan%2C%20Europe).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Twin%20Hawk%20(Japan%2C%20Europe).png"
     },
     "Uchuu Senkan Gomora": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Uchuu%20Senkan%20Gomora%20(Japan).png"
@@ -597,27 +1143,54 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Ultracore%20(Japan)%20(En).png"
     },
     "Universal Soldier": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Universal%20Soldier%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Universal%20Soldier%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Universal%20Soldier%20(USA%2C%20Europe)%20(Unl).png"
+    },
+    "Urban Strike": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Urban%20Strike%20(USA).png"
     },
     "V-V": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/V-V%20(Japan).png"
     },
+    "VR Troopers": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/VR%20Troopers%20(USA).png"
+    },
     "Vampire Killer": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Vampire%20Killer%20(Japan).png"
+    },
+    "Vectorman": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Vectorman%20(Europe).png"
     },
     "Virtua Racing": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Virtua%20Racing%20(Japan).png"
     },
+    "Virtual Bart": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Virtual%20Bart%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Virtual%20Bart%20(Japan).png"
+    },
+    "Virtual Pinball": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Virtual%20Pinball%20(USA).png"
+    },
     "Volfied": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Volfied%20(Japan).png"
+    },
+    "WWF Royal Rumble": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/WWF%20Royal%20Rumble%20(USA).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/WWF%20Royal%20Rumble%20(Japan).png"
+    },
+    "WWF Super WrestleMania": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/WWF%20Super%20WrestleMania%20(Europe).png"
+    },
+    "WWF WrestleMania - The Arcade Game": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/WWF%20WrestleMania%20-%20The%20Arcade%20Game%20(Europe).png"
     },
     "Wani Wani World": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Wani%20Wani%20World%20(Japan).png"
     },
+    "Warlock": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Warlock%20(USA)%20(Beta).png"
+    },
     "WarpSpeed": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/WarpSpeed%20(USA%2C%20Europe)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/WarpSpeed%20(USA%2C%20Europe)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/WarpSpeed%20(USA%2C%20Europe)%20(Unl).png"
     },
     "Whac-a-Critter": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Whac-a-Critter%20(USA)%20(Unl).png"
@@ -625,16 +1198,39 @@
     "Wimbledon Championship Tennis": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Wimbledon%20Championship%20Tennis%20(Japan).png"
     },
+    "Wolverine - Adamantium Rage": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Wolverine%20-%20Adamantium%20Rage%20(Europe).png"
+    },
+    "Wonder Boy III - Monster Lair": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Wonder%20Boy%20III%20-%20Monster%20Lair%20(Japan).png"
+    },
+    "Wonder Boy in Monster World": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Wonder%20Boy%20in%20Monster%20World%20(USA).png"
+    },
+    "World Cup USA 94": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/World%20Cup%20USA%2094%20(Europe).png"
+    },
+    "Wrestle War": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Wrestle%20War%20(Japan)%20(Beta).png"
+    },
     "Wrestleball": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Wrestleball%20(Japan).png"
+    },
+    "X-Men 2 - Clone Wars": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/X-Men%202%20-%20Clone%20Wars%20(Europe).png"
     },
     "XDR - X-Dazedly-Ray": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/XDR%20-%20X-Dazedly-Ray%20(Japan).png"
     },
     "Xeno Crisis": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Xeno%20Crisis%20(World)%20(En%2CJa%2CFr%2CDe%2CEs%2CIt%2CNl%2CPt)%20(Unl).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Xeno%20Crisis%20(World)%20(En%2CJa%2CFr%2CDe%2CEs%2CIt%2CNl%2CPt)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Xeno%20Crisis%20(World)%20(En%2CJa%2CFr%2CDe%2CEs%2CIt%2CNl%2CPt)%20(Unl).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Xeno%20Crisis.png"
+    },
+    "Zero Tolerance": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Zero%20Tolerance%20(Europe).png"
+    },
+    "Zoom!": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Zoom!%20(Europe).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Zoom!%20(Japan).png"
     },
     "Zou! Zou! Zou! Rescue Daisakusen": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega_Drive_-_Genesis/HEAD/Named_Boxarts/Zou!%20Zou!%20Zou!%20Rescue%20Daisakusen%20(Japan).png"

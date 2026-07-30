@@ -4,9 +4,9 @@
     "totalGames": 3670,
     "totalFiles": 3670,
     "totalCovers": 3090,
-    "totalGameCovers": 22,
-    "totalGameCoverUrls": 23,
-    "generated": "2026-07-30T12:24:57.865Z"
+    "totalGameCovers": 32,
+    "totalGameCoverUrls": 32,
+    "generated": "2026-07-30T14:07:27.801Z"
   },
   "covers": {
     "Action Replay": {
@@ -21,9 +21,8 @@
     "Aero the Acro-Bat - Rascal Rival Revenge": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Aero%20the%20Acro-Bat%20-%20Rascal%20Rival%20Revenge%20(USA).png"
     },
-    "Broken Circle": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Broken%20Circle%20(World)%20(En%2CIt)%20(Aftermarket)%20(Unl).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Broken%20Circle%20(World)%20(En%2CIt)%20(Aftermarket)%20(Unl).png"
+    "Caesars Palace Advance - Millennium Gold Edition": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Caesars%20Palace%20Advance%20-%20Millennium%20Gold%20Edition%20(USA)%20(Beta).png"
     },
     "Celeste Classic": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Celeste%20Classic.png"
@@ -33,6 +32,9 @@
     },
     "Commandos 2": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Commandos%202%20(Japan)%20(Proto)%20(2002-11-28).png"
+    },
+    "Cruis'n Velocity": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Cruis'n%20Velocity%20(USA)%20(Beta).png"
     },
     "Diddy Kong Pilot": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Diddy%20Kong%20Pilot%20(Unknown)%20(Proto)%20(2001).png"
@@ -47,13 +49,34 @@
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/GameShark%20GBA%20(USA)%20(Unl).png"
     },
     "Jonny Moseley Mad Trix": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Jonny%20Moseley%20Mad%20Trix%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs%2CIt).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Jonny%20Moseley%20Mad%20Trix%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs%2CIt).png"
+    },
+    "Mario vs. Donkey Kong": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Mario%20vs.%20Donkey%20Kong%20(USA)%20(Demo)%20(Kiosk%2C%20GameCube).png"
     },
     "Overstorm": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Overstorm%20(Unknown)%20(Proto).png"
     },
     "Pokemon - Doel Deoxys Distribution": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Pokemon%20-%20Doel%20Deoxys%20Distribution%20(Netherlands)%20(Kiosk).png"
+    },
+    "Pokemon - FireRed Version": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Pokemon%20-%20FireRed%20Version%20(USA).png"
+    },
+    "Pokemon - LeafGreen Version": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Pokemon%20-%20LeafGreen%20Version%20(USA).png"
+    },
+    "Pokemon - Ruby Version": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Pokemon%20-%20Ruby%20Version%20(USA).png"
+    },
+    "Pokemon - Sapphire Version": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Pokemon%20-%20Sapphire%20Version%20(USA).png"
+    },
+    "Pokemon Mystery Dungeon - Red Rescue Team": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Pokemon%20Mystery%20Dungeon%20-%20Red%20Rescue%20Team%20(USA)%20(Demo)%20(Kiosk).png"
+    },
+    "Prehistorik Man": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Prehistorik%20Man%20(USA)%20(En%2CFr%2CDe%2CEs%2CIt%2CNl)%20(Beta).png"
     },
     "Pro Action Replay": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Pro%20Action%20Replay%20(Japan)%20(Unl).png"
@@ -64,8 +87,14 @@
     "SpongeBob SquarePants and Friends Unite!": {
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/SpongeBob%20SquarePants%20and%20Friends%20Unite!%20(Europe)%20(En%2CFr%2CDe%2CEs%2CIt).png"
     },
+    "Super Mario Advance": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Super%20Mario%20Advance%20(USA)%20(Demo)%20(Kiosk).png"
+    },
     "Travis Pastrana's Pro MotoX": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Travis%20Pastrana's%20Pro%20MotoX%20(USA%2C%20Europe)%20(Proto)%20(2002-12-12).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/Travis%20Pastrana's%20Pro%20MotoX%20(USA%2C%20Europe)%20(Proto)%20(2002-12-12).png"
+    },
+    "WarioWare - Twisted!": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/WarioWare%20-%20Twisted!%20(USA).png"
     },
     "X-Terminator Advance": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Advance/HEAD/Named_Boxarts/X-Terminator%20Advance%20(Japan)%20(Unl).png"

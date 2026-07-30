@@ -24,9 +24,10 @@ interface RomDetailsProps {
   game?: WizardGame;
   /**
    * Boxart of that game, already resolved to something an `<img>` accepts, and
-   * the region it is the box of.
+   * the region it is the box of. It is also what a file of the game opened on
+   * its own shows, chosen there among the regions of *its* release.
    */
-  gameCover?: { url: string; region?: Region };
+  gameCover?: CoverShown;
   records: Map<string, RomRecord | null>;
   stats: Map<string, StorageStat | null>;
   /** Resolved `<img src>` for the covers of initialised ROMs. */
@@ -120,15 +121,44 @@ function ChecksumRow({
   );
 }
 
+/** The boxart on screen, and which box it is. */
+interface CoverShown {
+  url: string;
+  /** Absent when the image stands for the whole game rather than for a region. */
+  region?: Region;
+}
+
+/**
+ * The boxart and what it is the box of.
+ *
+ * Worth saying with six possible preference orders: the image alone does not
+ * tell you which region's box you are looking at, and for a release that ships
+ * to several the answer is the only visible effect of the preference.
+ */
+function CoverFigure({ cover, alt }: { cover?: CoverShown; alt: string }): JSX.Element {
+  if (!cover) return <div class="rom-info-cover placeholder">No cover</div>;
+
+  return (
+    <figure class="rom-info-cover-figure">
+      <img class="rom-info-cover" src={cover.url} alt={`${alt} boxart`} />
+      <figcaption class="rom-info-cover-region">
+        {cover.region ? `${cover.region} box` : 'Box of the game'}
+      </figcaption>
+    </figure>
+  );
+}
+
 /** A ROM the user has never edited: a plain file, described as one. */
 function RomFileView({
   path,
   stat,
+  cover,
   loadContent,
   onEdit,
 }: {
   path: string;
   stat: StorageStat | null | undefined;
+  cover?: CoverShown;
   loadContent: (path: string) => Promise<ArrayBuffer>;
   onEdit: () => void;
 }): JSX.Element {
@@ -136,15 +166,31 @@ function RomFileView({
 
   return (
     <div class="rom-file-view">
-      <div class="rom-file-header">
-        <div>
-          <h3>{fileNameOf(path)}</h3>
-          <p class="metadata-subtitle">Not in the library yet</p>
+      {/* The boxart of the game this file is a release of, chosen among the
+          regions *this* release ships to. A file with no game behind it — flat
+          mode, an unrecognised dump — simply has none, and gets no hero. */}
+      {cover ? (
+        <div class="rom-info-hero">
+          <CoverFigure cover={cover} alt={fileNameOf(path)} />
+          <div class="rom-info-heading">
+            <h3>{fileNameOf(path)}</h3>
+            <p class="metadata-subtitle">Not in the library yet</p>
+            <button class="btn-primary" onClick={onEdit}>
+              ✎ Add metadata
+            </button>
+          </div>
         </div>
-        <button class="btn-primary" onClick={onEdit}>
-          ✎ Add metadata
-        </button>
-      </div>
+      ) : (
+        <div class="rom-file-header">
+          <div>
+            <h3>{fileNameOf(path)}</h3>
+            <p class="metadata-subtitle">Not in the library yet</p>
+          </div>
+          <button class="btn-primary" onClick={onEdit}>
+            ✎ Add metadata
+          </button>
+        </div>
+      )}
 
       <div class="facts">
         <div class="fact">
@@ -186,17 +232,13 @@ function RomInfoView({
   path: string;
   record: RomRecord;
   stat: StorageStat | null | undefined;
-  cover?: string;
+  cover?: CoverShown;
   onEdit: () => void;
 }): JSX.Element {
   return (
     <div class="rom-info">
       <div class="rom-info-hero">
-        {cover ? (
-          <img class="rom-info-cover" src={cover} alt={`${record.title || path} boxart`} />
-        ) : (
-          <div class="rom-info-cover placeholder">No cover</div>
-        )}
+        <CoverFigure cover={cover} alt={record.title || path} />
 
         <div class="rom-info-heading">
           <h2>{record.title || gameNameOf(path)}</h2>
@@ -290,8 +332,14 @@ function VariantRow({
         <span class="variant-file-size">{formatSize(stats.get(file.path)?.size ?? 0)}</span>
       </li>
     ) : (
+      // A file that is not here has no size and no path to be recognised by, so
+      // what it leaves is the checksum: it is how you tell whether a dump found
+      // elsewhere is this one.
       <li key={`missing:${index}`} class="variant-file missing">
         <span>{file.label}</span>
+        <code class="variant-file-crc" title="CRC32">
+          {file.crc}
+        </code>
         <span class="variant-file-size">missing</span>
       </li>
     );
@@ -338,29 +386,17 @@ function GameView({
   onSelectFile,
 }: {
   game: WizardGame;
-  cover?: { url: string; region?: Region };
+  cover?: CoverShown;
   stats: Map<string, StorageStat | null>;
   onSelectFile?: (path: string) => void;
 }): JSX.Element {
   const present = game.variants.filter(hasFiles);
   const missing = game.variants.filter((variant) => !hasFiles(variant));
-  const size = game.paths.reduce((total, path) => total + (stats.get(path)?.size ?? 0), 0);
 
   return (
     <div class="rom-info game-info">
       <div class="rom-info-hero">
-        {cover ? (
-          // Which box it is worth saying: a game has one per region, and the
-          // preference order is what chose this one.
-          <figure class="rom-info-cover-figure">
-            <img class="rom-info-cover" src={cover.url} alt={`${game.title} boxart`} />
-            <figcaption class="rom-info-cover-region">
-              {cover.region ? `${cover.region} box` : 'Box of the game'}
-            </figcaption>
-          </figure>
-        ) : (
-          <div class="rom-info-cover placeholder">No cover</div>
-        )}
+        <CoverFigure cover={cover} alt={game.title} />
 
         <div class="rom-info-heading">
           <h2>{game.title}</h2>
@@ -379,27 +415,9 @@ function GameView({
         </div>
       </div>
 
-      <div class="facts">
-        <div class="fact">
-          <span class="fact-label">Name on disk</span>
-          <span class="fact-value">{game.id}</span>
-        </div>
-        <div class="fact">
-          <span class="fact-label">Releases</span>
-          <span class="fact-value">
-            {present.length} of {game.variants.length}
-          </span>
-        </div>
-        <div class="fact">
-          <span class="fact-label">Files here</span>
-          <span class="fact-value">{game.paths.length}</span>
-        </div>
-        <div class="fact">
-          <span class="fact-label">Size</span>
-          <span class="fact-value">{formatSize(size)}</span>
-        </div>
-      </div>
-
+      {/* No facts table: the name on disk, how many releases there are, how many
+          files are here and how much they weigh are all already read below, one
+          release at a time and with more to say. */}
       <h4 class="variants-title">Versions</h4>
       <ul class="variants">
         {present.map((variant) => (
@@ -651,6 +669,12 @@ export function RomDetails({
   const stat = stats.get(path);
   const size = stat?.size ?? 0;
 
+  // The boxart of the game this file is a release of, already chosen among the
+  // regions that release ships to. A file the record has a cover of its own for
+  // keeps it: it was picked by hand, for this file.
+  const own = covers.get(path);
+  const cover: CoverShown | undefined = own ? { url: own } : gameCover;
+
   if (editing) {
     return (
       <MetadataEditor
@@ -670,7 +694,13 @@ export function RomDetails({
     return (
       <>
         {back}
-        <RomFileView path={path} stat={stat} loadContent={loadContent} onEdit={onEdit} />
+        <RomFileView
+          path={path}
+          stat={stat}
+          cover={cover}
+          loadContent={loadContent}
+          onEdit={onEdit}
+        />
       </>
     );
   }
@@ -678,13 +708,7 @@ export function RomDetails({
   return (
     <>
       {back}
-      <RomInfoView
-        path={path}
-        record={record}
-        stat={stat}
-        cover={covers.get(path)}
-        onEdit={onEdit}
-      />
+      <RomInfoView path={path} record={record} stat={stat} cover={cover} onEdit={onEdit} />
     </>
   );
 }

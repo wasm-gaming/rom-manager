@@ -8,10 +8,11 @@
  *
  * Boxarts are published under the full DAT name, tags included, so they are
  * matched entry by entry. What that misses is a game whose published boxart
- * belongs to a release this DAT does not list — a different revision, or a
- * region that never got dumped. Those are joined by base title into a second,
- * game-level layer, which the application falls back to when a release has no
- * boxart of its own.
+ * belongs to a release this DAT does not list — a different revision, a region
+ * that never got dumped, or the European box of a game the DAT only lists as
+ * `(World)`. Those are joined by base title into a second, game-level layer,
+ * which the application falls back to when a release has no boxart *of that
+ * region* of its own.
  *
  * That second layer is kept **by region**, because a game has one boxart per
  * region and borrowing the European box for a Japanese release would be as
@@ -216,12 +217,17 @@ function loadCovers(coversFile) {
 /**
  * Best published boxart of a title for one region, or for the game as a whole
  * when no region is asked for.
+ *
+ * A name has to *say* the region to answer for it: `(World)` ships everywhere,
+ * so its box only ever stands in for a region, and the browser already reaches
+ * it through the release layer. Emitting it here would repeat that image under a
+ * key that claims more than it should.
  */
 function bestCover(candidates, region) {
   let best;
 
   for (const candidate of candidates) {
-    if (region && !candidate.regions.includes(region)) continue;
+    if (region && (!candidate.regions.includes(region) || candidate.regions.length > 1)) continue;
     if (!best || outranks(candidate.name, best)) best = candidate.name;
   }
 
@@ -233,7 +239,10 @@ function bestCover(candidates, region) {
  * reach, and nothing more.
  *
  * A region is filled only when the DAT actually ships that title there and no
- * matched release of it already covers the region.
+ * matched release *of that region alone* already covers it. A world release does
+ * not close the question: it ships to the three regions and its box is one
+ * scan, so the box published as `(Europe)` is still the European one and still
+ * worth carrying — that is what makes a preference of EU show it.
  *
  * The `*` entry is the last resort, for a title with no boxart placed in any
  * region at all — because its entries carry no region, or because the only
@@ -310,9 +319,11 @@ async function main() {
         titles.set(title, entry);
       }
 
+      // Only a release of one region speaks for it. A world release covers the
+      // three at once, and what it covers them with is a single scan.
       for (const region of regions) {
         entry.regions.add(region);
-        if (cover) entry.covered.add(region);
+        if (cover && regions.length === 1) entry.covered.add(region);
       }
 
       if (cover) entry.matched = true;

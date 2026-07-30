@@ -12,6 +12,11 @@ interface FileTreeProps {
   onSelectionChange?: (paths: string[]) => void;
   /** Fires with the game a row stands for, or nothing when a plain row is picked. */
   onGameChange?: (game?: WizardGame) => void;
+  /**
+   * Fires with the folder picked, or nothing when the selection is not exactly
+   * one. It is what a file dropped on the details pane would be added to.
+   */
+  onFolderChange?: (path?: string) => void;
   /** Rows currently painted, so the owner can prefetch what they need. */
   onVisibleChange?: (paths: string[]) => void;
   /** True once a ROM has a record in the library. */
@@ -30,6 +35,8 @@ interface FileTreeProps {
   onOrganize?: (path: string) => void;
   /** Progress of a long operation, such as hashing a system to group it. */
   notice?: string;
+  /** Bumped by the owner to re-read what is on screen after it wrote a file. */
+  refreshToken?: number;
 }
 
 /** The origin root, which the adapter addresses as an empty path. */
@@ -105,6 +112,7 @@ export function FileTree({
   selectedFiles,
   onSelectionChange,
   onGameChange,
+  onFolderChange,
   onVisibleChange,
   isInitialized,
   onRemoved,
@@ -115,6 +123,7 @@ export function FileTree({
   onToggleGrouping,
   onOrganize,
   notice,
+  refreshToken,
 }: FileTreeProps): JSX.Element {
   const [children, setChildren] = useState<Map<string, StorageEntry[]>>(new Map());
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -130,6 +139,8 @@ export function FileTree({
   // Loaded listings are read back inside async operations, where the state
   // captured by the render would already be stale.
   const childrenRef = useRef<Map<string, StorageEntry[]>>(new Map());
+  /** The game handed to the panel, to tell a rebuilt row from the same old one. */
+  const reportedGame = useRef<WizardGame | undefined>();
 
   const setDirectories = useCallback(
     (update: (current: Map<string, StorageEntry[]>) => Map<string, StorageEntry[]>) => {
@@ -164,6 +175,15 @@ export function FileTree({
     );
     setDirectories(() => new Map(listings));
   }, [node, setDirectories]);
+
+  /**
+   * A file the owner has just written — an image dropped on the details pane, or
+   * a ROM added to a folder — is on disk but not in what is on screen.
+   */
+  useEffect(() => {
+    if (!refreshToken) return;
+    refresh().catch(() => undefined);
+  }, [refreshToken, refresh]);
 
   const run = async (operation: () => Promise<void>) => {
     try {
@@ -258,10 +278,21 @@ export function FileTree({
     }
   }, [rows, expanded, groupedRows, isGrouped, onGroupingNeeded]);
 
+  /** The folder picked, when that is exactly what the selection is. */
+  const folderOf = useCallback(
+    (paths: Set<string>): string | undefined => {
+      if (paths.size !== 1) return undefined;
+
+      const [path] = Array.from(paths);
+      return entriesByPath.get(path)?.kind === 'directory' ? path : undefined;
+    },
+    [entriesByPath],
+  );
+
   /**
-   * Applies a selection and reports the files in it. Folders take part in the
-   * selection — they can be dragged and deleted — but they carry no metadata,
-   * so the details pane never hears about them.
+   * Applies a selection and reports the files in it. Folders carry no metadata,
+   * so they are reported apart from the files: what the details pane can show of
+   * one is nothing, but it is still somewhere a dropped file can go.
    *
    * A game is reported alongside its files: the details pane shows the game,
    * and the files are what a drag or a delete would act on.
@@ -270,12 +301,27 @@ export function FileTree({
     (paths: Set<string>, game?: WizardGame) => {
       setSelection(paths);
       setSelectedGame(game?.key);
+      reportedGame.current = game;
 
       onSelectionChange?.(filePaths.filter((path) => paths.has(path)));
       onGameChange?.(game);
+      onFolderChange?.(folderOf(paths));
     },
-    [filePaths, onSelectionChange, onGameChange],
+    [filePaths, folderOf, onSelectionChange, onGameChange, onFolderChange],
   );
+
+  /**
+   * A game whose rows have been worked out again is a different object for the
+   * same row — that is what happens when a ROM lands in the folder — so it is
+   * picked again. Without this the panel would keep showing the releases the
+   * folder held before, and its files would be the ones it held then.
+   */
+  useEffect(() => {
+    if (!selectedGame) return;
+
+    const row = rows.find((candidate) => candidate.key === selectedGame);
+    if (row?.game && row.game !== reportedGame.current) selectPaths(new Set(row.paths), row.game);
+  }, [rows, selectedGame, selectPaths]);
 
   /** Where new folders and uploads land: the selected folder, or root. */
   const targetDirectory = (): string => {

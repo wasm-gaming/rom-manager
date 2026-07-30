@@ -704,6 +704,15 @@ code {
   background-color: var(--app-bg);
 }
 
+/* Files can be dropped here: an image for the game on screen, anything for the
+   folder picked in the tree. Marked the same way as a drop target in the tree,
+   because it is the same gesture. */
+.details-pane.drop-target {
+  background-color: var(--ok-soft);
+  outline: 2px dashed var(--ok);
+  outline-offset: -0.5rem;
+}
+
 .empty-state {
   display: flex;
   align-items: center;
@@ -1047,6 +1056,46 @@ code {
   margin: 0.4rem 0 0;
   color: var(--text-faint);
   font-size: 0.75rem;
+}
+
+/* --- Dropping files on the details pane --- */
+
+/* Wider than the preferences panel: each image carries its two questions on one
+   line, and a file name is long. */
+.drop-dialog {
+  width: min(34rem, 92vw);
+}
+
+.drop-images,
+.drop-files {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.drop-image {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.drop-image-name,
+.drop-files li {
+  font-size: 0.8125rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drop-image .prefs-select {
+  width: auto;
+  font-size: 0.8125rem;
+  padding: 0.35rem 0.5rem;
 }
 
 .match-name {
@@ -1408,6 +1457,15 @@ code {
   color: var(--text);
 }
 
+/* A file of a game reads as a file, so its name stays the size it has in the
+   plain header — only now with the boxart of its release beside it. */
+.rom-info-heading h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--text);
+  word-break: break-all;
+}
+
 .rom-info-system {
   margin: 0;
   color: var(--text-dim);
@@ -1576,6 +1634,16 @@ code {
   flex: 0 0 auto;
   color: var(--text-faint);
   font-variant-numeric: tabular-nums;
+}
+
+/* Checksum of a file that is not here, sat where its size would be read. The
+   auto margin is what keeps it next to the size instead of adrift in the middle,
+   which is where `space-between` would leave a third child. */
+.variant-file-crc {
+  margin-left: auto;
+  flex: 0 0 auto;
+  color: var(--text-faint);
+  font-size: 0.75rem;
 }
 
 /* Back to the game a file was opened from. */

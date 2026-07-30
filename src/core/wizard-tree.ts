@@ -29,6 +29,12 @@ export interface WizardFile {
   label: string;
   /** Absent when the catalogue expects the file and this folder has not got it. */
   path?: string;
+  /**
+   * Checksum the catalogue lists for it. It is what identifies a file that is
+   * not here — the name of a missing dump says what to look for, the CRC32 says
+   * whether what you found is it.
+   */
+  crc: string;
 }
 
 /** One release of a game, and how much of it is here. */
@@ -127,11 +133,12 @@ export function buildWizardTree(
     for (const variant of matched.variants) {
       const files = variant.files.map((file): WizardFile => {
         const path = file.local?.path;
+        const crc = file.entry.crc;
 
         // A game can be complete elsewhere in the library, so a file outside the
         // folder being browsed counts as missing from this listing.
         if (path === undefined || !path.startsWith(prefix)) {
-          return { label: fileNameOf(file.entry) };
+          return { label: fileNameOf(file.entry), crc };
         }
 
         paths.push(path);
@@ -139,7 +146,7 @@ export function buildWizardTree(
         claimedFiles.add(path);
         for (const ancestor of ancestorsOf(path, folder)) claimedFolders.add(ancestor);
 
-        return { label: nameOf(path), path };
+        return { label: nameOf(path), path, crc };
       });
 
       variants.push({

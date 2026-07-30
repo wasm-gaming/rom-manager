@@ -119,8 +119,9 @@ En ambos casos, la metadata vive fuera de las carpetas de ROMs:
 
 ```
 .meta/<sistema>/<Juego>.json                       # metadata editable
-.meta/<sistema>/<Juego>.<variante>.case.png        # carátula de una release
+.meta/<sistema>/<Juego>.<región>.case.png          # carátula de una región
 .meta/<sistema>/<Juego>.case.png                   # carátula del juego
+.meta/<sistema>/<Juego>[.<región>].<tipo>.<ext>    # cualquier otra imagen
 .meta/<sistema>/scan.json                          # caché de hashes
 .meta/wizard.json
 ```
@@ -313,38 +314,60 @@ Dos capas, resueltas ambas en el build (`scripts/dat-to-json.mjs`):
   campo `cover` de cada entrada del dataset.
 - **por juego y región**: unión por título base (`normalizeGameName`), en el mapa
   `covers` del dataset. Solo lleva lo que el emparejamiento exacto no alcanzó
-  —una carátula publicada de una revisión que este DAT no lista—, y solo para las
-  regiones a las que el DAT sí manda el juego, así que no duplica nada de lo
-  anterior. La clave `*` es el último recurso, para un título del que no se pudo
-  situar ninguna carátula en ninguna región: porque sus entradas no traen región,
-  o porque los únicos nombres publicados son de regiones a las que el DAT no lo
-  manda. Sin ella, los juegos cuyo nombre publicado no lleva tag de región —un
-  cuarto de ellos— perderían la carátula que hoy tienen; emitida con más soltura
-  solo repetiría una imagen a la que el navegador ya llega recorriendo regiones.
+  —una carátula publicada de una revisión que este DAT no lista, o la caja
+  europea de un juego que el DAT solo lista como `(World)`—, y solo para las
+  regiones a las que el DAT sí manda el juego. La clave `*` es el último recurso,
+  para un título del que no se pudo situar ninguna carátula en ninguna región:
+  porque sus entradas no traen región, o porque los únicos nombres publicados son
+  de regiones a las que el DAT no lo manda. Sin ella, los juegos cuyo nombre
+  publicado no lleva tag de región —un cuarto de ellos— perderían la carátula que
+  hoy tienen.
+
+**Qué carátula le toca a una región.** Una release habla por una región cuando va
+*solo* a ella; una que va a varias apenas la sustituye. Esa distinción es lo que
+ordena las candidatas, de mejor a peor:
+
+1. carátula de una release de esa región sola, retail antes que beta o prototipo;
+2. carátula que el mapa por juego trae para esa región —publicada bajo un nombre
+   que sí la nombra, aunque sea de una release que el DAT no lista;
+3. carátula de una release que va a esa región entre otras, típicamente `(World)`.
+
+Sin esa escala, un juego como Sonic 2 de Mega Drive —cuyas quince releases son
+todas `(World)`— enseñaría con preferencia EU la carátula de la release mundial,
+que en `libretro-thumbnails` es el escaneo de la caja japonesa, mientras la caja
+europea está publicada como `Sonic The Hedgehog 2 (Europe)` y no la alcanzaba
+nadie. La elección no depende del orden de iteración.
 
 Sobre los 23 sistemas: **19 895 de 26 548 juegos con carátula (74,9 %)**, la
-misma cobertura que antes de repartirla por regiones. De ellos, 14 848 tienen
-carátula de una sola región, 2 858 de dos y 984 de las tres; en **3 787** juegos
-las regiones no llevan la misma imagen, que son los juegos donde el orden de
-preferencia cambia lo que se ve. El mapa por juego son 968 títulos y 1 078 URLs,
-unos 185 KB repartidos entre los 23 sistemas, y ninguna de sus entradas es
-inalcanzable.
-
-Dentro de una región se elige la carátula de una release retail antes que la de
-una beta o un prototipo, y la elección no depende del orden de iteración.
+misma cobertura que antes de repartirla por regiones. De ellos, 14 858 tienen
+carátula de una sola región, 3 823 de dos, 1 148 de las tres y 66 solo del juego;
+en **3 999** juegos las regiones no llevan la misma imagen, que son los juegos
+donde el orden de preferencia cambia lo que se ve. El mapa por juego son 1 216
+títulos y 1 302 URLs, unos 221 KB repartidos entre los 23 sistemas, y ninguna de
+sus entradas es inalcanzable.
 
 **Qué carátula se enseña.** Primero, entre las regiones a las que van los
 ficheros que el usuario tiene, la primera del orden de preferencia: es la caja
 que tienen, y enseñar la de otra región sería una pequeña mentira. Si ninguna de
 esas tiene carátula, se recorre el orden completo. Y si ninguna región tiene, la
-del juego. Para una release mundial —un solo fichero que va a las tres regiones—
-el orden es lo único que decide, y por eso existe.
+del juego; y si tampoco, el placeholder. Para una release mundial —un solo
+fichero que va a las tres regiones— el orden es lo único que decide, y por eso
+existe.
 
-**Cuando todas las regiones de un juego resuelven a la misma imagen**, el
-resultado es una carátula *del juego* y no tres idénticas. Ese es el caso de la
-release mundial, un sexto del catálogo, y es lo que evita guardar los mismos
-bytes una vez por región. Con una sola región no se colapsa: un juego publicado
-solo en Japón tiene carátula *de Japón*, y decirlo no cuesta espacio.
+**Al abrir un fichero suelto** —una versión concreta, desde el panel del juego— la
+carátula que se enseña es la del juego pero elegida entre las regiones de *esa*
+release, no entre las del juego entero: abrir el dump japonés de un juego que
+también se tiene en Europa enseña la caja japonesa. Un fichero que no pertenece a
+ningún juego —modo plano, un dump que el dataset no reconoce— no tiene carátula
+que enseñar y no se le inventa un hueco.
+
+**Una release mundial tiene las tres regiones**, no una carátula sin región: va a
+las tres, así que las tres tienen la suya y el orden puede elegir. Lo que no se
+afirma es más de lo que se sabe: **cuando todas las regiones de un juego resuelven
+a la misma imagen**, debajo se dice que es la caja *del juego* y no la de la
+región que el orden eligió, porque un único escaneo para las tres no es la caja
+europea por que la preferencia empiece por EU. Con una sola región sí se dice: un
+juego publicado solo en Japón tiene carátula *de Japón*.
 
 **Las imágenes se leen del repositorio, no de `thumbnails.libretro.com`.** Ese
 origen sirve las mismas imágenes pero **sin cabecera
@@ -355,16 +378,36 @@ verificado en los 23 repositorios. `HEAD` sustituye al nombre de rama porque los
 repositorios no coinciden en él.
 
 Guardar la copia: `<Juego>.<región>.case.png` cuando la carátula es de una
-región, `<Juego>.case.png` cuando es la del juego. El segmento de región está
-exactamente cuando la carátula pertenece a una, y eso es lo que evita bajar la
-misma imagen una vez por región. La extensión sale de la URL y nunca de la
-respuesta, así que el nombre de una carátula ya guardada se conoce sin
-descargarla. Es el mismo nombre que toma una carátula elegida a mano en el
-editor, de modo que en una biblioteca organizada sustituye a la publicada.
+región, `<Juego>.case.png` cuando es la del juego. La extensión sale de la URL y
+nunca de la respuesta, así que el nombre de una carátula ya guardada se conoce sin
+descargarla. Es el mismo nombre que toma una carátula puesta a mano, de modo que
+en una biblioteca organizada sustituye a la publicada.
 
-Sobre los 23 sistemas eso son 24 723 ficheros posibles, todos con nombre
-distinto, ninguno con caracteres que exFAT no acepte y el más largo de 130
-caracteres.
+Sobre los 23 sistemas eso son 26 017 ficheros posibles —24 714 descargas, porque
+dos regiones que comparten imagen la bajan una vez—, todos con nombre distinto
+dentro de su sistema, ninguno con caracteres que exFAT no acepte y el más largo
+de 130 caracteres.
+
+### Imágenes puestas a mano
+
+Una imagen se puede añadir arrastrándola al panel de detalles del juego, y al
+soltarla se pregunta lo único que no está en los bytes: **de qué es** (carátula,
+fondo, pantalla de título, captura, logo) y **de qué región** (EU, US, JP, o todas
+las regiones). Esas dos respuestas son el nombre del fichero,
+`<Juego>[.<región>].<tipo>.<ext>`, y el nombre es todo el mecanismo: una carátula
+soltada para EU se lee después como la carátula de EU.
+
+Leerlas es por tanto lo mismo que leer una copia descargada, y eso las mete en la
+elección en vez de dejarlas solo servirla: **una imagen añadida a mano hace que su
+región sea una opción**, incluso para un juego del que el catálogo no publica
+ninguna carátula. Lo que una región tiene que ofrecer se mira en este orden: la
+imagen guardada para ella, la guardada para todo el juego, y la publicada. Las dos
+locales van antes porque alguien las puso a propósito, y la del juego sirve a
+cualquier región —que es lo que hace que una carátula añadida «para todas las
+regiones» se vea en un juego del que el catálogo ya trae tres.
+
+Un `.meta/<sistema>` se lista una vez por sistema y carpeta abierta, que es lo que
+hace asequible preguntarlo para cada juego que se mira.
 
 **Navegar es lo que puebla `.meta/`**: al abrir un juego se muestra la copia
 local si existe y la remota si no, y en ese caso se baja una copia en segundo
@@ -432,12 +475,25 @@ las ausentes van plegadas, porque el catálogo puede listar quince frente a la
 estándares a los que corre, que es lo que dice si una ROM sirve para tu televisor
 y de qué caja es.
 
-**Orden de preferencia de región.** Un menú en la cabecera del explorador con las
-seis permutaciones de EU, US y JP; EU/US/JP por defecto. Cambiarlo no lee nada de
-disco: la fila de juego lleva las carátulas de todas sus regiones como dato, no
-la que toca enseñar, así que el panel simplemente elige otra. Debajo de la
-carátula se dice de qué región es, porque con seis órdenes posibles la imagen sola
-no lo aclara.
+**Orden de preferencia de región.** En el panel de preferencias (⚙ en la cabecera),
+las seis permutaciones de EU, US y JP; EU/US/JP por defecto. Cambiarlo no vuelve a
+agrupar ni a rehashear nada: la fila de juego lleva las carátulas de todas sus
+regiones como dato, no la que toca enseñar, y lo que hay en `.meta` ya está
+listado, así que el panel simplemente elige otra. Debajo de la carátula se dice de
+qué región es, porque con seis órdenes posibles la imagen sola no lo aclara.
+
+**El panel de detalles acepta ficheros arrastrados**, y qué hace con ellos depende
+de lo que haya seleccionado, no del fichero:
+
+- **un juego**: las imágenes van a su metadata, preguntando tipo y región (ver
+  «Imágenes puestas a mano»); lo demás se copia a la carpeta donde están sus ROMs.
+- **una carpeta**: todo se añade tal cual, imágenes incluidas.
+- **cualquier otra cosa** —un ROM suelto, varios ficheros, nada—: no hay dónde
+  ponerlo, y se dice que no hay acciones disponibles en vez de adivinar.
+
+Nada se escribe antes de confirmarlo: soltar un fichero es fácil de hacer sin
+querer y difícil de deshacer. Un arrastre interno del propio árbol no cuenta como
+drop aquí; mover un ROM al panel no significa nada.
 
 La fila actúa sobre **todos** los ficheros del juego: seleccionarla los
 selecciona, y arrastrar o borrar los mueve o los borra juntos. Como el árbol ya
@@ -464,7 +520,9 @@ Enseñar los 26 548 juegos del dataset enterraría los veinte que el usuario
 tiene. Dentro de un juego, en cambio, se listan **todas** sus variantes,
 incluidas las ausentes — ver qué hermanas existen es la razón de agrupar. Lo
 mismo con los ficheros de una variante parcial: el disco que falta se lista
-para que se vea que falta.
+para que se vea que falta. De un fichero ausente se enseña su **CRC32** donde el
+presente enseña su tamaño: no está en disco, así que el nombre —que se lo pone el
+dataset— no lo identifica y el checksum sí.
 
 **Carpetas absorbidas.** Una carpeta cuyos ficheros han acabado todos dentro
 de un juego desaparece del listado: su contenido ya está en pantalla un nivel

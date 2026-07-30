@@ -4,9 +4,9 @@
     "totalGames": 841,
     "totalFiles": 841,
     "totalCovers": 681,
-    "totalGameCovers": 14,
-    "totalGameCoverUrls": 20,
-    "generated": "2026-07-30T12:24:58.841Z"
+    "totalGameCovers": 19,
+    "totalGameCoverUrls": 19,
+    "generated": "2026-07-30T14:07:28.758Z"
   },
   "covers": {
     "32 in 1 Game Cartridge": {
@@ -16,17 +16,31 @@
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Actionauts%20(USA)%20(Proto)%20(1984-06-22).png"
     },
     "Alpha Beam": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Alpha%20Beam%20(Europe)%20(Beta)%20(1983-06-03).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Alpha%20Beam%20(Japan%2C%20USA)%20(Beta)%20(1982-12-22).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Alpha%20Beam%20(Japan%2C%20USA)%20(Beta)%20(1982-12-22).png"
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Alpha%20Beam%20(Europe)%20(Beta)%20(1983-06-03).png"
     },
     "Apples and Dolls": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Apples%20and%20Dolls%20(Brazil)%20(Unl).png"
     },
+    "Battlezone": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Battlezone%20(USA).png"
+    },
+    "Berzerk": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Berzerk%20(USA).png"
+    },
+    "Big Bird's Egg Catch": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Big%20Bird's%20Egg%20Catch%20(USA).png"
+    },
+    "Centipede": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Centipede%20(USA).png"
+    },
+    "Circus Atari": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Circus%20Atari%20(USA).png"
+    },
+    "Combat": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Combat%20(USA).png"
+    },
     "Halo 2600": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Halo%202600%20(World)%20(Aftermarket)%20(Homebrew).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Halo%202600%20(World)%20(Aftermarket)%20(Homebrew).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Halo%202600%20(World)%20(Aftermarket)%20(Homebrew).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Halo%202600%20(World)%20(Aftermarket)%20(Homebrew).png"
     },
     "Indy 500": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Indy%20500%20(USA).png"
@@ -41,18 +55,13 @@
       "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/My%20Golf%20(Europe).png"
     },
     "Oystron": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Oystron%20(World)%20(Aftermarket)%20(Homebrew).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Oystron%20(World)%20(Aftermarket)%20(Homebrew).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Oystron%20(World)%20(Aftermarket)%20(Homebrew).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Oystron%20(World)%20(Aftermarket)%20(Homebrew).png"
     },
     "Pleiades": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Pleiades%20(USA)%20(Proto).png"
     },
     "Street Racer - Speedway II": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Street%20Racer%20-%20Speedway%20II%20(USA).png"
-    },
-    "Super Breakout": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Super%20Breakout%20(USA%2C%20Europe)%20(Atari%20Anthology).png"
     },
     "Video Pinball": {
       "*": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_2600/HEAD/Named_Boxarts/Video%20Pinball%20(USA).png"

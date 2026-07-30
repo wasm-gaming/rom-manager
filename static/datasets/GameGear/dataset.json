@@ -4,20 +4,19 @@
     "totalGames": 912,
     "totalFiles": 912,
     "totalCovers": 521,
-    "totalGameCovers": 7,
-    "totalGameCoverUrls": 9,
-    "generated": "2026-07-30T12:24:58.131Z"
+    "totalGameCovers": 8,
+    "totalGameCoverUrls": 8,
+    "generated": "2026-07-30T14:07:28.066Z"
   },
   "covers": {
     "Barbie Super Model": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Barbie%20Super%20Model%20(USA)%20(Proto)%20(1994-08-25).png"
     },
-    "FIFA International Soccer": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/FIFA%20International%20Soccer%20(USA%2C%20Europe).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/FIFA%20International%20Soccer%20(USA%2C%20Europe).png"
-    },
     "Jang Pung II": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Jang%20Pung%20II%20(Korea)%20(En)%20(Unl).png"
+    },
+    "Olympic Gold": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Olympic%20Gold%20(Taiwan)%20(En%2CFr%2CDe%2CEs%2CIt%2CNl%2CPt%2CSv)%20(Unl).png"
     },
     "Pengo": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Pengo%20(Japan).png"
@@ -28,9 +27,11 @@
     "Rastan Saga": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Rastan%20Saga%20(Japan).png"
     },
+    "Star Wars": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Star%20Wars%20(Europe).png"
+    },
     "X-Men - GameMaster's Legacy": {
-      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/X-Men%20-%20GameMaster's%20Legacy%20(USA%2C%20Europe)%20(Beta).png",
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/X-Men%20-%20GameMaster's%20Legacy%20(USA%2C%20Europe)%20(Beta).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/X-Men%20-%20GameMaster's%20Legacy%20(USA%2C%20Europe)%20(Beta).png"
     }
   },
   "list": [

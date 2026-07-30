@@ -4,9 +4,9 @@
     "totalGames": 1141,
     "totalFiles": 1141,
     "totalCovers": 469,
-    "totalGameCovers": 35,
-    "totalGameCoverUrls": 35,
-    "generated": "2026-07-30T12:24:58.063Z"
+    "totalGameCovers": 36,
+    "totalGameCoverUrls": 36,
+    "generated": "2026-07-30T14:07:27.999Z"
   },
   "covers": {
     "4 PAK All Action": {
@@ -14,6 +14,9 @@
     },
     "94 Super World Cup Soccer": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/94%20Super%20World%20Cup%20Soccer%20(Korea)%20(En)%20(Unl).png"
+    },
+    "Action Fighter": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Action%20Fighter%20(Taiwan)%20(En)%20(Unl).png"
     },
     "Agigongnyong Dooly": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Agigongnyong%20Dooly%20(Korea)%20(Unl).png"
@@ -63,6 +66,9 @@
     "Janggun-ui Adeul": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Janggun-ui%20Adeul%20(Korea)%20(Unl).png"
     },
+    "Lemmings": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Lemmings%20(Europe)%20(Beta).png"
+    },
     "Penguin Adventure": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Penguin%20Adventure%20(Korea)%20(En)%20(Unl).png"
     },
@@ -104,9 +110,6 @@
     },
     "Ttoriui Moheom": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Ttoriui%20Moheom%20(Korea)%20(En)%20(Unl).png"
-    },
-    "Wonder Boy III - The Dragon's Trap": {
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Wonder%20Boy%20III%20-%20The%20Dragon's%20Trap%20(World)%20(Digital)%20(Unl).png"
     },
     "Wonsiin": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Master_System_-_Mark_III/HEAD/Named_Boxarts/Wonsiin%20(Korea)%20(En)%20(Unl).png"

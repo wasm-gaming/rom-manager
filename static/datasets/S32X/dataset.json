@@ -5,16 +5,15 @@
     "totalFiles": 207,
     "totalCovers": 53,
     "totalGameCovers": 11,
-    "totalGameCoverUrls": 13,
-    "generated": "2026-07-30T12:24:58.341Z"
+    "totalGameCoverUrls": 11,
+    "generated": "2026-07-30T14:07:28.270Z"
   },
   "covers": {
     "ClayFighter 2": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/ClayFighter%202%20(USA)%20(Proto)%20(1995-04-28).png"
     },
     "Doom RR": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20RR%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-15).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20RR%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-15).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20RR%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-15).png"
     },
     "Ecco the Dolphin": {
       "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Ecco%20the%20Dolphin%20(USA)%20(Demo)%20(Developer%20Cart).png"
@@ -41,8 +40,7 @@
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Stellar%20Assault%20(Japan).png"
     },
     "Zaxxon's Motherbase": {
-      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-10).png",
-      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-10).png"
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-10).png"
     }
   },
   "list": [

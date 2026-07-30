@@ -4,9 +4,9 @@
     "totalGames": 2540,
     "totalFiles": 2540,
     "totalCovers": 1386,
-    "totalGameCovers": 8,
-    "totalGameCoverUrls": 8,
-    "generated": "2026-07-30T12:24:57.771Z"
+    "totalGameCovers": 9,
+    "totalGameCoverUrls": 9,
+    "generated": "2026-07-30T14:07:27.707Z"
   },
   "covers": {
     "Driver - You Are the Wheelman": {
@@ -23,6 +23,9 @@
     },
     "Pokemon Picross": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Color/HEAD/Named_Boxarts/Pokemon%20Picross%20(Japan)%20(Proto).png"
+    },
+    "Wario Land 3": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Color/HEAD/Named_Boxarts/Wario%20Land%203%20(Japan).png"
     },
     "Wizardry I - Proving Grounds of the Mad Overlord": {
       "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy_Color/HEAD/Named_Boxarts/Wizardry%20I%20-%20Proving%20Grounds%20of%20the%20Mad%20Overlord%20(Japan).png"

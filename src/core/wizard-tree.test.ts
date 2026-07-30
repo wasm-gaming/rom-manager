@@ -141,7 +141,7 @@ describe('buildWizardTree', () => {
     );
 
     expect(variantOf(gameRow(tree, 'Sonic the Hedgehog'), 'USA').files).toEqual([
-      { label: 'sonic_u.bin', path: 'MegaDrive/sonic_u.bin' },
+      { label: 'sonic_u.bin', path: 'MegaDrive/sonic_u.bin', crc: 'AAAA1111' },
     ]);
   });
 
@@ -156,9 +156,11 @@ describe('buildWizardTree', () => {
       match(games, [local('PSX/Final Fantasy VII/USA/one.bin', 'AAAA1111')]),
     );
 
+    // The checksum comes along with it: a file that is not here is not known by
+    // its name, which the dataset made up, but by what it would hash to.
     expect(variantOf(gameRow(tree, 'Final Fantasy VII'), 'USA').files).toEqual([
-      { label: 'one.bin', path: 'PSX/Final Fantasy VII/USA/one.bin' },
-      { label: 'ff7-2.bin' },
+      { label: 'one.bin', path: 'PSX/Final Fantasy VII/USA/one.bin', crc: 'AAAA1111' },
+      { label: 'ff7-2.bin', crc: 'BBBB2222' },
     ]);
   });
 
@@ -236,7 +238,9 @@ describe('buildWizardTree', () => {
     );
 
     expect(row.paths).toEqual(['MegaDrive/Favoritos/axe.bin']);
-    expect(variantOf(row, 'Japan').files).toEqual([{ label: 'Golden Axe (Japan).md' }]);
+    expect(variantOf(row, 'Japan').files).toEqual([
+      { label: 'Golden Axe (Japan).md', crc: 'BBBB2222' },
+    ]);
   });
 
   it('gives every row a key of its own', () => {
