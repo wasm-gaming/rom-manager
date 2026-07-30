@@ -2,13 +2,16 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { JSX } from 'preact';
 import { Tabs } from '../components/Tabs';
 import { FileTree } from '../components/FileTree';
+import { OrganizePanel } from '../components/OrganizePanel';
 import { RomDetails } from '../components/RomDetails';
 import { storageService, StorageNode, StorageStat } from '../services/StorageService';
 import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
 import { GameCatalogService } from '../services/GameCatalogService';
+import { OrganizeService, type UndoRecord } from '../services/OrganizeService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
 import { buildWizardTree, type WizardNode } from '../core/wizard-tree';
+import type { OrganizePlan } from '../core/rom-organize';
 import {
   storeService,
   originsSignal,
@@ -44,6 +47,13 @@ export function ROMExplorer(): JSX.Element {
   const [groupedRows, setGroupedRows] = useState<Map<string, WizardNode[]>>(new Map());
   const [notice, setNotice] = useState<string | undefined>();
   const [editing, setEditing] = useState(false);
+  /** The organize preview, once one has been worked out and not yet dismissed. */
+  const [organize, setOrganize] = useState<
+    { system: string; plan: OrganizePlan; applied?: UndoRecord } | undefined
+  >();
+  const [organizeBusy, setOrganizeBusy] = useState<string | undefined>();
+  /** Bumped to remount the tree after the files underneath it have moved. */
+  const [treeVersion, setTreeVersion] = useState(0);
 
   /** Systems whose library folder has already been listed. */
   const indexedSystems = useRef<Set<string>>(new Set());
@@ -221,6 +231,86 @@ export function ROMExplorer(): JSX.Element {
     [activeNode],
   );
 
+  /** Forget what was read from a folder whose files have just moved. */
+  const invalidateTree = useCallback(() => {
+    grouping.current.clear();
+    setGroupedRows(new Map());
+    storeService.setSelection([]);
+    setRecords(new Map());
+    setStats(new Map());
+    setTreeVersion((version) => version + 1);
+  }, []);
+
+  /**
+   * Works out what organizing a folder would do and shows it.
+   *
+   * Only the plan is built here. Nothing on disk changes until the user reads
+   * the preview and says so, which is the whole point of splitting the two.
+   */
+  const handleOrganize = useCallback(
+    async (path: string) => {
+      if (!activeNode) return;
+
+      const system = systemFolderOf(path);
+
+      try {
+        storeService.setError(undefined);
+        setOrganizeBusy(`Reading ${system}...`);
+
+        const plan = await OrganizeService.plan(activeNode, system, (done, total) =>
+          setOrganizeBusy(`Reading ${system}: ${done} of ${total}`),
+        );
+
+        setOrganize({ system, plan });
+      } catch (err) {
+        storeService.setError(err instanceof Error ? err.message : `Failed to plan ${system}`);
+      } finally {
+        setOrganizeBusy(undefined);
+      }
+    },
+    [activeNode],
+  );
+
+  const handleOrganizeConfirm = useCallback(async () => {
+    if (!activeNode || !organize) return;
+
+    try {
+      storeService.setError(undefined);
+      setOrganizeBusy('Moving files...');
+
+      const applied = await OrganizeService.apply(
+        activeNode,
+        organize.system,
+        organize.plan,
+        (done, total) => setOrganizeBusy(`Moving files: ${done} of ${total}`),
+      );
+
+      setOrganize({ ...organize, applied });
+      invalidateTree();
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : 'Failed to organize');
+    } finally {
+      setOrganizeBusy(undefined);
+    }
+  }, [activeNode, organize, invalidateTree]);
+
+  const handleOrganizeUndo = useCallback(async () => {
+    if (!activeNode || !organize?.applied) return;
+
+    try {
+      storeService.setError(undefined);
+      setOrganizeBusy('Putting files back...');
+
+      await OrganizeService.undo(activeNode, organize.applied);
+      setOrganize(undefined);
+      invalidateTree();
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : 'Failed to undo');
+    } finally {
+      setOrganizeBusy(undefined);
+    }
+  }, [activeNode, organize, invalidateTree]);
+
   const handleCloseOrigin = (originId: string) => {
     storeService.removeOrigin(originId);
     setStorageNodes((current) => {
@@ -373,7 +463,7 @@ export function ROMExplorer(): JSX.Element {
         <div class="explorer-container">
           {activeNode && (
             <FileTree
-              key={activeOriginId}
+              key={`${activeOriginId}:${treeVersion}`}
               node={activeNode}
               selectedFiles={selection}
               onSelectionChange={handleSelectionChange}
@@ -385,7 +475,8 @@ export function ROMExplorer(): JSX.Element {
               groupedRows={groupedRows}
               onGroupingNeeded={handleGroupingNeeded}
               onToggleGrouping={handleToggleGrouping}
-              notice={notice}
+              onOrganize={handleOrganize}
+              notice={notice ?? (organize ? undefined : organizeBusy)}
             />
           )}
 
@@ -404,6 +495,18 @@ export function ROMExplorer(): JSX.Element {
             />
           </div>
         </div>
+      )}
+
+      {organize && (
+        <OrganizePanel
+          system={organize.system}
+          plan={organize.plan}
+          applied={organize.applied}
+          busy={organizeBusy}
+          onConfirm={handleOrganizeConfirm}
+          onUndo={handleOrganizeUndo}
+          onClose={() => setOrganize(undefined)}
+        />
       )}
     </div>
   );

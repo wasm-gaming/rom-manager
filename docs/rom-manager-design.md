@@ -193,6 +193,15 @@ el tag de disco** y se fusionan en una sola variante con varios ficheros.
 Derivarlo del nombre crudo, y no de los campos ya parseados, es lo que evita
 fusionar dos releases distintas que solo difieren en un tag no reconocido.
 
+Esto tiene un límite conocido: el nombre del DAT **no siempre es único**. Hay
+protos y homebrew donde dos releases comparten el nombre del `<game>` y solo
+se distinguen por la fecha del `<rom>` (`RealSports Basketball (USA) (Proto)`
+con ficheros `(1982-11-05)` y `(1983-10-31)`). Esas releases se fusionan en
+una variante que acaba teniendo dos ficheros con la misma extensión. Sobre los
+23 datasets son **93 casos de ~51 000 entradas**. No se corrige en la
+agrupación: se detecta al organizar, donde se manifiesta como dos ficheros
+reclamando el mismo nombre, y ahí no se toca ninguno de los dos.
+
 ### Normalización de nombres
 
 Una única función pura `normalizeGameName(datName)`, compartida por el path
@@ -219,6 +228,51 @@ por tanto **por variante**, no por juego, y ya la resuelve entrada a entrada
 `scripts/dat-to-json.mjs`. Compartir el saneado sigue siendo útil porque
 garantiza que ningún nombre de carátula introduce caracteres que el sistema de
 ficheros no acepte.
+
+### Organización canónica
+
+Llevar los ficheros a la estructura de arriba es la única operación que mueve
+las ROMs del usuario, así que se parte en dos: un **plan**, que no toca nada, y
+su **aplicación**, que no ocurre sin que el plan se haya mostrado.
+
+El plan solo alcanza a los ficheros que el dataset reconoce por CRC32 y tamaño.
+Lo que no reconoce se queda donde está, y eso es lo que impide que el gestor
+reordene una colección que no entiende. El destino se deriva **siempre del
+dataset**: el nombre canónico, la clave de variante y también la extensión, de
+modo que un `.gen` cuya entrada dice `.md` acaba llamándose `.md`.
+
+El plan es deliberadamente cobarde. Todo caso cuyo resultado dependería del
+orden en que se ejecutan las operaciones, o que sobrescribiría algo, se informa
+como conflicto en lugar de resolverse adivinando:
+
+- **dos ficheros reclaman el mismo nombre** — el caso de los DAT con nombres
+  repetidos descrito arriba;
+- **el destino ya está ocupado** por un fichero que no se va a mover;
+- **ciclo**, ficheros que se reclaman el sitio entre sí.
+
+Los movimientos que sí se emiten van **ordenados**, de forma que ninguno pisa a
+un fichero que todavía tiene que moverse. Un destino ocupado por algo que se va
+a mover antes no es un conflicto, es una cuestión de orden.
+
+Aplicar un plan además:
+
+- escribe el registro en `.meta/undo/<id>.json` **antes** del primer
+  movimiento, no después del último, porque una ejecución que se corta a medias
+  es justo el caso en que deshacer importa;
+- arrastra la metadata (`.meta/<sistema>/<Juego>.json`) detrás de su ROM, que
+  de otro modo quedaría huérfana al cambiar la ruta que la indexa;
+- borra `scan.json`, cuyas rutas acaban de dejar de ser ciertas;
+- escribe los `game.json` que falten, sin tocar los que ya existan.
+
+Deshacer recorre el registro al revés y **comprueba cada paso antes de darlo**,
+de modo que una ejecución interrumpida, o una carpeta que el usuario ya ha
+tocado a mano, revierte lo que todavía puede en vez de fallar entera.
+
+Sobre datos reales, organizar los 23 sistemas completos son ~51 000
+movimientos, 236 conflictos (0,46 %, todos por nombre duplicado en el DAT) y
+ningún carácter no admitido por exFAT. La ruta más larga generada mide 256
+caracteres, holgada en Linux pero cerca del `MAX_PATH` de Windows: es una
+limitación aceptada, ya que el destino es la SD de un MiSTer.
 
 ## Colecciones
 

@@ -24,6 +24,8 @@ interface FileTreeProps {
   /** A grouped folder came on screen with no rows yet. */
   onGroupingNeeded?: (path: string) => void;
   onToggleGrouping?: (path: string) => void;
+  /** Offered on the same folders as grouping: both need a dataset to work from. */
+  onOrganize?: (path: string) => void;
   /** Progress of a long operation, such as hashing a system to group it. */
   notice?: string;
 }
@@ -105,6 +107,7 @@ export function FileTree({
   groupedRows,
   onGroupingNeeded,
   onToggleGrouping,
+  onOrganize,
   notice,
 }: FileTreeProps): JSX.Element {
   const [children, setChildren] = useState<Map<string, StorageEntry[]>>(new Map());
@@ -559,6 +562,19 @@ export function FileTree({
                 }
               >
                 ⊞
+              </button>
+            )}
+
+            {row.kind === 'directory' && onOrganize && canGroup?.(row.path!) && (
+              <button
+                class="tree-organize"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onOrganize(row.path!);
+                }}
+                title="Rename and sort this folder to match the catalogue"
+              >
+                ⇄
               </button>
             )}
           </li>
