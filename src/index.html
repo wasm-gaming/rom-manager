@@ -5,6 +5,21 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ROM Manager</title>
+    <script>
+      // The remembered theme, painted before the bundle arrives, so a dark
+      // session does not open on a white flash. `ThemeService` owns this key and
+      // takes over the moment it loads; anything but an explicit choice — no
+      // value, or one nobody recognises — means follow the system, as there.
+      try {
+        var mode = localStorage.getItem('rom-manager.theme');
+        var dark =
+          mode === 'dark' ||
+          (mode !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch (error) {
+        // Storage can be refused, and a theme is not worth failing over.
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

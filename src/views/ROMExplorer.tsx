@@ -3,6 +3,7 @@ import { JSX } from 'preact';
 import { Tabs } from '../components/Tabs';
 import { FileTree } from '../components/FileTree';
 import { OrganizePanel } from '../components/OrganizePanel';
+import { PreferencesModal } from '../components/PreferencesModal';
 import { RomDetails } from '../components/RomDetails';
 import { storageService, StorageNode, StorageStat } from '../services/StorageService';
 import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
@@ -11,6 +12,7 @@ import { CoverService } from '../services/CoverService';
 import { OrganizeService, type UndoRecord } from '../services/OrganizeService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
+import { setThemeMode, themeModeSignal } from '../services/ThemeService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import { pickCover } from '../core/rom-covers';
 import type { Region } from '../core/rom-regions';
@@ -61,6 +63,8 @@ export function ROMExplorer(): JSX.Element {
     { system: string; plan: OrganizePlan; applied?: UndoRecord } | undefined
   >();
   const [organizeBusy, setOrganizeBusy] = useState<string | undefined>();
+  /** Whether the preferences panel is open. */
+  const [preferences, setPreferences] = useState(false);
   /** Bumped to remount the tree after the files underneath it have moved. */
   const [treeVersion, setTreeVersion] = useState(0);
 
@@ -564,6 +568,9 @@ export function ROMExplorer(): JSX.Element {
           onClose={handleCloseOrigin}
           onAddOrigin={handleOpenFolder}
         />
+        <button class="header-prefs" onClick={() => setPreferences(true)} title="Preferencias">
+          ⚙
+        </button>
       </header>
 
       {errorSignal.value && <div class="error-message">{errorSignal.value}</div>}
@@ -593,8 +600,6 @@ export function ROMExplorer(): JSX.Element {
               onGroupingNeeded={handleGroupingNeeded}
               onToggleGrouping={handleToggleGrouping}
               onOrganize={handleOrganize}
-              regionOrder={regionOrder}
-              onRegionOrderChange={handleRegionOrderChange}
               notice={notice ?? (organize ? undefined : organizeBusy)}
             />
           )}
@@ -623,6 +628,19 @@ export function ROMExplorer(): JSX.Element {
           </div>
         </div>
       )}
+
+      {/* Mounted whether or not it is open: the dialog closes itself, and being
+          still there is what lets it be seen doing so. */}
+      <PreferencesModal
+        open={preferences}
+        themeMode={themeModeSignal.value}
+        onThemeModeChange={setThemeMode}
+        regionOrder={regionOrder}
+        // The order lives in the library's `.meta`, so it can only be changed
+        // while one is open.
+        onRegionOrderChange={activeNode ? handleRegionOrderChange : undefined}
+        onClose={() => setPreferences(false)}
+      />
 
       {organize && (
         <OrganizePanel
