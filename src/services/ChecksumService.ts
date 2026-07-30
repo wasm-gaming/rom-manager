@@ -5,23 +5,49 @@
  * Lazy evaluation: CRC32 first (fast), then MD5 and SHA1 only if needed
  */
 
-import { md5 } from 'hash-wasm';
+import { createCRC32, crc32, md5 } from 'hash-wasm';
 
 /**
  * Calculate CRC32 checksum (fast, suitable for indexing)
+ *
+ * The default polynomial is the one the DAT catalogues use, so the result can
+ * be compared against them directly.
  */
 export async function calculateCRC32(data: ArrayBuffer): Promise<string> {
-  const bytes = new Uint8Array(data);
-  let crc = 0xffffffff;
+  return (await crc32(new Uint8Array(data))).toUpperCase();
+}
 
-  for (let i = 0; i < bytes.length; i++) {
-    crc = crc ^ bytes[i];
-    for (let j = 0; j < 8; j++) {
-      crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+/**
+ * CRC32 of a file read as a stream.
+ *
+ * A disc image runs into the hundreds of megabytes, so it is hashed as it
+ * arrives rather than held whole in memory. `onProgress` reports the bytes
+ * consumed so far, because on a file that size the wait is noticeable.
+ */
+export async function streamCRC32(
+  stream: ReadableStream<Uint8Array>,
+  onProgress?: (bytes: number) => void,
+): Promise<string> {
+  const hasher = await createCRC32();
+  hasher.init();
+
+  const reader = stream.getReader();
+  let read = 0;
+
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      hasher.update(value);
+      read += value.length;
+      onProgress?.(read);
     }
+  } finally {
+    reader.releaseLock();
   }
 
-  return ((crc ^ 0xffffffff) >>> 0).toString(16).padStart(8, '0').toUpperCase();
+  return hasher.digest('hex').toUpperCase();
 }
 
 /**
@@ -47,8 +73,8 @@ export async function* lazyChecksums(
   data: ArrayBuffer
 ): AsyncGenerator<{ type: 'crc32' | 'md5' | 'sha1'; value: string }> {
   // Step 1: CRC32 (fast)
-  const crc32 = await calculateCRC32(data);
-  yield { type: 'crc32', value: crc32 };
+  const crc = await calculateCRC32(data);
+  yield { type: 'crc32', value: crc };
 
   // Step 2: MD5 (only if caller requests via .next())
   const md5Hash = await calculateMD5(data);
@@ -65,10 +91,10 @@ export async function* lazyChecksums(
 export async function calculateChecksums(
   data: ArrayBuffer
 ): Promise<{ crc32: string; md5: string; sha1: string }> {
-  const [crc32, md5Hash, sha1] = await Promise.all([
+  const [crc, md5Hash, sha1] = await Promise.all([
     calculateCRC32(data),
     calculateMD5(data),
     calculateSHA1(data),
   ]);
-  return { crc32, md5: md5Hash, sha1 };
+  return { crc32: crc, md5: md5Hash, sha1 };
 }

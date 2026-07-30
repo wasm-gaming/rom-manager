@@ -205,6 +205,15 @@ describe('groupDatGames', () => {
     expect(groups[0].variants.map((v) => v.key)).toEqual(['Japan', 'Japan-virtualconsole']);
   });
 
+  it('drops whole words from a long tag rather than cutting one in half', () => {
+    const groups = groupDatGames([
+      game('Final Fantasy VII (USA)', 'ABCD1234'),
+      game('Final Fantasy VII (USA) (Square Soft on PlayStation Preview)', 'EF567890'),
+    ]);
+
+    expect(groups[0].variants[1].key).toBe('USA-squaresoftonplaystation');
+  });
+
   it('falls back to the checksum when two tags condense to the same word', () => {
     // Both spellings appear in the NES set, and dropping the separators makes
     // them collide, so at that point only the checksum is left.

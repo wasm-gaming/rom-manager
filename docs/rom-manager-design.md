@@ -90,8 +90,9 @@ que depende de binarios nativos incompatibles con el navegador):
 
 Pendiente de implementar en TypeScript puro (sin dependencias de Node):
 tipos `DatGame`, `GameVariant`, `GameGroup`, funciones `parseGameName`,
-`groupDatGames`, `hashLocalFile` (streaming + Web Crypto),
-`matchGroupsWithLocalFiles`. Irá en `src/core/rom-grouping.ts`.
+`groupDatGames` en `src/core/rom-grouping.ts`; `matchGroupsWithLocalFiles` en
+`src/core/rom-matching.ts`. El hashing por streaming vive en
+`ChecksumService.streamCRC32()`, porque necesita el acceso a ficheros.
 
 ## Estructura de carpetas
 
@@ -139,6 +140,12 @@ Sony - PlayStation/Final Fantasy VII/USA/Final Fantasy VII (USA) (Disc 1).cue
 apertura de la carpeta. Un único fichero por sistema en lugar de uno por
 juego, para que el arranque sea una sola lectura. Se puede borrar sin pérdida
 de información: se reconstruye rehasheando.
+
+El matching exige que coincidan **CRC32 y tamaño**, no solo el CRC. Un CRC32
+son 32 bits y un sistema tiene decenas de miles de entradas, de modo que la
+colisión es probable y no teórica; el tamaño ya lo conoce el escaneo, así que
+comprobarlo es gratis. Se ha verificado que las 51 216 entradas de los 23
+datasets traen `size` y que ningún CRC se repite con dos tamaños distintos.
 
 `game.json` existe **solo en sistemas de disco** y es deliberadamente mínimo
 (`gameId`, `title`, `system`). Su papel no es guardar datos, sino marcar la

@@ -7,6 +7,13 @@ import { StorageNode } from './StorageService';
  */
 export const LIBRARY_DIR = '.roms';
 
+/**
+ * Where everything the app derives about a library lives: metadata, covers and
+ * the scan cache. `LIBRARY_DIR` is the name this used to have and is still read
+ * from, so an existing library keeps working.
+ */
+export const META_DIR = '.meta';
+
 /** Past this size the CRC32 is only computed when explicitly requested. */
 export const CRC32_SIZE_LIMIT = 50 * 1024 * 1024;
 

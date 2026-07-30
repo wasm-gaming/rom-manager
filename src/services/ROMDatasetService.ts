@@ -51,7 +51,7 @@ interface DatasetIndex {
 }
 
 const DB_NAME = 'rom-manager-datasets';
-const DB_VERSION = 4;
+const DB_VERSION = 5;
 const STORE_ROMS = 'roms';
 const META_STORE = 'datasetsMeta';
 const DATASET_FORMAT_VERSION = 5;
@@ -98,13 +98,19 @@ export class ROMDatasetService {
           // The set of supported systems changed, so entries cached under the
           // previous one would linger forever: no dataset claims them anymore
           // and nothing would ever overwrite them.
-          transaction.objectStore(STORE_ROMS).clear();
+          const romStore = transaction.objectStore(STORE_ROMS);
+          romStore.clear();
           transaction.objectStore(META_STORE).clear();
+
+          if (!romStore.indexNames.contains('system')) {
+            romStore.createIndex('system', 'system', { unique: false });
+          }
         } else {
           const romStore = db.createObjectStore(STORE_ROMS, { keyPath: 'crc' });
           romStore.createIndex('md5', 'md5', { unique: false });
           romStore.createIndex('sha1', 'sha1', { unique: false });
           romStore.createIndex('name', 'name', { unique: false });
+          romStore.createIndex('system', 'system', { unique: false });
         }
 
         // Store: metadata tracking
@@ -247,6 +253,7 @@ export class ROMDatasetService {
       if (this.isValidROMMetadata(rom)) {
         romStore.put({
           ...rom,
+          system,
           crc: rom.crc.toUpperCase(),
           md5: rom.md5?.toUpperCase(),
           sha1: rom.sha1?.toUpperCase(),
@@ -280,6 +287,26 @@ export class ROMDatasetService {
    */
   private static sanitizeCoverUrl(cover: unknown): string | undefined {
     return typeof cover === 'string' && cover.startsWith('https://') ? cover : undefined;
+  }
+
+  /**
+   * Every entry of a system, which is what the catalogue is grouped from.
+   *
+   * Read from IndexedDB rather than fetched again: `ensureSystem` has already
+   * put the whole dataset there, and a system runs to tens of thousands of
+   * entries.
+   */
+  static async listSystemRoms(system: string): Promise<ROMMetadata[]> {
+    await this.ensureSystem(system);
+
+    const db = await this.getDB();
+    const index = db.transaction([STORE_ROMS], 'readonly').objectStore(STORE_ROMS).index('system');
+
+    return new Promise((resolve, reject) => {
+      const request = index.getAll(system);
+      request.onsuccess = () => resolve(request.result ?? []);
+      request.onerror = () => reject(request.error);
+    });
   }
 
   /**

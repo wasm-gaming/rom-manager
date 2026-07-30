@@ -19,9 +19,11 @@ export interface StorageStat {
 
 /**
  * Bookkeeping folders that back the app itself: the VFSNode journal and the
- * ROM library. Neither belongs in the file browser.
+ * metadata sidecar. Neither belongs in the file browser. `.roms` is the name
+ * the sidecar used before and is still hidden so an existing library does not
+ * suddenly show it.
  */
-const HIDDEN_DIRS = new Set(['.vfs', '.roms']);
+const HIDDEN_DIRS = new Set(['.vfs', '.roms', '.meta']);
 
 /**
  * StorageNode wraps a single VFSNode instance for a folder
@@ -87,6 +89,27 @@ export class StorageNode {
 
   async readFile(path: string): Promise<Uint8Array> {
     return this.requireNode().read(path);
+  }
+
+  /**
+   * Read a file as a stream, so a disc image can be hashed without ever being
+   * held whole in memory.
+   */
+  async readStream(path: string): Promise<ReadableStream<Uint8Array>> {
+    return this.requireNode().readStream(path);
+  }
+
+  /**
+   * Every file below a folder, depth first.
+   *
+   * Yields as it walks rather than returning a list, because a library holds
+   * thousands of files and the caller hashes them one at a time anyway.
+   */
+  async *walkFiles(path: string = ''): AsyncGenerator<StorageEntry> {
+    for (const entry of await this.list(path)) {
+      if (entry.kind === 'directory') yield* this.walkFiles(entry.path);
+      else yield entry;
+    }
   }
 
   async writeFile(path: string, content: Uint8Array): Promise<void> {

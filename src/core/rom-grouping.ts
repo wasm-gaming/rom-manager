@@ -106,6 +106,9 @@ const RESERVED_NAMES = new Set([
 /** Longest file or folder name produced, leaving room for extensions. */
 const MAX_NAME_LENGTH = 120;
 
+/** Longest an unrecognized tag may grow inside a variant key. */
+const SLUG_LENGTH = 24;
+
 /**
  * Characters libretro replaces with `_` in its thumbnail file names.
  *
@@ -284,13 +287,20 @@ function checksumSuffix(game: DatGame): string {
  *
  * `Retro-Bit Generations` becomes `retrobitgenerations`. Separators are
  * dropped rather than kept so the result cannot be mistaken for the `-` that
- * joins the parts of a key.
+ * joins the parts of a key, and whole words are dropped rather than cut, so a
+ * long tag ends at `squaresoftonplaystation` instead of mid-word.
  */
 function slug(tag: string): string {
-  return tag
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '')
-    .slice(0, 24);
+  const words = tag.toLowerCase().match(/[a-z0-9]+/g);
+  if (!words) return '';
+
+  let result = '';
+  for (const word of words) {
+    if (result.length + word.length > SLUG_LENGTH) break;
+    result += word;
+  }
+
+  return result || words[0].slice(0, SLUG_LENGTH);
 }
 
 /**
