@@ -39,6 +39,8 @@ interface DatasetJSON {
 
 type DatasetMedia = 'cartridge' | 'disc';
 
+export type { DatasetMedia };
+
 interface DatasetIndexEntry {
   system: string;
   media: DatasetMedia;
@@ -179,6 +181,17 @@ export class ROMDatasetService {
     load.catch(() => this.loading.delete(system));
 
     return load;
+  }
+
+  /**
+   * Whether a system stores its games as single cartridge files or as discs,
+   * which decides both its folder layout and how it is scanned.
+   */
+  static async mediaOf(system: string): Promise<DatasetMedia | null> {
+    const index = await this.getIndex();
+    const entry = index?.files.find((file) => file.system === system);
+
+    return entry && this.isValidDatasetIndexEntry(entry) ? entry.media : null;
   }
 
   private static isValidDatasetIndexEntry(value: unknown): value is DatasetIndexEntry {

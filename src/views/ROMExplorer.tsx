@@ -134,7 +134,7 @@ export function ROMExplorer(): JSX.Element {
   };
 
   /**
-   * Lists `.roms/<System>` once per system, which is all the tree needs to tell
+   * Lists `.meta/<System>` once per system, which is all the tree needs to tell
    * an initialised ROM from a plain file.
    */
   const handleVisibleChange = useCallback(

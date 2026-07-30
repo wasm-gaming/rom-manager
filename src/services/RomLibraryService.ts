@@ -1,18 +1,18 @@
 import { StorageNode } from './StorageService';
 
 /**
- * Sidecar folder holding everything the app knows about the ROMs. It mirrors
- * the library layout (`.roms/<System>/<Game>.json`) so the ROM folders
- * themselves stay free of anything that is not a ROM.
- */
-export const LIBRARY_DIR = '.roms';
-
-/**
- * Where everything the app derives about a library lives: metadata, covers and
- * the scan cache. `LIBRARY_DIR` is the name this used to have and is still read
- * from, so an existing library keeps working.
+ * Sidecar folder holding everything the app derives about a library: metadata,
+ * covers and the scan cache. It mirrors the library layout
+ * (`.meta/<System>/<Game>.json`) so the ROM folders themselves stay free of
+ * anything that is not a ROM.
  */
 export const META_DIR = '.meta';
+
+/**
+ * What the sidecar was called before. Still read from, so a library written by
+ * an earlier version keeps its metadata; never written to.
+ */
+export const LEGACY_META_DIR = '.roms';
 
 /** Past this size the CRC32 is only computed when explicitly requested. */
 export const CRC32_SIZE_LIMIT = 50 * 1024 * 1024;
@@ -20,7 +20,7 @@ export const CRC32_SIZE_LIMIT = 50 * 1024 * 1024;
 const RECORD_VERSION = 1;
 
 /**
- * What a `.roms/<System>/<Game>.json` file holds. Written the first time the
+ * What a `.meta/<System>/<Game>.json` file holds. Written the first time the
  * user edits a game, never before.
  */
 export interface RomRecord {
@@ -72,18 +72,18 @@ export function gameNameOf(romPath: string): string {
   return dot <= 0 ? name : name.slice(0, dot);
 }
 
-/** `.roms/<System>` — where the record and the cover of a game live. */
-export function recordDirOf(romPath: string): string {
+/** `.meta/<System>` — where the record and the cover of a game live. */
+export function recordDirOf(romPath: string, base: string = META_DIR): string {
   const system = systemOf(romPath);
-  return system ? `${LIBRARY_DIR}/${system}` : LIBRARY_DIR;
+  return system ? `${base}/${system}` : base;
 }
 
-export function recordPathOf(romPath: string): string {
-  return `${recordDirOf(romPath)}/${gameNameOf(romPath)}.json`;
+export function recordPathOf(romPath: string, base: string = META_DIR): string {
+  return `${recordDirOf(romPath, base)}/${gameNameOf(romPath)}.json`;
 }
 
-export function coverPathOf(romPath: string, coverFile: string): string {
-  return `${recordDirOf(romPath)}/${coverFile}`;
+export function coverPathOf(romPath: string, coverFile: string, base: string = META_DIR): string {
+  return `${recordDirOf(romPath, base)}/${coverFile}`;
 }
 
 function isRemoteCover(cover: string): boolean {
@@ -134,25 +134,34 @@ export function emptyRecord(): RomRecord {
 
 /**
  * Reads and writes the ROM library that shadows an opened folder.
+ *
+ * Everything is written to `META_DIR`. Reads fall back to `LEGACY_META_DIR`,
+ * so a library written before the rename keeps its metadata; a record read
+ * from there moves across the next time it is saved.
  */
 export class RomLibrary {
   constructor(private readonly node: StorageNode) {}
 
   /** The record of a game, or `null` when it has never been edited. */
   async read(romPath: string): Promise<RomRecord | null> {
-    let bytes: Uint8Array;
+    for (const base of [META_DIR, LEGACY_META_DIR]) {
+      let bytes: Uint8Array;
 
-    try {
-      bytes = await this.node.readFile(recordPathOf(romPath));
-    } catch {
-      return null;
+      try {
+        bytes = await this.node.readFile(recordPathOf(romPath, base));
+      } catch {
+        continue;
+      }
+
+      try {
+        return parseRecord(JSON.parse(new TextDecoder().decode(bytes)));
+      } catch {
+        // A damaged record is not a reason to fall back to an older one.
+        return null;
+      }
     }
 
-    try {
-      return parseRecord(JSON.parse(new TextDecoder().decode(bytes)));
-    } catch {
-      return null;
-    }
+    return null;
   }
 
   async readMany(romPaths: string[]): Promise<Map<string, RomRecord | null>> {
@@ -169,7 +178,15 @@ export class RomLibrary {
   }
 
   async remove(romPath: string): Promise<void> {
-    await this.node.remove(recordPathOf(romPath));
+    // Also in the old folder: leaving it there would resurrect the record on
+    // the next read.
+    for (const base of [META_DIR, LEGACY_META_DIR]) {
+      try {
+        await this.node.remove(recordPathOf(romPath, base));
+      } catch {
+        // Nothing to delete in that folder.
+      }
+    }
   }
 
   /**
@@ -177,20 +194,23 @@ export class RomLibrary {
    * a whole folder, which is what keeps the tree from reading a sidecar per row.
    */
   async initializedGames(system: string): Promise<Set<string>> {
-    const directory = system ? `${LIBRARY_DIR}/${system}` : LIBRARY_DIR;
+    const names = new Set<string>();
 
-    try {
-      const entries = await this.node.list(directory);
+    for (const base of [META_DIR, LEGACY_META_DIR]) {
+      const directory = system ? `${base}/${system}` : base;
 
-      return new Set(
-        entries
-          .filter((entry) => entry.kind === 'file' && entry.name.endsWith('.json'))
-          .map((entry) => entry.name.slice(0, -'.json'.length)),
-      );
-    } catch {
-      // A system nobody has edited yet simply has no folder.
-      return new Set();
+      try {
+        for (const entry of await this.node.list(directory)) {
+          if (entry.kind === 'file' && entry.name.endsWith('.json')) {
+            names.add(entry.name.slice(0, -'.json'.length));
+          }
+        }
+      } catch {
+        // A system nobody has edited yet simply has no folder.
+      }
     }
+
+    return names;
   }
 
   /**
@@ -221,12 +241,16 @@ export class RomLibrary {
     if (!safe) return undefined;
     if (isRemoteCover(safe)) return safe;
 
-    try {
-      const bytes = await this.node.readFile(coverPathOf(romPath, safe));
-      return URL.createObjectURL(new Blob([bytes as BlobPart]));
-    } catch {
-      return undefined;
+    for (const base of [META_DIR, LEGACY_META_DIR]) {
+      try {
+        const bytes = await this.node.readFile(coverPathOf(romPath, safe, base));
+        return URL.createObjectURL(new Blob([bytes as BlobPart]));
+      } catch {
+        // Try the folder the previous version wrote to.
+      }
     }
+
+    return undefined;
   }
 }
 

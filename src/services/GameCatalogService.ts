@@ -11,7 +11,6 @@ import { matchGroupsWithLocalFiles, type MatchResult } from '../core/rom-matchin
 import { scanSystem, type ScanProgress } from './LibraryScanService';
 import { ROMDatasetService, type ROMMetadata } from './ROMDatasetService';
 import type { StorageNode } from './StorageService';
-
 /** Entries without a checksum cannot be matched against anything. */
 function toDatGames(roms: ROMMetadata[]): DatGame[] {
   return roms
@@ -64,9 +63,12 @@ export class GameCatalogService {
     system: string,
     onProgress?: (progress: ScanProgress) => void,
   ): Promise<MatchResult> {
+    const media = await ROMDatasetService.mediaOf(system);
+    if (!media) throw new Error(`No dataset available for system: ${system}`);
+
     const [catalogue, files] = await Promise.all([
       this.catalogueOf(system),
-      scanSystem(node, system, onProgress),
+      scanSystem(node, system, media, onProgress),
     ]);
 
     return matchGroupsWithLocalFiles(catalogue, files);

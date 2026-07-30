@@ -9,10 +9,19 @@
 
 import { streamCRC32 } from './ChecksumService';
 import { META_DIR } from './RomLibraryService';
-import type { StorageNode } from './StorageService';
+import type { StorageEntry, StorageNode } from './StorageService';
 import type { LocalFile } from '../core/rom-matching';
 
 const SCAN_VERSION = 1;
+
+export type SystemMedia = 'cartridge' | 'disc';
+
+/**
+ * Marks a folder as a game the app manages, as opposed to a collection the
+ * user curates by hand. Only disc systems have it, since only there does a
+ * release need a folder of its own.
+ */
+export const GAME_MARKER = 'game.json';
 
 interface ScanEntry {
   size: number;
@@ -93,6 +102,50 @@ async function writeCache(
 }
 
 /**
+ * The ROMs of a system, leaving collections alone.
+ *
+ * A collection is a folder the user curates by hand, and the app never touches
+ * what is inside one. Telling it apart from a managed folder depends on the
+ * medium: a cartridge system keeps its ROMs loose at the root, so any subfolder
+ * is a collection; on a disc system game folders and collections sit side by
+ * side, so the marker file is what separates them.
+ */
+async function collectFiles(
+  node: StorageNode,
+  system: string,
+  media: SystemMedia,
+): Promise<StorageEntry[]> {
+  let entries: StorageEntry[];
+
+  try {
+    entries = await node.list(system);
+  } catch {
+    // The library has no folder for this system.
+    return [];
+  }
+
+  const files: StorageEntry[] = [];
+
+  for (const entry of entries) {
+    // A loose file at the root counts either way: on a disc system it is an
+    // image that has not been organised into its folder yet.
+    if (entry.kind === 'file') {
+      files.push(entry);
+      continue;
+    }
+
+    if (media === 'cartridge') continue;
+    if (!(await node.exists(`${entry.path}/${GAME_MARKER}`))) continue;
+
+    for await (const file of node.walkFiles(entry.path)) {
+      if (file.name !== GAME_MARKER) files.push(file);
+    }
+  }
+
+  return files;
+}
+
+/**
  * Hash every ROM of a system, reusing the cached checksum where the file has
  * not changed.
  *
@@ -104,10 +157,10 @@ async function writeCache(
 export async function scanSystem(
   node: StorageNode,
   system: string,
+  media: SystemMedia,
   onProgress?: (progress: ScanProgress) => void,
 ): Promise<LocalFile[]> {
-  const files = [];
-  for await (const entry of node.walkFiles(system)) files.push(entry);
+  const files = await collectFiles(node, system, media);
 
   const cached = await readCache(node, system);
   const fresh = new Map<string, ScanEntry>();
