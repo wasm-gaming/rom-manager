@@ -119,7 +119,8 @@ En ambos casos, la metadata vive fuera de las carpetas de ROMs:
 
 ```
 .meta/<sistema>/<Juego>.json                       # metadata editable
-.meta/<sistema>/<Juego>.<variante>.case.png        # carátula
+.meta/<sistema>/<Juego>.<variante>.case.png        # carátula de una release
+.meta/<sistema>/<Juego>.case.png                   # carátula del juego
 .meta/<sistema>/scan.json                          # caché de hashes
 .meta/wizard.json
 ```
@@ -274,6 +275,52 @@ ningún carácter no admitido por exFAT. La ruta más larga generada mide 256
 caracteres, holgada en Linux pero cerca del `MAX_PATH` de Windows: es una
 limitación aceptada, ya que el destino es la SD de un MiSTer.
 
+## Carátulas
+
+Las carátulas son las de `libretro-thumbnails`. Se publican con el **nombre
+completo del DAT**, tags incluidos, así que una carátula pertenece a una release
+y no a un juego: `Sonic (Japan)` y `Sonic (USA)` no llevan la misma. De ahí dos
+capas, resueltas ambas en el build (`scripts/dat-to-json.mjs`):
+
+- **por release**: emparejamiento exacto de nombre, entrada a entrada. Es el
+  campo `cover` de cada entrada del dataset.
+- **por juego**: unión por título base (`normalizeGameName`), en el mapa
+  `covers` del dataset. Solo lleva los juegos a los que el emparejamiento
+  exacto no llegó —una carátula publicada de una revisión que este DAT no
+  lista—, así que no duplica nada de lo anterior.
+
+Sobre los 23 sistemas: 19 153 juegos con carátula por release y 742 más por
+título, o sea **19 895 de 26 548 juegos (74,9 %)**. El mapa por juego son 742
+entradas en total, unos pocos KB.
+
+El navegador elige, para cada juego, la carátula de una release que el usuario
+tenga; si ninguna la tiene, la de una release retail antes que la de una beta o
+un prototipo; y si ninguna release tiene carátula propia, la del juego. La
+elección no depende del orden de iteración.
+
+**Las imágenes se leen del repositorio, no de `thumbnails.libretro.com`.** Ese
+origen sirve las mismas imágenes pero **sin cabecera
+`Access-Control-Allow-Origin`**, de modo que el navegador puede mostrarlas y no
+leer sus bytes; guardar una copia en `.meta/` exige leerlos. La URL es
+`raw.githubusercontent.com/libretro-thumbnails/<Repo>/HEAD/Named_Boxarts/<nombre>.png`,
+verificado en los 23 repositorios. `HEAD` sustituye al nombre de rama porque los
+repositorios no coinciden en él.
+
+Guardar la copia: `<Juego>.<variante>.case.png` cuando la carátula es de esa
+release, `<Juego>.case.png` cuando es la del juego. El segmento de variante
+está exactamente cuando la carátula es propia de la release, y eso es lo que
+evita bajar quince veces la misma imagen para las quince variantes de un juego.
+La extensión sale de la URL y nunca de la respuesta, así que el nombre de una
+carátula ya guardada se conoce sin descargarla. Es el mismo nombre que toma una
+carátula elegida a mano en el editor, de modo que en una biblioteca organizada
+sustituye a la publicada.
+
+**Navegar es lo que puebla `.meta/`**: al abrir un juego se muestra la copia
+local si existe y la remota si no, y en ese caso se baja una copia en segundo
+plano. No hay paso de descarga masiva y no se bajan miles de imágenes de juegos
+que nadie abre. Una descarga bloqueada no es un error: se sigue mostrando la
+imagen remota.
+
 ## Colecciones
 
 - Ejemplos: colección NeoGeo de Darksoft, lista personal curada.
@@ -307,6 +354,19 @@ Dos fuentes combinadas en un mismo recorrido real del filesystem:
     agrupa con sus variantes hermanas dentro de su `GameGroup`.
   - Lo que no reconoce, lo muestra suelto igual que en modo plano.
   - Permite navegar subcarpetas y ver info de archivos/carpetas.
+
+**Un juego es una sola fila, y no se despliega.** Que quince ficheros de Sonic 2
+se lean como un juego es justo para lo que sirve agrupar, y una fila que se abre
+y vuelve a enseñar los quince ficheros deshace eso. Así que la fila lleva sus
+releases como dato, no como hijos, y donde se leen es en el panel de detalles:
+todas las que el catálogo conoce, ausentes incluidas, con los ficheros de cada
+una y el que falte marcado como tal. La fila muestra además cuántas releases de
+las conocidas están en la carpeta.
+
+La fila actúa sobre **todos** los ficheros del juego: seleccionarla los
+selecciona, y arrastrar o borrar los mueve o los borra juntos. Como el árbol ya
+no lista los ficheros de un juego, el panel de detalles es también la única vía
+hasta uno: los presentes son botones que lo abren, con vuelta al juego.
 
 **Activación de wizard por carpeta**: un único fichero `.meta/wizard.json`
 guarda (entre otras posibles cosas) el listado de carpetas activadas como
@@ -346,12 +406,9 @@ forma de saber de qué sistema se trata y el explorador se queda en modo plano.
 
 ## Pendiente de definir
 
-- Carátulas: matching contra `libretro-thumbnails` por nombre canónico
-  (resuelto a nivel de nombre por `normalizeGameName`, falta detallar el
-  flujo de descarga y almacenamiento en `.meta`).
-- Estrategia de carga de datasets en IndexedDB: hoy se cargan todos al
-  arrancar; con la lista completa de sistemas conviene cargarlos por sistema
-  bajo demanda.
-- Reorganización de una biblioteca existente hacia la estructura canónica:
-  es la única operación destructiva sobre ficheros del usuario, necesita
-  previsualización y registro de operaciones para deshacer.
+- Metadata editable por juego: hoy el registro `.json` se indexa por la ruta del
+  fichero, así que en la estructura canónica de cartucho acaba siendo por
+  variante (`<Juego>.<variante>.json`) y no por juego, que es lo que dice este
+  documento.
+- Neo Geo AES/MVS: identificación por nombre de romset, sin checksums (ver
+  arriba).

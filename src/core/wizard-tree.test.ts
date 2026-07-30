@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { groupDatGames, type DatGame } from './rom-grouping';
 import { matchGroupsWithLocalFiles, type LocalFile, type MatchResult } from './rom-matching';
-import { buildWizardTree, type FolderEntry, type WizardNode } from './wizard-tree';
+import {
+  buildWizardTree,
+  type FolderEntry,
+  type WizardGame,
+  type WizardNode,
+} from './wizard-tree';
 
 function game(name: string, crc: string, fileName?: string): DatGame {
   return { name, crc, size: 1024, fileName: fileName ?? `${name}.md` };
@@ -27,9 +32,16 @@ function labels(nodes: WizardNode[]): string[] {
   return nodes.map((node) => node.label);
 }
 
-function childrenOf(nodes: WizardNode[], label: string): WizardNode[] {
+function gameRow(nodes: WizardNode[], label: string): WizardGame {
   const node = nodes.find((candidate) => candidate.label === label);
-  return node && 'children' in node ? node.children : [];
+  if (!node || node.kind !== 'group') throw new Error(`No game row for ${label}`);
+  return node;
+}
+
+function variantOf(row: WizardGame, key: string) {
+  const variant = row.variants.find((candidate) => candidate.key === key);
+  if (!variant) throw new Error(`No variant ${key}`);
+  return variant;
 }
 
 describe('buildWizardTree', () => {
@@ -42,7 +54,32 @@ describe('buildWizardTree', () => {
     );
 
     expect(labels(tree)).toEqual(['Sonic the Hedgehog']);
-    expect(labels(childrenOf(tree, 'Sonic the Hedgehog'))).toEqual(['USA']);
+    expect(gameRow(tree, 'Sonic the Hedgehog').variants.map((it) => it.key)).toEqual(['USA']);
+  });
+
+  it('is a single row, with the releases carried as data', () => {
+    // Fifteen files reading as one game is the point of grouping; a row that
+    // unfolds back into them gives that away again.
+    const games = [
+      game('Sonic the Hedgehog 2 (World)', 'AAAA1111'),
+      game('Sonic the Hedgehog 2 (World) (Beta)', 'BBBB2222'),
+    ];
+    const entries = [file('MegaDrive/sonic2.bin'), file('MegaDrive/sonic2beta.bin')];
+    const tree = buildWizardTree(
+      'MegaDrive',
+      entries,
+      match(games, [
+        local('MegaDrive/sonic2.bin', 'AAAA1111'),
+        local('MegaDrive/sonic2beta.bin', 'BBBB2222'),
+      ]),
+    );
+
+    expect(tree).toHaveLength(1);
+    expect(tree[0]).not.toHaveProperty('children');
+    expect(gameRow(tree, 'Sonic the Hedgehog 2').paths).toEqual([
+      'MegaDrive/sonic2.bin',
+      'MegaDrive/sonic2beta.bin',
+    ]);
   });
 
   it('lists the sibling variants even when they are missing', () => {
@@ -58,14 +95,10 @@ describe('buildWizardTree', () => {
       match(games, [local('MegaDrive/sonic.bin', 'BBBB2222')]),
     );
 
-    const variants = childrenOf(tree, 'Sonic the Hedgehog');
+    const { variants } = gameRow(tree, 'Sonic the Hedgehog');
 
-    expect(labels(variants)).toEqual(['Europe', 'Japan', 'USA']);
-    expect(variants.map((node) => ('status' in node ? node.status : undefined))).toEqual([
-      'complete',
-      'missing',
-      'missing',
-    ]);
+    expect(variants.map((it) => it.key)).toEqual(['Europe', 'Japan', 'USA']);
+    expect(variants.map((it) => it.status)).toEqual(['complete', 'missing', 'missing']);
   });
 
   it('leaves out the games with nothing on disk', () => {
@@ -94,8 +127,8 @@ describe('buildWizardTree', () => {
     expect(tree[1].kind).toBe('entry');
   });
 
-  it('names a file row after the file on disk, not after the dataset', () => {
-    // The row has to point at something the user can find in their folder.
+  it('names a file after the file on disk, not after the dataset', () => {
+    // It has to point at something the user can find in their folder.
     const games = [game('Sonic the Hedgehog (USA)', 'AAAA1111', 'Sonic the Hedgehog (USA).md')];
     const tree = buildWizardTree(
       'MegaDrive',
@@ -103,12 +136,12 @@ describe('buildWizardTree', () => {
       match(games, [local('MegaDrive/sonic_u.bin', 'AAAA1111')]),
     );
 
-    const [row] = childrenOf(childrenOf(tree, 'Sonic the Hedgehog'), 'USA');
-
-    expect(row).toMatchObject({ kind: 'file', label: 'sonic_u.bin', path: 'MegaDrive/sonic_u.bin' });
+    expect(variantOf(gameRow(tree, 'Sonic the Hedgehog'), 'USA').files).toEqual([
+      { label: 'sonic_u.bin', path: 'MegaDrive/sonic_u.bin' },
+    ]);
   });
 
-  it('names a missing file row after the dataset, which is all there is', () => {
+  it('names a missing file after the dataset, which is all there is', () => {
     const games = [
       game('Final Fantasy VII (USA) (Disc 1)', 'AAAA1111', 'ff7-1.bin'),
       game('Final Fantasy VII (USA) (Disc 2)', 'BBBB2222', 'ff7-2.bin'),
@@ -119,11 +152,9 @@ describe('buildWizardTree', () => {
       match(games, [local('PSX/Final Fantasy VII/USA/one.bin', 'AAAA1111')]),
     );
 
-    const files = childrenOf(childrenOf(tree, 'Final Fantasy VII'), 'USA');
-
-    expect(files.map((node) => [node.kind, node.label])).toEqual([
-      ['file', 'one.bin'],
-      ['missing', 'ff7-2.bin'],
+    expect(variantOf(gameRow(tree, 'Final Fantasy VII'), 'USA').files).toEqual([
+      { label: 'one.bin', path: 'PSX/Final Fantasy VII/USA/one.bin' },
+      { label: 'ff7-2.bin' },
     ]);
   });
 
@@ -183,6 +214,27 @@ describe('buildWizardTree', () => {
     expect(labels(tree)).toEqual(['Golden Axe']);
   });
 
+  it('lists a file held outside the folder as missing from it', () => {
+    // The match covers the whole system, so a release present elsewhere in the
+    // library is still not in the folder on screen.
+    const games = [
+      game('Golden Axe (USA)', 'AAAA1111'),
+      game('Golden Axe (Japan)', 'BBBB2222', 'Golden Axe (Japan).md'),
+    ];
+    const files = [
+      local('MegaDrive/Favoritos/axe.bin', 'AAAA1111'),
+      local('MegaDrive/axe_j.bin', 'BBBB2222'),
+    ];
+
+    const row = gameRow(
+      buildWizardTree('MegaDrive/Favoritos', [], match(games, files)),
+      'Golden Axe',
+    );
+
+    expect(row.paths).toEqual(['MegaDrive/Favoritos/axe.bin']);
+    expect(variantOf(row, 'Japan').files).toEqual([{ label: 'Golden Axe (Japan).md' }]);
+  });
+
   it('gives every row a key of its own', () => {
     const games = [
       game('Sonic the Hedgehog (USA)', 'AAAA1111'),
@@ -195,14 +247,7 @@ describe('buildWizardTree', () => {
       match(games, [local('MegaDrive/sonic.bin', 'AAAA1111')]),
     );
 
-    const keys: string[] = [];
-    const collect = (nodes: WizardNode[]) => {
-      for (const node of nodes) {
-        keys.push(node.key);
-        if ('children' in node) collect(node.children);
-      }
-    };
-    collect(tree);
+    const keys = tree.map((node) => node.key);
 
     expect(new Set(keys).size).toBe(keys.length);
   });

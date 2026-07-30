@@ -226,7 +226,11 @@ export class RomLibrary {
 
     const blob = await response.blob();
     const extension = coverExtension(sourceUrl, blob.type);
-    const coverFile = `${gameNameOf(romPath)}.cover.${extension}`;
+    // Same name the catalogue's boxarts take, so in a library organised the
+    // canonical way a cover picked by hand simply replaces the published one.
+    // Records keep whatever name they were written with, so older files still
+    // resolve.
+    const coverFile = `${gameNameOf(romPath)}.case.${extension}`;
 
     await this.node.writeFile(coverPathOf(romPath, coverFile), new Uint8Array(await blob.arrayBuffer()));
     return coverFile;

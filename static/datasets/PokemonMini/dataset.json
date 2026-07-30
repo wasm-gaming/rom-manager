@@ -4,7 +4,11 @@
     "totalGames": 42,
     "totalFiles": 42,
     "totalCovers": 39,
-    "generated": "2026-07-29T23:49:50.121Z"
+    "totalGameCovers": 1,
+    "generated": "2026-07-30T10:39:18.146Z"
+  },
+  "covers": {
+    "Pokemon Tetris": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Tetris%20(Europe)%20(En%2CJa%2CFr).png"
   },
   "list": [
     {
@@ -24,7 +28,7 @@
       "sha1": "6F9BDED4842B451102083D181DB9DEAC2A7696E4",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pichu%20Bros.%20Mini%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pichu%20Bros.%20Mini%20(Japan).png"
     },
     {
       "name": "Pichu Bros. Mini - Hoppip's Jump Match (Japan) (Preview)",
@@ -35,7 +39,7 @@
       "sha1": "1C928C1E989F37751536494E1E843ED01C7F2C93",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pichu%20Bros.%20Mini%20-%20Hoppip's%20Jump%20Match%20(Japan)%20(Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pichu%20Bros.%20Mini%20-%20Hoppip's%20Jump%20Match%20(Japan)%20(Preview).png"
     },
     {
       "name": "Pichu Bros. Mini - Netsukikyuu (Japan) (Preview)",
@@ -46,7 +50,7 @@
       "sha1": "041B6BEA48D316EB63EFCF930A9BDA0DD3BD6618",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pichu%20Bros.%20Mini%20-%20Netsukikyuu%20(Japan)%20(Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pichu%20Bros.%20Mini%20-%20Netsukikyuu%20(Japan)%20(Preview).png"
     },
     {
       "name": "Pichu Bros. Mini - Skateboard (Japan) (Preview)",
@@ -57,7 +61,7 @@
       "sha1": "B36ED9E3C86D37B128BCEFBEB6088C4C66F11C52",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pichu%20Bros.%20Mini%20-%20Skateboard%20(Japan)%20(Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pichu%20Bros.%20Mini%20-%20Skateboard%20(Japan)%20(Preview).png"
     },
     {
       "name": "Pokemon Anime Card Daisakusen (Japan)",
@@ -68,7 +72,7 @@
       "sha1": "2C3AEE0D0DB8B4A80083732B8DB07B0CC72608A8",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Anime%20Card%20Daisakusen%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Anime%20Card%20Daisakusen%20(Japan).png"
     },
     {
       "name": "Pokemon Party Mini (Europe)",
@@ -79,7 +83,7 @@
       "sha1": "58C3210187497CFFE989DEBCC095CB99C465E970",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20(Europe).png"
     },
     {
       "name": "Pokemon Party Mini (Japan)",
@@ -90,7 +94,7 @@
       "sha1": "4DB4568B990077C21320B50DEE6A3CEB258809DB",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20(Japan).png"
     },
     {
       "name": "Pokemon Party Mini (USA)",
@@ -101,7 +105,7 @@
       "sha1": "AC94ED80D6F857E9530D17CC77C43AA809BF0415",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20(USA).png"
     },
     {
       "name": "Pokemon Party Mini - Baseline Judge (Europe) (GameCube)",
@@ -112,7 +116,7 @@
       "sha1": "A309E00B2A8D7290070F27EC2FE10CFABA048283",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Baseline%20Judge%20(Europe)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Baseline%20Judge%20(Europe)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Baseline Judge (Japan) (GameCube)",
@@ -123,7 +127,7 @@
       "sha1": "BDAD2FC86506F18C16D2BD249CC1AD4EBF6113DD",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Baseline%20Judge%20(Japan)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Baseline%20Judge%20(Japan)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Baseline Judge (USA) (GameCube)",
@@ -134,7 +138,7 @@
       "sha1": "20004FFC01EEB04E72402E70FC97170111AAFA6A",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Baseline%20Judge%20(USA)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Baseline%20Judge%20(USA)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Chansey's Dribble (Europe) (GameCube)",
@@ -145,7 +149,7 @@
       "sha1": "C9A5F335C93E9BACF198B976D430CF798BC517BC",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Chansey's%20Dribble%20(Europe)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Chansey's%20Dribble%20(Europe)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Pikachu's Rocket Start (Europe) (GameCube)",
@@ -156,7 +160,7 @@
       "sha1": "B1922F3D43F3A4E36876C3E0E8428809FD999EFC",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Pikachu's%20Rocket%20Start%20(Europe)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Pikachu's%20Rocket%20Start%20(Europe)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Ricochet Dribble (Japan) (GameCube)",
@@ -167,7 +171,7 @@
       "sha1": "88B60902F9CF779EBCBA1CAEE7C8477FC2E22598",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Ricochet%20Dribble%20(Japan)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Ricochet%20Dribble%20(Japan)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Ricochet Dribble (USA) (GameCube)",
@@ -178,7 +182,7 @@
       "sha1": "BA1DB1745933A941479D885FE0D1B52365B7F817",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Ricochet%20Dribble%20(USA)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Ricochet%20Dribble%20(USA)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Rocket Start (USA) (GameCube)",
@@ -189,7 +193,7 @@
       "sha1": "840D43FE55E8E056940FF0B7BC6D7E4E11B5E047",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Rocket%20Start%20(USA)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Rocket%20Start%20(USA)%20(GameCube).png"
     },
     {
       "name": "Pokemon Party Mini - Slowking's Judge (Europe) (GameCube)",
@@ -200,7 +204,7 @@
       "sha1": "E3BD506B97EA94E9291C2FA4E1395E1829BAFEAF",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Slowking's%20Judge%20(Europe)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Party%20Mini%20-%20Slowking's%20Judge%20(Europe)%20(GameCube).png"
     },
     {
       "name": "Pokemon Pinball Mini (Japan)",
@@ -211,7 +215,7 @@
       "sha1": "57C78731F17F29D9CDDFC7E21B4D8801E8569CA6",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Pinball%20Mini%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Pinball%20Mini%20(Japan).png"
     },
     {
       "name": "Pokemon Pinball Mini (USA, Europe)",
@@ -222,7 +226,7 @@
       "sha1": "3EC1E04DE413C22E9034074789FF2C45646EC0AC",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Pinball%20Mini%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Pinball%20Mini%20(USA%2C%20Europe).png"
     },
     {
       "name": "Pokemon Puzzle Collection (France)",
@@ -232,7 +236,7 @@
       "md5": "DE1EDFAF924DC6CF48C6D3D789BA79D9",
       "sha1": "5A2927770C1E2C7DF3F8CC80C9252BB1111CA3A6",
       "region": "France",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(France).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(France).png"
     },
     {
       "name": "Pokemon Puzzle Collection (France) (GameCube Preview)",
@@ -242,7 +246,7 @@
       "md5": "1811BB9F759CA25E60886A8BC06F9018",
       "sha1": "D748F54BB50622858AE65CBA74BA0CC82415FCBC",
       "region": "France",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(France)%20(GameCube%20Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(France)%20(GameCube%20Preview).png"
     },
     {
       "name": "Pokemon Puzzle Collection (Germany)",
@@ -252,7 +256,7 @@
       "md5": "185A1995DC07E222152B591BFFBE7720",
       "sha1": "7C83682F595DC6EAFC9C438D92EBA7920FF3B2CA",
       "region": "Germany",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Germany).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Germany).png"
     },
     {
       "name": "Pokemon Puzzle Collection (Germany) (GameCube Preview)",
@@ -262,7 +266,7 @@
       "md5": "C1F450D01759AFF0A34457408D141F2E",
       "sha1": "7DC61E11B482B873D58657C827E3B166B3882DB2",
       "region": "Germany",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Germany)%20(GameCube%20Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Germany)%20(GameCube%20Preview).png"
     },
     {
       "name": "Pokemon Puzzle Collection (Japan)",
@@ -273,7 +277,7 @@
       "sha1": "2DA4D24ED3192A88AB0B71ADE7AEC387987C5000",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Japan).png"
     },
     {
       "name": "Pokemon Puzzle Collection (Japan) (GameCube)",
@@ -284,7 +288,7 @@
       "sha1": "1CE915F0C03BC0EC2E505669336E6B6965F7476C",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Japan)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Japan)%20(GameCube).png"
     },
     {
       "name": "Pokemon Puzzle Collection (USA) (GameCube Preview)",
@@ -295,7 +299,7 @@
       "sha1": "048BB1D30D6FF21BE14DD123C52A375E12611238",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(USA)%20(GameCube%20Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(USA)%20(GameCube%20Preview).png"
     },
     {
       "name": "Pokemon Puzzle Collection (USA, Europe)",
@@ -306,7 +310,7 @@
       "sha1": "9C5FA07CC9F93874B297F759A6C6FD98F6EC6F47",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(USA%2C%20Europe).png"
     },
     {
       "name": "Pokemon Puzzle Collection Vol. 2 (Japan)",
@@ -317,7 +321,7 @@
       "sha1": "11775BBAC2E985EF90D4192ED6322DD3B8352AC9",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Puzzle%20Collection%20Vol.%202%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20Vol.%202%20(Japan).png"
     },
     {
       "name": "Pokemon Race Mini (Japan)",
@@ -328,7 +332,7 @@
       "sha1": "12BFBD2C8A810B49338148FEB6162E29A540AC3A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Race%20Mini%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Race%20Mini%20(Japan).png"
     },
     {
       "name": "Pokemon Race Mini (Japan) (Preview)",
@@ -339,7 +343,7 @@
       "sha1": "6B8DBAA68EDE37E64A22EE4B1CBB722F038CF5B5",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Race%20Mini%20(Japan)%20(Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Race%20Mini%20(Japan)%20(Preview).png"
     },
     {
       "name": "Pokemon Shock Tetris (Japan)",
@@ -350,7 +354,7 @@
       "sha1": "E81C3576B0C96E6CA28B958F8DDA11CEA5FCE078",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Shock%20Tetris%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Shock%20Tetris%20(Japan).png"
     },
     {
       "name": "Pokemon Sodateyasan Mini (Japan)",
@@ -361,7 +365,7 @@
       "sha1": "3B87D4D61BA3DB92190B6FFA055F463ADEA2363C",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Sodateyasan%20Mini%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Sodateyasan%20Mini%20(Japan).png"
     },
     {
       "name": "Pokemon Tetris (Europe) (En,Fr,De)",
@@ -381,7 +385,7 @@
       "md5": "A2A2ADD2F368E532EEECEF5566B5FD8E",
       "sha1": "7A8B3F6A3751CD39431D822FA3A8016FFD2D26D8",
       "region": "France",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Zany%20Cards%20(France).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Zany%20Cards%20(France).png"
     },
     {
       "name": "Pokemon Zany Cards (Germany)",
@@ -391,7 +395,7 @@
       "md5": "F974F9CA3A9FBAADCAF4FA1A88B5A763",
       "sha1": "0922E0147FF097E56D5EC98BF66EF050539329FA",
       "region": "Germany",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Zany%20Cards%20(Germany).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Zany%20Cards%20(Germany).png"
     },
     {
       "name": "Pokemon Zany Cards (USA, Europe)",
@@ -402,7 +406,7 @@
       "sha1": "F34909ED7D1C1D432819FF774C0767EBFA42FB84",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Pokemon%20Zany%20Cards%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Zany%20Cards%20(USA%2C%20Europe).png"
     },
     {
       "name": "Silver Falls - Monsters In North Island (World)",
@@ -421,7 +425,7 @@
       "sha1": "22CC052D900909A9032B7C84A0C7AB7C366A4A57",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Snorlax's%20Lunch%20Time%20(Europe)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Snorlax's%20Lunch%20Time%20(Europe)%20(GameCube).png"
     },
     {
       "name": "Snorlax's Lunch Time (Japan) (GameCube)",
@@ -432,7 +436,7 @@
       "sha1": "A332FEECA96C2B4CAD2E1ABD2D9B289804101A4A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Snorlax's%20Lunch%20Time%20(Japan)%20(GameCube).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Snorlax's%20Lunch%20Time%20(Japan)%20(GameCube).png"
     },
     {
       "name": "Togepi no Daibouken (Japan)",
@@ -443,7 +447,7 @@
       "sha1": "0F56E0A3E72180B1113B900A6D3E4F8E8F570BB3",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Togepi%20no%20Daibouken%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Togepi%20no%20Daibouken%20(Japan).png"
     },
     {
       "name": "Togepi no Daibouken (Japan) (Preview)",
@@ -454,7 +458,7 @@
       "sha1": "DB7D8209594C6E8EDEE5932F799F36ECF1CFAC9F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Nintendo%20-%20Pokemon%20Mini/Named_Boxarts/Togepi%20no%20Daibouken%20(Japan)%20(Preview).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Togepi%20no%20Daibouken%20(Japan)%20(Preview).png"
     }
   ]
 }

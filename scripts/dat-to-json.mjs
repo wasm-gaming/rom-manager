@@ -5,10 +5,24 @@
  *
  * When a covers file is supplied, every entry gets the URL of its published
  * boxart. Only scraped names are used, so the generated URLs never 404.
+ *
+ * Boxarts are published under the full DAT name, tags included, so they are
+ * matched entry by entry. What that misses is a game whose published boxart
+ * belongs to a release this DAT does not list — a different revision, or a
+ * region that never got dumped. Those are joined by base title into a second,
+ * game-level layer, which the application falls back to when a release has no
+ * boxart of its own.
+ *
+ * The base title comes from the application's own `normalizeGameName`, imported
+ * rather than reimplemented: the same key groups the games in the browser, names
+ * the folders on disk and looks up the boxarts here, and two implementations of
+ * it would eventually disagree.
  */
 
 import fs from 'fs';
 import path from 'path';
+import { boxartUrl } from './systems.mjs';
+import { normalizeGameName, parseGameName, sanitizeName } from '../src/core/rom-grouping.ts';
 
 /**
  * Parse clrmamepro DAT format with balanced parenthesis matching
@@ -133,29 +147,61 @@ function inferVideoStandard(region) {
 }
 
 /**
- * Reproduce the sanitization Libretro applies when publishing a thumbnail, so a
- * DAT game name can be matched against the scraped file names.
+ * How well a boxart name stands in for a whole game.
+ *
+ * Lower sorts first. A plain retail release beats a beta or a prototype, and
+ * among equals the least decorated name wins, so a game borrows a cover that
+ * looks like the game rather than like one of its oddities. The name itself
+ * breaks the remaining ties, so the choice never depends on listing order.
  */
-function toThumbnailName(name) {
-  return name.replace(/[&*/:`<>?\\|"]/g, '_');
+function coverRank(name) {
+  const parsed = parseGameName(name);
+  return [parsed.flags.length > 0 ? 1 : 0, parsed.tags.length, name.length, name];
+}
+
+function outranks(name, current) {
+  const candidate = coverRank(name);
+  const incumbent = coverRank(current);
+
+  for (let i = 0; i < candidate.length; i++) {
+    if (candidate[i] !== incumbent[i]) return candidate[i] < incumbent[i];
+  }
+
+  return false;
 }
 
 /**
- * Build a `sanitized game name -> boxart URL` lookup from a scraped covers file.
+ * Read a scraped covers file into the two lookups the join needs: one keyed by
+ * the published name, for the exact match, and one keyed by base title, for the
+ * game-level fallback.
  */
 function loadCovers(coversFile) {
-  if (!coversFile) return new Map();
+  if (!coversFile) return { byName: new Map(), byGame: new Map() };
 
   const covers = JSON.parse(fs.readFileSync(coversFile, 'utf-8'));
-  const baseUrl = covers?.meta?.baseUrl;
+  const repository = covers?.meta?.repository;
 
-  if (typeof baseUrl !== 'string' || !Array.isArray(covers.list)) {
+  if (typeof repository !== 'string' || !Array.isArray(covers.list)) {
     throw new Error(`Invalid covers file: ${coversFile}`);
   }
 
-  return new Map(
-    covers.list.map((name) => [name, `${baseUrl}/${encodeURIComponent(`${name}.png`)}`]),
-  );
+  const byName = new Map();
+  const byGame = new Map();
+
+  for (const name of covers.list) {
+    if (typeof name !== 'string' || name.length === 0) continue;
+
+    byName.set(name, boxartUrl(repository, name));
+
+    const game = normalizeGameName(name);
+    const chosen = byGame.get(game);
+    if (!chosen || outranks(name, chosen)) byGame.set(game, name);
+  }
+
+  return {
+    byName,
+    byGame: new Map([...byGame].map(([game, name]) => [game, boxartUrl(repository, name)])),
+  };
 }
 
 async function main() {
@@ -184,14 +230,19 @@ async function main() {
 
     const covers = loadCovers(coversFile);
     if (coversFile) {
-      console.log(`🖼️  Loaded ${covers.size} boxarts from: ${coversFile}`);
+      console.log(`🖼️  Loaded ${covers.byName.size} boxarts from: ${coversFile}`);
     }
 
     // Keep every ROM once. The application builds its lookup indexes in IndexedDB.
     const filesByCrc = new Map();
-    
+    /** Base titles the DAT lists, and whether one of their releases got a boxart. */
+    const gameCovered = new Map();
+
     games.forEach(game => {
-      const cover = covers.get(toThumbnailName(game.name));
+      const cover = covers.byName.get(sanitizeName(game.name));
+      const title = normalizeGameName(game.name);
+
+      if (cover || !gameCovered.has(title)) gameCovered.set(title, Boolean(cover));
 
       game.roms.forEach(rom => {
         const metadata = {
@@ -211,32 +262,44 @@ async function main() {
       });
     });
 
+    // The fallback layer only carries what the exact match could not reach, and
+    // only for games this DAT actually lists: a boxart for a game the user
+    // cannot own would never be shown.
+    const gameCovers = {};
+    for (const [title, covered] of gameCovered) {
+      const cover = covered ? undefined : covers.byGame.get(title);
+      if (cover) gameCovers[title] = cover;
+    }
+
     const list = Array.from(filesByCrc.values());
     const withCover = list.filter((entry) => entry.cover).length;
-    
+    const gameCoverCount = Object.keys(gameCovers).length;
+
     const output = {
       meta: {
         source: path.basename(inputFile),
         totalGames: games.length,
         totalFiles: list.length,
         totalCovers: withCover,
+        totalGameCovers: gameCoverCount,
         generated: new Date().toISOString()
       },
+      covers: gameCovers,
       list
     };
-    
+
     // Write JSON
     console.log(`✍️  Writing JSON to: ${outputFile}`);
     fs.writeFileSync(outputFile, JSON.stringify(output, null, 2), 'utf-8');
-    
+
     // Show stats
     const fileSize = fs.statSync(outputFile).size;
     const fileSizeKB = (fileSize / 1024).toFixed(2);
-    
+
     console.log('\n✅ Conversion successful!');
     console.log(`   Games: ${games.length}`);
     console.log(`   Files: ${list.length}`);
-    console.log(`   Covers: ${withCover}`);
+    console.log(`   Covers: ${withCover} by name, ${gameCoverCount} more games by title`);
     console.log(`   File size: ${fileSizeKB} KB`);
     
   } catch (error) {

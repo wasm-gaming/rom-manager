@@ -4,7 +4,11 @@
     "totalGames": 229,
     "totalFiles": 229,
     "totalCovers": 102,
-    "generated": "2026-07-29T23:49:50.836Z"
+    "totalGameCovers": 1,
+    "generated": "2026-07-30T10:39:19.194Z"
+  },
+  "covers": {
+    "Flash Masta Firmware": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Flash%20Masta%20Firmware%20(USA)%20(2016-05-13).png"
   },
   "list": [
     {
@@ -32,7 +36,7 @@
       "sha1": "99D9D7F951AE589059F34E76AEA7489AE4CD79F1",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Alchemist%20Marie%20_%20Elie%20-%20Futari%20no%20Atelier%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Alchemist%20Marie%20_%20Elie%20-%20Futari%20no%20Atelier%20(Japan).png"
     },
     {
       "name": "Another Heaven - Memory of those Days (Japan)",
@@ -43,7 +47,7 @@
       "sha1": "CAF4A8DE853DED732B2A72619ACF2784EECEAFC7",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Another%20Heaven%20-%20Memory%20of%20those%20Days%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Another%20Heaven%20-%20Memory%20of%20those%20Days%20(Japan).png"
     },
     {
       "name": "Arc the Lad - Kishin Fukkatsu (Japan)",
@@ -54,7 +58,7 @@
       "sha1": "68981C05D8118D4189100EED462EE6639328DC59",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Arc%20the%20Lad%20-%20Kishin%20Fukkatsu%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Arc%20the%20Lad%20-%20Kishin%20Fukkatsu%20(Japan).png"
     },
     {
       "name": "Arial (World) (v0.21) (Proto) (WonderWitch)",
@@ -123,7 +127,7 @@
       "sha1": "FFFB1AEA34E0A96113CD10BA9DE515000D27BFE6",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Battle%20Spirit%20-%20Digimon%20Frontier%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Battle%20Spirit%20-%20Digimon%20Frontier%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Bio Worms (World) (WonderWitch)",
@@ -150,7 +154,7 @@
       "sha1": "02103FC5FC97C3A38834CED32A3CFE6523832535",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Blue%20Wing%20Blitz%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Blue%20Wing%20Blitz%20(Japan).png"
     },
     {
       "name": "Bury (World) (WonderWitch)",
@@ -257,7 +261,7 @@
       "sha1": "C2188171DC0F78FB6A13BBB55B4E85BDF7B82FD5",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Dark%20Eyes%20-%20Battle%20Gate%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Dark%20Eyes%20-%20Battle%20Gate%20(Japan).png"
     },
     {
       "name": "Darkhero Figment - Calibur Edition (World) (Ja) (WonderWitch)",
@@ -302,7 +306,7 @@
       "sha1": "1E4D8E8B3D16083968055CC76B604DA91FA0A132",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Dicing%20Knight.%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Dicing%20Knight.%20(Japan).png"
     },
     {
       "name": "Digimon - Anode Tamer & Cathode Tamer - Veedramon Version (Hong Kong) (En)",
@@ -312,7 +316,7 @@
       "md5": "47B23A84817217CC5B9BBD85FE634174",
       "sha1": "7A6411CF8A4D91E8A4E0532779F11BDD25B92363",
       "region": "Hong Kong",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20-%20Anode%20Tamer%20_%20Cathode%20Tamer%20-%20Veedramon%20Version%20(Hong%20Kong)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20-%20Anode%20Tamer%20_%20Cathode%20Tamer%20-%20Veedramon%20Version%20(Hong%20Kong)%20(En).png"
     },
     {
       "name": "Digimon - Anode Tamer & Cathode Tamer - Veedramon Version (Korea) (En)",
@@ -333,7 +337,7 @@
       "sha1": "18D3DFE25D82964AB7BB61AF363D368FD12F4D4B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20Adventure%2002%20-%20D1%20Tamers%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20Adventure%2002%20-%20D1%20Tamers%20(Japan).png"
     },
     {
       "name": "Digimon Adventure 02 - D1 Tamers (Japan) (Rev 1)",
@@ -344,7 +348,7 @@
       "sha1": "6FBB07BFEFAC7832436EC56E4D95678428B0F7BA",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20Adventure%2002%20-%20D1%20Tamers%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20Adventure%2002%20-%20D1%20Tamers%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Digimon Tamers - Battle Spirit (Japan, Korea) (En,Ja)",
@@ -355,7 +359,7 @@
       "sha1": "757E92177385A14D979227EDEE1CB544B4C56BD6",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20Tamers%20-%20Battle%20Spirit%20(Japan%2C%20Korea)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20Tamers%20-%20Battle%20Spirit%20(Japan%2C%20Korea)%20(En%2CJa).png"
     },
     {
       "name": "Digimon Tamers - Battle Spirit Ver. 1.5 (Japan)",
@@ -366,7 +370,7 @@
       "sha1": "3F39FF494A3D8DD9D55A2E7CF86B47F1C8E8A156",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20Tamers%20-%20Battle%20Spirit%20Ver.%201.5%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20Tamers%20-%20Battle%20Spirit%20Ver.%201.5%20(Japan).png"
     },
     {
       "name": "Digimon Tamers - Brave Tamer (Japan) (Rev 1)",
@@ -377,7 +381,7 @@
       "sha1": "31A718CFBCFF2DAB56AB9606A0B5B2DFCCECBBCB",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20Tamers%20-%20Brave%20Tamer%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20Tamers%20-%20Brave%20Tamer%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Digimon Tamers - Digimon Medley (Japan)",
@@ -388,7 +392,7 @@
       "sha1": "8638737E5A35C6BE05A888DC81E504E0D80FD756",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20Tamers%20-%20Digimon%20Medley%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20Tamers%20-%20Digimon%20Medley%20(Japan).png"
     },
     {
       "name": "Digimon Tamers - Digimon Medley (Japan) (Rev 1)",
@@ -399,7 +403,7 @@
       "sha1": "6C5A2DC7E231EBD278FE22BB7F01B1A7CC3785D6",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digimon%20Tamers%20-%20Digimon%20Medley%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digimon%20Tamers%20-%20Digimon%20Medley%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Digital Monster - D-Project (Japan)",
@@ -410,7 +414,7 @@
       "sha1": "3E8FFFE1F607EA5F855397D9D877CECB285507F7",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digital%20Monster%20-%20D-Project%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digital%20Monster%20-%20D-Project%20(Japan).png"
     },
     {
       "name": "Digital Monster - D-Project (Japan) (Rev 1)",
@@ -421,7 +425,7 @@
       "sha1": "7DAB09DF13E65AA778E3BC9100EFFFB10B93B8A9",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digital%20Monster%20-%20D-Project%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digital%20Monster%20-%20D-Project%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Digital Monster - D-Project (Japan) (Rev 2)",
@@ -432,7 +436,7 @@
       "sha1": "016DE32719E920FD9996C52D7EB81F2A60A24D7A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digital%20Monster%20-%20D-Project%20(Japan)%20(Rev%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digital%20Monster%20-%20D-Project%20(Japan)%20(Rev%202).png"
     },
     {
       "name": "Digital Monster Card Game - Ver. WonderSwan Color (Japan)",
@@ -443,7 +447,7 @@
       "sha1": "BA16A0770F7A71DD49E2879799FD04A4F04F7E60",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digital%20Monster%20Card%20Game%20-%20Ver.%20WonderSwan%20Color%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digital%20Monster%20Card%20Game%20-%20Ver.%20WonderSwan%20Color%20(Japan).png"
     },
     {
       "name": "Digital Monster Card Game - Ver. WonderSwan Color (Japan) (Rev 2)",
@@ -454,7 +458,7 @@
       "sha1": "E31BFA54CBF539A9D28090B372D8E669A93C3E28",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Digital%20Monster%20Card%20Game%20-%20Ver.%20WonderSwan%20Color%20(Japan)%20(Rev%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Digital%20Monster%20Card%20Game%20-%20Ver.%20WonderSwan%20Color%20(Japan)%20(Rev%202).png"
     },
     {
       "name": "Dokodemo Hamster 3 - Odekake Saffron (Japan) (Rev 2)",
@@ -465,7 +469,7 @@
       "sha1": "66B4BD15EF67DC324736A1CC78D6ACA335F03389",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Dokodemo%20Hamster%203%20-%20Odekake%20Saffron%20(Japan)%20(Rev%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Dokodemo%20Hamster%203%20-%20Odekake%20Saffron%20(Japan)%20(Rev%202).png"
     },
     {
       "name": "Doukyuu Tantei Oke Solo (World) (Ja) (WonderWitch)",
@@ -484,7 +488,7 @@
       "sha1": "5384F9974C66E5E26129A4709976DE0BB1AE1F17",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Dragon%20Ball%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Dragon%20Ball%20(Japan).png"
     },
     {
       "name": "Es=Loss Zero Side (World) (Ja) (WonderWitch)",
@@ -519,7 +523,7 @@
       "sha1": "26628EB76C16880B6FAF2E706778D91A60144078",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Final%20Fantasy%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Final%20Fantasy%20(Japan).png"
     },
     {
       "name": "Final Fantasy II (Japan)",
@@ -530,7 +534,7 @@
       "sha1": "959321E3B971516E38A4CBF95B0FC3EFC0B0A825",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Final%20Fantasy%20II%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Final%20Fantasy%20II%20(Japan).png"
     },
     {
       "name": "Final Fantasy IV (Japan)",
@@ -541,7 +545,7 @@
       "sha1": "6D707E88C85D1B5EF708631E709668006A9EE244",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Final%20Fantasy%20IV%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Final%20Fantasy%20IV%20(Japan).png"
     },
     {
       "name": "Final Lap Special - GT & Formula Machine (Japan)",
@@ -552,7 +556,7 @@
       "sha1": "4C3F092B095BDB0AFDAF8D32D4C54B4D6C209C96",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Final%20Lap%20Special%20-%20GT%20_%20Formula%20Machine%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Final%20Lap%20Special%20-%20GT%20_%20Formula%20Machine%20(Japan).png"
     },
     {
       "name": "Flash Koibito-kun (Japan)",
@@ -563,7 +567,7 @@
       "sha1": "A3D6717EFDB8F243FE86B4C3D869A9734A2E02D3",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Flash%20Koibito-kun%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Flash%20Koibito-kun%20(Japan).png"
     },
     {
       "name": "Flash Masta Firmware (World)",
@@ -598,7 +602,7 @@
       "sha1": "221F48E97EC2C6D0046213956E1F36E923C0DEC2",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Chopper%20no%20Daibouken%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Chopper%20no%20Daibouken%20(Japan).png"
     },
     {
       "name": "From TV Animation One Piece - Grand Battle Swan Colosseum (Japan)",
@@ -609,7 +613,7 @@
       "sha1": "01E765BF356CDCB413BFD27C6321F7449465766A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Grand%20Battle%20Swan%20Colosseum%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Grand%20Battle%20Swan%20Colosseum%20(Japan).png"
     },
     {
       "name": "From TV Animation One Piece - Grand Battle Swan Colosseum (Japan) (Sample)",
@@ -630,7 +634,7 @@
       "sha1": "2410690AD46667C52B63402DF9E95FC8A75CEE62",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Niji%20no%20Shima%20Densetsu%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Niji%20no%20Shima%20Densetsu%20(Japan).png"
     },
     {
       "name": "From TV Animation One Piece - Treasure Wars (Japan)",
@@ -641,7 +645,7 @@
       "sha1": "DD1E6E5467B72FCB5848F07A9747AA66BB207D45",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Treasure%20Wars%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Treasure%20Wars%20(Japan).png"
     },
     {
       "name": "From TV Animation One Piece - Treasure Wars (Japan) (Rev 1)",
@@ -652,7 +656,7 @@
       "sha1": "55088795164170C24B243A1B572506F123064C0F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Treasure%20Wars%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Treasure%20Wars%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "From TV Animation One Piece - Treasure Wars 2 - Buggy Land e Youkoso (Japan)",
@@ -663,7 +667,7 @@
       "sha1": "B7775E8F60FD62DC07F2865F8FAD29A11E12DBB5",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Treasure%20Wars%202%20-%20Buggy%20Land%20e%20Youkoso%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/From%20TV%20Animation%20One%20Piece%20-%20Treasure%20Wars%202%20-%20Buggy%20Land%20e%20Youkoso%20(Japan).png"
     },
     {
       "name": "Front Mission (Japan)",
@@ -674,7 +678,7 @@
       "sha1": "3C752694AB651F9A00CCD39C334A2E3FF78F5CB2",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Front%20Mission%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Front%20Mission%20(Japan).png"
     },
     {
       "name": "GPS TOOL for WonderSwan (World) (Ja) (WonderWitch)",
@@ -701,7 +705,7 @@
       "sha1": "1BC1E831B9E2AEFC59F2CAC5F19F7D22BE574FC1",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Gekitou!%20Crash%20Gear%20Turbo%20-%20Gear%20Champion%20League%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Gekitou!%20Crash%20Gear%20Turbo%20-%20Gear%20Champion%20League%20(Japan).png"
     },
     {
       "name": "Gensou Maden Saiyuuki Retribution - Hi no Ataru Basho de (Japan) (Rev 2)",
@@ -712,7 +716,7 @@
       "sha1": "ADBE6E38A0BC6A2D19DA64A444071977B771F14F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Gensou%20Maden%20Saiyuuki%20Retribution%20-%20Hi%20no%20Ataru%20Basho%20de%20(Japan)%20(Rev%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Gensou%20Maden%20Saiyuuki%20Retribution%20-%20Hi%20no%20Ataru%20Basho%20de%20(Japan)%20(Rev%202).png"
     },
     {
       "name": "Golden Axe (Japan)",
@@ -723,7 +727,7 @@
       "sha1": "87661841CA63E99B04C0F6DC4BA3454C897E0C6D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Golden%20Axe%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Golden%20Axe%20(Japan).png"
     },
     {
       "name": "Gransta Chronicle (Japan)",
@@ -734,7 +738,7 @@
       "sha1": "3A4C5D1C08B74CF05B4CB64CBFD7C3DD8B1C3789",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Gransta%20Chronicle%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Gransta%20Chronicle%20(Japan).png"
     },
     {
       "name": "Guilty Gear Petit (Japan)",
@@ -745,7 +749,7 @@
       "sha1": "6D8F8FD330F32374B55CF6B998196A7DB2131073",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Guilty%20Gear%20Petit%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Guilty%20Gear%20Petit%20(Japan).png"
     },
     {
       "name": "Guilty Gear Petit 2 (Japan)",
@@ -756,7 +760,7 @@
       "sha1": "F7AEAB6724154F7EF6A389F9F18B7100045E1064",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Guilty%20Gear%20Petit%202%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Guilty%20Gear%20Petit%202%20(Japan).png"
     },
     {
       "name": "GunPey EX (Japan)",
@@ -767,7 +771,7 @@
       "sha1": "1EB729AA9AB0A7DF6F8A3470A6FEDE59D7622D4A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/GunPey%20EX%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/GunPey%20EX%20(Japan).png"
     },
     {
       "name": "Guruguru Ringuru (World) (WonderWitch)",
@@ -794,7 +798,7 @@
       "sha1": "2E3F221D6965F53B29586D2019EE81DEC6D1AC30",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Hanjuku%20Hero%20-%20Ah%2C%20Sekai%20yo%20Hanjuku%20Nare...!!%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Hanjuku%20Hero%20-%20Ah%2C%20Sekai%20yo%20Hanjuku%20Nare...!!%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Hashire! Taiboku! (World) (v0.5) (Proto) (WonderWitch)",
@@ -813,7 +817,7 @@
       "sha1": "9BD63ED48926B27BE70333FBE07DA2CEED56328A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Hataraku%20Chocobo%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Hataraku%20Chocobo%20(Japan).png"
     },
     {
       "name": "Hebi (World) (Ja) (WonderWitch)",
@@ -872,7 +876,7 @@
       "sha1": "F66335B5AF87E7CB72AE311EB9B339534722F738",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Hunter%20X%20Hunter%20-%20Greed%20Island%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Hunter%20X%20Hunter%20-%20Greed%20Island%20(Japan).png"
     },
     {
       "name": "Hunter X Hunter - Greed Island (Japan) (Rev 1)",
@@ -883,7 +887,7 @@
       "sha1": "E26410D4EEE4CC8CEC5E2E369604AEDF26D69D0C",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Hunter%20X%20Hunter%20-%20Greed%20Island%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Hunter%20X%20Hunter%20-%20Greed%20Island%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Hunter X Hunter - Michibikareshi Mono (Japan)",
@@ -894,7 +898,7 @@
       "sha1": "BC591FC24D3F8E94B70503FD8B6A35FA58151139",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Hunter%20X%20Hunter%20-%20Michibikareshi%20Mono%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Hunter%20X%20Hunter%20-%20Michibikareshi%20Mono%20(Japan).png"
     },
     {
       "name": "Hunter X Hunter - Sorezore no Ketsui (Japan)",
@@ -905,7 +909,7 @@
       "sha1": "2DA2A9BCFF4813ABCB5B2C88095258D89A575378",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Hunter%20X%20Hunter%20-%20Sorezore%20no%20Ketsui%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Hunter%20X%20Hunter%20-%20Sorezore%20no%20Ketsui%20(Japan).png"
     },
     {
       "name": "Hurry Up! (World) (WonderWitch)",
@@ -948,7 +952,7 @@
       "sha1": "99D5BDDE193685A1D09EA73BB79A54B4DA82625D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Inuyasha%20-%20Fuuun%20Emaki%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Inuyasha%20-%20Fuuun%20Emaki%20(Japan).png"
     },
     {
       "name": "Inuyasha - Kagome no Sengoku Nikki (Japan)",
@@ -959,7 +963,7 @@
       "sha1": "B4FBEA1A2C50D8566685F72820B360AF4B54F82F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Inuyasha%20-%20Kagome%20no%20Sengoku%20Nikki%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Inuyasha%20-%20Kagome%20no%20Sengoku%20Nikki%20(Japan).png"
     },
     {
       "name": "Inuyasha - Kagome no Yume Nikki (Japan)",
@@ -970,7 +974,7 @@
       "sha1": "F7C8F8B6B6D036DF8FC4BDE72FCFAC2846DFFE35",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Inuyasha%20-%20Kagome%20no%20Yume%20Nikki%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Inuyasha%20-%20Kagome%20no%20Yume%20Nikki%20(Japan).png"
     },
     {
       "name": "Isomon - Get Oh No!! (World) (Ja) (WonderWitch)",
@@ -997,7 +1001,7 @@
       "sha1": "1DC66AC8AC21EB651723428657C9B18CB80D9EE0",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Judgement%20Silversword%20-%20Rebirth%20Edition%20(Japan)%20(Rev%204321).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Judgement%20Silversword%20-%20Rebirth%20Edition%20(Japan)%20(Rev%204321).png"
     },
     {
       "name": "Judgement Silversword - Rebirth Edition (Japan) (Rev 5C21)",
@@ -1008,7 +1012,7 @@
       "sha1": "58C691CB31F96EEA5689693FD23768D02E8B133F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Judgement%20Silversword%20-%20Rebirth%20Edition%20(Japan)%20(Rev%205C21).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Judgement%20Silversword%20-%20Rebirth%20Edition%20(Japan)%20(Rev%205C21).png"
     },
     {
       "name": "Juicy Crew (World) (WonderWitch)",
@@ -1051,7 +1055,7 @@
       "sha1": "20B671BC14A8AB6373DEECC641479D09658AC21F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Kidou%20Senshi%20Gundam%20-%20Giren%20no%20Yabou%20-%20Tokubetsu%20Hen%20-%20Aoki%20Hoshi%20no%20Hasha%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Kidou%20Senshi%20Gundam%20-%20Giren%20no%20Yabou%20-%20Tokubetsu%20Hen%20-%20Aoki%20Hoshi%20no%20Hasha%20(Japan).png"
     },
     {
       "name": "Kidou Senshi Gundam SEED (Japan)",
@@ -1072,7 +1076,7 @@
       "sha1": "29E72E7F96F145A0FF56E447F577310DF2EC463B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Kidou%20Senshi%20Gundam%20Vol.%201%20-%20Side%207%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Kidou%20Senshi%20Gundam%20Vol.%201%20-%20Side%207%20(Japan).png"
     },
     {
       "name": "Kidou Senshi Gundam Vol. 2 - Jaburo (Japan)",
@@ -1083,7 +1087,7 @@
       "sha1": "DF1A794F7E3992B1E1E9DE14141B607746202202",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Kidou%20Senshi%20Gundam%20Vol.%202%20-%20Jaburo%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Kidou%20Senshi%20Gundam%20Vol.%202%20-%20Jaburo%20(Japan).png"
     },
     {
       "name": "Kidou Senshi Gundam Vol. 3 - A Baoa Qu (Japan)",
@@ -1094,7 +1098,7 @@
       "sha1": "35443E2EF8A20A0AD82DA1274B2768C16239DD46",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Kidou%20Senshi%20Gundam%20Vol.%203%20-%20A%20Baoa%20Qu%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Kidou%20Senshi%20Gundam%20Vol.%203%20-%20A%20Baoa%20Qu%20(Japan).png"
     },
     {
       "name": "Kinnikuman II-Sei - Choujin Seisenshi (Japan)",
@@ -1105,7 +1109,7 @@
       "sha1": "EFCF8F92357FFC6F6EC0E4AA960CD97A5070836E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Kinnikuman%20II-Sei%20-%20Choujin%20Seisenshi%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Kinnikuman%20II-Sei%20-%20Choujin%20Seisenshi%20(Japan).png"
     },
     {
       "name": "Kinnikuman II-Sei - Dream Tag Match (Japan)",
@@ -1116,7 +1120,7 @@
       "sha1": "81DD3124CCE8A1AAFD423BFE0814187FB7C646CB",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Kinnikuman%20II-Sei%20-%20Dream%20Tag%20Match%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Kinnikuman%20II-Sei%20-%20Dream%20Tag%20Match%20(Japan).png"
     },
     {
       "name": "Kurupara! (Japan) (Rev 1)",
@@ -1127,7 +1131,7 @@
       "sha1": "9942D1B7D1C00126B9891E560E6A3E264F8FDC2E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Kurupara!%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Kurupara!%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Kuttsuke Su (World) (Ja) (WonderWitch)",
@@ -1146,7 +1150,7 @@
       "sha1": "B019F41207E396D9FE3509DCCDBE1CC6E7AC46BB",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Last%20Alive%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Last%20Alive%20(Japan).png"
     },
     {
       "name": "Lolita Queen (World) (WonderWitch)",
@@ -1189,7 +1193,7 @@
       "sha1": "6B7A9B810C932974CBDA4DE7178CF0EA5A90E628",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Makai%20Toushi%20Sa-Ga%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Makai%20Toushi%20Sa-Ga%20(Japan).png"
     },
     {
       "name": "Mawase Mawase WonderSwan Mawase (World) (WonderWitch)",
@@ -1216,7 +1220,7 @@
       "sha1": "36D8BC2CE7920D940943358D48F056F81055AB34",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Meitantei%20Conan%20-%20Yuugure%20no%20Oujo%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Meitantei%20Conan%20-%20Yuugure%20no%20Oujo%20(Japan).png"
     },
     {
       "name": "Memories Off - Festa (Japan)",
@@ -1227,7 +1231,7 @@
       "sha1": "F47B4AB9197999BBEC351750601BAA20FBBD7177",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Memories%20Off%20-%20Festa%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Memories%20Off%20-%20Festa%20(Japan).png"
     },
     {
       "name": "Mikeneko Holmes - Ghost Panic (Japan)",
@@ -1238,7 +1242,7 @@
       "sha1": "2358701531E8A38419859CD70BF2FBBD967B6745",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Mikeneko%20Holmes%20-%20Ghost%20Panic%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Mikeneko%20Holmes%20-%20Ghost%20Panic%20(Japan).png"
     },
     {
       "name": "Mini Tennis (World) (WonderWitch)",
@@ -1273,7 +1277,7 @@
       "sha1": "209232F1E91C05140529D466C0EF6B7AD3386DE1",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Mr.%20Driller%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Mr.%20Driller%20(Japan).png"
     },
     {
       "name": "Multi-BoaRD (World) (WonderWitch)",
@@ -1292,7 +1296,7 @@
       "sha1": "C48569FD0A46AB7B7CEAFEB5698BE90420CD4FBE",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Namco%20Super%20Wars%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Namco%20Super%20Wars%20(Japan).png"
     },
     {
       "name": "Nametry (World) (v1.00) (WonderWitch) (WWGP2001)",
@@ -1319,7 +1323,7 @@
       "sha1": "DBAA50FD56E69E72FDFE49362EF5FE4437D66667",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Naruto%20-%20Konoha%20Ninpouchou%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Naruto%20-%20Konoha%20Ninpouchou%20(Japan).png"
     },
     {
       "name": "Neko no Kurubushi (World) (WonderWitch)",
@@ -1466,7 +1470,7 @@
       "sha1": "57338999B949589C36CE116A30F433E9618685E4",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Pocket%20no%20Naka%20no%20Doraemon%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Pocket%20no%20Naka%20no%20Doraemon%20(Japan).png"
     },
     {
       "name": "Poker (World) (Ja) (WonderWitch)",
@@ -1517,7 +1521,7 @@
       "sha1": "3A41A3B8FC126DA07E2A82C21056A45C15EFBC98",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/RUN%3DDIM%20-%20Return%20to%20Earth%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/RUN%3DDIM%20-%20Return%20to%20Earth%20(Japan).png"
     },
     {
       "name": "Raku Jongg (Japan)",
@@ -1528,7 +1532,7 @@
       "sha1": "977D5830E45C78B9020E9D06A63A9AD6BC623745",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Raku%20Jongg%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Raku%20Jongg%20(Japan).png"
     },
     {
       "name": "Rave Hunter (World) (WonderWitch)",
@@ -1571,7 +1575,7 @@
       "sha1": "5973306A864C3804EE10B209E45067807D39A4DE",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Rhyme%20Rider%20Kerorican%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Rhyme%20Rider%20Kerorican%20(Japan).png"
     },
     {
       "name": "Rhythmin (World) (Ja) (WonderWitch)",
@@ -1590,7 +1594,7 @@
       "sha1": "A8F8D3EFC9B2D5741081E05F517D746EE5437F87",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Riviera%20-%20Yakusoku%20no%20Chi%20Riviera%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Riviera%20-%20Yakusoku%20no%20Chi%20Riviera%20(Japan).png"
     },
     {
       "name": "Riviera - Yakusoku no Chi Riviera (Japan) (Rev 1)",
@@ -1611,7 +1615,7 @@
       "sha1": "9B4786ADCA7B83FE66A9D4B9FD4FFAF32ABE7656",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Rockman%20EXE%20-%20N1%20Battle%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Rockman%20EXE%20-%20N1%20Battle%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Rockman EXE WS (Japan)",
@@ -1622,7 +1626,7 @@
       "sha1": "B4A3FF3B72639F27D1A6F449B0335074AEB9E603",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Rockman%20EXE%20WS%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Rockman%20EXE%20WS%20(Japan).png"
     },
     {
       "name": "Romancing Sa-Ga (Japan)",
@@ -1633,7 +1637,7 @@
       "sha1": "06FCC9AAD3AE478DB6EED27621AF4F56A6488A67",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Romancing%20Sa-Ga%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Romancing%20Sa-Ga%20(Japan).png"
     },
     {
       "name": "SD Gundam - Operation U.C. (Japan)",
@@ -1644,7 +1648,7 @@
       "sha1": "152C4D63B1B17F2C717A43EFC75D718B614F9DDC",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/SD%20Gundam%20-%20Operation%20U.C.%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/SD%20Gundam%20-%20Operation%20U.C.%20(Japan).png"
     },
     {
       "name": "SD Gundam Eiyuu Den - Kishi Densetsu (Japan)",
@@ -1655,7 +1659,7 @@
       "sha1": "EBD4B37ADE6DF717F7B637747A4D3C45A6CCA037",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/SD%20Gundam%20Eiyuu%20Den%20-%20Kishi%20Densetsu%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/SD%20Gundam%20Eiyuu%20Den%20-%20Kishi%20Densetsu%20(Japan).png"
     },
     {
       "name": "SD Gundam Eiyuu Den - Musha Densetsu (Japan)",
@@ -1666,7 +1670,7 @@
       "sha1": "D8097E25431F0AD5183B2479EE0837599677A300",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/SD%20Gundam%20Eiyuu%20Den%20-%20Musha%20Densetsu%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/SD%20Gundam%20Eiyuu%20Den%20-%20Musha%20Densetsu%20(Japan).png"
     },
     {
       "name": "SD Gundam G Generation - Gather Beat 2 (Japan)",
@@ -1677,7 +1681,7 @@
       "sha1": "016FF46509CBFE57A7440A1755D3A41EF49C048F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/SD%20Gundam%20G%20Generation%20-%20Gather%20Beat%202%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/SD%20Gundam%20G%20Generation%20-%20Gather%20Beat%202%20(Japan).png"
     },
     {
       "name": "SD Gundam G Generation - Mono-Eye Gundams (Japan)",
@@ -1688,7 +1692,7 @@
       "sha1": "91E087056207FCE21E782E25E383C203BC046897",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/SD%20Gundam%20G%20Generation%20-%20Mono-Eye%20Gundams%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/SD%20Gundam%20G%20Generation%20-%20Mono-Eye%20Gundams%20(Japan).png"
     },
     {
       "name": "SD Gundam G Generation - Mono-Eye Gundams (Japan) (Rev 2)",
@@ -1699,7 +1703,7 @@
       "sha1": "1F7C28D9D575B260D973F8526ECADDA834032149",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/SD%20Gundam%20G%20Generation%20-%20Mono-Eye%20Gundams%20(Japan)%20(Rev%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/SD%20Gundam%20G%20Generation%20-%20Mono-Eye%20Gundams%20(Japan)%20(Rev%202).png"
     },
     {
       "name": "Saint Seiya - Ougon Densetsu Hen - Perfect Edition (Japan)",
@@ -1710,7 +1714,7 @@
       "sha1": "8542649963EFE0976015759382C180B7C056BE9A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Saint%20Seiya%20-%20Ougon%20Densetsu%20Hen%20-%20Perfect%20Edition%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Saint%20Seiya%20-%20Ougon%20Densetsu%20Hen%20-%20Perfect%20Edition%20(Japan).png"
     },
     {
       "name": "Samegame for WSC (World) (WonderWitch)",
@@ -1753,7 +1757,7 @@
       "sha1": "DF9E831842072D9AF613EFFBEE7162229849DE58",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Senkaiden%20Ni%20-%20TV%20Animation%20Senkaiden%20Houshin%20Engi%20Yori%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Senkaiden%20Ni%20-%20TV%20Animation%20Senkaiden%20Houshin%20Engi%20Yori%20(Japan).png"
     },
     {
       "name": "Shaman King - Asu e no Ishi (Japan)",
@@ -1764,7 +1768,7 @@
       "sha1": "1E735D1E83A7BFA06C5C717C7E8A386D55A8E3F0",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Shaman%20King%20-%20Asu%20e%20no%20Ishi%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Shaman%20King%20-%20Asu%20e%20no%20Ishi%20(Japan).png"
     },
     {
       "name": "Shaman King - Asu e no Ishi (Japan) (Rev 1)",
@@ -1775,7 +1779,7 @@
       "sha1": "473195666A633573C777D3BE98D7E8F46569C84B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Shaman%20King%20-%20Asu%20e%20no%20Ishi%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Shaman%20King%20-%20Asu%20e%20no%20Ishi%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Shokaku 80186 (World) (WonderWitch)",
@@ -1802,7 +1806,7 @@
       "sha1": "983582FE8D18839DF30B6D29FB75780A9E32F4EC",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Sorobang%20(Japan)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Sorobang%20(Japan)%20(Rev%201).png"
     },
     {
       "name": "Star Hearts - Hoshi to Daichi no Shisha (Japan)",
@@ -1813,7 +1817,7 @@
       "sha1": "2B2C2A0566646156BCDDE2A00B728C5B8218AA23",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Star%20Hearts%20-%20Hoshi%20to%20Daichi%20no%20Shisha%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Star%20Hearts%20-%20Hoshi%20to%20Daichi%20no%20Shisha%20(Japan).png"
     },
     {
       "name": "Star Hearts - Hoshi to Daichi no Shisha - Taikenban (Japan) (Not For Sale)",
@@ -1824,7 +1828,7 @@
       "sha1": "44940AE0140DF1BD91D742A166C459DF1B6C2339",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Star%20Hearts%20-%20Hoshi%20to%20Daichi%20no%20Shisha%20-%20Taikenban%20(Japan)%20(Not%20For%20Sale).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Star%20Hearts%20-%20Hoshi%20to%20Daichi%20no%20Shisha%20-%20Taikenban%20(Japan)%20(Not%20For%20Sale).png"
     },
     {
       "name": "Star Ochi (World) (WonderWitch)",
@@ -1859,7 +1863,7 @@
       "sha1": "B579F204BE604EBEF4E8238E5883152B70399C4D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Super%20Robot%20Taisen%20Compact%203%20(Japan)%20(Rev%205).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Super%20Robot%20Taisen%20Compact%203%20(Japan)%20(Rev%205).png"
     },
     {
       "name": "Super Robot Taisen Compact 3 (Japan) (Rev 6)",
@@ -1870,7 +1874,7 @@
       "sha1": "DD6FE0F278CDEC2670D3BE8552DBB0CF6A3A2841",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Super%20Robot%20Taisen%20Compact%203%20(Japan)%20(Rev%206).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Super%20Robot%20Taisen%20Compact%203%20(Japan)%20(Rev%206).png"
     },
     {
       "name": "Super Robot Taisen Compact for WonderSwan Color (Japan)",
@@ -1881,7 +1885,7 @@
       "sha1": "BF212CECBBC51EE32EE2655A072F55E7BF70B9EC",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Super%20Robot%20Taisen%20Compact%20for%20WonderSwan%20Color%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Super%20Robot%20Taisen%20Compact%20for%20WonderSwan%20Color%20(Japan).png"
     },
     {
       "name": "Surround (World) (Proto) (WonderWitch)",
@@ -1924,7 +1928,7 @@
       "sha1": "9532113E14B03C95F034C015168E21273D42EFF1",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Terrors%202%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Terrors%202%20(Japan).png"
     },
     {
       "name": "Tetris (Japan)",
@@ -1935,7 +1939,7 @@
       "sha1": "1A86403D7896D60FCB7A4C09367F5A976C7EA5A5",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Tetris%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Tetris%20(Japan).png"
     },
     {
       "name": "Tonde Stone (World) (WonderWitch)",
@@ -1954,7 +1958,7 @@
       "sha1": "FB53C28BD48174D3829467F1AB81D3F87F9A7F5B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Tonpuusou%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Tonpuusou%20(Japan).png"
     },
     {
       "name": "Uchuu Senkan Yamato (Japan)",
@@ -1965,7 +1969,7 @@
       "sha1": "DD1878279A6667FB66DD1AC44A2CDB9A5ACBE415",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Uchuu%20Senkan%20Yamato%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Uchuu%20Senkan%20Yamato%20(Japan).png"
     },
     {
       "name": "Ultraman - Hikari no Kuni no Shisha (Japan)",
@@ -1976,7 +1980,7 @@
       "sha1": "BD107BEFE5CE6C5508D2DA8BE351B9984166AE1D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Ultraman%20-%20Hikari%20no%20Kuni%20no%20Shisha%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Ultraman%20-%20Hikari%20no%20Kuni%20no%20Shisha%20(Japan).png"
     },
     {
       "name": "UnderBabel (Main Data) (World) (Ja) (WonderWitch)",
@@ -2019,7 +2023,7 @@
       "sha1": "EA878A485A20ABD5251065FD66E82D9D8B8A669D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Wild%20Card%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Wild%20Card%20(Japan).png"
     },
     {
       "name": "Witch Typing (World) (Ja) (WonderWitch)",
@@ -2046,7 +2050,7 @@
       "sha1": "6A4F4A03C367CCF00AA7462191C929A2736EB44B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/With%20You%20-%20Mitsumete%20Itai%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/With%20You%20-%20Mitsumete%20Itai%20(Japan).png"
     },
     {
       "name": "Wizardry Scenario 1 - Proving Grounds of the Mad Overlord (Japan)",
@@ -2057,7 +2061,7 @@
       "sha1": "C1AD383D337DBA8A63295CFB8C7CA8470C893C67",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Wizardry%20Scenario%201%20-%20Proving%20Grounds%20of%20the%20Mad%20Overlord%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Wizardry%20Scenario%201%20-%20Proving%20Grounds%20of%20the%20Mad%20Overlord%20(Japan).png"
     },
     {
       "name": "Wonder Classic (Japan)",
@@ -2068,7 +2072,7 @@
       "sha1": "55B54944EFD6E277FA7140925ED2457A8CFB40B8",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/Wonder%20Classic%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/Wonder%20Classic%20(Japan).png"
     },
     {
       "name": "Wonder Racer (World) (WonderWitch)",
@@ -2103,7 +2107,7 @@
       "sha1": "C1AB4E24F261615CA59F937B866FCF7047B67796",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/X%20-%20Card%20of%20Fate%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/X%20-%20Card%20of%20Fate%20(Japan).png"
     },
     {
       "name": "XI Little (Japan)",
@@ -2114,7 +2118,7 @@
       "sha1": "97C29917A78918A6905FD61A1466971CFD2A33C6",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Bandai%20-%20WonderSwan%20Color/Named_Boxarts/XI%20Little%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Bandai_-_WonderSwan_Color/HEAD/Named_Boxarts/XI%20Little%20(Japan).png"
     },
     {
       "name": "Yokeru Kamo (World) (v1.0) (WonderWitch) (WWGP2002)",

@@ -2,7 +2,7 @@ import { JSX } from 'preact';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { StorageEntry, StorageNode } from '../services/StorageService';
 import type { MatchStatus } from '../core/rom-matching';
-import type { WizardNode } from '../core/wizard-tree';
+import type { WizardGame, WizardNode } from '../core/wizard-tree';
 
 interface FileTreeProps {
   node: StorageNode;
@@ -10,6 +10,8 @@ interface FileTreeProps {
   selectedFiles?: string[];
   /** Fires with every selected file, in tree order. Folders are left out. */
   onSelectionChange?: (paths: string[]) => void;
+  /** Fires with the game a row stands for, or nothing when a plain row is picked. */
+  onGameChange?: (game?: WizardGame) => void;
   /** Rows currently painted, so the owner can prefetch what they need. */
   onVisibleChange?: (paths: string[]) => void;
   /** True once a ROM has a record in the library. */
@@ -40,8 +42,6 @@ const ICONS: Record<VisibleRow['kind'], string> = {
   directory: '📁',
   file: '🎮',
   group: '📦',
-  variant: '🏷',
-  missing: '·',
 };
 
 const STATUS_TITLES = {
@@ -53,19 +53,24 @@ const STATUS_TITLES = {
 /**
  * A painted row.
  *
- * Grouping introduces rows that are not files: a game, and a variant of it.
- * They carry no path, which is what keeps them out of selection, drag and
- * delete — there is nothing on disk for those to act on.
+ * Grouping adds one kind of row that is not a file: a game. It does not unfold —
+ * reading fifteen files as one game is the point of grouping — so its releases
+ * are read in the details pane, and the row itself acts on every file of the
+ * game at once: selecting it selects them, and so do dragging and deleting.
  */
 interface VisibleRow {
   key: string;
   depth: number;
   label: string;
-  kind: 'directory' | 'file' | 'group' | 'variant' | 'missing';
-  /** Real filesystem path, for the rows that have one. */
+  kind: 'directory' | 'file' | 'group';
+  /** Real filesystem path, for the rows that are a single file or folder. */
   path?: string;
+  /** Files on disk the row acts on. A game row has one per release it holds. */
+  paths: string[];
   entry?: StorageEntry;
   status?: MatchStatus;
+  /** The game a grouped row stands for, which is what the details pane shows. */
+  game?: WizardGame;
   expandable: boolean;
 }
 
@@ -87,6 +92,11 @@ function contains(path: string, directory: string): boolean {
   return directory === path || directory.startsWith(`${path}/`);
 }
 
+/** Releases of a game with something on disk, which is what the row stands for. */
+function presentVariants(game: WizardGame): number {
+  return game.variants.filter((variant) => variant.files.some((file) => file.path)).length;
+}
+
 function parseDraggedPaths(payload: string): string[] {
   const parsed = JSON.parse(payload);
   if (!Array.isArray(parsed) || parsed.some((value) => typeof value !== 'string')) {
@@ -99,6 +109,7 @@ export function FileTree({
   node,
   selectedFiles,
   onSelectionChange,
+  onGameChange,
   onVisibleChange,
   isInitialized,
   onRemoved,
@@ -113,6 +124,8 @@ export function FileTree({
   const [children, setChildren] = useState<Map<string, StorageEntry[]>>(new Map());
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [selection, setSelection] = useState<Set<string>>(new Set());
+  /** Key of the game row picked, which has no path of its own to be marked by. */
+  const [selectedGame, setSelectedGame] = useState<string | undefined>();
   const [anchor, setAnchor] = useState<string | undefined>();
   const [dropTarget, setDropTarget] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
@@ -187,6 +200,7 @@ export function FileTree({
         label: entry.name,
         kind: entry.kind,
         path: entry.path,
+        paths: [entry.path],
         entry,
         expandable: entry.kind === 'directory',
       });
@@ -194,34 +208,31 @@ export function FileTree({
       if (entry.kind === 'directory' && expanded.has(entry.path)) walk(entry.path, depth + 1);
     };
 
-    const pushGrouped = (nodes: WizardNode[], depth: number) => {
-      for (const wizard of nodes) {
+    const walk = (path: string, depth: number) => {
+      const grouped = groupedRows?.get(path);
+
+      if (!grouped) {
+        for (const entry of children.get(path) || []) pushEntry(entry, depth);
+        return;
+      }
+
+      for (const wizard of grouped) {
         if (wizard.kind === 'entry') {
           pushEntry(wizard.entry, depth);
           continue;
         }
 
-        const branch = wizard.kind === 'group' || wizard.kind === 'variant';
-
         result.push({
           key: wizard.key,
           depth,
           label: wizard.label,
-          kind: wizard.kind,
-          path: wizard.kind === 'file' ? wizard.path : undefined,
-          status: branch ? wizard.status : undefined,
-          expandable: branch && wizard.children.length > 0,
+          kind: 'group',
+          paths: wizard.paths,
+          status: wizard.status,
+          game: wizard,
+          expandable: false,
         });
-
-        if (branch && expanded.has(wizard.key)) pushGrouped(wizard.children, depth + 1);
       }
-    };
-
-    const walk = (path: string, depth: number) => {
-      const grouped = groupedRows?.get(path);
-
-      if (grouped) pushGrouped(grouped, depth);
-      else for (const entry of children.get(path) || []) pushEntry(entry, depth);
     };
 
     walk(ROOT, 0);
@@ -229,8 +240,14 @@ export function FileTree({
   }, [children, expanded, groupedRows]);
 
   useEffect(() => {
-    onVisibleChange?.(rows.flatMap((row) => (row.path ? [row.path] : [])));
+    onVisibleChange?.(rows.flatMap((row) => row.paths));
   }, [rows, onVisibleChange]);
+
+  /** Every file the rows reach, in row order, the files inside games included. */
+  const filePaths = useMemo(
+    () => rows.flatMap((row) => (row.kind === 'directory' ? [] : row.paths)),
+    [rows],
+  );
 
   /**
    * Ask for the rows of a grouped folder the first time it is painted. Working
@@ -250,18 +267,19 @@ export function FileTree({
    * Applies a selection and reports the files in it. Folders take part in the
    * selection — they can be dragged and deleted — but they carry no metadata,
    * so the details pane never hears about them.
+   *
+   * A game is reported alongside its files: the details pane shows the game,
+   * and the files are what a drag or a delete would act on.
    */
   const selectPaths = useCallback(
-    (paths: Set<string>) => {
+    (paths: Set<string>, game?: WizardGame) => {
       setSelection(paths);
+      setSelectedGame(game?.key);
 
-      const files = rows
-        .filter((row) => row.kind === 'file' && row.path && paths.has(row.path))
-        .map((row) => row.path!);
-
-      onSelectionChange?.(files);
+      onSelectionChange?.(filePaths.filter((path) => paths.has(path)));
+      onGameChange?.(game);
     },
-    [rows, onSelectionChange],
+    [filePaths, onSelectionChange, onGameChange],
   );
 
   /** Where new folders and uploads land: the selected folder, or root. */
@@ -291,20 +309,16 @@ export function FileTree({
     setExpanded((current) => new Set(current).add(path));
   };
 
-  /** Games and variants exist only on screen, so there is nothing to load. */
-  const toggleBranch = (key: string) => {
-    setExpanded((current) => {
-      const next = new Set(current);
-      if (!next.delete(key)) next.add(key);
-      return next;
-    });
-  };
-
   const handleRowClick = (event: MouseEvent, row: VisibleRow) => {
-    if (!row.path) {
-      if (row.expandable) toggleBranch(row.key);
+    // A game is one thing, so it is picked whole; the modifiers only make sense
+    // over the plain rows.
+    if (row.kind === 'group') {
+      selectPaths(new Set(row.paths), row.game);
+      setAnchor(row.paths[0]);
       return;
     }
+
+    if (!row.path) return;
 
     const paths = rows.flatMap((candidate) => (candidate.path ? [candidate.path] : []));
 
@@ -401,17 +415,21 @@ export function FileTree({
       }
 
       selectPaths(new Set());
+      // Nothing lives at those paths anymore, so whatever was read from them —
+      // the grouped rows above all — has to be worked out again.
+      onRemoved?.(paths);
       await revealDirectory(directory);
       await refresh();
     });
   };
 
-  const handleDragStart = (event: DragEvent, path: string) => {
+  const handleDragStart = (event: DragEvent, row: VisibleRow) => {
     if (!event.dataTransfer) return;
 
     // Dragging an unselected row starts a fresh selection, like a file manager.
-    const dragged = selection.has(path) ? Array.from(selection) : [path];
-    if (!selection.has(path)) selectPaths(new Set([path]));
+    const held = row.paths.every((path) => selection.has(path));
+    const dragged = held ? Array.from(selection) : row.paths;
+    if (!held) selectPaths(new Set(row.paths), row.game);
 
     event.dataTransfer.setData(DRAG_MIME, JSON.stringify(dragged));
     event.dataTransfer.effectAllowed = 'move';
@@ -503,18 +521,16 @@ export function FileTree({
               'tree-item',
               row.kind,
               row.status ? `status-${row.status}` : '',
-              row.path && selection.has(row.path) ? 'selected' : '',
+              (row.path ? selection.has(row.path) : selectedGame === row.key) ? 'selected' : '',
               row.path && selectedFiles?.includes(row.path) ? 'active' : '',
               dropTarget === row.path ? 'drop-target' : '',
             ]
               .filter(Boolean)
               .join(' ')}
             style={{ paddingLeft: `${0.5 + row.depth}rem` }}
-            draggable={Boolean(row.path)}
+            draggable={row.paths.length > 0}
             onClick={(event) => handleRowClick(event, row)}
-            onDragStart={
-              row.path ? (event) => handleDragStart(event, row.path!) : undefined
-            }
+            onDragStart={(event) => handleDragStart(event, row)}
             onDragOver={
               row.kind === 'directory' ? (event) => handleDragOver(event, row.path!) : undefined
             }
@@ -525,8 +541,7 @@ export function FileTree({
                 class="tree-caret"
                 onClick={(event) => {
                   event.stopPropagation();
-                  if (row.kind === 'directory') void toggleDirectory(row.path!);
-                  else toggleBranch(row.key);
+                  void toggleDirectory(row.path!);
                 }}
                 title={expanded.has(row.key) ? 'Collapse' : 'Expand'}
               >
@@ -538,13 +553,22 @@ export function FileTree({
             <span class="tree-icon">{ICONS[row.kind]}</span>
             <span class="tree-name">{row.label}</span>
 
+            {row.game && (
+              <span
+                class="tree-versions"
+                title={`${presentVariants(row.game)} of ${row.game.variants.length} known releases are here`}
+              >
+                {presentVariants(row.game)}/{row.game.variants.length}
+              </span>
+            )}
+
             {row.status && row.status !== 'complete' && (
               <span class="tree-status" title={STATUS_TITLES[row.status]}>
                 {row.status === 'partial' ? '◐' : '○'}
               </span>
             )}
 
-            {row.kind === 'file' && isInitialized?.(row.path!) && (
+            {row.kind !== 'directory' && row.paths.some((path) => isInitialized?.(path)) && (
               <span class="tree-badge" title="Has library metadata">
                 ●
               </span>

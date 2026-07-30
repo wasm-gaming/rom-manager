@@ -317,25 +317,17 @@ code {
   word-break: break-word;
 }
 
-/* A game and its variants: structure the dataset provides, not files on disk. */
+/* A game: one row for every file of it, so it never unfolds. */
 .tree-item.group > .tree-name {
   font-weight: 500;
 }
 
-.tree-item.variant > .tree-name {
-  color: #616161;
-  font-size: 0.85rem;
-}
-
-/* A file the dataset expects and the folder does not have. */
-.tree-item.missing {
-  cursor: default;
-  color: #bdbdbd;
-  font-size: 0.85rem;
-}
-
-.tree-item.missing:hover {
-  background-color: transparent;
+/* Releases of the game that are here, out of the ones the catalogue knows. */
+.tree-versions {
+  flex: 0 0 auto;
+  color: #9e9e9e;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .tree-status {
@@ -1123,6 +1115,122 @@ code {
   color: #424242;
   font-size: 0.9375rem;
   line-height: 1.5;
+}
+
+/* --- A game and the releases of it the folder holds --- */
+
+.tag.status-complete {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.tag.status-partial {
+  background-color: #fff8e1;
+  color: #ef6c00;
+}
+
+.tag.status-missing {
+  background-color: #f5f5f5;
+  color: #757575;
+}
+
+.variants-title {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #757575;
+}
+
+.variants {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 46vh;
+  overflow-y: auto;
+}
+
+.variant {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.variant-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.variant-mark {
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  color: #2e7d32;
+}
+
+.variant.status-partial .variant-mark {
+  color: #f9a825;
+}
+
+.variant.status-missing .variant-mark {
+  color: #cfd8dc;
+}
+
+.variant-key {
+  flex: 1;
+  word-break: break-word;
+  color: #212121;
+}
+
+.variant.status-missing .variant-key {
+  color: #9e9e9e;
+}
+
+.variant-count {
+  flex: 0 0 auto;
+  color: #9e9e9e;
+  font-size: 0.75rem;
+}
+
+.variant-files {
+  list-style: none;
+  margin: 0.25rem 0 0;
+  padding: 0 0 0 1.25rem;
+}
+
+.variant-file {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  padding: 0.125rem 0;
+}
+
+.variant-file.missing {
+  color: #bdbdbd;
+}
+
+.variant-file-size {
+  flex: 0 0 auto;
+  color: #9e9e9e;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Back to the game a file was opened from. */
+.btn-back {
+  margin-bottom: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #eceff1;
+  color: #37474f;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.btn-back:hover {
+  background-color: #cfd8dc;
 }
 
 /* --- Multiple selection --- */

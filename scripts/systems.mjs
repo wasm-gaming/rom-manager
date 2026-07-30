@@ -33,6 +33,40 @@ export const COVERS_FILE = 'covers.json';
 export const DATASET_FILE = 'dataset.json';
 export const INDEX_FILE = 'index.json';
 
+/** Folder of the thumbnail repositories that holds the box art. */
+export const BOXART_FOLDER = 'Named_Boxarts';
+
+const THUMBNAILS_OWNER = 'libretro-thumbnails';
+
+/**
+ * Repository name backing a system's thumbnails.
+ *
+ * The convention is the libretro system name with every space turned into an
+ * underscore: `Atari - 5200` becomes `Atari_-_5200`.
+ */
+export function repositoryOf(thumbnailsName) {
+  return thumbnailsName.replace(/ /g, '_');
+}
+
+/**
+ * URL of a published boxart, served straight from the thumbnail repository.
+ *
+ * `thumbnails.libretro.com` hosts the same images but answers without any
+ * `Access-Control-Allow-Origin` header, so a browser can display those URLs and
+ * never read their bytes. Storing a copy in `.meta/` means fetching the image,
+ * so the raw host — which does send the header — is the only one that works.
+ *
+ * `HEAD` stands in for the branch name because the repositories disagree on it
+ * (`master` on most, `main` on some) and it always resolves to the default one.
+ */
+export function boxartUrl(repository, name) {
+  const path = [repository, 'HEAD', BOXART_FOLDER, `${name}.png`]
+    .map((segment) => encodeURIComponent(segment))
+    .join('/');
+
+  return `https://raw.githubusercontent.com/${THUMBNAILS_OWNER}/${path}`;
+}
+
 export const SYSTEMS = [
   // Nintendo
   {

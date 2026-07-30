@@ -7,10 +7,11 @@ import { RomDetails } from '../components/RomDetails';
 import { storageService, StorageNode, StorageStat } from '../services/StorageService';
 import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
 import { GameCatalogService } from '../services/GameCatalogService';
+import { CoverService } from '../services/CoverService';
 import { OrganizeService, type UndoRecord } from '../services/OrganizeService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
-import { buildWizardTree, type WizardNode } from '../core/wizard-tree';
+import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import type { OrganizePlan } from '../core/rom-organize';
 import {
   storeService,
@@ -47,6 +48,11 @@ export function ROMExplorer(): JSX.Element {
   const [groupedRows, setGroupedRows] = useState<Map<string, WizardNode[]>>(new Map());
   const [notice, setNotice] = useState<string | undefined>();
   const [editing, setEditing] = useState(false);
+  /** The game picked in the tree, shown instead of the files it holds. */
+  const [game, setGame] = useState<WizardGame | undefined>();
+  /** One file of that game, opened from its details. */
+  const [gameFile, setGameFile] = useState<string | undefined>();
+  const [gameCover, setGameCover] = useState<string | undefined>();
   /** The organize preview, once one has been worked out and not yet dismissed. */
   const [organize, setOrganize] = useState<
     { system: string; plan: OrganizePlan; applied?: UndoRecord } | undefined
@@ -92,6 +98,41 @@ export function ROMExplorer(): JSX.Element {
       .then((settings) => storeService.setWizardSettings(settings))
       .catch(() => undefined);
   }, [activeNode]);
+
+  /**
+   * The boxart of the game on screen: the copy in `.meta` when there is one, the
+   * published image otherwise — and browsing is what puts a copy there.
+   */
+  useEffect(() => {
+    // The cover of the game left behind is about to be revoked, so it stops
+    // being shown now rather than as a broken image.
+    setGameCover(undefined);
+    if (!activeNode || !game) return;
+
+    let shown: string | undefined;
+    let cancelled = false;
+
+    const revoke = (url?: string) => {
+      if (url?.startsWith('blob:')) URL.revokeObjectURL(url);
+    };
+
+    CoverService.resolve(activeNode, systemOf(game.paths[0]), game.id, game.cover)
+      .then((resolved) => {
+        if (cancelled) {
+          revoke(resolved?.url);
+          return;
+        }
+
+        shown = resolved?.url;
+        setGameCover(shown);
+      })
+      .catch(() => setGameCover(undefined));
+
+    return () => {
+      cancelled = true;
+      revoke(shown);
+    };
+  }, [activeNode, game]);
 
   const releaseCovers = () => {
     for (const url of objectUrls.current) URL.revokeObjectURL(url);
@@ -157,6 +198,8 @@ export function ROMExplorer(): JSX.Element {
     setInitialised(new Set());
     setGroupedRows(new Map());
     setEditing(false);
+    setGame(undefined);
+    setGameFile(undefined);
     storeService.setActiveOrigin(originId);
   };
 
@@ -187,15 +230,17 @@ export function ROMExplorer(): JSX.Element {
       try {
         storeService.setError(undefined);
 
-        const [match, entries] = await Promise.all([
-          GameCatalogService.load(activeNode, systemFolderOf(path), (progress) =>
+        const system = systemFolderOf(path);
+        const [match, covers, entries] = await Promise.all([
+          GameCatalogService.load(activeNode, system, (progress) =>
             setNotice(`Reading ${path}: ${progress.done} of ${progress.total}`),
           ),
+          GameCatalogService.coversOf(system),
           activeNode.list(path),
         ]);
 
         setGroupedRows((current) =>
-          new Map(current).set(path, buildWizardTree(path, entries, match)),
+          new Map(current).set(path, buildWizardTree(path, entries, match, covers)),
         );
       } catch (err) {
         storeService.setError(err instanceof Error ? err.message : `Failed to group ${path}`);
@@ -238,6 +283,8 @@ export function ROMExplorer(): JSX.Element {
     storeService.setSelection([]);
     setRecords(new Map());
     setStats(new Map());
+    setGame(undefined);
+    setGameFile(undefined);
     setTreeVersion((version) => version + 1);
   }, []);
 
@@ -319,6 +366,22 @@ export function ROMExplorer(): JSX.Element {
       return next;
     });
   };
+
+  /**
+   * A game picked in the tree. Its files arrive through the selection, so the
+   * details of every release are already loaded when the game comes on screen.
+   */
+  const handleGameChange = useCallback((selected?: WizardGame) => {
+    setEditing(false);
+    setGameFile(undefined);
+    setGame(selected);
+  }, []);
+
+  /** Opens one file of the game on screen, which the tree no longer lists. */
+  const handleSelectFile = useCallback((path: string) => {
+    setEditing(false);
+    setGameFile(path);
+  }, []);
 
   const handleSelectionChange = async (paths: string[]) => {
     setEditing(false);
@@ -423,6 +486,12 @@ export function ROMExplorer(): JSX.Element {
   };
 
   const handleRemoved = (paths: string[]) => {
+    // The grouped rows were worked out when those files were still there, so the
+    // folders they came from have to be read again. The scan cache survives, so
+    // that is a listing and not a rehash.
+    grouping.current.clear();
+    setGroupedRows(new Map());
+
     const affected = selection.some((selected) =>
       paths.some((path) => selected === path || selected.startsWith(`${path}/`)),
     );
@@ -430,6 +499,8 @@ export function ROMExplorer(): JSX.Element {
     if (!affected) return;
 
     setEditing(false);
+    setGame(undefined);
+    setGameFile(undefined);
     storeService.setSelection([]);
     releaseCovers();
     setRecords(new Map());
@@ -467,6 +538,7 @@ export function ROMExplorer(): JSX.Element {
               node={activeNode}
               selectedFiles={selection}
               onSelectionChange={handleSelectionChange}
+              onGameChange={handleGameChange}
               onVisibleChange={handleVisibleChange}
               isInitialized={(path) => initialised.has(gameKey(path))}
               onRemoved={handleRemoved}
@@ -482,7 +554,9 @@ export function ROMExplorer(): JSX.Element {
 
           <div class="details-pane">
             <RomDetails
-              paths={selection}
+              paths={gameFile ? [gameFile] : selection}
+              game={gameFile ? undefined : game}
+              gameCover={gameCover}
               records={records}
               stats={stats}
               covers={covers}
@@ -491,6 +565,12 @@ export function ROMExplorer(): JSX.Element {
               onCancelEdit={() => setEditing(false)}
               onSave={handleSave}
               onSaveMany={handleSaveMany}
+              onSelectFile={handleSelectFile}
+              onBack={
+                game && gameFile
+                  ? { label: game.title, go: () => setGameFile(undefined) }
+                  : undefined
+              }
               loadContent={loadContent}
             />
           </div>

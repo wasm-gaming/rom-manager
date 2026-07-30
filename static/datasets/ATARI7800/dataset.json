@@ -4,8 +4,10 @@
     "totalGames": 337,
     "totalFiles": 337,
     "totalCovers": 118,
-    "generated": "2026-07-29T23:49:50.706Z"
+    "totalGameCovers": 0,
+    "generated": "2026-07-30T10:39:19.017Z"
   },
+  "covers": {},
   "list": [
     {
       "name": "1942 (Extended) (World) (Aftermarket) (Unl)",
@@ -89,7 +91,7 @@
       "sha1": "C43249BA2D38441461E5FFE07AD2E0B46AB1C6DF",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ace%20of%20Aces%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ace%20of%20Aces%20(Europe).png"
     },
     {
       "name": "Ace of Aces (USA)",
@@ -101,7 +103,7 @@
       "sha1": "EFD20BD321A81D67FB6430D9BA93D23FB90D8029",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ace%20of%20Aces%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ace%20of%20Aces%20(USA).png"
     },
     {
       "name": "Alien Brigade (Europe)",
@@ -113,7 +115,7 @@
       "sha1": "990711AE451D901A960AF8AD9AE70813F16257B1",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Alien%20Brigade%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Alien%20Brigade%20(Europe).png"
     },
     {
       "name": "Alien Brigade (USA)",
@@ -125,7 +127,7 @@
       "sha1": "A8629FAC962CC20B263A60BB2D2386D605713387",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Alien%20Brigade%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Alien%20Brigade%20(USA).png"
     },
     {
       "name": "Alpha Race (World) (Aftermarket) (Unl)",
@@ -173,7 +175,7 @@
       "sha1": "D96EC4E043FCDACAB367D8A69D29904B3B2896F1",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Asteroids%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Asteroids%20(USA).png"
     },
     {
       "name": "Asteroids (USA) (Beta)",
@@ -185,7 +187,7 @@
       "sha1": "85D9CE187497877005E991F2BF139D21034CCF9D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Asteroids%20(USA)%20(Beta).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Asteroids%20(USA)%20(Beta).png"
     },
     {
       "name": "Asteroids Deluxe (World) (Aftermarket) (Unl)",
@@ -334,7 +336,7 @@
       "sha1": "1AA1A508ADA1521AE1D373A6860681093E3F851C",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ballblazer%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ballblazer%20(Europe).png"
     },
     {
       "name": "Ballblazer (USA)",
@@ -346,7 +348,7 @@
       "sha1": "4EB5424360691A38B199D91A0E2C9095D0862DBE",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ballblazer%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ballblazer%20(USA).png"
     },
     {
       "name": "Barnyard Blaster (Europe)",
@@ -358,7 +360,7 @@
       "sha1": "A5797CF7E747BBD755C99FDE6936CAA15FBBA6B1",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Barnyard%20Blaster%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Barnyard%20Blaster%20(Europe).png"
     },
     {
       "name": "Barnyard Blaster (USA)",
@@ -370,7 +372,7 @@
       "sha1": "CBCDE3D85C8778DEA402394568677884CD781DE3",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Barnyard%20Blaster%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Barnyard%20Blaster%20(USA).png"
     },
     {
       "name": "Baseball (Europe)",
@@ -382,7 +384,7 @@
       "sha1": "C44FE244206590ABC26FBBD520A5726353899E35",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Baseball%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Baseball%20(Europe).png"
     },
     {
       "name": "Basketbrawl (Europe)",
@@ -394,7 +396,7 @@
       "sha1": "E7EF6B11BB6836FF7D11A25F8D4E2C9361FA69B3",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Basketbrawl%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Basketbrawl%20(Europe).png"
     },
     {
       "name": "Basketbrawl (USA)",
@@ -406,7 +408,7 @@
       "sha1": "39877A4C88498BF6656451E3D1ACAF7E8638BDFD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Basketbrawl%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Basketbrawl%20(USA).png"
     },
     {
       "name": "Bentley Bear's Crystal Quest (World) (Aftermarket) (Unl)",
@@ -454,7 +456,7 @@
       "sha1": "323F9FC4FDE9AA6FCBAAC8AE300AAA06BAFA745A",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Centipede%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Centipede%20(Europe).png"
     },
     {
       "name": "Centipede (USA)",
@@ -466,7 +468,7 @@
       "sha1": "C8377AD7FB6AFEC5C88C14A23A68E2ECEBBA4E5A",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Centipede%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Centipede%20(USA).png"
     },
     {
       "name": "Choplifter! (Europe)",
@@ -478,7 +480,7 @@
       "sha1": "F2FE1C82E5B333F4C59F76A28A9D379228596D89",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Choplifter!%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Choplifter!%20(Europe).png"
     },
     {
       "name": "Choplifter! (USA)",
@@ -490,7 +492,7 @@
       "sha1": "6DF15E73494D0A498DD044753A27544214210B14",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Choplifter!%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Choplifter!%20(USA).png"
     },
     {
       "name": "Commando (Europe)",
@@ -502,7 +504,7 @@
       "sha1": "2BDAD24967FE4F5492AE294B1CCF8F148930A419",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Commando%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Commando%20(Europe).png"
     },
     {
       "name": "Commando (USA)",
@@ -514,7 +516,7 @@
       "sha1": "F8AE7DA650AD38675B81675B77096794A9CD52E8",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Commando%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Commando%20(USA).png"
     },
     {
       "name": "Crack'ed (Europe)",
@@ -526,7 +528,7 @@
       "sha1": "0C1A7806E431EFBF0C826A11B92D74EB45E08661",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Crack'ed%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Crack'ed%20(Europe).png"
     },
     {
       "name": "Crack'ed (USA)",
@@ -538,7 +540,7 @@
       "sha1": "664D267D1245D5698CBF6FF0622EE0D629DA3A11",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Crack'ed%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Crack'ed%20(USA).png"
     },
     {
       "name": "Crazy Bricks (World) (Aftermarket) (Unl)",
@@ -568,7 +570,7 @@
       "sha1": "F26D292210A91A714B4B87712FF53B8E49DA611E",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Crossbow%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Crossbow%20(Europe).png"
     },
     {
       "name": "Crossbow (USA)",
@@ -580,7 +582,7 @@
       "sha1": "D5E47DA88E232CD9EA059E133E7C0F13D921A04C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Crossbow%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Crossbow%20(USA).png"
     },
     {
       "name": "Dark Chambers (Europe)",
@@ -592,7 +594,7 @@
       "sha1": "2B888C95B31109FFD0441F586BA18F21A3A4F22E",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Dark%20Chambers%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Dark%20Chambers%20(Europe).png"
     },
     {
       "name": "Dark Chambers (USA)",
@@ -604,7 +606,7 @@
       "sha1": "848077F15114FEC31F8290BE2583566F4486FE65",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Dark%20Chambers%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Dark%20Chambers%20(USA).png"
     },
     {
       "name": "DeathMerchant (World) (v1.30) (Digital) (Aftermarket) (Unl)",
@@ -634,7 +636,7 @@
       "sha1": "185D104614E23699E074E850D5AB8C36A159071C",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Desert%20Falcon%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Desert%20Falcon%20(Europe).png"
     },
     {
       "name": "Desert Falcon (USA)",
@@ -646,7 +648,7 @@
       "sha1": "725F893F9A98926C627EF37EACC3F241620C3FFC",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Desert%20Falcon%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Desert%20Falcon%20(USA).png"
     },
     {
       "name": "Destroyer 7800 (World) (v1.03) (Aftermarket) (Unl)",
@@ -676,7 +678,7 @@
       "sha1": "CE05D3270B0E0D36D80A4F0731D0173CB5921BCE",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Dig%20Dug%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Dig%20Dug%20(Europe).png"
     },
     {
       "name": "Dig Dug (USA)",
@@ -688,7 +690,7 @@
       "sha1": "19CEE8DC40FABD7022BEDC27E4896C09E3CADFDD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Dig%20Dug%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Dig%20Dug%20(USA).png"
     },
     {
       "name": "Donkey Kong (Europe)",
@@ -700,7 +702,7 @@
       "sha1": "DC69FA8FDF3FCBA8557195358B8D206463652E0F",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Donkey%20Kong%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Donkey%20Kong%20(Europe).png"
     },
     {
       "name": "Donkey Kong (USA)",
@@ -712,7 +714,7 @@
       "sha1": "820C852CAA7957179BF7D6FAF2E6922DDE5A1A8E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Donkey%20Kong%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Donkey%20Kong%20(USA).png"
     },
     {
       "name": "Donkey Kong Junior (Europe)",
@@ -724,7 +726,7 @@
       "sha1": "2626A9CD3326B8CE0EE0E834E17A0EEDAE005669",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Donkey%20Kong%20Junior%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Donkey%20Kong%20Junior%20(Europe).png"
     },
     {
       "name": "Donkey Kong Junior (USA)",
@@ -736,7 +738,7 @@
       "sha1": "E9392259FFF682FCC3476009771A3CFD7D5BDB6D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Donkey%20Kong%20Junior%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Donkey%20Kong%20Junior%20(USA).png"
     },
     {
       "name": "Double Dragon (Europe)",
@@ -748,7 +750,7 @@
       "sha1": "210F3AC989549E89425E7677127715AEE713AF32",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Double%20Dragon%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Double%20Dragon%20(Europe).png"
     },
     {
       "name": "Double Dragon (USA)",
@@ -760,7 +762,7 @@
       "sha1": "C3FB140836A4ED84CDA7A999832703E8B72C0D21",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Double%20Dragon%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Double%20Dragon%20(USA).png"
     },
     {
       "name": "Dragon's Cache (World) (Aftermarket) (Unl)",
@@ -898,7 +900,7 @@
       "sha1": "673D912B2F9AB7A43F95E0E90BD80249B360FE0D",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/F-18%20Hornet%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/F-18%20Hornet%20(Europe).png"
     },
     {
       "name": "F-18 Hornet (USA)",
@@ -910,7 +912,7 @@
       "sha1": "13A18A6B85DB6222B01D37800E5E57DB616A85A6",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/F-18%20Hornet%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/F-18%20Hornet%20(USA).png"
     },
     {
       "name": "FailSafe (World) (Aftermarket) (Unl)",
@@ -958,7 +960,7 @@
       "sha1": "F23173D2E42BCA0767F3D8ECB6BB1C0D23DDE996",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Fatal%20Run%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Fatal%20Run%20(Europe).png"
     },
     {
       "name": "Fatal Run (USA)",
@@ -970,7 +972,7 @@
       "sha1": "69AAB1E6EF332C6844C693AC41965E4C33FF822A",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Fatal%20Run%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Fatal%20Run%20(USA).png"
     },
     {
       "name": "Fight Night (Europe)",
@@ -982,7 +984,7 @@
       "sha1": "DED89F3A4AC0D95AA158C98302B7939E5B89E4C6",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Fight%20Night%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Fight%20Night%20(Europe).png"
     },
     {
       "name": "Fight Night (USA)",
@@ -994,7 +996,7 @@
       "sha1": "1E8A8704A77B15E70CBC72B0AE9BC25FB91D7C21",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Fight%20Night%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Fight%20Night%20(USA).png"
     },
     {
       "name": "Food Fight (Europe)",
@@ -1006,7 +1008,7 @@
       "sha1": "40B8E5EEB9E9AD7239963ED79DC085092CCBEC4C",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Food%20Fight%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Food%20Fight%20(Europe).png"
     },
     {
       "name": "Food Fight (USA)",
@@ -1018,7 +1020,7 @@
       "sha1": "3F5F42D5AAF6CCD4979658A1387AAC5933549357",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Food%20Fight%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Food%20Fight%20(USA).png"
     },
     {
       "name": "Food Fight (USA) (Beta)",
@@ -1030,7 +1032,7 @@
       "sha1": "CA47CAFF9CB976DA34192E4FB9EEA8DEDF2222CD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Food%20Fight%20(USA)%20(Beta).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Food%20Fight%20(USA)%20(Beta).png"
     },
     {
       "name": "Frenzy (World) (v1.06) (Aftermarket) (Unl)",
@@ -1096,7 +1098,7 @@
       "sha1": "D17A710ADCA8D69E2A864ED93368C1D9F9BCFBD8",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/GATO%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/GATO%20(USA)%20(Proto).png"
     },
     {
       "name": "Galaga (Europe)",
@@ -1108,7 +1110,7 @@
       "sha1": "F1AE5DF03CF90041380D77C1B49C94611443330B",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Galaga%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Galaga%20(Europe).png"
     },
     {
       "name": "Galaga (USA)",
@@ -1120,7 +1122,7 @@
       "sha1": "33178D682564D70955E13D0633359E87B512253B",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Galaga%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Galaga%20(USA).png"
     },
     {
       "name": "Galaxian (World) (Aftermarket) (Unl)",
@@ -1186,7 +1188,7 @@
       "sha1": "0E9FA678BB4AEDC7BB7CF5D38FE27556C4C2BBBD",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Hat%20Trick%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Hat%20Trick%20(Europe).png"
     },
     {
       "name": "Hat Trick (USA)",
@@ -1198,7 +1200,7 @@
       "sha1": "14C0CFD01DF1C725F399C23810E4854A639FCE52",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Hat%20Trick%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Hat%20Trick%20(USA).png"
     },
     {
       "name": "High Score Cartridge (USA) (Proto)",
@@ -1221,7 +1223,7 @@
       "sha1": "275CAE6C693D9BD1906FDC684460EC596869BBAD",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ikari%20Warriors%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ikari%20Warriors%20(Europe).png"
     },
     {
       "name": "Ikari Warriors (USA)",
@@ -1233,7 +1235,7 @@
       "sha1": "E368C6C7FFCA5FFAC314DEC1EFFEA4E2C809519A",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ikari%20Warriors%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ikari%20Warriors%20(USA).png"
     },
     {
       "name": "Impossible Mission (Europe)",
@@ -1245,7 +1247,7 @@
       "sha1": "9770B61472510ABA1CF3EA35CECA1859C3493676",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Impossible%20Mission%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Impossible%20Mission%20(Europe).png"
     },
     {
       "name": "Impossible Mission (USA)",
@@ -1257,7 +1259,7 @@
       "sha1": "5437C0EFB63A349953EC047EFE6EC24144ED6914",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Impossible%20Mission%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Impossible%20Mission%20(USA).png"
     },
     {
       "name": "Jacks or Better Poker (World) (v1.37) (Aftermarket) (Unl)",
@@ -1287,7 +1289,7 @@
       "sha1": "EB16DE0C3D5C4E769AE2314BA21C4DD3BCA33C88",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Jinks%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Jinks%20(Europe).png"
     },
     {
       "name": "Jinks (USA)",
@@ -1299,7 +1301,7 @@
       "sha1": "472BC12C437B015A9E317BAC092529F3295033B8",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Jinks%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Jinks%20(USA).png"
     },
     {
       "name": "Joust (Europe)",
@@ -1311,7 +1313,7 @@
       "sha1": "AAE5B9EE00C39D577858ABA9D1FD791194BE2C0C",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Joust%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Joust%20(Europe).png"
     },
     {
       "name": "Joust (USA)",
@@ -1323,7 +1325,7 @@
       "sha1": "1CCD7C232BCFD5A65D26B9DECFE4ECEADCBE314C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Joust%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Joust%20(USA).png"
     },
     {
       "name": "Jr. Pac-Man (World) (Aftermarket) (Unl)",
@@ -1407,7 +1409,7 @@
       "sha1": "C5F25C88EEFE0C7B3571AB3C3EC5185E537EB151",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Karateka%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Karateka%20(Europe).png"
     },
     {
       "name": "Karateka (USA)",
@@ -1419,7 +1421,7 @@
       "sha1": "9FB97BBC7DCC610251CEE1695C48B82A087F32D2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Karateka%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Karateka%20(USA).png"
     },
     {
       "name": "Keystone Koppers (World) (Aftermarket) (Unl)",
@@ -1449,7 +1451,7 @@
       "sha1": "0EA6A04B8F9713040CE57B6F23A6589F98409D46",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Klax%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Klax%20(USA)%20(Proto).png"
     },
     {
       "name": "Knight Guy in Low-Res World - Castle Days (World) (RC1.1) (Aftermarket) (Unl)",
@@ -1479,7 +1481,7 @@
       "sha1": "0F0E24246D9E684B7F900A362FB08878B232580C",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Kung-Fu%20Master%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Kung-Fu%20Master%20(Europe).png"
     },
     {
       "name": "Kung-Fu Master (USA)",
@@ -1491,7 +1493,7 @@
       "sha1": "8824BFFDF4F30A8191E581752A75259A663092CA",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Kung-Fu%20Master%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Kung-Fu%20Master%20(USA).png"
     },
     {
       "name": "Legend of Silverpeak (World) (v1.00) (Aftermarket) (Unl)",
@@ -1539,7 +1541,7 @@
       "sha1": "881BEFF5103713E655FED80B32E0BBD774E78EE8",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Mario%20Bros.%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Mario%20Bros.%20(Europe).png"
     },
     {
       "name": "Mario Bros. (USA)",
@@ -1551,7 +1553,7 @@
       "sha1": "12E04B67094AF622641C536379C69ECAD2EE98ED",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Mario%20Bros.%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Mario%20Bros.%20(USA).png"
     },
     {
       "name": "Mat Mania Challenge (Europe)",
@@ -1563,7 +1565,7 @@
       "sha1": "119BB784F1A0638CC6778841131CA1766E94A112",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Mat%20Mania%20Challenge%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Mat%20Mania%20Challenge%20(Europe).png"
     },
     {
       "name": "Mat Mania Challenge (USA)",
@@ -1575,7 +1577,7 @@
       "sha1": "BB849B603CF1091E4F032936B209FF33FC3B714E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Mat%20Mania%20Challenge%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Mat%20Mania%20Challenge%20(USA).png"
     },
     {
       "name": "Mean 18 Ultimate Golf (Europe)",
@@ -1587,7 +1589,7 @@
       "sha1": "47702EE71C64AF4ADA09CD41122C779C7D8D94F1",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Mean%2018%20Ultimate%20Golf%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Mean%2018%20Ultimate%20Golf%20(Europe).png"
     },
     {
       "name": "Mean 18 Ultimate Golf (USA)",
@@ -1599,7 +1601,7 @@
       "sha1": "A3E50C0E56C9675FFB1B6439F40789BC64C606B2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Mean%2018%20Ultimate%20Golf%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Mean%2018%20Ultimate%20Golf%20(USA).png"
     },
     {
       "name": "Meltdown (Europe)",
@@ -1611,7 +1613,7 @@
       "sha1": "AC448F369C3C6334415095E4FF344FDD73B473BE",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Meltdown%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Meltdown%20(Europe).png"
     },
     {
       "name": "Meltdown (USA)",
@@ -1623,7 +1625,7 @@
       "sha1": "E601C45AAA1CC25F01493867664C8B9FEFECA70E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Meltdown%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Meltdown%20(USA).png"
     },
     {
       "name": "Meteor Shower (World) (v1.05) (Aftermarket) (Unl)",
@@ -1707,7 +1709,7 @@
       "sha1": "85F0E0556DF65C0732F71AB3F2BBDE3615355F72",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Midnight%20Mutants%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Midnight%20Mutants%20(Europe).png"
     },
     {
       "name": "Midnight Mutants (USA)",
@@ -1719,7 +1721,7 @@
       "sha1": "DB5EA4C1456F3B403F6B8978432ECBCDAC89D432",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Midnight%20Mutants%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Midnight%20Mutants%20(USA).png"
     },
     {
       "name": "Missing in Action (USA) (Proto)",
@@ -1778,7 +1780,7 @@
       "sha1": "3B72D6B3E28CA9182F1F25DC57115D2EC33AA63E",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Motor%20Psycho%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Motor%20Psycho%20(Europe).png"
     },
     {
       "name": "Motor Psycho (USA)",
@@ -1790,7 +1792,7 @@
       "sha1": "B9381F4D0413B6C48E27F26ED94C7A9EB1A49624",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Motor%20Psycho%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Motor%20Psycho%20(USA).png"
     },
     {
       "name": "Ms. Pac-Man (Europe)",
@@ -1802,7 +1804,7 @@
       "sha1": "A5B0826A130ACF8B8DBC59EF980D40B802C22B30",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ms.%20Pac-Man%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ms.%20Pac-Man%20(Europe).png"
     },
     {
       "name": "Ms. Pac-Man (USA)",
@@ -1814,7 +1816,7 @@
       "sha1": "FF22E21FC953A288453C40EB6FC5378D42B871F6",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ms.%20Pac-Man%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ms.%20Pac-Man%20(USA).png"
     },
     {
       "name": "Ms. Pac-Man 320 (World) (Aftermarket) (Unl)",
@@ -1862,7 +1864,7 @@
       "sha1": "99CE5711E38FF7EF3311216F954CF0AB70E289CF",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ninja%20Golf%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ninja%20Golf%20(Europe).png"
     },
     {
       "name": "Ninja Golf (USA)",
@@ -1874,7 +1876,7 @@
       "sha1": "96D0E59E703770EEA8D8D9C2C4E5A87CE6F2DE76",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Ninja%20Golf%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Ninja%20Golf%20(USA).png"
     },
     {
       "name": "One-on-One Basketball (Europe)",
@@ -1886,7 +1888,7 @@
       "sha1": "01DFC5E4E615CF20EE4F07245285F85684EE445D",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/One-on-One%20Basketball%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/One-on-One%20Basketball%20(Europe).png"
     },
     {
       "name": "One-on-One Basketball (USA)",
@@ -1898,7 +1900,7 @@
       "sha1": "5173F892A8D70AECA6C324C138C56208E0DB2B98",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/One-on-One%20Basketball%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/One-on-One%20Basketball%20(USA).png"
     },
     {
       "name": "Oozy the Goo Gaiden (World) (Aftermarket) (Unl)",
@@ -2162,7 +2164,7 @@
       "sha1": "FFB4FBED8D8F28EA71668542B7EBD019955C5A11",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Pete%20Rose%20Baseball%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Pete%20Rose%20Baseball%20(USA).png"
     },
     {
       "name": "Pirate Cove (World) (Aftermarket) (Unl)",
@@ -2192,7 +2194,7 @@
       "sha1": "378ADDEF67ACA55500F0F5F9F0075DCB177406B5",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Pit%20Fighter%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Pit%20Fighter%20(USA)%20(Proto).png"
     },
     {
       "name": "Planet Smashers (Europe)",
@@ -2204,7 +2206,7 @@
       "sha1": "F12CBB576607EC38D6111F4346412CCC5BFBCF42",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Planet%20Smashers%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Planet%20Smashers%20(Europe).png"
     },
     {
       "name": "Planet Smashers (USA)",
@@ -2216,7 +2218,7 @@
       "sha1": "503B975FC1F8EDC16110AC2C5B884C4E8B2B6EFB",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Planet%20Smashers%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Planet%20Smashers%20(USA).png"
     },
     {
       "name": "Plink (World) (Aftermarket) (Unl)",
@@ -2246,7 +2248,7 @@
       "sha1": "FA55D6A366B237917F18487FC51817394839A3BC",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Plutos%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Plutos%20(USA)%20(Proto).png"
     },
     {
       "name": "Plutos XM (World) (Aftermarket) (Unl)",
@@ -2294,7 +2296,7 @@
       "sha1": "268E53B5B2117BF853E0AAE6ADB0B2D3AAD8AD5C",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Pole%20Position%20II%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Pole%20Position%20II%20(Europe).png"
     },
     {
       "name": "Pole Position II (USA)",
@@ -2306,7 +2308,7 @@
       "sha1": "CCFA6F3F83DDBED2A2FB32735FEA316A718FBAAA",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Pole%20Position%20II%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Pole%20Position%20II%20(USA).png"
     },
     {
       "name": "Pole Position II (USA) (Beta)",
@@ -2318,7 +2320,7 @@
       "sha1": "E65E2BBF62F902C4DEE3F2E95EC5A222D151BEB4",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Pole%20Position%20II%20(USA)%20(Beta).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Pole%20Position%20II%20(USA)%20(Beta).png"
     },
     {
       "name": "Rampage (USA)",
@@ -2330,7 +2332,7 @@
       "sha1": "13745B5EAAAB7E2C992F3312285E112CDEB424F6",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Rampage%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Rampage%20(USA).png"
     },
     {
       "name": "Rampart (USA) (Proto)",
@@ -2342,7 +2344,7 @@
       "sha1": "53516794CB442208AF5D54760324C006510553B3",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Rampart%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Rampart%20(USA)%20(Proto).png"
     },
     {
       "name": "RealSports Baseball (USA)",
@@ -2354,7 +2356,7 @@
       "sha1": "9A9F60251D049630099F56D2D3EFB013828B8A2C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/RealSports%20Baseball%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/RealSports%20Baseball%20(USA).png"
     },
     {
       "name": "Rescue on Fractalus (USA) (Proto)",
@@ -2366,7 +2368,7 @@
       "sha1": "6653022F38E553D475896A918850158EAF8F77FF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Rescue%20on%20Fractalus%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Rescue%20on%20Fractalus%20(USA)%20(Proto).png"
     },
     {
       "name": "Rip-Off (World) (v1.05) (Aftermarket) (Unl)",
@@ -2486,7 +2488,7 @@
       "sha1": "CCC9753CDCBD2A2F8CB7966B8227801BA0BFD41D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Robotron%20-%202084%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Robotron%20-%202084%20(USA).png"
     },
     {
       "name": "Santa Simon (World) (Aftermarket) (Unl)",
@@ -2588,7 +2590,7 @@
       "sha1": "EBFED67CFEEBC6A558DBB087E4784E5E5258C2E1",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Scrapyard%20Dog%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Scrapyard%20Dog%20(Europe).png"
     },
     {
       "name": "Scrapyard Dog (USA)",
@@ -2600,7 +2602,7 @@
       "sha1": "F2249321D0CC296B9F9E516BBC5ECC9AAB56CA22",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Scrapyard%20Dog%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Scrapyard%20Dog%20(USA).png"
     },
     {
       "name": "Sentinel (Europe)",
@@ -2612,7 +2614,7 @@
       "sha1": "6D85A73A56D2F02FF439736EACE86691AA613444",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Sentinel%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Sentinel%20(Europe).png"
     },
     {
       "name": "Sentinel (USA) (Proto)",
@@ -2624,7 +2626,7 @@
       "sha1": "BD7DE03A28B168C992BCAA96539C2310F3BFE30C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Sentinel%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Sentinel%20(USA)%20(Proto).png"
     },
     {
       "name": "Serpentine (World) (Aftermarket) (Unl)",
@@ -2708,7 +2710,7 @@
       "sha1": "CD9F6DEA96F102262065D7472E73121B67F9E244",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Sirius%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Sirius%20(USA)%20(Proto).png"
     },
     {
       "name": "Sirius XM (World) (Aftermarket) (Unl)",
@@ -2900,7 +2902,7 @@
       "sha1": "31D46B32A2AA8D5BD6028CFF1F41037426B22409",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Summer%20Games%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Summer%20Games%20(USA).png"
     },
     {
       "name": "Super Circus AtariAge (World) (Aftermarket) (Unl)",
@@ -2948,7 +2950,7 @@
       "sha1": "469E03EE1E22EF0978C8095A38D662D34A413723",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Super%20Huey%20UH-IX%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Super%20Huey%20UH-IX%20(Europe).png"
     },
     {
       "name": "Super Huey UH-IX (USA)",
@@ -2960,7 +2962,7 @@
       "sha1": "29AEA9E90C446942001FD08D3C4C929F4CE048D7",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Super%20Huey%20UH-IX%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Super%20Huey%20UH-IX%20(USA).png"
     },
     {
       "name": "Super Pac-Man (World) (v1.09) (Aftermarket) (Unl)",
@@ -3044,7 +3046,7 @@
       "sha1": "FAB349584AF7B6B3F9B034AF3034F43257E2C25F",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Super%20Skateboardin'%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Super%20Skateboardin'%20(Europe).png"
     },
     {
       "name": "Super Skateboardin' (USA)",
@@ -3056,7 +3058,7 @@
       "sha1": "666D9383C112B66026898E6002B803801E269C51",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Super%20Skateboardin'%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Super%20Skateboardin'%20(USA).png"
     },
     {
       "name": "Tank Command (USA)",
@@ -3068,7 +3070,7 @@
       "sha1": "1D2975D754806416A25A821DB6A9FE389BF5D946",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Tank%20Command%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Tank%20Command%20(USA).png"
     },
     {
       "name": "Title Match Pro Wrestling (Europe)",
@@ -3080,7 +3082,7 @@
       "sha1": "7AB281C9B69692823B3B6B594856172363C507B5",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Title%20Match%20Pro%20Wrestling%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Title%20Match%20Pro%20Wrestling%20(Europe).png"
     },
     {
       "name": "Title Match Pro Wrestling (USA)",
@@ -3092,7 +3094,7 @@
       "sha1": "80D11BCBB953CCD8BF3C3E64162711E7EDB95090",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Title%20Match%20Pro%20Wrestling%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Title%20Match%20Pro%20Wrestling%20(USA).png"
     },
     {
       "name": "Tomcat - The F-14 Fighter Simulator (Europe)",
@@ -3104,7 +3106,7 @@
       "sha1": "825381773593365B5CA7EECA968CCA00879EEE71",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Tomcat%20-%20The%20F-14%20Fighter%20Simulator%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Tomcat%20-%20The%20F-14%20Fighter%20Simulator%20(Europe).png"
     },
     {
       "name": "Tomcat - The F-14 Fighter Simulator (USA)",
@@ -3116,7 +3118,7 @@
       "sha1": "80C615FB60D0004C1ACCDE25E42759572E030928",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Tomcat%20-%20The%20F-14%20Fighter%20Simulator%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Tomcat%20-%20The%20F-14%20Fighter%20Simulator%20(USA).png"
     },
     {
       "name": "Touchdown Challenge (World) (v2.21) (Aftermarket) (Unl)",
@@ -3146,7 +3148,7 @@
       "sha1": "364BF0FEF8A67F7E66761C76A3A6A0DD186F04AA",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Touchdown%20Football%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Touchdown%20Football%20(USA).png"
     },
     {
       "name": "Tower Toppler (Europe)",
@@ -3158,7 +3160,7 @@
       "sha1": "56E1B795E80382EDB376E4536D1DEE539D4AC548",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Tower%20Toppler%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Tower%20Toppler%20(Europe).png"
     },
     {
       "name": "Tower Toppler (USA)",
@@ -3170,7 +3172,7 @@
       "sha1": "53976013986E0AD3694AB9C021420B8172465DE7",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Tower%20Toppler%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Tower%20Toppler%20(USA).png"
     },
     {
       "name": "Tunnels of Hyperion (World) (Aftermarket) (Unl)",
@@ -3254,7 +3256,7 @@
       "sha1": "621C67C2228843405445222743BA3D7C1F04A3C4",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Water%20Ski%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Water%20Ski%20(USA).png"
     },
     {
       "name": "Winter Games (USA)",
@@ -3266,7 +3268,7 @@
       "sha1": "B3725D6F0834C68AC62CE13EB9EB0D01D1124E5E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Winter%20Games%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Winter%20Games%20(USA).png"
     },
     {
       "name": "Wizard's Dungeon (World) (Aftermarket) (Unl)",
@@ -3332,7 +3334,7 @@
       "sha1": "B2CF7D6164D6E5ACD47E9F6D7CF60BB0F775B4A3",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Xenophobe%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Xenophobe%20(Europe).png"
     },
     {
       "name": "Xenophobe (USA)",
@@ -3344,7 +3346,7 @@
       "sha1": "867ADBFD7539FF81E68726ED6F5FF7326409539F",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Xenophobe%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Xenophobe%20(USA).png"
     },
     {
       "name": "Xevious (Europe)",
@@ -3356,7 +3358,7 @@
       "sha1": "81647C8CE432F891328631B57DD3268DD315F8E8",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Xevious%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Xevious%20(Europe).png"
     },
     {
       "name": "Xevious (USA)",
@@ -3368,7 +3370,7 @@
       "sha1": "1D4F0335B152239553534FCBBACDCA273802E3BD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Xevious%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Xevious%20(USA).png"
     },
     {
       "name": "Xevious (USA) (Beta)",
@@ -3380,7 +3382,7 @@
       "sha1": "5F7D2D52ED8C9A3263EE0AEFB3BC05A2847665DD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%207800/Named_Boxarts/Xevious%20(USA)%20(Beta).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_7800/HEAD/Named_Boxarts/Xevious%20(USA)%20(Beta).png"
     },
     {
       "name": "bonQ (World) (Aftermarket) (Unl)",

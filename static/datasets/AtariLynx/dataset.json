@@ -4,7 +4,11 @@
     "totalGames": 620,
     "totalFiles": 620,
     "totalCovers": 124,
-    "generated": "2026-07-29T23:49:50.746Z"
+    "totalGameCovers": 1,
+    "generated": "2026-07-30T10:39:19.077Z"
+  },
+  "covers": {
+    "Eye of the Beholder": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Eye%20of%20the%20Beholder%20(USA)%20(Unl).png"
   },
   "list": [
     {
@@ -96,7 +100,7 @@
       "crc": "F6FB48FB",
       "md5": "B425941149874C6371C40E85CC5B6241",
       "sha1": "C2BF00DE769895CBED03C056EB9C8FA1A7EA59EF",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/A.P.B.%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/A.P.B.%20(USA%2C%20Europe).png"
     },
     {
       "name": "Alien (World) (v1.02) (Aftermarket) (Unl)",
@@ -106,7 +110,7 @@
       "crc": "1F324A19",
       "md5": "9B51DB0B7532E23945C5ADCD2E238B25",
       "sha1": "9982D65D1A3EEF98E669AC7FB090400AB8D3EEAD",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Alien%20(World)%20(v1.02)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Alien%20(World)%20(v1.02)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Alien (World) (v1.02) (Aftermarket) (Unl)",
@@ -116,7 +120,7 @@
       "crc": "0F5C46C3",
       "md5": "8E7AA580D9FDCEBBCCE18C62BE30CC29",
       "sha1": "FDC610C669186F0AC4ED0AA0450AF8F07E55D2D7",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Alien%20(World)%20(v1.02)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Alien%20(World)%20(v1.02)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Alien (World) (v1.03) (Aftermarket) (Unl)",
@@ -182,7 +186,7 @@
       "sha1": "27427ED186D034D71E100CBFF5D0072A717AF9E0",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Alien%20vs%20Predator%20(Europe)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Alien%20vs%20Predator%20(Europe)%20(Proto).png"
     },
     {
       "name": "Allein (World) (De) (Aftermarket) (Unl)",
@@ -336,7 +340,7 @@
       "crc": "9EE4EFE6",
       "md5": "8CF418CEF94E87BD272C6F8A8FAA1554",
       "sha1": "3F7D32509E09FB5B1DA78F7B0A5565E027DD0390",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Asteroids Chasers (World) (Proto) (Aftermarket) (Unl)",
@@ -346,7 +350,7 @@
       "crc": "5D3CD51D",
       "md5": "2F404547C5D96250D96E96DFF5046242",
       "sha1": "BA389CAFAD7E9C8F596AF994977DDDDBD3F4884C",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Asteroids Chasers (World) (Proto) (Aftermarket) (Unl)",
@@ -356,7 +360,7 @@
       "crc": "2C89BBF4",
       "md5": "ECC2702671260360F529E5193C48E53E",
       "sha1": "469E4F887D01CE240732EFB4059024DA8EF39565",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Asteroids Chasers (World) (Proto) (Aftermarket) (Unl)",
@@ -366,7 +370,7 @@
       "crc": "EF51810F",
       "md5": "2067C87C8065F60A10B5C30392CD4417",
       "sha1": "B2760A81917848333616C1735DB580C887EBDF3B",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Asteroids%20Chasers%20(World)%20(Proto)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Atari Tabletops Collection (World) (v1.0) (Aftermarket) (Unl)",
@@ -448,7 +452,7 @@
       "crc": "0483CD2A",
       "md5": "49D6EEB3C983246FF4D7034497F7095C",
       "sha1": "74441B96CE5BF2BE68945FBE93BDA259F97816B7",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Awesome%20Golf%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Awesome%20Golf%20(USA%2C%20Europe).png"
     },
     {
       "name": "Awesome Golf (World) (Atari Lynx Collection 1) (Unl)",
@@ -557,7 +561,7 @@
       "crc": "3943C116",
       "md5": "8C9A72DDBB5559293862684EC67BFA92",
       "sha1": "B30A1FE12DC3E69E1A179A5E4D1799D93996FC24",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Baseball%20Heroes%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Baseball%20Heroes%20(USA%2C%20Europe).png"
     },
     {
       "name": "Basketbrawl (USA, Europe)",
@@ -567,7 +571,7 @@
       "crc": "4161BB4A",
       "md5": "F19B95E4835C5FBC44B180DBD3F024FC",
       "sha1": "46AE8E1504E2944525D535280A3ED32E0873788A",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Basketbrawl%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Basketbrawl%20(USA%2C%20Europe).png"
     },
     {
       "name": "Basketbrawl (World) (Atari Lynx Collection 1) (Unl)",
@@ -622,7 +626,7 @@
       "crc": "277F82C2",
       "md5": "6E9BBFF3C7B66D3EC0411FFBE0E41DFD",
       "sha1": "2E25B17A221D4D9598811FBF84AB0DA3016F26E4",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Batman%20Returns%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Batman%20Returns%20(USA%2C%20Europe).png"
     },
     {
       "name": "Battle Wheels (USA, Europe)",
@@ -632,7 +636,7 @@
       "crc": "779FAECE",
       "md5": "FDDECD756ABE5EAF613CA1DB31D51DF7",
       "sha1": "4577550D20A22CB685D51B411396D5085A852BE6",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Battle%20Wheels%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Battle%20Wheels%20(USA%2C%20Europe).png"
     },
     {
       "name": "Battlezone 2000 (USA, Europe)",
@@ -642,7 +646,7 @@
       "crc": "30FEE726",
       "md5": "D405EA54B77390B06222F9DAC7CEA827",
       "sha1": "FB50DDEE638AA316C7EAE6D50961E3B69B112C4F",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Battlezone%202000%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Battlezone%202000%20(USA%2C%20Europe).png"
     },
     {
       "name": "Befok (World) (Proto) (Aftermarket) (Unl)",
@@ -733,7 +737,7 @@
       "crc": "143A313E",
       "md5": "87DFF4F4D5E1E4A7132D19F94D4E9B3A",
       "sha1": "F09CE08D93A479FEACECEB79EB48B337AFF49FAE",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Bill%20_%20Ted's%20Excellent%20Adventure%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Bill%20_%20Ted's%20Excellent%20Adventure%20(USA%2C%20Europe).png"
     },
     {
       "name": "Biniax (World) (v0.1) (Beta) (Aftermarket) (Unl)",
@@ -869,7 +873,7 @@
       "crc": "3CD75DF3",
       "md5": "C81ABF2919EFFD525B83C2103B75E6CA",
       "sha1": "AE177CF76953B7E0A56B03096BB5C9C9C9051177",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Block%20Out%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Block%20Out%20(USA%2C%20Europe).png"
     },
     {
       "name": "Blue Lightning (World)",
@@ -879,7 +883,7 @@
       "crc": "DAF587B1",
       "md5": "F7B4775771BC25D9053AF5C69A8C8B2A",
       "sha1": "BE08076586F76DB368DB1769380DCBB6DE2A6513",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Blue%20Lightning%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Blue%20Lightning%20(World).png"
     },
     {
       "name": "Bobo (World) (Proto) (Aftermarket) (Unl)",
@@ -934,7 +938,7 @@
       "crc": "333DAECE",
       "md5": "90841F8FED54862F8A8750DDF212EB84",
       "sha1": "CB9F78FFB02216979A03ABB66301E4D3A8F01BFE",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Bubble%20Trouble%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Bubble%20Trouble%20(USA%2C%20Europe).png"
     },
     {
       "name": "Bug Hunt (World) (Proto) (Aftermarket) (Unl)",
@@ -980,7 +984,7 @@
       "crc": "A08F0B59",
       "md5": "73E02BB77DCF857A6578F0E24B4ECB9E",
       "sha1": "F13E010102CA527A9C393ACB52BB949A1BA93E3E",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/California%20Games%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/California%20Games%20(World).png"
     },
     {
       "name": "Cardtest (World) (Beta) (Aftermarket) (Unl)",
@@ -1028,7 +1032,7 @@
       "sha1": "59A5185203E3550B1CAD7B28489915BC8DE80851",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Centipede%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Centipede%20(USA)%20(Proto).png"
     },
     {
       "name": "Chase (World) (Aftermarket) (Unl)",
@@ -1083,7 +1087,7 @@
       "crc": "19C5A7A5",
       "md5": "85B33C5E5985AB041ECC44555A8CFB42",
       "sha1": "F115BB5F98992D98C8D11B1DAA68BB1961B59660",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Checkered%20Flag%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Checkered%20Flag%20(USA%2C%20Europe).png"
     },
     {
       "name": "Chip's Challenge (World)",
@@ -1093,7 +1097,7 @@
       "crc": "6A5F53ED",
       "md5": "24611D1445EBD34AB79FB0AE996FF4E4",
       "sha1": "6A90E6627086E13D99BACBCAAFEA7AB2F6ABA8A0",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Chip's%20Challenge%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Chip's%20Challenge%20(World).png"
     },
     {
       "name": "Choplifter X (World) (Aftermarket) (Unl)",
@@ -1400,7 +1404,7 @@
       "crc": "AEC474C8",
       "md5": "B4ACBD3C544A0D92CC8AD1380BF8A810",
       "sha1": "3364BDE38508C5C4FED5575295CC80C6F72EDEBE",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Crystal%20Mines%20II%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Crystal%20Mines%20II%20(USA%2C%20Europe).png"
     },
     {
       "name": "Crystal Mines II - Buried Treasure (World) (Unl)",
@@ -1567,7 +1571,7 @@
       "crc": "B9AC1FE5",
       "md5": "F764B88C44AFA8B5EBEFB8EB2E4D7B97",
       "sha1": "3149D8BA5661FD61DC94D518A0CB6D7B3A8F319F",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Desert%20Strike%20-%20Return%20to%20the%20Gulf%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Desert%20Strike%20-%20Return%20to%20the%20Gulf%20(USA%2C%20Europe).png"
     },
     {
       "name": "Dinolympics (USA, Europe)",
@@ -1577,7 +1581,7 @@
       "crc": "50386CFA",
       "md5": "9496BE61FD0675553F05345C5FC2D15C",
       "sha1": "0DAD2286934C6A317407DB066F00233C27F54BBE",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Dinolympics%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Dinolympics%20(USA%2C%20Europe).png"
     },
     {
       "name": "Dirty Larry - Renegade Cop (USA, Europe)",
@@ -1587,7 +1591,7 @@
       "crc": "D565FBB7",
       "md5": "8CD77BEC912C9B4DCEBD8A82DCF91A0B",
       "sha1": "CA856DC880663D7F105AE5AA2FF160B9FC209F92",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Dirty%20Larry%20-%20Renegade%20Cop%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Dirty%20Larry%20-%20Renegade%20Cop%20(USA%2C%20Europe).png"
     },
     {
       "name": "Double Dragon (USA, Europe)",
@@ -1597,7 +1601,7 @@
       "crc": "FBFC0F05",
       "md5": "0E91B7ED60BB47D569BA24DF671AD3A3",
       "sha1": "7FC3663BEC878B138CFC51F14154823F9701C9E7",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Double%20Dragon%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Double%20Dragon%20(USA%2C%20Europe).png"
     },
     {
       "name": "Dracula - The Undead (USA, Europe)",
@@ -1607,7 +1611,7 @@
       "crc": "33BB74C7",
       "md5": "3FF35996887C2FF95E275085EFBBBBED",
       "sha1": "8F393F0FA8CE832E6298DB72F539CE4B961700E2",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Dracula%20-%20The%20Undead%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Dracula%20-%20The%20Undead%20(USA%2C%20Europe).png"
     },
     {
       "name": "Dracula - The Undead (World) (Atari Lynx Collection 1) (Unl)",
@@ -1752,7 +1756,7 @@
       "crc": "BD97116B",
       "md5": "C49CA94A908DB219224C6D5BAA206AB6",
       "sha1": "5BD6614BC98A882EC2F465278FE4F1ED6A4E972B",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Electrocop%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Electrocop%20(World).png"
     },
     {
       "name": "Escape from Dungeon of Deja Vu (World) (Proto) (Aftermarket) (Unl)",
@@ -1789,7 +1793,7 @@
       "crc": "F83397F9",
       "md5": "32E726AB7941EB1E833DCC4CF348A060",
       "sha1": "F1D0390A36055EF2B7CB5F7CE44F622A63D82E80",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/European%20Soccer%20Challenge%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/European%20Soccer%20Challenge%20(USA%2C%20Europe).png"
     },
     {
       "name": "Eye of the Beholder (USA) (Proto 1)",
@@ -1830,7 +1834,7 @@
       "crc": "9034EE27",
       "md5": "69ABD21C83390DAE54630919C3C150D0",
       "sha1": "766ED1A28528535338E176559A145AFAFFACF3EF",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Fat%20Bobby%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Fat%20Bobby%20(USA%2C%20Europe).png"
     },
     {
       "name": "Fidelity Ultimate Chess Challenge, The (USA, Europe)",
@@ -1840,7 +1844,7 @@
       "crc": "7E4B5945",
       "md5": "19EB0CA77284B5D91A63EB02F6962930",
       "sha1": "F6AFA50F161FFFE5975CF5688A9314B8039D940F",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Fidelity%20Ultimate%20Chess%20Challenge%2C%20The%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Fidelity%20Ultimate%20Chess%20Challenge%2C%20The%20(USA%2C%20Europe).png"
     },
     {
       "name": "Final Melee (World) (Aftermarket) (Unl)",
@@ -2014,7 +2018,7 @@
       "crc": "494CC568",
       "md5": "D5BE9118BCB14243468001B08C4AA21A",
       "sha1": "4EB4D3EB29231B2E36D8EF6EDE64A568F469C5FE",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Gates%20of%20Zendocon%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Gates%20of%20Zendocon%20(World).png"
     },
     {
       "name": "Gauntlet - The Third Encounter (World)",
@@ -2024,7 +2028,7 @@
       "crc": "7F0EC7AD",
       "md5": "0B572C0DFB938849EEEC39B2C9583547",
       "sha1": "41D27F0717A93D05A9D3D1110F571F791D330F55",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Gauntlet%20-%20The%20Third%20Encounter%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Gauntlet%20-%20The%20Third%20Encounter%20(World).png"
     },
     {
       "name": "Gauntlet - The Third Encounter (World) (Beta)",
@@ -2151,7 +2155,7 @@
       "crc": "D20A85FC",
       "md5": "EB9B5B2B6160E5F3015BC2A669D886B6",
       "sha1": "298163CF4355D0E8AABA264CD7DCD828B1FC6BEC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Gordo%20106%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Gordo%20106%20(USA%2C%20Europe).png"
     },
     {
       "name": "Gordo 106 (World) (Atari Lynx Collection 1) (Unl)",
@@ -2345,7 +2349,7 @@
       "crc": "6DF63834",
       "md5": "C265F0DE8C5BD77DB8F9CF5A1F7AB68F",
       "sha1": "6D33ABD50D46F900E8762D6E64B51E647EA98B07",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Hard%20Drivin'%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Hard%20Drivin'%20(USA%2C%20Europe).png"
     },
     {
       "name": "Hero Dust (World) (Proto) (Aftermarket) (Unl)",
@@ -2382,7 +2386,7 @@
       "crc": "E8B45707",
       "md5": "A08B8070AD613BDB2637162B3BF39574",
       "sha1": "707AF2B63C75B777EC519B63F0B8E86565356357",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Hockey%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Hockey%20(USA%2C%20Europe).png"
     },
     {
       "name": "Hungry Monsters (World) (v1.0) (Retro Platform Jam #4) (Aftermarket) (Unl)",
@@ -2428,7 +2432,7 @@
       "crc": "E3041C6C",
       "md5": "76A48869C14FBCF85588001A1327253D",
       "sha1": "FC0C7CABF3A2EE821F7441B71D19D52205F97721",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Hydra%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Hydra%20(USA%2C%20Europe).png"
     },
     {
       "name": "Ishido - The Way of Stones (USA, Europe)",
@@ -2438,7 +2442,7 @@
       "crc": "5CF8BBF0",
       "md5": "ADDC6C0AE7B535839815B8E7F7FD0F11",
       "sha1": "78C295AF3A57B5BD7D7E1D13AB13AD67885C4E89",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Ishido%20-%20The%20Way%20of%20Stones%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Ishido%20-%20The%20Way%20of%20Stones%20(USA%2C%20Europe).png"
     },
     {
       "name": "Ishido - The Way of Stones (World) (Atari Lynx Collection 1) (Unl)",
@@ -2484,7 +2488,7 @@
       "crc": "2455B6CF",
       "md5": "087E6ED018AD0573BD7CE3A91D34F2C9",
       "sha1": "D9C4220653B2DFBD6B26C0A0C81C40CB3108EE85",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Jimmy%20Connors'%20Tennis%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Jimmy%20Connors'%20Tennis%20(USA%2C%20Europe).png"
     },
     {
       "name": "Jimmy Connors' Tennis (World) (Atari Lynx Collection 1) (Unl)",
@@ -2512,7 +2516,7 @@
       "crc": "5DBA792A",
       "md5": "440462507CF5CFFAA8D3D3A66F01AC6A",
       "sha1": "EAD01F532BCAF535065DFD66B26D04B484D0066E",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Joust%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Joust%20(USA%2C%20Europe).png"
     },
     {
       "name": "Jungle Jack (World) (Aftermarket) (Unl)",
@@ -2558,7 +2562,7 @@
       "crc": "A53649F1",
       "md5": "F96A0DDCC72C971226E8FDFD95607C88",
       "sha1": "A1D2DC0771F4A30E539AB3261A21CC71ADC71550",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Klax%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Klax%20(World).png"
     },
     {
       "name": "Klax (World) (Beta)",
@@ -2685,7 +2689,7 @@
       "crc": "BED5BA2B",
       "md5": "7E82DB12A5749AB983E2F3C8BF4C0F6E",
       "sha1": "20E9011C922F06D9C8823F15C71E005AC2268295",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Krazy%20Ace%20-%20Miniature%20Golf%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Krazy%20Ace%20-%20Miniature%20Golf%20(USA%2C%20Europe).png"
     },
     {
       "name": "Kung Food (USA, Europe)",
@@ -2695,7 +2699,7 @@
       "crc": "CD1BD405",
       "md5": "E5E42190918847B8C6056E78316EE91D",
       "sha1": "AE1BD18B30DD9AE67472C4C532F4D65D23324555",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Kung%20Food%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Kung%20Food%20(USA%2C%20Europe).png"
     },
     {
       "name": "Lawnmower (World) (v1.1) (Aftermarket) (Unl)",
@@ -2723,7 +2727,7 @@
       "crc": "39B9B8CC",
       "md5": "3CAE85572DF3B43F0220326BF4BB3C8B",
       "sha1": "4D430B1AACF207A631F81B2089688B82267D0394",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Lemmings%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lemmings%20(USA%2C%20Europe).png"
     },
     {
       "name": "Lexis (World) (Aftermarket) (Unl)",
@@ -2733,7 +2737,7 @@
       "crc": "401210CC",
       "md5": "453BFE03779D8B7A25C534E96B404240",
       "sha1": "7ABCBE820466ACEB26A64E28167BCE7D9C5CA22B",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Lexis%20(World)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lexis%20(World)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Lexis (World) (Aftermarket) (Unl)",
@@ -2743,7 +2747,7 @@
       "crc": "0271B6E9",
       "md5": "7EE41EDAEF283459C9DF93366C5DA267",
       "sha1": "B973CEE4A58DBAE5AB2D540B38DB90AAE78BA323",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Lexis%20(World)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lexis%20(World)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Lode Runner (World) (Proto 1) (Aftermarket) (Unl)",
@@ -2753,7 +2757,7 @@
       "crc": "3469D418",
       "md5": "5D00C8B40A6559CF20AE19550AD67579",
       "sha1": "6E81CAFD17C5252E59F03FB1BFC7B90736BB7FD3",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Lode%20Runner%20(World)%20(Proto%201)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lode%20Runner%20(World)%20(Proto%201)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Lode Runner (World) (Proto 1) (Aftermarket) (Unl)",
@@ -2763,7 +2767,7 @@
       "crc": "4C138261",
       "md5": "F085AE3144D788AF2B41E4F0F2F83C52",
       "sha1": "EF4E57ABDCFA99897127A68CBD9BE4FF8E13C714",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Lode%20Runner%20(World)%20(Proto%201)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lode%20Runner%20(World)%20(Proto%201)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Lode Runner (World) (Proto 1) (Aftermarket) (Unl)",
@@ -2773,7 +2777,7 @@
       "crc": "0E702444",
       "md5": "B28964FAC53DD55C413862A9AD8CCB50",
       "sha1": "B055E3E194E3CFB4EC3EEB2703CF39CE45454178",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Lode%20Runner%20(World)%20(Proto%201)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lode%20Runner%20(World)%20(Proto%201)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Lode Runner (World) (Proto 2) (Aftermarket) (Unl)",
@@ -2814,7 +2818,7 @@
       "crc": "C00F6393",
       "md5": "8DEE3A894D23AD244AAC9D4F8DAE9997",
       "sha1": "68CB5483883073EEDE598011E8568D84BA9B7C25",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Loopz%20(World)%20(v0.7)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Loopz%20(World)%20(v0.7)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Loopz (World) (v0.7) (Aftermarket) (Unl)",
@@ -2824,7 +2828,7 @@
       "crc": "3994253B",
       "md5": "3A341972F8B86F15052833857B7B3879",
       "sha1": "8C955A2222EF3BD4F9A67D630ECD665FAA44E475",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Loopz%20(World)%20(v0.7)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Loopz%20(World)%20(v0.7)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Lynx Casino (USA, Europe)",
@@ -2834,7 +2838,7 @@
       "crc": "1091A268",
       "md5": "05D28AB0E92B19147E7F5EA88C6EFB6D",
       "sha1": "4B82A9BC02330C9213C2BBD74D547D520C4E6FA3",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Lynx%20Casino%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Lynx%20Casino%20(USA%2C%20Europe).png"
     },
     {
       "name": "Lynx II Production Test Program (USA)",
@@ -3035,7 +3039,7 @@
       "crc": "ABA6DA3D",
       "md5": "280344C8B073895ECCE286D1B9D87D8B",
       "sha1": "9C3D8037D347C0FF23D941EFF8B575A4F2F051DA",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Malibu%20Bikini%20Volleyball%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Malibu%20Bikini%20Volleyball%20(USA%2C%20Europe).png"
     },
     {
       "name": "Malibu Bikini Volleyball (USA, Europe) (Beta)",
@@ -3119,7 +3123,7 @@
       "sha1": "D3FC3FF1843C3AD431AD053ADE9DBBE4A8F34822",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Marlboro%20Go!%20(Europe)%20(Proto%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Marlboro%20Go!%20(Europe)%20(Proto%201).png"
     },
     {
       "name": "Marlboro Go! (Europe) (Proto 2)",
@@ -3131,7 +3135,7 @@
       "sha1": "26B18B706359B093D0B1BBCA4DBA9CD2D73E0372",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Marlboro%20Go!%20(Europe)%20(Proto%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Marlboro%20Go!%20(Europe)%20(Proto%202).png"
     },
     {
       "name": "MegaPak Vol.1 (World) (Aftermarket) (Unl)",
@@ -3240,7 +3244,7 @@
       "crc": "7DE3783A",
       "md5": "192B6B764A3A1C7831E0A785FA4B5453",
       "sha1": "FF644034CD840F8C13B643C44EC2C685290E0326",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Ms.%20Pac-Man%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Ms.%20Pac-Man%20(World).png"
     },
     {
       "name": "MultiPong 1k (World) (Aftermarket) (Unl)",
@@ -3277,7 +3281,7 @@
       "crc": "006FD398",
       "md5": "276B9BE28571189912F05D321FCB04EF",
       "sha1": "CAEA445BDDCF75BCBE13920718279220D1ACB869",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/NFL%20Football%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/NFL%20Football%20(USA%2C%20Europe).png"
     },
     {
       "name": "Nezumi-kun to Poker Shiyouyo (World) (Ja) (v1.0) (Aftermarket) (Unl)",
@@ -3368,7 +3372,7 @@
       "crc": "22D47D51",
       "md5": "7EC4063EB6C7C74600D6A16FB3A3BDBD",
       "sha1": "A40B5DABFF9C2F6114FDBC587C72312704D7FABB",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Ninja%20Gaiden%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Ninja%20Gaiden%20(USA%2C%20Europe).png"
     },
     {
       "name": "Ninja Gaiden III - The Ancient Ship of Doom (USA, Europe)",
@@ -3378,7 +3382,7 @@
       "crc": "F3E3F811",
       "md5": "C9ED2A3BDEFD6D5FDF67302D87B5CFB2",
       "sha1": "37861CC3025D9ADDBACE8D07C8F65961CBA29EAA",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Ninja%20Gaiden%20III%20-%20The%20Ancient%20Ship%20of%20Doom%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Ninja%20Gaiden%20III%20-%20The%20Ancient%20Ship%20of%20Doom%20(USA%2C%20Europe).png"
     },
     {
       "name": "Nutmeg (World) (Aftermarket) (Unl)",
@@ -3523,7 +3527,7 @@
       "crc": "AA50DD22",
       "md5": "0A14754B351B4F11A1359E252B8EB992",
       "sha1": "58B57835703E3145A54E1C0ADA38C9218BF4CD3D",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Pac-Land%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Pac-Land%20(USA%2C%20Europe).png"
     },
     {
       "name": "Paperboy (World)",
@@ -3533,7 +3537,7 @@
       "crc": "4CDFBD57",
       "md5": "2A59D2CA6D6F07BC2791BF349E2778EE",
       "sha1": "537BAE2C336DC9925F10505D4040965CA7434F5D",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Paperboy%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Paperboy%20(World).png"
     },
     {
       "name": "Peg Solitaire (World) (v1.0) (Aftermarket) (Unl)",
@@ -3633,7 +3637,7 @@
       "crc": "14D38CA7",
       "md5": "29A248FBC87F477B49587581E29C1DC7",
       "sha1": "D9F911DC35A6B70BA38569D47C96DA25FFC7F40E",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Pinball%20Jam%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Pinball%20Jam%20(USA%2C%20Europe).png"
     },
     {
       "name": "Pit-Fighter (USA, Europe)",
@@ -3643,7 +3647,7 @@
       "crc": "2393135F",
       "md5": "5565889A9A8817F99EC6DDA322A70877",
       "sha1": "30F8C7ACF41A988578768B251E88B636462752CB",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Pit-Fighter%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Pit-Fighter%20(USA%2C%20Europe).png"
     },
     {
       "name": "Pit-Fighter (USA, Europe) (Beta)",
@@ -3774,7 +3778,7 @@
       "crc": "99C42034",
       "md5": "B29414B8C81CC9EF28EF2F7A09D6D876",
       "sha1": "1AD5386F43F60D848A40EE1237E5BD153FAEA23F",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Power%20Factor%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Power%20Factor%20(USA%2C%20Europe).png"
     },
     {
       "name": "Power Factor (World) (Atari Lynx Collection 1) (Unl)",
@@ -3874,7 +3878,7 @@
       "crc": "B9881423",
       "md5": "12E1EB0900402EF6DE8B72DDA5D22F47",
       "sha1": "30B8369EA396347D4847990691D880C313AACAE7",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/QIX%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/QIX%20(USA%2C%20Europe).png"
     },
     {
       "name": "Raid on TriCity (World) (Beta) (Aftermarket) (Unl)",
@@ -3940,7 +3944,7 @@
       "sha1": "469AA2D72959DE155466E84CC284A06609389A2D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Raiden%20(USA)%20(Beta).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Raiden%20(USA)%20(Beta).png"
     },
     {
       "name": "Raiden (USA) (Beta)",
@@ -3952,7 +3956,7 @@
       "sha1": "DF48F69A7257A40844812E5B0BDA9EFDF093B7F6",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Raiden%20(USA)%20(Beta).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Raiden%20(USA)%20(Beta).png"
     },
     {
       "name": "Raiden (World) (Aftermarket) (Unl)",
@@ -3962,7 +3966,7 @@
       "crc": "C0208CAA",
       "md5": "558F4AEB1E3D71C5CDF4513BDA2ADEF1",
       "sha1": "5A22B08214E2855607DF156BBC3A0D466DAC9D88",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Raiden%20(World)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Raiden%20(World)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Raiden (World) (Aftermarket) (Unl)",
@@ -3972,7 +3976,7 @@
       "crc": "689F31A4",
       "md5": "00A522C806102FB56044097368247A81",
       "sha1": "EC89B8D69BE93245F3F4A9900A4D5E6FDC4AD7B1",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Raiden%20(World)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Raiden%20(World)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Rainbow (World) (Proto) (Aftermarket) (Unl)",
@@ -4009,7 +4013,7 @@
       "crc": "B10B7C8E",
       "md5": "E0CB426257761C3688A866332ED48340",
       "sha1": "771DBF246386DA37670324D34066671F3F43AC0E",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Rampage%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Rampage%20(World).png"
     },
     {
       "name": "Rampart (USA, Europe)",
@@ -4019,7 +4023,7 @@
       "crc": "139F301D",
       "md5": "D8045ED542D5E58C779C884E0930E16C",
       "sha1": "3C3A0729BB4DDECF5E5FD2D9CED4671D2E0E702E",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Rampart%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Rampart%20(USA%2C%20Europe).png"
     },
     {
       "name": "Red Square (World) (v1.0) (Aftermarket) (Unl)",
@@ -4130,7 +4134,7 @@
       "sha1": "9A6B92EECA38C5333B1025730055190FE3BE4B64",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Road%20Riot%204WD%20(USA)%20(Proto%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Road%20Riot%204WD%20(USA)%20(Proto%201).png"
     },
     {
       "name": "Road Riot 4WD (USA) (Proto 2)",
@@ -4142,7 +4146,7 @@
       "sha1": "F6D94F7DE242D20260985B30A252B24E7CF3884C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Road%20Riot%204WD%20(USA)%20(Proto%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Road%20Riot%204WD%20(USA)%20(Proto%202).png"
     },
     {
       "name": "Road Riot 4WD (USA) (Proto 3)",
@@ -4154,7 +4158,7 @@
       "sha1": "6B83802CC058066D0C3776E52E6944BF18035FD0",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Road%20Riot%204WD%20(USA)%20(Proto%203).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Road%20Riot%204WD%20(USA)%20(Proto%203).png"
     },
     {
       "name": "Road Riot 4WD (USA) (Proto 4)",
@@ -4175,7 +4179,7 @@
       "crc": "6867E80C",
       "md5": "39617EBB81F3C1DF27354C18571BD6C3",
       "sha1": "20233381F12A48BC61B2C4B7A8F602A2C8EBC8BA",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/RoadBlasters%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/RoadBlasters%20(World).png"
     },
     {
       "name": "Robo-Squash (World)",
@@ -4185,7 +4189,7 @@
       "crc": "D1DFF2B2",
       "md5": "F9FAA45E3C35E505249C3F9DF801737B",
       "sha1": "144E4AA67BABC8F3E24C5547F8664C3C6CFF8601",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Robo-Squash%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Robo-Squash%20(World).png"
     },
     {
       "name": "Robotron 2084 (USA, Europe)",
@@ -4195,7 +4199,7 @@
       "crc": "7A6049B5",
       "md5": "60C1DFBF112BBB2A49CF16EDDB191842",
       "sha1": "04048AA47C0FF99647608D4D1CCF48BA881A0F89",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Robotron%202084%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Robotron%202084%20(USA%2C%20Europe).png"
     },
     {
       "name": "Rolling Thunder (USA) (Proto)",
@@ -4243,7 +4247,7 @@
       "crc": "67E5BDBA",
       "md5": "FF6FFF314446AB70DFECB21E2DE4A2F6",
       "sha1": "8743769AF583AF681FD1D96AADB533D26B1B510D",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Rygar%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Rygar%20(World).png"
     },
     {
       "name": "S.T.U.N. Runner (USA, Europe)",
@@ -4253,7 +4257,7 @@
       "crc": "8595C40B",
       "md5": "490F8063BBB299070C4ACEAB64195088",
       "sha1": "AA570DBBF4682DA3297286FC69617C3C9ACA2F18",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/S.T.U.N.%20Runner%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/S.T.U.N.%20Runner%20(USA%2C%20Europe).png"
     },
     {
       "name": "Santa Factory (World) (Aftermarket) (Unl)",
@@ -4326,7 +4330,7 @@
       "crc": "BE166F3B",
       "md5": "0CF228912D2F8EEB29AA215ABF416F6D",
       "sha1": "DF57CD7F119FA6AF8F9B24942F0F12314B301075",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Scrapyard%20Dog%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Scrapyard%20Dog%20(USA%2C%20Europe).png"
     },
     {
       "name": "Scroll of theTime Lords - Lovejoy Prologue (World) (Aftermarket) (Unl)",
@@ -4354,7 +4358,7 @@
       "crc": "EB78BAA3",
       "md5": "F92D57198EF2DA30DBA63BDD7C15FF83",
       "sha1": "8B891B5DAFBA71740294C8DC818717D3B00BE3A5",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Shadow%20of%20the%20Beast%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Shadow%20of%20the%20Beast%20(USA%2C%20Europe).png"
     },
     {
       "name": "Shaken, Not Stirred (World) (v1.0) (Aftermarket) (Unl)",
@@ -4436,7 +4440,7 @@
       "crc": "192BCD04",
       "md5": "46634EB87E6380D4D10F7B80D177C1FF",
       "sha1": "9E67E05545934A7D375597B0E8C469468C5748A4",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Shanghai%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Shanghai%20(World).png"
     },
     {
       "name": "Shuriken (World) (Aftermarket) (Unl)",
@@ -4851,7 +4855,7 @@
       "crc": "5B2308ED",
       "md5": "8828C0042A1A397DE67C4E49042161FF",
       "sha1": "773946365ECF3C862CFA21167750140E4B1ADAD2",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Steel%20Talons%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Steel%20Talons%20(USA%2C%20Europe).png"
     },
     {
       "name": "Stinger (World) (Aftermarket) (Unl)",
@@ -4906,7 +4910,7 @@
       "crc": "2DA7E2A8",
       "md5": "67DD69E6FFAF61BC85243D272D9EE9D9",
       "sha1": "D15C7382346CAE6296E83EF494A8AEC3ADAF949C",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Super%20Asteroids%2C%20Missile%20Command%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Super%20Asteroids%2C%20Missile%20Command%20(USA%2C%20Europe).png"
     },
     {
       "name": "Super Off-Road (USA, Europe)",
@@ -4916,7 +4920,7 @@
       "crc": "690CAEB0",
       "md5": "6CD23CB37C4C4C34EF4E197468462F3F",
       "sha1": "9BF10EDFEDDE85467F159AFB48D02F1CA43BE8F4",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Super%20Off-Road%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Super%20Off-Road%20(USA%2C%20Europe).png"
     },
     {
       "name": "Super Skweek (USA, Europe)",
@@ -4926,7 +4930,7 @@
       "crc": "DFA61571",
       "md5": "A19802BD3A7E390DAF7E2CBE5A81ED38",
       "sha1": "D6C18BF5E625CBAC7434EF0D600AD0DA667F24CD",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Super%20Skweek%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Super%20Skweek%20(USA%2C%20Europe).png"
     },
     {
       "name": "Super Skweek (World) (Atari Lynx Collection 1) (Unl)",
@@ -4981,7 +4985,7 @@
       "crc": "13657705",
       "md5": "4971DD8B47D3475DC8D31B5325C14459",
       "sha1": "256D55E8E9478C53E340321C858DF6710A9F69A6",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Switchblade%20II%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Switchblade%20II%20(USA%2C%20Europe).png"
     },
     {
       "name": "Sybil's Nightmare Run (World) (Proto) (Aftermarket) (Unl)",
@@ -5009,7 +5013,7 @@
       "crc": "2708643D",
       "md5": "DBC654E957184FF2AD67C23FBE181540",
       "sha1": "75C2F2853996DCAF73A014A6F03B6590108B8D59",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/T-Tris%20(World)%20(Pirate).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/T-Tris%20(World)%20(Pirate).png"
     },
     {
       "name": "T-Tris (World) (Pirate)",
@@ -5019,7 +5023,7 @@
       "crc": "F4D80D0B",
       "md5": "DC92F0C42811C8691FA921A4DD2897C2",
       "sha1": "DE0186250918DAF76125D50BA2F3FC8F2F309110",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/T-Tris%20(World)%20(Pirate).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/T-Tris%20(World)%20(Pirate).png"
     },
     {
       "name": "T-Tris (World) (Pirate)",
@@ -5029,7 +5033,7 @@
       "crc": "B6BBAB2E",
       "md5": "AF4D97DA5D1E60E77573BCFC5BDFD1CC",
       "sha1": "BB5ECDDB975387BC97039DD01F3841D7E451ACD6",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/T-Tris%20(World)%20(Pirate).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/T-Tris%20(World)%20(Pirate).png"
     },
     {
       "name": "T-Tris (World) (Pirate) (Alt)",
@@ -5039,7 +5043,7 @@
       "crc": "A261FCBC",
       "md5": "1B6A8A0B7F80332E9C7DFECADED8683E",
       "sha1": "D337D0B38E22F42C92691AD2A80D48125D908B7F",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/T-Tris%20(World)%20(Pirate)%20(Alt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/T-Tris%20(World)%20(Pirate)%20(Alt).png"
     },
     {
       "name": "T-Tris (World) (Pirate) (Alt)",
@@ -5049,7 +5053,7 @@
       "crc": "86099145",
       "md5": "DE8CD0F21C20BDBB092BE20FCDC85E81",
       "sha1": "DA55E0B4F1312DC95C9EE2C99F7139A6D3B5F306",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/T-Tris%20(World)%20(Pirate)%20(Alt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/T-Tris%20(World)%20(Pirate)%20(Alt).png"
     },
     {
       "name": "T-Tris (World) (Pirate) (Alt)",
@@ -5059,7 +5063,7 @@
       "crc": "C46A3760",
       "md5": "C2187B6535D603FCA803314F270A5DBF",
       "sha1": "08AA8FD4E814FF05459EB1BB825372721A952C37",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/T-Tris%20(World)%20(Pirate)%20(Alt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/T-Tris%20(World)%20(Pirate)%20(Alt).png"
     },
     {
       "name": "Teen Dance (World) (Aftermarket) (Unl)",
@@ -5204,7 +5208,7 @@
       "crc": "AE267E29",
       "md5": "4581AC0418679567DCE041C88CC97719",
       "sha1": "2B9C665456D17726EA57FD06CE2754A14382DC99",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Todd's%20Adventures%20in%20Slime%20World%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Todd's%20Adventures%20in%20Slime%20World%20(World).png"
     },
     {
       "name": "Toki (USA, Europe)",
@@ -5214,7 +5218,7 @@
       "crc": "156A4A4C",
       "md5": "EC46311F47276E20CC43228C96D119A1",
       "sha1": "242FEE76EA2AE263511DF5D8BD3F7B0DDC81757D",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Toki%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Toki%20(USA%2C%20Europe).png"
     },
     {
       "name": "Tournament Cyberball (USA, Europe)",
@@ -5224,7 +5228,7 @@
       "crc": "0590A9E3",
       "md5": "391DFABA9AB8B9B60E9D8CA2A73F5711",
       "sha1": "E63CC54E34840A4E3C1AA5BBCE4E406895E44534",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Tournament%20Cyberball%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Tournament%20Cyberball%20(USA%2C%20Europe).png"
     },
     {
       "name": "Tron-6-Fun (World) (Proto) (Aftermarket) (Unl)",
@@ -5279,7 +5283,7 @@
       "crc": "A4B924D6",
       "md5": "8CAAAF56F95EE0BB610CA14AF2D12A61",
       "sha1": "1186B3216830C5BBEAC6B39AAB1039EEF27F0785",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Turbo%20Sub%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Turbo%20Sub%20(USA%2C%20Europe).png"
     },
     {
       "name": "Twitter Panic (World) (Proto) (Aftermarket) (Unl)",
@@ -5334,7 +5338,7 @@
       "crc": "8D56828B",
       "md5": "44D7C4EA6B8D930075F5B05C94B5F973",
       "sha1": "47C32E4D816DDE797B6BBA2019F2E296BDAD02DD",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Viking%20Child%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Viking%20Child%20(USA%2C%20Europe).png"
     },
     {
       "name": "Vindicators (USA) (Proto)",
@@ -5355,7 +5359,7 @@
       "crc": "B946BA49",
       "md5": "E7F118AC59F985CEEA2ECFC0F17E9CC6",
       "sha1": "2C376581AC20FB5DE8538B51820E1F007CCA8260",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Warbirds%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Warbirds%20(USA%2C%20Europe).png"
     },
     {
       "name": "Wizzy (World) (Proto) (Aftermarket) (Unl)",
@@ -5428,7 +5432,7 @@
       "crc": "91233794",
       "md5": "7FCF204013CBEDF7EAAF682FF5F216BA",
       "sha1": "40100A0DB681B4EFCA4A491C88BF76A19105336F",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/World%20Class%20Soccer%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/World%20Class%20Soccer%20(USA%2C%20Europe).png"
     },
     {
       "name": "Xenophobe (World)",
@@ -5438,7 +5442,7 @@
       "crc": "9BED736D",
       "md5": "69FB597CB4DB019C48FD2E0C1CC7B75C",
       "sha1": "A1B4F7A4697310CAFEA1271BD4B41EEAFAE60FFA",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xenophobe%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xenophobe%20(World).png"
     },
     {
       "name": "Xump - The Final Run (World) (Retroguru) (Digital) (Aftermarket) (Unl)",
@@ -5448,7 +5452,7 @@
       "crc": "C3F9CCE3",
       "md5": "85CB70DBFA117C8FD20185E91F26315D",
       "sha1": "069CD375EAE026958CD50122472CE185BDAD8E78",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Xump - The Final Run (World) (Retroguru) (Digital) (Aftermarket) (Unl)",
@@ -5458,7 +5462,7 @@
       "crc": "6A71421A",
       "md5": "F413E06F6C1732FED2C53D48897CF525",
       "sha1": "65C5FCC10CF768C121E441CEE20A97BEAECC0B3D",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Xump - The Final Run (World) (Songbird) (Digital) (Aftermarket) (Unl)",
@@ -5468,7 +5472,7 @@
       "crc": "01CC8EAB",
       "md5": "AE1EB9A2D41C11902BA52408F3E657AB",
       "sha1": "3A2DCC1BFAFBEF7C15BAAC50541FADA05BBA268F",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Songbird)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Songbird)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Xump - The Final Run (World) (Songbird) (Digital) (Aftermarket) (Unl)",
@@ -5478,7 +5482,7 @@
       "crc": "532CE92B",
       "md5": "1DE33F0FAE0FD633E706A0434EEFED5D",
       "sha1": "B43B896625B7BDFCF720EEF73AFBF7F8E3657365",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Songbird)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(Songbird)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Xump - The Final Run (World) (v1.2) (Retroguru) (Digital) (Aftermarket) (Unl)",
@@ -5488,7 +5492,7 @@
       "crc": "41E546A7",
       "md5": "E8CDDF7B04A935FD48AB030D2EDE8BE0",
       "sha1": "1381BFBD5CAAEEFAF44B886068F5542F4005A899",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(v1.2)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(v1.2)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Xump - The Final Run (World) (v1.2) (Retroguru) (Digital) (Aftermarket) (Unl)",
@@ -5498,7 +5502,7 @@
       "crc": "577D7E7B",
       "md5": "47DF4D7A6077CA613C29F384FF0C374B",
       "sha1": "F18E6FE666D08E412620B1D8E3D37354D576874E",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(v1.2)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xump%20-%20The%20Final%20Run%20(World)%20(v1.2)%20(Retroguru)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Xump 2 - Back to Space (World) (Proto) (Aftermarket) (Unl)",
@@ -5526,7 +5530,7 @@
       "crc": "89E2A595",
       "md5": "C145BFE904E5D56F479DF44204B255DA",
       "sha1": "5FF3C39A6919DB6D2270BB22E80E7680550C47BA",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Xybots%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Xybots%20(USA%2C%20Europe).png"
     },
     {
       "name": "YNXA (World) (Game Jam Edition) (Digital) (Aftermarket) (Unl)",
@@ -5536,7 +5540,7 @@
       "crc": "9B62AAFF",
       "md5": "89C0C6F94E6A49F8583215D9BB69C8DB",
       "sha1": "7906AB0DADB57F7A2E180499FE9EEB4C576A15AC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/YNXA%20(World)%20(Game%20Jam%20Edition)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/YNXA%20(World)%20(Game%20Jam%20Edition)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "YNXA (World) (Game Jam Edition) (Digital) (Aftermarket) (Unl)",
@@ -5546,7 +5550,7 @@
       "crc": "DC8713EE",
       "md5": "562CACEE10EE81C4AA0C3E1746F6E984",
       "sha1": "338BF03BFBF40AAFD30DF9B024879D66B46D6AE1",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/YNXA%20(World)%20(Game%20Jam%20Edition)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/YNXA%20(World)%20(Game%20Jam%20Edition)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "YNXA - Leaf and the Guardians of Time (World) (Proto 1) (Aftermarket) (Unl)",
@@ -5610,7 +5614,7 @@
       "crc": "A87ED55E",
       "md5": "C8191BC3F40938BC18CB172F1200A28F",
       "sha1": "2C311788DEF1E4EC7D5ADC64E2FBB44C851861E8",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Yastuna Volume 1 - The Alchemy of Cubes (World) (v1.00) (Digital) (Aftermarket) (Unl)",
@@ -5620,7 +5624,7 @@
       "crc": "A6FE24AF",
       "md5": "22B13522EB382070763F282BDED16F39",
       "sha1": "78AB610F29E97B111CFE4C48B681A416D5E79D42",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Yastuna Volume 1 - The Alchemy of Cubes (World) (v1.01) (Digital) (Aftermarket) (Unl)",
@@ -5630,7 +5634,7 @@
       "crc": "62793FE8",
       "md5": "D3DA7B9850359BE97A41D7F22A8B6B50",
       "sha1": "EDF7C73F04586A31CBCAD856E166EB4D55E76373",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Yastuna Volume 1 - The Alchemy of Cubes (World) (v1.01) (Digital) (Aftermarket) (Unl)",
@@ -5640,7 +5644,7 @@
       "crc": "6CF9CE19",
       "md5": "C40F43FFBA5C37D6731CF4FA4C78702A",
       "sha1": "AFE4DB65A7207B1136BF251FC50E3C958E9419DC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%201%20-%20The%20Alchemy%20of%20Cubes%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Yastuna Volume 2 - The Space Incident (World) (v1.00) (Digital) (Aftermarket) (Unl)",
@@ -5650,7 +5654,7 @@
       "crc": "658929E1",
       "md5": "F80A67CC8E383A01E3F61798BD3A3F6E",
       "sha1": "4BE4BA20A495C5B865E2512D0194D31185B016C5",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Yastuna Volume 2 - The Space Incident (World) (v1.00) (Digital) (Aftermarket) (Unl)",
@@ -5660,7 +5664,7 @@
       "crc": "6B09D810",
       "md5": "BFFB5D9521CFA4E8A151DB5CEE9943DD",
       "sha1": "E38728654920868905E2A7B1E98985ACAA9D21AE",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.00)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Yastuna Volume 2 - The Space Incident (World) (v1.01) (Digital) (Aftermarket) (Unl)",
@@ -5670,7 +5674,7 @@
       "crc": "2F17AF66",
       "md5": "73342F98C5F995A6485B4B75E661225B",
       "sha1": "4D73A340629190D15533C8BF6F1FB21A503A0784",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Yastuna Volume 2 - The Space Incident (World) (v1.01) (Digital) (Aftermarket) (Unl)",
@@ -5680,7 +5684,7 @@
       "crc": "21975E97",
       "md5": "DF4881703738614EE465559AD18E6E8E",
       "sha1": "D54C9792C87B14E756225DB0FC2AFBEC013C2F29",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Yastuna%20Volume%202%20-%20The%20Space%20Incident%20(World)%20(v1.01)%20(Digital)%20(Aftermarket)%20(Unl).png"
     },
     {
       "name": "Z.A.P. (World) (Aftermarket) (Unl)",
@@ -5717,7 +5721,7 @@
       "crc": "8819E916",
       "md5": "6C22F4E6ACD7AEEF5FD134FCBCA05715",
       "sha1": "24C2F137D4A8040762B8B5F669918675E53637B4",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Zaku%20(World)%20(Beta)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Zaku%20(World)%20(Beta)%20(Unl).png"
     },
     {
       "name": "Zaku (World) (Beta) (Unl)",
@@ -5727,7 +5731,7 @@
       "crc": "B3747C71",
       "md5": "52997DE9AF205728A0E17EA3475F7AE2",
       "sha1": "530EA8C0A820746425017CBCC9F766531F5C6333",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Zaku%20(World)%20(Beta)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Zaku%20(World)%20(Beta)%20(Unl).png"
     },
     {
       "name": "Zaku (World) (Unl)",
@@ -5737,7 +5741,7 @@
       "crc": "3D82E190",
       "md5": "B37CF00379B80452D8BCA13ABE7269D6",
       "sha1": "6377DD0EF9BEE6B6BD05736DADD2B36C0A02B8C3",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Zaku%20(World)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Zaku%20(World)%20(Unl).png"
     },
     {
       "name": "Zaku (World) (Unl)",
@@ -5747,7 +5751,7 @@
       "crc": "4EA845DA",
       "md5": "6B9D6872961B22DE6B1B0CCED65D8E3F",
       "sha1": "2723C29B4E00DD76402E9FC4DC50CB59B673B507",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Zaku%20(World)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Zaku%20(World)%20(Unl).png"
     },
     {
       "name": "Zarlor Mercenary (World)",
@@ -5757,7 +5761,7 @@
       "crc": "CB27199D",
       "md5": "D008F41EC119E2C5C6A0782AEBF148A8",
       "sha1": "7005CDFA0A2E4A9611266CE50493CBB32351E069",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Zarlor%20Mercenary%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_Lynx/HEAD/Named_Boxarts/Zarlor%20Mercenary%20(World).png"
     }
   ]
 }

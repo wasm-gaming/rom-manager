@@ -4,8 +4,10 @@
     "totalGames": 117,
     "totalFiles": 117,
     "totalCovers": 105,
-    "generated": "2026-07-29T23:49:50.670Z"
+    "totalGameCovers": 0,
+    "generated": "2026-07-30T10:39:18.963Z"
   },
+  "covers": {},
   "list": [
     {
       "name": "5200 Menu (USA) (Proto)",
@@ -17,7 +19,7 @@
       "sha1": "E64FB1A353C72B87C5483BB88CB3523EA5D37B59",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/5200%20Menu%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/5200%20Menu%20(USA)%20(Proto).png"
     },
     {
       "name": "A.E. (USA) (Proto)",
@@ -29,7 +31,7 @@
       "sha1": "E18A603B18B85E24F9C938B33B6077A767C1FA9C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/A.E.%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/A.E.%20(USA)%20(Proto).png"
     },
     {
       "name": "Activision Decathlon, The (USA)",
@@ -41,7 +43,7 @@
       "sha1": "DB203973DF13B071DA46D52FDB078A76F4DB428D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Activision%20Decathlon%2C%20The%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Activision%20Decathlon%2C%20The%20(USA).png"
     },
     {
       "name": "Asteroids (USA) (Proto)",
@@ -53,7 +55,7 @@
       "sha1": "18697DD8E640FA1578B3B4AE09AF484C14FB8410",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Asteroids%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Asteroids%20(USA)%20(Proto).png"
     },
     {
       "name": "Astro Chase (USA)",
@@ -65,7 +67,7 @@
       "sha1": "67E405C37E55DEC4071018E8166AB4FAF9F21DF5",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Astro%20Chase%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Astro%20Chase%20(USA).png"
     },
     {
       "name": "Astrogrover (USA) (Proto)",
@@ -88,7 +90,7 @@
       "sha1": "D3FF99E080985C9C8E25389DFA74835E8C9BE508",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Atari%20PAM%20-%20Pete's%20Test%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Atari%20PAM%20-%20Pete's%20Test%20(USA).png"
     },
     {
       "name": "Atari PAM Diagnostics (USA) (v2.0)",
@@ -100,7 +102,7 @@
       "sha1": "5CC3B4245FAF01C30F77AC20B0B4940F4F8F83D8",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Atari%20PAM%20Diagnostics%20(USA)%20(v2.0).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Atari%20PAM%20Diagnostics%20(USA)%20(v2.0).png"
     },
     {
       "name": "Atari PAM Diagnostics (USA) (v2.3)",
@@ -112,7 +114,7 @@
       "sha1": "E086E9868AA913E87F94676FD600F003892E73A1",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Atari%20PAM%20Diagnostics%20(USA)%20(v2.3).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Atari%20PAM%20Diagnostics%20(USA)%20(v2.3).png"
     },
     {
       "name": "Atari PAM System Test (USA) (v1.02)",
@@ -124,7 +126,7 @@
       "sha1": "AF81C400F1AF0EE13A24DA5E8B642442A0FC9479",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Atari%20PAM%20System%20Test%20(USA)%20(v1.02).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Atari%20PAM%20System%20Test%20(USA)%20(v1.02).png"
     },
     {
       "name": "Ballblazer (USA)",
@@ -136,7 +138,7 @@
       "sha1": "1DFD9CB5EB608590C84E14376291F8C02FB1AB93",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Ballblazer%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Ballblazer%20(USA).png"
     },
     {
       "name": "Barroom Baseball (USA) (Proto)",
@@ -148,7 +150,7 @@
       "sha1": "510CCB20DF2ECDBE7F8373DE6A9FC11493E8C3F2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Barroom%20Baseball%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Barroom%20Baseball%20(USA)%20(Proto).png"
     },
     {
       "name": "Battlezone (USA) (Proto)",
@@ -160,7 +162,7 @@
       "sha1": "A339CDDFC28477C21C58783D2D3B0CF0F4626DDF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Battlezone%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Battlezone%20(USA)%20(Proto).png"
     },
     {
       "name": "Battlezone (USA) (Proto) (Alt)",
@@ -172,7 +174,7 @@
       "sha1": "B64D5152CC398E9EF5A7B2636A5165EFB8793539",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Battlezone%20(USA)%20(Proto)%20(Alt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Battlezone%20(USA)%20(Proto)%20(Alt).png"
     },
     {
       "name": "Beamrider (USA)",
@@ -184,7 +186,7 @@
       "sha1": "B75D555D059AD61992F9F5A234129ECBF9504C35",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Beamrider%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Beamrider%20(USA).png"
     },
     {
       "name": "Behind Jaggi Lines! (USA) (Proto)",
@@ -207,7 +209,7 @@
       "sha1": "E56CCC6BF427A832CE00540B02D065A2688260DC",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/BerZerk%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/BerZerk%20(USA).png"
     },
     {
       "name": "Black Belt (USA) (Proto)",
@@ -219,7 +221,7 @@
       "sha1": "9B7ECD444B6239442EF1F54CD8E14C294C064DA2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Black%20Belt%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Black%20Belt%20(USA)%20(Proto).png"
     },
     {
       "name": "Blaster (USA) (Proto)",
@@ -231,7 +233,7 @@
       "sha1": "AB3130256D16AF09CAC8B11749DFAFF6AAAA3EA3",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Blaster%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Blaster%20(USA)%20(Proto).png"
     },
     {
       "name": "Blue Print (USA)",
@@ -243,7 +245,7 @@
       "sha1": "1E1A20C104BF4D55ECA0CA1E72DC5DC64FA6B1B5",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Blue%20Print%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Blue%20Print%20(USA).png"
     },
     {
       "name": "Bounty Bob Strikes Back! (USA)",
@@ -255,7 +257,7 @@
       "sha1": "CFDD2F8DABB03D8784F336BB0C804270DC3A8A6C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Bounty%20Bob%20Strikes%20Back!%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Bounty%20Bob%20Strikes%20Back!%20(USA).png"
     },
     {
       "name": "Buck Rogers - Planet of Zoom (USA)",
@@ -267,7 +269,7 @@
       "sha1": "BC7C81F758DD3E224E42AC8A16C1A12D69AED722",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Buck%20Rogers%20-%20Planet%20of%20Zoom%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Buck%20Rogers%20-%20Planet%20of%20Zoom%20(USA).png"
     },
     {
       "name": "Buck Rogers - Planet of Zoom (USA) (Alt)",
@@ -290,7 +292,7 @@
       "sha1": "CE9BD3B0847C5E187C3E8F667C8F5EA771C49965",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Carol%20Shaw's%20River%20Raid%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Carol%20Shaw's%20River%20Raid%20(USA).png"
     },
     {
       "name": "Castle Blast (USA) (Unl)",
@@ -302,7 +304,7 @@
       "sha1": "C1A56A1FC51E09B1D8E93AF40DDD7596847E6164",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Castle%20Blast%20(USA)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Castle%20Blast%20(USA)%20(Unl).png"
     },
     {
       "name": "Castle Crisis (USA) (Unl)",
@@ -314,7 +316,7 @@
       "sha1": "4E022E101D7346A0A8618018372740E7333B4A36",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Castle%20Crisis%20(USA)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Castle%20Crisis%20(USA)%20(Unl).png"
     },
     {
       "name": "Centipede (USA)",
@@ -326,7 +328,7 @@
       "sha1": "EB343B90D3DE696E69B1F039D4FB2C6AFB0D80C0",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Centipede%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Centipede%20(USA).png"
     },
     {
       "name": "Choplifter! (USA)",
@@ -338,7 +340,7 @@
       "sha1": "9F1EE191319EF0261CC7074A81C0E6D6B7464CD2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Choplifter!%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Choplifter!%20(USA).png"
     },
     {
       "name": "Congo Bongo (USA)",
@@ -350,7 +352,7 @@
       "sha1": "E0203C2124127EBA2D679BE548FA257ECC5B2607",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Congo%20Bongo%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Congo%20Bongo%20(USA).png"
     },
     {
       "name": "Countermeasure (USA)",
@@ -362,7 +364,7 @@
       "sha1": "FA6D77E6E9AFD0EA42FC9F9807932BF9E8FB170E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Countermeasure%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Countermeasure%20(USA).png"
     },
     {
       "name": "David Crane's Pitfall II - Lost Caverns (USA)",
@@ -374,7 +376,7 @@
       "sha1": "B051F0FB2E816787AB6EED0CB008B9F8CC9963DC",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/David%20Crane's%20Pitfall%20II%20-%20Lost%20Caverns%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/David%20Crane's%20Pitfall%20II%20-%20Lost%20Caverns%20(USA).png"
     },
     {
       "name": "Defender (USA)",
@@ -386,7 +388,7 @@
       "sha1": "44F6DBF5013A70E646D5C5232981D517069FC449",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Defender%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Defender%20(USA).png"
     },
     {
       "name": "Dig Dug (USA)",
@@ -398,7 +400,7 @@
       "sha1": "387A76BA5912251E2285B7722004AD75E9EDE523",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Dig%20Dug%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Dig%20Dug%20(USA).png"
     },
     {
       "name": "Dreadnaught Factor, The (USA)",
@@ -410,7 +412,7 @@
       "sha1": "EA7B40CE1106378E1D409CAB6634FB2E483FF238",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Dreadnaught%20Factor%2C%20The%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Dreadnaught%20Factor%2C%20The%20(USA).png"
     },
     {
       "name": "Final Legacy (USA) (Proto)",
@@ -422,7 +424,7 @@
       "sha1": "48625AF4F3E9FE538DAB2A0B463887FC8C6B138D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Final%20Legacy%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Final%20Legacy%20(USA)%20(Proto).png"
     },
     {
       "name": "Frisky Tom (USA) (Proto)",
@@ -434,7 +436,7 @@
       "sha1": "69DCC8F59CA449F13DC896B4B29B534762D97064",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Frisky%20Tom%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Frisky%20Tom%20(USA)%20(Proto).png"
     },
     {
       "name": "Frogger (USA)",
@@ -446,7 +448,7 @@
       "sha1": "D9A695757F0494AEE92A50AB8A49558745E0CEDF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Frogger%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Frogger%20(USA).png"
     },
     {
       "name": "Frogger II - Threeedeep! (USA)",
@@ -458,7 +460,7 @@
       "sha1": "3D815594CF674694B04BB0FF90BF635D7D402FC2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Frogger%20II%20-%20Threeedeep!%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Frogger%20II%20-%20Threeedeep!%20(USA).png"
     },
     {
       "name": "Galaxian (USA)",
@@ -470,7 +472,7 @@
       "sha1": "0DF0D7F11D89E2C5B59CC9F98D67D98E203831AA",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Galaxian%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Galaxian%20(USA).png"
     },
     {
       "name": "Galaxian (USA) (Alt)",
@@ -493,7 +495,7 @@
       "sha1": "80926BB270EA66CB5CACC379DE1FC16D8A3D814B",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Gorf%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Gorf%20(USA).png"
     },
     {
       "name": "Gremlins (USA)",
@@ -505,7 +507,7 @@
       "sha1": "F3C32B39580D589799DCEAD98BB206FBF3DF0504",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Gremlins%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Gremlins%20(USA).png"
     },
     {
       "name": "Gyruss (USA)",
@@ -517,7 +519,7 @@
       "sha1": "D0D8650EB07D1679004D491360C2C041E37C61CD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Gyruss%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Gyruss%20(USA).png"
     },
     {
       "name": "Gyruss (USA) (Alt)",
@@ -540,7 +542,7 @@
       "sha1": "D286ECB6793A0DDA9C9C68F6355DBE3ADE6922F9",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/H.E.R.O.%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/H.E.R.O.%20(USA).png"
     },
     {
       "name": "James Bond 007 (USA)",
@@ -552,7 +554,7 @@
       "sha1": "AE765943AE8D909B6CA6FF1560BA027ADEEAA515",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/James%20Bond%20007%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/James%20Bond%20007%20(USA).png"
     },
     {
       "name": "Joust (USA)",
@@ -564,7 +566,7 @@
       "sha1": "0F74125EDAC90FFD1274A128DF2970C239348FB5",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Joust%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Joust%20(USA).png"
     },
     {
       "name": "Jr. Pac-Man (USA) (Proto)",
@@ -576,7 +578,7 @@
       "sha1": "A3E760D09E4DC6053286967576B5B7D42EE2FD38",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Jr.%20Pac-Man%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Jr.%20Pac-Man%20(USA)%20(Proto).png"
     },
     {
       "name": "Jungle Hunt (USA)",
@@ -588,7 +590,7 @@
       "sha1": "FA02EE04CFAD90C6CCF9D9B984E3B7B3327FEC12",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Jungle%20Hunt%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Jungle%20Hunt%20(USA).png"
     },
     {
       "name": "K-Razy Shoot-Out (USA)",
@@ -600,7 +602,7 @@
       "sha1": "C7EB2B4A46A197ADFEDF33C2CCC17D8424D681C4",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/K-Razy%20Shoot-Out%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/K-Razy%20Shoot-Out%20(USA).png"
     },
     {
       "name": "Kaboom! (USA)",
@@ -612,7 +614,7 @@
       "sha1": "A80F876A89A8CEACC71DA5D9C02B546970B17730",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Kaboom!%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Kaboom!%20(USA).png"
     },
     {
       "name": "Kangaroo (USA)",
@@ -624,7 +626,7 @@
       "sha1": "C3DBEED7ADC0E282BF76332AB5A3209550E26D02",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Kangaroo%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Kangaroo%20(USA).png"
     },
     {
       "name": "Keystone Kapers (USA)",
@@ -636,7 +638,7 @@
       "sha1": "9F31C85A13E919135438590601E33BEF11A8DF8A",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Keystone%20Kapers%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Keystone%20Kapers%20(USA).png"
     },
     {
       "name": "Koffi - Yellow Kopter (USA) (Unl)",
@@ -648,7 +650,7 @@
       "sha1": "9547C56E2951E1B3A713B0B99D3EDB43C9D3CDD8",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Koffi%20-%20Yellow%20Kopter%20(USA)%20(Unl).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Koffi%20-%20Yellow%20Kopter%20(USA)%20(Unl).png"
     },
     {
       "name": "Last Starfighter, The (USA) (Proto)",
@@ -660,7 +662,7 @@
       "sha1": "4046F60602254A7D86D2A6EFD1A330455EAEC119",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Last%20Starfighter%2C%20The%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Last%20Starfighter%2C%20The%20(USA)%20(Proto).png"
     },
     {
       "name": "Looney Tunes Hotel (USA) (Proto)",
@@ -672,7 +674,7 @@
       "sha1": "BC4A536616AC45689B3AD790F6B1394EBBD8CC7E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Looney%20Tunes%20Hotel%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Looney%20Tunes%20Hotel%20(USA)%20(Proto).png"
     },
     {
       "name": "Mario Bros. (USA)",
@@ -684,7 +686,7 @@
       "sha1": "A293B6B06050E11029D97137F2B1B36059567273",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Mario%20Bros.%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Mario%20Bros.%20(USA).png"
     },
     {
       "name": "Mario Bros. (USA) (Alt)",
@@ -707,7 +709,7 @@
       "sha1": "FF0F1D9ED0AE45E3C81B252F3D0A335E03B0AA4B",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Meebzork%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Meebzork%20(USA)%20(Proto).png"
     },
     {
       "name": "MegaMania (USA)",
@@ -719,7 +721,7 @@
       "sha1": "F5512460C6B6D3A1BAA0B23ADF6A3A37FE308EB3",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/MegaMania%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/MegaMania%20(USA).png"
     },
     {
       "name": "Meteorites (USA)",
@@ -731,7 +733,7 @@
       "sha1": "32D86A381FEFF43149B66336DCC4BA2523273228",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Meteorites%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Meteorites%20(USA).png"
     },
     {
       "name": "Microgammon SB (USA) (Proto)",
@@ -743,7 +745,7 @@
       "sha1": "2F152A857A8A58D602B3C717612D9744423EE495",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Microgammon%20SB%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Microgammon%20SB%20(USA)%20(Proto).png"
     },
     {
       "name": "Millipede (USA) (Proto)",
@@ -755,7 +757,7 @@
       "sha1": "1243A8ECFC02A74AE4E1F4FCDA38502776F45CB0",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Millipede%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Millipede%20(USA)%20(Proto).png"
     },
     {
       "name": "Miner 2049er Starring Bounty Bob (USA)",
@@ -767,7 +769,7 @@
       "sha1": "0564B1867A0B570D66DFCBC11ADC3E51A2C6F28C",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Miner%202049er%20Starring%20Bounty%20Bob%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Miner%202049er%20Starring%20Bounty%20Bob%20(USA).png"
     },
     {
       "name": "Miniature Golf (USA) (Proto)",
@@ -779,7 +781,7 @@
       "sha1": "EF4D3EE7B4DA2EF79C6F4D0D1833F10C1EB7725E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Miniature%20Golf%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Miniature%20Golf%20(USA)%20(Proto).png"
     },
     {
       "name": "Missile Command (USA)",
@@ -791,7 +793,7 @@
       "sha1": "5C8EC22E131810CCAC08066CA96E9944CCFA4ECB",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Missile%20Command%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Missile%20Command%20(USA).png"
     },
     {
       "name": "Montezuma's Revenge - Featuring Panama Joe (USA)",
@@ -803,7 +805,7 @@
       "sha1": "7E2A05625598C7E6615F969AA695E64315CD9846",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Montezuma's%20Revenge%20-%20Featuring%20Panama%20Joe%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Montezuma's%20Revenge%20-%20Featuring%20Panama%20Joe%20(USA).png"
     },
     {
       "name": "Moon Patrol (USA)",
@@ -815,7 +817,7 @@
       "sha1": "02DD5B9278C06AE8CBB6DACC094E238FBACF08D2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Moon%20Patrol%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Moon%20Patrol%20(USA).png"
     },
     {
       "name": "Mountain King (USA)",
@@ -827,7 +829,7 @@
       "sha1": "2E7AE57260624D1F5710D445A0936F0C280A6655",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Mountain%20King%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Mountain%20King%20(USA).png"
     },
     {
       "name": "Mr. Do!'s Castle (USA)",
@@ -839,7 +841,7 @@
       "sha1": "002E6F8C7533B03F8041E7F1896589C0AB0E17A6",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Mr.%20Do!'s%20Castle%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Mr.%20Do!'s%20Castle%20(USA).png"
     },
     {
       "name": "Ms. Pac-Man (USA)",
@@ -851,7 +853,7 @@
       "sha1": "F93D72444D76075273E508555423936530875148",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Ms.%20Pac-Man%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Ms.%20Pac-Man%20(USA).png"
     },
     {
       "name": "Pac-Man (USA)",
@@ -863,7 +865,7 @@
       "sha1": "EE4B3C6F08AA9FDFAB532EEC98136306B6923F75",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Pac-Man%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Pac-Man%20(USA).png"
     },
     {
       "name": "Pengo (USA)",
@@ -875,7 +877,7 @@
       "sha1": "19FF7622DBBC2915E3E98D8D966340E7E893FF34",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Pengo%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Pengo%20(USA).png"
     },
     {
       "name": "Pitfall! (USA)",
@@ -887,7 +889,7 @@
       "sha1": "D1C7DC3DE097A4BFAB82235ACEC69A97E6E05F18",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Pitfall!%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Pitfall!%20(USA).png"
     },
     {
       "name": "Pole Position (USA)",
@@ -899,7 +901,7 @@
       "sha1": "D504764C5894EE99C0B5E2024CBE833EBBA3AB17",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Pole%20Position%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Pole%20Position%20(USA).png"
     },
     {
       "name": "Pole Position (USA) (Proto)",
@@ -911,7 +913,7 @@
       "sha1": "C22E5EA7CC892F515E4967F6FF0844B5A8D34B62",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Pole%20Position%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Pole%20Position%20(USA)%20(Proto).png"
     },
     {
       "name": "Popeye (USA)",
@@ -923,7 +925,7 @@
       "sha1": "E615AAA0C1D56AC83B91F6087970FA708D6433BF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Popeye%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Popeye%20(USA).png"
     },
     {
       "name": "Q-bert (USA)",
@@ -935,7 +937,7 @@
       "sha1": "E6966BDE5CD4167020C9D21BAB613AF1648B4D75",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Q-bert%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Q-bert%20(USA).png"
     },
     {
       "name": "QIX (USA)",
@@ -947,7 +949,7 @@
       "sha1": "786CDF54D1625E0D3EA8814506FDEEBA5E4ECE48",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/QIX%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/QIX%20(USA).png"
     },
     {
       "name": "Quest for Quintana Roo (USA)",
@@ -959,7 +961,7 @@
       "sha1": "17A41C5F9A32F8A71939CFAA0E96807B951AEDAD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Quest%20for%20Quintana%20Roo%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Quest%20for%20Quintana%20Roo%20(USA).png"
     },
     {
       "name": "RealSports Baseball (USA)",
@@ -971,7 +973,7 @@
       "sha1": "A94D06739FA19453FA586A836EAACAE11FE93989",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/RealSports%20Baseball%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/RealSports%20Baseball%20(USA).png"
     },
     {
       "name": "RealSports Basketball (USA)",
@@ -983,7 +985,7 @@
       "sha1": "9B21AC7FEC8D556585C6970231318EF1F501B2B5",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/RealSports%20Basketball%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/RealSports%20Basketball%20(USA).png"
     },
     {
       "name": "RealSports Basketball (USA) (Proto)",
@@ -1017,7 +1019,7 @@
       "sha1": "A0DBD654ED3BA2583CA175A1356924D9529884DF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/RealSports%20Football%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/RealSports%20Football%20(USA).png"
     },
     {
       "name": "RealSports Soccer (USA)",
@@ -1029,7 +1031,7 @@
       "sha1": "C911CC914F3923D5AEB1A897E6DC4A551A9A53DA",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/RealSports%20Soccer%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/RealSports%20Soccer%20(USA).png"
     },
     {
       "name": "RealSports Tennis (USA)",
@@ -1041,7 +1043,7 @@
       "sha1": "2E6C7472E37926CDFD3D855A4BD37A18FA83D8CF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/RealSports%20Tennis%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/RealSports%20Tennis%20(USA).png"
     },
     {
       "name": "Rescue on Fractalus! (USA)",
@@ -1053,7 +1055,7 @@
       "sha1": "9253D7286CF87999474B37DF242BA23B4358EF4A",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Rescue%20on%20Fractalus!%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Rescue%20on%20Fractalus!%20(USA).png"
     },
     {
       "name": "Road Runner (USA) (Proto)",
@@ -1065,7 +1067,7 @@
       "sha1": "0A7AAEF5B0EDE927CEA13E724906207E1DB48068",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Road%20Runner%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Road%20Runner%20(USA)%20(Proto).png"
     },
     {
       "name": "Robotron 2084 (USA)",
@@ -1077,7 +1079,7 @@
       "sha1": "9175E6DACA58102AC8B9729D7B0336CF09977D12",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Robotron%202084%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Robotron%202084%20(USA).png"
     },
     {
       "name": "Space Dungeon (USA)",
@@ -1089,7 +1091,7 @@
       "sha1": "127ED1C31C3E85D10212EEE7B9E6D71AEF7DD891",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Space%20Dungeon%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Space%20Dungeon%20(USA).png"
     },
     {
       "name": "Space Invaders (USA)",
@@ -1101,7 +1103,7 @@
       "sha1": "CF411DB770217B5AF5FCFA32725CC587A8B9E710",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Space%20Invaders%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Space%20Invaders%20(USA).png"
     },
     {
       "name": "Space Shuttle - A Journey Into Space (USA)",
@@ -1113,7 +1115,7 @@
       "sha1": "5AE20E767D9819FE601F3B1EA6D4506AE2F2CEEF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Space%20Shuttle%20-%20A%20Journey%20Into%20Space%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Space%20Shuttle%20-%20A%20Journey%20Into%20Space%20(USA).png"
     },
     {
       "name": "Spitfire (USA) (Proto)",
@@ -1125,7 +1127,7 @@
       "sha1": "688133761C462D6865BF673ED298B4D828120940",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Spitfire%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Spitfire%20(USA)%20(Proto).png"
     },
     {
       "name": "Sport Goofy (USA) (Proto)",
@@ -1137,7 +1139,7 @@
       "sha1": "5F0354D8792D652313E5A0FA5D395E091C801D97",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Sport%20Goofy%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Sport%20Goofy%20(USA)%20(Proto).png"
     },
     {
       "name": "Star Raiders (USA)",
@@ -1149,7 +1151,7 @@
       "sha1": "57DFC22C9805555F957ED51A2DC7BF35AD00C9D9",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Star%20Raiders%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Star%20Raiders%20(USA).png"
     },
     {
       "name": "Star Raiders (USA) (Alternate)",
@@ -1172,7 +1174,7 @@
       "sha1": "19801454AB86F2A5CF691FCD577A71AD2B8DC7D5",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Star%20Trek%20-%20Strategic%20Operations%20Simulator%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Star%20Trek%20-%20Strategic%20Operations%20Simulator%20(USA).png"
     },
     {
       "name": "Star Trek - Strategic Operations Simulator (USA) (Alt)",
@@ -1195,7 +1197,7 @@
       "sha1": "BF77048ABC36BA2CBA5EEEAC812802D6A0EBA891",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Star%20Wars%20-%20Return%20of%20the%20Jedi%20-%20Death%20Star%20Battle%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Star%20Wars%20-%20Return%20of%20the%20Jedi%20-%20Death%20Star%20Battle%20(USA).png"
     },
     {
       "name": "Star Wars - The Arcade Game (USA)",
@@ -1207,7 +1209,7 @@
       "sha1": "AB676FFE054B23BDD43CEE2498AFEFAABBF9355B",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Star%20Wars%20-%20The%20Arcade%20Game%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Star%20Wars%20-%20The%20Arcade%20Game%20(USA).png"
     },
     {
       "name": "Stargate (USA) (Proto)",
@@ -1219,7 +1221,7 @@
       "sha1": "09D192A3598CDADFB61ECEB430B3D5892E40962F",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Stargate%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Stargate%20(USA)%20(Proto).png"
     },
     {
       "name": "Super Breakout (USA)",
@@ -1231,7 +1233,7 @@
       "sha1": "F5F9C7F97BF09E5647E808D892B656F3EE1E19E0",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Super%20Breakout%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Super%20Breakout%20(USA).png"
     },
     {
       "name": "Super Cobra (USA)",
@@ -1243,7 +1245,7 @@
       "sha1": "8205093F5FB1FDF0CCB71D667EA0A3849FB0A0F2",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Super%20Cobra%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Super%20Cobra%20(USA).png"
     },
     {
       "name": "Super Pac-Man (USA) (Proto)",
@@ -1255,7 +1257,7 @@
       "sha1": "238CB448555D8BB5C96AA0354718411E8777C613",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Super%20Pac-Man%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Super%20Pac-Man%20(USA)%20(Proto).png"
     },
     {
       "name": "Super Pacman (USA) (Proto) (Alt)",
@@ -1267,7 +1269,7 @@
       "sha1": "5B2D1264923C37ACBBB6E1FFD3AD82C0E95D45FD",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Super%20Pacman%20(USA)%20(Proto)%20(Alt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Super%20Pacman%20(USA)%20(Proto)%20(Alt).png"
     },
     {
       "name": "Tempest (USA) (AtariAge)",
@@ -1290,7 +1292,7 @@
       "sha1": "85FCEA0A4D4D1F22437801C96229BA96E0F6B711",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Tempest%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Tempest%20(USA)%20(Proto).png"
     },
     {
       "name": "Track and Field (USA) (Proto)",
@@ -1302,7 +1304,7 @@
       "sha1": "9DFBB5D8B77504C66CE3AC4382DAF79820393DD8",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Track%20and%20Field%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Track%20and%20Field%20(USA)%20(Proto).png"
     },
     {
       "name": "Vanguard (USA)",
@@ -1314,7 +1316,7 @@
       "sha1": "6C633DE50E6CC0C0C40061CD24E6F78F552A438F",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Vanguard%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Vanguard%20(USA).png"
     },
     {
       "name": "Wizard of Wor (USA)",
@@ -1326,7 +1328,7 @@
       "sha1": "49DEBDF3C133FDE9905D6D9137DA5D8DFF8D6283",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Wizard%20of%20Wor%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Wizard%20of%20Wor%20(USA).png"
     },
     {
       "name": "Xari Arena (USA) (Proto 2)",
@@ -1349,7 +1351,7 @@
       "sha1": "8B5512D3D2A952C99B9377919F0E06481161D81E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Xari%20Arena%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Xari%20Arena%20(USA)%20(Proto).png"
     },
     {
       "name": "Xevious (USA) (Proto)",
@@ -1361,7 +1363,7 @@
       "sha1": "C3CF33216DFA484309B923F21829D040486BC481",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Xevious%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Xevious%20(USA)%20(Proto).png"
     },
     {
       "name": "Zaxxon (USA)",
@@ -1373,7 +1375,7 @@
       "sha1": "4A4C4A25C8ED1B0AE79CA22684D7D311A564A7B5",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Zaxxon%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Zaxxon%20(USA).png"
     },
     {
       "name": "Zenji (USA)",
@@ -1385,7 +1387,7 @@
       "sha1": "55DA563B4394508C23D866FB1E543262FB45536D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Zenji%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Zenji%20(USA).png"
     },
     {
       "name": "Zone Ranger (USA)",
@@ -1397,7 +1399,7 @@
       "sha1": "18315BEC1E62102290FEEB77FB290E1266CF5BFC",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Atari%20-%205200/Named_Boxarts/Zone%20Ranger%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Atari_-_5200/HEAD/Named_Boxarts/Zone%20Ranger%20(USA).png"
     }
   ]
 }

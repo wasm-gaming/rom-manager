@@ -6,12 +6,13 @@
  *
  * The listing comes from the GitHub repository that backs each system
  * (`libretro-thumbnails/<System_Name>`), because thumbnails.libretro.com
- * stopped serving its directory index and now answers 403 to it. The images
- * themselves are still served from that origin, so `baseUrl` keeps pointing
- * there.
+ * stopped serving its directory index and now answers 403 to it. The images are
+ * read from the same repository, which is what lets the application store a
+ * copy of a boxart locally — see `boxartUrl` in `systems.mjs`.
  *
  * The scraped names are stored as `<output-dir>/<system>/covers.json` and
- * later joined against the DAT entries by `dat-to-json.mjs`.
+ * later joined against the DAT entries by `dat-to-json.mjs`, which builds each
+ * URL from the recorded `repository`.
  *
  * The GitHub API allows 60 requests/hour anonymously and this script spends
  * two per system, so a full run fits but a second one within the hour may not.
@@ -21,34 +22,17 @@
 import fs from 'fs';
 import path from 'path';
 import {
+  BOXART_FOLDER,
   COVERS_FILE,
   DATASETS_DIR,
+  repositoryOf,
   selectSystems,
   systemDir,
 } from './systems.mjs';
 
-const THUMBNAILS_ORIGIN = 'https://thumbnails.libretro.com';
-const BOXART_FOLDER = 'Named_Boxarts';
 const GITHUB_API = 'https://api.github.com';
 const THUMBNAILS_OWNER = 'libretro-thumbnails';
 const BRANCHES = ['master', 'main'];
-
-/**
- * Build a URL under the thumbnails origin, encoding each path segment.
- */
-function thumbnailsUrl(...segments) {
-  return `${THUMBNAILS_ORIGIN}/${segments.map(encodeURIComponent).join('/')}`;
-}
-
-/**
- * Repository name backing a system's thumbnails.
- *
- * The convention is the libretro system name with every space turned into an
- * underscore: `Atari - 5200` becomes `Atari_-_5200`.
- */
-function repositoryOf(thumbnailsName) {
-  return thumbnailsName.replace(/ /g, '_');
-}
 
 async function githubJson(url) {
   const headers = { 'User-Agent': 'rom-manager', Accept: 'application/vnd.github+json' };
@@ -125,7 +109,6 @@ async function main() {
   let totalCovers = 0;
 
   for (const system of systems) {
-    const baseUrl = thumbnailsUrl(system.thumbnails, BOXART_FOLDER);
     const repository = repositoryOf(system.thumbnails);
 
     process.stdout.write(`⏳ ${system.name.padEnd(30)} ... `);
@@ -148,7 +131,6 @@ async function main() {
           thumbnails: system.thumbnails,
           repository,
           type: BOXART_FOLDER,
-          baseUrl,
           total: list.length,
           generated: new Date().toISOString(),
         },

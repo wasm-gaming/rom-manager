@@ -34,6 +34,12 @@ interface DatasetMeta {
 
 interface DatasetJSON {
   meta: DatasetMeta;
+  /**
+   * One boxart per game, keyed by base title. Only holds the games no single
+   * entry could be matched to a boxart, so it is the fallback layer and not a
+   * copy of what `list` already carries.
+   */
+  covers?: Record<string, string>;
   list: ROMMetadata[];
 }
 
@@ -56,7 +62,8 @@ const DB_NAME = 'rom-manager-datasets';
 const DB_VERSION = 5;
 const STORE_ROMS = 'roms';
 const META_STORE = 'datasetsMeta';
-const DATASET_FORMAT_VERSION = 5;
+/** Bumped to 6 when the datasets started carrying a boxart per game. */
+const DATASET_FORMAT_VERSION = 6;
 
 export class ROMDatasetService {
   private static db: IDBDatabase | null = null;
@@ -275,13 +282,16 @@ export class ROMDatasetService {
       }
     }
 
-    // Record metadata
+    // Record metadata, boxart fallbacks included: they are a handful of entries
+    // per system and belong with the dataset they came from, not in a store of
+    // their own.
     const metaStoreWrite = transaction.objectStore(META_STORE);
     metaStoreWrite.put({
       ...dataset.meta,
       source: path,
       system,
       crc32,
+      covers: this.sanitizeCovers(dataset.covers),
       formatVersion: DATASET_FORMAT_VERSION,
       loadedAt: new Date().toISOString()
     });
@@ -300,6 +310,45 @@ export class ROMDatasetService {
    */
   private static sanitizeCoverUrl(cover: unknown): string | undefined {
     return typeof cover === 'string' && cover.startsWith('https://') ? cover : undefined;
+  }
+
+  private static sanitizeCovers(covers: unknown): Record<string, string> {
+    if (!covers || typeof covers !== 'object') return {};
+
+    const safe: Record<string, string> = {};
+    for (const [game, cover] of Object.entries(covers as Record<string, unknown>)) {
+      const url = this.sanitizeCoverUrl(cover);
+      if (game.length > 0 && url) safe[game] = url;
+    }
+
+    return safe;
+  }
+
+  /**
+   * The boxart of each game of a system that no single entry could be matched
+   * to one, keyed by base title.
+   *
+   * Boxarts are published under the full release name, so a game whose only
+   * published boxart belongs to a release the DAT does not list has none of its
+   * own. This is what the browser falls back to in that case.
+   */
+  static async gameCoversOf(system: string): Promise<Map<string, string>> {
+    await this.ensureSystem(system);
+
+    const index = await this.getIndex();
+    const entry = index?.files.find((file) => file.system === system);
+    if (!entry) return new Map();
+
+    const db = await this.getDB();
+    const store = db.transaction([META_STORE], 'readonly').objectStore(META_STORE);
+
+    const record = await new Promise<any>((resolve, reject) => {
+      const request = store.get(entry.path);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+
+    return new Map(Object.entries(this.sanitizeCovers(record?.covers)));
   }
 
   /**

@@ -13,10 +13,16 @@ import {
 } from '../services/RomLibraryService';
 import { MetadataEditor } from './MetadataEditor';
 import { calculateCRC32 } from '../services/ChecksumService';
+import type { WizardFile, WizardGame, WizardVariant } from '../core/wizard-tree';
+import type { MatchStatus } from '../core/rom-matching';
 
 interface RomDetailsProps {
   /** ROM files selected in the tree, in tree order. */
   paths: string[];
+  /** The game picked in the tree, which is shown instead of its files. */
+  game?: WizardGame;
+  /** Boxart of that game, already resolved to something an `<img>` accepts. */
+  gameCover?: string;
   records: Map<string, RomRecord | null>;
   stats: Map<string, StorageStat | null>;
   /** Resolved `<img src>` for the covers of initialised ROMs. */
@@ -26,6 +32,10 @@ interface RomDetailsProps {
   onCancelEdit: () => void;
   onSave: (path: string, record: RomRecord) => Promise<void>;
   onSaveMany: (changes: Partial<RomRecord>) => Promise<void>;
+  /** Opens one file of the game being shown, since the tree no longer lists them. */
+  onSelectFile?: (path: string) => void;
+  /** Goes back to the game a file was opened from. */
+  onBack?: { label: string; go: () => void };
   loadContent: (path: string) => Promise<ArrayBuffer>;
 }
 
@@ -234,6 +244,146 @@ function RomInfoView({
   );
 }
 
+const STATUS_LABELS: Record<MatchStatus, string> = {
+  complete: 'Complete',
+  partial: 'Incomplete',
+  missing: 'Not in this folder',
+};
+
+const STATUS_MARKS: Record<MatchStatus, string> = {
+  complete: '●',
+  partial: '◐',
+  missing: '○',
+};
+
+function hasFiles(variant: WizardVariant): boolean {
+  return variant.files.some((file) => file.path);
+}
+
+/**
+ * The releases of a game, the ones on disk first.
+ *
+ * The catalogue order buries what the user owns among the twenty betas they do
+ * not, so what is here comes first; within each half the catalogue order stands.
+ */
+function orderedVariants(variants: WizardVariant[]): WizardVariant[] {
+  return [...variants.filter(hasFiles), ...variants.filter((variant) => !hasFiles(variant))];
+}
+
+/** One release: what it is called, how much of it is here, and its files. */
+function VariantRow({
+  variant,
+  stats,
+  onSelectFile,
+}: {
+  variant: WizardVariant;
+  stats: Map<string, StorageStat | null>;
+  onSelectFile?: (path: string) => void;
+}): JSX.Element {
+  const files = (file: WizardFile, index: number) =>
+    file.path ? (
+      <li key={file.path} class="variant-file">
+        <button class="btn-inline" onClick={() => onSelectFile?.(file.path!)}>
+          {file.label}
+        </button>
+        <span class="variant-file-size">{formatSize(stats.get(file.path)?.size ?? 0)}</span>
+      </li>
+    ) : (
+      <li key={`missing:${index}`} class="variant-file missing">
+        <span>{file.label}</span>
+        <span class="variant-file-size">missing</span>
+      </li>
+    );
+
+  return (
+    <li class={`variant status-${variant.status}`}>
+      <div class="variant-heading">
+        <span class="variant-mark" title={STATUS_LABELS[variant.status]}>
+          {STATUS_MARKS[variant.status]}
+        </span>
+        <span class="variant-key">{variant.key}</span>
+        <span class="variant-count">
+          {variant.files.length > 1 ? `${variant.files.length} files` : ''}
+        </span>
+      </div>
+      <ul class="variant-files">{variant.files.map(files)}</ul>
+    </li>
+  );
+}
+
+/**
+ * A game as one thing: its boxart, and which of its releases the folder holds.
+ *
+ * The tree shows a game as a single row, so this is the only place the releases
+ * can be read — and the only way into the files themselves, which is why the
+ * present ones are buttons.
+ */
+function GameView({
+  game,
+  cover,
+  stats,
+  onSelectFile,
+}: {
+  game: WizardGame;
+  cover?: string;
+  stats: Map<string, StorageStat | null>;
+  onSelectFile?: (path: string) => void;
+}): JSX.Element {
+  const present = game.variants.filter(hasFiles).length;
+  const size = game.paths.reduce((total, path) => total + (stats.get(path)?.size ?? 0), 0);
+
+  return (
+    <div class="rom-info game-info">
+      <div class="rom-info-hero">
+        {cover ? (
+          <img class="rom-info-cover" src={cover} alt={`${game.title} boxart`} />
+        ) : (
+          <div class="rom-info-cover placeholder">No cover</div>
+        )}
+
+        <div class="rom-info-heading">
+          <h2>{game.title}</h2>
+          <p class="rom-info-system">{systemOf(game.paths[0]) || '—'}</p>
+
+          <div class="rom-info-tags">
+            <span class={`tag status-${game.status}`}>{STATUS_LABELS[game.status]}</span>
+            <span class="tag">
+              {present} of {game.variants.length} releases
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="facts">
+        <div class="fact">
+          <span class="fact-label">Name on disk</span>
+          <span class="fact-value">{game.id}</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Files here</span>
+          <span class="fact-value">{game.paths.length}</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Size</span>
+          <span class="fact-value">{formatSize(size)}</span>
+        </div>
+      </div>
+
+      <h4 class="variants-title">Versions</h4>
+      <ul class="variants">
+        {orderedVariants(game.variants).map((variant) => (
+          <VariantRow
+            key={variant.key}
+            variant={variant}
+            stats={stats}
+            onSelectFile={onSelectFile}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /**
  * Shared value of a field across the selection, or `undefined` when the games
  * disagree — which is what the editor shows as "(mixed)".
@@ -391,6 +541,8 @@ function RomSelectionView({
 
 export function RomDetails({
   paths,
+  game,
+  gameCover,
   records,
   stats,
   covers,
@@ -399,8 +551,22 @@ export function RomDetails({
   onCancelEdit,
   onSave,
   onSaveMany,
+  onSelectFile,
+  onBack,
   loadContent,
 }: RomDetailsProps): JSX.Element {
+  const back = onBack && (
+    <button class="btn-back" onClick={onBack.go} title="Back to the game">
+      ← {onBack.label}
+    </button>
+  );
+
+  if (game) {
+    return (
+      <GameView game={game} cover={gameCover} stats={stats} onSelectFile={onSelectFile} />
+    );
+  }
+
   if (paths.length === 0) {
     return <div class="empty-state">Select a ROM to view its details</div>;
   }
@@ -445,16 +611,24 @@ export function RomDetails({
   }
 
   if (!record) {
-    return <RomFileView path={path} stat={stat} loadContent={loadContent} onEdit={onEdit} />;
+    return (
+      <>
+        {back}
+        <RomFileView path={path} stat={stat} loadContent={loadContent} onEdit={onEdit} />
+      </>
+    );
   }
 
   return (
-    <RomInfoView
-      path={path}
-      record={record}
-      stat={stat}
-      cover={covers.get(path)}
-      onEdit={onEdit}
-    />
+    <>
+      {back}
+      <RomInfoView
+        path={path}
+        record={record}
+        stat={stat}
+        cover={covers.get(path)}
+        onEdit={onEdit}
+      />
+    </>
   );
 }

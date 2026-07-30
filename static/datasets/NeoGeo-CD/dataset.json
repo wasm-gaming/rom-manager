@@ -4,7 +4,13 @@
     "totalGames": 145,
     "totalFiles": 111,
     "totalCovers": 98,
-    "generated": "2026-07-29T23:49:50.586Z"
+    "totalGameCovers": 3,
+    "generated": "2026-07-30T10:39:18.842Z"
+  },
+  "covers": {
+    "Fighter's History Dynamite ~ Karnov's Revenge": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Fighter's%20History%20Dynamite%20~%20Karnov's%20Revenge%20(Japan)%20(En%2CJa).png",
+    "Last Hope": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Last%20Hope%20(World).png",
+    "Top Hunter - Roddy _ Cathy": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Top%20Hunter%20-%20Roddy%20%26%20Cathy%20(Japan).png"
   },
   "list": [
     {
@@ -16,7 +22,7 @@
       "sha1": "C86B08200FE4EDDDDBCD4B4AB04613CF919DEC43",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/2020%20Super%20Baseball%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/2020%20Super%20Baseball%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "ADK World (Japan)",
@@ -27,7 +33,7 @@
       "sha1": "7A70EDB5DED975BCAED220889E8688B03F2B50BB",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/ADK%20World%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/ADK%20World%20(Japan).png"
     },
     {
       "name": "ASO II - The Last Guardian ~ Alpha Mission II (Japan) (En,Ja)",
@@ -38,7 +44,7 @@
       "sha1": "AB10C812F2C1A27E7B74D287AD0C36B950FA72B7",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/ASO%20II%20-%20The%20Last%20Guardian%20~%20Alpha%20Mission%20II%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/ASO%20II%20-%20The%20Last%20Guardian%20~%20Alpha%20Mission%20II%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Andro Dunos (France)",
@@ -56,7 +62,7 @@
       "crc": "B649CFC6",
       "md5": "AC4F11D6EE75D9ED39C89503D41EAAA5",
       "sha1": "AA174C7830BBE6A74717A8C942B17AE12DC72920",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Art%20of%20Fighting%20-%20Ryuuko%20no%20Ken%20Gaiden%20~%20The%20Path%20of%20the%20Warrior%20-%20Art%20of%20Fighting%203%20(World)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Art%20of%20Fighting%20-%20Ryuuko%20no%20Ken%20Gaiden%20~%20The%20Path%20of%20the%20Warrior%20-%20Art%20of%20Fighting%203%20(World)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Bakumatsu Roman - Gekka no Kenshi ~ The Last Blade (Japan) (En,Ja,Es,Pt)",
@@ -67,7 +73,7 @@
       "sha1": "A72DDEE23849C7895AD5142AA50A43CA6D8CC78B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Bakumatsu%20Roman%20-%20Gekka%20no%20Kenshi%20~%20The%20Last%20Blade%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Bakumatsu%20Roman%20-%20Gekka%20no%20Kenshi%20~%20The%20Last%20Blade%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Bakumatsu Roman Daini Maku - Gekka no Kenshi - Tsuki ni Saku Hana, Chiri Yuku Hana ~ The Last Blade 2 (Japan) (En,Ja,Es,Pt)",
@@ -78,7 +84,7 @@
       "sha1": "EABAD89EBF8B6F621D517DEDDED883B3AAF45D66",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Bakumatsu%20Roman%20Daini%20Maku%20-%20Gekka%20no%20Kenshi%20-%20Tsuki%20ni%20Saku%20Hana%2C%20Chiri%20Yuku%20Hana%20~%20The%20Last%20Blade%202%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Bakumatsu%20Roman%20Daini%20Maku%20-%20Gekka%20no%20Kenshi%20-%20Tsuki%20ni%20Saku%20Hana%2C%20Chiri%20Yuku%20Hana%20~%20The%20Last%20Blade%202%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Bang^2 Busters (France) (En,Ja)",
@@ -98,7 +104,7 @@
       "sha1": "1BC3D2F6A899A416B447C49FD2BC41B810B98CA1",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Baseball%20Stars%202%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Baseball%20Stars%202%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Baseball Stars Professional (Japan) (En,Ja)",
@@ -109,7 +115,7 @@
       "sha1": "E81581B14EBB48E1B80AD9ACEC8D9A99510C3F1A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Baseball%20Stars%20Professional%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Baseball%20Stars%20Professional%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Big Tournament Golf ~ Neo Turf Masters (Japan) (En,Ja)",
@@ -120,7 +126,7 @@
       "sha1": "8C8ECF715FFD46C9832D19C4F3EE420CDE6C8883",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Big%20Tournament%20Golf%20~%20Neo%20Turf%20Masters%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Big%20Tournament%20Golf%20~%20Neo%20Turf%20Masters%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Breakers (Japan) (En,Ja)",
@@ -131,7 +137,7 @@
       "sha1": "362D954B78A3E6C4FD56EA20913BCFE009209514",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Breakers%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Breakers%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Burning Fight (Japan) (En,Ja)",
@@ -142,7 +148,7 @@
       "sha1": "05AB7F35A0C71213EE3073B80257D86484B3722E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Burning%20Fight%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Burning%20Fight%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Choujin Gakuen - Gowcaizer ~ Voltage Fighter - Gowcaizer (World) (En,Ja)",
@@ -171,7 +177,7 @@
       "sha1": "F7A462B3EA15D1249DC90F0F4F0C334188E09604",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Crossed%20Swords%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Crossed%20Swords%20(Japan).png"
     },
     {
       "name": "Crossed Swords II (Japan) (En,Ja)",
@@ -182,7 +188,7 @@
       "sha1": "2ECE2BC117448C29F003132A7CEB311BCEF67CE0",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Crossed%20Swords%20II%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Crossed%20Swords%20II%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Cyber-Lip (Japan) (En,Ja)",
@@ -193,7 +199,7 @@
       "sha1": "FFB864D6BFDC5C3D49778497771A39382E3DDB05",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Cyber-Lip%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Cyber-Lip%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Double Dragon (Export) (En,Ja)",
@@ -202,7 +208,7 @@
       "crc": "CF083610",
       "md5": "7DA8A04EC84F0F6F56FF41DEB075C27E",
       "sha1": "7E41663299914766649B3F5247848EB224F8A26E",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Double%20Dragon%20(Export)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Double%20Dragon%20(Export)%20(En%2CJa).png"
     },
     {
       "name": "Double Dragon (Japan) (En,Ja) (Rev 1)",
@@ -213,7 +219,7 @@
       "sha1": "A9D3A27BDBD533279368CDAC7F83ECE312235F56",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Double%20Dragon%20(Japan)%20(En%2CJa)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Double%20Dragon%20(Japan)%20(En%2CJa)%20(Rev%201).png"
     },
     {
       "name": "Dunk Dream ~ Street Slam ~ Street Hoop (World)",
@@ -222,7 +228,7 @@
       "crc": "999747B1",
       "md5": "8AE0EDEE592B657D610FD459878481F5",
       "sha1": "FC5C36934EC5A9C0BA3461F8FC7CE8509902E171",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Dunk%20Dream%20~%20Street%20Slam%20~%20Street%20Hoop%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Dunk%20Dream%20~%20Street%20Slam%20~%20Street%20Hoop%20(World).png"
     },
     {
       "name": "Far East of Eden - Tengai Makyou Shinden ~ Far East of Eden - Kabuki Klash (Japan) (En,Ja)",
@@ -233,7 +239,7 @@
       "sha1": "09D5D70FA28C890C990313314398FF480A6D3FED",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Far%20East%20of%20Eden%20-%20Tengai%20Makyou%20Shinden%20~%20Far%20East%20of%20Eden%20-%20Kabuki%20Klash%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Far%20East%20of%20Eden%20-%20Tengai%20Makyou%20Shinden%20~%20Far%20East%20of%20Eden%20-%20Kabuki%20Klash%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Fighter's History Dynamite ~ Karnov's Revenge (World) (En,Ja)",
@@ -250,7 +256,7 @@
       "crc": "37F64C30",
       "md5": "741374CBF885B0CE1DC82B2AFAB8B1FB",
       "sha1": "01BAD2685633A102034D7543BB94748C121B5299",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Fire%20Suplex%20~%203%20Count%20Bout%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Fire%20Suplex%20~%203%20Count%20Bout%20(World)%20(En%2CJa).png"
     },
     {
       "name": "Flying Power Disc ~ Windjammers (Japan) (En,Ja)",
@@ -261,7 +267,7 @@
       "sha1": "15481015CF9192A1F86D39B5F86BA1F881F65F3F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Flying%20Power%20Disc%20~%20Windjammers%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Flying%20Power%20Disc%20~%20Windjammers%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Football Frenzy (Japan) (En,Ja)",
@@ -272,7 +278,7 @@
       "sha1": "344F43854E814A65C3BF88A84F99F83C0E096B8C",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Football%20Frenzy%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Football%20Frenzy%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Futsal - 5 on 5 Mini Soccer ~ PleasureGoal - 5 on 5 Mini Soccer (Japan) (En,Ja)",
@@ -283,7 +289,7 @@
       "sha1": "77FF2F6C45FB9C112467C996FE6066A2C6735692",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Futsal%20-%205%20on%205%20Mini%20Soccer%20~%20PleasureGoal%20-%205%20on%205%20Mini%20Soccer%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Futsal%20-%205%20on%205%20Mini%20Soccer%20~%20PleasureGoal%20-%205%20on%205%20Mini%20Soccer%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Fuuun Mokushiroku - Kakutou Sousei ~ Savage Reign (World) (En,Ja,Es,Pt)",
@@ -292,7 +298,7 @@
       "crc": "89074587",
       "md5": "ED12060F02E8347CE639261943D2AD27",
       "sha1": "610515A22118F4C2593969CF39531C2EC8569C93",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Fuuun%20Mokushiroku%20-%20Kakutou%20Sousei%20~%20Savage%20Reign%20(World)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Fuuun%20Mokushiroku%20-%20Kakutou%20Sousei%20~%20Savage%20Reign%20(World)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Fuuun Mokushiroku - Kakutou Sousei ~ Savage Reign (World) (En,Ja,Es,Pt) (Rev 1)",
@@ -311,7 +317,7 @@
       "sha1": "1BB24ED4874882E3E41DB4B1CF8B2130BE5493E2",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Galaxy%20Fight%20-%20Universal%20Warriors%20(Japan)%20(En%2CJa%2CEs).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Galaxy%20Fight%20-%20Universal%20Warriors%20(Japan)%20(En%2CJa%2CEs).png"
     },
     {
       "name": "Garou Densetsu - Shukumei no Tatakai ~ Fatal Fury - King of Fighters (Japan) (En,Ja)",
@@ -322,7 +328,7 @@
       "sha1": "F3E2DB57336122D4D1CC9D1E1205CD0A7EC586CC",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%20-%20Shukumei%20no%20Tatakai%20~%20Fatal%20Fury%20-%20King%20of%20Fighters%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%20-%20Shukumei%20no%20Tatakai%20~%20Fatal%20Fury%20-%20King%20of%20Fighters%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Garou Densetsu 2 ~ Fatal Fury 2 (Japan) (En,Ja)",
@@ -333,7 +339,7 @@
       "sha1": "9EA668492677FBB0ADA34DF69699FB7CC74561B5",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%202%20~%20Fatal%20Fury%202%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%202%20~%20Fatal%20Fury%202%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Garou Densetsu 3 - Road to the Final Victory ~ Fatal Fury 3 - Road to the Final Victory (Export) (En,Ja,Es,Pt) (Rev 2)",
@@ -342,7 +348,7 @@
       "crc": "1022C7D9",
       "md5": "8435A6A294A15C68D3B179BA31DEDD44",
       "sha1": "E22F7CBD0AF80B6F9019ED0767E0D7D1725DFB52",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(Export)%20(En%2CJa%2CEs%2CPt)%20(Rev%202).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(Export)%20(En%2CJa%2CEs%2CPt)%20(Rev%202).png"
     },
     {
       "name": "Garou Densetsu 3 - Road to the Final Victory ~ Fatal Fury 3 - Road to the Final Victory (Export) (En,Ja,Es,Pt) (Rev 3)",
@@ -351,7 +357,7 @@
       "crc": "83FCA6F9",
       "md5": "1B73CFEEC05B528C9AF662DB52DB8426",
       "sha1": "AF80488135ADB89ED7A2A2FD75AFE64402370643",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(Export)%20(En%2CJa%2CEs%2CPt)%20(Rev%203).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(Export)%20(En%2CJa%2CEs%2CPt)%20(Rev%203).png"
     },
     {
       "name": "Garou Densetsu 3 - Road to the Final Victory ~ Fatal Fury 3 - Road to the Final Victory (Japan) (En,Ja,Es,Pt)",
@@ -362,7 +368,7 @@
       "sha1": "4172348C5033CD3B05F5D98B8568B55D030A2601",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(Japan)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Garou Densetsu 3 - Road to the Final Victory ~ Fatal Fury 3 - Road to the Final Victory (World) (En,Ja,Es,Pt) (Rev 1)",
@@ -371,7 +377,7 @@
       "crc": "F98916C2",
       "md5": "6FAF1ECDFCC8D44A86D40EBA50A1ED7D",
       "sha1": "2A4378C7B654E3719DF6D0688B69E25859EDEEAB",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(World)%20(En%2CJa%2CEs%2CPt)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%203%20-%20Road%20to%20the%20Final%20Victory%20~%20Fatal%20Fury%203%20-%20Road%20to%20the%20Final%20Victory%20(World)%20(En%2CJa%2CEs%2CPt)%20(Rev%201).png"
     },
     {
       "name": "Garou Densetsu Special ~ Fatal Fury Special (Japan) (En,Ja)",
@@ -382,7 +388,7 @@
       "sha1": "5DF92D1C9BE9D7B313753FAC1C6B4A9EFA275B4A",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%20Special%20~%20Fatal%20Fury%20Special%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%20Special%20~%20Fatal%20Fury%20Special%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Garou Densetsu Special ~ Fatal Fury Special (World) (En,Ja) (Rev 1)",
@@ -391,7 +397,7 @@
       "crc": "6497C176",
       "md5": "F24058AB3363209265593553631F87F1",
       "sha1": "F993E226920EA7BCC807A9BF129850D5711A15C4",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Garou%20Densetsu%20Special%20~%20Fatal%20Fury%20Special%20(World)%20(En%2CJa)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Garou%20Densetsu%20Special%20~%20Fatal%20Fury%20Special%20(World)%20(En%2CJa)%20(Rev%201).png"
     },
     {
       "name": "Ghost Pilots (World)",
@@ -400,7 +406,7 @@
       "crc": "A6FF1B78",
       "md5": "C41F1D4058CC7FBBA171E35F23D0A3EC",
       "sha1": "988EF1601BE196BBF2D9D4EADF9B2B1956560907",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Ghost%20Pilots%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ghost%20Pilots%20(World).png"
     },
     {
       "name": "Idol Mahjong - Final Romance 2 (Japan)",
@@ -411,7 +417,7 @@
       "sha1": "26D338CB4DFE3E69562409BB0CDC5AEBBA1A86CC",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Idol%20Mahjong%20-%20Final%20Romance%202%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Idol%20Mahjong%20-%20Final%20Romance%202%20(Japan).png"
     },
     {
       "name": "Janshin Densetsu - Quest of Jongmaster (Japan)",
@@ -422,7 +428,7 @@
       "sha1": "DE3EE6A052B604824C0BC097E7EDF0BE62DD733E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Janshin%20Densetsu%20-%20Quest%20of%20Jongmaster%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Janshin%20Densetsu%20-%20Quest%20of%20Jongmaster%20(Japan).png"
     },
     {
       "name": "Joy Joy Kid ~ Puzzled (World) (En,Ja)",
@@ -431,7 +437,7 @@
       "crc": "EC0A7D08",
       "md5": "EF003D72465A04C5AF0CCD66010917CE",
       "sha1": "299BBBC22586F192FF7B92D5C371EE4EC9068FAF",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Joy%20Joy%20Kid%20~%20Puzzled%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Joy%20Joy%20Kid%20~%20Puzzled%20(World)%20(En%2CJa).png"
     },
     {
       "name": "King of Fighters '94, The (World) (En,Ja)",
@@ -440,7 +446,7 @@
       "crc": "8233ACFD",
       "md5": "0BC0410878D4F0AC764DFBE9C026A1CA",
       "sha1": "A41D012CE4A3B25A60233DE1D58488555C5447DF",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'94%2C%20The%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'94%2C%20The%20(World)%20(En%2CJa).png"
     },
     {
       "name": "King of Fighters '94, The (World) (En,Ja) (Rev 1)",
@@ -449,7 +455,7 @@
       "crc": "6BACD5EB",
       "md5": "7B3DD8EE185CA756C61555129D01D29A",
       "sha1": "AFD30291A40650E0A4D0CEDBB0986BC772A49440",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'94%2C%20The%20(World)%20(En%2CJa)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'94%2C%20The%20(World)%20(En%2CJa)%20(Rev%201).png"
     },
     {
       "name": "King of Fighters '95, The (Japan) (En,Ja) (Rev 1)",
@@ -460,7 +466,7 @@
       "sha1": "6C4DB54FDECBFA0709883F3B174D88CCC482A510",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'95%2C%20The%20(Japan)%20(En%2CJa)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'95%2C%20The%20(Japan)%20(En%2CJa)%20(Rev%201).png"
     },
     {
       "name": "King of Fighters '95, The (World) (En,Ja)",
@@ -469,7 +475,7 @@
       "crc": "5ADA10CD",
       "md5": "A5EA3D9A553504A36D2D96D1D4FD15B3",
       "sha1": "D6BC6EE36323AF596D0137C49153F3A0423F326C",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'95%2C%20The%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'95%2C%20The%20(World)%20(En%2CJa).png"
     },
     {
       "name": "King of Fighters '96 NeoGeo Collection, The (Japan)",
@@ -488,7 +494,7 @@
       "crc": "3F2154CE",
       "md5": "7110C64C79D143FFF97D8EE80254CA92",
       "sha1": "080F9832A0523286A47664B782A358D09C0A4662",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'96%2C%20The%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'96%2C%20The%20(World)%20(En%2CJa).png"
     },
     {
       "name": "King of Fighters '97, The (Japan) (En,Ja)",
@@ -499,7 +505,7 @@
       "sha1": "2B3BE63026E336D910D9950B7C8E7B39521D4F6C",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'97%2C%20The%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'97%2C%20The%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "King of Fighters '98, The - Dream Match Never Ends ~ The King of Fighters '98 - The Slugfest (Japan) (En,Ja)",
@@ -510,7 +516,7 @@
       "sha1": "BE8300E69C6400B0DD84EE9D5A8BD8DEB3FBBA6E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'98%2C%20The%20-%20Dream%20Match%20Never%20Ends%20~%20The%20King%20of%20Fighters%20'98%20-%20The%20Slugfest%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'98%2C%20The%20-%20Dream%20Match%20Never%20Ends%20~%20The%20King%20of%20Fighters%20'98%20-%20The%20Slugfest%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "King of Fighters '99, The ~ The King of Fighters '99 - Millennium Battle (World) (En,Ja,Es,Pt)",
@@ -519,7 +525,7 @@
       "crc": "55D9A455",
       "md5": "9216B9D80D076FF0FAB1B4D9242534E2",
       "sha1": "C5C0F3EC69B54C654E8C1B291B616305772A08D2",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/King%20of%20Fighters%20'99%2C%20The%20~%20The%20King%20of%20Fighters%20'99%20-%20Millennium%20Battle%20(World)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/King%20of%20Fighters%20'99%2C%20The%20~%20The%20King%20of%20Fighters%20'99%20-%20Millennium%20Battle%20(World)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Last Hope (Germany)",
@@ -539,7 +545,7 @@
       "sha1": "BCC4F2651CA698E84E3C8FE393121B0262EE5D86",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Last%20Resort%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Last%20Resort%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "League Bowling (Japan) (En,Ja)",
@@ -550,7 +556,7 @@
       "sha1": "5A5A980B6BD61037910B5DF2D84D2C0D82E04659",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/League%20Bowling%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/League%20Bowling%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Magical Drop 2 (Japan) (En,Ja)",
@@ -561,7 +567,7 @@
       "sha1": "EC7A7560FC3C127CFA9CF9094F97ED8C73216966",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Magical%20Drop%202%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Magical%20Drop%202%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Magician Lord (Japan) (En,Ja)",
@@ -572,7 +578,7 @@
       "sha1": "87FA01B271C5F57223D2DDF78BAE66FECA175AB7",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Magician%20Lord%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Magician%20Lord%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Mahjong-kyou Retsuden - Nishi Nihon-hen (Japan)",
@@ -583,7 +589,7 @@
       "sha1": "860ACE9F8642558F0CF41C6D7971F25246306733",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Mahjong-kyou%20Retsuden%20-%20Nishi%20Nihon-hen%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Mahjong-kyou%20Retsuden%20-%20Nishi%20Nihon-hen%20(Japan).png"
     },
     {
       "name": "Metal Slug (Japan) (En,Ja)",
@@ -594,7 +600,7 @@
       "sha1": "5D14C965BBF852E14D3583A56051BB4103FA9C04",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Metal%20Slug%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Metal%20Slug%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Metal Slug 2 (World) (En,Ja)",
@@ -603,7 +609,7 @@
       "crc": "3806511E",
       "md5": "B37467FD27269B3D5B41FFF642F2DA87",
       "sha1": "7545874E448FE49D13F30B8B00B2C4291BC79795",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Metal%20Slug%202%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Metal%20Slug%202%20(World)%20(En%2CJa).png"
     },
     {
       "name": "Mutation Nation (Japan) (En,Ja)",
@@ -614,7 +620,7 @@
       "sha1": "C86046C7B15FD101F2B8D25BD3077744991A270C",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Mutation%20Nation%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Mutation%20Nation%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Nam-1975 (Japan) (En,Ja)",
@@ -625,7 +631,7 @@
       "sha1": "3DC58E5A8E8E54EDD2A1BDED8C883652D464C099",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Nam-1975%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Nam-1975%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Neo Drift Out - New Technology (Japan)",
@@ -636,7 +642,7 @@
       "sha1": "9403E89F77A0C52511E11BE01718660F3081A47F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Neo%20Drift%20Out%20-%20New%20Technology%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Neo%20Drift%20Out%20-%20New%20Technology%20(Japan).png"
     },
     {
       "name": "Neo-Geo CD Special (Japan)",
@@ -647,7 +653,7 @@
       "sha1": "C55361ADCFF9A20986D3E010DF2FCC8C513E2E78",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Neo-Geo%20CD%20Special%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Neo-Geo%20CD%20Special%20(Japan).png"
     },
     {
       "name": "Next Thing, The - King of the Monsters 2 (World) (En,Ja)",
@@ -656,7 +662,7 @@
       "crc": "4115937C",
       "md5": "FCDAEA883D8154EAF056EBEAC7412404",
       "sha1": "E35567FCB0E7C838F65557C560BD5A00D5D97DEB",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Next%20Thing%2C%20The%20-%20King%20of%20the%20Monsters%202%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Next%20Thing%2C%20The%20-%20King%20of%20the%20Monsters%202%20(World)%20(En%2CJa).png"
     },
     {
       "name": "Ninja Combat (Japan) (En,Ja)",
@@ -667,7 +673,7 @@
       "sha1": "749175128252E6700F3EF35D07A8B256393BD568",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Ninja%20Combat%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ninja%20Combat%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Ninja Commando (Japan) (En,Ja)",
@@ -678,7 +684,7 @@
       "sha1": "B38AC8AB809F82FF109E329DE44B765E4B86EF8E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Ninja%20Commando%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ninja%20Commando%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Ninja Master's - Haou Ninpou Chou (Japan) (En,Ja)",
@@ -689,7 +695,7 @@
       "sha1": "C6EB2F4D5C10A99D2502D768826F943FFEE65E90",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Ninja%20Master's%20-%20Haou%20Ninpou%20Chou%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ninja%20Master's%20-%20Haou%20Ninpou%20Chou%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Oshidashi Zintrick ~ ZinTricK (Japan) (En,Ja)",
@@ -700,7 +706,7 @@
       "sha1": "C75EB018E70E956582F6DAC746DE0FB24F3F6FE3",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Oshidashi%20Zintrick%20~%20ZinTricK%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Oshidashi%20Zintrick%20~%20ZinTricK%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "OverTop (Japan) (En,Ja)",
@@ -711,7 +717,7 @@
       "sha1": "9DB04589FA2E1F39DAB2BBE9D57B2B7C8E6FD46B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/OverTop%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/OverTop%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Power Spikes II (Japan) (En,Ja)",
@@ -722,7 +728,7 @@
       "sha1": "371FB0D8BE953AEDC7B1CEFB8086569207211938",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Power%20Spikes%20II%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Power%20Spikes%20II%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Pulstar (Japan) (En,Ja)",
@@ -733,7 +739,7 @@
       "sha1": "476F2454DFCE5C9DF605E3AC7E4957B8936E1B79",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Pulstar%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Pulstar%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Puzzle Bobble ~ Bust-A-Move (Japan) (En,Ja)",
@@ -754,7 +760,7 @@
       "sha1": "17FE9FE9D732C95CDB876B31307E516A871E3279",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Quiz%20King%20of%20Fighters%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Quiz%20King%20of%20Fighters%20(Japan).png"
     },
     {
       "name": "Raguy ~ Blue's Journey (Japan) (En,Ja)",
@@ -765,7 +771,7 @@
       "sha1": "CB24B3201C562855B99F9317D24E8333C94FF61E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Raguy%20~%20Blue's%20Journey%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Raguy%20~%20Blue's%20Journey%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Rally Chase (Japan) (En,Ja)",
@@ -776,7 +782,7 @@
       "sha1": "16B3C3DCCE97D793B07D23722C132FC4D5DDF705",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Rally%20Chase%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Rally%20Chase%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Real Bout Garou Densetsu 2 - The Newcomers ~ Real Bout Fatal Fury 2 - The Newcomers (Japan) (En,Ja)",
@@ -795,7 +801,7 @@
       "crc": "9E8C704F",
       "md5": "9E3DC32C7EF28A6167EEE8D7FA2D9C63",
       "sha1": "AE68E9146C96E32CD0CF9A47073DA1823D1715E6",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20Special%20~%20Real%20Bout%20Fatal%20Fury%20Special%20(World)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20Special%20~%20Real%20Bout%20Fatal%20Fury%20Special%20(World)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Real Bout Garou Densetsu ~ Real Bout Fatal Fury (World) (En,Ja,Es,Pt)",
@@ -804,7 +810,7 @@
       "crc": "DAB225EE",
       "md5": "C7D11D90F4EB5194AD9C677C62EC1923",
       "sha1": "53C6F85B735AF36B24B20EB25358748872E812A8",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20~%20Real%20Bout%20Fatal%20Fury%20(World)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20~%20Real%20Bout%20Fatal%20Fury%20(World)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Riding Hero (Japan) (En,Ja)",
@@ -815,7 +821,7 @@
       "sha1": "30ADC2EE4DD0BED6FAB6F340799A84070726977F",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Riding%20Hero%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Riding%20Hero%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Robo Army (Japan) (En,Ja)",
@@ -826,7 +832,7 @@
       "sha1": "0778BAD48B20A16844CC16997F34DC28806DDC81",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Robo%20Army%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Robo%20Army%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Ryuuko no Ken 2 ~ Art of Fighting 2 (World) (En,Ja,Es)",
@@ -835,7 +841,7 @@
       "crc": "863E2EFD",
       "md5": "B12597C04180D90491430580B6817200",
       "sha1": "28B691BE20C86C418ECD2A55418673FC48C67587",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Ryuuko%20no%20Ken%202%20~%20Art%20of%20Fighting%202%20(World)%20(En%2CJa%2CEs).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ryuuko%20no%20Ken%202%20~%20Art%20of%20Fighting%202%20(World)%20(En%2CJa%2CEs).png"
     },
     {
       "name": "Ryuuko no Ken ~ Art of Fighting (World) (En,Ja,Es)",
@@ -844,7 +850,7 @@
       "crc": "CE8F08D8",
       "md5": "61CC6B35A540FAA52BAF1A9B7A9D3522",
       "sha1": "962C9FF2F51F5C39F2E2E2127C3212D912456A3A",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Ryuuko%20no%20Ken%20~%20Art%20of%20Fighting%20(World)%20(En%2CJa%2CEs).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Ryuuko%20no%20Ken%20~%20Art%20of%20Fighting%20(World)%20(En%2CJa%2CEs).png"
     },
     {
       "name": "Samurai Spirits - Amakusa Kourin ~ Samurai Shodown IV - Amakusa's Revenge (World) (En,Ja,Es,Pt)",
@@ -853,7 +859,7 @@
       "crc": "AFBF9351",
       "md5": "E18A1A60E7121A42892B9401E997067E",
       "sha1": "BE9E7F4BEB2A3856D031B4E0813DF4A77105159A",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Samurai%20Spirits%20-%20Amakusa%20Kourin%20~%20Samurai%20Shodown%20IV%20-%20Amakusa's%20Revenge%20(World)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Samurai%20Spirits%20-%20Amakusa%20Kourin%20~%20Samurai%20Shodown%20IV%20-%20Amakusa's%20Revenge%20(World)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Samurai Spirits - Zankurou Musouken ~ Samurai Shodown III (World) (En,Ja,Es,Pt)",
@@ -862,7 +868,7 @@
       "crc": "3045A65A",
       "md5": "824253DEECEDE3A25CC32CCD800700EC",
       "sha1": "7F6272EAD80D6E495534C7F4DA2891DBB18A3F72",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Samurai%20Spirits%20-%20Zankurou%20Musouken%20~%20Samurai%20Shodown%20III%20(World)%20(En%2CJa%2CEs%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Samurai%20Spirits%20-%20Zankurou%20Musouken%20~%20Samurai%20Shodown%20III%20(World)%20(En%2CJa%2CEs%2CPt).png"
     },
     {
       "name": "Samurai Spirits ~ Samurai Shodown (Japan) (En,Ja)",
@@ -873,7 +879,7 @@
       "sha1": "AED14DFEA5CBF722EE7CE85FED3AC386DADB2598",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Samurai%20Spirits%20~%20Samurai%20Shodown%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Samurai%20Spirits%20~%20Samurai%20Shodown%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Sengoku Denshou 2 ~ Sengoku 2 (Japan) (En,Ja)",
@@ -884,7 +890,7 @@
       "sha1": "0F58D9FE47C01022DB9D592D2A6939FEA234899D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Sengoku%20Denshou%202%20~%20Sengoku%202%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Sengoku%20Denshou%202%20~%20Sengoku%202%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Sengoku Denshou ~ Sengoku (Japan) (En,Ja)",
@@ -895,7 +901,7 @@
       "sha1": "FF41E2EED3C6FA525BFF7986A0967BC022097002",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Sengoku%20Denshou%20~%20Sengoku%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Sengoku%20Denshou%20~%20Sengoku%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Shin Samurai Spirits - Haoumaru Jigokuhen ~ Samurai Shodown II (World) (En,Ja)",
@@ -904,7 +910,7 @@
       "crc": "63CFF4FA",
       "md5": "BB4B30CE28045B7804D53713037F0779",
       "sha1": "0C646FA29EFC7331DA76057582BAD5D3F3C8D311",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Shin%20Samurai%20Spirits%20-%20Haoumaru%20Jigokuhen%20~%20Samurai%20Shodown%20II%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Shin%20Samurai%20Spirits%20-%20Haoumaru%20Jigokuhen%20~%20Samurai%20Shodown%20II%20(World)%20(En%2CJa).png"
     },
     {
       "name": "Shinouken ~ Ragnagard (Japan) (En,Ja,Es)",
@@ -915,7 +921,7 @@
       "sha1": "96A29FE48D2AD818032581F6EAF06DD1278A40FB",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Shinouken%20~%20Ragnagard%20(Japan)%20(En%2CJa%2CEs).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Shinouken%20~%20Ragnagard%20(Japan)%20(En%2CJa%2CEs).png"
     },
     {
       "name": "Shinsetsu Samurai Spirits - Bushidou Retsuden (Japan)",
@@ -926,7 +932,7 @@
       "sha1": "69DA036E094A971A035C63C7B365179E031AEA2C",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Shinsetsu%20Samurai%20Spirits%20-%20Bushidou%20Retsuden%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Shinsetsu%20Samurai%20Spirits%20-%20Bushidou%20Retsuden%20(Japan).png"
     },
     {
       "name": "Shougi no Tatsujin - Master of Syougi (Japan)",
@@ -937,7 +943,7 @@
       "sha1": "34EAC00B4CB8F96D98036B023128A447FE0CF928",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Shougi%20no%20Tatsujin%20-%20Master%20of%20Syougi%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Shougi%20no%20Tatsujin%20-%20Master%20of%20Syougi%20(Japan).png"
     },
     {
       "name": "Soccer Brawl (World)",
@@ -946,7 +952,7 @@
       "crc": "F4497457",
       "md5": "37803FDACAC177A3ED5A1DDDFE55EBAA",
       "sha1": "24F9E1BA2B1A0578FD5D026FD8B7530D6F748254",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Soccer%20Brawl%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Soccer%20Brawl%20(World).png"
     },
     {
       "name": "Sonic Wings 2 ~ Aero Fighters 2 (World) (En,Ja)",
@@ -955,7 +961,7 @@
       "crc": "BBB2F599",
       "md5": "7688FC3D710C3DF5509BBDD137C7E282",
       "sha1": "A684A6A330E882989A3618F54C5C08A181CA096F",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Sonic%20Wings%202%20~%20Aero%20Fighters%202%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Sonic%20Wings%202%20~%20Aero%20Fighters%202%20(World)%20(En%2CJa).png"
     },
     {
       "name": "Sonic Wings 3 ~ Aero Fighters 3 (Japan) (En,Ja)",
@@ -966,7 +972,7 @@
       "sha1": "D2775A963D415FC7C967C96E963ECB7AAAC09742",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Sonic%20Wings%203%20~%20Aero%20Fighters%203%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Sonic%20Wings%203%20~%20Aero%20Fighters%203%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Stakes Winner - GI Kanzen Seiha e no Michi (Japan)",
@@ -977,7 +983,7 @@
       "sha1": "278AF36D282E76F4EE08A76826B06D9F3B5EC8E9",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Stakes%20Winner%20-%20GI%20Kanzen%20Seiha%20e%20no%20Michi%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Stakes%20Winner%20-%20GI%20Kanzen%20Seiha%20e%20no%20Michi%20(Japan).png"
     },
     {
       "name": "Super Sidekicks - Tokuten-ou (Japan) (En,Ja)",
@@ -988,7 +994,7 @@
       "sha1": "6FF5069553198576E24B1DB6695D7F88C4535E4B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Super%20Sidekicks%20-%20Tokuten-ou%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Super%20Sidekicks%20-%20Tokuten-ou%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Super Spy, The (Japan) (En,Ja)",
@@ -999,7 +1005,7 @@
       "sha1": "02E0C4E39588D21B8921E643DE1E853684B34617",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Super%20Spy%2C%20The%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Super%20Spy%2C%20The%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Tokuten-ou 2 ~ Super Sidekicks 2 - The World Championship (Japan) (En,Ja,Es)",
@@ -1010,7 +1016,7 @@
       "sha1": "0B7F702E69F57B396C9C108941F85D3676C114DC",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Tokuten-ou%202%20~%20Super%20Sidekicks%202%20-%20The%20World%20Championship%20(Japan)%20(En%2CJa%2CEs).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Tokuten-ou%202%20~%20Super%20Sidekicks%202%20-%20The%20World%20Championship%20(Japan)%20(En%2CJa%2CEs).png"
     },
     {
       "name": "Tokuten-ou 3 - Eikou e no Chousen ~ Super Sidekicks 3 - The Next Glory (World) (En,Ja,Fr,Es,It,Pt)",
@@ -1019,7 +1025,7 @@
       "crc": "69CCAE9B",
       "md5": "DB1372DEC6F64D6512284609DBCD58CD",
       "sha1": "7A42EC163527906DA5E1AEFAFBC40B11A118DE86",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Tokuten-ou%203%20-%20Eikou%20e%20no%20Chousen%20~%20Super%20Sidekicks%203%20-%20The%20Next%20Glory%20(World)%20(En%2CJa%2CFr%2CEs%2CIt%2CPt).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Tokuten-ou%203%20-%20Eikou%20e%20no%20Chousen%20~%20Super%20Sidekicks%203%20-%20The%20Next%20Glory%20(World)%20(En%2CJa%2CFr%2CEs%2CIt%2CPt).png"
     },
     {
       "name": "Top Hunter - Roddy & Cathy (World) (En,Ja)",
@@ -1038,7 +1044,7 @@
       "sha1": "18CF70673A0A45718161547E22B9D355223D1174",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Top%20Player's%20Golf%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Top%20Player's%20Golf%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Treasure of the Caribbean (France) (En,Ja)",
@@ -1056,7 +1062,7 @@
       "crc": "EB9BEF26",
       "md5": "D4A738CB3CA41FDDA60079C80A19B3F1",
       "sha1": "9AFF91FE9D53C6F90E3877EC530F5B11E3A731C6",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Tsuukai%20Gangan%20Koushinkyoku%20~%20Aggressors%20of%20Dark%20Kombat%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Tsuukai%20Gangan%20Koushinkyoku%20~%20Aggressors%20of%20Dark%20Kombat%20(World)%20(En%2CJa).png"
     },
     {
       "name": "Twinkle Star Sprites (Japan) (En,Ja)",
@@ -1067,7 +1073,7 @@
       "sha1": "90CEF41DC9BF31D971361192FF47310E26C063BE",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Twinkle%20Star%20Sprites%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Twinkle%20Star%20Sprites%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "Viewpoint (Japan)",
@@ -1078,7 +1084,7 @@
       "sha1": "5A9B0B77EAF9A414E37078B76AAEA26EE086A824",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/Viewpoint%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/Viewpoint%20(Japan).png"
     },
     {
       "name": "World Heroes (Japan) (En,Ja)",
@@ -1089,7 +1095,7 @@
       "sha1": "D64D5439102D5F00DCFE8B7A1315B2C2FB7991E2",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/World%20Heroes%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/World%20Heroes%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "World Heroes 2 (Japan) (En,Ja)",
@@ -1100,7 +1106,7 @@
       "sha1": "35BFF15D5C7041E3CC0B6B85456501D2227225DF",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/World%20Heroes%202%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/World%20Heroes%202%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "World Heroes 2 Jet (Japan) (En,Ja)",
@@ -1111,7 +1117,7 @@
       "sha1": "BD76ACFF4C30DA82256ABA39A6B409D0AD02533E",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/World%20Heroes%202%20Jet%20(Japan)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/World%20Heroes%202%20Jet%20(Japan)%20(En%2CJa).png"
     },
     {
       "name": "World Heroes Perfect (Export) (En,Ja) (Rev 1)",
@@ -1120,7 +1126,7 @@
       "crc": "0A3A9568",
       "md5": "6431F0E5EBA3D9FBAB9334EE6F7B5679",
       "sha1": "65BDF8970B73A029C814D570470CF863D4F5E6A6",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/World%20Heroes%20Perfect%20(Export)%20(En%2CJa)%20(Rev%201).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/World%20Heroes%20Perfect%20(Export)%20(En%2CJa)%20(Rev%201).png"
     },
     {
       "name": "World Heroes Perfect (World) (En,Ja)",
@@ -1129,7 +1135,7 @@
       "crc": "F6B4C4F6",
       "md5": "15EBB70D28E03805CF52EF87906D76D7",
       "sha1": "F66466DC4CBC1E974E947270551B00F0F2C802C7",
-      "cover": "https://thumbnails.libretro.com/SNK%20-%20Neo%20Geo%20CD/Named_Boxarts/World%20Heroes%20Perfect%20(World)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/SNK_-_Neo_Geo_CD/HEAD/Named_Boxarts/World%20Heroes%20Perfect%20(World)%20(En%2CJa).png"
     },
     {
       "name": "Xeno Crisis (World)",

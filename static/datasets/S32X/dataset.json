@@ -4,7 +4,20 @@
     "totalGames": 207,
     "totalFiles": 207,
     "totalCovers": 53,
-    "generated": "2026-07-29T23:49:50.321Z"
+    "totalGameCovers": 10,
+    "generated": "2026-07-30T10:39:18.462Z"
+  },
+  "covers": {
+    "ClayFighter 2": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/ClayFighter%202%20(USA)%20(Proto)%20(1995-04-28).png",
+    "Doom RR": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20RR%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-15).png",
+    "Ecco the Dolphin": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Ecco%20the%20Dolphin%20(USA)%20(Demo)%20(Developer%20Cart).png",
+    "Mars Sample Program - Gnu Sierra": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Gnu%20Sierra%20(Unknown)%20(SDK%20Build).png",
+    "Mars Sample Program - Pharaoh": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Pharaoh%20(Unknown)%20(SDK%20Build).png",
+    "Mars Sample Program - Runlength Mode Test": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Runlength%20Mode%20Test%20(Unknown)%20(SDK%20Build).png",
+    "Mars Sample Program - Texture Test": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Texture%20Test%20(Unknown)%20(SDK%20Build).png",
+    "Pinocchio": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Pinocchio%20(Europe)%20(Proto)%20(1995-06-12).png",
+    "Spot Goes to Hollywood": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Spot%20Goes%20to%20Hollywood%20(Europe)%20(Proto).png",
+    "Zaxxon's Motherbase": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-10).png"
   },
   "list": [
     {
@@ -16,7 +29,7 @@
       "sha1": "C7D56CC75DC9A5206FDA6A080CBEDAE9F48C82BC",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/After%20Burner%20Complete%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/After%20Burner%20Complete%20(Europe).png"
     },
     {
       "name": "After Burner Complete (Japan, USA) (En)",
@@ -27,7 +40,7 @@
       "sha1": "9CF575FEB036E2F26E78350154D5EB2FD3825325",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/After%20Burner%20Complete%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/After%20Burner%20Complete%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Amazing Spider-Man, The - Web of Fire (USA)",
@@ -38,7 +51,7 @@
       "sha1": "7CC2EA1E10F110338AD880BD3E7FF3BCE72E7E9E",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Amazing%20Spider-Man%2C%20The%20-%20Web%20of%20Fire%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Amazing%20Spider-Man%2C%20The%20-%20Web%20of%20Fire%20(USA).png"
     },
     {
       "name": "Amazing Spider-Man, The - Web of Fire (USA) (Beta)",
@@ -59,7 +72,7 @@
       "sha1": "9B5FD499EAA442D48A2C97FCEB1D505DC8E8DDFF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/BC%20Racers%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/BC%20Racers%20(USA).png"
     },
     {
       "name": "Blackthorne (USA)",
@@ -70,7 +83,7 @@
       "sha1": "4BF120CF056FE1417CA5B02FA0372EF33CB8EC11",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Blackthorne%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Blackthorne%20(USA).png"
     },
     {
       "name": "Brutal - Above the Claw (USA)",
@@ -81,7 +94,7 @@
       "sha1": "40AA2C787F37772CDBD7280B8BE06B15421FABAE",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Brutal%20-%20Above%20the%20Claw%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Brutal%20-%20Above%20the%20Claw%20(USA).png"
     },
     {
       "name": "ClayFighter 2 (USA) (Proto)",
@@ -102,7 +115,7 @@
       "sha1": "900E8ECDCC4460B4C4AF3873E1D6BC83DA4AEE99",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Cosmic%20Carnage%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Cosmic%20Carnage%20(Europe).png"
     },
     {
       "name": "Cosmic Carnage (Japan, USA) (En)",
@@ -113,7 +126,7 @@
       "sha1": "9A563ED821B483148339561EBD2B876EFA58847B",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Cosmic%20Carnage%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Cosmic%20Carnage%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Cosmic Carnage (Japan, USA) (En) (Beta 1)",
@@ -204,7 +217,7 @@
       "sha1": "108B4FFED8643ABDEFA921CFB58389B119B47F3D",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Darxide%20(Europe)%20(En%2CFr%2CDe%2CEs).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Darxide%20(Europe)%20(En%2CFr%2CDe%2CEs).png"
     },
     {
       "name": "Doom (Europe)",
@@ -215,7 +228,7 @@
       "sha1": "4EC03C2114EBFFBBCD16859583340D4EA4CD8DD5",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Doom%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20(Europe).png"
     },
     {
       "name": "Doom (Japan, USA) (En)",
@@ -226,7 +239,7 @@
       "sha1": "B68E9C7AF81853B8F05B8696033DFE4C80327E38",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Doom%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Doom (Japan, USA) (En) (Beta 1)",
@@ -367,7 +380,7 @@
       "sha1": "131EBB717DEE4DD1D8F5AB2B9393C23785D3A359",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/FIFA%20Soccer%2096%20(Europe)%20(En%2CFr%2CDe%2CEs%2CIt%2CSv).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/FIFA%20Soccer%2096%20(Europe)%20(En%2CFr%2CDe%2CEs%2CIt%2CSv).png"
     },
     {
       "name": "Golf Magazine Presents - 36 Great Holes Starring Fred Couples (Europe)",
@@ -378,7 +391,7 @@
       "sha1": "55848F7C54533FD2A19011DB661EF261CD8BDB22",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Golf%20Magazine%20Presents%20-%2036%20Great%20Holes%20Starring%20Fred%20Couples%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Golf%20Magazine%20Presents%20-%2036%20Great%20Holes%20Starring%20Fred%20Couples%20(Europe).png"
     },
     {
       "name": "Golf Magazine Presents - 36 Great Holes Starring Fred Couples (Europe) (Beta 1)",
@@ -409,7 +422,7 @@
       "sha1": "DC77B1E5C888C2C4284766915A5020BB14EE681D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Golf%20Magazine%20Presents%20-%2036%20Great%20Holes%20Starring%20Fred%20Couples%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Golf%20Magazine%20Presents%20-%2036%20Great%20Holes%20Starring%20Fred%20Couples%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Golf Magazine Presents - 36 Great Holes Starring Fred Couples (Japan, USA) (En) (Beta 1)",
@@ -740,7 +753,7 @@
       "sha1": "5C1A2E327A656217604D4BAE7E141764A7E59922",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Knuckles'%20Chaotix%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Knuckles'%20Chaotix%20(Europe).png"
     },
     {
       "name": "Knuckles' Chaotix (Japan, USA) (En)",
@@ -751,7 +764,7 @@
       "sha1": "0C2FFF7BC79ED26507C08AC47464C3AF19F7CED7",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Knuckles'%20Chaotix%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Knuckles'%20Chaotix%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Knuckles' Chaotix (Japan, USA) (En) (Beta 1)",
@@ -882,7 +895,7 @@
       "sha1": "191AE0B525ECF32664086D8D748E0B35F776DDFE",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Kolibri%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Kolibri%20(USA%2C%20Europe).png"
     },
     {
       "name": "Mars Check Program (USA) (Auto Demo)",
@@ -943,7 +956,7 @@
       "sha1": "2A7767024E23B55FE193D586A96A3BA3C92E7EA8",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Metal%20Head%20(Europe)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Metal%20Head%20(Europe)%20(En%2CJa).png"
     },
     {
       "name": "Metal Head (Japan, USA) (En) (Beta 1)",
@@ -1044,7 +1057,7 @@
       "sha1": "4E872FBB44ECB2BD730ABD8CC8F32F96B10582C0",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Metal%20Head%20(Japan%2C%20USA)%20(En%2CJa).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Metal%20Head%20(Japan%2C%20USA)%20(En%2CJa).png"
     },
     {
       "name": "Mortal Kombat II (Europe)",
@@ -1055,7 +1068,7 @@
       "sha1": "F75698DE887D0EF980F73E35FC4615887A9AD58F",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Mortal%20Kombat%20II%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mortal%20Kombat%20II%20(Europe).png"
     },
     {
       "name": "Mortal Kombat II (Japan, USA) (En)",
@@ -1066,7 +1079,7 @@
       "sha1": "D55964BD935110AC2D9CBD3B085B7E8B71B11DF2",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Mortal%20Kombat%20II%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mortal%20Kombat%20II%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Motherbase (Europe)",
@@ -1077,7 +1090,7 @@
       "sha1": "00792570C459637D46F26D0CEB301ED9D83F0098",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Motherbase%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Motherbase%20(Europe).png"
     },
     {
       "name": "Motherbase (Europe) (Sample)",
@@ -1088,7 +1101,7 @@
       "sha1": "6D457A613E91ED265B0E2835A02E05558BC7E3CA",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Motherbase%20(Europe)%20(Sample).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Motherbase%20(Europe)%20(Sample).png"
     },
     {
       "name": "Motocross Championship (Europe)",
@@ -1099,7 +1112,7 @@
       "sha1": "AF0CB8626825E1B431EBA07B8A9B571186745C16",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Motocross%20Championship%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Motocross%20Championship%20(Europe).png"
     },
     {
       "name": "Motocross Championship (USA)",
@@ -1110,7 +1123,7 @@
       "sha1": "5F1A107991AAF9EFF0B3CE864B2E3151F56ABE7B",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Motocross%20Championship%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Motocross%20Championship%20(USA).png"
     },
     {
       "name": "Motocross Championship (USA) (Beta 1)",
@@ -1269,7 +1282,7 @@
       "crc": "6B7994AA",
       "md5": "966A5E00DD7BCDC70B05C5A0C0E8F7AA",
       "sha1": "C8AF3E74C49514669BA6652EC0C81BCCF77873B6",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/NBA%20Jam%20-%20Tournament%20Edition%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/NBA%20Jam%20-%20Tournament%20Edition%20(World).png"
     },
     {
       "name": "NFL Quarterback Club (World)",
@@ -1278,7 +1291,7 @@
       "crc": "0BC7018D",
       "md5": "E273C10114351CDAFEBA1ABCCCA8909D",
       "sha1": "A0DC24F2F3A7FC5BFD12791CF25AF7F7888843CF",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/NFL%20Quarterback%20Club%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/NFL%20Quarterback%20Club%20(World).png"
     },
     {
       "name": "Pinocchio (Europe) (Proto)",
@@ -1299,7 +1312,7 @@
       "sha1": "EE864D1677C6D976D0846EB5F8D8EDB839ACFB76",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Pitfall%20-%20The%20Mayan%20Adventure%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Pitfall%20-%20The%20Mayan%20Adventure%20(USA).png"
     },
     {
       "name": "Primal Rage (USA, Europe)",
@@ -1310,7 +1323,7 @@
       "sha1": "5084DCCA51D76173C383AB7D04CBC661673545F7",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Primal%20Rage%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Primal%20Rage%20(USA%2C%20Europe).png"
     },
     {
       "name": "RBI Baseball '95 (USA)",
@@ -1321,7 +1334,7 @@
       "sha1": "4F90433A4403FD74CAFEEA49272689046DE4AE43",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/RBI%20Baseball%20'95%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/RBI%20Baseball%20'95%20(USA).png"
     },
     {
       "name": "Sangokushi IV (Japan)",
@@ -1332,7 +1345,7 @@
       "sha1": "74A3BA27C55CFF12409BF6C9324ECE6247ABBAD1",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Sangokushi%20IV%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Sangokushi%20IV%20(Japan).png"
     },
     {
       "name": "Soulstar X (USA) (Proto)",
@@ -1343,7 +1356,7 @@
       "sha1": "4726988F28C5E49971E1F38E335FECC3F9DD6C1F",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Soulstar%20X%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Soulstar%20X%20(USA)%20(Proto).png"
     },
     {
       "name": "Space Harrier (Europe)",
@@ -1354,7 +1367,7 @@
       "sha1": "8B0495257FA5392EF9DDCC9C3BA1860AE58F4F3D",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Space%20Harrier%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Space%20Harrier%20(Europe).png"
     },
     {
       "name": "Space Harrier (Japan, USA) (En)",
@@ -1365,7 +1378,7 @@
       "sha1": "F32A52A7082761982024E40291DBD962A835B231",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Space%20Harrier%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Space%20Harrier%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Space Harrier (Japan, USA) (En) (Beta)",
@@ -1396,7 +1409,7 @@
       "sha1": "E5248328B64A1EC4F1079C88EE53EF8D48E99E58",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Star%20Trek%20-%20Starfleet%20Academy%20-%20Starship%20Bridge%20Simulator%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Star%20Trek%20-%20Starfleet%20Academy%20-%20Starship%20Bridge%20Simulator%20(USA).png"
     },
     {
       "name": "Star Wars Arcade (Europe)",
@@ -1407,7 +1420,7 @@
       "sha1": "A877CBF704FE7480966FD88A3C39EFB6A39392AC",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Star%20Wars%20Arcade%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Star%20Wars%20Arcade%20(Europe).png"
     },
     {
       "name": "Star Wars Arcade (Europe) (Beta 1)",
@@ -1458,7 +1471,7 @@
       "sha1": "282767A07E453E868DE52B46BF11DEF3D071BDA6",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Star%20Wars%20Arcade%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Star%20Wars%20Arcade%20(Japan).png"
     },
     {
       "name": "Star Wars Arcade (Japan) (Beta 1)",
@@ -1499,7 +1512,7 @@
       "sha1": "F4FFAAF1D8330EA971643021BE3F3203E1EA065D",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Star%20Wars%20Arcade%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Star%20Wars%20Arcade%20(USA).png"
     },
     {
       "name": "Star Wars Arcade (USA) (Beta 1)",
@@ -1650,7 +1663,7 @@
       "sha1": "561C8C63DBCABC0B1B6F31673CA75A0BDE7ABC72",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Stellar%20Assault%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Stellar%20Assault%20(USA%2C%20Europe).png"
     },
     {
       "name": "Stellar Assault (USA, Europe) (Beta 1)",
@@ -1711,7 +1724,7 @@
       "sha1": "173C8425921D83DB3E8D181158E7599364F4C0F6",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/T-MEK%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/T-MEK%20(USA%2C%20Europe).png"
     },
     {
       "name": "Tempo (Japan, USA) (En)",
@@ -1722,7 +1735,7 @@
       "sha1": "6673BA83570B4F2C1B4A22415A56594C3CC6C6A9",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Tempo%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Tempo%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Tempo (Japan, USA) (En) (Beta 1)",
@@ -1813,7 +1826,7 @@
       "sha1": "7588B0B8F4E93D5FDC920D3AB7E464154E423DA9",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Toughman%20Contest%20(USA%2C%20Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Toughman%20Contest%20(USA%2C%20Europe).png"
     },
     {
       "name": "Virtua Fighter (Europe)",
@@ -1824,7 +1837,7 @@
       "sha1": "24B3063284A914C76D8D1F681E3ED6323B0D7D0B",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Virtua%20Fighter%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Virtua%20Fighter%20(Europe).png"
     },
     {
       "name": "Virtua Fighter (Japan, USA) (En)",
@@ -1835,7 +1848,7 @@
       "sha1": "F35754F4BFE3A53722D7A799F88FACE0FD13C424",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Virtua%20Fighter%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Virtua%20Fighter%20(Japan%2C%20USA)%20(En).png"
     },
     {
       "name": "Virtua Fighter (Japan, USA) (En) (Beta 1)",
@@ -1916,7 +1929,7 @@
       "sha1": "C10F98D9DB73AE90BE5E5D556B663A5AFF015CEF",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Virtua%20Hamster%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Virtua%20Hamster%20(USA)%20(Proto).png"
     },
     {
       "name": "Virtua Racing Deluxe (Europe)",
@@ -1927,7 +1940,7 @@
       "sha1": "BB26DDDE26CD07191D872E8A76A170CA3326F781",
       "region": "Europe",
       "videoStandard": "PAL",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Virtua%20Racing%20Deluxe%20(Europe).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Virtua%20Racing%20Deluxe%20(Europe).png"
     },
     {
       "name": "Virtua Racing Deluxe (Japan)",
@@ -1938,7 +1951,7 @@
       "sha1": "1C64E80EB164CA8D6C6587A55AD60385BA1DAF27",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Virtua%20Racing%20Deluxe%20(Japan).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Virtua%20Racing%20Deluxe%20(Japan).png"
     },
     {
       "name": "Virtua Racing Deluxe (USA)",
@@ -1949,7 +1962,7 @@
       "sha1": "18DFDEB50780C2623E60A6587D7ED701A1CF81F1",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Virtua%20Racing%20Deluxe%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Virtua%20Racing%20Deluxe%20(USA).png"
     },
     {
       "name": "Virtua Racing Deluxe (USA) (Beta 1)",
@@ -1988,7 +2001,7 @@
       "crc": "8EB7CD2C",
       "md5": "B3788F861803D21CFA0E559695835F44",
       "sha1": "94B974F2F69F0C10BC18B349FA4FF95CA56FA47B",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/WWF%20Raw%20(World).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/WWF%20Raw%20(World).png"
     },
     {
       "name": "WWF WrestleMania - The Arcade Game (USA)",
@@ -1999,7 +2012,7 @@
       "sha1": "551EEDC963CBA0E1410B3D229B332EF9EA061469",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/WWF%20WrestleMania%20-%20The%20Arcade%20Game%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/WWF%20WrestleMania%20-%20The%20Arcade%20Game%20(USA).png"
     },
     {
       "name": "World Series Baseball Starring Deion Sanders (USA)",
@@ -2010,7 +2023,7 @@
       "sha1": "AB3026EAE46A775ADB7EAEBC13702699557DDC41",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/World%20Series%20Baseball%20Starring%20Deion%20Sanders%20(USA).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/World%20Series%20Baseball%20Starring%20Deion%20Sanders%20(USA).png"
     },
     {
       "name": "X-Men (USA) (Proto)",
@@ -2021,7 +2034,7 @@
       "sha1": "CD3FA2ACE2FDBF4B6402CB52EEB208010BF31029",
       "region": "USA",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/X-Men%20(USA)%20(Proto).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/X-Men%20(USA)%20(Proto).png"
     },
     {
       "name": "Zaxxon's Motherbase (Japan, USA) (En) (Beta 1)",
@@ -2122,7 +2135,7 @@
       "sha1": "60C390F76C394BDD221936C21AECBF98AEC49A3D",
       "region": "Japan",
       "videoStandard": "NTSC",
-      "cover": "https://thumbnails.libretro.com/Sega%20-%2032X/Named_Boxarts/Zaxxon's%20Motherbase%202000%20(Japan%2C%20USA)%20(En).png"
+      "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%202000%20(Japan%2C%20USA)%20(En).png"
     }
   ]
 }
