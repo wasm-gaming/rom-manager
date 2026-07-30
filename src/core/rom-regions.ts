@@ -183,6 +183,19 @@ export const REGION_ORDERS: readonly (readonly Region[])[] = [
 
 export const DEFAULT_REGION_ORDER = REGION_ORDERS[0];
 
+/**
+ * The order with one region moved to the front, the other two keeping the order
+ * they were in.
+ *
+ * It is the whole gesture behind the three buttons in the header: what a click
+ * says is «this one first», and it would be rude to answer by reshuffling the
+ * two the user did not touch. Every result is one of `REGION_ORDERS`, because
+ * moving one element of a permutation of three leaves a permutation of three.
+ */
+export function preferRegion(order: readonly Region[], region: Region): readonly Region[] {
+  return [region, ...order.filter((candidate) => candidate !== region)];
+}
+
 /** `['EU', 'US', 'JP']` -> `EU/US/JP`, which is what the menu shows and stores. */
 export function regionOrderKey(order: readonly Region[]): string {
   return order.join('/');

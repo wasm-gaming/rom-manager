@@ -17,7 +17,7 @@ import { setThemeMode, themeModeSignal } from '../services/ThemeService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
 import { imageExtensionOf, regionOfScope } from '../core/rom-media';
-import type { Region } from '../core/rom-regions';
+import { preferRegion, type Region } from '../core/rom-regions';
 import type { OrganizePlan } from '../core/rom-organize';
 import {
   storeService,
@@ -745,6 +745,28 @@ export function ROMExplorer(): JSX.Element {
           onClose={handleCloseOrigin}
           onAddOrigin={handleOpenFolder}
         />
+        {/* The preference order, as the order itself: three buttons in the order
+            they are preferred in, and clicking one puts it first. Leaving the
+            other two as they were is what makes it a move and not a reshuffle. */}
+        <div class="header-regions" role="group" aria-label="Prioridad de región">
+          {regionOrder.map((region, at) => (
+            <button
+              key={region}
+              class={`header-region ${at === 0 ? 'on' : ''}`}
+              // The order belongs to the open library's `.meta`, so with none
+              // open there is nowhere to write it.
+              disabled={!activeNode}
+              aria-pressed={at === 0}
+              title={
+                at === 0 ? `Se prefiere la carátula de ${region}` : `Preferir la carátula de ${region}`
+              }
+              onClick={() => handleRegionOrderChange(preferRegion(regionOrder, region))}
+            >
+              {region}
+            </button>
+          ))}
+        </div>
+
         <button class="header-prefs" onClick={() => setPreferences(true)} title="Preferencias">
           ⚙
         </button>

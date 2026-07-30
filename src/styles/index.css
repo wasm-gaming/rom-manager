@@ -297,6 +297,51 @@ code {
 }
 
 /* The way into the preferences, kept at the far end of the header. */
+/* The region preference, read left to right: the leftmost is the one preferred,
+   and clicking any other moves it there. Segmented like the panel's controls,
+   because it is the same kind of choice. */
+.header-regions {
+  flex-shrink: 0;
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  height: 2rem;
+}
+
+.header-region {
+  padding: 0 0.5rem;
+  border: none;
+  border-left: 1px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-family: monospace;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.header-region:first-child {
+  border-left: none;
+}
+
+.header-region:hover:not(.on):not(:disabled) {
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+.header-region.on {
+  background-color: var(--accent);
+  color: var(--accent-on);
+  font-weight: 600;
+}
+
+.header-region:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .header-prefs {
   flex-shrink: 0;
   width: 2rem;

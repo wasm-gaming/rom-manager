@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
   DEFAULT_REGION_ORDER,
   REGION_ORDERS,
+  REGIONS,
   parseRegionOrder,
+  preferRegion,
   regionOrderKey,
   regionsOf,
   videoStandardsOf,
@@ -88,5 +90,29 @@ describe('region orders', () => {
     expect(parseRegionOrder(['EU', 'EU', 'JP'])).toEqual(DEFAULT_REGION_ORDER);
     expect(parseRegionOrder('europe first')).toEqual(DEFAULT_REGION_ORDER);
     expect(parseRegionOrder(undefined)).toEqual(DEFAULT_REGION_ORDER);
+  });
+});
+
+describe('preferRegion', () => {
+  it('moves the region asked for to the front', () => {
+    expect(preferRegion(['EU', 'US', 'JP'], 'US')).toEqual(['US', 'EU', 'JP']);
+    expect(preferRegion(['EU', 'US', 'JP'], 'JP')).toEqual(['JP', 'EU', 'US']);
+  });
+
+  it('leaves the other two in the order they were in', () => {
+    expect(preferRegion(['US', 'JP', 'EU'], 'EU')).toEqual(['EU', 'US', 'JP']);
+    expect(preferRegion(['JP', 'US', 'EU'], 'EU')).toEqual(['EU', 'JP', 'US']);
+  });
+
+  it('changes nothing when the region is already first', () => {
+    expect(preferRegion(['JP', 'EU', 'US'], 'JP')).toEqual(['JP', 'EU', 'US']);
+  });
+
+  it('always lands on an order the app knows', () => {
+    for (const order of REGION_ORDERS) {
+      for (const region of REGIONS) {
+        expect(parseRegionOrder(preferRegion(order, region))).toEqual(preferRegion(order, region));
+      }
+    }
   });
 });

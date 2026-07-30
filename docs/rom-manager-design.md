@@ -475,8 +475,13 @@ las ausentes van plegadas, porque el catálogo puede listar quince frente a la
 estándares a los que corre, que es lo que dice si una ROM sirve para tu televisor
 y de qué caja es.
 
-**Orden de preferencia de región.** En el panel de preferencias (⚙ en la cabecera),
-las seis permutaciones de EU, US y JP; EU/US/JP por defecto. Cambiarlo no vuelve a
+**Orden de preferencia de región.** En la cabecera, tres botones con las regiones
+**en el orden en que se prefieren**: `| EU | US | JP |`. Clicar uno lo pone
+primero y deja los otros dos como estaban —clicar JP en `EU US JP` da `JP EU US`,
+no `JP US EU`—, porque lo que dice el click es «esta primero» y reordenar lo que
+nadie tocó sería contestar otra cosa. El panel de preferencias ofrece además las
+seis permutaciones enteras, para elegirlas de una vez. EU/US/JP por defecto.
+Cambiarlo no vuelve a
 agrupar ni a rehashear nada: la fila de juego lleva las carátulas de todas sus
 regiones como dato, no la que toca enseñar, y lo que hay en `.meta` ya está
 listado, así que el panel simplemente elige otra. Debajo de la carátula se dice de
