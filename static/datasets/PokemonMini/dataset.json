@@ -5,10 +5,13 @@
     "totalFiles": 42,
     "totalCovers": 39,
     "totalGameCovers": 1,
-    "generated": "2026-07-30T10:39:18.146Z"
+    "totalGameCoverUrls": 1,
+    "generated": "2026-07-30T12:24:57.997Z"
   },
   "covers": {
-    "Pokemon Tetris": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Tetris%20(Europe)%20(En%2CJa%2CFr).png"
+    "Pokemon Tetris": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Tetris%20(Europe)%20(En%2CJa%2CFr).png"
+    }
   },
   "list": [
     {
@@ -17,7 +20,8 @@
       "size": 75264,
       "crc": "296DA9BB",
       "md5": "EF8984F9E252298296F373598CA63E7E",
-      "sha1": "03C19D49263DFF65D655D54B89FC4FDECF56D876"
+      "sha1": "03C19D49263DFF65D655D54B89FC4FDECF56D876",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Pichu Bros. Mini (Japan)",
@@ -225,7 +229,7 @@
       "md5": "086EC88930AA624A09D470858CCC9911",
       "sha1": "3EC1E04DE413C22E9034074789FF2C45646EC0AC",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Pinball%20Mini%20(USA%2C%20Europe).png"
     },
     {
@@ -236,6 +240,7 @@
       "md5": "DE1EDFAF924DC6CF48C6D3D789BA79D9",
       "sha1": "5A2927770C1E2C7DF3F8CC80C9252BB1111CA3A6",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(France).png"
     },
     {
@@ -246,6 +251,7 @@
       "md5": "1811BB9F759CA25E60886A8BC06F9018",
       "sha1": "D748F54BB50622858AE65CBA74BA0CC82415FCBC",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(France)%20(GameCube%20Preview).png"
     },
     {
@@ -256,6 +262,7 @@
       "md5": "185A1995DC07E222152B591BFFBE7720",
       "sha1": "7C83682F595DC6EAFC9C438D92EBA7920FF3B2CA",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Germany).png"
     },
     {
@@ -266,6 +273,7 @@
       "md5": "C1F450D01759AFF0A34457408D141F2E",
       "sha1": "7DC61E11B482B873D58657C827E3B166B3882DB2",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(Germany)%20(GameCube%20Preview).png"
     },
     {
@@ -309,7 +317,7 @@
       "md5": "1BB47758E8EA1C5BA39ACF4A1D10C78E",
       "sha1": "9C5FA07CC9F93874B297F759A6C6FD98F6EC6F47",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Puzzle%20Collection%20(USA%2C%20Europe).png"
     },
     {
@@ -385,6 +393,7 @@
       "md5": "A2A2ADD2F368E532EEECEF5566B5FD8E",
       "sha1": "7A8B3F6A3751CD39431D822FA3A8016FFD2D26D8",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Zany%20Cards%20(France).png"
     },
     {
@@ -395,6 +404,7 @@
       "md5": "F974F9CA3A9FBAADCAF4FA1A88B5A763",
       "sha1": "0922E0147FF097E56D5EC98BF66EF050539329FA",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Zany%20Cards%20(Germany).png"
     },
     {
@@ -405,7 +415,7 @@
       "md5": "28DDB09ED326DF90B706AA61A851C732",
       "sha1": "F34909ED7D1C1D432819FF774C0767EBFA42FB84",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Pokemon_Mini/HEAD/Named_Boxarts/Pokemon%20Zany%20Cards%20(USA%2C%20Europe).png"
     },
     {
@@ -414,7 +424,8 @@
       "size": 74419,
       "crc": "68E0DA6F",
       "md5": "0CE0BEAD3EE9911765D3D0EB097EE7E7",
-      "sha1": "F3B3A7E95738033712E5ADB0ACB3B26C8DC2BDB2"
+      "sha1": "F3B3A7E95738033712E5ADB0ACB3B26C8DC2BDB2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Snorlax's Lunch Time (Europe) (GameCube)",

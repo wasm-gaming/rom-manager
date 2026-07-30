@@ -25,7 +25,7 @@
     "test:coverage": "vitest --coverage",
     "dataset:fetch-dat": "node --use-system-ca --use-env-proxy scripts/download-dats.mjs",
     "dataset:fetch-covers": "node --use-system-ca --use-env-proxy scripts/fetch-covers.mjs",
-    "dataset:to-json": "node --use-system-ca --use-env-proxy scripts/build-datasets.mjs --skip-download",
+    "dataset:to-json": "node --use-system-ca --use-env-proxy --import ./scripts/ts-imports.mjs scripts/build-datasets.mjs --skip-download",
     "dataset:json-to-sqlite": "node scripts/json-to-sqlite.mjs",
     "dataset:sample": "node scripts/create-sample-datasets.mjs"
   },

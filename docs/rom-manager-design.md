@@ -182,6 +182,29 @@ corta es ambigua, de modo que el caso común queda legible (`USA`, `Japan-rev1`)
 Sobre los 51 216 juegos de los 23 datasets esto produce 41 540 variantes sin
 ninguna necesitar el sufijo `crc8`.
 
+### Regiones y sistema de vídeo
+
+El DAT nombra decenas de regiones (`Europe`, `USA`, `Japan`, pero también
+`Brazil`, `Scandinavia`, `Hong Kong`) y la aplicación razona en **tres**: EU, US
+y JP. La traducción vive en un único sitio, `src/core/rom-regions.ts`, porque la
+usan a la vez el navegador y el build de datasets.
+
+`World` no es una cuarta región: una release mundial va a las tres a la vez, y
+eso es justo lo que hace útil un orden de preferencia. Sobre las 55 158 entradas
+de los 23 DATs, **8 700 son `World`** y solo 26 no se pueden situar en ninguna
+región; esas se quedan sin ella, porque adivinarla sería peor que no decirla.
+
+El **sistema de vídeo** es el de la propia release y no el de la emisión del
+país, porque lo que importa de una ROM es si es una build de 50 Hz o de 60:
+`Hong Kong` es NTSC —país PAL cuyas consolas iban NTSC-J—, `Brazil` es NTSC
+—PAL-M son 60 Hz— y `Argentina` es PAL —PAL-N son 50— pese a estar en el
+mercado americano.
+
+Cada variante declara por tanto las regiones a las que va y los estándares a los
+que corre. Una release multi-región conserva **los dos** cuando cruza un mercado
+de 50 Hz y otro de 60: `(USA, Europe)` es una entrada en el DAT pero dos builds
+en la práctica, y decir solo uno sería falso.
+
 ### Ficheros de una misma release
 
 Un DAT lista **una entrada por fichero**, no por release. Una misma release
@@ -225,8 +248,9 @@ El paso 4 usa a propósito el mismo saneado que aplica libretro al publicar
 thumbnails, pero **el nombre de la carpeta del juego no coincide con el del
 thumbnail**: libretro nombra las carátulas con el nombre completo del DAT
 (`Final Fantasy VII (Europe) (Disc 1).png`), tags incluidos. La carátula es
-por tanto **por variante**, no por juego, y ya la resuelve entrada a entrada
-`scripts/dat-to-json.mjs`. Compartir el saneado sigue siendo útil porque
+por tanto **de una release**, no de un juego, y ya la resuelve entrada a entrada
+`scripts/dat-to-json.mjs`; como la release es lo que lleva región, de ahí sale
+una carátula por región (ver «Carátulas»). Compartir el saneado sigue siendo útil porque
 garantiza que ningún nombre de carátula introduce caracteres que el sistema de
 ficheros no acepte.
 
@@ -279,24 +303,48 @@ limitación aceptada, ya que el destino es la SD de un MiSTer.
 
 Las carátulas son las de `libretro-thumbnails`. Se publican con el **nombre
 completo del DAT**, tags incluidos, así que una carátula pertenece a una release
-y no a un juego: `Sonic (Japan)` y `Sonic (USA)` no llevan la misma. De ahí dos
-capas, resueltas ambas en el build (`scripts/dat-to-json.mjs`):
+y no a un juego: `Sonic (Japan)` y `Sonic (USA)` no llevan la misma. Y como la
+release es lo que lleva región, lo que un juego guarda es **una carátula por
+región**: EU, US y JP.
+
+Dos capas, resueltas ambas en el build (`scripts/dat-to-json.mjs`):
 
 - **por release**: emparejamiento exacto de nombre, entrada a entrada. Es el
   campo `cover` de cada entrada del dataset.
-- **por juego**: unión por título base (`normalizeGameName`), en el mapa
-  `covers` del dataset. Solo lleva los juegos a los que el emparejamiento
-  exacto no llegó —una carátula publicada de una revisión que este DAT no
-  lista—, así que no duplica nada de lo anterior.
+- **por juego y región**: unión por título base (`normalizeGameName`), en el mapa
+  `covers` del dataset. Solo lleva lo que el emparejamiento exacto no alcanzó
+  —una carátula publicada de una revisión que este DAT no lista—, y solo para las
+  regiones a las que el DAT sí manda el juego, así que no duplica nada de lo
+  anterior. La clave `*` es el último recurso, para un título del que no se pudo
+  situar ninguna carátula en ninguna región: porque sus entradas no traen región,
+  o porque los únicos nombres publicados son de regiones a las que el DAT no lo
+  manda. Sin ella, los juegos cuyo nombre publicado no lleva tag de región —un
+  cuarto de ellos— perderían la carátula que hoy tienen; emitida con más soltura
+  solo repetiría una imagen a la que el navegador ya llega recorriendo regiones.
 
-Sobre los 23 sistemas: 19 153 juegos con carátula por release y 742 más por
-título, o sea **19 895 de 26 548 juegos (74,9 %)**. El mapa por juego son 742
-entradas en total, unos pocos KB.
+Sobre los 23 sistemas: **19 895 de 26 548 juegos con carátula (74,9 %)**, la
+misma cobertura que antes de repartirla por regiones. De ellos, 14 848 tienen
+carátula de una sola región, 2 858 de dos y 984 de las tres; en **3 787** juegos
+las regiones no llevan la misma imagen, que son los juegos donde el orden de
+preferencia cambia lo que se ve. El mapa por juego son 968 títulos y 1 078 URLs,
+unos 185 KB repartidos entre los 23 sistemas, y ninguna de sus entradas es
+inalcanzable.
 
-El navegador elige, para cada juego, la carátula de una release que el usuario
-tenga; si ninguna la tiene, la de una release retail antes que la de una beta o
-un prototipo; y si ninguna release tiene carátula propia, la del juego. La
-elección no depende del orden de iteración.
+Dentro de una región se elige la carátula de una release retail antes que la de
+una beta o un prototipo, y la elección no depende del orden de iteración.
+
+**Qué carátula se enseña.** Primero, entre las regiones a las que van los
+ficheros que el usuario tiene, la primera del orden de preferencia: es la caja
+que tienen, y enseñar la de otra región sería una pequeña mentira. Si ninguna de
+esas tiene carátula, se recorre el orden completo. Y si ninguna región tiene, la
+del juego. Para una release mundial —un solo fichero que va a las tres regiones—
+el orden es lo único que decide, y por eso existe.
+
+**Cuando todas las regiones de un juego resuelven a la misma imagen**, el
+resultado es una carátula *del juego* y no tres idénticas. Ese es el caso de la
+release mundial, un sexto del catálogo, y es lo que evita guardar los mismos
+bytes una vez por región. Con una sola región no se colapsa: un juego publicado
+solo en Japón tiene carátula *de Japón*, y decirlo no cuesta espacio.
 
 **Las imágenes se leen del repositorio, no de `thumbnails.libretro.com`.** Ese
 origen sirve las mismas imágenes pero **sin cabecera
@@ -306,20 +354,34 @@ leer sus bytes; guardar una copia en `.meta/` exige leerlos. La URL es
 verificado en los 23 repositorios. `HEAD` sustituye al nombre de rama porque los
 repositorios no coinciden en él.
 
-Guardar la copia: `<Juego>.<variante>.case.png` cuando la carátula es de esa
-release, `<Juego>.case.png` cuando es la del juego. El segmento de variante
-está exactamente cuando la carátula es propia de la release, y eso es lo que
-evita bajar quince veces la misma imagen para las quince variantes de un juego.
-La extensión sale de la URL y nunca de la respuesta, así que el nombre de una
-carátula ya guardada se conoce sin descargarla. Es el mismo nombre que toma una
-carátula elegida a mano en el editor, de modo que en una biblioteca organizada
-sustituye a la publicada.
+Guardar la copia: `<Juego>.<región>.case.png` cuando la carátula es de una
+región, `<Juego>.case.png` cuando es la del juego. El segmento de región está
+exactamente cuando la carátula pertenece a una, y eso es lo que evita bajar la
+misma imagen una vez por región. La extensión sale de la URL y nunca de la
+respuesta, así que el nombre de una carátula ya guardada se conoce sin
+descargarla. Es el mismo nombre que toma una carátula elegida a mano en el
+editor, de modo que en una biblioteca organizada sustituye a la publicada.
+
+Sobre los 23 sistemas eso son 24 723 ficheros posibles, todos con nombre
+distinto, ninguno con caracteres que exFAT no acepte y el más largo de 130
+caracteres.
 
 **Navegar es lo que puebla `.meta/`**: al abrir un juego se muestra la copia
 local si existe y la remota si no, y en ese caso se baja una copia en segundo
 plano. No hay paso de descarga masiva y no se bajan miles de imágenes de juegos
 que nadie abre. Una descarga bloqueada no es un error: se sigue mostrando la
 imagen remota.
+
+**Un juego que está en la biblioteca guarda todas sus regiones**, no solo la que
+se está viendo. Es lo que distingue un juego inicializado —alguno de sus ficheros
+tiene registro en `.meta/`— de uno que simplemente se ha mirado, y es lo que hace
+que cambiar el orden de preferencia más tarde funcione sin red y sin depender de
+que el proveedor siga ahí. Ocurre al abrir el juego y justo después de guardar su
+metadata, así que sigue siendo la navegación la que puebla `.meta/` y no un paso
+de descarga masiva. Cada carátula se baja por separado, así que una
+descarga bloqueada no impide guardar las demás. Dos regiones que comparten imagen
+se guardan una vez cada una: son ficheros distintos, y que falte uno devolvería
+esa región a la red.
 
 ## Colecciones
 
@@ -366,7 +428,16 @@ En el árbol, un juego solo se distingue por el color del texto: los recuentos y
 el detalle viven en el panel, que es donde hay sitio para leerlos. Allí las
 releases presentes son un badge cada una —qué tienes se lee mejor que cuántas— y
 las ausentes van plegadas, porque el catálogo puede listar quince frente a la
-única que hay en disco.
+única que hay en disco. Cada versión lleva además las regiones a las que va y los
+estándares a los que corre, que es lo que dice si una ROM sirve para tu televisor
+y de qué caja es.
+
+**Orden de preferencia de región.** Un menú en la cabecera del explorador con las
+seis permutaciones de EU, US y JP; EU/US/JP por defecto. Cambiarlo no lee nada de
+disco: la fila de juego lleva las carátulas de todas sus regiones como dato, no
+la que toca enseñar, así que el panel simplemente elige otra. Debajo de la
+carátula se dice de qué región es, porque con seis órdenes posibles la imagen sola
+no lo aclara.
 
 La fila actúa sobre **todos** los ficheros del juego: seleccionarla los
 selecciona, y arrastrar o borrar los mueve o los borra juntos. Como el árbol ya
@@ -380,6 +451,12 @@ carpeta (incluidas colecciones) puede activarse explícitamente ahí si se
 quiere navegarla agrupada. El fichero guarda **solo las excepciones**: una
 carpeta devuelta a su valor por defecto se borra de él, para que no queden
 entradas obsoletas de sistemas renombrados.
+
+El mismo fichero guarda el **orden de preferencia de región** (`regionOrder`),
+que pertenece a la biblioteca y no al navegador: la preferencia es sobre la
+colección que alguien tiene en una tarjeta, y viaja con ella. Como el fichero es
+editable a mano, un orden que no sea una permutación de las tres regiones cae al
+valor por defecto en vez de dejar al navegador sin forma de elegir.
 
 **Qué juegos aparecen en modo wizard.** El explorador enseña el disco, no el
 catálogo: solo se lista un juego si tiene **al menos un fichero presente**.

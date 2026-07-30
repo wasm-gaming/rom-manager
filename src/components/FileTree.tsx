@@ -3,6 +3,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { StorageEntry, StorageNode } from '../services/StorageService';
 import type { MatchStatus } from '../core/rom-matching';
 import type { WizardGame, WizardNode } from '../core/wizard-tree';
+import {
+  DEFAULT_REGION_ORDER,
+  REGION_ORDERS,
+  parseRegionOrder,
+  regionOrderKey,
+  type Region,
+} from '../core/rom-regions';
 
 interface FileTreeProps {
   node: StorageNode;
@@ -28,6 +35,9 @@ interface FileTreeProps {
   onToggleGrouping?: (path: string) => void;
   /** Offered on the same folders as grouping: both need a dataset to work from. */
   onOrganize?: (path: string) => void;
+  /** Order the boxart of a game is preferred in, region by region. */
+  regionOrder?: readonly Region[];
+  onRegionOrderChange?: (order: readonly Region[]) => void;
   /** Progress of a long operation, such as hashing a system to group it. */
   notice?: string;
 }
@@ -114,6 +124,8 @@ export function FileTree({
   onGroupingNeeded,
   onToggleGrouping,
   onOrganize,
+  regionOrder = DEFAULT_REGION_ORDER,
+  onRegionOrderChange,
   notice,
 }: FileTreeProps): JSX.Element {
   const [children, setChildren] = useState<Map<string, StorageEntry[]>>(new Map());
@@ -463,6 +475,25 @@ export function FileTree({
       <div class="file-tree-header">
         <h3>Files</h3>
         <div class="file-tree-actions">
+          {/* A game has a boxart per region, so which one shows is a choice —
+              and for a world release, whose single file ships everywhere, it is
+              the only thing that decides. */}
+          {onRegionOrderChange && (
+            <select
+              class="tree-region-order"
+              value={regionOrderKey(regionOrder)}
+              onChange={(event) =>
+                onRegionOrderChange(parseRegionOrder((event.target as HTMLSelectElement).value))
+              }
+              title="Order boxarts are preferred in"
+            >
+              {REGION_ORDERS.map((order) => (
+                <option key={regionOrderKey(order)} value={regionOrderKey(order)}>
+                  {regionOrderKey(order)}
+                </option>
+              ))}
+            </select>
+          )}
           <button
             onClick={handleCreateFolder}
             disabled={busy}

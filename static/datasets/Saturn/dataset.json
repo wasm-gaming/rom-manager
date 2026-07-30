@@ -4,26 +4,114 @@
     "totalGames": 2668,
     "totalFiles": 2112,
     "totalCovers": 1772,
-    "totalGameCovers": 16,
-    "generated": "2026-07-30T10:39:18.536Z"
+    "totalGameCovers": 34,
+    "totalGameCoverUrls": 35,
+    "generated": "2026-07-30T12:24:58.420Z"
   },
   "covers": {
-    "Bakuretsu Hunter": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Bakuretsu%20Hunter%20(Japan)%20(Disc%201).png",
-    "Can Can Bunny Premiere": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Can%20Can%20Bunny%20Premiere%20(Japan)%20(1M).png",
-    "D": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/D%20(USA).png",
-    "Devil Summoner - Soul Hackers": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Devil%20Summoner%20-%20Soul%20Hackers%20(Japan).png",
-    "FIFA - Die WM-Qualifikation 98": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20Die%20WM-Qualifikation%2098%20(Germany).png",
-    "FIFA - En Route pour la Coupe du Monde 98": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20En%20Route%20pour%20la%20Coupe%20du%20Monde%2098%20(France).png",
-    "FIFA - Rumbo al Mundial 98": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20Rumbo%20al%20Mundial%2098%20(Spain).png",
-    "FIFA Soccer 97": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20Soccer%2097%20(USA).png",
-    "Gale Racer": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Gale%20Racer%20(Japan)%20(En%2CJa)%20(1A).png",
-    "Jikkyou Powerful Pro Yakyuu '95 - Kaimakuban": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Jikkyou%20Powerful%20Pro%20Yakyuu%20'95%20-%20Kaimakuban%20(Japan)%20(2M).png",
-    "Masters - Harukanaru Augusta 3": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Masters%20-%20Harukanaru%20Augusta%203%20(Japan)%20(2M).png",
-    "Puyo Puyo Tsuu": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Puyo%20Puyo%20Tsuu%20(Japan)%20(1M).png",
-    "Real Bout Garou Densetsu": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20(Japan).png",
-    "Riglordsaga": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Riglordsaga%20(Japan)%20(Made%20in%20Japan)%20(1M).png",
-    "Shin Seiki Evangelion - 2nd Impression": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Shin%20Seiki%20Evangelion%20-%202nd%20Impression%20(Japan)%20(Made%20in%20USA).png",
-    "Winning Post EX": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Winning%20Post%20EX%20(Japan)%20(2M).png"
+    "Bakuretsu Hunter": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Bakuretsu%20Hunter%20(Japan)%20(Disc%201).png"
+    },
+    "Battle Stations": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Battle%20Stations%20(USA).png"
+    },
+    "Can Can Bunny Premiere": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Can%20Can%20Bunny%20Premiere%20(Japan)%20(1M).png"
+    },
+    "Clockwork Knight - Pepperouchau's Adventure": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Clockwork%20Knight%20-%20Pepperouchau's%20Adventure%20(USA).png"
+    },
+    "Cyber Speedway": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Cyber%20Speedway%20(Europe)%20(RE).png"
+    },
+    "D": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/D%20(Europe)%20(Disc%20I).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/D%20(USA).png"
+    },
+    "Devil Summoner - Soul Hackers": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Devil%20Summoner%20-%20Soul%20Hackers%20(Japan).png"
+    },
+    "FIFA - Die WM-Qualifikation 98": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20Die%20WM-Qualifikation%2098%20(Germany).png"
+    },
+    "FIFA - En Route pour la Coupe du Monde 98": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20En%20Route%20pour%20la%20Coupe%20du%20Monde%2098%20(France).png"
+    },
+    "FIFA - Road to World Cup 98": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20Road%20to%20World%20Cup%2098%20(USA).png"
+    },
+    "FIFA - Rumbo al Mundial 98": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20Rumbo%20al%20Mundial%2098%20(Spain).png"
+    },
+    "FIFA Soccer 96": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20Soccer%2096%20(USA).png"
+    },
+    "FIFA Soccer 97": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20Soccer%2097%20(USA).png"
+    },
+    "Fighting Vipers": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Fighting%20Vipers%20(USA).png"
+    },
+    "Gale Racer": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Gale%20Racer%20(Japan)%20(En%2CJa)%20(1A).png"
+    },
+    "In the Hunt": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/In%20the%20Hunt%20(USA).png"
+    },
+    "Jikkyou Powerful Pro Yakyuu '95 - Kaimakuban": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Jikkyou%20Powerful%20Pro%20Yakyuu%20'95%20-%20Kaimakuban%20(Japan)%20(2M).png"
+    },
+    "Loaded": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Loaded%20(Europe)%20(En%2CFr%2CDe).png"
+    },
+    "Masters - Harukanaru Augusta 3": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Masters%20-%20Harukanaru%20Augusta%203%20(Japan)%20(2M).png"
+    },
+    "Puyo Puyo Tsuu": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Puyo%20Puyo%20Tsuu%20(Japan)%20(1M).png"
+    },
+    "Real Bout Garou Densetsu": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Real%20Bout%20Garou%20Densetsu%20(Japan).png"
+    },
+    "Revolution X - Music Is the Weapon": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Revolution%20X%20-%20Music%20Is%20the%20Weapon%20(USA).png"
+    },
+    "Riglordsaga": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Riglordsaga%20(Japan)%20(Made%20in%20Japan)%20(1M).png"
+    },
+    "Road _ Track Presents - The Need for Speed": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Road%20_%20Track%20Presents%20-%20The%20Need%20for%20Speed%20(USA).png"
+    },
+    "Shin Seiki Evangelion - 2nd Impression": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Shin%20Seiki%20Evangelion%20-%202nd%20Impression%20(Japan)%20(Made%20in%20USA).png"
+    },
+    "Shining Wisdom": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Shining%20Wisdom%20(USA).png"
+    },
+    "Shining the Holy Ark": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Shining%20the%20Holy%20Ark%20(Japan)%20(1M).png"
+    },
+    "Street Fighter Alpha - Warriors' Dreams": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Street%20Fighter%20Alpha%20-%20Warriors'%20Dreams%20(USA).png"
+    },
+    "Striker 96": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Striker%2096%20(USA).png"
+    },
+    "Tomb Raider": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Tomb%20Raider%20(USA).png"
+    },
+    "Virtua Cop": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Virtua%20Cop%20(Japan).png"
+    },
+    "Virtua Cop 2": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Virtua%20Cop%202%20(Japan)%20(2M).png"
+    },
+    "Winning Post EX": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Winning%20Post%20EX%20(Japan)%20(2M).png"
+    },
+    "World Cup Golf - Professional Edition": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/World%20Cup%20Golf%20-%20Professional%20Edition%20(USA).png"
+    }
   },
   "list": [
     {
@@ -374,6 +462,7 @@
       "md5": "14E4B7E5A8B1BF9467CF7C3E28246283",
       "sha1": "95EFEB806A50321ED293D43EA8414A839344E4CD",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Alien%20Trilogy%20(Germany).png"
     },
     {
@@ -527,6 +616,7 @@
       "md5": "7AFEFC022D44FAC1A8C1D146649CD5B8",
       "sha1": "94A48D2427777C67C8A8F01FCD576F7FB7D1ED53",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Andretti%20Racing%20(France).png"
     },
     {
@@ -537,6 +627,7 @@
       "md5": "3B8C8F5386EF92043384F9303AFF442F",
       "sha1": "650C95E35D258D6886E9CDB8048195A6916B4D6A",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Andretti%20Racing%20(Germany).png"
     },
     {
@@ -941,6 +1032,7 @@
       "md5": "3EEE7727E2DC2DAE12913B905559E886",
       "sha1": "AFC434251A9A1B1C974DB56FCF115BF4C152893D",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Atlantis%20-%20The%20Lost%20Tales%20(France)%20(Disc%201).png"
     },
     {
@@ -951,6 +1043,7 @@
       "md5": "039B34AE0503365648399BA96535C1D0",
       "sha1": "284C9EE91E8F12FF58A5E497A9595F3569952E28",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Atlantis%20-%20The%20Lost%20Tales%20(France)%20(Disc%202).png"
     },
     {
@@ -1564,6 +1657,7 @@
       "md5": "265EFE547100557997CAC4E70513174A",
       "sha1": "FC183DBBC972FE7514ADA46013ECD25FB3144087",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Blam!%20Machinehead%20(France).png"
     },
     {
@@ -1574,6 +1668,7 @@
       "md5": "DC215FC39E5F6423241220AFCE5E8AE3",
       "sha1": "18F8C8FEEDB96E5ECAF369A5B87BCBD8EEBCD235",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Blam!%20Machinehead%20(Germany).png"
     },
     {
@@ -1639,6 +1734,7 @@
       "md5": "F4BB6DDF2C88C55804BAF725180C1ABC",
       "sha1": "9D9546854C09F38C09B665F460D4609A5F19A174",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Blazing%20Dragons%20(France).png"
     },
     {
@@ -1649,6 +1745,7 @@
       "md5": "AC06E224B666050B7A5A5DF851EAA02F",
       "sha1": "575D203EF937308AB5C513568BFA6746C526B061",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Blazing%20Dragons%20(Germany).png"
     },
     {
@@ -2620,6 +2717,7 @@
       "md5": "942644A6D3E1F0C4BBA14AD62265F86D",
       "sha1": "73B5DB33173935562FD15E6376DD390FAECFFA1E",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Command%20_%20Conquer%20(France)%20(Disc%201)%20(GDI).png"
     },
     {
@@ -2630,6 +2728,7 @@
       "md5": "132BB2552A19233520EE5303D57F5222",
       "sha1": "A442A068BE0FCB5991001FA90189D9C1BCBE8104",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Command%20_%20Conquer%20(France)%20(Disc%202)%20(NOD).png"
     },
     {
@@ -2684,6 +2783,7 @@
       "md5": "C1E358BECA0B3E9F1F9F3B4DEFFEE23A",
       "sha1": "4642BEC8C02A1375B3E6C4FEC60574C0569C1879",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Command%20_%20Conquer%20-%20Teil%201%20-%20Der%20Tiberiumkonflikt%20(Germany)%20(Disc%201)%20(GDI).png"
     },
     {
@@ -2694,6 +2794,7 @@
       "md5": "08E42994949042DE057AD48F75ECCE15",
       "sha1": "A4304247DB920750A6A3726C8330051E645B0368",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Command%20_%20Conquer%20-%20Teil%201%20-%20Der%20Tiberiumkonflikt%20(Germany)%20(Disc%202)%20(NOD).png"
     },
     {
@@ -3018,6 +3119,7 @@
       "md5": "62A5FA67FB02F191A6FC1DA441922B60",
       "sha1": "3C06B46D8D424329396008053CB3B441E20BA6B3",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Crow%2C%20The%20-%20City%20of%20Angels%20(Germany).png"
     },
     {
@@ -3072,6 +3174,7 @@
       "md5": "158C7CDF948693B88497CA03F11BFC81",
       "sha1": "52E5B971D5FA16B7D9ABED8BB81C0CFFC656A603",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Crusader%20-%20No%20Remorse%20(France).png"
     },
     {
@@ -3082,6 +3185,7 @@
       "md5": "5616CB3A944395BFCBBAB334D1E3E28A",
       "sha1": "8C95DE34029632D5CAF9649C7696EA2BA72A7096",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Crusader%20-%20No%20Remorse%20(Germany).png"
     },
     {
@@ -3294,7 +3398,8 @@
       "crc": "FE3BF0D0",
       "md5": "DD6924D73AC5AC28144601742DFCFDDE",
       "sha1": "C8CB4959DA29B2445F3C9722A243EACE2F9F31A7",
-      "region": "France"
+      "region": "France",
+      "videoStandard": "PAL"
     },
     {
       "name": "D (France) (Disc 2)",
@@ -3303,7 +3408,8 @@
       "crc": "4BFE3CC9",
       "md5": "C97D3A73789854BABE51E9D16275F538",
       "sha1": "FACB4DF9FB927443778D8AA3BB6F239173163C6D",
-      "region": "France"
+      "region": "France",
+      "videoStandard": "PAL"
     },
     {
       "name": "D (Germany) (Disc 1)",
@@ -3312,7 +3418,8 @@
       "crc": "622F67CE",
       "md5": "590AE7130C9A51A459B4BB6268E1E45E",
       "sha1": "EF8EC9DE9C9E852D9DC83E8050B313A3003E8E8E",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "D (Germany) (Disc 2)",
@@ -3321,7 +3428,8 @@
       "crc": "CEDAE18D",
       "md5": "7137BA522A95405F640B54242D3754F3",
       "sha1": "DC0B848B8295C2B8FAF1678EE1E820092DC10DCD",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "D (USA) (Disc 1)",
@@ -4077,6 +4185,7 @@
       "md5": "0FE1353ADF1B615650E73C7749FFBCE9",
       "sha1": "AF9043729D3B96F44BA0057DCB7D8801868F32B6",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Defcon%205%20(France).png"
     },
     {
@@ -4738,6 +4847,7 @@
       "md5": "7EC9E46F60F66B0FD20FD52E752641C0",
       "sha1": "37F8ADDEC925F595DEBB93E2B68B4C0A2253D0BC",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Dragon%20Ball%20Z%20-%20La%20Grande%20Legende%20des%20Boules%20de%20Cristal%20(France%2C%20Spain).png"
     },
     {
@@ -5392,7 +5502,7 @@
       "md5": "32B470991CD832D9492F61CF6AD273F8",
       "sha1": "BB8C221DB7A30A21B3C3B7EC53905887A98EEE3B",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Eternal Melody (Japan)",
@@ -5587,7 +5697,8 @@
       "crc": "1CCED1E5",
       "md5": "A221EBA7A5301D06B102174FB4B16B8F",
       "sha1": "A9B08D7ED5A906D85F2BC272888689D5FA958EDA",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "FIFA - En Route pour la Coupe du Monde 98 (France) (En,Fr,De,Es,It,Nl,Sv)",
@@ -5596,7 +5707,8 @@
       "crc": "06718679",
       "md5": "5FE633AF0EBA44CD84A2E4FEE24458E4",
       "sha1": "2798E0C5DD834039BD65B089A59B96B9810DC68E",
-      "region": "France"
+      "region": "France",
+      "videoStandard": "PAL"
     },
     {
       "name": "FIFA - Road to World Cup 98 (Europe) (En,Fr,De,Es,It,Nl,Sv)",
@@ -5616,6 +5728,7 @@
       "md5": "2580799CBCC7D9946627D04772EB7DAF",
       "sha1": "57041E23E7CAA97D8CA7AFD5713E3B61B39FE495",
       "region": "Italy",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%20-%20Road%20to%20World%20Cup%2098%20(Italy)%20(En%2CFr%2CDe%2CEs%2CIt%2CNl%2CSv).png"
     },
     {
@@ -5635,7 +5748,8 @@
       "crc": "A7D064E0",
       "md5": "1F77834CE4EC04EDC4C5C142FFF535D9",
       "sha1": "CCA646316C004C1DB6017DAC1449D0E862D63298",
-      "region": "Spain"
+      "region": "Spain",
+      "videoStandard": "PAL"
     },
     {
       "name": "FIFA 97 (Europe) (En,Fr,De,Es,It,Sv)",
@@ -5656,6 +5770,7 @@
       "md5": "D7927C3E8E9E84090202B9D6A2B47CA1",
       "sha1": "86BB35C46CCFB5D3632FD10A4800D8DEA9AB67D0",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%2097%20(France)%20(En%2CFr%2CDe%2CEs%2CIt%2CSv).png"
     },
     {
@@ -5666,6 +5781,7 @@
       "md5": "790A3F3B5207EABA5AA82882D20C579F",
       "sha1": "5FAEBF0D2E4FF63E6BF8794C343CDA07681465BA",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/FIFA%2097%20(Germany)%20(En%2CFr%2CDe%2CEs%2CIt%2CSv).png"
     },
     {
@@ -6023,6 +6139,7 @@
       "md5": "433E13831715100BC12D296A1B611795",
       "sha1": "4CB1491104D9D11CA1EC9B7758912D0F6FFCB849",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Firestorm%20-%20Thunderhawk%202%20(Germany).png"
     },
     {
@@ -8148,6 +8265,7 @@
       "md5": "919C68D6731378F9D499DD6AF2CF8C71",
       "sha1": "C0D470F612C0F721BE3E8553A7DD642507E848A8",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Horde%2C%20The%20(France).png"
     },
     {
@@ -8158,6 +8276,7 @@
       "md5": "45C3C8BB09D1808010B4294849F6DC3F",
       "sha1": "4E11EF4FF7954DEEE519698243658C73730EA124",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Horde%2C%20The%20(Germany).png"
     },
     {
@@ -9145,6 +9264,7 @@
       "md5": "664C446589AC34A1B26D9690FE30A5DA",
       "sha1": "77B2BA85A95AEB46DF2826AD3DDF055C84E1249B",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Jonah%20Lomu%20Rugby%20(France).png"
     },
     {
@@ -9679,6 +9799,7 @@
       "md5": "69032B111AE82857E257E36C913B70BC",
       "sha1": "22FC3AE78EDD717D25B5B4501D15791A503A010F",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Krazy%20Ivan%20(Germany).png"
     },
     {
@@ -10770,6 +10891,7 @@
       "md5": "8C16865971DB1A403A1F414E8029649F",
       "sha1": "614C367718D257A0FDD9984FB55EA2C684BA1933",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Manoir%20des%20Ames%20Perdues%2C%20Le%20(France).png"
     },
     {
@@ -10780,6 +10902,7 @@
       "md5": "9D7E11B2F958B06CEA2E106E55BC3C1E",
       "sha1": "9007B2B2A19A2F298537BA0185E1C111C529DF9D",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Mansion%20de%20las%20Almas%20Ocultas%2C%20La%20(Spain).png"
     },
     {
@@ -11793,6 +11916,7 @@
       "md5": "D36751DE1D195BBD5F36A2EF9426C695",
       "sha1": "55A552DC48ABC0D5A4470DE255A60F506D8EF0BB",
       "region": "Taiwan",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Myst%20(Taiwan).png"
     },
     {
@@ -11856,6 +11980,7 @@
       "md5": "DA06B292C4765D00FD1C5DFA5CD4D391",
       "sha1": "3092AFE0280CF6FEE8E12E8D96C16D5342B299C7",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Mystery%20Mansion%20-%20Das%20Haus%20der%20verlorenen%20Seelen%20(Germany).png"
     },
     {
@@ -11877,6 +12002,7 @@
       "md5": "CB73F0A65BB0424BAFC1E46D6EA3D4D5",
       "sha1": "CAD491B8C05FF196395D6DD34E7704EBF2AFC64F",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/NASCAR%2098%20(France).png"
     },
     {
@@ -11887,6 +12013,7 @@
       "md5": "8E1AC90BFD8F21942EC3F37D03014FCF",
       "sha1": "8E51C864BFE7BCB5D00284E9FC8B6A26A8E4DFD6",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/NASCAR%2098%20(Germany).png"
     },
     {
@@ -12181,6 +12308,7 @@
       "md5": "B17535F8B29A8C8FBDC27A6037379CCF",
       "sha1": "6527984DC97E9B49F14E5707E215858B903A17D1",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/NHL%2097%20(Germany).png"
     },
     {
@@ -12867,6 +12995,7 @@
       "md5": "AC353916CEDAECD31448E7B2430A9807",
       "sha1": "9CF34197B60020C6F2D973E1150ECA3031C49A97",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Olympic%20Soccer%20(Germany).png"
     },
     {
@@ -14653,6 +14782,7 @@
       "md5": "95F786CB1FBEAF019F86DE0DF00BE0E0",
       "sha1": "811E9D672269D4273D00BD1303F16A7C73AB8EEC",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Revolution%20X%20-%20Music%20Is%20the%20Weapon%20(Germany)%20(5S).png"
     },
     {
@@ -14768,6 +14898,7 @@
       "md5": "F89F176E02D86063C6185E6C66BA34F7",
       "sha1": "7D033A09BFB43ED49A4B5211B670DD488D2CE9BB",
       "region": "Brazil",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Riven%20-%20A%20Sequencia%20de%20Myst%20(Brazil)%20(Disc%201).png"
     },
     {
@@ -14778,6 +14909,7 @@
       "md5": "9C47C350A829469567A45643D5571C79",
       "sha1": "64709467B021A667A9CECB1167C24BCD5EA764BC",
       "region": "Brazil",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Riven%20-%20A%20Sequencia%20de%20Myst%20(Brazil)%20(Disc%202).png"
     },
     {
@@ -14788,6 +14920,7 @@
       "md5": "E5625E05C4E386DDF906BB3C8644188D",
       "sha1": "DAA5E2515D1CF33E5B10A4D789361B704E1007B5",
       "region": "Brazil",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Riven%20-%20A%20Sequencia%20de%20Myst%20(Brazil)%20(Disc%203).png"
     },
     {
@@ -14798,6 +14931,7 @@
       "md5": "6A41C4F0AF1437E7887BCBAFBB7BBA61",
       "sha1": "714B8A00E2D11806D1385D6878BAA3DC486D5E87",
       "region": "Brazil",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Riven%20-%20A%20Sequencia%20de%20Myst%20(Brazil)%20(Disc%204).png"
     },
     {
@@ -15506,6 +15640,7 @@
       "md5": "D6AE5A6D90FDB8B5507078566184B4E2",
       "sha1": "72E0FF5C5EB301CA6215AABA8FF105B88E47BCF8",
       "region": "Taiwan",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Sanguozhi%20IV%20(Taiwan).png"
     },
     {
@@ -15516,6 +15651,7 @@
       "md5": "11163823B23EA4B1E71753C7271554CF",
       "sha1": "E08A725BDE9EBFB0D7A7BEB0BDEB6406EB89CD77",
       "region": "Taiwan",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Sanguozhi%20V%20(Taiwan).png"
     },
     {
@@ -15526,6 +15662,7 @@
       "md5": "D027C5C1840AE4DA2C78B63B0092E6F8",
       "sha1": "3725A6E871691AEED317CB9E6392CFDCE2C2D895",
       "region": "Taiwan",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Sanguozhi%20Yingjiezhuan%20(Taiwan).png"
     },
     {
@@ -16079,7 +16216,8 @@
       "size": 259467936,
       "crc": "06B821C4",
       "md5": "6270284AF9958828414E121876393EFF",
-      "sha1": "BF58FA7CBA78DCFDDC9B7B3AA525441FD75A3119"
+      "sha1": "BF58FA7CBA78DCFDDC9B7B3AA525441FD75A3119",
+      "videoStandard": "PAL"
     },
     {
       "name": "Sega Flash Vol. 3 (UK)",
@@ -16087,7 +16225,8 @@
       "size": 414116640,
       "crc": "44A8F531",
       "md5": "1A6E15A5E2E5F55F88AA71926E0D33B2",
-      "sha1": "2161C2DCE6D9723B71AE734086727A141DEABEA6"
+      "sha1": "2161C2DCE6D9723B71AE734086727A141DEABEA6",
+      "videoStandard": "PAL"
     },
     {
       "name": "Sega Flash Vol. 3 (UK) (Rev A)",
@@ -16095,7 +16234,8 @@
       "size": 414142512,
       "crc": "3014AD30",
       "md5": "73FFB40B4DC4B458CC76FB331584891A",
-      "sha1": "2AC1B05038E1B3F58A3DF93AA43F29C7EA6BA125"
+      "sha1": "2AC1B05038E1B3F58A3DF93AA43F29C7EA6BA125",
+      "videoStandard": "PAL"
     },
     {
       "name": "Sega Flash Vol. 4 (UK)",
@@ -16103,7 +16243,8 @@
       "size": 451743936,
       "crc": "0B0BED86",
       "md5": "78573FD965D83CA2E8645DD2D5C5F8C6",
-      "sha1": "9DE9C72EFBCCA1104954D40C196BA12B5FC8A46C"
+      "sha1": "9DE9C72EFBCCA1104954D40C196BA12B5FC8A46C",
+      "videoStandard": "PAL"
     },
     {
       "name": "Sega Flash Vol. 5 (Europe)",
@@ -16121,7 +16262,8 @@
       "size": 498026592,
       "crc": "696965E3",
       "md5": "77BB480BB8FAF8C43CBDB3E5A990493F",
-      "sha1": "394E55B92D7D337F40373A336F44517A248C4F3F"
+      "sha1": "394E55B92D7D337F40373A336F44517A248C4F3F",
+      "videoStandard": "PAL"
     },
     {
       "name": "Sega Flash Vol. 7 (UK)",
@@ -16129,7 +16271,8 @@
       "size": 566338080,
       "crc": "0767D4B5",
       "md5": "F4B742BC07834AA797EEE8737930047F",
-      "sha1": "EEFB5D238F9D504BEECFCFDADF13B7346965BCD2"
+      "sha1": "EEFB5D238F9D504BEECFCFDADF13B7346965BCD2",
+      "videoStandard": "PAL"
     },
     {
       "name": "Sega International Victory Goal (Japan) (5M)",
@@ -16149,7 +16292,8 @@
       "crc": "E0711279",
       "md5": "4E93508C1B0B16D91C7F33B37FA9F3D2",
       "sha1": "9511957E65692E7E19A8A46C814DA786442EEEC2",
-      "region": "Finland"
+      "region": "Finland",
+      "videoStandard": "PAL"
     },
     {
       "name": "Sega Rally Championship (Europe) (Made in USA)",
@@ -16320,7 +16464,7 @@
       "md5": "2FA3510087711C28DBDADBB4DC797936",
       "sha1": "3D6E207E89A0560E9D46C3B703E14EE6A2BF1257",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sega Worldwide Soccer '97 (USA)",
@@ -16779,6 +16923,7 @@
       "md5": "E58B4A35AF47D68EB7FDD48973B8EFE5",
       "sha1": "CE1DB88A2253E4A6751B52CAEB557E2AB63185FB",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Shellshock%20(France).png"
     },
     {
@@ -16789,6 +16934,7 @@
       "md5": "4D170816552B7098ED576E4D09E06429",
       "sha1": "C06047E11B7FBCF631AE24AB356453BCE3453F30",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Shellshock%20(Germany).png"
     },
     {
@@ -17977,6 +18123,7 @@
       "md5": "A5FEE5197C42620557B0F5DADD335710",
       "sha1": "9202A7CC69F60E2D6BFDCBB2F077165C44C35B46",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Soviet%20Strike%20(France).png"
     },
     {
@@ -17987,6 +18134,7 @@
       "md5": "679C617921CE950B2AD0CFDF24F4BE22",
       "sha1": "DB439BEA450C9FC20DC3A5511BF22ED76700263D",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Soviet%20Strike%20(Germany).png"
     },
     {
@@ -18019,7 +18167,7 @@
       "md5": "872343FF0C64CFE079D21CBD12CDB0A3",
       "sha1": "2C9620DA3C0FAAFE5955CF12586E35BBF1DF7E69",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Space Hulk - Vengeance of the Blood Angels (Europe)",
@@ -22204,6 +22352,7 @@
       "md5": "33453A4996B301426216AE9A284628F3",
       "sha1": "6E62137D3B69192A215DCFDBF309B4BAD41A87A7",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/World%20Cup%20Golf%20-%20Professional%20Edition%20(France).png"
     },
     {
@@ -22214,6 +22363,7 @@
       "md5": "60B25F342EAF495238689B6EE0AAB7A1",
       "sha1": "B14F915A44FB1428D088862673DBD3D9DD3DB14C",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/World%20Cup%20Golf%20-%20Professional%20Edition%20(Germany)%20(Rev%20A).png"
     },
     {
@@ -22463,6 +22613,7 @@
       "md5": "E1D631CA2AA654BFEBA3FFE7DEE85488",
       "sha1": "6084CC79B94C3AC505D0177C5482AC590587B58D",
       "region": "Taiwan",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Saturn/HEAD/Named_Boxarts/Xianjian%20Qixiazhuan%20(Taiwan).png"
     },
     {

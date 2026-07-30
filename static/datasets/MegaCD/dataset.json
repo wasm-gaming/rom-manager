@@ -4,21 +4,62 @@
     "totalGames": 544,
     "totalFiles": 467,
     "totalCovers": 393,
-    "totalGameCovers": 11,
-    "generated": "2026-07-30T10:39:18.403Z"
+    "totalGameCovers": 16,
+    "totalGameCoverUrls": 19,
+    "generated": "2026-07-30T12:24:58.281Z"
   },
   "covers": {
-    "A-X-101": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/A-X-101%20(USA)%20(RE).png",
-    "Bloodshot": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Bloodshot%20(Europe).png",
-    "Cadillacs and Dinosaurs - The Second Cataclysm": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Cadillacs%20and%20Dinosaurs%20-%20The%20Second%20Cataclysm%20(USA).png",
-    "Championship Soccer '94": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Championship%20Soccer%20'94%20(USA).png",
-    "Dune": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Dune%20(USA).png",
-    "FIFA International Soccer": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/FIFA%20International%20Soccer%20(USA).png",
-    "Flink": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Flink%20(USA).png",
-    "Sensible Soccer": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Sensible%20Soccer%20(Europe).png",
-    "Syndicate": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Syndicate%20(Europe).png",
-    "Theme Park": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Theme%20Park%20(Europe).png",
-    "World Cup USA '94": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/World%20Cup%20USA%20'94%20(USA).png"
+    "A-X-101": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/A-X-101%20(USA)%20(RE).png"
+    },
+    "Bloodshot": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Bloodshot%20(Europe).png"
+    },
+    "Cadillacs and Dinosaurs - The Second Cataclysm": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Cadillacs%20and%20Dinosaurs%20-%20The%20Second%20Cataclysm%20(USA).png"
+    },
+    "Championship Soccer '94": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Championship%20Soccer%20'94%20(USA).png"
+    },
+    "Dracula Unleashed": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Dracula%20Unleashed%20(Europe).png"
+    },
+    "Dragon's Lair": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Dragon's%20Lair%20(Europe).png"
+    },
+    "Dune": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Dune%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Dune%20(USA).png"
+    },
+    "Dungeon Master II - Skullkeep": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Dungeon%20Master%20II%20-%20Skullkeep%20(USA)%20(RE3).png"
+    },
+    "FIFA International Soccer": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/FIFA%20International%20Soccer%20(USA).png"
+    },
+    "Flink": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Flink%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Flink%20(USA).png"
+    },
+    "Sensible Soccer": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Sensible%20Soccer%20(Europe).png"
+    },
+    "Sonic CD": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Sonic%20CD%20(USA).png"
+    },
+    "Syndicate": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Syndicate%20(Europe).png"
+    },
+    "Theme Park": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Theme%20Park%20(Europe).png"
+    },
+    "Thunderhawk": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Thunderhawk%20(Europe).png"
+    },
+    "World Cup USA '94": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/World%20Cup%20USA%20'94%20(Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/World%20Cup%20USA%20'94%20(USA).png"
+    }
   },
   "list": [
     {
@@ -1426,6 +1467,7 @@
       "md5": "DF763F8AB7631DB4AF05DE2A1BBF5193",
       "sha1": "1F8E22AC1311032AB70F0DB1B4127114FEE0D3C8",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Fahrenheit%20(France).png"
     },
     {
@@ -1916,6 +1958,7 @@
       "md5": "D1E0F4AA95BCA042FB9EAD7BB17C396D",
       "sha1": "1193FB622315CFA70B67AB95737BB0A7391FA0ED",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Jurassic%20Park%20(France).png"
     },
     {
@@ -1926,6 +1969,7 @@
       "md5": "43DD6FAF6A1EC77E3BBC8743F23643CF",
       "sha1": "3887B8D3EC77E12EC4FF14FB8500558B9230B5E9",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Jurassic%20Park%20(Germany).png"
     },
     {
@@ -1947,6 +1991,7 @@
       "md5": "2A505BEF7B5962B5ABEDBD9B6566B0E1",
       "sha1": "6185B291C108F3C1D6304B38936E534358B7A6F7",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Jurassic%20Park%20(Spain).png"
     },
     {
@@ -2719,6 +2764,7 @@
       "md5": "E923E3B57FD4E3DCE184E01830FABA01",
       "sha1": "5A1798C472A6016124DFF7FE9997C9DB20D9C896",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Night%20Trap%20(France)%20(Disc%201).png"
     },
     {
@@ -2729,6 +2775,7 @@
       "md5": "49B65CA593BA15A9E892E93A070D6843",
       "sha1": "A83617ABE23A39F95BAC11E93F6BE912514A4502",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Night%20Trap%20(France)%20(Disc%202).png"
     },
     {
@@ -4448,6 +4495,7 @@
       "md5": "945D37549F11012247E5B064B161340D",
       "sha1": "19BB54E5AF096AE321AF5A02C9E2741CB8C992C4",
       "region": "Brazil",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Surgical%20Strike%20(Brazil)%20(Sega%20CD%2032X).png"
     },
     {
@@ -4675,6 +4723,7 @@
       "md5": "343654408A1D08FEB9EF93148057F2E5",
       "sha1": "F4B1436FA717CC306B2B208C04172C7BBC039AAE",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Tomcat%20Alley%20(France).png"
     },
     {
@@ -4685,6 +4734,7 @@
       "md5": "FC172242B78462CD9652941681F300DA",
       "sha1": "767D67D9C599205B208ACA2FC19F6C6B2ADC2162",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Tomcat%20Alley%20(Germany).png"
     },
     {
@@ -4706,6 +4756,7 @@
       "md5": "9BA0A5854897A2BBD8A6EE7E859D620E",
       "sha1": "DE9EF3A5C24C946F604771338D6861390551962C",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Mega-CD_-_Sega_CD/HEAD/Named_Boxarts/Tomcat%20Alley%20(Spain).png"
     },
     {

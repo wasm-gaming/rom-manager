@@ -13,16 +13,22 @@
  * game-level layer, which the application falls back to when a release has no
  * boxart of its own.
  *
- * The base title comes from the application's own `normalizeGameName`, imported
- * rather than reimplemented: the same key groups the games in the browser, names
- * the folders on disk and looks up the boxarts here, and two implementations of
- * it would eventually disagree.
+ * That second layer is kept **by region**, because a game has one boxart per
+ * region and borrowing the European box for a Japanese release would be as
+ * wrong as showing none. A published name that carries no region tag — a quarter
+ * of them do not — goes under `*` and stands for the whole game.
+ *
+ * The base title and the region both come from the application's own functions,
+ * imported rather than reimplemented: the same key groups the games in the
+ * browser, names the folders on disk and looks up the boxarts here, and two
+ * implementations of either would eventually disagree.
  */
 
 import fs from 'fs';
 import path from 'path';
 import { boxartUrl } from './systems.mjs';
 import { normalizeGameName, parseGameName, sanitizeName } from '../src/core/rom-grouping.ts';
+import { ANY_REGION, REGIONS, regionsOf, videoStandardsOf } from '../src/core/rom-regions.ts';
 
 /**
  * Parse clrmamepro DAT format with balanced parenthesis matching
@@ -91,7 +97,6 @@ function parseDat(datContent) {
             const regionMatch = gameBlock.match(/\bregion\s+"([^"]+)"/);
             if (regionMatch) {
               game.region = regionMatch[1];
-              game.videoStandard = inferVideoStandard(game.region);
             }
             
             // Extract ROMs. Game and ROM names may themselves contain parentheses,
@@ -133,17 +138,18 @@ function parseDat(datContent) {
 }
 
 /**
- * Infer the television standard from known DAT regions. Multi-region ROMs
- * retain every applicable standard rather than guessing a single one.
+ * Region names of an entry, as the application reads them: the tags of the name
+ * first, and the DAT's own `region` field only when the name carries none.
+ *
+ * That order matters because the field is unreliable — missing for a third of
+ * the NES entries and never carrying `World` — while the name almost always has
+ * a region tag.
  */
-function inferVideoStandard(region) {
-  const normalized = region.toLowerCase();
-  const standards = [];
+function datRegionsOf(game) {
+  const { regions } = parseGameName(game.name);
+  if (regions.length > 0) return regions;
 
-  if (/europe|australia|new zealand/.test(normalized)) standards.push('PAL');
-  if (/usa|canada|japan|korea|asia/.test(normalized)) standards.push('NTSC');
-
-  return standards.length > 0 ? standards.join(', ') : undefined;
+  return game.region ? [game.region] : [];
 }
 
 /**
@@ -174,9 +180,12 @@ function outranks(name, current) {
  * Read a scraped covers file into the two lookups the join needs: one keyed by
  * the published name, for the exact match, and one keyed by base title, for the
  * game-level fallback.
+ *
+ * The candidates of a title keep the regions their name claims, because the
+ * fallback is resolved region by region.
  */
 function loadCovers(coversFile) {
-  if (!coversFile) return { byName: new Map(), byGame: new Map() };
+  if (!coversFile) return { byName: new Map(), byTitle: new Map(), boxart: () => undefined };
 
   const covers = JSON.parse(fs.readFileSync(coversFile, 'utf-8'));
   const repository = covers?.meta?.repository;
@@ -186,22 +195,69 @@ function loadCovers(coversFile) {
   }
 
   const byName = new Map();
-  const byGame = new Map();
+  const byTitle = new Map();
 
   for (const name of covers.list) {
     if (typeof name !== 'string' || name.length === 0) continue;
 
     byName.set(name, boxartUrl(repository, name));
 
-    const game = normalizeGameName(name);
-    const chosen = byGame.get(game);
-    if (!chosen || outranks(name, chosen)) byGame.set(game, name);
+    const title = normalizeGameName(name);
+    const candidates = byTitle.get(title);
+    const candidate = { name, regions: regionsOf(parseGameName(name).regions) };
+
+    if (candidates) candidates.push(candidate);
+    else byTitle.set(title, [candidate]);
   }
 
-  return {
-    byName,
-    byGame: new Map([...byGame].map(([game, name]) => [game, boxartUrl(repository, name)])),
-  };
+  return { byName, byTitle, boxart: (name) => boxartUrl(repository, name) };
+}
+
+/**
+ * Best published boxart of a title for one region, or for the game as a whole
+ * when no region is asked for.
+ */
+function bestCover(candidates, region) {
+  let best;
+
+  for (const candidate of candidates) {
+    if (region && !candidate.regions.includes(region)) continue;
+    if (!best || outranks(candidate.name, best)) best = candidate.name;
+  }
+
+  return best;
+}
+
+/**
+ * The game-level boxarts of one title: what entry-by-entry matching could not
+ * reach, and nothing more.
+ *
+ * A region is filled only when the DAT actually ships that title there and no
+ * matched release of it already covers the region.
+ *
+ * The `*` entry is the last resort, for a title with no boxart placed in any
+ * region at all — because its entries carry no region, or because the only
+ * published names are of regions the DAT does not ship it to. Without it the
+ * games whose published name has no region tag, a quarter of them, would lose
+ * the cover they have today; with it emitted any more freely it would only
+ * repeat a boxart the browser already reaches by falling through the regions.
+ */
+function gameCoversOf(entry, candidates, boxart) {
+  const covers = {};
+
+  for (const region of REGIONS) {
+    if (!entry.regions.has(region) || entry.covered.has(region)) continue;
+
+    const name = bestCover(candidates, region);
+    if (name) covers[region] = boxart(name);
+  }
+
+  if (!entry.matched && Object.keys(covers).length === 0) {
+    const name = bestCover(candidates);
+    if (name) covers[ANY_REGION] = boxart(name);
+  }
+
+  return covers;
 }
 
 async function main() {
@@ -235,14 +291,31 @@ async function main() {
 
     // Keep every ROM once. The application builds its lookup indexes in IndexedDB.
     const filesByCrc = new Map();
-    /** Base titles the DAT lists, and whether one of their releases got a boxart. */
-    const gameCovered = new Map();
+    /**
+     * Base titles the DAT lists: the regions they ship to, the regions a matched
+     * release already covers, and whether any release was matched at all.
+     */
+    const titles = new Map();
 
     games.forEach(game => {
       const cover = covers.byName.get(sanitizeName(game.name));
       const title = normalizeGameName(game.name);
+      const datRegions = datRegionsOf(game);
+      const regions = regionsOf(datRegions);
+      const videoStandard = videoStandardsOf(datRegions).join(', ') || undefined;
 
-      if (cover || !gameCovered.has(title)) gameCovered.set(title, Boolean(cover));
+      let entry = titles.get(title);
+      if (!entry) {
+        entry = { regions: new Set(), covered: new Set(), matched: false };
+        titles.set(title, entry);
+      }
+
+      for (const region of regions) {
+        entry.regions.add(region);
+        if (cover) entry.covered.add(region);
+      }
+
+      if (cover) entry.matched = true;
 
       game.roms.forEach(rom => {
         const metadata = {
@@ -254,7 +327,7 @@ async function main() {
           md5: rom.md5,
           sha1: rom.sha1,
           region: game.region,
-          videoStandard: game.videoStandard,
+          videoStandard,
           cover
         };
 
@@ -266,14 +339,18 @@ async function main() {
     // only for games this DAT actually lists: a boxart for a game the user
     // cannot own would never be shown.
     const gameCovers = {};
-    for (const [title, covered] of gameCovered) {
-      const cover = covered ? undefined : covers.byGame.get(title);
-      if (cover) gameCovers[title] = cover;
+    for (const [title, entry] of titles) {
+      const fallback = gameCoversOf(entry, covers.byTitle.get(title) ?? [], covers.boxart);
+      if (Object.keys(fallback).length > 0) gameCovers[title] = fallback;
     }
 
     const list = Array.from(filesByCrc.values());
     const withCover = list.filter((entry) => entry.cover).length;
     const gameCoverCount = Object.keys(gameCovers).length;
+    const gameCoverUrls = Object.values(gameCovers).reduce(
+      (total, fallback) => total + Object.keys(fallback).length,
+      0,
+    );
 
     const output = {
       meta: {
@@ -282,6 +359,7 @@ async function main() {
         totalFiles: list.length,
         totalCovers: withCover,
         totalGameCovers: gameCoverCount,
+        totalGameCoverUrls: gameCoverUrls,
         generated: new Date().toISOString()
       },
       covers: gameCovers,
@@ -299,7 +377,9 @@ async function main() {
     console.log('\n✅ Conversion successful!');
     console.log(`   Games: ${games.length}`);
     console.log(`   Files: ${list.length}`);
-    console.log(`   Covers: ${withCover} by name, ${gameCoverCount} more games by title`);
+    console.log(
+      `   Covers: ${withCover} by name, ${gameCoverUrls} by title over ${gameCoverCount} games`,
+    );
     console.log(`   File size: ${fileSizeKB} KB`);
     
   } catch (error) {

@@ -34,7 +34,7 @@ class FakeStorage {
   }
 }
 
-const COVER = { url: 'https://example.test/Sonic%20(USA).png', variantKey: 'USA' };
+const COVER = { url: 'https://example.test/Sonic%20(USA).png', region: 'US' as const };
 
 let storage: FakeStorage;
 
@@ -56,8 +56,8 @@ function respondWith(bytes: number): void {
 }
 
 describe('CoverService.stored', () => {
-  it('finds the copy stored for the release', async () => {
-    storage.put('.meta/MegaDrive/Sonic.USA.case.png', 'image');
+  it('finds the copy stored for the region', async () => {
+    storage.put('.meta/MegaDrive/Sonic.US.case.png', 'image');
 
     expect(await CoverService.stored(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toBe(
       'blob:cover',
@@ -65,7 +65,7 @@ describe('CoverService.stored', () => {
   });
 
   it('falls back to the copy stored for the game', async () => {
-    // Stored earlier for another release of the same game: still this game's box.
+    // Stored earlier for the whole game: still this game's box.
     storage.put('.meta/MegaDrive/Sonic.case.png', 'image');
 
     expect(await CoverService.stored(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toBe(
@@ -89,11 +89,11 @@ describe('CoverService.cache', () => {
     respondWith(1024);
 
     expect(await CoverService.cache(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toBe(true);
-    expect(storage.files.has('.meta/MegaDrive/Sonic.USA.case.png')).toBe(true);
+    expect(storage.files.has('.meta/MegaDrive/Sonic.US.case.png')).toBe(true);
     expect(storage.directories).toContain('.meta/MegaDrive');
   });
 
-  it('stores a game boxart once, whichever release asked for it', async () => {
+  it('stores a game boxart once, whichever region asked for it', async () => {
     respondWith(1024);
     const game = { url: 'https://example.test/Sonic%20(Japan).png' };
 
@@ -103,10 +103,63 @@ describe('CoverService.cache', () => {
     expect([...storage.files.keys()]).toEqual(['.meta/MegaDrive/Sonic.case.png']);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
+});
+
+describe('CoverService.cacheAll', () => {
+  it('keeps every region of a game, not only the one on screen', async () => {
+    // What makes changing the preference order later work with no network.
+    respondWith(1024);
+
+    const stored = await CoverService.cacheAll(storage.asNode(), 'MegaDrive', 'Sonic', {
+      byRegion: {
+        EU: 'https://example.test/Sonic%20(Europe).png',
+        US: 'https://example.test/Sonic%20(USA).png',
+      },
+    });
+
+    expect(stored).toBe(2);
+    expect([...storage.files.keys()].sort()).toEqual([
+      '.meta/MegaDrive/Sonic.EU.case.png',
+      '.meta/MegaDrive/Sonic.US.case.png',
+    ]);
+  });
+
+  it('keeps the boxart of the game when that is all there is', async () => {
+    respondWith(1024);
+
+    await CoverService.cacheAll(storage.asNode(), 'MegaDrive', 'Sonic', {
+      byRegion: {},
+      game: 'https://example.test/Sonic%20(World).png',
+    });
+
+    expect([...storage.files.keys()]).toEqual(['.meta/MegaDrive/Sonic.case.png']);
+  });
+
+  it('keeps the regions it can when one download is blocked', async () => {
+    let call = 0;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => {
+        call += 1;
+        if (call === 1) throw new TypeError('Failed to fetch');
+        return { ok: true, blob: async () => new Blob([new Uint8Array(1024)]) };
+      }),
+    );
+
+    const stored = await CoverService.cacheAll(storage.asNode(), 'MegaDrive', 'Sonic', {
+      byRegion: {
+        EU: 'https://example.test/Sonic%20(Europe).png',
+        US: 'https://example.test/Sonic%20(USA).png',
+      },
+    });
+
+    expect(stored).toBe(1);
+    expect(storage.files.size).toBe(1);
+  });
 
   it('does not download again what is already stored', async () => {
     respondWith(1024);
-    storage.put('.meta/MegaDrive/Sonic.USA.case.png', 'image');
+    storage.put('.meta/MegaDrive/Sonic.US.case.png', 'image');
 
     expect(await CoverService.cache(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toBe(true);
     expect(fetch).not.toHaveBeenCalled();
@@ -138,7 +191,7 @@ describe('CoverService.cache', () => {
 describe('CoverService.resolve', () => {
   it('shows the stored copy without touching the network', async () => {
     respondWith(1024);
-    storage.put('.meta/MegaDrive/Sonic.USA.case.png', 'image');
+    storage.put('.meta/MegaDrive/Sonic.US.case.png', 'image');
 
     expect(await CoverService.resolve(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toEqual({
       url: 'blob:cover',

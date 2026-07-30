@@ -12,6 +12,9 @@
  *   const metadata = await ROMDatasetService.lookupByCrc('ABC123DE');
  */
 
+import type { GameCovers } from '../core/rom-covers';
+import { ANY_REGION, isRegion, type Region } from '../core/rom-regions';
+
 export interface ROMMetadata {
   name: string;
   description?: string;
@@ -35,11 +38,12 @@ interface DatasetMeta {
 interface DatasetJSON {
   meta: DatasetMeta;
   /**
-   * One boxart per game, keyed by base title. Only holds the games no single
-   * entry could be matched to a boxart, so it is the fallback layer and not a
-   * copy of what `list` already carries.
+   * Boxarts by game, keyed by base title and then by region — plus `*` for a
+   * published name that carries no region. Only holds what entry-by-entry
+   * matching could not reach, so it is the fallback layer and not a copy of
+   * what `list` already carries.
    */
-  covers?: Record<string, string>;
+  covers?: Record<string, Record<string, string>>;
   list: ROMMetadata[];
 }
 
@@ -62,8 +66,8 @@ const DB_NAME = 'rom-manager-datasets';
 const DB_VERSION = 5;
 const STORE_ROMS = 'roms';
 const META_STORE = 'datasetsMeta';
-/** Bumped to 6 when the datasets started carrying a boxart per game. */
-const DATASET_FORMAT_VERSION = 6;
+/** Bumped to 7 when the boxarts of a game started being kept by region. */
+const DATASET_FORMAT_VERSION = 7;
 
 export class ROMDatasetService {
   private static db: IDBDatabase | null = null;
@@ -312,27 +316,61 @@ export class ROMDatasetService {
     return typeof cover === 'string' && cover.startsWith('https://') ? cover : undefined;
   }
 
-  private static sanitizeCovers(covers: unknown): Record<string, string> {
+  /**
+   * Keep only the entries of the fallback map that are usable.
+   *
+   * The map comes off the network and its URLs end up in an `<img src>`, so an
+   * unknown region key or a URL that is not plainly `https://` is dropped. The
+   * shape stored is the one the file has, region by region; turning it into
+   * covers is `toGameCovers`.
+   */
+  private static sanitizeCovers(covers: unknown): Record<string, Record<string, string>> {
     if (!covers || typeof covers !== 'object') return {};
 
-    const safe: Record<string, string> = {};
-    for (const [game, cover] of Object.entries(covers as Record<string, unknown>)) {
-      const url = this.sanitizeCoverUrl(cover);
-      if (game.length > 0 && url) safe[game] = url;
+    const safe: Record<string, Record<string, string>> = {};
+
+    for (const [game, published] of Object.entries(covers as Record<string, unknown>)) {
+      if (game.length === 0 || !published || typeof published !== 'object') continue;
+
+      const byRegion: Record<string, string> = {};
+
+      for (const [region, cover] of Object.entries(published as Record<string, unknown>)) {
+        const url = this.sanitizeCoverUrl(cover);
+        if (url && (region === ANY_REGION || isRegion(region))) byRegion[region] = url;
+      }
+
+      if (Object.keys(byRegion).length > 0) safe[game] = byRegion;
     }
 
     return safe;
   }
 
+  /** The stored fallback map, in the shape the browser picks covers from. */
+  private static toGameCovers(stored: unknown): Map<string, GameCovers> {
+    const covers = new Map<string, GameCovers>();
+
+    for (const [game, published] of Object.entries(this.sanitizeCovers(stored))) {
+      const byRegion: Partial<Record<Region, string>> = {};
+      for (const [region, url] of Object.entries(published)) {
+        if (isRegion(region)) byRegion[region] = url;
+      }
+
+      const fallback = published[ANY_REGION];
+      covers.set(game, fallback ? { byRegion, game: fallback } : { byRegion });
+    }
+
+    return covers;
+  }
+
   /**
-   * The boxart of each game of a system that no single entry could be matched
-   * to one, keyed by base title.
+   * The boxarts of each game of a system that entry-by-entry matching could not
+   * reach, keyed by base title and then by region.
    *
-   * Boxarts are published under the full release name, so a game whose only
+   * Boxarts are published under the full release name, so a region whose only
    * published boxart belongs to a release the DAT does not list has none of its
    * own. This is what the browser falls back to in that case.
    */
-  static async gameCoversOf(system: string): Promise<Map<string, string>> {
+  static async gameCoversOf(system: string): Promise<Map<string, GameCovers>> {
     await this.ensureSystem(system);
 
     const index = await this.getIndex();
@@ -348,7 +386,7 @@ export class ROMDatasetService {
       request.onerror = () => reject(request.error);
     });
 
-    return new Map(Object.entries(this.sanitizeCovers(record?.covers)));
+    return this.toGameCovers(record?.covers);
   }
 
   /**

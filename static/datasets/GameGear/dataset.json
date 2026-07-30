@@ -4,14 +4,34 @@
     "totalGames": 912,
     "totalFiles": 912,
     "totalCovers": 521,
-    "totalGameCovers": 4,
-    "generated": "2026-07-30T10:39:18.269Z"
+    "totalGameCovers": 7,
+    "totalGameCoverUrls": 9,
+    "generated": "2026-07-30T12:24:58.131Z"
   },
   "covers": {
-    "Barbie Super Model": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Barbie%20Super%20Model%20(USA)%20(Proto)%20(1994-08-25).png",
-    "Jang Pung II": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Jang%20Pung%20II%20(Korea)%20(En)%20(Unl).png",
-    "Rastan Saga": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Rastan%20Saga%20(Japan).png",
-    "X-Men - GameMaster's Legacy": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/X-Men%20-%20GameMaster's%20Legacy%20(USA%2C%20Europe)%20(Beta).png"
+    "Barbie Super Model": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Barbie%20Super%20Model%20(USA)%20(Proto)%20(1994-08-25).png"
+    },
+    "FIFA International Soccer": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/FIFA%20International%20Soccer%20(USA%2C%20Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/FIFA%20International%20Soccer%20(USA%2C%20Europe).png"
+    },
+    "Jang Pung II": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Jang%20Pung%20II%20(Korea)%20(En)%20(Unl).png"
+    },
+    "Pengo": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Pengo%20(Japan).png"
+    },
+    "Psychic World": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Psychic%20World%20(Japan)%20(En).png"
+    },
+    "Rastan Saga": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Rastan%20Saga%20(Japan).png"
+    },
+    "X-Men - GameMaster's Legacy": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/X-Men%20-%20GameMaster's%20Legacy%20(USA%2C%20Europe)%20(Beta).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/X-Men%20-%20GameMaster's%20Legacy%20(USA%2C%20Europe)%20(Beta).png"
+    }
   },
   "list": [
     {
@@ -43,6 +63,7 @@
       "crc": "1D01F999",
       "md5": "F4F3211738002369B9ADA7A099E33A45",
       "sha1": "3231D574E5EB0AC3A77B1D65D74F3A581819A9C7",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Addams%20Family%2C%20The%20(World).png"
     },
     {
@@ -53,7 +74,7 @@
       "md5": "A684CBA5F11C4E4E3E6CB71A0D73C702",
       "sha1": "50E8726BE1B26D066EA9E2E2B5CD7407C356187E",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Adventures%20of%20Batman%20_%20Robin%2C%20The%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -64,7 +85,7 @@
       "md5": "5913EC1BBC095860334F5857D43FF047",
       "sha1": "AC60F308640EEA536BB3007D2A0B78D95B81D160",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Adventures of Batman & Robin, The (USA, Europe, Brazil) (En) (Beta 2)",
@@ -74,7 +95,7 @@
       "md5": "CEDB40A7D687BF846AE66C437903C383",
       "sha1": "7877C4F8C271C37FC7D72208460231E60E63B95E",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Adventures of Batman & Robin, The (USA, Europe, Brazil) (En) (Beta 3)",
@@ -84,7 +105,7 @@
       "md5": "1AC3FA2DD2BC9CFF269F0DFE98134A90",
       "sha1": "CDA657EB423A8891304CB64CF4A43FD434C60588",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Adventures of Batman & Robin, The (USA, Europe, Brazil) (En) (Beta 4)",
@@ -94,7 +115,7 @@
       "md5": "C6479B51ABF0F53A81BDE0468B0EDFDD",
       "sha1": "81CB20D64ACC5CEE4BC7B56F0DCEC9125B55F66F",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Adventures of Batman & Robin, The (USA, Europe, Brazil) (En) (Beta 5)",
@@ -104,7 +125,7 @@
       "md5": "2AAF13F27460431734581D53471EBF03",
       "sha1": "19F890A237D4AA0868121D80944055A314275F81",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Adventures of Batman & Robin, The (USA, Europe, Brazil) (En) (Beta 6)",
@@ -114,7 +135,7 @@
       "md5": "53FA0E407603598C57E7739240C33BB6",
       "sha1": "0AFD0624BD054430B7894C24E2FB186D5F44AF99",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Adventures of Batman & Robin, The (USA, Europe, Brazil) (En) (Beta 7)",
@@ -124,7 +145,7 @@
       "md5": "A8021DBDC5EA3F78A2DE605B818731F7",
       "sha1": "8CEBB48B14C4C1EE4D168F764B074A87CC4E5324",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Adventures of Batman & Robin, The (USA, Europe, Brazil) (En) (Beta 8)",
@@ -134,7 +155,7 @@
       "md5": "988127687CDB23E7B38F4E45D3EB9681",
       "sha1": "EA5B5B79F92F5546A733EFC10F42997956037463",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Aerial Assault (World)",
@@ -143,6 +164,7 @@
       "crc": "3E549B7A",
       "md5": "B6FB54E60F8992DAAA35E98A712FF2CB",
       "sha1": "CBDBAAEB62A8483D9D5A8757B0F19233DFB9B416",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Aerial%20Assault%20(World).png"
     },
     {
@@ -152,6 +174,7 @@
       "crc": "04FE6DDE",
       "md5": "F1DEE7875668C536F0434217A67BA2F4",
       "sha1": "2A91AB5817938DDDF2724DF2DFD95A3BC6F5156D",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Aerial%20Assault%20(World)%20(Rev%201).png"
     },
     {
@@ -160,7 +183,8 @@
       "size": 16384,
       "crc": "FE76BEB0",
       "md5": "1DA109A967AEA3F201805FDB7A514389",
-      "sha1": "83CD03408DC850EDBA0B55F850043E7AA35E80B9"
+      "sha1": "83CD03408DC850EDBA0B55F850043E7AA35E80B9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Aladdin (Japan) (En)",
@@ -181,7 +205,7 @@
       "md5": "1AB3A94109AF90A333A68479A02A5643",
       "sha1": "20BA7F5E5C801FBE48A537D2551A3D4525EB63E7",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Aladdin%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -192,7 +216,7 @@
       "md5": "A7E2AF3C2D2A2B2B906FE815B322A248",
       "sha1": "ED303CB2DEBBC74F65A02F863E8C5BBB446155C4",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Aladdin (USA, Europe, Brazil) (En) (Beta 2)",
@@ -202,7 +226,7 @@
       "md5": "CC679464BBAD9AB0E7F10ACBEF7A6797",
       "sha1": "7EC48D31A35006CCBA4ABCF108E187E0B222852B",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Aladdin (USA, Europe, Brazil) (En) (Beta 3)",
@@ -212,7 +236,7 @@
       "md5": "7201FE4AFFE0924C6A3FA6967DF67860",
       "sha1": "A968EE77938233A4FF94C73266C7FB36FA25657D",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Alien 3 (Japan) (En)",
@@ -233,7 +257,7 @@
       "md5": "653310B476CAB68EEB8D3520C26B9755",
       "sha1": "F3B976FEFC331F37C3E4D883791EBA68890279A5",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Alien%203%20(USA%2C%20Europe).png"
     },
     {
@@ -286,7 +310,8 @@
       "size": 16384,
       "crc": "B781327E",
       "md5": "D5F06F6217D7BEBA1E64E042584E708E",
-      "sha1": "895504CB4D4BF09149E61E2A966C9246FDF3E704"
+      "sha1": "895504CB4D4BF09149E61E2A966C9246FDF3E704",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Arcade Classics (USA)",
@@ -329,7 +354,7 @@
       "md5": "CE3E5094025B10C3885FF1DA53A46D2F",
       "sha1": "91E411D979789F2E31DCFE94FB7F757815F60680",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Arena%20(USA%2C%20Europe).png"
     },
     {
@@ -340,7 +365,7 @@
       "md5": "E786FB76FB3808A7B4906AA3BA9FF1A7",
       "sha1": "D2F1B95A6D0A2CACD93ED307A5A6576F954A7D56",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ariel%20-%20The%20Little%20Mermaid%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -360,7 +385,8 @@
       "size": 16384,
       "crc": "0765A5F1",
       "md5": "7230BC9577367462AFACADB62E30CFEF",
-      "sha1": "FB897C2502210BEFB131C75695C9D4BBF9426F37"
+      "sha1": "FB897C2502210BEFB131C75695C9D4BBF9426F37",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Asterix and the Great Rescue (Europe) (En,Fr,De,Es,It)",
@@ -453,7 +479,7 @@
       "md5": "71E87C98E849C71DFD9A21A4A9FF56B4",
       "sha1": "9F5BF2973225B8EE337FCEC460829724A0C63D9E",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ax%20Battler%20-%20A%20Legend%20of%20Golden%20Axe%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -464,7 +490,7 @@
       "md5": "1D8CC7E9A742312294FC1DACE252907F",
       "sha1": "FE0F433AEBD6E3C4B61E4E155323FE6932369459",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ax%20Battler%20-%20A%20Legend%20of%20Golden%20Axe%20(USA%2C%20Europe%2C%20Brazil)%20(En)%20(Beta).png"
     },
     {
@@ -508,7 +534,7 @@
       "md5": "1539563613AE8CDB08BBFE372B3AE1F4",
       "sha1": "E6A86010A4DAD0A6102783D3C00AD126E8221597",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ayrton%20Senna's%20Super%20Monaco%20GP%20II%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -519,7 +545,7 @@
       "md5": "5843ABEA9BEFF14EF6FE840CE59DFAA0",
       "sha1": "3467364272FEA73D434AAA421B1F3F39F34D97B0",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Baku Baku (Europe)",
@@ -571,6 +597,7 @@
       "crc": "618B19E2",
       "md5": "6E8F14A7AB173CAC90317D390FF8D63B",
       "sha1": "775ECF7BA87345C2F89F0E9D6E55544DB8878786",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Batman%20Forever%20(World).png"
     },
     {
@@ -580,6 +607,7 @@
       "crc": "7AC4A3CA",
       "md5": "1E8CFD2F30E9AD733F602CF2DE696BA9",
       "sha1": "85994B2F506C7BDED0B02A59D96B1D949E48D518",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Batman%20Returns%20(World).png"
     },
     {
@@ -612,7 +640,7 @@
       "md5": "2B4EB4C0FDDD1753DAAC8FD8E043E883",
       "sha1": "77A284B993C6F60652D88468B836D7A2EE7B4600",
       "region": "Japan",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Battletoads%20(Japan%2C%20Europe)%20(En).png"
     },
     {
@@ -632,7 +660,8 @@
       "size": 16384,
       "crc": "6287B42E",
       "md5": "9384CB599B7666848B1A1CAB47FE0A03",
-      "sha1": "E6AA54ACE356D3B817C88208565830CB1E76801B"
+      "sha1": "E6AA54ACE356D3B817C88208565830CB1E76801B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Beavis and Butt-Head (USA, Europe)",
@@ -642,7 +671,7 @@
       "md5": "116EA358051E46F4829BAD566E14B28B",
       "sha1": "DD2EA76C05D933B91F1B03140F6A04BF02F746D1",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Beavis%20and%20Butt-Head%20(USA%2C%20Europe).png"
     },
     {
@@ -653,7 +682,7 @@
       "md5": "F2F728487E55EEDB774C212796C554A4",
       "sha1": "EF47D449F65CFE129368A77CC0A4679A0D55EE63",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Beavis%20and%20Butt-Head%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -875,7 +904,8 @@
       "size": 65536,
       "crc": "7FD721F6",
       "md5": "43B11BDA7BB01D7D81BC3ACF765ED7FF",
-      "sha1": "23727688C23EC8AE53B81A3B27C9CAE8E0DEB56D"
+      "sha1": "23727688C23EC8AE53B81A3B27C9CAE8E0DEB56D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Black Castle (World) (v1.1)",
@@ -883,7 +913,8 @@
       "size": 65536,
       "crc": "EE80F563",
       "md5": "CD3B44AA8792CBA1FB748996745E1BFE",
-      "sha1": "0903D9831A953932C2BA7A281041B4F635C35AD7"
+      "sha1": "0903D9831A953932C2BA7A281041B4F635C35AD7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe)",
@@ -893,7 +924,7 @@
       "md5": "3608E04A697B3C6B5857B5D3F3A58CCA",
       "sha1": "B98BD9467FE8BF782989172B576C7844F3666AE9",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Bonkers%20Wax%20Up!%20(USA%2C%20Europe).png"
     },
     {
@@ -904,7 +935,7 @@
       "md5": "8D83EE01AE126BF51751899D681FC498",
       "sha1": "160D28C7FD900AB25117247ECCECF2ECDB164CE4",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 10)",
@@ -914,7 +945,7 @@
       "md5": "BC9C506ABD42D4D6BDD17DB719B175BF",
       "sha1": "C8844BFDA83A94CE648588EF945A0D76503B84CE",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 11)",
@@ -924,7 +955,7 @@
       "md5": "EEB18688A3CDA16294B857B7C2D27FED",
       "sha1": "50897D1CBDA11E7B20678924D7461F8ACD6F0686",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 12)",
@@ -934,7 +965,7 @@
       "md5": "C49ECC028F523D1A17B563CEDAE03E52",
       "sha1": "E797640E2363F517FB83EE42903F5D13A1FFAD73",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 13)",
@@ -944,7 +975,7 @@
       "md5": "6638615230EC32B4481AB2A1F000F28D",
       "sha1": "368286DED1662EDDFFF056AD77583D62CE83F58B",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 2)",
@@ -954,7 +985,7 @@
       "md5": "B51F13573B32BA814A7FB2ECDD31BA97",
       "sha1": "6CD8FEE2110BC5010A2840C6E5B3FB32270EFC02",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 3)",
@@ -964,7 +995,7 @@
       "md5": "1051B23C3175674ABA90564054E6A4D7",
       "sha1": "C60FBD9E191E4154E26E73F0FD1BE1DC6E999E11",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 4)",
@@ -974,7 +1005,7 @@
       "md5": "015027E8337C5277A5398E88CC4412AD",
       "sha1": "AC22B149FCD6B500875C93F71E12B2A6CEDEA507",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 5)",
@@ -984,7 +1015,7 @@
       "md5": "BA9498E389F001498290A251190604B8",
       "sha1": "FBDCCD5EE5F38B8CE5654A0093F32E3811C8B56B",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 6)",
@@ -994,7 +1025,7 @@
       "md5": "12C4D0D96BF3A8C66963FD1287E3FC50",
       "sha1": "4AD7947A4FFEE9A76D146FECC9C3C2F6C5E680B7",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 7)",
@@ -1004,7 +1035,7 @@
       "md5": "4ADD2991173843E4911425D094AA0683",
       "sha1": "7E426A1DB56125836DD93EA57D5AC82CFF1BE23F",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 8)",
@@ -1014,7 +1045,7 @@
       "md5": "F8A2C270D65C27BABAAFD44859B8BB75",
       "sha1": "DCBB000CDA6F303D902A308A50E08EBC4803D511",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bonkers Wax Up! (USA, Europe) (Beta 9)",
@@ -1024,7 +1055,7 @@
       "md5": "503B6E55C7D7D00954A4C23424FB6CE9",
       "sha1": "415FC9E0021F544CBF8FD0895D013465654FD1D5",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bootskell Mini (World)",
@@ -1032,7 +1063,8 @@
       "size": 16384,
       "crc": "58233B4A",
       "md5": "AD4F91ED772FC4252F14E4B6C885EE52",
-      "sha1": "E70F3D4E079EDF12A69F5DE2F3A0AB3148E24547"
+      "sha1": "E70F3D4E079EDF12A69F5DE2F3A0AB3148E24547",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bram Stoker's Dracula (Europe)",
@@ -1096,7 +1128,7 @@
       "md5": "04770C2C01095A6E3FDE211A125D8964",
       "sha1": "A29DABB90532FF6114437F28970203E16003C11E",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Bugs%20Bunny%20in%20Double%20Trouble%20(USA%2C%20Europe).png"
     },
     {
@@ -1150,7 +1182,7 @@
       "md5": "30D140CBA0604578382CFF96ACA09F78",
       "sha1": "A60815AA0C6EC2BC5AD7F817668B74A42BB64026",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/CJ%20Elephant%20Fugitive%20(USA%2C%20Europe).png"
     },
     {
@@ -1161,7 +1193,7 @@
       "md5": "41D09D4F89EFE07C02CD07F097E301EA",
       "sha1": "322EA1294833659A205E313CA49667B921891E85",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/CJ%20Elephant%20Fugitive%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -1170,7 +1202,8 @@
       "size": 16368,
       "crc": "D1880CCA",
       "md5": "DBCDAC97201F6F93DFAB795475500FDD",
-      "sha1": "7A0790E8318B22AF75FE1BDB151807A208CDF622"
+      "sha1": "7A0790E8318B22AF75FE1BDB151807A208CDF622",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Caesars Palace (USA)",
@@ -1224,7 +1257,7 @@
       "md5": "16B6EA96908C17D4389A5907710A0F4E",
       "sha1": "06BBEB784F913B37F58C2581C66D4ECB099DEACE",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Castle%20of%20Illusion%20Starring%20Mickey%20Mouse%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -1244,7 +1277,8 @@
       "size": 16384,
       "crc": "7EC76EC0",
       "md5": "8DD72AB990C136225C56EF9813670002",
-      "sha1": "4D6D2272174C3264D2B4A563F6D46B8E0F2B718E"
+      "sha1": "4D6D2272174C3264D2B4A563F6D46B8E0F2B718E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Chakan (USA, Europe)",
@@ -1254,7 +1288,7 @@
       "md5": "096E525C29AF9F5A0A0DDD8B67DD8FBF",
       "sha1": "BDB82464147EF20792162CFF7922824D4DEE0DC1",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Chakan%20(USA%2C%20Europe).png"
     },
     {
@@ -1287,7 +1321,7 @@
       "md5": "63AF90497BDAC40CE4217C5133037A51",
       "sha1": "8897BA5AA76D0E17251B2765FAFBDB0DF41030A6",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Cheese%20Cat-Astrophe%20Starring%20Speedy%20Gonzales%20(USA%2C%20Europe%2C%20Brazil)%20(En%2CFr%2CDe%2CEs).png"
     },
     {
@@ -1298,7 +1332,7 @@
       "md5": "B24D5C5548ACB3B35AAF02802B3BB7D5",
       "sha1": "DAEA9A76DEDC080B9965CFA32E2DDB1EAAAAB0B4",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Chessmaster%2C%20The%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -1570,6 +1604,7 @@
       "crc": "191B1ED8",
       "md5": "86A3221D3D74133C84F658939FD6E928",
       "sha1": "2B08A3231C0504D86CACA74C8508D85C8EF6A86A",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Chuck%20Rock%20(World).png"
     },
     {
@@ -1579,6 +1614,7 @@
       "crc": "CB3A1D23",
       "md5": "D34E94DC571D7782283ABB1CC5A36C7A",
       "sha1": "17442F7B30D7882723BDDCAD38C9ADA363FB7211",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Chuck%20Rock%20(World)%20(Beta).png"
     },
     {
@@ -1589,7 +1625,7 @@
       "md5": "8346EE6A9687FCAF3CA3714D55CE6E9F",
       "sha1": "8EE080538E87E0F39720C9254BB4A2D85F637967",
       "region": "Europe",
-      "videoStandard": "PAL",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Chuck%20Rock%20II%20-%20Son%20of%20Chuck%20(Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -1655,7 +1691,7 @@
       "md5": "90BD4681E3E4B07445EAF35E83B223DB",
       "sha1": "05B73F39A90FD59E01262CBD3F4E7A21575D468A",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Columns%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -1688,7 +1724,7 @@
       "md5": "0AD508B2A076990B49AE2BCDA0F1E9E7",
       "sha1": "C24F48CA3FB7DF3B50B4353095C7A070653F3539",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Cosmic%20Spacehead%20(USA%2C%20Europe).png"
     },
     {
@@ -1697,7 +1733,8 @@
       "size": 16368,
       "crc": "F76913ED",
       "md5": "EBF4CFD27F6EF2C1E057E4B34EF83E93",
-      "sha1": "802F8AE265173828586D7B591D73879451877E02"
+      "sha1": "802F8AE265173828586D7B591D73879451877E02",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Crayon Shin-chan - Taiketsu! Kantam Panic!! (Japan)",
@@ -1726,7 +1763,8 @@
       "size": 32768,
       "crc": "D156B6D5",
       "md5": "DE5ED7F8565A2B1035FBB2A7C70C8689",
-      "sha1": "B1104B66BA6CD3231EEB3488D0D5F99706B5EBFC"
+      "sha1": "B1104B66BA6CD3231EEB3488D0D5F99706B5EBFC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Bomber (World) (v1.1)",
@@ -1734,7 +1772,8 @@
       "size": 32768,
       "crc": "B53334C7",
       "md5": "7AED3247705154B6A2C68815D8DB12A0",
-      "sha1": "D2CF0ADA1049F8F55E32A746510BF632A3E0C96F"
+      "sha1": "D2CF0ADA1049F8F55E32A746510BF632A3E0C96F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Chase (World) (v1.0)",
@@ -1742,7 +1781,8 @@
       "size": 32768,
       "crc": "C2A8811C",
       "md5": "30DDB3F1B286C0FCDCCEE0149953887E",
-      "sha1": "EDF4806CB43C0E8D3501F1221D8B4472E7FA6B44"
+      "sha1": "EDF4806CB43C0E8D3501F1221D8B4472E7FA6B44",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Chase (World) (v1.1)",
@@ -1750,7 +1790,8 @@
       "size": 32768,
       "crc": "5CE19C14",
       "md5": "BEBF673E477F24794FC1C998C99684EF",
-      "sha1": "35353ED34AA807C3E6D7B301FAE6434CD3DE6191"
+      "sha1": "35353ED34AA807C3E6D7B301FAE6434CD3DE6191",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Horde (World) (v1.0)",
@@ -1758,7 +1799,8 @@
       "size": 32768,
       "crc": "203CEEA1",
       "md5": "6F66EC64A139F3FDFD06C30BE90055A1",
-      "sha1": "303C9A078E5084F260F741D5D46832ACDA87D2B3"
+      "sha1": "303C9A078E5084F260F741D5D46832ACDA87D2B3",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Horde (World) (v1.1)",
@@ -1766,7 +1808,8 @@
       "size": 32768,
       "crc": "66E6968C",
       "md5": "2F73162BB7602BDAE7C06FB0EF0D5909",
-      "sha1": "F74B52EC9F24A32517796256DBED80C2E8FB9AC1"
+      "sha1": "F74B52EC9F24A32517796256DBED80C2E8FB9AC1",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Shoot (World)",
@@ -1774,7 +1817,8 @@
       "size": 32768,
       "crc": "4479ADC3",
       "md5": "BA4E4231F96C7C1DF358833CABC39990",
-      "sha1": "3505E4B1870151B8801A9DF0C97CDA92493D547C"
+      "sha1": "3505E4B1870151B8801A9DF0C97CDA92493D547C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Shuriken (World)",
@@ -1782,7 +1826,8 @@
       "size": 32768,
       "crc": "31505680",
       "md5": "BE7075BDA7E0D18799D4C4CB7056D24F",
-      "sha1": "8F5732E94CBC952E1C6070ACD1FC91119F8FC358"
+      "sha1": "8F5732E94CBC952E1C6070ACD1FC91119F8FC358",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Snake (World)",
@@ -1790,7 +1835,8 @@
       "size": 32768,
       "crc": "030FC2A1",
       "md5": "DF32F97D8B602494E54759C0589EC069",
-      "sha1": "92368FABE8946ACA7256AFA4A0772FF93FC69E02"
+      "sha1": "92368FABE8946ACA7256AFA4A0772FF93FC69E02",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Trex (World)",
@@ -1798,7 +1844,8 @@
       "size": 32768,
       "crc": "54B37E2B",
       "md5": "0583132FC38148608F705B500CFBBC3A",
-      "sha1": "0E8AC5F8D522256E04299ACF1ACE09717549CD18"
+      "sha1": "0E8AC5F8D522256E04299ACF1ACE09717549CD18",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Trex (World) (Beta)",
@@ -1806,7 +1853,8 @@
       "size": 32768,
       "crc": "9BB82CBC",
       "md5": "5F957B0CEB7454EC141B1F6351D26008",
-      "sha1": "DBC7DF6AD2FF8179E73E4BB8FEED009A6EC1619B"
+      "sha1": "DBC7DF6AD2FF8179E73E4BB8FEED009A6EC1619B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cross Verbix (World)",
@@ -1814,7 +1862,8 @@
       "size": 32768,
       "crc": "92E342E3",
       "md5": "D306509ACD1B3E4A7F6D0518310182FA",
-      "sha1": "D0FD6E56B30AE6FCF672ADD2BC0A7F4E94A5B375"
+      "sha1": "D0FD6E56B30AE6FCF672ADD2BC0A7F4E94A5B375",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Crystal Warriors (USA, Europe)",
@@ -1824,7 +1873,7 @@
       "md5": "35D3FC09FCF22E35DB4BAC8CEE9967F3",
       "sha1": "6B03183B7183DE17AD6FBC9938599D3D18BADC1A",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Crystal%20Warriors%20(USA%2C%20Europe).png"
     },
     {
@@ -1857,7 +1906,7 @@
       "md5": "1B079DED7729472B4F4039612C3112F2",
       "sha1": "2D058F3885BEE45B04B74CBE16F3974D4EB2BFCF",
       "region": "Europe",
-      "videoStandard": "PAL",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Daffy%20Duck%20in%20Hollywood%20(Europe%2C%20Brazil)%20(En%2CFr%2CDe%2CEs%2CIt).png"
     },
     {
@@ -1867,7 +1916,8 @@
       "crc": "8821A7C9",
       "md5": "35B8FB205B5CF9989E9DE4A1ED29D0D3",
       "sha1": "6039E65F4E807C1200DE496FCAC9FF7DA0D1EB42",
-      "region": "Taiwan"
+      "region": "Taiwan",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Dangerous Demolition (World)",
@@ -1875,7 +1925,8 @@
       "size": 49152,
       "crc": "4C1DD4BA",
       "md5": "C4077616427DA428901CE1667911D620",
-      "sha1": "096C473B626348179E932822A6D08E9F7D238A8C"
+      "sha1": "096C473B626348179E932822A6D08E9F7D238A8C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Dangerous Demolition (World)",
@@ -1883,7 +1934,8 @@
       "size": 32768,
       "crc": "638C4252",
       "md5": "D643D140B0A6E7691FF61DB20896F92E",
-      "sha1": "1FC86E872798466A4E5191E01F3AF2D76D3BFEDD"
+      "sha1": "1FC86E872798466A4E5191E01F3AF2D76D3BFEDD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "David Robinson's Supreme Court (USA) (Auto Demo)",
@@ -1903,7 +1955,7 @@
       "md5": "CD792CF0D4E8EBB6F77A906AC0744B66",
       "sha1": "24485549001BC57B5CFFEE1449AD0AF80E862773",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Deep%20Duck%20Trouble%20Starring%20Donald%20Duck%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -1914,7 +1966,7 @@
       "md5": "8430050C60DB46B3887CF7D7CF2F206F",
       "sha1": "07C1167C3B6EEA294A73272C256934406F48F9D5",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Defenders%20of%20Oasis%20(USA%2C%20Europe).png"
     },
     {
@@ -1925,7 +1977,7 @@
       "md5": "503E2946DCF3CBA80A7264EBC4793AFD",
       "sha1": "76E1F94DBB8A12BA428767D2E70F00FE719FA449",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Defenders%20of%20Oasis%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -1936,7 +1988,7 @@
       "md5": "92247960C4A8F0292C94E1E8FC8D4348",
       "sha1": "FE4C1DF4E8D8CD244E9CEF803EEAFAEC4962C31A",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Defenders%20of%20Oasis%20(USA%2C%20Europe)%20(Virtual%20Console).png"
     },
     {
@@ -1991,7 +2043,7 @@
       "md5": "E3DDA1FE814C22C102F0714D48D27DE6",
       "sha1": "3EB7E6CBE74D16BB14C42E91AB6334C156071F6B",
       "region": "Europe",
-      "videoStandard": "PAL",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Devilish%20(Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -2065,7 +2117,8 @@
       "size": 65536,
       "crc": "EC3DCC27",
       "md5": "566075A823A8F95574333C918F8CDF1B",
-      "sha1": "315DD39F6D40D903E609EBBC0844B4ADCC51FFC7"
+      "sha1": "315DD39F6D40D903E609EBBC0844B4ADCC51FFC7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Doraemon - Noranosuke no Yabou (Japan)",
@@ -2097,7 +2150,7 @@
       "md5": "B45D73E40CE8F6E76DCED24EE921871A",
       "sha1": "BAEBE28FC7549CBB06C94FCB36A3C40231933C01",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Double%20Dragon%20(USA%2C%20Europe).png"
     },
     {
@@ -2108,7 +2161,7 @@
       "md5": "662D42206945815AE7ACF13E406EFD9B",
       "sha1": "B24AA3E31EFBF09E8D0D9AE9D07B4D219B648F96",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Double%20Dragon%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -2119,7 +2172,7 @@
       "md5": "6565DDCB2E41BF9CE5771A62D30AA700",
       "sha1": "C36BDA8A86994D430506B196922EC1365622E560",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Dr.%20Robotnik's%20Mean%20Bean%20Machine%20(USA%2C%20Europe).png"
     },
     {
@@ -2173,7 +2226,7 @@
       "md5": "8431BACCD169025F79C9CBC44E31622D",
       "sha1": "6D53F32001D419A5B5E9C16CB62E07E548D2F44A",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Dragon%20Crystal%20(USA%2C%20Europe).png"
     },
     {
@@ -2184,7 +2237,7 @@
       "md5": "19BB76E91F6BDB94A9332135698227C2",
       "sha1": "C7D1551B7BBC01F35FA849E5B05073012F76C3A8",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Dragon%20Crystal%20(USA%2C%20Europe)%20(Virtual%20Console).png"
     },
     {
@@ -2250,7 +2303,7 @@
       "md5": "2DA61F019F30EB0795CFD6EB9D5B54C6",
       "sha1": "A8C8B5252A885D466E044E6055336513D988E661",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Dynamite%20Headdy%20(USA%2C%20Europe).png"
     },
     {
@@ -2261,7 +2314,7 @@
       "md5": "232705594BE493A6CEE83CFA528CB6A7",
       "sha1": "0E8BCCB304898A80EFCBAE8351303103EC4145EE",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Dynamite Headdy (USA, Europe) (Beta 2)",
@@ -2271,7 +2324,7 @@
       "md5": "E52ECF659C6CFE97741969E1DDC514DE",
       "sha1": "0E408B4C9DFBB94BDF556B7AA920D4AC71D88C56",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Dynamite Headdy (USA, Europe) (Beta 3)",
@@ -2281,7 +2334,7 @@
       "md5": "2264B89876A197C63B3936CADEF13FF6",
       "sha1": "59807E03D32837DB34E2912D0E85DB812EDF823C",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Earthworm Jim (Europe)",
@@ -2313,7 +2366,7 @@
       "md5": "8F8CBAEF1A8E1BECFCC7F07B134A3D83",
       "sha1": "61913F6803977BB54FDA7C3D969DC2C0F7C6DA62",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ecco%20-%20The%20Tides%20of%20Time%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -2334,7 +2387,7 @@
       "md5": "CCD970B22303887734FAFB8E45B1E43F",
       "sha1": "7C6C8F44D5AA799726ADC3A9E21C9F35CACEA87F",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ecco%20the%20Dolphin%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -2345,7 +2398,7 @@
       "md5": "03CA0A5165659324C9D85009634584F2",
       "sha1": "070298F87402E874576F295828EDDE142482A085",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ecco the Dolphin (USA, Europe, Brazil) (En) (Beta 2)",
@@ -2355,7 +2408,7 @@
       "md5": "713B343B1CF5C080A5F247E406B8B0DE",
       "sha1": "E9C260C5B2E5288A4B190987EF1F9744203C9EB3",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ecco the Dolphin II (Japan)",
@@ -2409,7 +2462,7 @@
       "md5": "4E63ABB36BE8D86B94B34846B16D9FA3",
       "sha1": "3093D6E6E332C864DA8473AC2EAB7D17EB65B523",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Evander%20Holyfield's%20'Real%20Deal'%20Boxing%20(USA%2C%20Europe).png"
     },
     {
@@ -2431,7 +2484,7 @@
       "md5": "69CC38014650BDD0AF0A2B7D7E9C46EC",
       "sha1": "4BFDAFA848223598CA16699AD44FE4A19A1C2BA2",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/F-15%20Strike%20Eagle%20(USA%2C%20Europe).png"
     },
     {
@@ -2442,7 +2495,7 @@
       "md5": "93B3E1B682474FFD9985C0A5688D45BF",
       "sha1": "B5A1985D671E8B9E0EED7922E6DB695011071E99",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/F1%20(USA%2C%20Europe).png"
     },
     {
@@ -2475,7 +2528,7 @@
       "md5": "9A70ADE3CC8647EE1A926AE71BB7FE52",
       "sha1": "0725626FC9988B690FC1FC77B294D31B78CBFB5A",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "FIFA Soccer 96 (USA, Europe) (En,Fr,De,Es)",
@@ -2485,7 +2538,7 @@
       "md5": "4338306D35219DA89E1F6CC4550FD8A3",
       "sha1": "F928C32ACBA90ED5EBCA131AF03E76A0EFB38797",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/FIFA%20Soccer%2096%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs).png"
     },
     {
@@ -2507,7 +2560,7 @@
       "md5": "784F3FF02E544E3A9CF18B3B1DA1F062",
       "sha1": "94BEB8B6334BB9DC104FFDB0AD2BDD4964ED91A5",
       "region": "Europe",
-      "videoStandard": "PAL",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Factory%20Panic%20(Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -2518,7 +2571,7 @@
       "md5": "66A8E3133A047FA7D44968EFD3C30720",
       "sha1": "B6A13D51C72B576738F0D7E8E328DB2FFEB0B38C",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Fantastic%20Dizzy%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs%2CIt).png"
     },
     {
@@ -2529,7 +2582,7 @@
       "md5": "4C6C42493B5AF22540E6C2014D2C367A",
       "sha1": "5951D500D6F53B0537F045ADB85D94068A838F32",
       "region": "Japan",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Fantasy%20Zone%20(Japan%2C%20Europe)%20(En).png"
     },
     {
@@ -2571,7 +2624,8 @@
       "size": 65536,
       "crc": "4835426E",
       "md5": "E567E6326C4D46FAA78158556BE944AF",
-      "sha1": "B68B23733A1A3ACB1772A2A8A0482F562852E426"
+      "sha1": "B68B23733A1A3ACB1772A2A8A0482F562852E426",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Flying Hamburgers (World)",
@@ -2579,7 +2633,8 @@
       "size": 131072,
       "crc": "87B4981C",
       "md5": "041B542DF9B9935DBB5B061FF97EB73A",
-      "sha1": "41B12ECB15A9FE1BE7790B802C76AAA44AF54D2D"
+      "sha1": "41B12ECB15A9FE1BE7790B802C76AAA44AF54D2D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Foreman for Real (Japan, USA) (En)",
@@ -2688,7 +2743,7 @@
       "md5": "EC61986C03B1BB9C1862BDDD6432BF26",
       "sha1": "407DA6E4D0916D3F54AD1BA8D45FACE04DAD5657",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/G-LOC%20-%20Air%20Battle%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -2741,7 +2796,8 @@
       "size": 131072,
       "crc": "E2E209C4",
       "md5": "1C3AF09F523ED70BF6A42EAE26E5AE95",
-      "sha1": "5404F3BF3AF9DEC7EDED211C1DDAF2C363E43D12"
+      "sha1": "5404F3BF3AF9DEC7EDED211C1DDAF2C363E43D12",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GG Hicolor Demo (World) (v1.01) (Auto Demo)",
@@ -2749,7 +2805,8 @@
       "size": 131072,
       "crc": "1882C8D7",
       "md5": "E7E3A920128CBA2E1C83CF36299C303B",
-      "sha1": "D9FDABFACEE52044BA58F8BEFF7761A0A794D55B"
+      "sha1": "D9FDABFACEE52044BA58F8BEFF7761A0A794D55B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GG Nibbles (World) (v1.0)",
@@ -2757,7 +2814,8 @@
       "size": 32768,
       "crc": "E0B5215A",
       "md5": "2DAFFEAFA8D0FFF01B34A1135E7959C5",
-      "sha1": "786592A4047E94A26F872C9A00E9278B654895E5"
+      "sha1": "786592A4047E94A26F872C9A00E9278B654895E5",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GG Nibbles (World) (v1.1)",
@@ -2765,7 +2823,8 @@
       "size": 32768,
       "crc": "2E6C15AB",
       "md5": "4C6F9F1994C1BA27F81C6CCDBBF58C08",
-      "sha1": "88F03B73C812987B8B0DE468F620990DB2BC39B4"
+      "sha1": "88F03B73C812987B8B0DE468F620990DB2BC39B4",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GG Nibbles (World) (v1.2)",
@@ -2773,7 +2832,8 @@
       "size": 32768,
       "crc": "8CA15176",
       "md5": "10407177C68FC7D1C0213EAC1A2C7C30",
-      "sha1": "248A2BEAAFC2539CBF31D74695D8C67259125DA7"
+      "sha1": "248A2BEAAFC2539CBF31D74695D8C67259125DA7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GG Nibbles (World) (v1.3)",
@@ -2781,7 +2841,8 @@
       "size": 32768,
       "crc": "68979CF6",
       "md5": "2C7C03B790658A6E76436B780BA353AC",
-      "sha1": "DCAA0E2F8759585DA0BF0D5139BB87A757ABFBBC"
+      "sha1": "DCAA0E2F8759585DA0BF0D5139BB87A757ABFBBC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GG Portrait - Pai Chan (Japan)",
@@ -2822,7 +2883,8 @@
       "size": 524288,
       "crc": "39212762",
       "md5": "31C3B01106796CD8EFC1699712D1B271",
-      "sha1": "56157D43234D22F93A0C7E809FF4F35E8F3BEFAE"
+      "sha1": "56157D43234D22F93A0C7E809FF4F35E8F3BEFAE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GG Turrican (World) (Demo 2)",
@@ -2830,7 +2892,8 @@
       "size": 524288,
       "crc": "971CA630",
       "md5": "880F8DAEA46EBD93CAAD2F4D4CD4A3D1",
-      "sha1": "D9177C956324BE7E38E04516534ACFB08190478C"
+      "sha1": "D9177C956324BE7E38E04516534ACFB08190478C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "GP Rider (Japan) (En)",
@@ -2850,6 +2913,7 @@
       "crc": "876E9B72",
       "md5": "6FA101FB69DA89A922B1B99F36E515BC",
       "sha1": "7777F091C8B540D3248FD7C0FB21E742AF6F0EDE",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/GP%20Rider%20(World).png"
     },
     {
@@ -2859,6 +2923,7 @@
       "crc": "12E4F6DB",
       "md5": "841A7115046459DECD3BEE75DFD2981C",
       "sha1": "5E13822BF04FACC19D44A718635647AD4DB6CD2A",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/GP%20Rider%20(World)%20(Beta).png"
     },
     {
@@ -2924,7 +2989,7 @@
       "md5": "8766AD6AB161FFC7796A543325A82FB6",
       "sha1": "DC65F458CAD3C165D0963B9B6DA258D438DA2EF7",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Garfield%20-%20Caught%20in%20the%20Act%20(USA%2C%20Europe).png"
     },
     {
@@ -2979,7 +3044,7 @@
       "md5": "C5D2AADB57D9827A24C69A80014B4ECF",
       "sha1": "5B3E3E3B88079108A4379C2428E70007D62C7B51",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/George%20Foreman's%20KO%20Boxing%20(USA%2C%20Europe).png"
     },
     {
@@ -3053,7 +3118,8 @@
       "size": 16384,
       "crc": "518C4C44",
       "md5": "DC74EE1A4CF7D1E1D4581C9BEB0F5767",
-      "sha1": "485CCF3A50C143550F411D64074389831E82EDF0"
+      "sha1": "485CCF3A50C143550F411D64074389831E82EDF0",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Halley Wars (Japan) (En)",
@@ -3074,7 +3140,7 @@
       "md5": "1EF93397C3C6D2049B0701D69255A22B",
       "sha1": "77637E9916A774529D971370C1509EEC0B7E1651",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Halley%20Wars%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -3083,7 +3149,8 @@
       "size": 131072,
       "crc": "200068D9",
       "md5": "0392BFAC0713CB0B1EE8F8464DDCC875",
-      "sha1": "F8D734C56423673A76A79496232864BDF49BCA6F"
+      "sha1": "F8D734C56423673A76A79496232864BDF49BCA6F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Hamburgers en Route to Switzerland (World) (Proto 2)",
@@ -3091,7 +3158,8 @@
       "size": 131072,
       "crc": "F4FAD7C2",
       "md5": "C91F1BCC0B4AB1ABAC998CE8A02BBAFB",
-      "sha1": "DE7F24F7BCC6B6A225B994C82D4E2EA6AAC0F4E7"
+      "sha1": "DE7F24F7BCC6B6A225B994C82D4E2EA6AAC0F4E7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Hamburgers en Route to Switzerland 2 (World)",
@@ -3099,7 +3167,8 @@
       "size": 131072,
       "crc": "B6FF951D",
       "md5": "3D8CB0F12DCB5E01D9F29FEF85D266B0",
-      "sha1": "9F24919DD586D7496BCB3EDADC08405C8185C72C"
+      "sha1": "9F24919DD586D7496BCB3EDADC08405C8185C72C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Head Buster (Japan)",
@@ -3129,7 +3198,8 @@
       "size": 262144,
       "crc": "F712FC2D",
       "md5": "293DC400D895D7C4F39E21D3AB65C179",
-      "sha1": "717B965BD1C3A7DC3F75B80617C48930F422E56A"
+      "sha1": "717B965BD1C3A7DC3F75B80617C48930F422E56A",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Home Alone (USA, Europe, Brazil) (En)",
@@ -3139,7 +3209,7 @@
       "md5": "8747C4CC07059D97BC597C5EB757CBD9",
       "sha1": "ABAD566F587AFFCB35102ED5B45C4E3A8EE22DC9",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Home%20Alone%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -3181,7 +3251,8 @@
       "size": 16368,
       "crc": "84FD672D",
       "md5": "73CDA8D9CF406C5AD1D69747333482E9",
-      "sha1": "920AA9C3D64073D140280BF0BAED64FE2AAA5DFA"
+      "sha1": "920AA9C3D64073D140280BF0BAED64FE2AAA5DFA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Hurricanes (Europe)",
@@ -3222,7 +3293,8 @@
       "size": 32768,
       "crc": "07E1FA70",
       "md5": "46A21ABE039640944CC0DC4E4DB1935D",
-      "sha1": "8243FA156DE56601FFB8EA547F2C16B1C47C2702"
+      "sha1": "8243FA156DE56601FFB8EA547F2C16B1C47C2702",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Impetus+ Micro (World)",
@@ -3230,7 +3302,8 @@
       "size": 24576,
       "crc": "8E6E9131",
       "md5": "CA4353DDDB53E87D40CA298A94391375",
-      "sha1": "7E613C688E84889D1239B0DBED85CCAC850D14FF"
+      "sha1": "7E613C688E84889D1239B0DBED85CCAC850D14FF",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "In the Wake of Vampire (Japan) (En)",
@@ -3261,6 +3334,7 @@
       "crc": "087FC247",
       "md5": "4D7FAFE13D1AA4C9EA893BD4EC2F8332",
       "sha1": "6858554FC26F2382A262736854496E11F0925D40",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Incredible%20Crash%20Dummies%2C%20The%20(World).png"
     },
     {
@@ -3271,7 +3345,7 @@
       "md5": "7B239C8AE257CB78C46A8AFFA9BC8226",
       "sha1": "0410DAFCE21E5F40263CCB39871188CA84F7DD22",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Incredible%20Hulk%2C%20The%20(USA%2C%20Europe).png"
     },
     {
@@ -3282,7 +3356,7 @@
       "md5": "9D396418BE6587BED4867070D049CE98",
       "sha1": "2607F99263C8DD732D199B2357400638E08402EC",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Indiana%20Jones%20and%20the%20Last%20Crusade%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -3304,7 +3378,7 @@
       "md5": "63BB5A1A959CDC79BFBE05B022F64EBF",
       "sha1": "2D0C2BE09B977CC68A7E8F0FC415D8783AD7F8AE",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Itchy%20_%20Scratchy%20Game%2C%20The%20(USA%2C%20Europe).png"
     },
     {
@@ -3434,7 +3508,8 @@
       "crc": "A59B4A09",
       "md5": "B0B66F32939E2402539244F026ADC6B8",
       "sha1": "F686BB3845E87FB06C4B0DD6DF6D6615EE838101",
-      "region": "Taiwan"
+      "region": "Taiwan",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Joe Montana Football (Japan, Brazil) (En) (Rev 1)",
@@ -3455,7 +3530,7 @@
       "md5": "C74F379A93E9F667C375A316F8021AFC",
       "sha1": "24C3B2CD18967B7141850D4F63B4992C3DAD3AD4",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Joe%20Montana%20Football%20(USA%2C%20Europe).png"
     },
     {
@@ -3466,7 +3541,7 @@
       "md5": "D9393AFCE9CC368EB1B0217CFF994C8E",
       "sha1": "ED5D1FC5BA8A47992551B0D577C1A6A06D0F7AC2",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Journey%20from%20Darkness%20-%20Strider%20Returns%20(USA%2C%20Europe).png"
     },
     {
@@ -3477,7 +3552,7 @@
       "md5": "709B274675ED49CC3DE4D5BD62784D6F",
       "sha1": "CD7E9650A65882A633401A1947B4C621ADF4E197",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Journey%20from%20Darkness%20-%20Strider%20Returns%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -3488,7 +3563,7 @@
       "md5": "CFDA45DE60237EE360D4C40A1404CFCA",
       "sha1": "4C9D00FAEB4454A8F538B5CCC6453B3464930AFA",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Judge%20Dredd%20(USA%2C%20Europe).png"
     },
     {
@@ -3565,7 +3640,7 @@
       "md5": "A3158BAAB261C5DDBCD4328D01E33A94",
       "sha1": "0425DC09465A4B7BE78AB7AA46107987BA61E82A",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Jurassic%20Park%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -3574,7 +3649,8 @@
       "size": 994560,
       "crc": "A362FD6B",
       "md5": "6B376EF3C4E7B2AC496058D5423F0CFD",
-      "sha1": "57B516FFF1516DAFB4B009E146326354553EC0EB"
+      "sha1": "57B516FFF1516DAFB4B009E146326354553EC0EB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "KLAX (USA, Europe)",
@@ -3584,7 +3660,7 @@
       "md5": "B8969BA5F8DC60823DA59AA511A593C9",
       "sha1": "4705BBC862169CDFEB3B30DBA6F274B094AB99B3",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/KLAX%20(USA%2C%20Europe).png"
     },
     {
@@ -3593,7 +3669,8 @@
       "size": 65536,
       "crc": "2531800A",
       "md5": "CB2E6994ACD9F18D0AF33E9CF083FFF8",
-      "sha1": "64A983EE627C8F3C8A6D2EA0CBCCA5D19698086C"
+      "sha1": "64A983EE627C8F3C8A6D2EA0CBCCA5D19698086C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Kaitou Saint Tail (Japan)",
@@ -3680,7 +3757,7 @@
       "md5": "46BE87D97E42DCEEF816DD7A6AD4D018",
       "sha1": "A24FD153669E0C38D55FF939E1EA52B6A316AD0D",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Krusty's%20Fun%20House%20(USA%2C%20Europe).png"
     },
     {
@@ -3713,7 +3790,7 @@
       "md5": "4F423E63523BAFDC7311D790850ACE58",
       "sha1": "5975BF7D01C84B9433C2859E6D38D26545FD3BC9",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Land%20of%20Illusion%20Starring%20Mickey%20Mouse%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -3735,7 +3812,7 @@
       "md5": "6D106D9C80B9D0CDC4F555BE3C3677D3",
       "sha1": "FA1200FD34A81796222EAE97175C2FB72A77E970",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Legend%20of%20Illusion%20Starring%20Mickey%20Mouse%20(USA%2C%20Europe).png"
     },
     {
@@ -3746,7 +3823,7 @@
       "md5": "3FF1C6E9837E945DE8D70B8509F3A4E1",
       "sha1": "2D78A5B6449C9D20CD03156A56CBC6BC10C2EF68",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Illusion Starring Mickey Mouse (USA, Europe) (Beta 2)",
@@ -3756,7 +3833,7 @@
       "md5": "30356BDDE5B7A4F171096BD522D90657",
       "sha1": "94EC7C72E2FB6E4BD51EF55EAC9646FB2FA8D791",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Illusion Starring Mickey Mouse (USA, Europe) (Beta 3)",
@@ -3766,7 +3843,7 @@
       "md5": "A1262BE4B5F8BCFCB8DE33D9CB364328",
       "sha1": "14F266482BFD25238C6E44087C26ACA329D4FA64",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Illusion Starring Mickey Mouse (USA, Europe) (Beta 4)",
@@ -3776,7 +3853,7 @@
       "md5": "BC24F01E4B3D5156803FE4AE2AE193D9",
       "sha1": "13C6F75A1360A76673BCEBDF18B9735DDAA113C7",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Illusion Starring Mickey Mouse (USA, Europe) (Beta 5)",
@@ -3786,7 +3863,7 @@
       "md5": "CC72B33F67E42D5A5BA188CD0989BFE9",
       "sha1": "98C4ADAF6E74D960760F686F256F63BC887C1A2B",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Illusion Starring Mickey Mouse (USA, Europe) (Beta 6)",
@@ -3796,7 +3873,7 @@
       "md5": "B5C3B1DE46028AC8D206E8BB93E476D0",
       "sha1": "CCBCDA1E7D74E0BFE94ECB1214D4CA1A5D1504AB",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Lemmings (World)",
@@ -3805,6 +3882,7 @@
       "crc": "0FDE7BAA",
       "md5": "49D07D8B68D59535D9B51AE5EFDBBDAC",
       "sha1": "5A79B6FA15B7085FC7062945F0E6D469D49871E1",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Lemmings%20(World).png"
     },
     {
@@ -3814,6 +3892,7 @@
       "crc": "51548F61",
       "md5": "E49134DDD959298BE16A6A702EB4A7A0",
       "sha1": "31B9926EFFF652151C8390529FC2C8A211AAFB0B",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Lemmings%20(World)%20(Beta).png"
     },
     {
@@ -3832,7 +3911,8 @@
       "size": 10873,
       "crc": "E7B92D77",
       "md5": "1D7C4538AC540442418E575A01A75AF5",
-      "sha1": "55D3841970052652C4FD48120C040D4C4E41F1A0"
+      "sha1": "55D3841970052652C4FD48120C040D4C4E41F1A0",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Lion King, The (Europe)",
@@ -3986,7 +4066,7 @@
       "md5": "78A7964B341CCC4379A837EE998805C7",
       "sha1": "5CC5CAA887A63C580C1E3FF344A4B0ADE643F24B",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Lucky%20Dime%20Caper%20Starring%20Donald%20Duck%2C%20The%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -4019,7 +4099,7 @@
       "md5": "D2B82F0A23B10168E47D62D708002D53",
       "sha1": "49412EBEF31558AFD8CB534C6914F5612EAA25B1",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Madden%2096%20(USA%2C%20Europe).png"
     },
     {
@@ -4128,6 +4208,7 @@
       "crc": "CF6D7BC5",
       "md5": "E496FF2196C372F4D6111538950D25CA",
       "sha1": "FB939F0810D0763B9ABAEEC1A2BFBABACAAD5441",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Magical%20Puzzle%20Popils%20(World).png"
     },
     {
@@ -4147,7 +4228,8 @@
       "size": 131072,
       "crc": "36A2DA11",
       "md5": "9DF2A140480D2397C0F5DD249BEBD544",
-      "sha1": "FB53789C37AA5F36009869BC6C8EA12C97ED65AE"
+      "sha1": "FB53789C37AA5F36009869BC6C8EA12C97ED65AE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Majors, The - Pro Baseball (USA)",
@@ -4190,7 +4272,7 @@
       "md5": "B83F36FD113A8F75F1A29652ACB641FC",
       "sha1": "42C5CD5AFEBBF860A8AD80EA684F9B216762109E",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Marble%20Madness%20(USA%2C%20Europe).png"
     },
     {
@@ -4223,7 +4305,7 @@
       "md5": "78655DABD43E475C3B4D849C3F0C7046",
       "sha1": "F9EABDB7E925360F69B41F5357ABCB36F893D72E",
       "region": "Europe",
-      "videoStandard": "PAL",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Master%20of%20Darkness%20(Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -4232,7 +4314,8 @@
       "size": 16384,
       "crc": "AF6E6CBC",
       "md5": "1A52D9A0F6971832C7EA266D5D6E6D0D",
-      "sha1": "021205B9AB828F1ED063FD5B24E6C063C18D5BE2"
+      "sha1": "021205B9AB828F1ED063FD5B24E6C063C18D5BE2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mazy Mini (World)",
@@ -4240,7 +4323,8 @@
       "size": 16384,
       "crc": "FC3A058C",
       "md5": "44B46E16E5BED2FBC90AC95892003F3F",
-      "sha1": "768688B0908F25BD5662935DBA5E7513E9B04095"
+      "sha1": "768688B0908F25BD5662935DBA5E7513E9B04095",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man (USA)",
@@ -4327,7 +4411,7 @@
       "md5": "C08B950E8AB836A737B07374F8235955",
       "sha1": "7B2D39B68622E18EAC6C27FD961133B1D002342B",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Micro%20Machines%20(USA%2C%20Europe).png"
     },
     {
@@ -4338,7 +4422,7 @@
       "md5": "878A1879F59C8C3108292ACE04D5BB37",
       "sha1": "51CB41C00020F80D7C3C80B217B41841AD59A825",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Micro%20Machines%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -4358,7 +4442,8 @@
       "size": 16384,
       "crc": "C3EB27E8",
       "md5": "DC93AD803F9FF7564959763B5C106798",
-      "sha1": "D72E136E889C00F520A47B9BA0A16683480AC50C"
+      "sha1": "D72E136E889C00F520A47B9BA0A16683480AC50C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mighty Morphin Power Rangers (USA, Europe)",
@@ -4368,7 +4453,7 @@
       "md5": "7FCB774AA2B207CF16D2DDFE618351C0",
       "sha1": "86C4D12257FAF355623F47F8FA22DA23A3B36CD9",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Mighty%20Morphin%20Power%20Rangers%20(USA%2C%20Europe).png"
     },
     {
@@ -4379,7 +4464,7 @@
       "md5": "8E91D4325C93F6C2BAE7B7775A43C6AF",
       "sha1": "88A90AC68FE67872CDEE9C4AB2B77595347297EB",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Mighty%20Morphin%20Power%20Rangers%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -4390,7 +4475,7 @@
       "md5": "F9ACD8F01CAA8D11150A53B37B435AA2",
       "sha1": "DFE7DC7B2DF143DA4F4EEB32051A6D373DDDBA5D",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Mighty%20Morphin%20Power%20Rangers%20-%20The%20Movie%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -4410,7 +4495,8 @@
       "size": 49152,
       "crc": "01A074AB",
       "md5": "B6FDD041E354C517002534F4C7B3B51D",
-      "sha1": "EF9631080E964A9B027A93264D40D5D523C1CEEE"
+      "sha1": "EF9631080E964A9B027A93264D40D5D523C1CEEE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Monster Truck Wars (USA, Europe)",
@@ -4420,7 +4506,7 @@
       "md5": "AA768D95B27CCB2A796379F7F01F1CE7",
       "sha1": "F493D5AEBEF88B44CADCB3459D214A6C3BA155C8",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Monster%20Truck%20Wars%20(USA%2C%20Europe).png"
     },
     {
@@ -4442,7 +4528,7 @@
       "md5": "F9971DC9D78214F94856F6E886B1C8C2",
       "sha1": "EF634649B846B3F49D2C68739B36019E4FAE0464",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Mortal%20Kombat%20(USA%2C%20Europe).png"
     },
     {
@@ -4453,7 +4539,7 @@
       "md5": "EFD7BC7767E9C87D1027627BA814CDDD",
       "sha1": "0D2CA2DE933993ED45B20EF736237BC774DD3914",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Mortal%20Kombat%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -4485,6 +4571,7 @@
       "crc": "4B304E0F",
       "md5": "159256F5A372F2E409ECB343A3946001",
       "sha1": "320D2B8B62EF0109621BBE609B02BD8B0769A0B9",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Mortal%20Kombat%20II%20(World).png"
     },
     {
@@ -4493,7 +4580,8 @@
       "size": 49152,
       "crc": "1CDE85C9",
       "md5": "D6C87CA0DBFE8A1A9FBD9DE25DB2BC77",
-      "sha1": "2B1696AC754DF2DF5159C4468EEF48F6FA4637F9"
+      "sha1": "2B1696AC754DF2DF5159C4468EEF48F6FA4637F9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mr. Ultra 2 (World) (Beta)",
@@ -4501,7 +4589,8 @@
       "size": 32768,
       "crc": "99CA79AE",
       "md5": "E83BF0096E7808730C71628C1ED8A5DA",
-      "sha1": "ACE361434BAD58CD3C4433EFDB393A7D2B39ADD5"
+      "sha1": "ACE361434BAD58CD3C4433EFDB393A7D2B39ADD5",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ms. Pac-Man (USA)",
@@ -4855,7 +4944,7 @@
       "md5": "3BB261C05BDA5E82708AF1C361797134",
       "sha1": "2DE5991810BAD1A4120A2698530C66D4DBF16F7C",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/NBA%20Jam%20(USA%2C%20Europe).png"
     },
     {
@@ -4865,6 +4954,7 @@
       "crc": "86C32E5B",
       "md5": "CFB2427A59CF67223E25AB2C46ABCA3E",
       "sha1": "C34E318852CA6F52E980C7A63721A145CD167843",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/NBA%20Jam%20-%20Tournament%20Edition%20(World).png"
     },
     {
@@ -5015,6 +5105,7 @@
       "crc": "61785ED5",
       "md5": "C2D0EE20EA58F5BFCFE7DDFF05722A2D",
       "sha1": "EA42BB90EEA90A159F8C662743AA59D6DD6F7250",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/NFL%20Quarterback%20Club%20(World).png"
     },
     {
@@ -5217,7 +5308,7 @@
       "md5": "A898B1D38CD6379090EF54A2F1D37FA2",
       "sha1": "8F243A6011F769538349C968929A500AFF7D3E6D",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/NHL%20Hockey%20(USA%2C%20Europe).png"
     },
     {
@@ -5281,7 +5372,8 @@
       "size": 32768,
       "crc": "D0CDFAFC",
       "md5": "AC5E430571200B5B5AF59CC3AF7C4568",
-      "sha1": "DD1544F4C3B3ABA0DE14220FBA5F65E15F1CBDEA"
+      "sha1": "DD1544F4C3B3ABA0DE14220FBA5F65E15F1CBDEA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Neko (World) (Demo 2)",
@@ -5289,7 +5381,8 @@
       "size": 32768,
       "crc": "743B96A0",
       "md5": "84D99B92369B64E497DA0AC9C844A711",
-      "sha1": "B2E4A013CC1F1BB016845E3B72CA5769C9EE6055"
+      "sha1": "B2E4A013CC1F1BB016845E3B72CA5769C9EE6055",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Neko Daisuki! (Japan)",
@@ -5308,7 +5401,8 @@
       "size": 16384,
       "crc": "A2B97DB3",
       "md5": "A6F84B82861FE51EB2B7944C49C726A0",
-      "sha1": "F7228D9D3DBA1BEA5A21E566130234C383A5CD50"
+      "sha1": "F7228D9D3DBA1BEA5A21E566130234C383A5CD50",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ninja Gaiden (Japan)",
@@ -5329,7 +5423,7 @@
       "md5": "764388B8B5DC2E762FAB9BADD0ECA6BA",
       "sha1": "1A5C44E76A0E913D76F590AFFAE3B2E24FBD0F59",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ninja%20Gaiden%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -5415,7 +5509,8 @@
       "crc": "3382D73F",
       "md5": "A08E0A90ABB143272D4B5F94B1A9846F",
       "sha1": "CC922D900534841730A2019E407D374A04276933",
-      "region": "Taiwan"
+      "region": "Taiwan",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Osotos Mini (World)",
@@ -5423,7 +5518,8 @@
       "size": 16384,
       "crc": "3DCA13E6",
       "md5": "6B39A30C8D3A0E6484B75A1DEA498A4A",
-      "sha1": "C6512203B33B371BC44484EB17031A22AB8892E2"
+      "sha1": "C6512203B33B371BC44484EB17031A22AB8892E2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ottifants, The (Europe) (En,Fr,De,Es,It)",
@@ -5444,7 +5540,7 @@
       "md5": "31BA1DE018853EAD9B43B522DF540C0C",
       "sha1": "41D5F3F95CA8CD288842BAD7BB5F7940C2BAA86D",
       "region": "Europe",
-      "videoStandard": "PAL",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/OutRun%20(Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -5488,7 +5584,7 @@
       "md5": "EA4A78F2D68E63D129598A225C02684B",
       "sha1": "DC71616C742F23979C5EB27AAFA27961170E0AE8",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/PGA%20Tour%2096%20(USA%2C%20Europe).png"
     },
     {
@@ -5510,7 +5606,7 @@
       "md5": "41350F8EFDCB619D409090E7DB66AC70",
       "sha1": "34A2B521C4577E4D1699311365722745D62F10AA",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/PGA%20Tour%20Golf%20(USA%2C%20Europe).png"
     },
     {
@@ -5521,7 +5617,7 @@
       "md5": "4EFD19D797AAA235A397B286DEBB7A5A",
       "sha1": "871B94F1FF63E2A89BC165382110D4F79DF53FA3",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/PGA%20Tour%20Golf%20II%20(USA%2C%20Europe).png"
     },
     {
@@ -5563,7 +5659,8 @@
       "size": 65536,
       "crc": "85595C91",
       "md5": "9AA58142A94B8554A8BAA4F7C364948D",
-      "sha1": "5121090C765D59C0443C6368BECFBF77842C1B32"
+      "sha1": "5121090C765D59C0443C6368BECFBF77842C1B32",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Pac-in-Time (USA) (Proto)",
@@ -5594,7 +5691,7 @@
       "md5": "60E9482350815E3BE5ADC2A59234F05A",
       "sha1": "B1F81F9E2B7197B2FA1475B9CD422479780EF7F2",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Paperboy%20(USA%2C%20Europe).png"
     },
     {
@@ -5625,7 +5722,8 @@
       "size": 32768,
       "crc": "A3E06E7A",
       "md5": "4BB7E14045CBC9C13F7C2A67E6746EFA",
-      "sha1": "D01B356706B5D281D858D41AEE8C5CFCD4DBB08E"
+      "sha1": "D01B356706B5D281D858D41AEE8C5CFCD4DBB08E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Pengo (Europe)",
@@ -5687,7 +5785,8 @@
       "size": 32768,
       "crc": "058D54F4",
       "md5": "9F13AB6DCAEA424019562F01AA7264D7",
-      "sha1": "188FB93D5A9C16A346AD845B5EEF690A7E364277"
+      "sha1": "188FB93D5A9C16A346AD845B5EEF690A7E364277",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Phantasy Star Adventure (Japan)",
@@ -5719,7 +5818,7 @@
       "md5": "28F08375A5CDB864564C7D5A3207D0F3",
       "sha1": "0E054455D99B6D1732ABBE9D0CA1B25825B70B87",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Phantom%202040%20(USA%2C%20Europe).png"
     },
     {
@@ -5750,7 +5849,8 @@
       "size": 1048576,
       "crc": "39DC7C0C",
       "md5": "D13F78B620F696AE4169A85BE477A272",
-      "sha1": "C0AB7158AEFD4F942A74373D690B81F6CF92B32D"
+      "sha1": "C0AB7158AEFD4F942A74373D690B81F6CF92B32D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Poker Face Paul's Blackjack (USA)",
@@ -5822,7 +5922,8 @@
       "size": 131072,
       "crc": "8DA58E3C",
       "md5": "C44BE980A54952CE70FF6D888C7B5051",
-      "sha1": "27ED04AF6773FCE540FD329BDC49343291486805"
+      "sha1": "27ED04AF6773FCE540FD329BDC49343291486805",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Pop Breaker (Japan) (En)",
@@ -5865,7 +5966,7 @@
       "md5": "D5836EC389EC2C81BD54728B96B87152",
       "sha1": "E4DB2140761B43426024BD08C4372BB9B8979D3D",
       "region": "Japan",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Power%20Strike%20II%20(Japan%2C%20Europe)%20(En).png"
     },
     {
@@ -5876,7 +5977,7 @@
       "md5": "886649DC63ACA898CE30A32348192CD5",
       "sha1": "76464809826A0CEED7CFD68A8FE5E06C06BD96FC",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Predator%202%20(USA%2C%20Europe).png"
     },
     {
@@ -5887,7 +5988,7 @@
       "md5": "1CE6A2D5B50098CBCC9F166F2CC44FBA",
       "sha1": "6D193840463722ED141ED503C2CFC7AE0077CE35",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Primal%20Rage%20(USA%2C%20Europe).png"
     },
     {
@@ -5918,7 +6019,7 @@
       "md5": "0D636C8D86DAFD4F2C337E34E94B1E41",
       "sha1": "7820699EE6B214F3F02F724F4D7891184CAF93F8",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Prince%20of%20Persia%20(USA%2C%20Europe).png"
     },
     {
@@ -5929,7 +6030,7 @@
       "md5": "197E31DCAFEA7023CC948FEA29C50230",
       "sha1": "0672814B9FB20DD217141F7853DB300343F2C1EA",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Prince%20of%20Persia%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -5993,7 +6094,7 @@
       "md5": "52CFDDC12AF6A3A64030F62CCF6ACA83",
       "sha1": "3BE13F79EEB26B82343AFAB3E740B3A1D35978EB",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Psychic%20World%20(USA%2C%20Europe%2C%20Brazil)%20(En)%20(Rev%201).png"
     },
     {
@@ -6015,7 +6116,7 @@
       "md5": "61C0B40329F89007AB44CC5EB29ADDFD",
       "sha1": "7038A6E60106EBA19E0AFF56C14749C2DBB5DE5F",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Putt%20_%20Putter%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -6092,7 +6193,7 @@
       "md5": "42854DD79BF57019A26DDD73E12B68AC",
       "sha1": "83BC52F669183F99ACCB078A454F786B5E320E40",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Quest%20for%20the%20Shaven%20Yak%20Starring%20Ren%20Hoek%20_%20Stimpy%20(USA%2C%20Europe).png"
     },
     {
@@ -6188,7 +6289,8 @@
       "size": 131072,
       "crc": "471C09B7",
       "md5": "90008552628768282F5993F4F9638B6E",
-      "sha1": "CE851F25E70093E7C2CC6D14F95918A8D1F31360"
+      "sha1": "CE851F25E70093E7C2CC6D14F95918A8D1F31360",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Rise of the Robots (USA, Europe)",
@@ -6198,7 +6300,7 @@
       "md5": "EBCEDB0B611788408D1B27171B77AD6B",
       "sha1": "9BA2F734ECCF5B2CEEFAA69CEBDF7399BC9032D8",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Rise%20of%20the%20Robots%20(USA%2C%20Europe).png"
     },
     {
@@ -6208,6 +6310,7 @@
       "crc": "EFE65B3B",
       "md5": "06F0A495FBB70FAD50246DA715F8ADD7",
       "sha1": "D0D950097471553B6A96DC9CF0FB14DDB3A7DDA2",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ristar%20(World).png"
     },
     {
@@ -6216,7 +6319,8 @@
       "size": 524288,
       "crc": "A1C214BD",
       "md5": "2B302F29D4F6D87E4250329A8DBA0739",
-      "sha1": "F746E8E99F4FCA811A32716D96A4E6528EC930EB"
+      "sha1": "F746E8E99F4FCA811A32716D96A4E6528EC930EB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ristar (World) (Beta 2)",
@@ -6224,7 +6328,8 @@
       "size": 524288,
       "crc": "672D38D5",
       "md5": "CB722A42FA9995FD68B01C6B75D4ED4D",
-      "sha1": "AC6D5E7F5C3FBD828876A12E10D89274025F3924"
+      "sha1": "AC6D5E7F5C3FBD828876A12E10D89274025F3924",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ristar (World) (Beta 3)",
@@ -6232,7 +6337,8 @@
       "size": 524288,
       "crc": "A302413C",
       "md5": "B59BA59EEEDA353D1D63FBA20A263CFE",
-      "sha1": "B13C32F50E7EB7D8147B7AD1D310E89E690BA6B2"
+      "sha1": "B13C32F50E7EB7D8147B7AD1D310E89E690BA6B2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ristar (World) (Beta 4)",
@@ -6240,7 +6346,8 @@
       "size": 524288,
       "crc": "44FA6AE6",
       "md5": "E6D0BC904B7C7114EFF0A7E3E750F7E9",
-      "sha1": "E2A06327647D9AD2358E34AAE069D7789BC70E65"
+      "sha1": "E2A06327647D9AD2358E34AAE069D7789BC70E65",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ristar (World) (Beta 5)",
@@ -6248,7 +6355,8 @@
       "size": 524288,
       "crc": "302D2B4B",
       "md5": "E93B6E37CB8B6CAF6C62262CF63A7D8A",
-      "sha1": "CF2A646D5C4B3F717A5C2A29D193210ABBF770CA"
+      "sha1": "CF2A646D5C4B3F717A5C2A29D193210ABBF770CA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Road Rash (Europe)",
@@ -6278,7 +6386,8 @@
       "size": 65536,
       "crc": "C71E6FA1",
       "md5": "F51650C767795BEAD14DA1CB422A44A2",
-      "sha1": "5E7982E3C808CAA005B9D77889D55627690EE0CE"
+      "sha1": "5E7982E3C808CAA005B9D77889D55627690EE0CE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "RoboCop 3 (World)",
@@ -6287,6 +6396,7 @@
       "crc": "069A0704",
       "md5": "AE7121E6CE2831E1B700515B6060ACAF",
       "sha1": "8DE7C9AC95B734AF9E3FBE5700AC4C6599799702",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/RoboCop%203%20(World).png"
     },
     {
@@ -6297,7 +6407,7 @@
       "md5": "D19DC027E7AFF95A1ABFD0DB074E1CF2",
       "sha1": "13286DF11FC66A8974A73A82E8478FA382FA2B43",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/RoboCop%20Versus%20The%20Terminator%20(USA%2C%20Europe).png"
     },
     {
@@ -6317,7 +6427,8 @@
       "size": 16384,
       "crc": "591350A8",
       "md5": "9CCD11C35DF05D5AB6BBE7F8AA464F4C",
-      "sha1": "D982C0B0D718738F1945D5BDFAC709C0DDAD4158"
+      "sha1": "D982C0B0D718738F1945D5BDFAC709C0DDAD4158",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ryuukyuu (Japan)",
@@ -6554,7 +6665,7 @@
       "md5": "E3C8FD81C70CDBFC4BC0B8684FCD8420",
       "sha1": "0D31C7DD2FF84F1A18AC5A71203BCD511534951D",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Shining%20Force%20-%20The%20Sword%20of%20Hajya%20(USA%2C%20Europe)%20(Virtual%20Console).png"
     },
     {
@@ -6608,6 +6719,7 @@
       "crc": "30F1C984",
       "md5": "8FA7438DEC1403F2E9D7B1CA60B29F1A",
       "sha1": "2E7303F82D885CB84FA557E211954808C8EBE779",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Shinobi%20(World)%20(Rev%20A).png"
     },
     {
@@ -6617,6 +6729,7 @@
       "crc": "B62D934A",
       "md5": "A0C373A38EC4271AC42EC99AFA2A6BE3",
       "sha1": "9AD7313DA97EF00463800199AB9E4E6F39FBCB0D",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Shinobi%20(World)%20(Rev%20A)%20(Virtual%20Console).png"
     },
     {
@@ -6626,6 +6739,7 @@
       "crc": "6201C694",
       "md5": "48D741774004EAB9C19C1DD43758BF2B",
       "sha1": "CD57301D16202EA02D9F97BD8B17D71772782C94",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Shinobi%20II%20-%20The%20Silent%20Fury%20(World).png"
     },
     {
@@ -6647,7 +6761,7 @@
       "md5": "A9DAC5C7F2DC324232C3B5A3263B761A",
       "sha1": "C8BBC1EA5B9B60EBCD15EFC2DC850E0FFD20DAE0",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Simpsons%2C%20The%20-%20Bart%20vs.%20the%20Space%20Mutants%20(USA%2C%20Europe).png"
     },
     {
@@ -6657,6 +6771,7 @@
       "crc": "DA7BD5C7",
       "md5": "B71C156BB1FCFA6C3C48924A7B3747FF",
       "sha1": "256672261C9A2D35E10EB06E990E8EBC46FB35C1",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Simpsons%2C%20The%20-%20Bart%20vs.%20the%20World%20(World).png"
     },
     {
@@ -6689,7 +6804,7 @@
       "md5": "634A3EF93D9E93B79F194559541ADEB8",
       "sha1": "AB37B26CA62339720D1CEFCB152A0ACA545359AA",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Slider%20(USA%2C%20Europe).png"
     },
     {
@@ -6709,7 +6824,8 @@
       "size": 32768,
       "crc": "D252DC65",
       "md5": "D892FBC2AF5CA6461AE4047617519EE7",
-      "sha1": "2E752BBD913365BB2BBBE45E8424A4BC5460CE40"
+      "sha1": "2E752BBD913365BB2BBBE45E8424A4BC5460CE40",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Snepzhen Solitaire (World)",
@@ -6717,7 +6833,8 @@
       "size": 32768,
       "crc": "FD06798C",
       "md5": "ACA63448B5D887239FC8821760D36EFB",
-      "sha1": "891811A7B86222B01F9A43664DB8186E2F8001B8"
+      "sha1": "891811A7B86222B01F9A43664DB8186E2F8001B8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Solitaire FunPak (USA)",
@@ -6738,7 +6855,7 @@
       "md5": "D76A2CF1BA1565C4EC6494EA4EE4075B",
       "sha1": "7478A2F641FA371999F2C9F0A1EFD9917615BE5F",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Solitaire%20Poker%20(USA%2C%20Europe).png"
     },
     {
@@ -6781,6 +6898,7 @@
       "crc": "031B9DA9",
       "md5": "56E1561D981A9A7C240CDD8D5580CCF0",
       "sha1": "11241BE4082F6F9D057488AE75CCDD482F623F8C",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20Blast%20(World).png"
     },
     {
@@ -6789,7 +6907,8 @@
       "size": 524288,
       "crc": "C09EF45B",
       "md5": "7B758A3F8ACD3D6FEF82B163DA1D2A34",
-      "sha1": "5D9FA949AEDDFC4251D7B8A58CB1122F190ECD36"
+      "sha1": "5D9FA949AEDDFC4251D7B8A58CB1122F190ECD36",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Blast (World) (Beta 2)",
@@ -6797,7 +6916,8 @@
       "size": 1048576,
       "crc": "362B186D",
       "md5": "5BFFD26D4A2A6ADAF2F312F9D51A002D",
-      "sha1": "E7BB20410C7AB341A3F7DF7FCFEE3A6996823655"
+      "sha1": "E7BB20410C7AB341A3F7DF7FCFEE3A6996823655",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Blast (World) (Beta 3)",
@@ -6805,7 +6925,8 @@
       "size": 1048576,
       "crc": "19DAD067",
       "md5": "DC3BA92C55276F2478F185C55C701B33",
-      "sha1": "12A8A59DA110B914ACDE68112DB691DF9595D4E8"
+      "sha1": "12A8A59DA110B914ACDE68112DB691DF9595D4E8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Blast (World) (Beta 4)",
@@ -6813,7 +6934,8 @@
       "size": 1048576,
       "crc": "5EECB549",
       "md5": "4E03B1985F36A925D0AEF44CE12D06BD",
-      "sha1": "DA497AE41BE3FCCC97EB18BD6349917E645C5179"
+      "sha1": "DA497AE41BE3FCCC97EB18BD6349917E645C5179",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Blast (World) (Beta 5)",
@@ -6821,7 +6943,8 @@
       "size": 1048576,
       "crc": "E6847AC0",
       "md5": "DAA3FB567D237281448A515E7E4EE5AA",
-      "sha1": "F1A1EDEE0EB15FAF74DD6896753F0F6ABCF12A45"
+      "sha1": "F1A1EDEE0EB15FAF74DD6896753F0F6ABCF12A45",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Blast (World) (Beta 6)",
@@ -6829,7 +6952,8 @@
       "size": 1048576,
       "crc": "2F22A352",
       "md5": "B4F35AEC668264AF115D3BD8D102406F",
-      "sha1": "8AA965B342466CC3AC4093BBA61ABF7D68B5EC86"
+      "sha1": "8AA965B342466CC3AC4093BBA61ABF7D68B5EC86",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Chaos (USA, Europe, Brazil) (En)",
@@ -6839,7 +6963,7 @@
       "md5": "895CA34F733C445341E5CA1642527690",
       "sha1": "5B5B7D9CD8ADF0F8E1EE15FD4557828F91DFDCA1",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20Chaos%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -6850,7 +6974,7 @@
       "md5": "7EE83089F6CBA6042493C0D49F1DC67C",
       "sha1": "77294880735369D09F2688784D85CDF3E80FA8A3",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20Chaos%20(USA%2C%20Europe%2C%20Brazil)%20(En)%20(Beta).png"
     },
     {
@@ -6882,6 +7006,7 @@
       "crc": "D6E8A305",
       "md5": "B39D1E9A40DFD3508EE4003CD28DA452",
       "sha1": "FE597C5CFBBC31E54F2484EB5B33C21C66CF0290",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20Drift%202%20(World).png"
     },
     {
@@ -6891,6 +7016,7 @@
       "crc": "5550173B",
       "md5": "AA6598585B2CDB92A14476BEEB34991B",
       "sha1": "E24BF33D8D5A79F371485F20F207B6B26F5B341E",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20Labyrinth%20(World).png"
     },
     {
@@ -6900,6 +7026,7 @@
       "crc": "B531A09E",
       "md5": "27C46DADDA7BD6D04BD7863975CDDE39",
       "sha1": "77B7A4972725C605346CB441AD0B532BFF21065D",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20Labyrinth%20(World)%20(Virtual%20Console).png"
     },
     {
@@ -6910,7 +7037,7 @@
       "md5": "8E3B44FDA375AD9748B678E9C6B45502",
       "sha1": "DF21D42B55B1B4A25704957FE323728B775EB84D",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20Spinball%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -6921,7 +7048,7 @@
       "md5": "697986B161416F0A825C36E9B9CAE1B8",
       "sha1": "1B6F1469D0E707AAB3EBA3C6748F350A30EB530F",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 10)",
@@ -6931,7 +7058,7 @@
       "md5": "128F3975903C44A150183579B880E7C1",
       "sha1": "A4C3D6B3601D321003AAD3B759487BDDB4CD64B3",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 11)",
@@ -6941,7 +7068,7 @@
       "md5": "11751E817EB8FDAE3117D37B77848E23",
       "sha1": "E59E3D9B0A8D9ADB13A32CFDBE027ADE81C8DED1",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 12)",
@@ -6951,7 +7078,7 @@
       "md5": "82B1F2656E2FA356DF07ABD0F2EC950E",
       "sha1": "F0ABF46487ACC6A2A93B3E7E93DBE9F651CCBD41",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 13)",
@@ -6961,7 +7088,7 @@
       "md5": "351ED856988FC763309613C7B7B71F6A",
       "sha1": "2BE84549AEECF580EF25290B7255270EDE38B830",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 14)",
@@ -6971,7 +7098,7 @@
       "md5": "8F1DB6CD04BB574A9175A4D177826025",
       "sha1": "35954B7E65E663FBA3066046E971316D5E573158",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 15)",
@@ -6981,7 +7108,7 @@
       "md5": "D7E2839B0A18C811C490C4D2450556CE",
       "sha1": "AB9AC3B4EBECD02C8F3B0D29B921A3D8BCF96458",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 16)",
@@ -6991,7 +7118,7 @@
       "md5": "088D45240470EA834A37318CB187488A",
       "sha1": "7577EEF2AC9823A539D6AF1C2673D1702D29695F",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 17)",
@@ -7001,7 +7128,7 @@
       "md5": "F4713905BFF582A7895D2FF3FB2CEBCB",
       "sha1": "975232A729179C1DB5307C072593CDBF83E233D6",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 18)",
@@ -7011,7 +7138,7 @@
       "md5": "0EF8F22D8D95427A5C22ACA684E3CD46",
       "sha1": "36CD00138F78BF31EE6098D1F5B0B2E870AB5637",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 19)",
@@ -7021,7 +7148,7 @@
       "md5": "AE8747357AF5CBAF4743F1FED69EB93C",
       "sha1": "CF9AFBC274AFCD28931BB1298C53BFDF6E04A9B6",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 2)",
@@ -7031,7 +7158,7 @@
       "md5": "D434BC645921890AD458E7CF01813395",
       "sha1": "81DC53C9103FAB356014E7E45082FC562CDD59EC",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 20)",
@@ -7041,7 +7168,7 @@
       "md5": "06CC26DB4CCC2418E0F204073E04D35B",
       "sha1": "8C16865212AD284A0929869A95980BCDF3D9BA81",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 3)",
@@ -7051,7 +7178,7 @@
       "md5": "97F87F9FBD32F90377C07A4F4DAC51F7",
       "sha1": "CEC96B3372A4ECB39AC7BD51829D4F641FF8D198",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 4)",
@@ -7061,7 +7188,7 @@
       "md5": "AB5D01525D4CFAE5BF59F5B11A6340F8",
       "sha1": "6B08DD5E60E957739CD7C8DEA5F9FCB2BF82009C",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 5)",
@@ -7071,7 +7198,7 @@
       "md5": "3E6179C47A1FD6E62FBB49745F3CAD7E",
       "sha1": "41260C00F83592C6C21800750BD25359F8CCE911",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 6)",
@@ -7081,7 +7208,7 @@
       "md5": "385114C0DF7E23898B83F038AD51F77C",
       "sha1": "F3A3B701F7700459B0A4175E6B8C24AB68518F40",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 7)",
@@ -7091,7 +7218,7 @@
       "md5": "88FA2EDE48D9F04EC84F4EBDA1735067",
       "sha1": "A066324F8D781EA218EA61689EEA6D6254BF9AAB",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 8)",
@@ -7101,7 +7228,7 @@
       "md5": "0E0235B01732D3E16ECBCF9A128A7707",
       "sha1": "35ED35FDA5FC8D5F1AC1068157C176BB216769E4",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic Spinball (USA, Europe, Brazil) (En) (Beta 9)",
@@ -7111,7 +7238,7 @@
       "md5": "CF90A8293D1AC1DC7A79D3C2AC7DB48A",
       "sha1": "3FD285036F794574B7310CA093A6D5D5BC244BC7",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sonic The Hedgehog (Japan, USA) (En)",
@@ -7142,6 +7269,7 @@
       "crc": "D163356E",
       "md5": "B1DE7027824C434CE8DE59782705F5C9",
       "sha1": "7DBBBCA2229E74FCB8F90EC794AA6E5CB168E489",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%20(World)%20(Rev%20A).png"
     },
     {
@@ -7151,6 +7279,7 @@
       "crc": "C2572208",
       "md5": "37A20D660517DE6A07B4981C253439EF",
       "sha1": "DA410B0F00CD0B3A70C3E18C83D0D71609D8EA43",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%20(World)%20(Rev%20A)%20(Virtual%20Console).png"
     },
     {
@@ -7161,7 +7290,7 @@
       "md5": "F0F7E4DFE2908F0030E64FD9ED843422",
       "sha1": "4965AF7FFE60382FFA805710B7C8006419CC4AC4",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%20-%20Triple%20Trouble%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -7172,7 +7301,7 @@
       "md5": "2FC9CD0ABA609D5BF179A7E66F561512",
       "sha1": "02257FECE665D04D3C88B5F5589773D5A8433953",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%20-%20Triple%20Trouble%20(USA%2C%20Europe%2C%20Brazil)%20(En)%20(Beta).png"
     },
     {
@@ -7193,6 +7322,7 @@
       "crc": "95A18EC7",
       "md5": "9C64846563D8B9A24400471322E53FB5",
       "sha1": "DABB452E416B4FA9CB83D8DDD307C2A32C3A1A7F",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%202%20(World).png"
     },
     {
@@ -7202,6 +7332,7 @@
       "crc": "850727A0",
       "md5": "39332EB123AEB1B906C70948641FE889",
       "sha1": "BA720D925FBED0D68E1D35F61C6F4FEC47708718",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Sonic%20The%20Hedgehog%202%20(World)%20(Virtual%20Console).png"
     },
     {
@@ -7222,6 +7353,7 @@
       "crc": "600C15B3",
       "md5": "CD3809B8D6D32144C45DE8E102623AA0",
       "sha1": "D00B8FF195D4423F2A344490EB34156017F4EE64",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Space%20Harrier%20(World).png"
     },
     {
@@ -7232,7 +7364,7 @@
       "md5": "13E2E27559B0AE898306506219DCC68B",
       "sha1": "46B064B4B5A6444CE0E64E16A7E5CEC2087FB4D3",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Spider-Man%20(USA%2C%20Europe).png"
     },
     {
@@ -7243,7 +7375,7 @@
       "md5": "ABA3B030CA9C78288F74DDD02C7AB5AB",
       "sha1": "37E2B3FD35138E9E939D5152D86E307F7AC06F7E",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Spider-Man%20-%20Return%20of%20the%20Sinister%20Six%20(USA%2C%20Europe).png"
     },
     {
@@ -7263,7 +7395,8 @@
       "size": 524288,
       "crc": "7CA0FB6B",
       "md5": "C7850A354D01346AF335667D68BEAC60",
-      "sha1": "08C5062D34D91007CE6860938E78BD5F61809202"
+      "sha1": "08C5062D34D91007CE6860938E78BD5F61809202",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Spirou (Europe) (Proto)",
@@ -7698,7 +7831,7 @@
       "md5": "5330216B69CFD046ABCC209CBC22D07E",
       "sha1": "48C14C0C2B4E38AC122D9CCDCDC8B194E15EF032",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Star%20Wars%20(USA%2C%20Europe).png"
     },
     {
@@ -7709,7 +7842,7 @@
       "md5": "B1B543A313BF406D1CD049AC84B31F26",
       "sha1": "682DF750F372134734D8668F08B9A5ACBB4F2CFD",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Star%20Wars%20(USA%2C%20Europe)%20(Rev%201).png"
     },
     {
@@ -7719,6 +7852,7 @@
       "crc": "FC7C64E4",
       "md5": "B24361360667C2730AE9CBE9004B54D0",
       "sha1": "011FD49600EAEF8BE7CBE35AB6EEB4E1554D836C",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Stargate%20(World).png"
     },
     {
@@ -7727,7 +7861,8 @@
       "size": 32768,
       "crc": "4EB39BBA",
       "md5": "CD662C0C74D2531DE65763DE3E7717B6",
-      "sha1": "1525B653C941E0775D6E51B01B05EF663F2E5777"
+      "sha1": "1525B653C941E0775D6E51B01B05EF663F2E5777",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Street Battle (USA) (Proto)",
@@ -7766,6 +7901,7 @@
       "crc": "3D8BCF1D",
       "md5": "1ECE7480D21FB862A65233BA126282D3",
       "sha1": "CA8C8A00EE838E994B2FA17E595DDD40D898CF42",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Streets%20of%20Rage%20(World).png"
     },
     {
@@ -7775,6 +7911,7 @@
       "crc": "0B618409",
       "md5": "5566E332F860DC0F9DA1507FD7FEB1CD",
       "sha1": "2804B355347BDA6E2903078BA30ED6B3A289EBBA",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Streets%20of%20Rage%202%20(World).png"
     },
     {
@@ -7784,6 +7921,7 @@
       "crc": "6C395A69",
       "md5": "3EDB60B0434B48C80DF97E99CB660654",
       "sha1": "15589214EB8570C9B2BF2EDE14803D08C77C29F8",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Streets%20of%20Rage%202%20(World)%20(Beta).png"
     },
     {
@@ -7827,7 +7965,7 @@
       "md5": "8F1DE0CAA864BEED2A61F391795B0A10",
       "sha1": "CE59845E973B7FB7B3B2121B35A95FBA5727DF62",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Super%20Columns%20(USA%2C%20Europe).png"
     },
     {
@@ -7838,7 +7976,7 @@
       "md5": "1513E04AB34FF687E6BFCF89199CCE5A",
       "sha1": "E5B23A687C9DD285970F4783369E36C7A96D19FA",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Columns (USA, Europe) (Beta 2)",
@@ -7848,7 +7986,7 @@
       "md5": "D829D132768AF645EC9770CE7751AEB6",
       "sha1": "29DAC0DA809C8A74C6610E4DDE300EFADDACA29A",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Columns (USA, Europe) (Beta 3)",
@@ -7858,7 +7996,7 @@
       "md5": "D592E3AC72DB3D3829B5C56FD9B6C0E4",
       "sha1": "3EDAD6D335D5F6EC3DC403FD642CD6A71E3C053D",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Columns (USA, Europe) (Beta 4)",
@@ -7868,7 +8006,7 @@
       "md5": "EEF5E19E5314CD512BBF9CFE700C9482",
       "sha1": "B7CABE08F0E0850B055FD0E694E175E8F1C47E4D",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Columns (USA, Europe) (Beta 5)",
@@ -7878,7 +8016,7 @@
       "md5": "9C8597827B2B6632288DCD2E518C5EA1",
       "sha1": "D3050DE383E772BB068D4C722BBE91FF05172D45",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Columns (USA, Europe) (Beta 6)",
@@ -7888,7 +8026,7 @@
       "md5": "AF4AA4DFC874B945FBE61D31D8C20C00",
       "sha1": "B2BC04E1F7A00EC5431774DB0B47DA53DB57D3A3",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Columns (USA, Europe) (Beta 7)",
@@ -7898,7 +8036,7 @@
       "md5": "0F9EB3B55945F0057E0E1A04424A64FC",
       "sha1": "FED437CF7D22C685FEF7B2E55579CD77BB48E232",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Golf (Japan) (En)",
@@ -7963,7 +8101,7 @@
       "md5": "91558564F8C32117D7F05E1FEF3B8C17",
       "sha1": "D834E43D7EC6DBADF2E367AFD45B7E1E4362035B",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Super%20Monaco%20GP%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -7974,7 +8112,7 @@
       "md5": "CE6809A18FB430A2863231B2DAC51DB2",
       "sha1": "C5EE89F785C44784867C3B33FD6466FC72E9042C",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Super%20Off%20Road%20(USA%2C%20Europe).png"
     },
     {
@@ -7985,7 +8123,7 @@
       "md5": "9BA272B3A9477C51B75A8CBBC4A0498C",
       "sha1": "5703EDEFFD93EF20F8AB88EA5160C7FFB41C7A47",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Super%20Off%20Road%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -7994,7 +8132,8 @@
       "size": 131072,
       "crc": "3429D807",
       "md5": "0EAA25D0E0046C198AE2405BEDAFE94C",
-      "sha1": "71C39F0125819CFBB71E15112E354B6E21D400A2"
+      "sha1": "71C39F0125819CFBB71E15112E354B6E21D400A2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Princess' 2092 - Exodus (World) (v1.1)",
@@ -8002,7 +8141,8 @@
       "size": 131072,
       "crc": "273218CA",
       "md5": "EEF162E952EF9C01EA2087D35105CC5A",
-      "sha1": "0672AC93ECBD2304B05F4D08E7CBCC9F4ADFFBD3"
+      "sha1": "0672AC93ECBD2304B05F4D08E7CBCC9F4ADFFBD3",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Smash T.V. (World)",
@@ -8011,6 +8151,7 @@
       "crc": "1006E4E3",
       "md5": "D378D5784B82154BDC7B36976A7C7737",
       "sha1": "85189E29F3F6B94F95723BC75571E9424DF119F9",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Super%20Smash%20T.V.%20(World).png"
     },
     {
@@ -8021,7 +8162,7 @@
       "md5": "6367666402C51229D283AC0CF5BF3FFB",
       "sha1": "3864C399F76E67AE4FF40D32A60C36AD16578988",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Super%20Space%20Invaders%20(USA%2C%20Europe).png"
     },
     {
@@ -8032,7 +8173,7 @@
       "md5": "FC8D04E6975267CDC6BD49A0DEA33C41",
       "sha1": "A37858100903AD1E0224C870FE12419C25DF90E0",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Super%20Star%20Wars%20-%20Return%20of%20the%20Jedi%20(USA%2C%20Europe).png"
     },
     {
@@ -8065,7 +8206,7 @@
       "md5": "63F72877317FD3C17B0D867EA3169F56",
       "sha1": "23E493F7C19FFB17E67392289C5A72DC9D0D6D9E",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Surf%20Ninjas%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -8074,7 +8215,8 @@
       "size": 131072,
       "crc": "F2984436",
       "md5": "4B349820763705A31A526C2B6251716B",
-      "sha1": "CD291A2DAFA8BAA2A277BCF77FD259CEE0A27F3C"
+      "sha1": "CD291A2DAFA8BAA2A277BCF77FD259CEE0A27F3C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sushi Nights (World) (v1.01)",
@@ -8082,7 +8224,8 @@
       "size": 131072,
       "crc": "BDC4C3C9",
       "md5": "811A5D51566D50D24A1134C62467CCA9",
-      "sha1": "0205508C951C389B8DC306237BE12767B468453E"
+      "sha1": "0205508C951C389B8DC306237BE12767B468453E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sushi Nights (World) (v1.04)",
@@ -8090,7 +8233,8 @@
       "size": 131072,
       "crc": "934523BB",
       "md5": "51667F190C9A8C80E5BD7C2F83F81EB3",
-      "sha1": "06F1EB442611A850F57289ACF513BBC94B1A00D2"
+      "sha1": "06F1EB442611A850F57289ACF513BBC94B1A00D2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Svellas Micro (World)",
@@ -8098,7 +8242,8 @@
       "size": 16384,
       "crc": "D0A447DD",
       "md5": "AB3E9ACFF8A0EA8D88BEFB46637066C2",
-      "sha1": "3E5595F99105CDB68C0131FE19473ABD8895CF3A"
+      "sha1": "3E5595F99105CDB68C0131FE19473ABD8895CF3A",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Swabby (World) (v1.11)",
@@ -8106,7 +8251,8 @@
       "size": 131072,
       "crc": "B814AD3D",
       "md5": "DB672D52225564B6F520E8A0A4B1A4C7",
-      "sha1": "64F7350CA2C37C44B679E35F9BFD2766C7259CB9"
+      "sha1": "64F7350CA2C37C44B679E35F9BFD2766C7259CB9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sylvan Tale (Japan)",
@@ -8138,7 +8284,7 @@
       "md5": "D459D14BADDFA9F8A69E91F79BE71B9B",
       "sha1": "12B6F5542B6CEBFE872096EAB2A885D297EEFA2F",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/T2%20-%20The%20Arcade%20Game%20(USA%2C%20Europe).png"
     },
     {
@@ -8148,6 +8294,7 @@
       "crc": "5BB6E5D6",
       "md5": "A8BDB1BEED088FF83C725C5AF6B85E1F",
       "sha1": "DA3DF145B8E9F2A2E680D2C92939084D4530ED90",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Tails%20Adventure%20(World)%20(En%2CJa).png"
     },
     {
@@ -8157,6 +8304,7 @@
       "crc": "A354EA49",
       "md5": "C2FE111A6E569EC6D58B9ECC32DE0E12",
       "sha1": "8A3C327B328DEF981779CE436DF7857578C01883",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Tails%20Adventure%20(World)%20(En%2CJa)%20(Virtual%20Console).png"
     },
     {
@@ -8222,7 +8370,7 @@
       "md5": "0C03DF9B73F191C27755C3816343827F",
       "sha1": "60E5C27A07A69969EA1BA830CC82DF33A5FBF227",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/TaleSpin%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -8277,7 +8425,7 @@
       "md5": "6DB88AB8C4DDCF3CAF5424A993A79521",
       "sha1": "1D19306B7DBCB37FD1AB62021B5054EFD2D04889",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Taz%20in%20Escape%20from%20Mars%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -8288,7 +8436,7 @@
       "md5": "0EC6E6F437D85EA13E3273E3DAB22086",
       "sha1": "47B98EE8DFE407BAC65FD02257E99221FEB088FC",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 10)",
@@ -8298,7 +8446,7 @@
       "md5": "11D0E1392A58D2B28B7E236A20F8A760",
       "sha1": "02B726D8C0DA2F51076AD95DDC750D423636A807",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 11)",
@@ -8308,7 +8456,7 @@
       "md5": "E03CC0209501D5AA8796F9C5779C3E69",
       "sha1": "B383C0E67E47BB1B6F2402948408DA1D5418C354",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 12)",
@@ -8318,7 +8466,7 @@
       "md5": "116FDFCF5A822CA7C445CE45DB1EA4FB",
       "sha1": "5FB66139767319777153FADDBDFDB1168F898546",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 13)",
@@ -8328,7 +8476,7 @@
       "md5": "EF48B3A2F4406EE3C6DCD7BB8944AB36",
       "sha1": "C3CBE41444DADD60A0F79AF213A50EAB552F083F",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 14)",
@@ -8338,7 +8486,7 @@
       "md5": "A359FC4EB069C4CC4CF15D97441BEEF6",
       "sha1": "3D0DA9536C47ECAD367A83A6645172CEE46B2CA8",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 2)",
@@ -8348,7 +8496,7 @@
       "md5": "BD832F0910005DAD0750C4A211D714FC",
       "sha1": "ED5A66C278FC429FD4DDB993C4A7BDF2D2400A3A",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 3)",
@@ -8358,7 +8506,7 @@
       "md5": "EE2FADEBCD57021B9AE80D6C0349462E",
       "sha1": "8800DA06EA2AA3982CF2E294B165F5E1A9CAB63C",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 4)",
@@ -8368,7 +8516,7 @@
       "md5": "84D3C8C1921019CF783C8D5B9B52F0FC",
       "sha1": "D32127A67F988062407D92BB1DFDF3CE38210E31",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 5)",
@@ -8378,7 +8526,7 @@
       "md5": "2A8ED6F2ACDE315546B62B30DFBB7F43",
       "sha1": "6482E281447B586C533A45527DB52BD5C333EBDD",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 6)",
@@ -8388,7 +8536,7 @@
       "md5": "C1314681D1CE4EFF3423CF07D95EEFAA",
       "sha1": "9CC498D9975FA2633A4EC98581768856884163A8",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 7)",
@@ -8398,7 +8546,7 @@
       "md5": "78E31C497A4E7A28AAA5D1CB328F9106",
       "sha1": "B1B5F7B06001F38E0533BC489B5C7F8B9CAF6A5B",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 8)",
@@ -8408,7 +8556,7 @@
       "md5": "8B63C2B375637AD77A3F29672C7EC251",
       "sha1": "20C0398E036F733734D2D38E8D2E3E57A1086106",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz in Escape from Mars (USA, Europe, Brazil) (En) (Beta 9)",
@@ -8418,7 +8566,7 @@
       "md5": "746EEE88E966860EA83E49C1C74F92D2",
       "sha1": "AFCA21F4F5337540343B6C74F36D6B2D0C9CA6C9",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Taz-Mania (USA, Europe, Brazil) (En)",
@@ -8428,7 +8576,7 @@
       "md5": "70220F584B2D4F69E5EFA9A3268A4A88",
       "sha1": "0D0285BC5350146F365DAE1F271ED0828971CF4D",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Taz-Mania%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -8438,6 +8586,7 @@
       "crc": "DE466796",
       "md5": "D5D52E216698B34A3DBE95D5990C52C8",
       "sha1": "A2D800D2836A03F81DD8F3DDA23CD2D8BFFF18A5",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Tempo%20Jr.%20(World).png"
     },
     {
@@ -8446,7 +8595,8 @@
       "size": 524288,
       "crc": "A33B5B92",
       "md5": "C3DD941B63D62CC15E18530ED6B9BDEB",
-      "sha1": "D909B2B153E500C506A5CEE3439D3C514C58600B"
+      "sha1": "D909B2B153E500C506A5CEE3439D3C514C58600B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 2)",
@@ -8454,7 +8604,8 @@
       "size": 524288,
       "crc": "3475D48E",
       "md5": "6B77BA7FF746AD45F77BFA14ABF8D97C",
-      "sha1": "C86B63D669464CBA8BF167C33CFA8DC5BF1625B4"
+      "sha1": "C86B63D669464CBA8BF167C33CFA8DC5BF1625B4",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 3)",
@@ -8462,7 +8613,8 @@
       "size": 524288,
       "crc": "FB9A5885",
       "md5": "5EC3C24A33ADD41ADF3909C3A0F16145",
-      "sha1": "6112068A8B6AD0E34AFC2D576C2EF7E95AF32C6D"
+      "sha1": "6112068A8B6AD0E34AFC2D576C2EF7E95AF32C6D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 4)",
@@ -8470,7 +8622,8 @@
       "size": 524288,
       "crc": "E484E41C",
       "md5": "9493D4617A7AE96B8C95E18F9A2CC863",
-      "sha1": "9FB56C4CB39F48BDFB6A16A7AF40B85888D81B3B"
+      "sha1": "9FB56C4CB39F48BDFB6A16A7AF40B85888D81B3B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 5)",
@@ -8478,7 +8631,8 @@
       "size": 524288,
       "crc": "AB6DC88C",
       "md5": "4A8BC6281BF4F66DD76150142C976FDE",
-      "sha1": "987BBF9F394A3AA7E79A95B847B093E45D532296"
+      "sha1": "987BBF9F394A3AA7E79A95B847B093E45D532296",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 6)",
@@ -8486,7 +8640,8 @@
       "size": 524288,
       "crc": "96D64B16",
       "md5": "99BD890AD3CC1539019C1CD8A75DA1D1",
-      "sha1": "01A81E62F04759993D1FB865AA5F7FEB086E15EC"
+      "sha1": "01A81E62F04759993D1FB865AA5F7FEB086E15EC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 7)",
@@ -8494,7 +8649,8 @@
       "size": 524288,
       "crc": "7AFEDF36",
       "md5": "12AD4B3C6759CC6DABDE4998CAAF3B90",
-      "sha1": "75A0914F97622C3F148B7874A8B8CE564A150EAE"
+      "sha1": "75A0914F97622C3F148B7874A8B8CE564A150EAE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 8)",
@@ -8502,7 +8658,8 @@
       "size": 524288,
       "crc": "3EF6551C",
       "md5": "2F080114C5A110B02D1079399241EF44",
-      "sha1": "F3A25425C939A3190C15A1C35A86CDE116DCC5EA"
+      "sha1": "F3A25425C939A3190C15A1C35A86CDE116DCC5EA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tempo Jr. (World) (Beta 9)",
@@ -8510,7 +8667,8 @@
       "size": 524288,
       "crc": "79E83D67",
       "md5": "9A1E8FB53EF4FCF05D4FB5BB9A5D0204",
-      "sha1": "BB2CFEB11E0319021A83A63556BD5E4F98E3D217"
+      "sha1": "BB2CFEB11E0319021A83A63556BD5E4F98E3D217",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tengen World Cup Soccer (USA, Europe)",
@@ -8520,7 +8678,7 @@
       "md5": "C7570D82D91DC353D7DF445453FC0646",
       "sha1": "8E1BEAB60E120924656D8A741A38B112ABD7EF97",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Tengen%20World%20Cup%20Soccer%20(USA%2C%20Europe).png"
     },
     {
@@ -8531,7 +8689,7 @@
       "md5": "66058E05A8EE09B2B6311BA759433B8F",
       "sha1": "69BB04A218D207A9A907A37970B6AC992A64B8CD",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Tengen%20World%20Cup%20Soccer%20(USA%2C%20Europe)%20(Beta).png"
     },
     {
@@ -8541,6 +8699,7 @@
       "crc": "1BD15773",
       "md5": "67388B1C9758E7F0C0957EB9A788611A",
       "sha1": "833C94EA65A7C36349B2BB0B2B637116F54A6762",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Terminator%202%20-%20Judgment%20Day%20(World).png"
     },
     {
@@ -8551,7 +8710,7 @@
       "md5": "B9190F130F728BA8C05D82D5F01FDE21",
       "sha1": "1889D019BD9F5919517805A2E02A9691DE5EF634",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Terminator%2C%20The%20(USA%2C%20Europe).png"
     },
     {
@@ -8582,7 +8741,8 @@
       "size": 65536,
       "crc": "E0654D27",
       "md5": "C77E1427E7DD3694BDAD73D166C60D6E",
-      "sha1": "B0A0BF66B1106B39E027574B8215BC658695BB4B"
+      "sha1": "B0A0BF66B1106B39E027574B8215BC658695BB4B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tintin in Tibet (Europe) (En,Fr,De,Es,Nl,Sv)",
@@ -8614,7 +8774,7 @@
       "md5": "C0246EED0C11EBE7A9B144A00ED61DF1",
       "sha1": "514F8BC2E9306F4005D5A8AA2DC49304D48BFC82",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Tom%20and%20Jerry%20-%20The%20Movie%20(USA%2C%20Europe)%20(En%2CJa).png"
     },
     {
@@ -8635,6 +8795,7 @@
       "crc": "5173B02A",
       "md5": "758BFE2BABA5D8B518C6F746864BB8D5",
       "sha1": "7EE525E68B9F3BCA2A5BDD6DE14711108DCBC288",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/True%20Lies%20(World).png"
     },
     {
@@ -8645,7 +8806,7 @@
       "md5": "23ED27EBB1ED0F22610E132A3668F06B",
       "sha1": "7994621926628D2376A75E8D90CD066D48A4D502",
       "region": "Japan",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Ultimate%20Soccer%20(Japan%2C%20Europe%2C%20Brazil)%20(En%2CFr%2CDe%2CEs%2CIt).png"
     },
     {
@@ -8667,7 +8828,7 @@
       "md5": "1093DBDC69A36330973CFB76C292C0EF",
       "sha1": "0986935CEE44541C1E24BCD4DC3D9F87F324BBBE",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/VR%20Troopers%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -8698,7 +8859,8 @@
       "size": 32768,
       "crc": "3C456BBF",
       "md5": "A691DD3F8610F0CAE8E8A9A6EA59A760",
-      "sha1": "DAEBC23F09D1F6BF1A2E3620E3247C58E48B102C"
+      "sha1": "DAEBC23F09D1F6BF1A2E3620E3247C58E48B102C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Virtua Fighter Animation (USA, Europe)",
@@ -8708,7 +8870,7 @@
       "md5": "DB315B11C28F8BE4ECDAC77759E889DE",
       "sha1": "222F3E49F595CEB4263AF329C4021D64FC4772E6",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Virtua%20Fighter%20Animation%20(USA%2C%20Europe).png"
     },
     {
@@ -8730,7 +8892,7 @@
       "md5": "D810E851AD60ED5BA50B6246C2CE12F2",
       "sha1": "585E147026BD998062E64ED3C0AAA0A07E6EE734",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/WWF%20Raw%20(USA%2C%20Europe).png"
     },
     {
@@ -8741,7 +8903,7 @@
       "md5": "93E08B96E19EB89C6BA7E2BF3824C990",
       "sha1": "59E2FAB18A0244EFCC9CB9AD1E4ED3A1C777948D",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/WWF%20Wrestlemania%20-%20Steel%20Cage%20Challenge%20(USA%2C%20Europe).png"
     },
     {
@@ -8761,7 +8923,8 @@
       "size": 65536,
       "crc": "6BB36DFC",
       "md5": "44D92C492CAA17F298D216B9E272DD3D",
-      "sha1": "FD56A237586A20CF3CEEA9E3FAC20D0A9EAE77CF"
+      "sha1": "FD56A237586A20CF3CEEA9E3FAC20D0A9EAE77CF",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Wheel of Fortune (USA)",
@@ -8791,6 +8954,7 @@
       "crc": "CE1108FD",
       "md5": "05E39EB8DC19C023F4A4FED36C058675",
       "sha1": "6AA588E0AA93C5C74C80F7044DE49933291AF4E9",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Wimbledon%20(World).png"
     },
     {
@@ -8799,7 +8963,8 @@
       "size": 131072,
       "crc": "DC5885FF",
       "md5": "991F19B7E12508365E6C30EC304F70EA",
-      "sha1": "10BC0E1106D7BB1DA5E183FD6339CC3291EFF8C5"
+      "sha1": "10BC0E1106D7BB1DA5E183FD6339CC3291EFF8C5",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Wing Warriors (World) (En,Fr,Es) (v1.1)",
@@ -8807,7 +8972,8 @@
       "size": 131072,
       "crc": "0BEB8382",
       "md5": "95435210F3AB46F89DECD2E4178A714D",
-      "sha1": "8F670F043AACB943B76F5C76BD65326291D9A93D"
+      "sha1": "8F670F043AACB943B76F5C76BD65326291D9A93D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Wing Warriors (World) (En,Fr,Es,Pt)",
@@ -8815,7 +8981,8 @@
       "size": 131072,
       "crc": "7FC13192",
       "md5": "D2B10BE811907E67074C7F9DC01C9D9B",
-      "sha1": "30ECB0A3A2436796F3A1A6E4A7D4CDDE1BD5083E"
+      "sha1": "30ECB0A3A2436796F3A1A6E4A7D4CDDE1BD5083E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Winter Olympics (Japan) (En,Fr,De,Es,It,Pt,Sv,No)",
@@ -8836,7 +9003,7 @@
       "md5": "6AF2738B6B12780A017FA743485FC396",
       "sha1": "6F9942792072626F1322E11835DBC5E2E94AA718",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Winter%20Olympics%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs%2CIt%2CPt%2CSv%2CNo).png"
     },
     {
@@ -8867,7 +9034,8 @@
       "size": 524288,
       "crc": "C2760884",
       "md5": "092713CEBD64E18C70C17C400C5DEAA2",
-      "sha1": "1E4A995CD5D9968662D26906D7C2B3072FFD8B2A"
+      "sha1": "1E4A995CD5D9968662D26906D7C2B3072FFD8B2A",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Wonder Boy (Europe)",
@@ -8952,7 +9120,7 @@
       "md5": "A23E89266DDAD3C856E7401D04A49C6C",
       "sha1": "4EFBFA1D3234D8F1800A06AB72B2177FBA6914CB",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/Woody%20Pop%20(USA%2C%20Europe%2C%20Brazil)%20(En).png"
     },
     {
@@ -8963,7 +9131,7 @@
       "md5": "13F72ACFEA47587F9AA9F655BF98653C",
       "sha1": "23B28CF137ADC947FFD1AF649CF3C8D64E6FADC1",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/World%20Class%20Leaderboard%20(USA%2C%20Europe).png"
     },
     {
@@ -8974,7 +9142,7 @@
       "md5": "D95D381C6AFFB8345EE5457655E393D1",
       "sha1": "5596ECB5B7A28027E5C0AD1C8ACC73C45E7A1265",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/World%20Cup%20USA%2094%20(USA%2C%20Europe%2C%20Brazil)%20(En%2CFr%2CDe%2CEs%2CIt%2CNl%2CPt%2CSv).png"
     },
     {
@@ -9110,7 +9278,7 @@
       "md5": "028E3E0687AABA52629EE29E21E5126D",
       "sha1": "46237CF1C2810A8F2E5C31907A1AE04B647256C8",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "X-Men - GameMaster's Legacy (USA, Europe) (Beta 2)",
@@ -9120,7 +9288,7 @@
       "md5": "E5CE888CF6B6517F23259FA18C4C657C",
       "sha1": "9DF11129D4F7E55A1380B139D1BB0CDB4137A702",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "X-Men - GameMaster's Legacy (USA, Europe) (Beta 3)",
@@ -9130,7 +9298,7 @@
       "md5": "927F0791A9941907650036C60E50B546",
       "sha1": "1078EF9C16CB997F61EDDBD07C1BFBC5F74B177B",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "X-Men - Gamemaster's Legacy (USA, Europe)",
@@ -9140,7 +9308,7 @@
       "md5": "571AC03B80E3075C699CD583BF8651FD",
       "sha1": "872596D40AAE1755C9DDA99180CB165166267904",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_Game_Gear/HEAD/Named_Boxarts/X-Men%20-%20Gamemaster's%20Legacy%20(USA%2C%20Europe).png"
     },
     {
@@ -9240,7 +9408,8 @@
       "size": 16384,
       "crc": "52CB91DF",
       "md5": "EEC1386A31FA781DFD0AAD2B028D17D3",
-      "sha1": "DBD48DD2E0FF5C750B0785A2F45D391DF4CD1E47"
+      "sha1": "DBD48DD2E0FF5C750B0785A2F45D391DF4CD1E47",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Yogi Bear in Yogi Bear's Goldrush (Europe) (Proto)",
@@ -9280,7 +9449,8 @@
       "size": 65536,
       "crc": "26DEC9CE",
       "md5": "8FE0667E6C84F7D8D4504DA4758A4A5F",
-      "sha1": "906451F224EF599D54FBD708F914860E1BCC808D"
+      "sha1": "906451F224EF599D54FBD708F914860E1BCC808D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Zan Gear (Japan)",
@@ -9354,7 +9524,8 @@
       "size": 65536,
       "crc": "590F9C54",
       "md5": "60D5FFE2D56CFE460F86FA4B91C9CA84",
-      "sha1": "602D68FD0C334990219059B59F125382BF20E0FD"
+      "sha1": "602D68FD0C334990219059B59F125382BF20E0FD",
+      "videoStandard": "PAL, NTSC"
     }
   ]
 }

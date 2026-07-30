@@ -5,7 +5,8 @@
     "totalFiles": 447,
     "totalCovers": 441,
     "totalGameCovers": 0,
-    "generated": "2026-07-30T10:39:18.724Z"
+    "totalGameCoverUrls": 0,
+    "generated": "2026-07-30T12:24:58.646Z"
   },
   "covers": {},
   "list": [
@@ -113,6 +114,7 @@
       "crc": "D76C4169",
       "md5": "F0B6CC101007ED7A6878F7F9CEE5EBDD",
       "sha1": "39439C11275269FA8A7EC7C29153FF674F0AB4A1",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Air%20Zonk%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -231,6 +233,7 @@
       "crc": "FDDC5814",
       "md5": "29ABB6671FC4A4217473CD955CB76AE8",
       "sha1": "518341D715C8FB651EDC1BACB2848DBB0ACAE097",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Atlantean%20(World)%20(Aftermarket)%20(Homebrew).png"
     },
     {
@@ -409,6 +412,7 @@
       "crc": "E52BE33E",
       "md5": "95B746797CEE1976E3A84E1538DAD6C1",
       "sha1": "42D6B4F80A225951200F7263D33FD7209162FBE8",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Blazing%20Lazers%20(World)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -491,6 +495,7 @@
       "crc": "4C7BA73B",
       "md5": "32E20C5B317F599060195D3276DADDD2",
       "sha1": "B5E2FC745723634D9955A3D3418BA21859893A7B",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Bomberman%20'93%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -525,6 +530,7 @@
       "crc": "1AAB222E",
       "md5": "B8E9DE07AADEF68FDB306E4B1D97B928",
       "sha1": "0F933199F5DBC01BFF200CF9AEB9FCFFFBD98A00",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Bomberman%20'94%20(World)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -595,6 +601,7 @@
       "crc": "1F6511D7",
       "md5": "73B3EF4925207683F83598288A00B1D3",
       "sha1": "4CFB1F9150BDE55066DC450EC93AAB16B869CA45",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Bonk%203%20-%20Bonk's%20Big%20Adventure%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -617,6 +624,7 @@
       "crc": "704C801E",
       "md5": "CC7721FCD414095C810EDF8D95C85C52",
       "sha1": "0C15C2E532964BB42120685DB19F6205AE5EB6AD",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Bonk's%20Adventure%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -639,6 +647,7 @@
       "crc": "2020817A",
       "md5": "D837420442BFCE0B1D10DFE3901DA0A7",
       "sha1": "BE90E3C59586268D10962880497A110A0C5CB5C8",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Bonk's%20Revenge%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -649,6 +658,7 @@
       "crc": "F36FFEE1",
       "md5": "34E8B8C01D7721A33C7D131F77C8C082",
       "sha1": "A9908331D835CE3F6AE301E2A6232FE59861C454",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Bonk's%20Revenge%20(USA%2C%20Europe)%20(Wii%20Virtual%20Console).png"
     },
     {
@@ -1031,6 +1041,7 @@
       "crc": "EB2466F9",
       "md5": "F98DF7740F72FBAB06E9252A0160A807",
       "sha1": "A31340575DE9AAAD33338A807BAA5FCA33D18767",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Darius%20Alpha%20(World)%20(SG%20Enhanced)%20(Darius%20Cozmic%20Collection).png"
     },
     {
@@ -1173,6 +1184,7 @@
       "crc": "6308EB07",
       "md5": "469D79940731A034D26B3899EE434BBB",
       "sha1": "F1E6829BAB3306486ECCCA39C7D11CC0B8435C62",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Devil's%20Crush%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -1279,6 +1291,7 @@
       "crc": "D189B4AD",
       "md5": "2B7A15EC3C5A5318CF76D9B162146501",
       "sha1": "B33F24C74104C8F138E989CD6BD75D2FA389AA34",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Double%20Dungeons%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -1625,6 +1638,7 @@
       "crc": "06835D94",
       "md5": "A09F962FC2940FC12C88322AA6BBED43",
       "sha1": "F52E2A9C5DF042EB04C98FBFA38C8399CA4C7F85",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Final%20Soldier%20(World)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -1887,6 +1901,7 @@
       "crc": "A5273CC4",
       "md5": "E4275F5B3DE32A19711D8F466E5D12C2",
       "sha1": "0272C9094DF0EE05EB5D6F7289A694A92341E83E",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Gradius%20(World)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -2172,6 +2187,7 @@
       "crc": "9AA5295C",
       "md5": "3E7B7BDA5FCEACD670E9441C589811B5",
       "sha1": "B17CC5F89028E105BAEC466634F25B9E93B82A6D",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Jaseiken%20Necromancer%20(World)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -2986,6 +3002,7 @@
       "crc": "811259E5",
       "md5": "6C521EC727A175FBA00EC0B6F21E3A0D",
       "sha1": "11654C9A8A91CB427BA9FBCA8E946B7ECCFFA96D",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Neutopia%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -3032,6 +3049,7 @@
       "crc": "2602EDA2",
       "md5": "53AFD4CC91184A984A65A223E24CADE3",
       "sha1": "DAFC0193F697AADFA6079B715329569C2344A16B",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Neutopia%20II%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -3054,6 +3072,7 @@
       "crc": "21DB1D10",
       "md5": "BA0B49331B376DC19E93F77DFA6425D2",
       "sha1": "5A1D9F4F0A19ED1D00F54208506FB84ABB7FEB70",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/New%20Adventure%20Island%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -3124,6 +3143,7 @@
       "crc": "85D1E33B",
       "md5": "A0DB910D4D1F001711FA2B43D0E09506",
       "sha1": "76962B7DF09FCCF72FA95EB375B32E90BE8EFF6C",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Ninja%20Spirit%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -3948,6 +3968,7 @@
       "crc": "A869A0B4",
       "md5": "C580C62CB6227291BB56E144D50552B7",
       "sha1": "27FF27ADA609FE8FF540A7F4256786A8DA116054",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Salamander%20(World)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -3970,6 +3991,7 @@
       "crc": "F436B4AC",
       "md5": "12C9CB92855185A15B315435EC8EADF7",
       "sha1": "9E79251DC99A24EA03A2A431CAC26A66E6C6A543",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Santatlantean%20(World)%20(Aftermarket)%20(Homebrew).png"
     },
     {
@@ -4196,6 +4218,7 @@
       "crc": "D2113BF1",
       "md5": "441FEA810ECB8E453D96AE9501E12E9C",
       "sha1": "07FAE30744280C26971AB5F976F0CD81F69BE4EF",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Soldier%20Blade%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -4470,6 +4493,7 @@
       "crc": "0FCA781A",
       "md5": "26C0D7CB2274CCA65E25D4624988BB5B",
       "sha1": "2205B4CE704C060F7FDDAE4CA7CD4E5807B16723",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Super%20Star%20Soldier%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -4826,7 +4850,8 @@
       "size": 524288,
       "crc": "FE451C22",
       "md5": "15107F07C3B7A65A7E784ADD44349961",
-      "sha1": "456C4A07B6E5D0A4E231AAD3A479F97F3DF02E21"
+      "sha1": "456C4A07B6E5D0A4E231AAD3A479F97F3DF02E21",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tora e no Michi (Japan)",
@@ -4992,6 +5017,7 @@
       "crc": "AAC2876F",
       "md5": "3CCE47219328AFFAF32282EC7B897011",
       "sha1": "E7D5AA410119874A6854D768429C18F387FDA225",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/Victory%20Run%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {
@@ -5181,6 +5207,7 @@
       "crc": "61B3C8C8",
       "md5": "1298416A88FC063775FB165C3AD430A9",
       "sha1": "F4396A9BCAAF94A02B6C77D0B45FB3EA55AFDD84",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/World%20Class%20Baseball%20(USA%2C%20Europe)%20(Wii%20Virtual%20Console).png"
     },
     {
@@ -5227,6 +5254,7 @@
       "crc": "9AEB5D26",
       "md5": "193C00AE4E592D3C288E34E893726B05",
       "sha1": "F8457F40C24A7B2064EEE1050EB40F6EC0BE3F88",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_-_TurboGrafx_16/HEAD/Named_Boxarts/World%20Sports%20Competition%20(USA%2C%20Europe)%20(Wii%20U%20Virtual%20Console).png"
     },
     {

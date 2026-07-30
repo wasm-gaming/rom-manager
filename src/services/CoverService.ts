@@ -4,13 +4,19 @@
  * A cover is worth keeping: the library has to work with the network off, and a
  * boxart is the one piece of metadata nothing local can reconstruct. So the
  * first time a game is looked at, its cover is copied into
- * `.meta/<system>/<Game>[.<variant>].case.png` and read from there afterwards.
+ * `.meta/<system>/<Game>[.<region>].case.png` and read from there afterwards.
  *
  * Which cover and under what name is decided by `core/rom-covers`; this only
  * does the parts that touch the network and the disk.
  */
 
-import { coverFileNameOf, storedCoverNamesOf, type Cover } from '../core/rom-covers';
+import {
+  coverFileNameOf,
+  storableCoversOf,
+  storedCoverNamesOf,
+  type Cover,
+  type GameCovers,
+} from '../core/rom-covers';
 import { META_DIR } from './RomLibraryService';
 import type { StorageNode } from './StorageService';
 
@@ -77,6 +83,28 @@ export class CoverService {
     } catch {
       return false;
     }
+  }
+
+  /**
+   * Keep every boxart of a game, so its regions all resolve with the network
+   * off.
+   *
+   * This is what a game in the library gets, as opposed to one merely looked at:
+   * changing the region preference later must not need a provider that may be
+   * gone. Each cover is left to `cache`, so one blocked download does not stop
+   * the others.
+   */
+  static async cacheAll(
+    node: StorageNode,
+    system: string,
+    gameId: string,
+    covers: GameCovers,
+  ): Promise<number> {
+    const stored = await Promise.all(
+      storableCoversOf(covers).map((cover) => this.cache(node, system, gameId, cover)),
+    );
+
+    return stored.filter(Boolean).length;
   }
 
   /**

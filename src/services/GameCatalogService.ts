@@ -6,6 +6,7 @@
  * contains, and the scan, which says what is on disk.
  */
 
+import type { GameCovers } from '../core/rom-covers';
 import { groupDatGames, type DatGame, type GameGroup } from '../core/rom-grouping';
 import { matchGroupsWithLocalFiles, type MatchResult } from '../core/rom-matching';
 import { scanSystem, type ScanProgress } from './LibraryScanService';
@@ -36,8 +37,8 @@ export class GameCatalogService {
    */
   private static catalogues = new Map<string, Promise<GameGroup[]>>();
 
-  /** Boxarts by game, for the games whose releases have none of their own. */
-  private static covers = new Map<string, Promise<Map<string, string>>>();
+  /** Boxarts by game and region, for what no release has of its own. */
+  private static covers = new Map<string, Promise<Map<string, GameCovers>>>();
 
   /**
    * Every game a system has, present or not.
@@ -63,11 +64,13 @@ export class GameCatalogService {
    * A missing map is not worth an error: it only costs the games in it their
    * cover, so a failure resolves to an empty one.
    */
-  static async coversOf(system: string): Promise<Map<string, string>> {
+  static async coversOf(system: string): Promise<Map<string, GameCovers>> {
     const cached = this.covers.get(system);
     if (cached) return cached;
 
-    const covers = ROMDatasetService.gameCoversOf(system).catch(() => new Map<string, string>());
+    const covers = ROMDatasetService.gameCoversOf(system).catch(
+      () => new Map<string, GameCovers>(),
+    );
 
     this.covers.set(system, covers);
     return covers;

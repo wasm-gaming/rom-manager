@@ -12,6 +12,10 @@ function game(name: string, crc: string, fileName?: string): DatGame {
   return { name, crc, size: 1024, fileName: fileName ?? `${name}.md` };
 }
 
+function covered(name: string, crc: string, cover: string): DatGame {
+  return { ...game(name, crc), cover };
+}
+
 function local(path: string, crc32: string): LocalFile {
   return { path, size: 1024, crc32 };
 }
@@ -254,5 +258,70 @@ describe('buildWizardTree', () => {
 
   it('lists nothing for an empty folder with nothing recognised', () => {
     expect(buildWizardTree('MegaDrive', [], { groups: [], unmatched: [] })).toEqual([]);
+  });
+
+  it('carries every region of the boxart, not the one to show', () => {
+    // The panel picks with the preference order, so changing it must not mean
+    // reading the folder again.
+    const games = [
+      covered('Sonic (Europe)', 'AAAA1111', 'eu.png'),
+      covered('Sonic (Japan)', 'BBBB2222', 'jp.png'),
+    ];
+    const tree = buildWizardTree(
+      'MegaDrive',
+      [file('MegaDrive/sonic.bin')],
+      match(games, [local('MegaDrive/sonic.bin', 'BBBB2222')]),
+    );
+
+    expect(gameRow(tree, 'Sonic').covers).toEqual({ byRegion: { EU: 'eu.png', JP: 'jp.png' } });
+  });
+
+  it('reports the regions the files on disk ship to', () => {
+    // Which is what makes the boxart shown the box of the release they own.
+    const games = [game('Sonic (Europe)', 'AAAA1111'), game('Sonic (Japan)', 'BBBB2222')];
+    const tree = buildWizardTree(
+      'MegaDrive',
+      [file('MegaDrive/sonic.bin')],
+      match(games, [local('MegaDrive/sonic.bin', 'BBBB2222')]),
+    );
+
+    expect(gameRow(tree, 'Sonic').presentRegions).toEqual(['JP']);
+  });
+
+  it('reports all three regions for a world file, which ships everywhere', () => {
+    const games = [game('Sonic (World)', 'AAAA1111')];
+    const tree = buildWizardTree(
+      'MegaDrive',
+      [file('MegaDrive/sonic.bin')],
+      match(games, [local('MegaDrive/sonic.bin', 'AAAA1111')]),
+    );
+
+    expect(gameRow(tree, 'Sonic').presentRegions).toEqual(['EU', 'US', 'JP']);
+  });
+
+  it('falls back to the boxart the dataset knows by title and region', () => {
+    const games = [game('Sonic (Japan)', 'AAAA1111')];
+    const tree = buildWizardTree(
+      'MegaDrive',
+      [file('MegaDrive/sonic.bin')],
+      match(games, [local('MegaDrive/sonic.bin', 'AAAA1111')]),
+      new Map([['Sonic', { byRegion: { JP: 'jp-rev1.png' } }]]),
+    );
+
+    expect(gameRow(tree, 'Sonic').covers.byRegion.JP).toBe('jp-rev1.png');
+  });
+
+  it('says which regions and standards each release supports', () => {
+    const games = [game('Sonic (USA, Europe)', 'AAAA1111')];
+    const tree = buildWizardTree(
+      'MegaDrive',
+      [file('MegaDrive/sonic.bin')],
+      match(games, [local('MegaDrive/sonic.bin', 'AAAA1111')]),
+    );
+
+    expect(variantOf(gameRow(tree, 'Sonic'), 'USA+Europe')).toMatchObject({
+      regions: ['EU', 'US'],
+      videoStandards: ['PAL', 'NTSC'],
+    });
   });
 });

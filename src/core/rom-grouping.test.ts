@@ -248,6 +248,31 @@ describe('groupDatGames', () => {
     expect(groups[0].variants[0].key).toBe('Brazil');
   });
 
+  it('says which regions and video standards a release supports', () => {
+    const groups = groupDatGames([
+      game('Sonic (USA, Europe)', '11111111'),
+      game('Sonic (Japan)', '22222222'),
+    ]);
+
+    const [japan, americaEurope] = groups[0].variants;
+
+    expect(japan).toMatchObject({ regions: ['JP'], videoStandards: ['NTSC'] });
+    expect(americaEurope).toMatchObject({
+      datRegions: ['USA', 'Europe'],
+      regions: ['EU', 'US'],
+      videoStandards: ['PAL', 'NTSC'],
+    });
+  });
+
+  it('has a world release support every region and both standards', () => {
+    const groups = groupDatGames([game('Sonic (World)', '11111111')]);
+
+    expect(groups[0].variants[0]).toMatchObject({
+      regions: ['EU', 'US', 'JP'],
+      videoStandards: ['PAL', 'NTSC'],
+    });
+  });
+
   it('is stable regardless of input order', () => {
     const entries = [
       game('Sonic (USA)', '11111111'),

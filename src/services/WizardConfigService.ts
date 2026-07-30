@@ -7,6 +7,12 @@
  * silently change how the library looks when a file is added or removed.
  */
 
+import {
+  DEFAULT_REGION_ORDER,
+  parseRegionOrder,
+  regionOrderKey,
+  type Region,
+} from '../core/rom-regions';
 import { META_DIR } from './RomLibraryService';
 import type { StorageNode } from './StorageService';
 
@@ -21,10 +27,17 @@ export interface WizardSettings {
    * exceptions are stored.
    */
   folders: Record<string, boolean>;
+  /**
+   * Order the boxart of a game is preferred in, region by region.
+   *
+   * It belongs to the library and not to the browser: the preference is about
+   * the collection someone keeps on a card, and it travels with it.
+   */
+  regionOrder: readonly Region[];
 }
 
 export function emptySettings(): WizardSettings {
-  return { folders: {} };
+  return { folders: {}, regionOrder: DEFAULT_REGION_ORDER };
 }
 
 /**
@@ -70,7 +83,10 @@ function parseSettings(raw: unknown): WizardSettings {
     if (typeof mode === 'boolean' && isSafeFolderKey(path)) folders[path] = mode;
   }
 
-  return { folders };
+  // A file written before region orders existed simply has none, and an order
+  // edited into something that is not a permutation of the three is no better
+  // than that, so both land on the default.
+  return { folders, regionOrder: parseRegionOrder(source.regionOrder) };
 }
 
 export class WizardConfigService {
@@ -86,7 +102,11 @@ export class WizardConfigService {
   }
 
   static async write(node: StorageNode, settings: WizardSettings): Promise<void> {
-    const stored = { version: WIZARD_VERSION, folders: settings.folders };
+    const stored = {
+      version: WIZARD_VERSION,
+      folders: settings.folders,
+      regionOrder: regionOrderKey(settings.regionOrder),
+    };
 
     await node.createDirectory(META_DIR);
     await node.writeFile(
@@ -114,7 +134,19 @@ export class WizardConfigService {
     if (wizard === systems.has(path)) delete folders[path];
     else folders[path] = wizard;
 
-    const updated = { folders };
+    const updated = { ...settings, folders };
+    await this.write(node, updated);
+    return updated;
+  }
+
+  /** Record the order boxarts are preferred in and store the result. */
+  static async setRegionOrder(
+    node: StorageNode,
+    regionOrder: readonly Region[],
+  ): Promise<WizardSettings> {
+    const settings = await this.read(node);
+    const updated = { ...settings, regionOrder: parseRegionOrder(regionOrder) };
+
     await this.write(node, updated);
     return updated;
   }

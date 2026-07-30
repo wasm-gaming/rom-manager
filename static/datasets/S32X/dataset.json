@@ -4,20 +4,46 @@
     "totalGames": 207,
     "totalFiles": 207,
     "totalCovers": 53,
-    "totalGameCovers": 10,
-    "generated": "2026-07-30T10:39:18.462Z"
+    "totalGameCovers": 11,
+    "totalGameCoverUrls": 13,
+    "generated": "2026-07-30T12:24:58.341Z"
   },
   "covers": {
-    "ClayFighter 2": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/ClayFighter%202%20(USA)%20(Proto)%20(1995-04-28).png",
-    "Doom RR": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20RR%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-15).png",
-    "Ecco the Dolphin": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Ecco%20the%20Dolphin%20(USA)%20(Demo)%20(Developer%20Cart).png",
-    "Mars Sample Program - Gnu Sierra": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Gnu%20Sierra%20(Unknown)%20(SDK%20Build).png",
-    "Mars Sample Program - Pharaoh": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Pharaoh%20(Unknown)%20(SDK%20Build).png",
-    "Mars Sample Program - Runlength Mode Test": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Runlength%20Mode%20Test%20(Unknown)%20(SDK%20Build).png",
-    "Mars Sample Program - Texture Test": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Texture%20Test%20(Unknown)%20(SDK%20Build).png",
-    "Pinocchio": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Pinocchio%20(Europe)%20(Proto)%20(1995-06-12).png",
-    "Spot Goes to Hollywood": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Spot%20Goes%20to%20Hollywood%20(Europe)%20(Proto).png",
-    "Zaxxon's Motherbase": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-10).png"
+    "ClayFighter 2": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/ClayFighter%202%20(USA)%20(Proto)%20(1995-04-28).png"
+    },
+    "Doom RR": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20RR%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-15).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Doom%20RR%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-15).png"
+    },
+    "Ecco the Dolphin": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Ecco%20the%20Dolphin%20(USA)%20(Demo)%20(Developer%20Cart).png"
+    },
+    "Mars Sample Program - Gnu Sierra": {
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Gnu%20Sierra%20(Unknown)%20(SDK%20Build).png"
+    },
+    "Mars Sample Program - Pharaoh": {
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Pharaoh%20(Unknown)%20(SDK%20Build).png"
+    },
+    "Mars Sample Program - Runlength Mode Test": {
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Runlength%20Mode%20Test%20(Unknown)%20(SDK%20Build).png"
+    },
+    "Mars Sample Program - Texture Test": {
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Mars%20Sample%20Program%20-%20Texture%20Test%20(Unknown)%20(SDK%20Build).png"
+    },
+    "Pinocchio": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Pinocchio%20(Europe)%20(Proto)%20(1995-06-12).png"
+    },
+    "Spot Goes to Hollywood": {
+      "*": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Spot%20Goes%20to%20Hollywood%20(Europe)%20(Proto).png"
+    },
+    "Stellar Assault": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Stellar%20Assault%20(Japan).png"
+    },
+    "Zaxxon's Motherbase": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-10).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Zaxxon's%20Motherbase%20(Japan%2C%20USA)%20(En)%20(Beta)%20(1995-02-10).png"
+    }
   },
   "list": [
     {
@@ -894,7 +920,7 @@
       "md5": "6AF6207B1E67072A9104178130C61712",
       "sha1": "191AE0B525ECF32664086D8D748E0B35F776DDFE",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Kolibri%20(USA%2C%20Europe).png"
     },
     {
@@ -1282,6 +1308,7 @@
       "crc": "6B7994AA",
       "md5": "966A5E00DD7BCDC70B05C5A0C0E8F7AA",
       "sha1": "C8AF3E74C49514669BA6652EC0C81BCCF77873B6",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/NBA%20Jam%20-%20Tournament%20Edition%20(World).png"
     },
     {
@@ -1291,6 +1318,7 @@
       "crc": "0BC7018D",
       "md5": "E273C10114351CDAFEBA1ABCCCA8909D",
       "sha1": "A0DC24F2F3A7FC5BFD12791CF25AF7F7888843CF",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/NFL%20Quarterback%20Club%20(World).png"
     },
     {
@@ -1322,7 +1350,7 @@
       "md5": "E1EFC5804D3360E7B19F7542219BF964",
       "sha1": "5084DCCA51D76173C383AB7D04CBC661673545F7",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Primal%20Rage%20(USA%2C%20Europe).png"
     },
     {
@@ -1662,7 +1690,7 @@
       "md5": "1415A8675ADF3E8647B3DF673B50056D",
       "sha1": "561C8C63DBCABC0B1B6F31673CA75A0BDE7ABC72",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Stellar%20Assault%20(USA%2C%20Europe).png"
     },
     {
@@ -1673,7 +1701,7 @@
       "md5": "1F363C972686056A475813F61B8600BF",
       "sha1": "9D72335CB0468A9699F7E92927043387091BC0C9",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Stellar Assault (USA, Europe) (Beta 2)",
@@ -1683,7 +1711,7 @@
       "md5": "F5E23C9C89673F3F2294EEF5D2E5CA67",
       "sha1": "5A83E4EBFFE8AC7108B45697BE7468BD7F111642",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Stellar Assault (USA, Europe) (Beta 3)",
@@ -1693,7 +1721,7 @@
       "md5": "9B2F80F1C52B78885CEBD8140E99166E",
       "sha1": "31A0A0A34719B1259DE98458C24CF5EB78F7109C",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Stellar Assault (USA, Europe) (Beta 4)",
@@ -1703,7 +1731,7 @@
       "md5": "C304DE27CDB1CF7DBF660C37F666AC13",
       "sha1": "9875B357FD2D651892054D233C608B6F3BBB40E7",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Stellar Assault (USA, Europe) (Beta 5)",
@@ -1713,7 +1741,7 @@
       "md5": "DF79824D61C1F4F7A258450528A1FF3C",
       "sha1": "9BAE40D4D07A096545B11F6B0434DB778C238AF5",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "T-MEK (USA, Europe)",
@@ -1723,7 +1751,7 @@
       "md5": "1B06C84CAF09206A8D9F0BB3EAABA512",
       "sha1": "173C8425921D83DB3E8D181158E7599364F4C0F6",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/T-MEK%20(USA%2C%20Europe).png"
     },
     {
@@ -1825,7 +1853,7 @@
       "md5": "386D99D132CE5699ADE81B4473CEF5B4",
       "sha1": "7588B0B8F4E93D5FDC920D3AB7E464154E423DA9",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/Toughman%20Contest%20(USA%2C%20Europe).png"
     },
     {
@@ -2001,6 +2029,7 @@
       "crc": "8EB7CD2C",
       "md5": "B3788F861803D21CFA0E559695835F44",
       "sha1": "94B974F2F69F0C10BC18B349FA4FF95CA56FA47B",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Sega_-_32X/HEAD/Named_Boxarts/WWF%20Raw%20(World).png"
     },
     {

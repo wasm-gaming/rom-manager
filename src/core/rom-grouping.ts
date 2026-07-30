@@ -15,6 +15,8 @@
  * libretro-database carries it.
  */
 
+import { regionsOf, videoStandardsOf, type Region, type VideoStandard } from './rom-regions';
+
 /** A single entry of a DAT, as stored in the generated datasets. */
 export interface DatGame {
   name: string;
@@ -52,7 +54,12 @@ export interface ParsedName {
 export interface GameVariant {
   /** Identifier used in file and folder names. Unique inside its group. */
   key: string;
-  regions: string[];
+  /** Region names as the DAT spells them, which is what the key is built from. */
+  datRegions: string[];
+  /** Regions this release ships to. A world release ships to all three. */
+  regions: Region[];
+  /** Video standards it runs at, both when it spans a 50 Hz and a 60 Hz market. */
+  videoStandards: VideoStandard[];
   languages: string[];
   revision?: string;
   flags: string[];
@@ -328,7 +335,7 @@ export function variantKey(
 /**
  * Regions carried by the DAT's own field, used when the name has no region tag.
  */
-function regionsOf(parsed: ParsedName, game: DatGame): string[] {
+function datRegionsOf(parsed: ParsedName, game: DatGame): string[] {
   if (parsed.regions.length > 0) return parsed.regions;
   return game.region ? [game.region] : [];
 }
@@ -391,7 +398,7 @@ function buildVariants(entries: Array<{ parsed: ParsedName; game: DatGame }>): G
     if (draft) {
       draft.files.push(game);
     } else {
-      drafts.set(key, { parsed, regions: regionsOf(parsed, game), files: [game] });
+      drafts.set(key, { parsed, regions: datRegionsOf(parsed, game), files: [game] });
     }
   }
 
@@ -423,7 +430,9 @@ function buildVariants(entries: Array<{ parsed: ParsedName; game: DatGame }>): G
               extras,
               checksum: checksum ? checksumSuffix(draft.files[0]) : undefined,
             }),
-            regions: draft.regions,
+            datRegions: draft.regions,
+            regions: regionsOf(draft.regions),
+            videoStandards: videoStandardsOf(draft.regions),
             languages: draft.parsed.languages,
             revision: draft.parsed.revision,
             flags: draft.parsed.flags,

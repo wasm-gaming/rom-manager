@@ -13,7 +13,8 @@
  * siblings exist is the reason to group in the first place.
  */
 
-import { coverKeyOf, coverOf, type Cover } from './rom-covers';
+import { coverKeyOf, coversOf, type GameCovers } from './rom-covers';
+import { REGIONS, type Region, type VideoStandard } from './rom-regions';
 import type { MatchResult, MatchStatus } from './rom-matching';
 
 /** A row of a real directory listing, as the storage layer reports it. */
@@ -34,6 +35,10 @@ export interface WizardFile {
 export interface WizardVariant {
   key: string;
   status: MatchStatus;
+  /** Regions it ships to, which is what a region preference chooses among. */
+  regions: Region[];
+  /** Video standards it runs at. */
+  videoStandards: VideoStandard[];
   files: WizardFile[];
 }
 
@@ -51,8 +56,18 @@ export interface WizardGame {
   variants: WizardVariant[];
   /** Files of this game inside the folder, which is what the row acts on. */
   paths: string[];
-  /** The boxart to show, when the catalogue knows of one. */
-  cover?: Cover;
+  /**
+   * Every boxart the catalogue knows of, one per region.
+   *
+   * The row carries all of them rather than the one to show, so changing the
+   * region preference repaints the panel without reading the folder again.
+   */
+  covers: GameCovers;
+  /**
+   * Regions the files in this folder ship to, which is what makes the boxart of
+   * a game the box the user owns.
+   */
+  presentRegions: Region[];
 }
 
 export type WizardNode =
@@ -92,8 +107,8 @@ export function buildWizardTree(
   folder: string,
   entries: FolderEntry[],
   match: MatchResult,
-  /** One boxart per game, for the games whose releases have none of their own. */
-  covers: ReadonlyMap<string, string> = new Map(),
+  /** Boxarts by game, for the regions whose releases have none of their own. */
+  covers: ReadonlyMap<string, GameCovers> = new Map(),
 ): WizardNode[] {
   const prefix = folder ? `${folder}/` : '';
   const nodes: WizardNode[] = [];
@@ -106,8 +121,8 @@ export function buildWizardTree(
     const id = matched.group.id;
     const variants: WizardVariant[] = [];
     const paths: string[] = [];
-    /** Releases with something here, so the boxart shown is one of theirs. */
-    const present = new Set<string>();
+    /** Regions the files here ship to, so the boxart shown is one of theirs. */
+    const presentRegions = new Set<Region>();
 
     for (const variant of matched.variants) {
       const files = variant.files.map((file): WizardFile => {
@@ -120,14 +135,20 @@ export function buildWizardTree(
         }
 
         paths.push(path);
-        present.add(variant.variant.key);
+        for (const region of variant.variant.regions) presentRegions.add(region);
         claimedFiles.add(path);
         for (const ancestor of ancestorsOf(path, folder)) claimedFolders.add(ancestor);
 
         return { label: nameOf(path), path };
       });
 
-      variants.push({ key: variant.variant.key, status: variant.status, files });
+      variants.push({
+        key: variant.variant.key,
+        status: variant.status,
+        regions: variant.variant.regions,
+        videoStandards: variant.variant.videoStandards,
+        files,
+      });
     }
 
     if (paths.length === 0) continue;
@@ -141,10 +162,8 @@ export function buildWizardTree(
       status: matched.status,
       variants,
       paths,
-      cover: coverOf(matched.group, {
-        present,
-        fallback: covers.get(coverKeyOf(matched.group)),
-      }),
+      covers: coversOf(matched.group, covers.get(coverKeyOf(matched.group))),
+      presentRegions: REGIONS.filter((region) => presentRegions.has(region)),
     });
   }
 

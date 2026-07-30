@@ -228,6 +228,17 @@ code {
   cursor: not-allowed;
 }
 
+/* Order boxarts are preferred in: a menu, because there are only six. */
+.tree-region-order {
+  padding: 0.2rem 0.25rem;
+  font-size: 0.7rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #616161;
+  cursor: pointer;
+}
+
 .file-tree-input {
   display: none;
 }
@@ -1051,12 +1062,29 @@ code {
   margin-bottom: 1.25rem;
 }
 
+.rom-info-cover-figure {
+  margin: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
 .rom-info-cover {
   width: 180px;
   flex-shrink: 0;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   object-fit: cover;
+}
+
+/* Which region's box is on screen, since a game has one per region. */
+.rom-info-cover-region {
+  color: #90a4ae;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
 }
 
 .rom-info-cover.placeholder {
@@ -1127,6 +1155,24 @@ code {
   color: #757575;
 }
 
+/* What a release supports reads as a smaller, quieter badge than a status. */
+.tag.region,
+.tag.video {
+  padding: 0 0.3rem;
+  font-size: 0.6875rem;
+  border-radius: 3px;
+}
+
+.tag.region {
+  background-color: #ede7f6;
+  color: #5e35b1;
+}
+
+.tag.video {
+  background-color: #f1f8e9;
+  color: #558b2f;
+}
+
 .variants-title {
   margin: 1.5rem 0 0.5rem;
   font-size: 0.8125rem;
@@ -1187,6 +1233,17 @@ code {
   flex: 1;
   word-break: break-word;
   color: #212121;
+}
+
+.variant-support {
+  flex: 0 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.variant.status-missing .variant-support {
+  opacity: 0.6;
 }
 
 .variant.status-missing .variant-key {

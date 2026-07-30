@@ -12,6 +12,8 @@ import { OrganizeService, type UndoRecord } from '../services/OrganizeService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
+import { pickCover } from '../core/rom-covers';
+import type { Region } from '../core/rom-regions';
 import type { OrganizePlan } from '../core/rom-organize';
 import {
   storeService,
@@ -52,7 +54,8 @@ export function ROMExplorer(): JSX.Element {
   const [game, setGame] = useState<WizardGame | undefined>();
   /** One file of that game, opened from its details. */
   const [gameFile, setGameFile] = useState<string | undefined>();
-  const [gameCover, setGameCover] = useState<string | undefined>();
+  /** The boxart on screen for that game, and the region it is the box of. */
+  const [gameCover, setGameCover] = useState<{ url: string; region?: Region } | undefined>();
   /** The organize preview, once one has been worked out and not yet dismissed. */
   const [organize, setOrganize] = useState<
     { system: string; plan: OrganizePlan; applied?: UndoRecord } | undefined
@@ -76,6 +79,7 @@ export function ROMExplorer(): JSX.Element {
   const selection = activeOrigin?.selection || [];
   const wizardSettings = wizardSettingsSignal.value;
   const knownSystems = knownSystemsSignal.value;
+  const regionOrder = wizardSettings.regionOrder;
 
   useEffect(() => {
     return () => {
@@ -100,8 +104,9 @@ export function ROMExplorer(): JSX.Element {
   }, [activeNode]);
 
   /**
-   * The boxart of the game on screen: the copy in `.meta` when there is one, the
-   * published image otherwise — and browsing is what puts a copy there.
+   * The boxart of the game on screen, chosen by the region preference: the copy
+   * in `.meta` when there is one, the published image otherwise — and browsing
+   * is what puts a copy there.
    */
   useEffect(() => {
     // The cover of the game left behind is about to be revoked, so it stops
@@ -116,7 +121,12 @@ export function ROMExplorer(): JSX.Element {
       if (url?.startsWith('blob:')) URL.revokeObjectURL(url);
     };
 
-    CoverService.resolve(activeNode, systemOf(game.paths[0]), game.id, game.cover)
+    const cover = pickCover(game.covers, {
+      present: game.presentRegions,
+      order: regionOrder,
+    });
+
+    CoverService.resolve(activeNode, systemOf(game.paths[0]), game.id, cover)
       .then((resolved) => {
         if (cancelled) {
           revoke(resolved?.url);
@@ -124,7 +134,7 @@ export function ROMExplorer(): JSX.Element {
         }
 
         shown = resolved?.url;
-        setGameCover(shown);
+        setGameCover(resolved ? { url: resolved.url, region: cover?.region } : undefined);
       })
       .catch(() => setGameCover(undefined));
 
@@ -132,7 +142,22 @@ export function ROMExplorer(): JSX.Element {
       cancelled = true;
       revoke(shown);
     };
-  }, [activeNode, game]);
+  }, [activeNode, game, regionOrder]);
+
+  /**
+   * Every boxart of a game already in the library is kept on disk, so its other
+   * regions stay available with the network off — or with the provider gone.
+   *
+   * A game merely looked at keeps only the one on screen: this is what the
+   * library gets and browsing does not, and a game is in the library once any of
+   * its files has a record.
+   */
+  useEffect(() => {
+    if (!activeNode || !game) return;
+    if (!game.paths.some((path) => records.get(path))) return;
+
+    void CoverService.cacheAll(activeNode, systemOf(game.paths[0]), game.id, game.covers);
+  }, [activeNode, game, records]);
 
   const releaseCovers = () => {
     for (const url of objectUrls.current) URL.revokeObjectURL(url);
@@ -272,6 +297,26 @@ export function ROMExplorer(): JSX.Element {
         next.delete(path);
         return next;
       });
+    },
+    [activeNode],
+  );
+
+  /**
+   * Records the order boxarts are preferred in. Nothing is read again: the rows
+   * carry every region's boxart, so the panel simply picks another one.
+   */
+  const handleRegionOrderChange = useCallback(
+    async (order: readonly Region[]) => {
+      if (!activeNode) return;
+
+      try {
+        const settings = await WizardConfigService.setRegionOrder(activeNode, order);
+        storeService.setWizardSettings(settings);
+      } catch (err) {
+        storeService.setError(
+          err instanceof Error ? err.message : 'Failed to save the region order',
+        );
+      }
     },
     [activeNode],
   );
@@ -548,6 +593,8 @@ export function ROMExplorer(): JSX.Element {
               onGroupingNeeded={handleGroupingNeeded}
               onToggleGrouping={handleToggleGrouping}
               onOrganize={handleOrganize}
+              regionOrder={regionOrder}
+              onRegionOrderChange={handleRegionOrderChange}
               notice={notice ?? (organize ? undefined : organizeBusy)}
             />
           )}

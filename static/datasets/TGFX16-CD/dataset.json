@@ -4,35 +4,89 @@
     "totalGames": 502,
     "totalFiles": 498,
     "totalCovers": 453,
-    "totalGameCovers": 25,
-    "generated": "2026-07-30T10:39:18.788Z"
+    "totalGameCovers": 26,
+    "totalGameCoverUrls": 26,
+    "generated": "2026-07-30T12:24:58.712Z"
   },
   "covers": {
-    "AV Tanjou": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/AV%20Tanjou%20(Japan)%20(Unl)%20(Alt%202).png",
-    "Bikini Girls": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Bikini%20Girls%20(199x)%20(Excite)%20(USA).png",
-    "Bishoujo Janshi Idol Pai": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Bishoujo%20Janshi%20Idol%20Pai%20(Japan)%20(Unl).png",
-    "CD Bishoujo Pachinko - Kyuuma Yon Shimai": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Bishoujo%20Pachinko%20-%20Kyuuma%20Yon%20Shimai%20(Japan)%20(Unl).png",
-    "CD Hanafuda - Bishoujo Fan Club": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Hanafuda%20-%20Bishoujo%20Fan%20Club%20(Japan)%20(Unl).png",
-    "CD Mahjong - Bishoujo Chuushinha": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Mahjong%20-%20Bishoujo%20Chuushinha%20(Japan)%20(Unl).png",
-    "CD Pachi-Slot - Bishoujo Gambler": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Pachi-Slot%20-%20Bishoujo%20Gambler%20(Japan)%20(Unl).png",
-    "Daisenryaku II - Campaign Version": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Daisenryaku%20II%20-%20Campaign%20Version%20(Micro%20Cabin)%20(Japan).png",
-    "FX Unit Yuki - The Henshin Engine": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/FX%20Unit%20Yuki%20-%20The%20Henshin%20Engine%20(USA)%20(Unl)%20(Rerelease).png",
-    "Hawiian Island Girls": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Hawiian%20Island%20Girls%20(199x)%20(Excite)%20(USA).png",
-    "Hi-Leg Fantasy": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Hi-Leg%20Fantasy%20(Japan)%20(Unl).png",
-    "Hypernova Blast": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Hypernova%20Blast%20(USA)%20(Unl).png",
-    "Implode": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Implode%20(MindRec)%20(USA).png",
-    "Insanity": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Insanity%20(Aetherbyte)%20(USA).png",
-    "J-Thunder - Tsumetai Hada wa Shoujo o Nurasu": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/J-Thunder%20-%20Tsumetai%20Hada%20wa%20Shoujo%20o%20Nurasu%20(Japan)%20(Unl).png",
-    "Legion": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Legion%20(Japan).png",
-    "Local Girls of Hawaii, The": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Local%20Girls%20of%20Hawaii%2C%20The%20(USA)%20(Unl).png",
-    "Meteor Blaster DX": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Meteor%20Blaster%20DX%20(USA)%20(Unl).png",
-    "Mysterious Song": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Mysterious%20Song%20(USA)%20(En%2CFr%2CEs)%20(Unl).png",
-    "Pyramid Plunder": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Pyramid%20Plunder%20(USA)%20(Unl).png",
-    "Shiawase Usagi - Nureta Bishoujo - Hajimete Nanoni": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shiawase%20Usagi%20-%20Nureta%20Bishoujo%20-%20Hajimete%20Nanoni...%20(Japan)%20(Unl).png",
-    "Shiawase Usagi II - Toraware Usagi Sailor Z": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shiawase%20Usagi%20II%20-%20Toraware%20Usagi%20Sailor%20Z%20(Japan)%20(Unl).png",
-    "Shin Megami Tensei": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shin%20Megami%20Tensei%20(Japan).png",
-    "Shinsetsu Shiawase Usagi 2 - Kairaku e no Invitation": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shinsetsu%20Shiawase%20Usagi%202%20-%20Kairaku%20e%20no%20Invitation%20(199x)%20(-)%20(Japan).png",
-    "Shinsetsu Shiawase Usagi f - Yuujou yorimo Aiyoku": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shinsetsu%20Shiawase%20Usagi%20f%20-%20Yuujou%20yorimo%20Aiyoku%20(Japan)%20(Unl).png"
+    "AV Tanjou": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/AV%20Tanjou%20(Japan)%20(Unl)%20(Alt%202).png"
+    },
+    "Bikini Girls": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Bikini%20Girls%20(199x)%20(Excite)%20(USA).png"
+    },
+    "Bishoujo Janshi Idol Pai": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Bishoujo%20Janshi%20Idol%20Pai%20(Japan)%20(Unl).png"
+    },
+    "CD Bishoujo Pachinko - Kyuuma Yon Shimai": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Bishoujo%20Pachinko%20-%20Kyuuma%20Yon%20Shimai%20(Japan)%20(Unl).png"
+    },
+    "CD Hanafuda - Bishoujo Fan Club": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Hanafuda%20-%20Bishoujo%20Fan%20Club%20(Japan)%20(Unl).png"
+    },
+    "CD Mahjong - Bishoujo Chuushinha": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Mahjong%20-%20Bishoujo%20Chuushinha%20(Japan)%20(Unl).png"
+    },
+    "CD Pachi-Slot - Bishoujo Gambler": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/CD%20Pachi-Slot%20-%20Bishoujo%20Gambler%20(Japan)%20(Unl).png"
+    },
+    "Daisenryaku II - Campaign Version": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Daisenryaku%20II%20-%20Campaign%20Version%20(Micro%20Cabin)%20(Japan).png"
+    },
+    "FX Unit Yuki - The Henshin Engine": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/FX%20Unit%20Yuki%20-%20The%20Henshin%20Engine%20(USA)%20(Unl)%20(Rerelease).png"
+    },
+    "Fantastic Night Dreams - Cotton": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Fantastic%20Night%20Dreams%20-%20Cotton%20(Japan)%20(En%2CJa).png"
+    },
+    "Hawiian Island Girls": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Hawiian%20Island%20Girls%20(199x)%20(Excite)%20(USA).png"
+    },
+    "Hi-Leg Fantasy": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Hi-Leg%20Fantasy%20(Japan)%20(Unl).png"
+    },
+    "Hypernova Blast": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Hypernova%20Blast%20(USA)%20(Unl).png"
+    },
+    "Implode": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Implode%20(MindRec)%20(USA).png"
+    },
+    "Insanity": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Insanity%20(Aetherbyte)%20(USA).png"
+    },
+    "J-Thunder - Tsumetai Hada wa Shoujo o Nurasu": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/J-Thunder%20-%20Tsumetai%20Hada%20wa%20Shoujo%20o%20Nurasu%20(Japan)%20(Unl).png"
+    },
+    "Legion": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Legion%20(Japan).png"
+    },
+    "Local Girls of Hawaii, The": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Local%20Girls%20of%20Hawaii%2C%20The%20(USA)%20(Unl).png"
+    },
+    "Meteor Blaster DX": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Meteor%20Blaster%20DX%20(USA)%20(Unl).png"
+    },
+    "Mysterious Song": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Mysterious%20Song%20(USA)%20(En%2CFr%2CEs)%20(Unl).png"
+    },
+    "Pyramid Plunder": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Pyramid%20Plunder%20(USA)%20(Unl).png"
+    },
+    "Shiawase Usagi - Nureta Bishoujo - Hajimete Nanoni": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shiawase%20Usagi%20-%20Nureta%20Bishoujo%20-%20Hajimete%20Nanoni...%20(Japan)%20(Unl).png"
+    },
+    "Shiawase Usagi II - Toraware Usagi Sailor Z": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shiawase%20Usagi%20II%20-%20Toraware%20Usagi%20Sailor%20Z%20(Japan)%20(Unl).png"
+    },
+    "Shin Megami Tensei": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shin%20Megami%20Tensei%20(Japan).png"
+    },
+    "Shinsetsu Shiawase Usagi 2 - Kairaku e no Invitation": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shinsetsu%20Shiawase%20Usagi%202%20-%20Kairaku%20e%20no%20Invitation%20(199x)%20(-)%20(Japan).png"
+    },
+    "Shinsetsu Shiawase Usagi f - Yuujou yorimo Aiyoku": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/NEC_-_PC_Engine_CD_-_TurboGrafx-CD/HEAD/Named_Boxarts/Shinsetsu%20Shiawase%20Usagi%20f%20-%20Yuujou%20yorimo%20Aiyoku%20(Japan)%20(Unl).png"
+    }
   },
   "list": [
     {
@@ -2154,7 +2208,8 @@
       "size": 3370416,
       "crc": "F917F093",
       "md5": "30E85E7F9A7BC31935B34D7DDC20B6CD",
-      "sha1": "1D999569B014BC5D44BBC54937BF778E1BCE66A6"
+      "sha1": "1D999569B014BC5D44BBC54937BF778E1BCE66A6",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Jim Power in Mutant Planet (Japan)",

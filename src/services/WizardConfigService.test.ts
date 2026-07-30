@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { StorageNode } from './StorageService';
+import { DEFAULT_REGION_ORDER } from '../core/rom-regions';
 import {
   emptySettings,
   isWizardFolder,
@@ -35,7 +36,7 @@ const SYSTEMS = new Set(['MegaDrive', 'PSX']);
 
 let storage: FakeStorage;
 
-function stored(): { version: number; folders: Record<string, boolean> } {
+function stored(): { version: number; folders: Record<string, boolean>; regionOrder: string } {
   return JSON.parse(storage.files.get(WIZARD_CONFIG_PATH)!);
 }
 
@@ -54,13 +55,13 @@ describe('isWizardFolder', () => {
   });
 
   it('honours a folder turned on explicitly', () => {
-    const settings = { folders: { 'MegaDrive/Favoritos': true } };
+    const settings = { ...emptySettings(), folders: { 'MegaDrive/Favoritos': true } };
 
     expect(isWizardFolder('MegaDrive/Favoritos', settings, SYSTEMS)).toBe(true);
   });
 
   it('honours a system turned off explicitly', () => {
-    const settings = { folders: { MegaDrive: false } };
+    const settings = { ...emptySettings(), folders: { MegaDrive: false } };
 
     expect(isWizardFolder('MegaDrive', settings, SYSTEMS)).toBe(false);
   });
@@ -72,10 +73,14 @@ describe('WizardConfigService', () => {
   });
 
   it('reads back what it wrote', async () => {
-    await WizardConfigService.write(storage.asNode(), { folders: { 'PSX/Demos': true } });
+    await WizardConfigService.write(storage.asNode(), {
+      folders: { 'PSX/Demos': true },
+      regionOrder: ['JP', 'US', 'EU'],
+    });
 
     expect(await WizardConfigService.read(storage.asNode())).toEqual({
       folders: { 'PSX/Demos': true },
+      regionOrder: ['JP', 'US', 'EU'],
     });
   });
 
@@ -100,6 +105,7 @@ describe('WizardConfigService', () => {
 
     expect(await WizardConfigService.read(storage.asNode())).toEqual({
       folders: { MegaDrive: false },
+      regionOrder: DEFAULT_REGION_ORDER,
     });
   });
 
@@ -127,5 +133,39 @@ describe('WizardConfigService', () => {
     );
 
     expect(settings.folders).toEqual({ PSX: false, 'MegaDrive/Favoritos': true });
+  });
+
+  it('stores the order boxarts are preferred in', async () => {
+    const settings = await WizardConfigService.setRegionOrder(storage.asNode(), ['JP', 'EU', 'US']);
+
+    expect(settings.regionOrder).toEqual(['JP', 'EU', 'US']);
+    expect(stored().regionOrder).toBe('JP/EU/US');
+  });
+
+  it('keeps the folder settings when the order changes', async () => {
+    await WizardConfigService.setWizard(storage.asNode(), 'MegaDrive', false, SYSTEMS);
+    const settings = await WizardConfigService.setRegionOrder(storage.asNode(), ['US', 'EU', 'JP']);
+
+    expect(settings.folders).toEqual({ MegaDrive: false });
+  });
+
+  it('keeps the order when a folder changes', async () => {
+    await WizardConfigService.setRegionOrder(storage.asNode(), ['US', 'JP', 'EU']);
+    const settings = await WizardConfigService.setWizard(
+      storage.asNode(),
+      'MegaDrive',
+      false,
+      SYSTEMS,
+    );
+
+    expect(settings.regionOrder).toEqual(['US', 'JP', 'EU']);
+  });
+
+  it('falls back to the default order for one edited into nonsense', async () => {
+    storage.put(WIZARD_CONFIG_PATH, { version: 1, folders: {}, regionOrder: 'EU/EU/EU' });
+
+    expect((await WizardConfigService.read(storage.asNode())).regionOrder).toEqual(
+      DEFAULT_REGION_ORDER,
+    );
   });
 });

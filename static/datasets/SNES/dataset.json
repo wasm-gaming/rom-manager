@@ -4,45 +4,159 @@
     "totalGames": 4256,
     "totalFiles": 4256,
     "totalCovers": 3326,
-    "totalGameCovers": 35,
-    "generated": "2026-07-30T10:39:17.794Z"
+    "totalGameCovers": 48,
+    "totalGameCoverUrls": 52,
+    "generated": "2026-07-30T12:24:57.619Z"
   },
   "covers": {
-    "3-jigen Kakutou Ballz": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/3-jigen%20Kakutou%20Ballz%20(Japan).png",
-    "Assault Suits Valken": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Assault%20Suits%20Valken%20(USA).png",
-    "Controller Test Cassette": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Controller%20Test%20Cassette%20(Japan).png",
-    "Crash Dummy - Dr. Zabu o Sukuidase": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Crash%20Dummy%20-%20Dr.%20Zabu%20o%20Sukuidase%20(Japan).png",
-    "Donkey Kong Country - Competition Cartridge": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Donkey%20Kong%20Country%20-%20Competition%20Cartridge%20(USA).png",
-    "Finalset": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Finalset%20(Japan).png",
-    "Gourmet Warriors": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Gourmet%20Warriors%20(USA).png",
-    "Human Grand Prix 2": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Human%20Grand%20Prix%202%20(Japan)%20(Sample).png",
-    "Iron Commando": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Iron%20Commando%20(Europe)%20(Proto)%20%5Bb%5D.png",
-    "Kaizou Choujin Shubibinman Zero": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Kaizou%20Choujin%20Shubibinman%20Zero%20(Japan).png",
-    "Krusty World": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Krusty%20World%20(Japan).png",
-    "Mask": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mask%20(Japan).png",
-    "Mr. Tuff": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mr.%20Tuff%20(Europe)%20(En%2CFr%2CDe)%20(Proto)%20(1994-07-12).png",
-    "Nightmare Busters": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Nightmare%20Busters%20(Europe)%20(Proto).png",
-    "Nintendo Power Menu Program": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Nintendo%20Power%20Menu%20Program%20(Japan).png",
-    "PowerFest 94": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/PowerFest%2094%20(USA).png",
-    "Red October": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Red%20October%20(Japan).png",
-    "River City Girls Zero": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/River%20City%20Girls%20Zero%20(USA)%20(RCG%20Translation%2C%20Switch).png",
-    "Sound Factory": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Sound%20Factory%20(Japan)%20(En)%20(Proto)%20(1993-08-22).png",
-    "SpellCraft - Aspects of Valor": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/SpellCraft%20-%20Aspects%20of%20Valor%20(USA)%20(Proto).png",
-    "Starwing - Competition": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Starwing%20-%20Competition%20(Europe).png",
-    "Super Boss Gaiden": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Boss%20Gaiden%20(Japan)%20(En)%20(v1.2).png",
-    "Super Copa": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Copa%20(Brazil)%20(Es%2CPt).png",
-    "Super Drift Out - World Rally Championships": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Drift%20Out%20-%20World%20Rally%20Championships%20(Japan)%20(En).png",
-    "Super Fire Pro Wrestling 3": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Fire%20Pro%20Wrestling%203%20(Japan)%20(Demo).png",
-    "Super Linearball": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Linearball%20(Japan).png",
-    "Super Puyo Puyo 2": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Puyo%20Puyo%202%20(USA%2C%20Europe)%20(Ja)%20(Switch%20Online).png",
-    "Super Star Fox Weekend": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Star%20Fox%20Weekend%20(USA).png",
-    "Supercooked!": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png",
-    "Superman": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Superman%20(USA)%20(Demo)%20(1992-05-25).png",
-    "Suzuki Aguri no F-1 Super Driving": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Suzuki%20Aguri%20no%20F-1%20Super%20Driving%20(Japan)%20(En).png",
-    "Tom to Jerry": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Tom%20to%20Jerry%20(Japan).png",
-    "Wizardry I-II-III - Story of Llylgamyn": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Wizardry%20I-II-III%20-%20Story%20of%20Llylgamyn%20(USA).png",
-    "Yoshi no Cookie": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Yoshi%20no%20Cookie%20(Japan)%20(En).png",
-    "Zool": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Zool%20(USA)%20(Sample).png"
+    "3-jigen Kakutou Ballz": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/3-jigen%20Kakutou%20Ballz%20(Japan).png"
+    },
+    "Assault Suits Valken": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Assault%20Suits%20Valken%20(USA).png"
+    },
+    "Blues Brothers, The": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Blues%20Brothers%2C%20The%20(Japan).png"
+    },
+    "Controller Test Cassette": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Controller%20Test%20Cassette%20(Japan).png"
+    },
+    "Crash Dummy - Dr. Zabu o Sukuidase": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Crash%20Dummy%20-%20Dr.%20Zabu%20o%20Sukuidase%20(Japan).png"
+    },
+    "Donkey Kong Country - Competition Cartridge": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Donkey%20Kong%20Country%20-%20Competition%20Cartridge%20(USA).png"
+    },
+    "Finalset": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Finalset%20(Japan).png"
+    },
+    "Gourmet Warriors": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Gourmet%20Warriors%20(USA).png"
+    },
+    "Human Grand Prix 2": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Human%20Grand%20Prix%202%20(Japan)%20(Sample).png"
+    },
+    "Iron Commando": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Iron%20Commando%20(Europe)%20(Proto)%20%5Bb%5D.png"
+    },
+    "Jimmy Connors Pro Tennis Tour": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jimmy%20Connors%20Pro%20Tennis%20Tour%20(Japan).png"
+    },
+    "Kaizou Choujin Shubibinman Zero": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Kaizou%20Choujin%20Shubibinman%20Zero%20(Japan).png"
+    },
+    "Krusty World": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Krusty%20World%20(Japan).png"
+    },
+    "Major Title": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Major%20Title%20(Japan).png"
+    },
+    "Mask": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mask%20(Japan).png"
+    },
+    "Mega Man X": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mega%20Man%20X%20(World)%20(Rev%201)%20(Mega%20Man%20X%20Legacy%20Collection).png"
+    },
+    "Mega Man X2": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mega%20Man%20X2%20(World)%20(Mega%20Man%20X%20Legacy%20Collection).png"
+    },
+    "Mega Man X3": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mega%20Man%20X3%20(World)%20(Mega%20Man%20X%20Legacy%20Collection).png"
+    },
+    "Mr. Do!": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mr.%20Do!%20(Japan).png"
+    },
+    "Mr. Tuff": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mr.%20Tuff%20(Europe)%20(En%2CFr%2CDe)%20(Proto)%20(1994-07-12).png"
+    },
+    "Nightmare Busters": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Nightmare%20Busters%20(Europe)%20(Proto).png"
+    },
+    "Nintendo Power Menu Program": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Nintendo%20Power%20Menu%20Program%20(Japan).png"
+    },
+    "PowerFest 94": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/PowerFest%2094%20(USA).png"
+    },
+    "Q-bert 3": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Q-bert%203%20(Japan).png"
+    },
+    "Red October": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Red%20October%20(Japan).png"
+    },
+    "River City Girls Zero": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/River%20City%20Girls%20Zero%20(USA)%20(RCG%20Translation%2C%20Switch).png"
+    },
+    "Shadowrun": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Shadowrun%20(Japan)%20(En%2CJa).png"
+    },
+    "Sound Factory": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Sound%20Factory%20(Japan)%20(En)%20(Proto)%20(1993-08-22).png"
+    },
+    "SpellCraft - Aspects of Valor": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/SpellCraft%20-%20Aspects%20of%20Valor%20(USA)%20(Proto).png"
+    },
+    "Star Fox 2": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Star%20Fox%202%20(USA%2C%20Europe).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Star%20Fox%202%20(USA%2C%20Europe).png"
+    },
+    "Starwing - Competition": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Starwing%20-%20Competition%20(Europe).png"
+    },
+    "Super Bomberman": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Bomberman%20(Japan).png"
+    },
+    "Super Boss Gaiden": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Boss%20Gaiden%20(Japan)%20(En)%20(v1.2).png"
+    },
+    "Super Copa": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Copa%20(Brazil)%20(Es%2CPt).png"
+    },
+    "Super Drift Out - World Rally Championships": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Drift%20Out%20-%20World%20Rally%20Championships%20(USA)%20(Proto)%20(1995-05-18).png"
+    },
+    "Super Fire Pro Wrestling 3": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Fire%20Pro%20Wrestling%203%20(Japan)%20(Demo).png"
+    },
+    "Super Linearball": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Linearball%20(Japan).png"
+    },
+    "Super Loopz": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Loopz%20(Japan).png"
+    },
+    "Super Pinball - Behind the Mask": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Pinball%20-%20Behind%20the%20Mask%20(Japan).png"
+    },
+    "Super Puyo Puyo 2": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Puyo%20Puyo%202%20(USA%2C%20Europe)%20(Ja)%20(Switch%20Online).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Puyo%20Puyo%202%20(USA%2C%20Europe)%20(Ja)%20(Switch%20Online).png"
+    },
+    "Super Star Fox Weekend": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Star%20Fox%20Weekend%20(USA).png"
+    },
+    "Supercooked!": {
+      "EU": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png",
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png",
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Supercooked!%20(World)%20(Aftermarket)%20(Unl).png"
+    },
+    "Superman": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Superman%20(USA)%20(Demo)%20(1992-05-25).png"
+    },
+    "Suzuki Aguri no F-1 Super Driving": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Suzuki%20Aguri%20no%20F-1%20Super%20Driving%20(Japan)%20(En).png"
+    },
+    "Tom to Jerry": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Tom%20to%20Jerry%20(Japan).png"
+    },
+    "Wizardry I-II-III - Story of Llylgamyn": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Wizardry%20I-II-III%20-%20Story%20of%20Llylgamyn%20(Japan)%20(En%2CJa)%20(NP).png"
+    },
+    "Yoshi no Cookie": {
+      "JP": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Yoshi%20no%20Cookie%20(Japan)%20(En).png"
+    },
+    "Zool": {
+      "US": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Zool%20(USA)%20(Sample).png"
+    }
   },
   "list": [
     {
@@ -72,7 +186,8 @@
       "size": 524288,
       "crc": "5F7B6627",
       "md5": "0829EBFDE80E7A9673FE9966A8D47B0F",
-      "sha1": "7752CAA676D15D4D0C42F25548C3E86128A416DB"
+      "sha1": "7752CAA676D15D4D0C42F25548C3E86128A416DB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "16 BIT XMAS 2011 - Christmas Craze (World) (Alt)",
@@ -80,7 +195,8 @@
       "size": 524288,
       "crc": "D23CA2D7",
       "md5": "1FEB26AE4AB5ADFE7ACB6847007D4B84",
-      "sha1": "7B3FCB6F3CC80AE6A8BA496669944B2D9DCCB6BE"
+      "sha1": "7B3FCB6F3CC80AE6A8BA496669944B2D9DCCB6BE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "16 BIT XMAS 2012 - Snowball Fight (World)",
@@ -88,7 +204,8 @@
       "size": 131072,
       "crc": "DB518E68",
       "md5": "A3FB44EE8547ECC51B5D5FB890CE0EEF",
-      "sha1": "03241CA4455840420B5780E579C614F3F08EAB41"
+      "sha1": "03241CA4455840420B5780E579C614F3F08EAB41",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "16 Zhang Mahjong II - Xingzuo Nulang Pian (Hong Kong)",
@@ -97,7 +214,8 @@
       "crc": "561BBD96",
       "md5": "2A5B7B6DDD3B0516CABCC5645F452140",
       "sha1": "7D22466EBF2D3A33E4567D6F23756A286DDCF9C7",
-      "region": "Hong Kong"
+      "region": "Hong Kong",
+      "videoStandard": "NTSC"
     },
     {
       "name": "2020 Super Baseball (Japan)",
@@ -116,7 +234,8 @@
       "size": 262144,
       "crc": "E155D6F4",
       "md5": "2916B01B0A060273025E26E8840BF1E1",
-      "sha1": "DCD21154E75F269C9118616CA04CD6EBC9239775"
+      "sha1": "DCD21154E75F269C9118616CA04CD6EBC9239775",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "3 Ninjas Kick Back (USA)",
@@ -366,6 +485,7 @@
       "md5": "4D7084EFDAAC42131BF9C68FAD358EBD",
       "sha1": "2F913B33F8C2B4EA2CA18AC91F3ED08F02285227",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/ActRaiser%20(France).png"
     },
     {
@@ -376,6 +496,7 @@
       "md5": "FD56459ABA757C35B9892AEDE9D24304",
       "sha1": "2BE890711DEC987CA1375C0B5D0844997DE96566",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/ActRaiser%20(Germany).png"
     },
     {
@@ -743,7 +864,8 @@
       "size": 1048576,
       "crc": "69CB4875",
       "md5": "17DADEAD27B05853459B205F2028AD9C",
-      "sha1": "67E3B9429FDB29FF0812806C94F6E53138C983AE"
+      "sha1": "67E3B9429FDB29FF0812806C94F6E53138C983AE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Aero the Acro-Bat 2 (Europe)",
@@ -1002,6 +1124,7 @@
       "md5": "61A86AEE5792EAF64A04BCB30257D985",
       "sha1": "D0FC2D457DDE02CB28B4D1C7248C97D1711E2FE2",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Aladdin%20(France).png"
     },
     {
@@ -1012,6 +1135,7 @@
       "md5": "01AA89137B747DC68E108234B4973AFA",
       "sha1": "A06AA6F4BB62951884ADB3C7813FD93337D4750B",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Aladdin%20(Germany).png"
     },
     {
@@ -1033,6 +1157,7 @@
       "md5": "6B09F8C51E5C989D950F9510F1F73224",
       "sha1": "DB4C5AE21420AA79F4519B542B03962A9293464D",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Aladdin%20(Spain).png"
     },
     {
@@ -1064,6 +1189,7 @@
       "crc": "C997AED1",
       "md5": "96D395B194695181FA249B88FA410412",
       "sha1": "D7A402FE9EADFED99EA2DEFD8D8AC09117C43CE7",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Aladdin%20(World)%20(Disney%20Classic%20Games).png"
     },
     {
@@ -1235,7 +1361,8 @@
       "size": 1048576,
       "crc": "C8098944",
       "md5": "9F9D721B501F08A41F146CA899A567F0",
-      "sha1": "B30EEAEB5679F0B20E9BE10D1B5A2D0E1291ED9B"
+      "sha1": "B30EEAEB5679F0B20E9BE10D1B5A2D0E1291ED9B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Alien Cat 2 (World) (v1.1) (Evercade)",
@@ -1243,7 +1370,8 @@
       "size": 1048576,
       "crc": "27DDEEC1",
       "md5": "18F20F55640CF34A77883576AAE82B7D",
-      "sha1": "CA081B5FDB3140336ABA9393575B60534F41E1F2"
+      "sha1": "CA081B5FDB3140336ABA9393575B60534F41E1F2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Alien vs Predator (Europe)",
@@ -1436,7 +1564,8 @@
       "size": 262144,
       "crc": "F965D542",
       "md5": "853643C5AE2CF38E9CFA474C1CA2C7F4",
-      "sha1": "DA302D2144858EA877D2C09610672CA2E3E73447"
+      "sha1": "DA302D2144858EA877D2C09610672CA2E3E73447",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Angelsong (World) (v1.2) (SNESDEV 2025)",
@@ -1444,7 +1573,8 @@
       "size": 262144,
       "crc": "667B31FB",
       "md5": "12483927D4F0CDE3FA666738B879124F",
-      "sha1": "16C4ADF8C2F2D4480B406286AB09B5B5B68159E9"
+      "sha1": "16C4ADF8C2F2D4480B406286AB09B5B5B68159E9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Angelsong (World) (v1.4)",
@@ -1452,7 +1582,8 @@
       "size": 262144,
       "crc": "C9596C5E",
       "md5": "15B748081BD08161EE25150BDBA3D03D",
-      "sha1": "D06FE1D33B03137FF447F18FB0E1CA8B9DF30F6C"
+      "sha1": "D06FE1D33B03137FF447F18FB0E1CA8B9DF30F6C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Animal Buranden - Brutal (Japan)",
@@ -1966,7 +2097,8 @@
       "size": 1572864,
       "crc": "C0DA0170",
       "md5": "7BD97DFCBD856AF4E8A98632CF8E3B11",
-      "sha1": "4F73754563799EF077F9F8FC182285B08B3C8E28"
+      "sha1": "4F73754563799EF077F9F8FC182285B08B3C8E28",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Asterix & Obelix (Europe) (En,Fr,De,Es)",
@@ -2006,7 +2138,8 @@
       "size": 720896,
       "crc": "41D59381",
       "md5": "BB1689799D82D47D35A55E88592471BF",
-      "sha1": "7E205EDC8A45198F0403033FA6A30C3C3C28BC70"
+      "sha1": "7E205EDC8A45198F0403033FA6A30C3C3C28BC70",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Astrohawk (World)",
@@ -2014,7 +2147,8 @@
       "size": 786432,
       "crc": "183E3BBF",
       "md5": "E0061C14BF01B138CF6DA6A2E073C3FE",
-      "sha1": "09FD2D689305E93355C660F09E352D32F1246141"
+      "sha1": "09FD2D689305E93355C660F09E352D32F1246141",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Atlas, The - Renaissance Voyager (Japan)",
@@ -2161,7 +2295,8 @@
       "size": 262144,
       "crc": "8C7FAEE4",
       "md5": "51F3C9D06A3CCDD683C953BF57B0D6B9",
-      "sha1": "03FA6293F83D3AF717A9EC8A29B10501460A0A5F"
+      "sha1": "03FA6293F83D3AF717A9EC8A29B10501460A0A5F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "BLT (World) (Demo 1)",
@@ -2169,7 +2304,8 @@
       "size": 262144,
       "crc": "75F193F0",
       "md5": "4839BD9545086A33FE81CFB18B52DB2D",
-      "sha1": "35420235EEE48C138EE823AC42D1ED8DF7F45D38"
+      "sha1": "35420235EEE48C138EE823AC42D1ED8DF7F45D38",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "BLT (World) (Demo 2)",
@@ -2177,7 +2313,8 @@
       "size": 262144,
       "crc": "DA63D27F",
       "md5": "3E22AA87899DEDFA1D34BA5805999BF6",
-      "sha1": "189AC6C9130CE55D59449D7260C8EB1291C7A3D0"
+      "sha1": "189AC6C9130CE55D59449D7260C8EB1291C7A3D0",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Baby T-Rex (USA) (Beta)",
@@ -2283,7 +2420,8 @@
       "crc": "52B0D84B",
       "md5": "38BACE8688B9962E2F90B294E0E4956B",
       "sha1": "149E916DFD4058F8DE97D7BC8F74D5E630853FFB",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Barbarossa (Japan)",
@@ -2558,7 +2696,8 @@
       "size": 1572864,
       "crc": "9CD27606",
       "md5": "16A20D2F340371DBB69B4101753D2BC3",
-      "sha1": "7D733217FC281E6B905B8EFDAE5A722077DA27AD"
+      "sha1": "7D733217FC281E6B905B8EFDAE5A722077DA27AD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Battle Clash (Europe)",
@@ -2887,7 +3026,7 @@
       "md5": "F827FFBDA26A32617A32136D090050CE",
       "sha1": "B392D00F78E04A35E1C95C1EB5F11BDD0D843EFA",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bazooka Blitzkrieg (USA)",
@@ -3463,6 +3602,7 @@
       "md5": "92FE34E7F0101296325354BE2D67AF2F",
       "sha1": "D34E903870AB0FA1B15B992696A9497AFDC3183F",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Blanco%20World%20Class%20Rugby%20(France)%20(En).png"
     },
     {
@@ -3645,7 +3785,8 @@
       "size": 3145728,
       "crc": "EF7C3B9D",
       "md5": "AC1E0FF7E8769AC7DBA59C816469C38D",
-      "sha1": "F3276EE68E5D5BB9C89C95B1811E7EE9CC406E2E"
+      "sha1": "F3276EE68E5D5BB9C89C95B1811E7EE9CC406E2E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Borderline (World)",
@@ -3653,7 +3794,8 @@
       "size": 524288,
       "crc": "B1154EC9",
       "md5": "2DAD0EAAF23F6A764DF02B0E25F3E528",
-      "sha1": "17BEC86EB5592BCC0644B69729581E3D225DB631"
+      "sha1": "17BEC86EB5592BCC0644B69729581E3D225DB631",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Borderline (World) (Beta)",
@@ -3661,7 +3803,8 @@
       "size": 524288,
       "crc": "1A7B48A7",
       "md5": "39232B6F21E12B1512B2C28F6F6BB8CF",
-      "sha1": "2B70ADF56C16DD9A896448814C351633C2E9A1D8"
+      "sha1": "2B70ADF56C16DD9A896448814C351633C2E9A1D8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bounty Sword (Japan)",
@@ -3864,7 +4007,8 @@
       "size": 1572864,
       "crc": "93356B76",
       "md5": "EB1AA51369F39224F47507F562CF6F39",
-      "sha1": "1ABFA5DA05FBC96D94CEBF9143ABA59107AD09F2"
+      "sha1": "1ABFA5DA05FBC96D94CEBF9143ABA59107AD09F2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Brawl Brothers - Rival Turf! 2 (Europe)",
@@ -3917,7 +4061,7 @@
       "md5": "918732FE0D7B7349B7D75AD8878125D5",
       "sha1": "619098C6531504B6815F6CD629BCDF94ACD772AC",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Breath%20of%20Fire%20(USA%2C%20Europe)%20(Switch%20Online).png"
     },
     {
@@ -3994,7 +4138,7 @@
       "md5": "7933CAC3CA64DE83D6ADDFE1A9D19159",
       "sha1": "4A5019ECDAE118B34DE3F4C7B226CE0922A441A8",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Breath%20of%20Fire%20II%20(USA%2C%20Europe)%20(Virtual%20Console%2C%20Switch%20Online).png"
     },
     {
@@ -4155,7 +4299,8 @@
       "size": 2097152,
       "crc": "9582F89F",
       "md5": "B7DCD461C6C7E97E4254DAF0888B27C3",
-      "sha1": "1F4CB2040B793179D5BA219D366363816558306B"
+      "sha1": "1F4CB2040B793179D5BA219D366363816558306B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bubsy in - Claws Encounters of the Furred Kind (Europe)",
@@ -4176,6 +4321,7 @@
       "md5": "FD412F4C8AA847C61A8F0304F97881B6",
       "sha1": "AE715A18088B13AE3F673A30725804D83100B50E",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Bubsy%20in%20-%20Claws%20Encounters%20of%20the%20Furred%20Kind%20(Germany)%20(En).png"
     },
     {
@@ -4195,7 +4341,8 @@
       "size": 2097152,
       "crc": "C19F0876",
       "md5": "8CBA8604CF93352DBF518592F67204C1",
-      "sha1": "E6BAD5B0708B16D898BA3FE848BAA5451824F3AA"
+      "sha1": "E6BAD5B0708B16D898BA3FE848BAA5451824F3AA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bubsy in Claws Encounters of the Furred Kind (USA) (Beta 1)",
@@ -4236,7 +4383,8 @@
       "size": 262144,
       "crc": "B7AE6B77",
       "md5": "812A7B9537CCD8DC3A07715A40A5A7CD",
-      "sha1": "69EC7A07F896BB67988999D26B351A75DBD02E92"
+      "sha1": "69EC7A07F896BB67988999D26B351A75DBD02E92",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Bug's Life, A (USA) (Pirate)",
@@ -4376,6 +4524,7 @@
       "crc": "B6E76A6A",
       "md5": "037AC4296B6B6A5C47C440188D3C72E3",
       "sha1": "A002F4EFBA42775A31185D443F3ED1790B0E949A",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/CX4%20(World)%20(Enhancement%20Chip).png"
     },
     {
@@ -4723,7 +4872,8 @@
       "size": 262144,
       "crc": "0A7BD0CF",
       "md5": "830FA7362F135444E356E1A9712E36AE",
-      "sha1": "AC6E8D4EF165DE55E781CD28A118AF4F803E9C35"
+      "sha1": "AC6E8D4EF165DE55E781CD28A118AF4F803E9C35",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Carrot Man and The Great Garden Getaway (World) (Proto) (SNESDEV 2025) (PAL)",
@@ -4731,7 +4881,8 @@
       "size": 262144,
       "crc": "E6980711",
       "md5": "2F878FADB40EE97D57556704621F0DC0",
-      "sha1": "6F8BC2162BDBF1BA85A36AEDAD4BF8FFBA728A9D"
+      "sha1": "6F8BC2162BDBF1BA85A36AEDAD4BF8FFBA728A9D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Casper (Europe)",
@@ -4923,7 +5074,8 @@
       "size": 1572864,
       "crc": "D61B2178",
       "md5": "EAC6C943728F5409AF8F27E00F203BF4",
-      "sha1": "76D4D51D7C4DF7B812D5A64EBAD913B8DD18E296"
+      "sha1": "76D4D51D7C4DF7B812D5A64EBAD913B8DD18E296",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Chaos Seed - Fuusui Kairouki (Japan)",
@@ -5083,7 +5235,8 @@
       "size": 1048576,
       "crc": "CE7CD57F",
       "md5": "C1B0663449D2E992145A54DFCFC3FE4C",
-      "sha1": "8CCECFD7875A5DB7C405ADDDE3D75DA1A9C27236"
+      "sha1": "8CCECFD7875A5DB7C405ADDDE3D75DA1A9C27236",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Choplifter III (Europe)",
@@ -5337,7 +5490,8 @@
       "size": 262144,
       "crc": "B068407D",
       "md5": "248E86C8EA3D24C5A7EF26B7AD680321",
-      "sha1": "241B3247039D3E5E269A0F878D0021419A2A9D3D"
+      "sha1": "241B3247039D3E5E269A0F878D0021419A2A9D3D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Classic Kong Complete (World) (v2.0)",
@@ -5345,7 +5499,8 @@
       "size": 262144,
       "crc": "BDC32AD8",
       "md5": "711828DFF9641140F57D23EA82799AF4",
-      "sha1": "ABAC92CCC09E4E21B45DA3104BBE3D28B6C0BB24"
+      "sha1": "ABAC92CCC09E4E21B45DA3104BBE3D28B6C0BB24",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Classic Kong Complete (World) (v2.01)",
@@ -5353,7 +5508,8 @@
       "size": 262144,
       "crc": "8FA368BE",
       "md5": "34109A821497C892B2BBA264ACEE2045",
-      "sha1": "33879E1A173B6F3A9E3DEB160F6DEF1DDEB38463"
+      "sha1": "33879E1A173B6F3A9E3DEB160F6DEF1DDEB38463",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Classic Road (Japan)",
@@ -5405,7 +5561,8 @@
       "size": 3145728,
       "crc": "85322FE3",
       "md5": "5C3DDB2A03021AC442311656EBE583E8",
-      "sha1": "1AE2D9936DFE47989A3A1C2445320A776EB79D57"
+      "sha1": "1AE2D9936DFE47989A3A1C2445320A776EB79D57",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Clay Fighter - Tournament Edition (USA)",
@@ -5446,7 +5603,8 @@
       "size": 3145728,
       "crc": "AC124DB3",
       "md5": "61EF3E3FA983C6ECC8621C66136DBD01",
-      "sha1": "74C73FD9D4B2337CFB8E2575F88E51E7D2EEFDE2"
+      "sha1": "74C73FD9D4B2337CFB8E2575F88E51E7D2EEFDE2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "ClayFighter (USA) (Beta 2)",
@@ -5516,7 +5674,8 @@
       "size": 1048576,
       "crc": "296720A1",
       "md5": "3894EE329ACDDDDAF192E98AE03AD52A",
-      "sha1": "7B6B71604791CBE9EFF7A206C4FFAE6BB6AC1CDE"
+      "sha1": "7B6B71604791CBE9EFF7A206C4FFAE6BB6AC1CDE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cliffhanger (Europe)",
@@ -5708,7 +5867,8 @@
       "size": 4194304,
       "crc": "D102B4D4",
       "md5": "BB531E4C36696177D262A942A60004DB",
-      "sha1": "D3F094DE3FF80453A08197C59D7DCA813D8E84CD"
+      "sha1": "D3F094DE3FF80453A08197C59D7DCA813D8E84CD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Contra (World) (Ja) (REV-B) (NES Conversion)",
@@ -5716,7 +5876,8 @@
       "size": 3145728,
       "crc": "E7903D3F",
       "md5": "AFAB6237DC9088144D5D9416B77AB61A",
-      "sha1": "1F34DC4265365D20CEA7AC42885D8B1456DAA4C0"
+      "sha1": "1F34DC4265365D20CEA7AC42885D8B1456DAA4C0",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Contra (World) (Ja) (REV-C) (NES Conversion)",
@@ -5724,7 +5885,8 @@
       "size": 4194304,
       "crc": "115A4DFE",
       "md5": "4B986427C05DF38EBCFC9E470FA62597",
-      "sha1": "ABAF42C31BDD9D9BFFF2B67A4DC70559B115095E"
+      "sha1": "ABAF42C31BDD9D9BFFF2B67A4DC70559B115095E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Contra (World) (Ja) (REV-D) (NES Conversion)",
@@ -5732,7 +5894,8 @@
       "size": 4194304,
       "crc": "0168C3E9",
       "md5": "9DF3F65B48383CB8B249829CEA2D0B94",
-      "sha1": "34951DEFC2527AF4A29BED73F2D258FB457BA3A6"
+      "sha1": "34951DEFC2527AF4A29BED73F2D258FB457BA3A6",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Contra Force (World) (Proto 1) (NES Conversion)",
@@ -5740,7 +5903,8 @@
       "size": 4194304,
       "crc": "69989684",
       "md5": "9AA031FC12CB47BA48234E0744058AF1",
-      "sha1": "8CDF278632BCF9CCA0A78D760918280793569762"
+      "sha1": "8CDF278632BCF9CCA0A78D760918280793569762",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Contra Force (World) (Proto 2) (NES Conversion)",
@@ -5748,7 +5912,8 @@
       "size": 4194304,
       "crc": "E2060F4B",
       "md5": "17F28D75F7F4CB9406E2EB8D36794D97",
-      "sha1": "4F08E6E3045CE2F8DBF0F333FF24A97A2375AFCC"
+      "sha1": "4F08E6E3045CE2F8DBF0F333FF24A97A2375AFCC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Contra III - The Alien Wars (USA)",
@@ -5790,6 +5955,7 @@
       "crc": "6128275A",
       "md5": "EE8D967297A0BDB4661CD6BF70C383F8",
       "sha1": "BADDFEC9F565E2083BAC06DFDCD527FD869BB778",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Contra%20III%20-%20The%20Alien%20Wars%20(World)%20(Contra%20Anniversary%20Collection).png"
     },
     {
@@ -5821,6 +5987,7 @@
       "crc": "8B037C37",
       "md5": "3C6BFE38D0DDE432804C0C64DB48578F",
       "sha1": "1E822C00CC87FA2CE0919B8BCF55D243599F99A1",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Contra%20Spirits%20(World)%20(Contra%20Anniversary%20Collection).png"
     },
     {
@@ -5917,7 +6084,8 @@
       "crc": "0FBC1145",
       "md5": "DCEDDC76526C05DDD01C7B6896D4C0A2",
       "sha1": "6A11AED1D7EA28A9F0ADE1C3156C49D4688F0239",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Corn Buster (Europe) (Proto)",
@@ -6012,7 +6180,8 @@
       "size": 262144,
       "crc": "D9BCE9A7",
       "md5": "E8EFB980E592024BAE1ED10A50B94041",
-      "sha1": "22BDED1200764E571863770EE444EFB7EB30D61C"
+      "sha1": "22BDED1200764E571863770EE444EFB7EB30D61C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Creepy Bird (World) (v1.02) (Digital)",
@@ -6020,7 +6189,8 @@
       "size": 262144,
       "crc": "707C5E8B",
       "md5": "CEFA0AC385EFA80E6E842B51C7E77B5F",
-      "sha1": "AAB7AC18B1168DBF2CD698538C0EED31565736CB"
+      "sha1": "AAB7AC18B1168DBF2CD698538C0EED31565736CB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Creepy Bird (World) (v1.02) (Digital) (Retro-Bit Generations)",
@@ -6028,7 +6198,8 @@
       "size": 262144,
       "crc": "EA58B25E",
       "md5": "276E236DD341F464C57722E88EB640B4",
-      "sha1": "35350EBF97DE1844CE5B7D1A2A252CF6759D2188"
+      "sha1": "35350EBF97DE1844CE5B7D1A2A252CF6759D2188",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Crystal Beans from Dungeon Explorer (Japan)",
@@ -6091,7 +6262,8 @@
       "size": 1048576,
       "crc": "30A73CE4",
       "md5": "412391A6CA0917E45E7AF9A8EE5AD6D6",
-      "sha1": "3021DD31A8F2E542BB70A69D36A53608CAB4B437"
+      "sha1": "3021DD31A8F2E542BB70A69D36A53608CAB4B437",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Cyber Knight (Japan)",
@@ -6208,6 +6380,7 @@
       "crc": "E359F184",
       "md5": "428FDB968D54353D9C9ECED1B0586671",
       "sha1": "188D471FEFEA71EB53F0EE7064697FF0971B1014",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/DSP1%20(World)%20(Enhancement%20Chip).png"
     },
     {
@@ -6217,6 +6390,7 @@
       "crc": "465C4E1C",
       "md5": "332273CC0DF5775D3803F2FD88E95D18",
       "sha1": "78B724811F5F18D8C67669D9390397EB1A47A5E2",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/DSP1%20B%20(World)%20(Enhancement%20Chip).png"
     },
     {
@@ -6225,7 +6399,8 @@
       "size": 131072,
       "crc": "D18A00CD",
       "md5": "54ECF1DC3401BA5DC0D2A838C26F35C5",
-      "sha1": "48F17DBCCCA2C2BB8E332BB3B7D2563A512C13E3"
+      "sha1": "48F17DBCCCA2C2BB8E332BB3B7D2563A512C13E3",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DSP2 (World) (Enhancement Chip)",
@@ -6234,6 +6409,7 @@
       "crc": "9A984974",
       "md5": "9EBBDCEC67C0C01D5A0593D3CF167C9E",
       "sha1": "198C4B1C3BFC6D69E734C5957AF3DBFA26238DFB",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/DSP2%20(World)%20(Enhancement%20Chip).png"
     },
     {
@@ -6254,6 +6430,7 @@
       "crc": "E15384C0",
       "md5": "F229FDA2D7B33C5A218CBA28147AB9B8",
       "sha1": "AF6478AECB6F1B67177E79C82CA04C56250A8C72",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/DSP4%20(World)%20(Enhancement%20Chip).png"
     },
     {
@@ -6493,6 +6670,7 @@
       "crc": "3C346D8B",
       "md5": "FDA2152B387F4521C00C3EC67FF845E2",
       "sha1": "C96233F582360DEA90CB43906F49D5E0AC7BED3A",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Darius%20Force%20(World)%20(Darius%20Cozmic%20Collection).png"
     },
     {
@@ -6534,7 +6712,8 @@
       "size": 1048576,
       "crc": "94688D7E",
       "md5": "0B36885799560A1593C15E04BE7DA331",
-      "sha1": "9002FBFB3C58319AC374F98933EFF1A1FBF598B9"
+      "sha1": "9002FBFB3C58319AC374F98933EFF1A1FBF598B9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Darius Twin (World) (Ja) (Darius Cozmic Collection)",
@@ -6543,6 +6722,7 @@
       "crc": "0E8AE847",
       "md5": "E5A049BB0E7D66CB7A7910380AEE17A4",
       "sha1": "F1D0B29DA939B07A5013B1B66BB9760C3CA312F0",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Darius%20Twin%20(World)%20(Ja)%20(Darius%20Cozmic%20Collection).png"
     },
     {
@@ -6650,7 +6830,8 @@
       "size": 2097152,
       "crc": "26FAA9C6",
       "md5": "4580ACB8038D177EA4AC616234ED351A",
-      "sha1": "94BFFCD2B5B993C85636DDF56F5044D8BB4E1194"
+      "sha1": "94BFFCD2B5B993C85636DDF56F5044D8BB4E1194",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Dead Dance (Japan)",
@@ -6845,7 +7026,7 @@
       "md5": "1A2F726D3D1D906FF8856DF51A023494",
       "sha1": "33C0630D35E0BCEA4B41B586C12CCD51A1867173",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Demon's%20Crest%20(USA%2C%20Europe)%20(Switch%20Online).png"
     },
     {
@@ -7061,7 +7242,8 @@
       "crc": "83610397",
       "md5": "A04580BBFB2D770F303E60E230C77957",
       "sha1": "E17EFF5CD7360BFEAB51DBEF9D0F76FD603CBD66",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Desert Fighter (Europe)",
@@ -7135,7 +7317,8 @@
       "size": 262143,
       "crc": "1570C9E2",
       "md5": "7CC61114AA2C9637F085ED0B4B32AFE9",
-      "sha1": "0B68A7FE026E62302EB25AE220E8FA3095503505"
+      "sha1": "0B68A7FE026E62302EB25AE220E8FA3095503505",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Destructive (Japan)",
@@ -7462,7 +7645,7 @@
       "md5": "0CB7BB0387E0464EC0CFCE6355BE3511",
       "sha1": "F7223A087CCA2C8D5BBF91C0BCC2D077DE6606FA",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Donkey%20Kong%20Country%20(USA%2C%20Europe)%20(Rev%202)%20(Virtual%20Console%2C%20Classic%20Mini%2C%20Switch%20Online).png"
     },
     {
@@ -7505,6 +7688,7 @@
       "md5": "F39D026F5BB47B1E8C72B36DCA524849",
       "sha1": "DC6A271AD77B49E59CB86CBA0B7799845D7347A0",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Donkey%20Kong%20Country%202%20-%20Diddy's%20Kong%20Quest%20(Germany)%20(En%2CDe).png"
     },
     {
@@ -7515,6 +7699,7 @@
       "md5": "2AE8161CB714F2DAD38F845674553A4B",
       "sha1": "5A5EE7C1E3D36530C3EBF98BDCED2C9C3A0313AB",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Donkey%20Kong%20Country%202%20-%20Diddy's%20Kong%20Quest%20(Germany)%20(En%2CDe)%20(Rev%201).png"
     },
     {
@@ -7525,6 +7710,7 @@
       "md5": "3A91E7FE961B8CA447A30F80D0A37EBF",
       "sha1": "50B44869EECFEBDA7602FA58BB4DB5CA44B0FAC2",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Donkey%20Kong%20Country%202%20-%20Diddy's%20Kong%20Quest%20(Germany)%20(En%2CDe)%20(Rev%201)%20(Virtual%20Console).png"
     },
     {
@@ -7568,7 +7754,7 @@
       "md5": "CFC251C8E59C25916A706E035DF1818D",
       "sha1": "89DFA86D7A393FFB1B08438AB3D024C31D741E24",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Donkey%20Kong%20Country%202%20-%20Diddy's%20Kong%20Quest%20(USA%2C%20Europe)%20(En%2CFr)%20(Rev%201)%20(Switch%20Online).png"
     },
     {
@@ -7760,7 +7946,8 @@
       "size": 1048576,
       "crc": "94AFC86D",
       "md5": "90BD580DB8B208798013B373BF1425A6",
-      "sha1": "812F508307063CDB5AD37547476C42C3CF1EC892"
+      "sha1": "812F508307063CDB5AD37547476C42C3CF1EC892",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Dottie Flowers (Japan) (v1.1)",
@@ -7909,6 +8096,7 @@
       "md5": "AB22F03F34FD2AE041D48F8BC92E8880",
       "sha1": "BF132F963C8E09E7F106B6106CE47BAD593B2A48",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Dragon%20Ball%20Z%20-%20Hyper%20Dimension%20(France).png"
     },
     {
@@ -7930,6 +8118,7 @@
       "md5": "36E1391F0B1F29F16EF5D4EB83C3725B",
       "sha1": "827C071F8AEBE93F80576800266F74F82FF9E41B",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Dragon%20Ball%20Z%20-%20La%20Legende%20Saien%20(France).png"
     },
     {
@@ -7940,6 +8129,7 @@
       "md5": "DD909B890FE4C2505D289361368EC22A",
       "sha1": "BDA0ECD24CD529D178EBA14DB8A0453718262DF2",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Dragon%20Ball%20Z%20-%20Super%20Butouden%20(France).png"
     },
     {
@@ -8048,6 +8238,7 @@
       "md5": "2A827D44ED95DB34E85854031EE8AE5E",
       "sha1": "C45A0A775AE09C00A9DCADC14E94AF8877D775A4",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Dragon%20Ball%20Z%20-%20Ultime%20Menace%20(France).png"
     },
     {
@@ -8175,7 +8366,8 @@
       "size": 2621440,
       "crc": "37A3F5D2",
       "md5": "D84A416783C094A5985C5163519718A5",
-      "sha1": "652F25EE1EAF654958755AA74ED91C459377F161"
+      "sha1": "652F25EE1EAF654958755AA74ED91C459377F161",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Dragon's Earth (Japan)",
@@ -8251,6 +8443,7 @@
       "md5": "00DEC808D74998F8F95D804DC43FA0D1",
       "sha1": "F4B2CAA1FD642CB2909BE32F6176BF423D17F700",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Drakkhen%20(Germany).png"
     },
     {
@@ -8281,7 +8474,8 @@
       "size": 1572864,
       "crc": "F1D748B6",
       "md5": "457D1E43EE85FC15A831479908C6957B",
-      "sha1": "C2893F7541B10FD87B014E7D68E3CC8F62C046BB"
+      "sha1": "C2893F7541B10FD87B014E7D68E3CC8F62C046BB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Dream Basketball - Dunk & Hoop (Japan)",
@@ -8398,7 +8592,8 @@
       "size": 3145728,
       "crc": "9A396EC5",
       "md5": "A1C4F25BB7666BC711BD3D63568E84AC",
-      "sha1": "27D362302516B72E5E5016E94F2DF84863FCE1AA"
+      "sha1": "27D362302516B72E5E5016E94F2DF84863FCE1AA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DuckTales (World) (Beta 2) (NES Conversion)",
@@ -8406,7 +8601,8 @@
       "size": 3145728,
       "crc": "FC78AE79",
       "md5": "324C72F53804402A27BC06C746C2AF07",
-      "sha1": "2F3A740FA37797945B23DF2DF7F6FF266E4F3599"
+      "sha1": "2F3A740FA37797945B23DF2DF7F6FF266E4F3599",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DuckTales (World) (REV-A) (NES Conversion)",
@@ -8414,7 +8610,8 @@
       "size": 3145728,
       "crc": "740786A1",
       "md5": "4E09AD45A608FE1A29045640E10730FF",
-      "sha1": "B7BD983F2A6B2E6FC24E9F76173F724A2F424378"
+      "sha1": "B7BD983F2A6B2E6FC24E9F76173F724A2F424378",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DuckTales (World) (REV-B) (NES Conversion)",
@@ -8422,7 +8619,8 @@
       "size": 3145728,
       "crc": "BFCC3575",
       "md5": "5923614EB9D6792B2A23DC347726266A",
-      "sha1": "1B7659DCE45438106E33F086051D2F04DA1CE57E"
+      "sha1": "1B7659DCE45438106E33F086051D2F04DA1CE57E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DuckTales (World) (REV-C) (NES Conversion)",
@@ -8430,7 +8628,8 @@
       "size": 3145728,
       "crc": "BF7D3209",
       "md5": "7DA1C401F1AD62AB720FE6BBE88A9A00",
-      "sha1": "7ACF8EBFED7182ED5FA45A2971B635E097743C38"
+      "sha1": "7ACF8EBFED7182ED5FA45A2971B635E097743C38",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DuckTales (World) (REV-F) (NES Conversion)",
@@ -8438,7 +8637,8 @@
       "size": 3145728,
       "crc": "CFFD528E",
       "md5": "308C7975D7EE112870A419E4B677DC78",
-      "sha1": "3E96278B43DC823FB7211E09BDB270E7FF7A1023"
+      "sha1": "3E96278B43DC823FB7211E09BDB270E7FF7A1023",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DuckTales (World) (REV-G) (NES Conversion)",
@@ -8446,7 +8646,8 @@
       "size": 4194304,
       "crc": "48CE1853",
       "md5": "34807F1989DF15B9326A1E4F9448F7EB",
-      "sha1": "8D9836B320B9A4FD879D6906958C919955B1A011"
+      "sha1": "8D9836B320B9A4FD879D6906958C919955B1A011",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "DuckTales (World) (REV-H) (NES Conversion)",
@@ -8454,7 +8655,8 @@
       "size": 4194304,
       "crc": "1BDFE6E6",
       "md5": "F79B7E5DFF2701E6762F0DDB61BCCA17",
-      "sha1": "EC9FBAE45B905614479307D943032FA2B4BB13EC"
+      "sha1": "EC9FBAE45B905614479307D943032FA2B4BB13EC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Duel, The - Test Drive II (Europe)",
@@ -8693,7 +8895,7 @@
       "md5": "D5668EBE58AF9AA9B9341C1F893494A7",
       "sha1": "3E1F3C22F0EA5B40B4EA9A61B074638C4CFB7CE2",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Earth%20Defense%20Force%20(USA%2C%20Europe)%20(Switch%20Online).png"
     },
     {
@@ -8852,7 +9054,8 @@
       "size": 3145728,
       "crc": "35A40580",
       "md5": "00BF280AC8550455D6C2CC411D40A754",
-      "sha1": "8CB8B41D6CD36D1C91C727541C687C46967CE976"
+      "sha1": "8CB8B41D6CD36D1C91C727541C687C46967CE976",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Edono Kiba (Japan)",
@@ -9058,6 +9261,7 @@
       "md5": "159DB76662232BF8F9560EB13191F7D5",
       "sha1": "188C653E31174CC1EC720F471DBDFBEB5A86FA2E",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Eric%20Cantona%20Football%20Challenge%20(France)%20(En%2CFr%2CDe%2CEs%2CIt%2CNl%2CSv).png"
     },
     {
@@ -9230,7 +9434,8 @@
       "size": 2097152,
       "crc": "C207C7D4",
       "md5": "82A6767E802254DD46BF6C01B5C01B72",
-      "sha1": "3DDB3D73D9BCD52B1667FBBC3803A013E68B482B"
+      "sha1": "3DDB3D73D9BCD52B1667FBBC3803A013E68B482B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Eyra - The Crow Maiden (World) (Demo 2)",
@@ -9238,7 +9443,8 @@
       "size": 2097152,
       "crc": "7C2C0BF7",
       "md5": "0C79924AB5ECCBC9B55AD14049232B94",
-      "sha1": "40D9C5E3F394EEBC0A4CA532FB535FC2B7D3AEF6"
+      "sha1": "40D9C5E3F394EEBC0A4CA532FB535FC2B7D3AEF6",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "F-1 Grand Prix (Japan)",
@@ -9346,7 +9552,7 @@
       "md5": "2083A0E260B052DDCA7A5D4382A9CA0D",
       "sha1": "693EAAB4013777BA91FDEAAAA021AC15640EB299",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/F-Zero%20(USA%2C%20Europe)%20(Virtual%20Console%2C%20Classic%20Mini%2C%20Switch%20Online).png"
     },
     {
@@ -9434,6 +9640,7 @@
       "md5": "9036D197E04EE34D7D364EDC70C6744F",
       "sha1": "84E58DA5F4A2CD15ACF72FBE5CB0037EA8AD6B4A",
       "region": "Brazil",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/FIFA%20-%20A%20Caminho%20Da%20Copa%2098%20(Brazil)%20(En%2CFr%2CDe%2CEs%2CIt%2CSv).png"
     },
     {
@@ -9836,7 +10043,8 @@
       "size": 2621440,
       "crc": "F9A8DC7D",
       "md5": "8E9F9516F9CE23690DE763E58611C9FC",
-      "sha1": "955DCC9A09A49EA4229FCF94026DB7FBA78163A9"
+      "sha1": "955DCC9A09A49EA4229FCF94026DB7FBA78163A9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Fighter's History - Mizoguchi Kikiippatsu!! (Japan)",
@@ -9912,7 +10120,7 @@
       "md5": "6EE1BFA6AC945590197C3925EE94B8DD",
       "sha1": "0A4BC57A58E5289D29A5F7836F27B72DDD0D120A",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Final%20Fantasy%20II%20(USA%2C%20Europe)%20(Rev%201)%20(Virtual%20Console).png"
     },
     {
@@ -10322,7 +10530,8 @@
       "size": 262144,
       "crc": "FD2A2284",
       "md5": "1431012DB45FCA4E9E5C0ECC50C23029",
-      "sha1": "7D19A5734ED9847165E6401F30AF17AB803CA1D1"
+      "sha1": "7D19A5734ED9847165E6401F30AF17AB803CA1D1",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Fire Emblem - Monshou no Nazo (Japan)",
@@ -10569,7 +10778,8 @@
       "size": 524288,
       "crc": "2B8BA13B",
       "md5": "7648BE5380826FE30D1DD705020CC74B",
-      "sha1": "DEB137D4CE8D90D22B294BF416388450D353D59F"
+      "sha1": "DEB137D4CE8D90D22B294BF416388450D353D59F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Fishing Koushien (Japan)",
@@ -10871,7 +11081,8 @@
       "size": 851968,
       "crc": "2BA40B80",
       "md5": "624D728F40F76FF400CA9079CF683751",
-      "sha1": "FE63FC2FF789C62AD6602A614CA7E2598E32FDA8"
+      "sha1": "FE63FC2FF789C62AD6602A614CA7E2598E32FDA8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Frogger (USA)",
@@ -11022,7 +11233,8 @@
       "size": 2621440,
       "crc": "7219DFCA",
       "md5": "48DA7271712F260C86BBB666EF84F2A5",
-      "sha1": "26688C1AF3835A46D6628965E524DC9B2EEA9C16"
+      "sha1": "26688C1AF3835A46D6628965E524DC9B2EEA9C16",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Fun 'n Games (Europe)",
@@ -11074,7 +11286,8 @@
       "size": 6291456,
       "crc": "8C7A9C00",
       "md5": "2DCFABF362808A9BA8BE16E866718920",
-      "sha1": "B316AB0FA33E3DA3310EC2D22349B299E7CA4526"
+      "sha1": "B316AB0FA33E3DA3310EC2D22349B299E7CA4526",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Furuta Atsuya no Simulation Pro Yakyuu 2 (Japan)",
@@ -11127,7 +11340,8 @@
       "crc": "2C9A788F",
       "md5": "39945FA5BE9FC820E8CCA5EFF6482CCD",
       "sha1": "035E7DCA68BE446A18224782B354ED9012D97FB5",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Futebol Brasileiro 96 (Brazil) (Pirate)",
@@ -11136,7 +11350,8 @@
       "crc": "65545E88",
       "md5": "61178475A7CBEA2D257F25C22E66A911",
       "sha1": "4E09A35B9404EEE49FE56B86D15E82FEB004CD36",
-      "region": "Brazil"
+      "region": "Brazil",
+      "videoStandard": "NTSC"
     },
     {
       "name": "G.O.D - Mezame yo to Yobu Koe ga Kikoe (Japan)",
@@ -11299,7 +11514,8 @@
       "crc": "F36B620D",
       "md5": "659AC20D8FF863A6AA7F1F70B9B812D3",
       "sha1": "5CF6A2E679185D435C9CEE93CABAB70A5D8A147D",
-      "region": "Taiwan"
+      "region": "Taiwan",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Gambler Jiko Chuushinha - Mahjong Ooisen (Japan)",
@@ -12228,6 +12444,7 @@
       "md5": "29E2EE08C6B7C1A89A720D7291F76E58",
       "sha1": "B3FB29994BFB9ECED59B580A13AF89C9BA9DBF94",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Goof%20Troop%20(France).png"
     },
     {
@@ -12238,6 +12455,7 @@
       "md5": "3000077578BE5FD29B3903F00E83FB8E",
       "sha1": "A13048050FCD51B07BA1A0ABE541FC416F3BF8E6",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Goof%20Troop%20(Germany).png"
     },
     {
@@ -12268,7 +12486,8 @@
       "size": 262144,
       "crc": "56817ACC",
       "md5": "B708166AE6A9059A6E6453E9A2506FD4",
-      "sha1": "ED4E38976DD9927E7AAE7541C78EED420F7670FE"
+      "sha1": "ED4E38976DD9927E7AAE7541C78EED420F7670FE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Goomba BreakOut (World) (v1.4)",
@@ -12276,7 +12495,8 @@
       "size": 262144,
       "crc": "2AEB2054",
       "md5": "5F58FC2F859DD1D579E066AC595D25FD",
-      "sha1": "AC60EF7F3E127BB3918AA55759C4DC8854FF53FD"
+      "sha1": "AC60EF7F3E127BB3918AA55759C4DC8854FF53FD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Gouketsuji Ichizoku (Japan)",
@@ -12326,7 +12546,8 @@
       "size": 2621440,
       "crc": "690A9540",
       "md5": "9A940AB2B5803031A1449111885C7517",
-      "sha1": "D028D7876D390B7A8CCF0691851D3D7609914C78"
+      "sha1": "D028D7876D390B7A8CCF0691851D3D7609914C78",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Gousou Jinrai Densetsu - Musha (Japan)",
@@ -12898,6 +13119,7 @@
       "md5": "21C252C096A5AE3D667057F46C85D7C2",
       "sha1": "A29836109AFF66A7273D6EA16927C5DF508EF1D2",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Harvest%20Moon%20(Germany).png"
     },
     {
@@ -13244,7 +13466,8 @@
       "size": 262144,
       "crc": "169DDA02",
       "md5": "54D007B1DAA712A7BDD0251BAD4A49FE",
-      "sha1": "D94CCFF3737C914BF49B13C3DA642468306A0E43"
+      "sha1": "D94CCFF3737C914BF49B13C3DA642468306A0E43",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Hind Strike (USA)",
@@ -13708,7 +13931,8 @@
       "size": 109824,
       "crc": "CDE1DFA9",
       "md5": "9B9C326106857D0A7B4E6584BBB21A6F",
-      "sha1": "C2B5D8820051D3796546F6A461A7FA0DDDEB9BD7"
+      "sha1": "C2B5D8820051D3796546F6A461A7FA0DDDEB9BD7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Horizontal Shooter (World) (Demo 2)",
@@ -13716,7 +13940,8 @@
       "size": 131072,
       "crc": "901293AE",
       "md5": "E1B12AB9B1C2B85E97A44B0F8B799704",
-      "sha1": "9342B8FAB9F8C621865950DAE4BFA3F7EFB99A37"
+      "sha1": "9342B8FAB9F8C621865950DAE4BFA3F7EFB99A37",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Hoshi no Kirby 3 (Japan)",
@@ -13888,6 +14113,7 @@
       "md5": "242BDFA398B3008B362914D09773B0EB",
       "sha1": "E74725E4EB14757C898007B9766090074C91B731",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Humans%2C%20The%20(Germany).png"
     },
     {
@@ -13896,7 +14122,8 @@
       "size": 1572864,
       "crc": "918AE6E0",
       "md5": "C496E69A0D0C0F12E015E0483CE8B3C6",
-      "sha1": "F620F7B35433D8912AE71DA850E4042DCEB19F2F"
+      "sha1": "F620F7B35433D8912AE71DA850E4042DCEB19F2F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Humans, The (World) (QUByte Classics)",
@@ -13904,7 +14131,8 @@
       "size": 1048576,
       "crc": "4F085456",
       "md5": "EF2D9F9570D91876750266840CBB9E16",
-      "sha1": "E57D19CDA15038FF70608C090F55C26A635C9536"
+      "sha1": "E57D19CDA15038FF70608C090F55C26A635C9536",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Hungry Dinosaurs (Europe)",
@@ -14117,7 +14345,8 @@
       "size": 1048576,
       "crc": "88D2416E",
       "md5": "D8400975534FCF3F83B64BB461F3379A",
-      "sha1": "2CB2494540C0E36FF73C8D8F54F51454206EAC5F"
+      "sha1": "2CB2494540C0E36FF73C8D8F54F51454206EAC5F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Igo Club (Japan)",
@@ -14213,6 +14442,7 @@
       "md5": "45EF39D209AF53EB7ABCCD763445F202",
       "sha1": "025ED8B698B66100DBBEB66B8A91AF2EA9D742F9",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Illusion%20of%20Time%20(France).png"
     },
     {
@@ -14223,6 +14453,7 @@
       "md5": "68E1492BDDEA04D457D77705C77C74E1",
       "sha1": "24711CE599F1F61E9B3CAC3D117D5D9C37FF759F",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Illusion%20of%20Time%20(Germany).png"
     },
     {
@@ -14233,6 +14464,7 @@
       "md5": "DA83E132213271FE3107BF4DBAC7B939",
       "sha1": "D3FF5ADF858D7E56A67577AC6042C26565C240DF",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Illusion%20of%20Time%20(Germany)%20(Rev%201).png"
     },
     {
@@ -14243,6 +14475,7 @@
       "md5": "FAF4D7C79DAF445D2CA286D8B2F81CAB",
       "sha1": "F236E4A5FFAA7431540DBAEB98716B3E84CFA455",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Illusion%20of%20Time%20(Spain).png"
     },
     {
@@ -14326,7 +14559,8 @@
       "size": 1048576,
       "crc": "1B6E1622",
       "md5": "735266767E3B7DF831C46B083436FE0A",
-      "sha1": "8A67D3E4AAD48BD9FE2460E2B2CE2DBBCF49D917"
+      "sha1": "8A67D3E4AAD48BD9FE2460E2B2CE2DBBCF49D917",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Incognity - A Rover Story (World) (v0.9.0)",
@@ -14334,7 +14568,8 @@
       "size": 524288,
       "crc": "456F3CBF",
       "md5": "E58A428FBACE2AFC7F1F69283C022B02",
-      "sha1": "086D62A3DDAFE3D23615DD1929A7743767CED815"
+      "sha1": "086D62A3DDAFE3D23615DD1929A7743767CED815",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Incognity - A Rover Story (World) (v0.9.1)",
@@ -14342,7 +14577,8 @@
       "size": 524288,
       "crc": "7E809B1A",
       "md5": "BCFA928602176B3C152C6C7E27EDFFFA",
-      "sha1": "38D068DA17BC9F32E6A1FA017932D476F8CD8EBA"
+      "sha1": "38D068DA17BC9F32E6A1FA017932D476F8CD8EBA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Incredible Crash Dummies, The (Europe)",
@@ -14631,7 +14867,8 @@
       "size": 2097152,
       "crc": "0A5B8444",
       "md5": "879B5F05A04D8D45874B4FDD1332B3AD",
-      "sha1": "AD4DE699CE58A380416265FB783DC6F569C24398"
+      "sha1": "AD4DE699CE58A380416265FB783DC6F569C24398",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Iron Commando (World) (Steam)",
@@ -14639,7 +14876,8 @@
       "size": 2097152,
       "crc": "CD7C58D4",
       "md5": "EB8C18AD7C7EA74AF694066FD7B10386",
-      "sha1": "C2FFF592AB11D610AAFD3B805FE2438C5DABB772"
+      "sha1": "C2FFF592AB11D610AAFD3B805FE2438C5DABB772",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Iron Commando (World) (v1.1) (Steam)",
@@ -14647,7 +14885,8 @@
       "size": 2097152,
       "crc": "2D911B58",
       "md5": "22E90C68B9D317C4B2AFB1C5DE4FE67C",
-      "sha1": "7BCAE41459F2EE9CC036B36142CD8F7075E1C3A8"
+      "sha1": "7BCAE41459F2EE9CC036B36142CD8F7075E1C3A8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Iron Commando - Koutetsu no Senshi (Japan)",
@@ -14942,6 +15181,7 @@
       "md5": "4E6A28FC481FD0D5F3B93C2179E8D7E9",
       "sha1": "D0A54A6E4E7C27FD6DA23AD53201679272F9AC04",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/J.R.R.%20Tolkien's%20The%20Lord%20of%20the%20Rings%20-%20Volume%20One%20(Germany).png"
     },
     {
@@ -14951,7 +15191,8 @@
       "crc": "74EC9859",
       "md5": "F0021DA95F5B1E313802AD2C16FF04B4",
       "sha1": "8922D657E6ECB15A585448843C884EC88E89111D",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "JB The Super Bass (Japan)",
@@ -15044,6 +15285,7 @@
       "md5": "D945DFD265D40CD77B8B87AED060E55C",
       "sha1": "126452A1EE886DF87B3B41BD870ECC88C6E0C9C6",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jack%20Nicklaus%20Golf%20(France).png"
     },
     {
@@ -15244,7 +15486,8 @@
       "size": 1048576,
       "crc": "9B344A9A",
       "md5": "3CC707A5072CE9409F788E9FB905CB20",
-      "sha1": "912EE5525861B184728AC401C52130D01CA3CDA5"
+      "sha1": "912EE5525861B184728AC401C52130D01CA3CDA5",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Jet Pilot Rising (World) (De) (v1.1)",
@@ -15252,7 +15495,8 @@
       "size": 524288,
       "crc": "23507977",
       "md5": "8E36483B61776951834D6738912CDDED",
-      "sha1": "6349D94230B3D75052FA110F200B23C9D9B89D2E"
+      "sha1": "6349D94230B3D75052FA110F200B23C9D9B89D2E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Jetsons, The - Invasion of the Planet Pirates (USA)",
@@ -15532,7 +15776,8 @@
       "size": 1048576,
       "crc": "929D8D10",
       "md5": "73FF5EAB8894AE3BB1F09D75E063D064",
-      "sha1": "E9E87B1459D63A78FB4865685835DC0CA8C74A53"
+      "sha1": "E9E87B1459D63A78FB4865685835DC0CA8C74A53",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Jim Power - The Lost Dimension in 3D (World) (Piko Interactive) (Enhanced)",
@@ -15540,7 +15785,8 @@
       "size": 2097152,
       "crc": "48164725",
       "md5": "43A52C684B49748772AC4FD2A3B324F3",
-      "sha1": "07E9EF42CD5B1E1FD903ABA6282D7B3B29378633"
+      "sha1": "07E9EF42CD5B1E1FD903ABA6282D7B3B29378633",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Jim Power - The Lost Dimension in 3D (World) (QUByte Classics)",
@@ -15548,7 +15794,8 @@
       "size": 1048576,
       "crc": "79D8EB24",
       "md5": "318CD0A7E9D2936F366DBAFAE1FD1139",
-      "sha1": "07730112C52F737261929DA808CA7695772838EB"
+      "sha1": "07730112C52F737261929DA808CA7695772838EB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Jimmy Connors Pro Tennis Tour (Europe)",
@@ -15569,6 +15816,7 @@
       "md5": "7424445C51692EAD97568E0A53B3D4A0",
       "sha1": "BAD6EAD80316FF9C1105E2CB7F16529939A0BE50",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jimmy%20Connors%20Pro%20Tennis%20Tour%20(France).png"
     },
     {
@@ -15579,6 +15827,7 @@
       "md5": "6CA06D22206DCAD105A8426C943287B1",
       "sha1": "0E0C581574851B09487CCB8EBC1CB7514BE05A31",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jimmy%20Connors%20Pro%20Tennis%20Tour%20(Germany).png"
     },
     {
@@ -15588,7 +15837,8 @@
       "crc": "585947EB",
       "md5": "A31C650101BD06993480309356DC325F",
       "sha1": "7F937D1B747691FC9361087F5F8052621C65D020",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "Jimmy Connors Pro Tennis Tour (Japan) (En)",
@@ -15847,7 +16097,8 @@
       "size": 1048576,
       "crc": "8617F7B9",
       "md5": "5937237991576DF306E9F1DCD8B889F2",
-      "sha1": "09F4CA0B2F035755784560953293292DFD106EDE"
+      "sha1": "09F4CA0B2F035755784560953293292DFD106EDE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Joe & Mac 3 - Lost in the Tropics (Europe) (En,Fr,De)",
@@ -16052,6 +16303,7 @@
       "crc": "A690CF68",
       "md5": "342847114BEBA981A83746A8C1AEDB29",
       "sha1": "F8DAA9D605DAB709A0F0F5281984168D88594399",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jungle%20Book%2C%20The%20(World)%20(Disney%20Classic%20Games).png"
     },
     {
@@ -16139,6 +16391,7 @@
       "md5": "C0C7E365D54CA41CF619908449ED069C",
       "sha1": "A02A935C4AD7164AE146623159A4EFE746B28952",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jurassic%20Park%20(France).png"
     },
     {
@@ -16149,6 +16402,7 @@
       "md5": "D4F063F065BD06935DC3F75732DF9450",
       "sha1": "5BA69A86A6A5A996212937E27C031B53456F090D",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jurassic%20Park%20(Germany).png"
     },
     {
@@ -16159,6 +16413,7 @@
       "md5": "F859C4F7C9D2BF507287F7208D44DF7F",
       "sha1": "E205BF1CAD258FBE119E5305DE06778D84548ABF",
       "region": "Italy",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jurassic%20Park%20(Italy).png"
     },
     {
@@ -16180,6 +16435,7 @@
       "md5": "961167DA14C524D1F5D0458745028017",
       "sha1": "0748801306572E7EBCDD8A9176C633DC98EC2945",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Jurassic%20Park%20(Spain).png"
     },
     {
@@ -16253,7 +16509,8 @@
       "size": 262144,
       "crc": "ECCFF965",
       "md5": "B2B36D20C88EE46691933AD893788B64",
-      "sha1": "7D75CE2C2766FFF87F7AD8AA10C5179EC1335087"
+      "sha1": "7D75CE2C2766FFF87F7AD8AA10C5179EC1335087",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Justice League Task Force (Europe)",
@@ -16305,7 +16562,8 @@
       "size": 2097152,
       "crc": "B4923E4A",
       "md5": "FEF11CD50A9AD09EABB3E0B04BF8513A",
-      "sha1": "B12BCFD423757209033F8DB7DAD4BC03F3985F07"
+      "sha1": "B12BCFD423757209033F8DB7DAD4BC03F3985F07",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Jutei Senki (Japan)",
@@ -16335,7 +16593,8 @@
       "size": 1572864,
       "crc": "3A589B8E",
       "md5": "DC4633FD1722B4F7AFC4F9A637921EDF",
-      "sha1": "0CF5C43A8C112DB39A421FF441DA4B017FF4890B"
+      "sha1": "0CF5C43A8C112DB39A421FF441DA4B017FF4890B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "K-fet Invaders (World)",
@@ -16343,7 +16602,8 @@
       "size": 262144,
       "crc": "67397D0D",
       "md5": "3FE046ECB232E8DF24F1F16DCD4BE5C1",
-      "sha1": "A74B5C528EEA85CFE3573D706FEC53D1A03EBAAA"
+      "sha1": "A74B5C528EEA85CFE3573D706FEC53D1A03EBAAA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "K.H. Rummenigge's Player Manager (Germany)",
@@ -16353,6 +16613,7 @@
       "md5": "68C0C9314301B238B033F62D34E3B763",
       "sha1": "5CB9CAF37BFEDD3FA9B946B0D5C58B49B96F698C",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/K.H.%20Rummenigge's%20Player%20Manager%20(Germany).png"
     },
     {
@@ -16600,7 +16861,8 @@
       "size": 262144,
       "crc": "2ED0F383",
       "md5": "47C08C2435981BD4158B0753D1865F5B",
-      "sha1": "CE85268A9B4EC06D53C7772529705506084F2E8C"
+      "sha1": "CE85268A9B4EC06D53C7772529705506084F2E8C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Keiba Eight Special (Japan)",
@@ -17437,7 +17699,7 @@
       "md5": "FCCA9E2E13C959075BADB1E8F6DDFF46",
       "sha1": "1141FB2269CA04D4312B26FFE97ED44CB83B882A",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Kirby's%20Dream%20Course%20(USA%2C%20Europe)%20(Virtual%20Console%2C%20Switch%20Online).png"
     },
     {
@@ -17895,6 +18157,7 @@
       "md5": "F644AD755DAF27BA4B92CB93D8B1451A",
       "sha1": "05E48A5916B5C8D0E4F99FA18866AB1DB1454615",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lagoon%20(Germany).png"
     },
     {
@@ -18067,7 +18330,8 @@
       "size": 262144,
       "crc": "49A36518",
       "md5": "8C46213970EF6C38D34774C6381FA9D6",
-      "sha1": "C5CACFDBED312ACDC9D408DC2060B5B967428633"
+      "sha1": "C5CACFDBED312ACDC9D408DC2060B5B967428633",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Lawnmower Man, The (Europe)",
@@ -18183,7 +18447,8 @@
       "size": 1048576,
       "crc": "FA66536D",
       "md5": "3A8D1E33ACD44E15F3F88BEA10FA2502",
-      "sha1": "FA868ED108891E84B62F27A92E539B8CB741F7F0"
+      "sha1": "FA868ED108891E84B62F27A92E539B8CB741F7F0",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend (World) (QUByte Classics)",
@@ -18191,7 +18456,8 @@
       "size": 1048576,
       "crc": "33C648AA",
       "md5": "99C070D3CDF193582A3413168BBA546F",
-      "sha1": "80ACA3DD651657D714C702157166900C61E33C7A"
+      "sha1": "80ACA3DD651657D714C702157166900C61E33C7A",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Zelda, The (World) (REV-F) (Digital) (NES Conversion)",
@@ -18199,7 +18465,8 @@
       "size": 3145728,
       "crc": "6CACD79C",
       "md5": "B53693517EBAAEDD9147545B02C3B7A9",
-      "sha1": "3AA0413E1E5FE5B50AD17FF32873D0F8777071EC"
+      "sha1": "3AA0413E1E5FE5B50AD17FF32873D0F8777071EC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Zelda, The (World) (REV-G) (Digital) (NES Conversion)",
@@ -18207,7 +18474,8 @@
       "size": 3145728,
       "crc": "E4BD1859",
       "md5": "A727B5259C247F48CECD179C380D906B",
-      "sha1": "A734F282046F198633D386421F16CCF1DFC29290"
+      "sha1": "A734F282046F198633D386421F16CCF1DFC29290",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Zelda, The (World) (REV-H) (Digital) (NES Conversion)",
@@ -18215,7 +18483,8 @@
       "size": 4194304,
       "crc": "C0AD8FC7",
       "md5": "B1A3781BCC8234358F1FD4010EEFA801",
-      "sha1": "A6ECE6B0FDF3021034CFE8B4BA40CD1FBD1A630E"
+      "sha1": "A6ECE6B0FDF3021034CFE8B4BA40CD1FBD1A630E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Zelda, The (World) (REV-I) (Digital) (NES Conversion)",
@@ -18223,7 +18492,8 @@
       "size": 4194304,
       "crc": "CB5F6855",
       "md5": "F7A46ABF32AC9D30348BE39FC912B67A",
-      "sha1": "E87462C6708E6BE06C6F3CEE4A816FC47822AC31"
+      "sha1": "E87462C6708E6BE06C6F3CEE4A816FC47822AC31",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Legend of Zelda, The - A Link to the Past (Canada) (Fr)",
@@ -18265,6 +18535,7 @@
       "md5": "3F3730F9BFB6AB74085801AF16B155A9",
       "sha1": "229364A1B92A05167CD38609B1AA98F7041987CC",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Legend%20of%20Zelda%2C%20The%20-%20A%20Link%20to%20the%20Past%20(France).png"
     },
     {
@@ -18274,7 +18545,8 @@
       "crc": "220F154D",
       "md5": "B412390C9BDCA64A2588C43AFC7EA3B6",
       "sha1": "00A2B2EA5ADC4474D87FF7B7303B2B1D0D54A952",
-      "region": "France"
+      "region": "France",
+      "videoStandard": "PAL"
     },
     {
       "name": "Legend of Zelda, The - A Link to the Past (France) (Beta 2)",
@@ -18283,7 +18555,8 @@
       "crc": "CAD9D8EC",
       "md5": "48645CB15057D837B6D271A0EC9CB34B",
       "sha1": "5B38121FFA6AC21EAF74AD2B72C2A767B6856A5D",
-      "region": "France"
+      "region": "France",
+      "videoStandard": "PAL"
     },
     {
       "name": "Legend of Zelda, The - A Link to the Past (Germany)",
@@ -18293,6 +18566,7 @@
       "md5": "9BCD78C38F4D999087718881703B3E9B",
       "sha1": "2E62494967FB0AFDF5DA1635607F9641DF7C6559",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Legend%20of%20Zelda%2C%20The%20-%20A%20Link%20to%20the%20Past%20(Germany).png"
     },
     {
@@ -18302,7 +18576,8 @@
       "crc": "92FF4444",
       "md5": "22C9120A260FD4A6613B1EF33B3A23ED",
       "sha1": "A480F4BF181116949BC0B61F7D65CD9028FA955C",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "Legend of Zelda, The - A Link to the Past (USA)",
@@ -18323,7 +18598,7 @@
       "md5": "863CF13D990B1D39229AD11E21BA9991",
       "sha1": "CCE2817177FE8D0CA2409934B2777526FE7008BC",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Legend%20of%20Zelda%2C%20The%20-%20A%20Link%20to%20the%20Past%20(USA%2C%20Europe)%20(Switch%20Online).png"
     },
     {
@@ -18345,6 +18620,7 @@
       "md5": "FC48381638FD7851E8B425F5F39A6D35",
       "sha1": "F971122ECB7FA6BFD82FE4697DAF3806536F866E",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Legend%20of%20the%20Mystical%20Ninja%2C%20The%20(Germany).png"
     },
     {
@@ -18562,7 +18838,8 @@
       "size": 524288,
       "crc": "DABC86FB",
       "md5": "ED72FC0639AE65B00C312DCA7BC594DB",
-      "sha1": "D9442FC8711AE64E0AA07712822A73296838D199"
+      "sha1": "D9442FC8711AE64E0AA07712822A73296838D199",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Liberty or Death (USA)",
@@ -18676,7 +18953,8 @@
       "size": 4194304,
       "crc": "881CE80A",
       "md5": "5652B6D507B8E8F29C9B2498EA071E5B",
-      "sha1": "CD354BDFB0B0EEA955CD92FB98CE45B7FD20B470"
+      "sha1": "CD354BDFB0B0EEA955CD92FB98CE45B7FD20B470",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Lion King, The (World) (Ja) (Disney Classic Games)",
@@ -18685,6 +18963,7 @@
       "crc": "E04B0914",
       "md5": "FFC9ECA9FD6BEA5D245E8AC9D6100120",
       "sha1": "08E08E69CE287DA62CD1B252C538CF9200B5EDD6",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lion%20King%2C%20The%20(World)%20(Ja)%20(Disney%20Classic%20Games).png"
     },
     {
@@ -18768,7 +19047,8 @@
       "size": 557056,
       "crc": "34EE7436",
       "md5": "057DBFC351FD75796739F00F607A9747",
-      "sha1": "1BA6D723682B31566B9D5F360EC899A046F94407"
+      "sha1": "1BA6D723682B31566B9D5F360EC899A046F94407",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Lobo (USA) (Proto)",
@@ -18953,6 +19233,7 @@
       "md5": "DBD58A2C35E4CDA603B6238CDA0DC6A0",
       "sha1": "72B472A389A6392ED8189BDC24BCEAFEA238F6FB",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lost%20Vikings%2C%20The%20(France)%20(En%2CFr).png"
     },
     {
@@ -18963,6 +19244,7 @@
       "md5": "402347C45AF9310AFA944CD2B88722CD",
       "sha1": "4AAD42B6813D12F90AEF9A6FDC3AD1D97024AD93",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lost%20Vikings%2C%20The%20(Germany).png"
     },
     {
@@ -18973,6 +19255,7 @@
       "md5": "67E4617FC9C17572B7B27386A3F7E766",
       "sha1": "6C4B1326755230C870A407DF7A30E1F849EACF6C",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lost%20Vikings%2C%20The%20(Spain).png"
     },
     {
@@ -19015,6 +19298,7 @@
       "md5": "76C0D775AF541F17AB7A1232F8836495",
       "sha1": "21E6CE377E3DE7052BFE06402D08CCB58678BB52",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lothar%20Matthaeus%20Super%20Soccer%20(Germany).png"
     },
     {
@@ -19090,6 +19374,7 @@
       "md5": "8607561B2D3175B949EBD899AA12052B",
       "sha1": "858197F17AC8081BD7D43F4089A75785A2016C6C",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lufia%20(Germany).png"
     },
     {
@@ -19100,6 +19385,7 @@
       "md5": "E5BA6B230AA1E4986B7CD3906C63B170",
       "sha1": "2CBB1A60656C6571ECB0B0CD8AE8E46609F37514",
       "region": "Netherlands",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lufia%20(Netherlands).png"
     },
     {
@@ -19110,6 +19396,7 @@
       "md5": "35505A978CF25E99C38806B634FF4BD0",
       "sha1": "EAF67E123573CA50D7FB8828C59E4F7A1DF23FA2",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Lufia%20(Spain).png"
     },
     {
@@ -19411,7 +19698,8 @@
       "size": 3145728,
       "crc": "4D88489F",
       "md5": "ED917718435646245E386C3CAD8F32B3",
-      "sha1": "A8CD502ED94D54B797FBBD286EA5B8B21BC82939"
+      "sha1": "A8CD502ED94D54B797FBBD286EA5B8B21BC82939",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Magical Drop 2 - Bunka Housou Special Version (Japan)",
@@ -19431,7 +19719,7 @@
       "md5": "A5C3F9D450AFF223C13B73A419B6D6A0",
       "sha1": "370136A129E2CE4903FC121DA1D60EF5AFF08809",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Magical%20Drop%20II%20(USA%2C%20Europe)%20(Switch%20Online).png"
     },
     {
@@ -19475,6 +19763,7 @@
       "md5": "4B303432CFCB16042B4479426B36CD9E",
       "sha1": "775360533038A2AEFEC395988390E018972A4DF4",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Magical%20Quest%20Starring%20Mickey%20Mouse%2C%20The%20(Germany).png"
     },
     {
@@ -19485,6 +19774,7 @@
       "md5": "374B780EB8252EAA3D459D39ACB05EC9",
       "sha1": "89DB73911485E7868CA8329BB463FE114AFDD021",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Magical%20Quest%20Starring%20Mickey%20Mouse%2C%20The%20(Germany)%20(Rev%201).png"
     },
     {
@@ -19495,6 +19785,7 @@
       "md5": "63F6150AB0DC8F4576280F280C9E252E",
       "sha1": "057E6BEEDC34D851016A2CFFE539ABA899A4ACDD",
       "region": "Italy",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Magical%20Quest%20Starring%20Mickey%20Mouse%2C%20The%20(Italy).png"
     },
     {
@@ -19853,6 +20144,7 @@
       "md5": "3253FBF00A560ED8CAFB5D603B25E42E",
       "sha1": "C7FAC77270ECC64CD1541BE9A86A007231B06CC6",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mario%20Is%20Missing!%20(France).png"
     },
     {
@@ -19863,6 +20155,7 @@
       "md5": "12A76FB31EFB2CD1A08ABD67B914A185",
       "sha1": "FCD4A8C83EFE83E8E15B03D83EB8F3F04A7D532F",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mario%20Is%20Missing!%20(Germany).png"
     },
     {
@@ -20003,6 +20296,7 @@
       "md5": "A2B37DCBC9729700137F2381553A25A6",
       "sha1": "7B20B6235A1C64486946FE71BB62CAC03D6F3F6D",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mario's%20Time%20Machine%20(Germany).png"
     },
     {
@@ -20289,7 +20583,8 @@
       "size": 262144,
       "crc": "4424F545",
       "md5": "09108E115A03436FB5DD53CF1D924EA8",
-      "sha1": "48AF2269CAC6A9803163868D2270D328F23B134C"
+      "sha1": "48AF2269CAC6A9803163868D2270D328F23B134C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "MazezaM (World) (Proto 2)",
@@ -20297,7 +20592,8 @@
       "size": 262144,
       "crc": "F360E2D9",
       "md5": "A49E76A5C336D267A00E3981355850D6",
-      "sha1": "CBEFC134D39B28B024012EC795B29C11A2777876"
+      "sha1": "CBEFC134D39B28B024012EC795B29C11A2777876",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "MazezaM Challenge (World) (En,Fr) (v1.2)",
@@ -20305,7 +20601,8 @@
       "size": 524288,
       "crc": "076AC3FE",
       "md5": "DDDAF6B133EF16C19A253B5465517513",
-      "sha1": "D263FFB10A1E4B8B177292FDB48973358A7C5ABA"
+      "sha1": "D263FFB10A1E4B8B177292FDB48973358A7C5ABA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "MazezaM Challenge (World) (NEO Compo 2012)",
@@ -20313,7 +20610,8 @@
       "size": 524288,
       "crc": "86B790C7",
       "md5": "0E3DA57AC40885629197DFAF381303FF",
-      "sha1": "CDF110FD6E176F12CB65DECCAA7B29D3D230327D"
+      "sha1": "CDF110FD6E176F12CB65DECCAA7B29D3D230327D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "MazezaM Challenge (World) (v1.1) (NEO Compo 2012)",
@@ -20321,7 +20619,8 @@
       "size": 524288,
       "crc": "5E468FB4",
       "md5": "7ECC4AF16B37CBE2B8015ACA09797669",
-      "sha1": "020FF0DE87968B6F1591358A580A9043D1F1D979"
+      "sha1": "020FF0DE87968B6F1591358A580A9043D1F1D979",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "MazezaM Challenge DX (World) (En,Fr) (v2.1)",
@@ -20329,7 +20628,8 @@
       "size": 524288,
       "crc": "F5A916C4",
       "md5": "F0D5DBE570DCE081A12CB323A244A68C",
-      "sha1": "DFCC31B9979F93F82137ABDF7BD4F3349EB49782"
+      "sha1": "DFCC31B9979F93F82137ABDF7BD4F3349EB49782",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "MazezaM Challenge DX (World) (En,Fr) (v2.1) (PAL)",
@@ -20337,7 +20637,8 @@
       "size": 524288,
       "crc": "17F7EE85",
       "md5": "68DBCEA87801C7EBDDE961668F5B5EA1",
-      "sha1": "5E4BA2570EF63F08C92803CD0A24B91915989595"
+      "sha1": "5E4BA2570EF63F08C92803CD0A24B91915989595",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mazinger Z (Japan)",
@@ -20391,6 +20692,7 @@
       "md5": "C320825E5EA7E4F1641071AD6524C727",
       "sha1": "2B146B18E7A323B92A3A8CE33BD34EE738BC2154",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/MechWarrior%20(France).png"
     },
     {
@@ -20401,6 +20703,7 @@
       "md5": "BB4CA7B4DCA71C3B8DCAE129F6072313",
       "sha1": "29BCC2DF05198F27EE24534E7AA1840B5B0EB914",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/MechWarrior%20(Germany).png"
     },
     {
@@ -20411,6 +20714,7 @@
       "md5": "6ABE3F39C2F6F58986DD8665C1147AA1",
       "sha1": "D85E61B4FA00172A7BD2E7F1FD06F939752B6238",
       "region": "Italy",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/MechWarrior%20(Italy).png"
     },
     {
@@ -20421,6 +20725,7 @@
       "md5": "AE1525BF00EFECC378C86048D2FDBA4F",
       "sha1": "48D6F2E0C8F673D79C2394BF9D7FC7B1218B0E6F",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/MechWarrior%20(Spain).png"
     },
     {
@@ -20502,7 +20807,8 @@
       "size": 1048576,
       "crc": "59CAEBD7",
       "md5": "6FF18DFAE7380A1D43422C1695FD0EDB",
-      "sha1": "21FC28BE19D7AECFC890BCF63DFD2F8D8EED5BD6"
+      "sha1": "21FC28BE19D7AECFC890BCF63DFD2F8D8EED5BD6",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man (World) (REV-B) (NES Conversion)",
@@ -20510,7 +20816,8 @@
       "size": 3145728,
       "crc": "AC8E409E",
       "md5": "91D048159AD11BB3EE06BC090A6BDB06",
-      "sha1": "E151CA94B84D97F7902E6C7EB30D8B3F6F194DC9"
+      "sha1": "E151CA94B84D97F7902E6C7EB30D8B3F6F194DC9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man (World) (REV-D) (NES Conversion)",
@@ -20518,7 +20825,8 @@
       "size": 4194304,
       "crc": "64D1382A",
       "md5": "2F4AAA8AB4B302A0BDFAD80D43CE4AA7",
-      "sha1": "D3B1228A37DE792C1CB0C0A319A230B42C666368"
+      "sha1": "D3B1228A37DE792C1CB0C0A319A230B42C666368",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man (World) (REV-E) (NES Conversion)",
@@ -20526,7 +20834,8 @@
       "size": 4194304,
       "crc": "44660632",
       "md5": "9CFFE28DE58AB928DFF2F287D253014E",
-      "sha1": "91286F96F06DC85B7064B1798B9D14B98C9F69FF"
+      "sha1": "91286F96F06DC85B7064B1798B9D14B98C9F69FF",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man 7 (Europe)",
@@ -20556,7 +20865,8 @@
       "size": 2097152,
       "crc": "FBB59CC5",
       "md5": "CE1259B08151F9351B6FD9DC5D178A45",
-      "sha1": "B2ACFF9DA4AF3BDAB59ECBAD808F10EB4F8D4DFC"
+      "sha1": "B2ACFF9DA4AF3BDAB59ECBAD808F10EB4F8D4DFC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man II (World) (REV-B) (NES Conversion)",
@@ -20564,7 +20874,8 @@
       "size": 2097152,
       "crc": "B81FABFB",
       "md5": "1DF88354201A40C70D9F455451421932",
-      "sha1": "13612A40F8504020A6C5ED13014E5163FAE65256"
+      "sha1": "13612A40F8504020A6C5ED13014E5163FAE65256",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man II (World) (REV-C) (NES Conversion)",
@@ -20572,7 +20883,8 @@
       "size": 2097152,
       "crc": "BF9F622D",
       "md5": "E12DD2F0EAD7BCA3E5289EAF1A71D4DB",
-      "sha1": "334D9D5844A530FEFC4599A6A49274E7B5082AAD"
+      "sha1": "334D9D5844A530FEFC4599A6A49274E7B5082AAD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man II (World) (REV-E) (NES Conversion)",
@@ -20580,7 +20892,8 @@
       "size": 2097152,
       "crc": "D7CDD5DC",
       "md5": "259965903452E0F1DA75CC126DF1CF1A",
-      "sha1": "E3F8BDE2C7738EFA50F0E0A24D1741ADBE909726"
+      "sha1": "E3F8BDE2C7738EFA50F0E0A24D1741ADBE909726",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man III (World) (REV-B) (NES Conversion)",
@@ -20588,7 +20901,8 @@
       "size": 4194304,
       "crc": "63953FA0",
       "md5": "ADEF38E5BA5A6E05D487E948291FEF7A",
-      "sha1": "B49EFDDB806A1BC2E0C99DA5F471513C48ED3814"
+      "sha1": "B49EFDDB806A1BC2E0C99DA5F471513C48ED3814",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man III (World) (REV-C) (NES Conversion)",
@@ -20596,7 +20910,8 @@
       "size": 4194304,
       "crc": "9B241DE4",
       "md5": "2036630FE6114AF9CC0B169F196EC1E4",
-      "sha1": "306956124A4539BD069448BD3A6BA9EF7FE89BEB"
+      "sha1": "306956124A4539BD069448BD3A6BA9EF7FE89BEB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man IV (World) (Beta) (NES Conversion)",
@@ -20604,7 +20919,8 @@
       "size": 2097152,
       "crc": "63C2FD28",
       "md5": "08825B091F3442EE7E1A9E688A80D69B",
-      "sha1": "E2D337F308A14AA4BF4F763383AB474EA7CFEEBB"
+      "sha1": "E2D337F308A14AA4BF4F763383AB474EA7CFEEBB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man IV (World) (REV-A) (NES Conversion)",
@@ -20612,7 +20928,8 @@
       "size": 2097152,
       "crc": "88A455A7",
       "md5": "14A4B072FD3DC6EF20F22ACDAE867D8D",
-      "sha1": "7FC8861A7BA074D2D03DA31FD18A60D31DADA971"
+      "sha1": "7FC8861A7BA074D2D03DA31FD18A60D31DADA971",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man IV (World) (REV-C) (NES Conversion)",
@@ -20620,7 +20937,8 @@
       "size": 2097152,
       "crc": "F6B61385",
       "md5": "E49EAD824FA7D819EB3086EB3C87FA67",
-      "sha1": "48D2BA83676876C0D49A5D4B7DD3966AC3FC1906"
+      "sha1": "48D2BA83676876C0D49A5D4B7DD3966AC3FC1906",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man IV (World) (REV-D) (NES Conversion)",
@@ -20628,7 +20946,8 @@
       "size": 2097152,
       "crc": "63793067",
       "md5": "4F15EB067D9165B615E72CA7E5BCE135",
-      "sha1": "52AD2F6C61C10319708DD0AD85F36C6A83A8D0D7"
+      "sha1": "52AD2F6C61C10319708DD0AD85F36C6A83A8D0D7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man IV (World) (REV-E) (NES Conversion)",
@@ -20636,7 +20955,8 @@
       "size": 2097152,
       "crc": "A34A97AA",
       "md5": "CF871DA39E12A03CB9DC8AC1AED4F935",
-      "sha1": "F77CB626DB23B37A2F8D3F6F0B752B0D265411D9"
+      "sha1": "F77CB626DB23B37A2F8D3F6F0B752B0D265411D9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man IV (World) (REV-G) (NES Conversion)",
@@ -20644,7 +20964,8 @@
       "size": 4194304,
       "crc": "4F914049",
       "md5": "65853F7DCC1F4DE97D3187C69ABBE3FE",
-      "sha1": "1FA2D7A9B71ECEF09305EF389A598C4B375B0D66"
+      "sha1": "1FA2D7A9B71ECEF09305EF389A598C4B375B0D66",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man Soccer (USA)",
@@ -20663,7 +20984,8 @@
       "size": 4194304,
       "crc": "2131E2B7",
       "md5": "606B64BB051091F74AF619CED544ECCB",
-      "sha1": "9992F8C24161A194B6FAF1F490132B1CA96AF3D7"
+      "sha1": "9992F8C24161A194B6FAF1F490132B1CA96AF3D7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man V (World) (REV-E) (NES Conversion)",
@@ -20671,7 +20993,8 @@
       "size": 4194304,
       "crc": "B1D358C8",
       "md5": "344E82612EA9DDBBEC58F6E2732B12D2",
-      "sha1": "A2AFCB00DF03054EEDA405C57932645C703D8AD7"
+      "sha1": "A2AFCB00DF03054EEDA405C57932645C703D8AD7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man VI (World) (REV-B) (NES Conversion)",
@@ -20679,7 +21002,8 @@
       "size": 4194304,
       "crc": "2587652B",
       "md5": "CB4C7C89771E0480C80058CAAEF536E3",
-      "sha1": "1D2D8071666E2D2A2A62C1D0F822265D8DCCC1FF"
+      "sha1": "1D2D8071666E2D2A2A62C1D0F822265D8DCCC1FF",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man X (Europe)",
@@ -20740,7 +21064,8 @@
       "size": 1572864,
       "crc": "97A10846",
       "md5": "F1DFBBCDC3D8CDEAFA4B4B9AA51A56D6",
-      "sha1": "14AA83CD2EAFAD1A9B04187A854E20B33CEFC207"
+      "sha1": "14AA83CD2EAFAD1A9B04187A854E20B33CEFC207",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man X2 (Europe)",
@@ -20780,7 +21105,8 @@
       "size": 1572864,
       "crc": "8972DF65",
       "md5": "A8AA24DF75686A5BB1A08A27D1876F5F",
-      "sha1": "4A57802A0AD3817DAF1FF60D62E094B0612B5612"
+      "sha1": "4A57802A0AD3817DAF1FF60D62E094B0612B5612",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega Man X3 (Europe)",
@@ -20810,7 +21136,8 @@
       "size": 2097152,
       "crc": "1ACB643D",
       "md5": "FF683B75E75E9B59F0C713C7512A016B",
-      "sha1": "E1259C1BBD8CEF0769F193D8EEC83536BD15E4D0"
+      "sha1": "E1259C1BBD8CEF0769F193D8EEC83536BD15E4D0",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mega lo Mania - Jikuu Daisenryaku (Japan)",
@@ -20925,7 +21252,8 @@
       "size": 1572864,
       "crc": "972E5F42",
       "md5": "9292200F3102430D0BB1138E073BA364",
-      "sha1": "51F60C67232BCEB195875A3D55361E1BDE4F5F8F"
+      "sha1": "51F60C67232BCEB195875A3D55361E1BDE4F5F8F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Metal Max 2 (Japan)",
@@ -20988,7 +21316,8 @@
       "size": 3145728,
       "crc": "B9EF2BC4",
       "md5": "C53FE67C808936267960894A187FDC61",
-      "sha1": "D4AD7579D20BDEB6509849015E8C82D35459F1C6"
+      "sha1": "D4AD7579D20BDEB6509849015E8C82D35459F1C6",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Metroid (World) (REV-E) (NES Conversion)",
@@ -20996,7 +21325,8 @@
       "size": 3145728,
       "crc": "2A059E29",
       "md5": "6111CC9FDBB903687328ED555A31181E",
-      "sha1": "38FACAB4E7F2C93DBD50E249B0ADD83CEB9AD5F3"
+      "sha1": "38FACAB4E7F2C93DBD50E249B0ADD83CEB9AD5F3",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Metroid (World) (REV-F) (NES Conversion)",
@@ -21004,7 +21334,8 @@
       "size": 4194304,
       "crc": "81B37C6A",
       "md5": "7FB92D6B2219951437A453BFEF2742D6",
-      "sha1": "0043C67572A4DA7337E4EC7698CFCBD014462AE8"
+      "sha1": "0043C67572A4DA7337E4EC7698CFCBD014462AE8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Metroid (World) (REV-G) (NES Conversion)",
@@ -21012,7 +21343,8 @@
       "size": 4194304,
       "crc": "CBAA1A84",
       "md5": "ABF0BE7777B50C9F32D406EBAA9ED0EE",
-      "sha1": "EC4D6A7FF9ED6CC1600E0554C47E9D377804370C"
+      "sha1": "EC4D6A7FF9ED6CC1600E0554C47E9D377804370C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Michael Andretti's Indy Car Challenge (Japan)",
@@ -21302,6 +21634,7 @@
       "md5": "369419BA2F81AA46EACFB9036EE12CDF",
       "sha1": "9E670B7F06A4B1FD8D7E79719D9B4A59AA4EDB57",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Might%20and%20Magic%20II%20(Germany).png"
     },
     {
@@ -21450,7 +21783,8 @@
       "size": 3145728,
       "crc": "D664DBFA",
       "md5": "A1B291A352CE1D065475AAAB883CE3D6",
-      "sha1": "6902F61DD0B6C67930F86F7C66535656B0D706D8"
+      "sha1": "6902F61DD0B6C67930F86F7C66535656B0D706D8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mike Tyson's Punch-Out!! (World) (REV-C) (NES Conversion)",
@@ -21458,7 +21792,8 @@
       "size": 4194304,
       "crc": "BB3421A3",
       "md5": "4CE1E9FEBED55644101E546E98C5FA3A",
-      "sha1": "03C013DB15202084DE74882BF0266DC2AB5D6E03"
+      "sha1": "03C013DB15202084DE74882BF0266DC2AB5D6E03",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Mike Tyson's Punch-Out!! (World) (REV-B) (NES Conversion)",
@@ -21466,7 +21801,8 @@
       "size": 4194304,
       "crc": "A78DE923",
       "md5": "571CEA8B86208C214E5E8153E090650A",
-      "sha1": "BFCE61B5FF30D7434FD3BC6A602ABF4F68561FF7"
+      "sha1": "BFCE61B5FF30D7434FD3BC6A602ABF4F68561FF7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Milandra (Japan)",
@@ -22138,7 +22474,8 @@
       "size": 2097152,
       "crc": "5C8A87B6",
       "md5": "4FBFFB470258BAB128A184D3F1FB0037",
-      "sha1": "D4FACCAB9347ADA1AF76A3B39F6DFBC13E2E9544"
+      "sha1": "D4FACCAB9347ADA1AF76A3B39F6DFBC13E2E9544",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ms. Pac-Man (Europe)",
@@ -22287,6 +22624,7 @@
       "md5": "A5356B9BAD50D4A9191BC1FE50316B5B",
       "sha1": "6C2BCB3BE5AD46CC96FD35B50446931FC046A167",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mystic%20Quest%20Legend%20(France).png"
     },
     {
@@ -22297,6 +22635,7 @@
       "md5": "10CFE4F746A8BF3DD54C1E61C67F61D1",
       "sha1": "BD190854C0F725160ED6F6B0669E3CDD2308CCCA",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Mystic%20Quest%20Legend%20(Germany).png"
     },
     {
@@ -22305,7 +22644,8 @@
       "size": 2097152,
       "crc": "BB6A870F",
       "md5": "7A76A36CB8A39AC0E223938005872AB8",
-      "sha1": "855F6002B8C08904C724B98842342EE486A4E376"
+      "sha1": "855F6002B8C08904C724B98842342EE486A4E376",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "N-Warp Daisakusen (World) (v1.1)",
@@ -22313,7 +22653,8 @@
       "size": 2097152,
       "crc": "BE08D788",
       "md5": "E6C5D532286EA248CEA10D878DF20A70",
-      "sha1": "A7F7A2D214E9DCEA51C1A6F0FBFB9DDA39F26F46"
+      "sha1": "A7F7A2D214E9DCEA51C1A6F0FBFB9DDA39F26F46",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "NBA All-Star Challenge (Europe)",
@@ -23302,7 +23643,8 @@
       "size": 2097152,
       "crc": "187CFBFA",
       "md5": "079AB9C22A0AA40DB0B78A04FF954D00",
-      "sha1": "E4DA96B8BA2E01DB4B5C85BAF5FBDCB75A3CE9E7"
+      "sha1": "E4DA96B8BA2E01DB4B5C85BAF5FBDCB75A3CE9E7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "New Super Mario Land (World) (v1.1)",
@@ -23310,7 +23652,8 @@
       "size": 2097152,
       "crc": "8D69103F",
       "md5": "3D89D04F1DAEE43C6AF7218235042807",
-      "sha1": "592D16617F9D8BE111CA914D387BFE59A84C0EEC"
+      "sha1": "592D16617F9D8BE111CA914D387BFE59A84C0EEC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "New Super Mario Land (World) (v1.2)",
@@ -23318,7 +23661,8 @@
       "size": 2097152,
       "crc": "6C2B54EB",
       "md5": "EBED74B4E5DDE0423C61AE4730A7B6A4",
-      "sha1": "37FACDA1CCAFE16235A6703703FB0E069645DE18"
+      "sha1": "37FACDA1CCAFE16235A6703703FB0E069645DE18",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "New Super Mario Land (World) (v1.3)",
@@ -23326,7 +23670,8 @@
       "size": 2097152,
       "crc": "981E7001",
       "md5": "BEC2422E77DC90A2F3C6C208F206A99A",
-      "sha1": "FCD32CDC86F6678FB006992BDDEC1440789101CF"
+      "sha1": "FCD32CDC86F6678FB006992BDDEC1440789101CF",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "New Super Mario Land (World) (v1.5)",
@@ -23334,7 +23679,8 @@
       "size": 2097152,
       "crc": "2B50F2AF",
       "md5": "37AC79B4BF8148BF1B80C36CC8C5F853",
-      "sha1": "B2B21665C03AD8AF092CC55B2B9DF10B47E8A1CD"
+      "sha1": "B2B21665C03AD8AF092CC55B2B9DF10B47E8A1CD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "New Yatterman - Nandai Kandai Yajirobee (Japan)",
@@ -23508,6 +23854,7 @@
       "md5": "E5AB2F72C3704132944F47FC427D222C",
       "sha1": "5B922C3C0FD06E928E0E54E69C07499608CA2051",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Nigel%20Mansell's%20World%20Championship%20Racing%20(Germany)%20(En).png"
     },
     {
@@ -23547,7 +23894,8 @@
       "size": 2097152,
       "crc": "ABAAFF79",
       "md5": "5B78A0D25CF6E12BDF20C8F6F6B0CDAF",
-      "sha1": "65D156BCC43149D4828289BC78B2565A674F58BE"
+      "sha1": "65D156BCC43149D4828289BC78B2565A674F58BE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ninja Gaiden Trilogy (USA)",
@@ -23566,7 +23914,8 @@
       "size": 4194304,
       "crc": "E0EDC33F",
       "md5": "9B41ADF2168574D02A79AAF2355D37DA",
-      "sha1": "FF5D1066445D1A7AD028A3E45B5146DE92C0DB80"
+      "sha1": "FF5D1066445D1A7AD028A3E45B5146DE92C0DB80",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ninja Gaiden Trilogy (World) (REV-C) (NES Conversion)",
@@ -23574,7 +23923,8 @@
       "size": 4194304,
       "crc": "86D2473C",
       "md5": "23BF075BCD514A3F74AC36DDE8CBDC26",
-      "sha1": "70A060A4DD269D1DCB202661B9EBE726E60CD757"
+      "sha1": "70A060A4DD269D1DCB202661B9EBE726E60CD757",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ninja Ryuuken Den Tomoe (Japan)",
@@ -23672,7 +24022,7 @@
       "md5": "C53464E770C855250B58674FAE95894C",
       "sha1": "DB86707DF15CA301B5E7508F6310C7781A7CDD7D",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Nintendo Challenge (Japan) (En) (Competition Cart)",
@@ -23906,7 +24256,8 @@
       "size": 524288,
       "crc": "C0C35B72",
       "md5": "65987A046A6113650FE0DE0703144D05",
-      "sha1": "4772A2019937621AFE191773D853B2336AEF1C2B"
+      "sha1": "4772A2019937621AFE191773D853B2336AEF1C2B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Numbers Paradise (Japan)",
@@ -24004,7 +24355,7 @@
       "md5": "A8DE9BB235319EF9B6B96B26F1296783",
       "sha1": "D042098F24378B8001FE8D008F562F8A40C084DF",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Ogre%20Battle%20-%20The%20March%20of%20the%20Black%20Queen%20(USA%2C%20Europe)%20(Virtual%20Console).png"
     },
     {
@@ -24208,7 +24559,8 @@
       "size": 1048576,
       "crc": "B29A80E7",
       "md5": "7C62792386D797856E3E79BD3B2D013C",
-      "sha1": "3C809CE38C22DF75369BD6A75528EDA979B824FC"
+      "sha1": "3C809CE38C22DF75369BD6A75528EDA979B824FC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Operation Starfi5h (Europe)",
@@ -24565,7 +24917,8 @@
       "size": 524288,
       "crc": "7D1D0E76",
       "md5": "945A8980E9A1CBFA970FC6873C5C5D79",
-      "sha1": "210C532E4E6B0041777BC3B8EB55EF9496C47B14"
+      "sha1": "210C532E4E6B0041777BC3B8EB55EF9496C47B14",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Pac-In-Time (Europe)",
@@ -24630,6 +24983,7 @@
       "md5": "7A59016E163998CC7A487D49BE235417",
       "sha1": "8DA6606676B6BC98DB3D3908DF3A8271D354BA60",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Pac-Man%202%20-%20The%20New%20Adventures%20(France).png"
     },
     {
@@ -24640,6 +24994,7 @@
       "md5": "0E63F85594B7BB335F0676D624A5C01A",
       "sha1": "C2D28F3A63C1199FA098F591EB100A9E1FC6C3C3",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Pac-Man%202%20-%20The%20New%20Adventures%20(Germany).png"
     },
     {
@@ -24967,6 +25322,7 @@
       "crc": "E3510CB3",
       "md5": "55E35840634595F20484EB0EB6D2E5B0",
       "sha1": "A5B11D77E105416EEB47172FF1D148BB38860034",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Panel%20de%20Pon%20(World)%20(Ja)%20(Rev%201)%20(Virtual%20Console%2C%20Switch%20Online).png"
     },
     {
@@ -26019,6 +26375,7 @@
       "md5": "7BED3A10E8E42D47B542637313EB96FE",
       "sha1": "9FC200F34EECE7E477CAE7BE0217B66015E613EE",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Plok%20(France)%20(En%2CFr).png"
     },
     {
@@ -26029,6 +26386,7 @@
       "md5": "43560F356FB0534D7E0E25ABA1CA31E5",
       "sha1": "88E30C9575D7A96DB29D3DCC5725612C359FF047",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Plok%20(Germany).png"
     },
     {
@@ -26209,7 +26567,7 @@
       "md5": "10AF6CCEA28EEB16C0D8ABD7C2A265DB",
       "sha1": "F146317872C6C3312AB1CD674C76A9E964C9910F",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Pop'n%20TwinBee%20(USA%2C%20Europe)%20(Switch%20Online).png"
     },
     {
@@ -26231,6 +26589,7 @@
       "md5": "AE9FA79542609DD1561DE3F44A9B997B",
       "sha1": "156C4C885BF99DC92625C6098669EAA1E0298C88",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Pop'n%20TwinBee%20-%20Rainbow%20Bell%20Adventures%20(Germany)%20(En).png"
     },
     {
@@ -26318,6 +26677,7 @@
       "md5": "7B93C4A184CD4D360C2CF7C9411F3644",
       "sha1": "38A0FD0AEE434B504551D4F9D2DBEFD7014C7263",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Populous%20II%20-%20Trials%20of%20the%20Olympian%20Gods%20(Germany).png"
     },
     {
@@ -26537,7 +26897,8 @@
       "size": 1572864,
       "crc": "491B0BCD",
       "md5": "998F04F150C6D34CCB2C41F5B427C787",
-      "sha1": "3CF095C0B589E442A42BE22FF42F08246746ED35"
+      "sha1": "3CF095C0B589E442A42BE22FF42F08246746ED35",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Power Rangers (Europe)",
@@ -26684,7 +27045,8 @@
       "size": 1572864,
       "crc": "43B270B8",
       "md5": "949B52462A7ABDA1110A72AD327B6F34",
-      "sha1": "D95F133812BC6F7D27AFBBE41AA664B3C25D3E96"
+      "sha1": "D95F133812BC6F7D27AFBBE41AA664B3C25D3E96",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Primal Rage (Europe)",
@@ -27189,7 +27551,8 @@
       "size": 262144,
       "crc": "CFB44991",
       "md5": "3982EF26134CED56BB5F5068263B77CE",
-      "sha1": "6C076E60C0B124A446B4C5B49BE13B199612412D"
+      "sha1": "6C076E60C0B124A446B4C5B49BE13B199612412D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Qwak (World) (Beta) (No Sound)",
@@ -27197,7 +27560,8 @@
       "size": 262144,
       "crc": "B7D3E1B8",
       "md5": "EDDD2A71A22DDF2F05978D11055A766D",
-      "sha1": "977FF11691C8F0C0225A773EB95DA84537326383"
+      "sha1": "977FF11691C8F0C0225A773EB95DA84537326383",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "R-Type III (Europe)",
@@ -27411,7 +27775,8 @@
       "size": 1048576,
       "crc": "9437A19B",
       "md5": "520AD5D30D24D5193557797C2A784C08",
-      "sha1": "3D488AFB36A55D66A11F9953EA1FBBEFC5A8229D"
+      "sha1": "3D488AFB36A55D66A11F9953EA1FBBEFC5A8229D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Raiden Densetsu (Japan) (En)",
@@ -27518,6 +27883,7 @@
       "md5": "0D4D5ED54AE085BD4E785CFA152FA0C9",
       "sha1": "F852D5312FB2290049CDC76B9E902C02C5E5FDB3",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Ranma%201-2%20(France).png"
     },
     {
@@ -27827,7 +28193,8 @@
       "size": 1572864,
       "crc": "BB2684C3",
       "md5": "686DA540762C1E280BD081DD396E7109",
-      "sha1": "C26C6AE19FB0E9EFD2C30B89C88E671180243C63"
+      "sha1": "C26C6AE19FB0E9EFD2C30B89C88E671180243C63",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Return of Double Dragon (World) (v1.1) (Evercade)",
@@ -27835,7 +28202,8 @@
       "size": 1572864,
       "crc": "3AA42970",
       "md5": "2786C5E1D18A0974B5A94E36CBAF9D3F",
-      "sha1": "514C826DA531FB2FAA16528E2D20EE24D4BDA5AE"
+      "sha1": "514C826DA531FB2FAA16528E2D20EE24D4BDA5AE",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Reverse Kids (Japan)",
@@ -27865,7 +28233,8 @@
       "crc": "59D0F587",
       "md5": "B75DCA377CEBBAE23E39820952EF59E7",
       "sha1": "CB1182799C76B7947F2415F1406BC13E0692CBA5",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "Revolution X (Japan) (En)",
@@ -27939,7 +28308,8 @@
       "size": 458752,
       "crc": "992B16B3",
       "md5": "0918653DD6E9C9EC0D2CDAA3B064C046",
-      "sha1": "16645A33F5C631B675DA443019EEB4C3BA5C0E64"
+      "sha1": "16645A33F5C631B675DA443019EEB4C3BA5C0E64",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (Demo 1)",
@@ -27947,7 +28317,8 @@
       "size": 262144,
       "crc": "0A479767",
       "md5": "A850FAAE27DDEDFA8C6A765C88563CDC",
-      "sha1": "A455151666F8F6A144B1F3693BF9918B6D095C83"
+      "sha1": "A455151666F8F6A144B1F3693BF9918B6D095C83",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (Demo 2)",
@@ -27955,7 +28326,8 @@
       "size": 393216,
       "crc": "B4E6DE65",
       "md5": "B46EE8964169618294B7BB7774148521",
-      "sha1": "40CAFC8EF184AF6CE28F523475E282DBCBB8F0EB"
+      "sha1": "40CAFC8EF184AF6CE28F523475E282DBCBB8F0EB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (Demo 3)",
@@ -27963,7 +28335,8 @@
       "size": 458752,
       "crc": "61CBC222",
       "md5": "D9B1E45F34146C60F8C723645BAE636C",
-      "sha1": "F8FCFCF9DF79F1C288CFCAEF9683176FE890BA75"
+      "sha1": "F8FCFCF9DF79F1C288CFCAEF9683176FE890BA75",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (Demo 4)",
@@ -27971,7 +28344,8 @@
       "size": 458752,
       "crc": "6EC4DAED",
       "md5": "3BDC3E6B842AB51906F2FE14C50EEC3F",
-      "sha1": "E3FEC638D7C7161EDE0AC31C5DD5557DFC8A1A30"
+      "sha1": "E3FEC638D7C7161EDE0AC31C5DD5557DFC8A1A30",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (Demo 5)",
@@ -27979,7 +28353,8 @@
       "size": 458752,
       "crc": "C9CF4F3C",
       "md5": "CC403A5D9F88C696883CF6294BFD81D6",
-      "sha1": "E926D64927F9DD0F3629E0ABFD67669BA834A366"
+      "sha1": "E926D64927F9DD0F3629E0ABFD67669BA834A366",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (Demo 6)",
@@ -27987,7 +28362,8 @@
       "size": 458752,
       "crc": "DDC49BC1",
       "md5": "D8BE5860878D6AAB238400D33C285870",
-      "sha1": "74955AD41DFA7846F3C621A97C2BDF581FA7F01F"
+      "sha1": "74955AD41DFA7846F3C621A97C2BDF581FA7F01F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (Demo 7)",
@@ -27995,7 +28371,8 @@
       "size": 458752,
       "crc": "F7A3ABA0",
       "md5": "86BC759DD6DC835FF6AD3CB200D60D26",
-      "sha1": "9C6C026590EE92CCF6F249439C713B2F5D2289C2"
+      "sha1": "9C6C026590EE92CCF6F249439C713B2F5D2289C2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring Dash (World) (v1.1)",
@@ -28003,7 +28380,8 @@
       "size": 458752,
       "crc": "DE9757DB",
       "md5": "1B1A7DC6523FC2662A803AB758CB8F15",
-      "sha1": "FDA67B2E091BCAAB65E068A50230B1B9C12CF611"
+      "sha1": "FDA67B2E091BCAAB65E068A50230B1B9C12CF611",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Ring ni Kakero (Japan) (NP)",
@@ -28099,7 +28477,8 @@
       "size": 4194304,
       "crc": "127F554B",
       "md5": "951D4286A5C2D561E5A8BB4D7285ED03",
-      "sha1": "6A66F295029D80FAE8C76D94362378E7E2E69D00"
+      "sha1": "6A66F295029D80FAE8C76D94362378E7E2E69D00",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Es) (Switch)",
@@ -28107,7 +28486,8 @@
       "size": 4194304,
       "crc": "324B4D54",
       "md5": "85B1003CBB64E7AF7C96426316DA3F70",
-      "sha1": "C7FED035EAE81645A56060DB21E70AB60FDCFF3E"
+      "sha1": "C7FED035EAE81645A56060DB21E70AB60FDCFF3E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Fr) (Switch)",
@@ -28115,7 +28495,8 @@
       "size": 4194304,
       "crc": "6B036F40",
       "md5": "71004CE8B55F0FBE42A6393B0DD8635A",
-      "sha1": "0530CFA2174098796078D3A46F82BD7C36CF09C5"
+      "sha1": "0530CFA2174098796078D3A46F82BD7C36CF09C5",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (It) (Switch)",
@@ -28123,7 +28504,8 @@
       "size": 4194304,
       "crc": "E8CCC32C",
       "md5": "462C0A9A43A236FA38F667EEE68376D2",
-      "sha1": "67A2ADE56FD01E7599A828A57ABD1705784B60E9"
+      "sha1": "67A2ADE56FD01E7599A828A57ABD1705784B60E9",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Ja) (Switch)",
@@ -28131,7 +28513,8 @@
       "size": 4194304,
       "crc": "09B30705",
       "md5": "477A3CF7C2D67D85D68F5F76937EA930",
-      "sha1": "7628A039EEBB3235664EDDF35EB4458C3F2B05EC"
+      "sha1": "7628A039EEBB3235664EDDF35EB4458C3F2B05EC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Ko) (Switch)",
@@ -28139,7 +28522,8 @@
       "size": 4194304,
       "crc": "932C8D7D",
       "md5": "85E4285EEC82B3CEB06D9E786E859499",
-      "sha1": "1EE96602B7F34B738B3B52C1A575DF271F56EA2B"
+      "sha1": "1EE96602B7F34B738B3B52C1A575DF271F56EA2B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Switch) (Original Translation)",
@@ -28147,7 +28531,8 @@
       "size": 4194304,
       "crc": "92C1B170",
       "md5": "3ACF4D6E8045F89C9A3898D4A73416A9",
-      "sha1": "E1CC41DD0FB6FAC8410A699BD0CF0421E1BDAC16"
+      "sha1": "E1CC41DD0FB6FAC8410A699BD0CF0421E1BDAC16",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Switch) (RCG Translation)",
@@ -28155,7 +28540,8 @@
       "size": 4194304,
       "crc": "CB32C4A0",
       "md5": "CED44A078B12CD3D659874C4DE2FA2D4",
-      "sha1": "D116AEE4DF76BDD593E33231B1227478DAD484BB"
+      "sha1": "D116AEE4DF76BDD593E33231B1227478DAD484BB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Zh-Hans) (Steam)",
@@ -28163,7 +28549,8 @@
       "size": 4194304,
       "crc": "C8B39DA3",
       "md5": "8A36BD3DD4CDE9527FAC6F25567EB33F",
-      "sha1": "71323911CCEB69995C2B24D50C68F762445FC189"
+      "sha1": "71323911CCEB69995C2B24D50C68F762445FC189",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Zh-Hans) (Switch)",
@@ -28171,7 +28558,8 @@
       "size": 4194304,
       "crc": "8FCBE2F3",
       "md5": "57206F565FB11014E938D9E6DF395699",
-      "sha1": "6B7470BDFEA3997802B445F7A802460ED9FC6264"
+      "sha1": "6B7470BDFEA3997802B445F7A802460ED9FC6264",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Zh-Hant) (Steam)",
@@ -28179,7 +28567,8 @@
       "size": 4194304,
       "crc": "B596E496",
       "md5": "7C258F8E4C73D9D575025004B144C047",
-      "sha1": "E763BE6A0407C740248CF5B1938339D24D45E41D"
+      "sha1": "E763BE6A0407C740248CF5B1938339D24D45E41D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "River City Girls Zero (World) (Zh-Hant) (Switch)",
@@ -28187,7 +28576,8 @@
       "size": 4194304,
       "crc": "F2EE9BC6",
       "md5": "3CA02401097E010909874F300D435CA4",
-      "sha1": "BB69A166A6B1B2B5BE3D6ED2A1DDB756430D7E73"
+      "sha1": "BB69A166A6B1B2B5BE3D6ED2A1DDB756430D7E73",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Road Riot 4WD (Europe)",
@@ -28389,7 +28779,8 @@
       "size": 393216,
       "crc": "655C13DF",
       "md5": "BED537F046EA4CBB4EE7056446D1BA57",
-      "sha1": "B3F38DF89AE6B463513BE97BA53DD4188AD2E731"
+      "sha1": "B3F38DF89AE6B463513BE97BA53DD4188AD2E731",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Rockman & Forte (Japan)",
@@ -28452,6 +28843,7 @@
       "crc": "94CA42BF",
       "md5": "D1DB4D338FFCC950D6FE2D2B25A7C4FA",
       "sha1": "67CC4BC4C9F23532D72D188EF96B431D3BAED401",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Rockman%20X%20(World)%20(Ja)%20(Mega%20Man%20X%20Legacy%20Collection).png"
     },
     {
@@ -28492,6 +28884,7 @@
       "crc": "011E5068",
       "md5": "8F2C5FA6003C74E7E3AC823FE0CE7BA1",
       "sha1": "44431B4489BD3726B220D9A879DF0A267C57CF2A",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Rockman%20X2%20(World)%20(Ja)%20(Mega%20Man%20X%20Legacy%20Collection).png"
     },
     {
@@ -28542,6 +28935,7 @@
       "crc": "741AB27B",
       "md5": "3108E8CBA0B2726988BA42DD1855F89D",
       "sha1": "10B62C6CDE8EA29E60B409DC357690DD83811C2E",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Rockman%20X3%20(World)%20(Ja)%20(Mega%20Man%20X%20Legacy%20Collection).png"
     },
     {
@@ -28738,7 +29132,8 @@
       "crc": "D209FE59",
       "md5": "E9A681DCB3271E99A09F3398E3B8BD83",
       "sha1": "7E9FF7DFF0FF8E8D8E7CE448148A71A3FA103897",
-      "region": "Brazil"
+      "region": "Brazil",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Royal Conquest (Japan) (En)",
@@ -28757,7 +29152,8 @@
       "size": 1048576,
       "crc": "87A38470",
       "md5": "1A3CA6117F34E15A509BF3E1C85AA242",
-      "sha1": "66E7CF5B0AB7F166A750F11B6CF755545DCE3E8A"
+      "sha1": "66E7CF5B0AB7F166A750F11B6CF755545DCE3E8A",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Rrodas Cross (World) (Demo 2)",
@@ -28765,7 +29161,8 @@
       "size": 1048576,
       "crc": "63854962",
       "md5": "37603B5AA42E3CC8FDE02F69E21C91C1",
-      "sha1": "3B47B05E6108A29590379F159B3B01367AA8CDBD"
+      "sha1": "3B47B05E6108A29590379F159B3B01367AA8CDBD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Rrodas Cross (World) (Demo 3)",
@@ -28773,7 +29170,8 @@
       "size": 1048576,
       "crc": "186BFD41",
       "md5": "58CBAA2B58911C48B320FEDB6C536277",
-      "sha1": "BAD4900D4FCDE1C0D386005723CF59A8797E478E"
+      "sha1": "BAD4900D4FCDE1C0D386005723CF59A8797E478E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Rudra no Hihou (Japan)",
@@ -28856,7 +29254,8 @@
       "size": 1048576,
       "crc": "B8A7B64F",
       "md5": "B75392CF3E25803A3A3F5B6B5A8435B3",
-      "sha1": "85E3E581B33C633DA07D595DC482EB3FE614AB30"
+      "sha1": "85E3E581B33C633DA07D595DC482EB3FE614AB30",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Rushing Beat Ran - Fukusei Toshi (Japan)",
@@ -28952,7 +29351,8 @@
       "size": 1048576,
       "crc": "239D2862",
       "md5": "E383EFE58D3AB9A7DB9472DFE842E765",
-      "sha1": "7F72357E99D1E899CA5DF82AFF86566423E17CBD"
+      "sha1": "7F72357E99D1E899CA5DF82AFF86566423E17CBD",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "SD F-1 Grand Prix (Japan)",
@@ -29162,7 +29562,8 @@
       "size": 524288,
       "crc": "CD5E651E",
       "md5": "C33A0B4AAEA2C10E81F1BDB4EE15A4E7",
-      "sha1": "F62061529A85D864E4CAABC48CA71966C058A068"
+      "sha1": "F62061529A85D864E4CAABC48CA71966C058A068",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "SNSP Aging Ver 1.02 (Japan) (En)",
@@ -29270,6 +29671,7 @@
       "md5": "D65F6CB61E6AA709A2C8874FF407FCB9",
       "sha1": "E3E4886F2E69E15E878EB70EF97E31C84F9F81DE",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Sailormoon%20(France).png"
     },
     {
@@ -29389,6 +29791,7 @@
       "md5": "05D483000FB14DBEA39B63A575E976FD",
       "sha1": "3C3F8D41DC2ED6BE9F9F2308D0B8B7CFC9961DEA",
       "region": "Hong Kong",
+      "videoStandard": "NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Sangokushi%20III%20(Hong%20Kong).png"
     },
     {
@@ -29552,6 +29955,7 @@
       "md5": "4C33B3B733B2CBD63295446B14654652",
       "sha1": "8A430C9D6A3DCEF974252FE8D946A0D619BB1A61",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Evermore%20(France).png"
     },
     {
@@ -29562,6 +29966,7 @@
       "md5": "0D131FF1D7896D6994B03FE2751D820B",
       "sha1": "5E5C2082526690D05F962C3FFBD7E080C681BFA4",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Evermore%20(Germany).png"
     },
     {
@@ -29572,6 +29977,7 @@
       "md5": "F6516A3B18C262EC00CD4348921C3897",
       "sha1": "4363CE4B19E76261F9325AC9A0CCE27D97490DF2",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Evermore%20(Spain)%20(Rev%201).png"
     },
     {
@@ -29582,6 +29988,7 @@
       "md5": "4051ABAB6CA98F5047D5B1A149E62FF6",
       "sha1": "C29FE997740BD9B54A07FBA7B2B5442A49245AAC",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Evermore%20(Spain)%20(Rev%202).png"
     },
     {
@@ -29623,6 +30030,7 @@
       "md5": "35AFB723A7A1166D894549519D78622C",
       "sha1": "D5601BE19DE691E58EDD55194E10496C77E464E5",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Mana%20(France).png"
     },
     {
@@ -29633,6 +30041,7 @@
       "md5": "5E1602019D4E337B9C6A714A6224BA1D",
       "sha1": "C1FF73EA67833748DBD4ECD393D3565E3AE1925D",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Mana%20(France)%20(Rev%201).png"
     },
     {
@@ -29643,6 +30052,7 @@
       "md5": "B57303407986C0D28F2D78F931EFC59C",
       "sha1": "AB8A31BFB4CF0CE19B96893A31442FFBFD8D0BEB",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Mana%20(Germany).png"
     },
     {
@@ -29674,6 +30084,7 @@
       "crc": "9499855E",
       "md5": "FF5790E984D6AB8109963C7B2F8A2A97",
       "sha1": "AA220E43981B86CFBD89CB53F41C14DDCEBA472B",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Mana%20(World)%20(De)%20(Collection%20of%20Mana).png"
     },
     {
@@ -29683,6 +30094,7 @@
       "crc": "C5FFEA78",
       "md5": "DE712DE1ABCB0EB554911C374EF8919B",
       "sha1": "B299B5104CFA4F087FD43C010AC5C93F4CD8843F",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Secret%20of%20Mana%20(World)%20(Fr)%20(Rev%201)%20(Collection%20of%20Mana).png"
     },
     {
@@ -29845,7 +30257,8 @@
       "crc": "1F27C7E9",
       "md5": "9CC9BC50F966B2CCCDB7CD145F117CEB",
       "sha1": "2255D1D3E03CD1CA276D6C2717279433F1EC74A9",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Sgt. Saunders' Combat! (Japan)",
@@ -29919,6 +30332,7 @@
       "md5": "C3DAC1984C06EEE0F9889667F83DC869",
       "sha1": "3118192DD257C0666067BFB6797769F26BDF4489",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Shadowrun%20(Germany).png"
     },
     {
@@ -29939,6 +30353,7 @@
       "md5": "CD22A7FF4908575F2FE5BD9F1E34FFC8",
       "sha1": "830464152553FAADA700BB93D4BB6B8975F79E0A",
       "region": "Sweden",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Shadowrun%20(Sweden).png"
     },
     {
@@ -30494,7 +30909,7 @@
       "md5": "87D49E09FD56C3142778CA8E8FD52D02",
       "sha1": "1947B4D6AEA1AF97588D7D66674D343B0E9B1145",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Shodai Nekketsu Kouha Kunio-kun (Japan)",
@@ -30709,7 +31124,8 @@
       "size": 1048576,
       "crc": "51C0F57B",
       "md5": "3D8A62C8BAE0EB021C8B77B24BC60DB3",
-      "sha1": "FEEC2763A82D29816A28EFA830B91A310DA56CB1"
+      "sha1": "FEEC2763A82D29816A28EFA830B91A310DA56CB1",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Silva Saga II - The Legend of Light and Darkness (Japan)",
@@ -30774,6 +31190,7 @@
       "md5": "2F1C1A70F2268B4C37E2A095A9BE0058",
       "sha1": "AF13DE6DDF7D33A2D29E9D1B40CEC58823EDCF42",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/SimCity%20(France).png"
     },
     {
@@ -30784,6 +31201,7 @@
       "md5": "D0142F63A3DEE58F97C21D939B6DBD60",
       "sha1": "EB55AAABB8ECAB6C750B5A14D8A9A67A03968D6F",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/SimCity%20(Germany).png"
     },
     {
@@ -30946,7 +31364,8 @@
       "size": 1048576,
       "crc": "C879FBC0",
       "md5": "28CD4FC2253D245210CEA84A354A8D50",
-      "sha1": "D1F821DF4542BC5A49AEFD49E54B4103136AFE7E"
+      "sha1": "D1F821DF4542BC5A49AEFD49E54B4103136AFE7E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Skipp and Friends - Unexpected Journey (World) (v1.1)",
@@ -30954,7 +31373,8 @@
       "size": 1048576,
       "crc": "C1C4AC32",
       "md5": "0FA4813BC4D5BD4982D609DC94733E22",
-      "sha1": "E7BC816AFECC36510F51C65871BD8FEC859DC63F"
+      "sha1": "E7BC816AFECC36510F51C65871BD8FEC859DC63F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Skuljagger - Revolt of the Westicans (USA)",
@@ -30984,7 +31404,8 @@
       "size": 524288,
       "crc": "2CA4C8BD",
       "md5": "48421557187AEC8E199137397FC7D08C",
-      "sha1": "2F157E7B4C0F5DCCC74DFB20A0A488FDD817E31F"
+      "sha1": "2F157E7B4C0F5DCCC74DFB20A0A488FDD817E31F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sky Mission (Japan) (En)",
@@ -31155,7 +31576,8 @@
       "size": 98304,
       "crc": "E57A7819",
       "md5": "5B48A492E50C1E21125B3AA44C9BF4E5",
-      "sha1": "5A6856C6E34C39A63F99559C575CE91CDA56C990"
+      "sha1": "5A6856C6E34C39A63F99559C575CE91CDA56C990",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Snoopy Concert (Japan)",
@@ -31228,7 +31650,8 @@
       "size": 1310720,
       "crc": "7D2FD6D8",
       "md5": "4BB3A4D4652AF58B02810B9B9FDBE98D",
-      "sha1": "B49CFE84C69C81103AA344E843EACE7D8514D0BA"
+      "sha1": "B49CFE84C69C81103AA344E843EACE7D8514D0BA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Soccer Shootout (Europe)",
@@ -31249,7 +31672,7 @@
       "md5": "83E32937E3EDC564E117FF70E6B8F5C9",
       "sha1": "DFD2856DCF975AED784546D1B452EB3FEC3F3A90",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Soldiers of Fortune (USA)",
@@ -31508,6 +31931,7 @@
       "md5": "47711F0773AC31490EB52F1AD5AE2683",
       "sha1": "7498FB48BC977A85A73610C3185AF3E5998C09B5",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Soul%20Blazer%20(France).png"
     },
     {
@@ -31518,6 +31942,7 @@
       "md5": "5421E92FA9A070A2207D38832D07BD4F",
       "sha1": "3278E5D375A0E206F711C89CD92A9B80DFBBD95E",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Soul%20Blazer%20(Germany).png"
     },
     {
@@ -31689,7 +32114,8 @@
       "size": 262144,
       "crc": "88FB19F8",
       "md5": "D3B60FE253214BEAD8CD080C44612F18",
-      "sha1": "8FB66E51D863912FEE4F0F0A51461D6C3BF2099E"
+      "sha1": "8FB66E51D863912FEE4F0F0A51461D6C3BF2099E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Space Rescue Squad (World) (Demo 2)",
@@ -31697,7 +32123,8 @@
       "size": 262144,
       "crc": "65E423A5",
       "md5": "A53BE7F1DDDF4045C1909B4CCA9D36D2",
-      "sha1": "6E7136197DF031384747C8A2E270B08950AA4CD5"
+      "sha1": "6E7136197DF031384747C8A2E270B08950AA4CD5",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Spanky's Quest (Europe)",
@@ -31984,7 +32411,8 @@
       "size": 2097152,
       "crc": "9D840D0B",
       "md5": "76B4558EE02F046168BD9E6B3F2642E7",
-      "sha1": "C82DFF7C20967E20A849673CD0F0A1A670A17097"
+      "sha1": "C82DFF7C20967E20A849673CD0F0A1A670A17097",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Spider-Man - X-Men - Arcade's Revenge (Europe)",
@@ -32014,7 +32442,8 @@
       "size": 1048576,
       "crc": "B07FFB8A",
       "md5": "7398D0BFC067E010E357486546FC47C5",
-      "sha1": "EC6BD15F34E41FAE55CE1332B0E8048CD69F2C00"
+      "sha1": "EC6BD15F34E41FAE55CE1332B0E8048CD69F2C00",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Spider-Man and the X-Men in Arcade's Revenge (USA) (Beta)",
@@ -32439,7 +32868,7 @@
       "md5": "7D66769F53CB3FB7F5C73044876DB240",
       "sha1": "1135A2A6CB786AC7523E81DD553DC81AAA266F51",
       "region": "USA",
-      "videoStandard": "NTSC"
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Star Ocean (Japan)",
@@ -32515,6 +32944,7 @@
       "md5": "C01A91DDE0BC004E39971EF07878FF40",
       "sha1": "1F32FED7052B7EC4F86AEF7747FAB096BFEF4F9D",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Star%20Trek%20-%20Starfleet%20Academy%20-%20Starship%20Bridge%20Simulator%20(Germany).png"
     },
     {
@@ -32635,6 +33065,7 @@
       "md5": "F3DAA875B6E20B01690617C9B8F6E843",
       "sha1": "7C365C325B3CE27A17FC88744B6928741FAB1996",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Starwing%20(Germany).png"
     },
     {
@@ -32644,7 +33075,8 @@
       "crc": "42275E73",
       "md5": "FC65C386A3BBA4237A0CFE93DCEDEFF9",
       "sha1": "90C2BF8BAE58BCD5AD104EF0AAB44A2B21975093",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "Starwing - Competition (Europe) (Competition Cart)",
@@ -32663,7 +33095,8 @@
       "crc": "B25F606A",
       "md5": "9A668DCE0A5589E7209949F441F0180E",
       "sha1": "DAF6C7BDBF8C9733705B1C586C85BE9EDD864A23",
-      "region": "Germany"
+      "region": "Germany",
+      "videoStandard": "PAL"
     },
     {
       "name": "Stealth (Japan)",
@@ -32746,7 +33179,8 @@
       "size": 2097152,
       "crc": "FEB912E1",
       "md5": "4E2816FC313AA6F2102E473F39EF041F",
-      "sha1": "D560FFCDC2763FDD379F24F7BD97FF39E7383389"
+      "sha1": "D560FFCDC2763FDD379F24F7BD97FF39E7383389",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Street Combat (Europe) (Possible Proto)",
@@ -33107,7 +33541,8 @@
       "size": 1048576,
       "crc": "53F2C71B",
       "md5": "091F8CD02C6ED341A1869A26DC378AAE",
-      "sha1": "3F95F05D0DD4341E9E167730C99D432973459C60"
+      "sha1": "3F95F05D0DD4341E9E167730C99D432973459C60",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Street Racer (World) (GOG)",
@@ -33115,7 +33550,8 @@
       "size": 2097152,
       "crc": "62AFD640",
       "md5": "0DE39A09BBDC68955CFBA0D4849F2D64",
-      "sha1": "69E7B46ECD6EE6A8E0BF06BACED6A22FF5C60995"
+      "sha1": "69E7B46ECD6EE6A8E0BF06BACED6A22FF5C60995",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Street Sports - Jammit (USA)",
@@ -33710,6 +34146,7 @@
       "md5": "1F174967BC26C977E33DD2AB8648C3B9",
       "sha1": "04FAA0072A039D5D1698DA013B1DB0D22C2F5604",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Battletank%202%20(Spain).png"
     },
     {
@@ -33730,7 +34167,8 @@
       "crc": "6865F663",
       "md5": "BC3E7F53D233442FBE5061800B795FFA",
       "sha1": "9B4C25F1219335E43DB59E3B511C9187EE82FD20",
-      "region": "China"
+      "region": "China",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Super Bikkuriman (Japan)",
@@ -33826,7 +34264,8 @@
       "size": 2097152,
       "crc": "FF153921",
       "md5": "2A0A9E5BC7E67038AA848F3B649818C6",
-      "sha1": "26FCE15AD8EECD2F92266077C2643711B2417A15"
+      "sha1": "26FCE15AD8EECD2F92266077C2643711B2417A15",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Bomberman (Europe)",
@@ -34027,7 +34466,8 @@
       "size": 524288,
       "crc": "188F152B",
       "md5": "73ABCD4808657A6D546652CFAC4683B5",
-      "sha1": "65B22D721B148C7863D315CD7BB78A851342D009"
+      "sha1": "65B22D721B148C7863D315CD7BB78A851342D009",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Boss Gaiden (World) (v1.2)",
@@ -34035,7 +34475,8 @@
       "size": 524288,
       "crc": "C9A8412D",
       "md5": "99A5EBFDF38FAF4E194BFAC535AA936B",
-      "sha1": "60C61DB61EA02C5FF4C57E72EC5147107628FE22"
+      "sha1": "60C61DB61EA02C5FF4C57E72EC5147107628FE22",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Bowling (Japan) (En)",
@@ -34065,7 +34506,8 @@
       "size": 262144,
       "crc": "4B1CB41A",
       "md5": "F1E80B379F55660C859CF9E18D5E8339",
-      "sha1": "376A7F94031429078E1F285A2AC66B818BE335EA"
+      "sha1": "376A7F94031429078E1F285A2AC66B818BE335EA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Bug Hunters (World) (v1.1)",
@@ -34073,7 +34515,8 @@
       "size": 262144,
       "crc": "F9305A4F",
       "md5": "AE2CEAC5A95ABF0282DC273107C47120",
-      "sha1": "02CC5403575C203954F3C6282AAFD4182EE06B29"
+      "sha1": "02CC5403575C203954F3C6282AAFD4182EE06B29",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Buster Bros. (USA)",
@@ -34147,7 +34590,8 @@
       "crc": "82B5AD66",
       "md5": "8C53DF0F7D21E338A62544C1715CA397",
       "sha1": "C6D943431359FCD22A899644D95787C00E2BCE83",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Super Campeones 4 (Peru) (Es) (Pirate)",
@@ -34156,7 +34600,8 @@
       "crc": "F9800156",
       "md5": "CCD3F769542665BB88993295054EA25C",
       "sha1": "3D6BC0DD1AF33E56BD0769C2A4E58D85A1BC9608",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Super Casino - Caesars Palace (Japan)",
@@ -34428,6 +34873,7 @@
       "md5": "6B8B709DFDDFF8CEB5C729D43CC40C77",
       "sha1": "9677299FAE28A2BD03E3A653238AAB4DA19ABA00",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Dany%20(France).png"
     },
     {
@@ -34438,6 +34884,7 @@
       "md5": "A38622C10605E90FF478E555065DD0DD",
       "sha1": "3D75BF2DE45027CBCF51A8589E466C27A217042C",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Dany%20(France)%20(Beta).png"
     },
     {
@@ -34447,7 +34894,8 @@
       "crc": "0BC88449",
       "md5": "9872342B1632B3153C789D795BB06584",
       "sha1": "6006FA76F11EF773EBFB6D8C49CEEF711EE01B56",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Super Descentralizado II (Peru) (Es) (Pirate)",
@@ -34456,7 +34904,8 @@
       "crc": "B22AD7AE",
       "md5": "BE71A8EDFFD989756DD83A55C1A8B91C",
       "sha1": "B040979AE95F7A87550BB4967E4934BD42903B51",
-      "region": "Peru"
+      "region": "Peru",
+      "videoStandard": "NTSC"
     },
     {
       "name": "Super Dogfight (Japan)",
@@ -35250,6 +35699,7 @@
       "crc": "8A4A174F",
       "md5": "B15DDB15721C657D82C5BAB6DB982EE9",
       "sha1": "973E10840DB683CF3FAF61BD443090786B3A9F04",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Game%20Boy%20(World)%20(Rev%202).png"
     },
     {
@@ -35281,6 +35731,7 @@
       "crc": "EC8A83B9",
       "md5": "D574D4F9C12F305074798F54C091A8B4",
       "sha1": "AA2F50A77DFB4823DA96BA99309085A3C6278515",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Game%20Boy%20SGB-CPU%20(World)%20(Enhancement%20Chip).png"
     },
     {
@@ -35355,7 +35806,7 @@
       "md5": "13CC01659E28C2C23F5FE9FEFDE54D05",
       "sha1": "8507486C4A81299BE02093573DA42B070D629639",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Ghouls%20'N%20Ghosts%20(USA%2C%20Europe)%20(Virtual%20Console%2C%20Classic%20Mini%2C%20Switch%20Online).png"
     },
     {
@@ -35386,7 +35837,8 @@
       "size": 524288,
       "crc": "598116A5",
       "md5": "088620876C70F111B5CD48E254ED7153",
-      "sha1": "4A7BA7CFB2212FBDFD17FD698AEB14AC2A59AA23"
+      "sha1": "4A7BA7CFB2212FBDFD17FD698AEB14AC2A59AA23",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Godzilla (USA)",
@@ -35570,6 +36022,7 @@
       "md5": "9A1D538F553BCBBEADF248EF1FDE8646",
       "sha1": "B6A8A554E405A7DCDD5AA7DCA467CA5B8DB58434",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Hockey%20(France)%20(En%2CFr).png"
     },
     {
@@ -35950,7 +36403,8 @@
       "size": 524288,
       "crc": "F466B51D",
       "md5": "6691F4D34FB7D0F665D357B6C6649156",
-      "sha1": "CAFAE7573EF7331639D1D5853FF3BA5F7F5A37AA"
+      "sha1": "CAFAE7573EF7331639D1D5853FF3BA5F7F5A37AA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Mad Champ (Japan)",
@@ -36206,7 +36660,7 @@
       "md5": "D9E7D0F3C0A220F5B655C84E324BD219",
       "sha1": "9779D804BEFECD7F79933A947F4D5843D50DD652",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Mario%20All-Stars%20(USA%2C%20Europe)%20(Switch%20Online).png"
     },
     {
@@ -36237,7 +36691,8 @@
       "size": 4194304,
       "crc": "558AAB4E",
       "md5": "9EC934238FF2E8D2572452BEB1966E46",
-      "sha1": "D685BE2360730C97E4B57406E62B13919CBADA58"
+      "sha1": "D685BE2360730C97E4B57406E62B13919CBADA58",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Mario Bros. (World) (REV-C) (NES Conversion)",
@@ -36245,7 +36700,8 @@
       "size": 4194304,
       "crc": "98FE54D4",
       "md5": "DB3E6611A6AECB681C32F0789C7A350C",
-      "sha1": "D15C99A67E2577921822260044B22F97C45691A3"
+      "sha1": "D15C99A67E2577921822260044B22F97C45691A3",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Mario Bros. Maker (World) (Proto 1) (NES Conversion)",
@@ -36253,7 +36709,8 @@
       "size": 4194304,
       "crc": "5CC7F538",
       "md5": "72B2FB0F9AAE04BD49C0608841D038F1",
-      "sha1": "3CC905838A9F32E7214973AB4D6F6D348DA596EA"
+      "sha1": "3CC905838A9F32E7214973AB4D6F6D348DA596EA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Mario Bros. Maker (World) (Proto 2) (NES Conversion)",
@@ -36261,7 +36718,8 @@
       "size": 4194304,
       "crc": "FAACA0F5",
       "md5": "7F2C3C11D7CB24E5E2653F91A92D7571",
-      "sha1": "588B6701EF24B4397257436A83590E10529FA1C8"
+      "sha1": "588B6701EF24B4397257436A83590E10529FA1C8",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Mario Collection (Japan)",
@@ -36429,7 +36887,7 @@
       "md5": "597823E50E531FBD300C0C7F334B34AA",
       "sha1": "54043D7322973F7268F0132C29357CE966FA7DE4",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Mario%20RPG%20-%20Legend%20of%20the%20Seven%20Stars%20(USA%2C%20Europe)%20(Virtual%20Console).png"
     },
     {
@@ -36493,7 +36951,7 @@
       "md5": "C4D3CC5200F9B59DCC9444B69FF7D0FF",
       "sha1": "50A2312099AE7CDF7140E6E66AC0E0A44B9E4779",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Mario%20World%20(USA%2C%20Europe)%20(Virtual%20Console%2C%20Classic%20Mini%2C%20Switch%20Online).png"
     },
     {
@@ -36614,7 +37072,7 @@
       "md5": "6DB92BFD8F039C847F584A437322DB4A",
       "sha1": "754BFAB196C40799A74A79D2BF51DBB850163334",
       "region": "USA",
-      "videoStandard": "NTSC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Metroid%20(USA%2C%20Europe)%20(En%2CJa)%20(Virtual%20Console%2C%20Classic%20Mini%2C%20Switch%20Online).png"
     },
     {
@@ -36880,7 +37338,8 @@
       "size": 1048576,
       "crc": "643D5097",
       "md5": "7B79C7F5D881928A805C8334F9941A7D",
-      "sha1": "9077F9742BD0236B910E05FEBFCB5974318ADE8B"
+      "sha1": "9077F9742BD0236B910E05FEBFCB5974318ADE8B",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Nobunaga no Yabou - Bushou Fuuunroku (Japan)",
@@ -37268,6 +37727,7 @@
       "crc": "22D08E51",
       "md5": "797AAB4E5EF7F61AC59334C16A4F0804",
       "sha1": "EA8DC2F783DDA1EF57CC7F909D0F16EDD9234BE0",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Probotector%20-%20Alien%20Rebels%20(World)%20(Contra%20Anniversary%20Collection).png"
     },
     {
@@ -37342,6 +37802,7 @@
       "crc": "2061FE60",
       "md5": "3CD324A626613FEBEBEF2268D0266722",
       "sha1": "E25957459FBC02A1E7FAF63A49619B02B91AC3B1",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Super%20Punch-Out!!%20(World)%20(GameCube).png"
     },
     {
@@ -37405,7 +37866,8 @@
       "size": 2097152,
       "crc": "8C8897F4",
       "md5": "15892783CF2BC369935B3B3D4DC3C4A2",
-      "sha1": "DAAA898B3ACD0141691A112A9BDBF56E47250D97"
+      "sha1": "DAAA898B3ACD0141691A112A9BDBF56E47250D97",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Puyo Puyo Tsuu (Japan)",
@@ -37479,7 +37941,8 @@
       "size": 262144,
       "crc": "6A41323B",
       "md5": "D5C25D5DCA588B9A24A270A10A020972",
-      "sha1": "C570244970EFB20FD7C72B7D2A90A4CA05F1A12E"
+      "sha1": "C570244970EFB20FD7C72B7D2A90A4CA05F1A12E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Rambler (World) (v1.02)",
@@ -37487,7 +37950,8 @@
       "size": 262144,
       "crc": "EE8F4E7D",
       "md5": "F5B370BA3696FDDD48A131A8F9F0D96A",
-      "sha1": "234AA34D01BEE3676D7C278E5B89FE10B8FAB642"
+      "sha1": "234AA34D01BEE3676D7C278E5B89FE10B8FAB642",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Real Mahjong PIV (Japan)",
@@ -37734,7 +38198,8 @@
       "size": 262144,
       "crc": "E7633A78",
       "md5": "6E447604C67F9F54C2E8E748DB6FA3F1",
-      "sha1": "7C998F64279AEB1721DA333F03C92BC37CD3F759"
+      "sha1": "7C998F64279AEB1721DA333F03C92BC37CD3F759",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Slam Dunk (USA)",
@@ -38253,7 +38718,8 @@
       "size": 262144,
       "crc": "AA5D8DB3",
       "md5": "9B78AAFC7310B228497FA3F05E47BF87",
-      "sha1": "A0BAD79477E8EC7E0C5C112F2F0599EE4E7F4CB5"
+      "sha1": "A0BAD79477E8EC7E0C5C112F2F0599EE4E7F4CB5",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Sudoku (World) (Beta 2)",
@@ -38261,7 +38727,8 @@
       "size": 262144,
       "crc": "7716936D",
       "md5": "426CE7DFE169B8CFDB56E25218D68D1B",
-      "sha1": "BDDE392A9570F6227756E5D40EA25D05EE9A810F"
+      "sha1": "BDDE392A9570F6227756E5D40EA25D05EE9A810F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Sudoku (World) (v1.0)",
@@ -38269,7 +38736,8 @@
       "size": 262144,
       "crc": "C97432BF",
       "md5": "12C29B9324082D273250826B16F5B512",
-      "sha1": "3B339F2EE585522B3671D2819FEC5E7B125F180C"
+      "sha1": "3B339F2EE585522B3671D2819FEC5E7B125F180C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Sudoku (World) (v1.1)",
@@ -38277,7 +38745,8 @@
       "size": 262144,
       "crc": "21EE5635",
       "md5": "421B929CF54A1776650A2C96EBF3EDCD",
-      "sha1": "15FD2899CED2D141411FC23EC3ED082A2DB98CE7"
+      "sha1": "15FD2899CED2D141411FC23EC3ED082A2DB98CE7",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Super Tekkyuu Fight! (Japan)",
@@ -38808,7 +39277,8 @@
       "size": 524288,
       "crc": "1DBF977A",
       "md5": "CABF7A303D2CF73A8DE559372581A2E2",
-      "sha1": "E5551C4FD2FD8A2D8246B6DB1A8348196A81FBDF"
+      "sha1": "E5551C4FD2FD8A2D8246B6DB1A8348196A81FBDF",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Supercooked! (World) (v1.1)",
@@ -38816,7 +39286,8 @@
       "size": 524288,
       "crc": "B9D927DD",
       "md5": "D7542606D0645A5137D466A842D4FDE7",
-      "sha1": "F3E3F234D3AB01602B9C8F83118CFAC47F1B0F2D"
+      "sha1": "F3E3F234D3AB01602B9C8F83118CFAC47F1B0F2D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Supercooked! (World) (v1.2)",
@@ -38824,7 +39295,8 @@
       "size": 524288,
       "crc": "06DF4264",
       "md5": "34C8E693445CDE7CA1C39E8F7815C55E",
-      "sha1": "015BE7D6163E6AF9D8666B00CB7E627F78851CD0"
+      "sha1": "015BE7D6163E6AF9D8666B00CB7E627F78851CD0",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Superman (USA) (Auto Demo)",
@@ -38842,7 +39314,8 @@
       "size": 262144,
       "crc": "98A650DB",
       "md5": "4A68EDCC4F7B6816B70124533A9EF7FD",
-      "sha1": "EED3733E4F8A177BC75A28523405A017987C30D6"
+      "sha1": "EED3733E4F8A177BC75A28523405A017987C30D6",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sure Instinct (World) (v1.0)",
@@ -38850,7 +39323,8 @@
       "size": 524288,
       "crc": "0E57E830",
       "md5": "AAE080871209150797E19F7E7BE7DB31",
-      "sha1": "F67648ED217BE1C635A79CCC8316260CA730751E"
+      "sha1": "F67648ED217BE1C635A79CCC8316260CA730751E",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sure Instinct (World) (v1.0) (PAL)",
@@ -38858,7 +39332,8 @@
       "size": 524288,
       "crc": "11960B56",
       "md5": "CC5D0BDDB5B005D54622286C36FBBE6A",
-      "sha1": "AB87A362D9BC7BC095171B3672CC179EF78D3AA1"
+      "sha1": "AB87A362D9BC7BC095171B3672CC179EF78D3AA1",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sure Instinct (World) (v1.0.1)",
@@ -38866,7 +39341,8 @@
       "size": 524288,
       "crc": "4528FEDB",
       "md5": "30E80082761DABFC9C596F6B952BE49C",
-      "sha1": "BE69E0EE9AA7D49506F2120B740ADAC526859975"
+      "sha1": "BE69E0EE9AA7D49506F2120B740ADAC526859975",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sure Instinct (World) (v1.0.1) (PAL)",
@@ -38874,7 +39350,8 @@
       "size": 524288,
       "crc": "E42AE539",
       "md5": "47432F0BA95ABDC677EBAE453ECA2E84",
-      "sha1": "F56D431CB13EFDA5828EF3FFEB7FFB691C2D87FA"
+      "sha1": "F56D431CB13EFDA5828EF3FFEB7FFB691C2D87FA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sure Instinct (World) (v1.0.2)",
@@ -38882,7 +39359,8 @@
       "size": 524288,
       "crc": "9D4E6D2F",
       "md5": "67FD0FE365A6B7AD5E4C39AAA4CA5288",
-      "sha1": "34ED5AF8CD1F384ADCBECBCC7FA5EE977EE30014"
+      "sha1": "34ED5AF8CD1F384ADCBECBCC7FA5EE977EE30014",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sure Instinct (World) (v1.0.2) (PAL)",
@@ -38890,7 +39368,8 @@
       "size": 524288,
       "crc": "5B1461A1",
       "md5": "3D19CA20E3BFC4DF2EC594108A5C7C0A",
-      "sha1": "2F10FA96219199EC22A1BFA73D5954CB9E241FB3"
+      "sha1": "2F10FA96219199EC22A1BFA73D5954CB9E241FB3",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sutobasu Yarou Show (Japan)",
@@ -38996,7 +39475,8 @@
       "size": 2097152,
       "crc": "95C8491F",
       "md5": "D16711B3600B2754027E0CBFDBABDEB6",
-      "sha1": "7B30BB8D520437088213DF2B33EECB9C056F1456"
+      "sha1": "7B30BB8D520437088213DF2B33EECB9C056F1456",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Sylvester and Tweety (USA) (Proto 1)",
@@ -39177,7 +39657,8 @@
       "size": 2097152,
       "crc": "67E3570F",
       "md5": "32793E45C2230B6E3166F65B210A7AED",
-      "sha1": "9DF7AD6F297BA3BBD15CC9E9A6C8E5995B3FE0E1"
+      "sha1": "9DF7AD6F297BA3BBD15CC9E9A6C8E5995B3FE0E1",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Table Game Daishuugou!! (Japan)",
@@ -39532,7 +40013,8 @@
       "size": 917504,
       "crc": "A251501B",
       "md5": "DC785C9BF5FD8C696C77B888FCC5D499",
-      "sha1": "F74992808ED0D228C01A91CE7C8F46D87983C5A4"
+      "sha1": "F74992808ED0D228C01A91CE7C8F46D87983C5A4",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tchou (World) (v1.1)",
@@ -39540,7 +40022,8 @@
       "size": 917504,
       "crc": "7C582644",
       "md5": "026B730E323B65A98FA032568EF9E2A1",
-      "sha1": "76152CD53EFCFAEFF62EE3A9D411A4D28054055C"
+      "sha1": "76152CD53EFCFAEFF62EE3A9D411A4D28054055C",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tecmo Secret of the Stars (USA)",
@@ -39778,7 +40261,8 @@
       "size": 4194304,
       "crc": "C9A34685",
       "md5": "0F5A4988DAEFABB013541CF4D27E3A7C",
-      "sha1": "694C0C321024354047076E86535663B3AE561E3F"
+      "sha1": "694C0C321024354047076E86535663B3AE561E3F",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Teenage Mutant Ninja Turtles - Mutant Warriors (Japan)",
@@ -39929,7 +40413,8 @@
       "size": 1048576,
       "crc": "00E4C4E6",
       "md5": "CAD2FE5891242A933B0964BB99348DBD",
-      "sha1": "64EA73D73CED4B7327F68B487B440D3EBB45CA32"
+      "sha1": "64EA73D73CED4B7327F68B487B440D3EBB45CA32",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Teenage Queen (World) (v1.4) (PAL)",
@@ -39937,7 +40422,8 @@
       "size": 1048576,
       "crc": "60B9EF27",
       "md5": "047CC263812BE812D416E74C4E2D1280",
-      "sha1": "86419187D2DE835FA8682EC969A38BFA9FEF8136"
+      "sha1": "86419187D2DE835FA8682EC969A38BFA9FEF8136",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Teitoku no Ketsudan (Japan)",
@@ -40186,6 +40672,7 @@
       "md5": "8995FFE9FA821AA54A7C17BFF7647F66",
       "sha1": "4F8A5771CB11757A31A026E5892B9434A3A405CB",
       "region": "France",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Terranigma%20(France).png"
     },
     {
@@ -40196,6 +40683,7 @@
       "md5": "2FF43498FBB957FACF11C598DD8A6299",
       "sha1": "018701E5CE385E0B32E61B8F8BB2F9ABF8ABF8F0",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Terranigma%20(Germany).png"
     },
     {
@@ -40206,6 +40694,7 @@
       "md5": "4F3F3C5504A524A0716B965808709118",
       "sha1": "9A64CE79BEA16D01AB71B58B11DF0BCF0EEDD889",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Terranigma%20(Germany)%20(Rev%201).png"
     },
     {
@@ -40216,6 +40705,7 @@
       "md5": "5223853D5EDC9856F2BF8A9F04D01D3A",
       "sha1": "1E1A85CF28BCB69CB34FC71F48347279D7CFEA7E",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Terranigma%20(Spain).png"
     },
     {
@@ -40615,7 +41105,8 @@
       "size": 1048576,
       "crc": "BFD26228",
       "md5": "44D4B21F9BB5F77E31EAA489E02A157C",
-      "sha1": "90BC3A78BF2569DDBC1EFBC612E8915E5B28DF04"
+      "sha1": "90BC3A78BF2569DDBC1EFBC612E8915E5B28DF04",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Tintin - Prisoners of the Sun (Europe) (En,Fr,De,Es)",
@@ -40691,6 +41182,7 @@
       "md5": "C8EBC624D2BCCBF3EB3F46C434A24CB8",
       "sha1": "7E8B79EA0E23AAA6E8212DAD9082D7A16FE2C67B",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Tiny%20Toon%20Adventures%20-%20Buster%20Busts%20Loose!%20(Spain).png"
     },
     {
@@ -41055,7 +41547,8 @@
       "size": 524288,
       "crc": "19369514",
       "md5": "B26095D3C9EEFE11037B554B56BCF2FB",
-      "sha1": "67C26085CBFA0AE31AE500527EE26BED453F2D90"
+      "sha1": "67C26085CBFA0AE31AE500527EE26BED453F2D90",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Top Racer 2 (Japan) (En)",
@@ -41074,7 +41567,8 @@
       "size": 1572864,
       "crc": "F7665EAF",
       "md5": "C171C495F5E4499C13BE0C7F154CCCD6",
-      "sha1": "A778ED4B920C6038686E5E5006B7BBB4BA9071A3"
+      "sha1": "A778ED4B920C6038686E5E5006B7BBB4BA9071A3",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Toride (Japan)",
@@ -41322,6 +41816,7 @@
       "crc": "DDB47390",
       "md5": "2DB50232EFE0CC3BBDF07DE5D045CF27",
       "sha1": "D882E706DD201F9D0C94199E3317778F14461FB2",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Trials%20of%20Mana%20(World)%20(De)%20(Collection%20of%20Mana).png"
     },
     {
@@ -41331,6 +41826,7 @@
       "crc": "534DF838",
       "md5": "5FB4A64249B0937FB189FBBF6248805C",
       "sha1": "5C2088CDC86C4792AEEFFDFBE19004A32D3396C4",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Trials%20of%20Mana%20(World)%20(De)%20(Rev%201)%20(Collection%20of%20Mana).png"
     },
     {
@@ -41339,7 +41835,8 @@
       "size": 6291456,
       "crc": "DFB821E4",
       "md5": "56E9CB9B39F11DEE22DDD817AEEAEDC8",
-      "sha1": "D9757453FC9799ECD6780202B3F603E7AB2168AF"
+      "sha1": "D9757453FC9799ECD6780202B3F603E7AB2168AF",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Trials of Mana (World) (En) (Collection of Mana)",
@@ -41347,7 +41844,8 @@
       "size": 6291456,
       "crc": "9743DC0E",
       "md5": "C9829D76E25F8C4BF459CF77A8306825",
-      "sha1": "462580125693A73DA90DA08D415023A885D84D1D"
+      "sha1": "462580125693A73DA90DA08D415023A885D84D1D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Trials of Mana (World) (En) (Rev 1) (Collection of Mana)",
@@ -41356,6 +41854,7 @@
       "crc": "173E6097",
       "md5": "D40BD9267FB21AD8F8987CB8DA473DBC",
       "sha1": "128D966ECF656957B9B9B39128817D1C6A9CBD21",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Trials%20of%20Mana%20(World)%20(En)%20(Rev%201)%20(Collection%20of%20Mana).png"
     },
     {
@@ -41365,6 +41864,7 @@
       "crc": "CA0C6BAE",
       "md5": "DF8FACAF7874A0BADC6C8390F56419A9",
       "sha1": "6317FC3FDC99B33F73EA69BF6E9F13DA02FB2E8D",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Trials%20of%20Mana%20(World)%20(Es)%20(Collection%20of%20Mana).png"
     },
     {
@@ -41374,6 +41874,7 @@
       "crc": "593CD548",
       "md5": "4BAD426EF6070DC2C2732ACB12B6B3BF",
       "sha1": "6908BC9191E4271F9CBB28420DB793F7CABD3BD6",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Trials%20of%20Mana%20(World)%20(Es)%20(Rev%201)%20(Collection%20of%20Mana).png"
     },
     {
@@ -41383,6 +41884,7 @@
       "crc": "D4F43F86",
       "md5": "5F0E3EC92AF10B2E9E22BF9EEF85F1E5",
       "sha1": "F0AD9AF7E8DEE731D2C8112D4E954E9B238032BC",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Trials%20of%20Mana%20(World)%20(Fr)%20(Collection%20of%20Mana).png"
     },
     {
@@ -41392,6 +41894,7 @@
       "crc": "3D09832A",
       "md5": "4EDB2359E76A7AC13DC0D8D79783B038",
       "sha1": "241D5EEA760FBDCFFCFAFD1064D68F18EC38FB94",
+      "videoStandard": "PAL, NTSC",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Trials%20of%20Mana%20(World)%20(Fr)%20(Rev%201)%20(Collection%20of%20Mana).png"
     },
     {
@@ -41542,6 +42045,7 @@
       "md5": "5A3E1278FD9D774D84D5D764FFA6D9EA",
       "sha1": "F54AA038CD6A8876373D37C70B8DCC933C99F5FF",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/True%20Lies%20(Germany)%20(En).png"
     },
     {
@@ -41727,6 +42231,7 @@
       "md5": "9FFF57F3B20C518E456FE79AD5E46D1D",
       "sha1": "81FCF88A24C80189F90FFC00243992C0D58D0692",
       "region": "Spain",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Turn%20and%20Burn%20-%20No-Fly%20Zone%20(Spain).png"
     },
     {
@@ -41834,7 +42339,8 @@
       "size": 262144,
       "crc": "E3BF975F",
       "md5": "50B5D42790301503B55F45BA4739EF9A",
-      "sha1": "3B676E2C52308829B57495FCFFC332B3F1094E14"
+      "sha1": "3B676E2C52308829B57495FCFFC332B3F1094E14",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "UWOL - Quest for Money (World) (v1.3)",
@@ -41842,7 +42348,8 @@
       "size": 262144,
       "crc": "6B125B71",
       "md5": "329C6F2BE3D70138EF106B159A48C47A",
-      "sha1": "E546375D415716962B68B4E270DB7A76E3266374"
+      "sha1": "E546375D415716962B68B4E270DB7A76E3266374",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Uchuu Race - Astro Go! Go! (Japan) (En)",
@@ -42216,7 +42723,8 @@
       "size": 262144,
       "crc": "28897FC6",
       "md5": "2F171571C2B2EA8B80FB975329FF412F",
-      "sha1": "DC5A7DB6C7E5BFE8AC60C990E37703C47CFA24D2"
+      "sha1": "DC5A7DB6C7E5BFE8AC60C990E37703C47CFA24D2",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Uncharted Waters (USA)",
@@ -42396,6 +42904,7 @@
       "md5": "45CE898BF6D5D2E6985C09ADE904B1F7",
       "sha1": "0F1757F3E1FA019CD3FE94F1C3DFDC93C6B9EE8B",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Utopia%20(Germany).png"
     },
     {
@@ -42467,7 +42976,8 @@
       "size": 524288,
       "crc": "99B152BF",
       "md5": "E5CD2E26ACDDE90816769E3FFE6128A2",
-      "sha1": "20E527A025FF2780525EE350419490CA78C0725A"
+      "sha1": "20E527A025FF2780525EE350419490CA78C0725A",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "VS. Collection (Japan)",
@@ -42582,7 +43092,8 @@
       "size": 3145728,
       "crc": "B264F6D0",
       "md5": "EF390B5F9EB0C9AD3893A93CD4873F78",
-      "sha1": "2C54F05EE6D7A61FFD146BD4A932AF1CFCF98597"
+      "sha1": "2C54F05EE6D7A61FFD146BD4A932AF1CFCF98597",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Verne World (Japan)",
@@ -42951,7 +43462,8 @@
       "size": 262144,
       "crc": "D5D30C22",
       "md5": "4AAC858C94912C14D88940C84512E55E",
-      "sha1": "52698821A3681DA41CEF494C252C740F2AE738CC"
+      "sha1": "52698821A3681DA41CEF494C252C740F2AE738CC",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "War 2410 (USA)",
@@ -43200,7 +43712,8 @@
       "size": 4194304,
       "crc": "59766A7D",
       "md5": "E19D75B6D9E56F09C58774D022C20292",
-      "sha1": "FA69D09D3493937A443FC46F3F84C47C0EDE9585"
+      "sha1": "FA69D09D3493937A443FC46F3F84C47C0EDE9585",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Wedding Peach (Japan)",
@@ -43438,6 +43951,7 @@
       "md5": "DFBC169B9927F0E8881857889EC9811E",
       "sha1": "4573A4DB25707DEC5468C0B4CFEBFE54A56DDFCA",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Wing%20Commander%20(Germany).png"
     },
     {
@@ -43448,6 +43962,7 @@
       "md5": "A1B7C3A1F75EA9B385263B181117770C",
       "sha1": "0713399BD5FB37B54260DFAE8F272A3F18B2D173",
       "region": "Germany",
+      "videoStandard": "PAL",
       "cover": "https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Super_Nintendo_Entertainment_System/HEAD/Named_Boxarts/Wing%20Commander%20(Germany)%20(Rev%201).png"
     },
     {
@@ -44359,7 +44874,8 @@
       "size": 262144,
       "crc": "C66723B7",
       "md5": "581D3D8052383CAF63A2A8D71880F869",
-      "sha1": "D33C355826F78254D73418B3205E204783D2ABBA"
+      "sha1": "D33C355826F78254D73418B3205E204783D2ABBA",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Yogi Bear (Japan) (En)",
@@ -44814,7 +45330,8 @@
       "size": 4194304,
       "crc": "E7339DA0",
       "md5": "C611796C835FD1C4AC56632B7BE832E0",
-      "sha1": "EACD7287F1C0C51D8AC8B423A3FE8BD4FB72317D"
+      "sha1": "EACD7287F1C0C51D8AC8B423A3FE8BD4FB72317D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Zelda II - The Adventure of Link (World) (REV-H) (NES Conversion)",
@@ -44822,7 +45339,8 @@
       "size": 4194304,
       "crc": "1357D141",
       "md5": "5090BBA6065A550607591C6E6FF9F01C",
-      "sha1": "C16B5D5E3051A2C02D0B492FE4D427D2E4C44B12"
+      "sha1": "C16B5D5E3051A2C02D0B492FE4D427D2E4C44B12",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Zelda no Densetsu - Kamigami no Triforce (Japan)",
@@ -45004,7 +45522,8 @@
       "size": 2097152,
       "crc": "72398230",
       "md5": "C79F43BC541133EC0C5B421A9685201A",
-      "sha1": "D867AA98DBF62AA0A700B7FF4C1027CE3E44507D"
+      "sha1": "D867AA98DBF62AA0A700B7FF4C1027CE3E44507D",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "Zero4 Champ RR (Japan)",
@@ -45216,7 +45735,8 @@
       "size": 65536,
       "crc": "0D6A9C48",
       "md5": "C1ED87A43E76EABEC9C02CB8C4041AA2",
-      "sha1": "1214F1B20859B631342D3215E5C0A0FCE72722AB"
+      "sha1": "1214F1B20859B631342D3215E5C0A0FCE72722AB",
+      "videoStandard": "PAL, NTSC"
     },
     {
       "name": "seaQuest DSV (Europe)",

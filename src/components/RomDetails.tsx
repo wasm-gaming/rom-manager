@@ -14,6 +14,7 @@ import {
 import { MetadataEditor } from './MetadataEditor';
 import { calculateCRC32 } from '../services/ChecksumService';
 import type { WizardFile, WizardGame, WizardVariant } from '../core/wizard-tree';
+import type { Region } from '../core/rom-regions';
 import type { MatchStatus } from '../core/rom-matching';
 
 interface RomDetailsProps {
@@ -21,8 +22,11 @@ interface RomDetailsProps {
   paths: string[];
   /** The game picked in the tree, which is shown instead of its files. */
   game?: WizardGame;
-  /** Boxart of that game, already resolved to something an `<img>` accepts. */
-  gameCover?: string;
+  /**
+   * Boxart of that game, already resolved to something an `<img>` accepts, and
+   * the region it is the box of.
+   */
+  gameCover?: { url: string; region?: Region };
   records: Map<string, RomRecord | null>;
   stats: Map<string, StorageStat | null>;
   /** Resolved `<img src>` for the covers of initialised ROMs. */
@@ -260,7 +264,14 @@ function hasFiles(variant: WizardVariant): boolean {
   return variant.files.some((file) => file.path);
 }
 
-/** One release: what it is called, how much of it is here, and its files. */
+/**
+ * One release: what it is called, where it ships and at what standard, how much
+ * of it is here, and its files.
+ *
+ * The regions and the standards are the release's own and not the game's: a
+ * world release runs both PAL and NTSC, and which regions a release covers is
+ * what decides whose box is on screen.
+ */
 function VariantRow({
   variant,
   stats,
@@ -292,6 +303,18 @@ function VariantRow({
           {STATUS_MARKS[variant.status]}
         </span>
         <span class="variant-key">{variant.key}</span>
+        <span class="variant-support">
+          {variant.regions.map((region) => (
+            <span key={region} class="tag region" title={`Ships to ${region}`}>
+              {region}
+            </span>
+          ))}
+          {variant.videoStandards.map((standard) => (
+            <span key={standard} class="tag video" title={`Runs at ${standard}`}>
+              {standard}
+            </span>
+          ))}
+        </span>
         <span class="variant-count">
           {variant.files.length > 1 ? `${variant.files.length} files` : ''}
         </span>
@@ -315,7 +338,7 @@ function GameView({
   onSelectFile,
 }: {
   game: WizardGame;
-  cover?: string;
+  cover?: { url: string; region?: Region };
   stats: Map<string, StorageStat | null>;
   onSelectFile?: (path: string) => void;
 }): JSX.Element {
@@ -327,7 +350,14 @@ function GameView({
     <div class="rom-info game-info">
       <div class="rom-info-hero">
         {cover ? (
-          <img class="rom-info-cover" src={cover} alt={`${game.title} boxart`} />
+          // Which box it is worth saying: a game has one per region, and the
+          // preference order is what chose this one.
+          <figure class="rom-info-cover-figure">
+            <img class="rom-info-cover" src={cover.url} alt={`${game.title} boxart`} />
+            <figcaption class="rom-info-cover-region">
+              {cover.region ? `${cover.region} box` : 'Box of the game'}
+            </figcaption>
+          </figure>
         ) : (
           <div class="rom-info-cover placeholder">No cover</div>
         )}
