@@ -260,16 +260,6 @@ function hasFiles(variant: WizardVariant): boolean {
   return variant.files.some((file) => file.path);
 }
 
-/**
- * The releases of a game, the ones on disk first.
- *
- * The catalogue order buries what the user owns among the twenty betas they do
- * not, so what is here comes first; within each half the catalogue order stands.
- */
-function orderedVariants(variants: WizardVariant[]): WizardVariant[] {
-  return [...variants.filter(hasFiles), ...variants.filter((variant) => !hasFiles(variant))];
-}
-
 /** One release: what it is called, how much of it is here, and its files. */
 function VariantRow({
   variant,
@@ -329,7 +319,8 @@ function GameView({
   stats: Map<string, StorageStat | null>;
   onSelectFile?: (path: string) => void;
 }): JSX.Element {
-  const present = game.variants.filter(hasFiles).length;
+  const present = game.variants.filter(hasFiles);
+  const missing = game.variants.filter((variant) => !hasFiles(variant));
   const size = game.paths.reduce((total, path) => total + (stats.get(path)?.size ?? 0), 0);
 
   return (
@@ -345,11 +336,15 @@ function GameView({
           <h2>{game.title}</h2>
           <p class="rom-info-system">{systemOf(game.paths[0]) || '—'}</p>
 
+          {/* One badge per release that is here: which ones you have reads
+              better than how many, and the missing ones have their own list. */}
           <div class="rom-info-tags">
             <span class={`tag status-${game.status}`}>{STATUS_LABELS[game.status]}</span>
-            <span class="tag">
-              {present} of {game.variants.length} releases
-            </span>
+            {present.map((variant) => (
+              <span key={variant.key} class="tag">
+                {variant.key}
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -358,6 +353,12 @@ function GameView({
         <div class="fact">
           <span class="fact-label">Name on disk</span>
           <span class="fact-value">{game.id}</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Releases</span>
+          <span class="fact-value">
+            {present.length} of {game.variants.length}
+          </span>
         </div>
         <div class="fact">
           <span class="fact-label">Files here</span>
@@ -371,7 +372,7 @@ function GameView({
 
       <h4 class="variants-title">Versions</h4>
       <ul class="variants">
-        {orderedVariants(game.variants).map((variant) => (
+        {present.map((variant) => (
           <VariantRow
             key={variant.key}
             variant={variant}
@@ -380,6 +381,24 @@ function GameView({
           />
         ))}
       </ul>
+
+      {/* The catalogue can list fifteen releases of a game against the one on
+          disk, so the absent ones stay folded until they are asked for. */}
+      {missing.length > 0 && (
+        <details class="variants-missing">
+          <summary>{missing.length} more the catalogue knows of</summary>
+          <ul class="variants">
+            {missing.map((variant) => (
+              <VariantRow
+                key={variant.key}
+                variant={variant}
+                stats={stats}
+                onSelectFile={onSelectFile}
+              />
+            ))}
+          </ul>
+        </details>
+      )}
     </div>
   );
 }
@@ -562,8 +581,15 @@ export function RomDetails({
   );
 
   if (game) {
+    // Keyed by game so the folded releases of the last one do not stay unfolded.
     return (
-      <GameView game={game} cover={gameCover} stats={stats} onSelectFile={onSelectFile} />
+      <GameView
+        key={game.key}
+        game={game}
+        cover={gameCover}
+        stats={stats}
+        onSelectFile={onSelectFile}
+      />
     );
   }
 

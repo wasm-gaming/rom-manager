@@ -92,11 +92,6 @@ function contains(path: string, directory: string): boolean {
   return directory === path || directory.startsWith(`${path}/`);
 }
 
-/** Releases of a game with something on disk, which is what the row stands for. */
-function presentVariants(game: WizardGame): number {
-  return game.variants.filter((variant) => variant.files.some((file) => file.path)).length;
-}
-
 function parseDraggedPaths(payload: string): string[] {
   const parsed = JSON.parse(payload);
   if (!Array.isArray(parsed) || parsed.some((value) => typeof value !== 'string')) {
@@ -523,7 +518,10 @@ export function FileTree({
               row.status ? `status-${row.status}` : '',
               (row.path ? selection.has(row.path) : selectedGame === row.key) ? 'selected' : '',
               row.path && selectedFiles?.includes(row.path) ? 'active' : '',
-              dropTarget === row.path ? 'drop-target' : '',
+              // Rows with no path of their own are not a drop target: comparing
+              // one to `dropTarget` would match every one of them while nothing
+              // is being dragged.
+              row.path !== undefined && dropTarget === row.path ? 'drop-target' : '',
             ]
               .filter(Boolean)
               .join(' ')}
@@ -552,15 +550,6 @@ export function FileTree({
             )}
             <span class="tree-icon">{ICONS[row.kind]}</span>
             <span class="tree-name">{row.label}</span>
-
-            {row.game && (
-              <span
-                class="tree-versions"
-                title={`${presentVariants(row.game)} of ${row.game.variants.length} known releases are here`}
-              >
-                {presentVariants(row.game)}/{row.game.variants.length}
-              </span>
-            )}
 
             {row.status && row.status !== 'complete' && (
               <span class="tree-status" title={STATUS_TITLES[row.status]}>

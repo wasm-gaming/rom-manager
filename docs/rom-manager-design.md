@@ -360,8 +360,13 @@ se lean como un juego es justo para lo que sirve agrupar, y una fila que se abre
 y vuelve a enseñar los quince ficheros deshace eso. Así que la fila lleva sus
 releases como dato, no como hijos, y donde se leen es en el panel de detalles:
 todas las que el catálogo conoce, ausentes incluidas, con los ficheros de cada
-una y el que falte marcado como tal. La fila muestra además cuántas releases de
-las conocidas están en la carpeta.
+una y el que falte marcado como tal.
+
+En el árbol, un juego solo se distingue por el color del texto: los recuentos y
+el detalle viven en el panel, que es donde hay sitio para leerlos. Allí las
+releases presentes son un badge cada una —qué tienes se lee mejor que cuántas— y
+las ausentes van plegadas, porque el catálogo puede listar quince frente a la
+única que hay en disco.
 
 La fila actúa sobre **todos** los ficheros del juego: seleccionarla los
 selecciona, y arrastrar o borrar los mueve o los borra juntos. Como el árbol ya
