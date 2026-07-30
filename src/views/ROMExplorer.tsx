@@ -5,12 +5,18 @@ import { FileTree } from '../components/FileTree';
 import { RomDetails } from '../components/RomDetails';
 import { storageService, StorageNode, StorageStat } from '../services/StorageService';
 import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
+import { GameCatalogService } from '../services/GameCatalogService';
+import { ROMDatasetService } from '../services/ROMDatasetService';
+import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
+import { buildWizardTree, type WizardNode } from '../core/wizard-tree';
 import {
   storeService,
   originsSignal,
   activeOriginIdSignal,
   loadingSignal,
   errorSignal,
+  knownSystemsSignal,
+  wizardSettingsSignal,
   Origin,
 } from '../services/StoreService';
 
@@ -19,16 +25,30 @@ function gameKey(romPath: string): string {
   return `${systemOf(romPath)}/${gameNameOf(romPath)}`;
 }
 
+/**
+ * The system a folder belongs to, which is the first segment of its path. A
+ * system folder is its own system, so grouping also works one level down, in a
+ * collection someone chose to browse grouped.
+ */
+function systemFolderOf(path: string): string {
+  const separator = path.indexOf('/');
+  return separator === -1 ? path : path.slice(0, separator);
+}
+
 export function ROMExplorer(): JSX.Element {
   const [storageNodes, setStorageNodes] = useState<Map<string, StorageNode>>(new Map());
   const [records, setRecords] = useState<Map<string, RomRecord | null>>(new Map());
   const [stats, setStats] = useState<Map<string, StorageStat | null>>(new Map());
   const [covers, setCovers] = useState<Map<string, string>>(new Map());
   const [initialised, setInitialised] = useState<Set<string>>(new Set());
+  const [groupedRows, setGroupedRows] = useState<Map<string, WizardNode[]>>(new Map());
+  const [notice, setNotice] = useState<string | undefined>();
   const [editing, setEditing] = useState(false);
 
   /** Systems whose library folder has already been listed. */
   const indexedSystems = useRef<Set<string>>(new Set());
+  /** Folders whose grouped rows are already being worked out. */
+  const grouping = useRef<Set<string>>(new Set());
   /** Object URLs minted for local covers, revoked when they are replaced. */
   const objectUrls = useRef<string[]>([]);
 
@@ -38,12 +58,30 @@ export function ROMExplorer(): JSX.Element {
   const activeOrigin = activeOriginId ? originsMap.get(activeOriginId) : undefined;
   const activeNode = activeOriginId ? storageNodes.get(activeOriginId) : undefined;
   const selection = activeOrigin?.selection || [];
+  const wizardSettings = wizardSettingsSignal.value;
+  const knownSystems = knownSystemsSignal.value;
 
   useEffect(() => {
     return () => {
       for (const url of objectUrls.current) URL.revokeObjectURL(url);
     };
   }, []);
+
+  /** The systems the dataset covers, which is what a folder is grouped against. */
+  useEffect(() => {
+    ROMDatasetService.listSystems()
+      .then((systems) => storeService.setKnownSystems(new Set(systems.map((it) => it.system))))
+      .catch(() => storeService.setKnownSystems(new Set()));
+  }, []);
+
+  /** Grouping settings belong to the folder on disk, so every tab has its own. */
+  useEffect(() => {
+    if (!activeNode) return;
+
+    WizardConfigService.read(activeNode)
+      .then((settings) => storeService.setWizardSettings(settings))
+      .catch(() => undefined);
+  }, [activeNode]);
 
   const releaseCovers = () => {
     for (const url of objectUrls.current) URL.revokeObjectURL(url);
@@ -105,10 +143,83 @@ export function ROMExplorer(): JSX.Element {
 
   const handleSelectOrigin = (originId: string) => {
     indexedSystems.current = new Set();
+    grouping.current = new Set();
     setInitialised(new Set());
+    setGroupedRows(new Map());
     setEditing(false);
     storeService.setActiveOrigin(originId);
   };
+
+  /** Only a folder of a system the dataset covers can be grouped by game. */
+  const canGroup = useCallback(
+    (path: string) => knownSystems.has(systemFolderOf(path)),
+    [knownSystems],
+  );
+
+  const isGrouped = useCallback(
+    (path: string) => isWizardFolder(path, wizardSettings, knownSystems),
+    [wizardSettings, knownSystems],
+  );
+
+  /**
+   * Works out the rows of a grouped folder: what the system holds, hashed and
+   * matched against its catalogue.
+   *
+   * A folder is only ever worked out once. Retrying on its own would turn a
+   * failure into a loop, since the tree asks again on every paint; toggling the
+   * folder is what clears the slate.
+   */
+  const handleGroupingNeeded = useCallback(
+    async (path: string) => {
+      if (!activeNode || grouping.current.has(path)) return;
+      grouping.current.add(path);
+
+      try {
+        storeService.setError(undefined);
+
+        const [match, entries] = await Promise.all([
+          GameCatalogService.load(activeNode, systemFolderOf(path), (progress) =>
+            setNotice(`Reading ${path}: ${progress.done} of ${progress.total}`),
+          ),
+          activeNode.list(path),
+        ]);
+
+        setGroupedRows((current) =>
+          new Map(current).set(path, buildWizardTree(path, entries, match)),
+        );
+      } catch (err) {
+        storeService.setError(err instanceof Error ? err.message : `Failed to group ${path}`);
+      } finally {
+        setNotice(undefined);
+      }
+    },
+    [activeNode],
+  );
+
+  const handleToggleGrouping = useCallback(
+    async (path: string) => {
+      if (!activeNode) return;
+
+      const systems = knownSystemsSignal.peek();
+      const grouped = isWizardFolder(path, wizardSettingsSignal.peek(), systems);
+
+      try {
+        const settings = await WizardConfigService.setWizard(activeNode, path, !grouped, systems);
+        storeService.setWizardSettings(settings);
+      } catch (err) {
+        storeService.setError(err instanceof Error ? err.message : 'Failed to save the view mode');
+        return;
+      }
+
+      grouping.current.delete(path);
+      setGroupedRows((current) => {
+        const next = new Map(current);
+        next.delete(path);
+        return next;
+      });
+    },
+    [activeNode],
+  );
 
   const handleCloseOrigin = (originId: string) => {
     storeService.removeOrigin(originId);
@@ -269,6 +380,12 @@ export function ROMExplorer(): JSX.Element {
               onVisibleChange={handleVisibleChange}
               isInitialized={(path) => initialised.has(gameKey(path))}
               onRemoved={handleRemoved}
+              canGroup={canGroup}
+              isGrouped={isGrouped}
+              groupedRows={groupedRows}
+              onGroupingNeeded={handleGroupingNeeded}
+              onToggleGrouping={handleToggleGrouping}
+              notice={notice}
             />
           )}
 

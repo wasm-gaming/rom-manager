@@ -258,7 +258,29 @@ Dos fuentes combinadas en un mismo recorrido real del filesystem:
 guarda (entre otras posibles cosas) el listado de carpetas activadas como
 wizard. Las carpetas de sistema son wizard por defecto; cualquier otra
 carpeta (incluidas colecciones) puede activarse explícitamente ahí si se
-quiere navegarla agrupada.
+quiere navegarla agrupada. El fichero guarda **solo las excepciones**: una
+carpeta devuelta a su valor por defecto se borra de él, para que no queden
+entradas obsoletas de sistemas renombrados.
+
+**Qué juegos aparecen en modo wizard.** El explorador enseña el disco, no el
+catálogo: solo se lista un juego si tiene **al menos un fichero presente**.
+Enseñar los 26 548 juegos del dataset enterraría los veinte que el usuario
+tiene. Dentro de un juego, en cambio, se listan **todas** sus variantes,
+incluidas las ausentes — ver qué hermanas existen es la razón de agrupar. Lo
+mismo con los ficheros de una variante parcial: el disco que falta se lista
+para que se vea que falta.
+
+**Carpetas absorbidas.** Una carpeta cuyos ficheros han acabado todos dentro
+de un juego desaparece del listado: su contenido ya está en pantalla un nivel
+más arriba y mejor organizado. Eso es lo que convierte un juego de disco —una
+carpeta por variante, varios ficheros cada una— en una sola fila, mientras que
+una colección, en la que el escáner nunca entró, sigue intacta y navegable.
+Las dos reglas caen de lo mismo: un fichero reconocido *reclama* su carpeta.
+
+**El sistema se deduce del primer segmento de la ruta**, que es la estructura
+que MiSTer impone en la SD. Consecuencia: agrupar requiere abrir la raíz que
+contiene las carpetas de sistema; si se abre directamente `MegaDrive/`, no hay
+forma de saber de qué sistema se trata y el explorador se queda en modo plano.
 
 ## Principios de diseño a mantener
 

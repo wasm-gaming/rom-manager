@@ -241,6 +241,15 @@ code {
   font-size: 0.8rem;
 }
 
+.file-tree-notice {
+  margin: 0 0.75rem 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  background-color: #e3f2fd;
+  color: #1565c0;
+  font-size: 0.8rem;
+}
+
 .file-tree-body {
   margin: 0;
   padding: 0 0 0.5rem;
@@ -306,6 +315,56 @@ code {
 .tree-name {
   flex: 1;
   word-break: break-word;
+}
+
+/* A game and its variants: structure the dataset provides, not files on disk. */
+.tree-item.group > .tree-name {
+  font-weight: 500;
+}
+
+.tree-item.variant > .tree-name {
+  color: #616161;
+  font-size: 0.85rem;
+}
+
+/* A file the dataset expects and the folder does not have. */
+.tree-item.missing {
+  cursor: default;
+  color: #bdbdbd;
+  font-size: 0.85rem;
+}
+
+.tree-item.missing:hover {
+  background-color: transparent;
+}
+
+.tree-status {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: #f9a825;
+}
+
+.tree-item.status-missing > .tree-status {
+  color: #bdbdbd;
+}
+
+.tree-group-toggle {
+  flex: 0 0 auto;
+  padding: 0 0.15rem;
+  border: none;
+  background: none;
+  color: #bdbdbd;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.tree-group-toggle:hover {
+  color: #757575;
+}
+
+.tree-group-toggle.on {
+  color: #1976d2;
 }
 
 .tree-empty {

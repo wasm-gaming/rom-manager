@@ -1,4 +1,5 @@
 import { signal } from '@preact/signals';
+import { emptySettings, type WizardSettings } from './WizardConfigService';
 
 /**
  * Origin represents an opened folder/location
@@ -19,6 +20,16 @@ export const originsSignal = signal<Map<string, Origin>>(new Map());
 export const activeOriginIdSignal = signal<string | undefined>();
 export const loadingSignal = signal(false);
 export const errorSignal = signal<string | undefined>();
+
+/**
+ * Which folders of the open library are browsed grouped by game, mirroring its
+ * `wizard.json`. Only the active library is held: the settings belong to the
+ * folder on disk, so switching tabs reloads them from there.
+ */
+export const wizardSettingsSignal = signal<WizardSettings>(emptySettings());
+
+/** Systems the dataset knows about, which is what makes a folder wizard by default. */
+export const knownSystemsSignal = signal<Set<string>>(new Set());
 
 export class StoreService {
   private static instance: StoreService;
@@ -112,11 +123,20 @@ export class StoreService {
     return errorSignal.value;
   }
 
+  setWizardSettings(settings: WizardSettings): void {
+    wizardSettingsSignal.value = settings;
+  }
+
+  setKnownSystems(systems: Set<string>): void {
+    knownSystemsSignal.value = systems;
+  }
+
   clear(): void {
     originsSignal.value = new Map();
     activeOriginIdSignal.value = undefined;
     loadingSignal.value = false;
     errorSignal.value = undefined;
+    wizardSettingsSignal.value = emptySettings();
   }
 }
 
