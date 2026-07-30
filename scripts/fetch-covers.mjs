@@ -1,13 +1,21 @@
 #!/usr/bin/env node
 /**
- * Scrape the boxart listings from thumbnails.libretro.com.
+ * Scrape the boxart listings of the libretro thumbnail collection.
  *
  * Usage: node scripts/fetch-covers.mjs [output-dir] [--systems=a,b]
  *
- * The server exposes a plain directory index per system, so we read the real
- * list of published files instead of guessing URLs. The scraped names are
- * stored as `<output-dir>/<system>/covers.json` and later joined against the
- * DAT entries by `dat-to-json.mjs`.
+ * The listing comes from the GitHub repository that backs each system
+ * (`libretro-thumbnails/<System_Name>`), because thumbnails.libretro.com
+ * stopped serving its directory index and now answers 403 to it. The images
+ * themselves are still served from that origin, so `baseUrl` keeps pointing
+ * there.
+ *
+ * The scraped names are stored as `<output-dir>/<system>/covers.json` and
+ * later joined against the DAT entries by `dat-to-json.mjs`.
+ *
+ * The GitHub API allows 60 requests/hour anonymously and this script spends
+ * two per system, so a full run fits but a second one within the hour may not.
+ * Set GITHUB_TOKEN to raise the limit.
  */
 
 import fs from 'fs';
@@ -21,6 +29,9 @@ import {
 
 const THUMBNAILS_ORIGIN = 'https://thumbnails.libretro.com';
 const BOXART_FOLDER = 'Named_Boxarts';
+const GITHUB_API = 'https://api.github.com';
+const THUMBNAILS_OWNER = 'libretro-thumbnails';
+const BRANCHES = ['master', 'main'];
 
 /**
  * Build a URL under the thumbnails origin, encoding each path segment.
@@ -30,43 +41,74 @@ function thumbnailsUrl(...segments) {
 }
 
 /**
- * Extract the PNG file names from an Apache directory index.
+ * Repository name backing a system's thumbnails.
  *
- * Only plain file names are accepted: entries containing a path separator are
- * navigation links (parent directory, sorting) and must be ignored.
+ * The convention is the libretro system name with every space turned into an
+ * underscore: `Atari - 5200` becomes `Atari_-_5200`.
  */
-function parseListing(html) {
-  const names = new Set();
-  const hrefPattern = /href="([^"]+\.png)"/gi;
-
-  let match;
-  while ((match = hrefPattern.exec(html)) !== null) {
-    const href = match[1];
-    if (href.includes('/') || href.includes('?')) continue;
-
-    let decoded;
-    try {
-      decoded = decodeURIComponent(href);
-    } catch {
-      continue;
-    }
-
-    if (decoded.includes('/') || decoded.includes('\\')) continue;
-
-    names.add(decoded.slice(0, -'.png'.length));
-  }
-
-  return Array.from(names).sort();
+function repositoryOf(thumbnailsName) {
+  return thumbnailsName.replace(/ /g, '_');
 }
 
-async function fetchListing(url) {
-  const response = await fetch(url);
+async function githubJson(url) {
+  const headers = { 'User-Agent': 'rom-manager', Accept: 'application/vnd.github+json' };
+  if (process.env.GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+
+  const response = await fetch(url, { headers });
+
+  if (response.status === 403 && response.headers.get('x-ratelimit-remaining') === '0') {
+    throw new Error('GitHub API rate limit exhausted; set GITHUB_TOKEN and retry');
+  }
 
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}: ${url}`);
   }
 
-  return response.text();
+  return response.json();
+}
+
+/**
+ * List the boxart names published for a system.
+ *
+ * The root tree is read first to locate the `Named_Boxarts` subtree, so only
+ * that folder is downloaded instead of the whole repository, which also holds
+ * the snapshot and title-screen collections.
+ */
+async function fetchBoxartNames(repository) {
+  const treesUrl = `${GITHUB_API}/repos/${THUMBNAILS_OWNER}/${repository}/git/trees`;
+
+  let root;
+  for (const branch of BRANCHES) {
+    try {
+      root = await githubJson(`${treesUrl}/${branch}`);
+      break;
+    } catch (error) {
+      if (!error.message.startsWith('HTTP 404')) throw error;
+    }
+  }
+
+  if (!root) {
+    throw new Error(`HTTP 404: ${treesUrl}/${BRANCHES[0]}`);
+  }
+
+  const folder = root.tree.find(
+    (entry) => entry.path === BOXART_FOLDER && entry.type === 'tree',
+  );
+
+  if (!folder) return [];
+
+  const listing = await githubJson(`${treesUrl}/${folder.sha}`);
+
+  if (listing.truncated) {
+    throw new Error(`Listing of ${repository}/${BOXART_FOLDER} was truncated by the API`);
+  }
+
+  return listing.tree
+    .filter((entry) => entry.type === 'blob' && entry.path.toLowerCase().endsWith('.png'))
+    .map((entry) => entry.path.slice(0, -'.png'.length))
+    .sort();
 }
 
 async function main() {
@@ -74,7 +116,7 @@ async function main() {
   const outputDir = args.find((value) => !value.startsWith('--')) || DATASETS_DIR;
   const systems = selectSystems(args);
 
-  console.log('\n🖼️  Scraping boxarts from thumbnails.libretro.com...\n');
+  console.log('\n🖼️  Scraping boxarts from the libretro-thumbnails repositories...\n');
   console.log(`📍 Output directory: ${outputDir}\n`);
 
   let scraped = 0;
@@ -84,12 +126,12 @@ async function main() {
 
   for (const system of systems) {
     const baseUrl = thumbnailsUrl(system.thumbnails, BOXART_FOLDER);
+    const repository = repositoryOf(system.thumbnails);
 
     process.stdout.write(`⏳ ${system.name.padEnd(30)} ... `);
 
     try {
-      const listing = await fetchListing(`${baseUrl}/`);
-      const list = parseListing(listing);
+      const list = await fetchBoxartNames(repository);
 
       if (list.length === 0) {
         console.log('⏭️  No boxarts published (skipped)');
@@ -104,6 +146,7 @@ async function main() {
         meta: {
           system: system.name,
           thumbnails: system.thumbnails,
+          repository,
           type: BOXART_FOLDER,
           baseUrl,
           total: list.length,
@@ -122,7 +165,7 @@ async function main() {
       totalCovers += list.length;
       scraped++;
     } catch (error) {
-      if (error.message.includes('HTTP 404')) {
+      if (error.message.startsWith('HTTP 404')) {
         console.log('⏭️  Not available (skipped)');
         skipped++;
       } else {

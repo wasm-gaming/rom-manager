@@ -23,6 +23,7 @@ import {
   DAT_FILE,
   INDEX_FILE,
   PROJECT_ROOT,
+  SYSTEMS,
   selectSystems,
   systemDir,
 } from './systems.mjs';
@@ -81,21 +82,24 @@ function runScript(script, args, options = {}) {
  *
  * Every system is listed with the path of its dataset, relative to the datasets
  * folder, so the application can fetch it directly.
+ *
+ * The listing is driven by SYSTEMS rather than by whatever sits in the folder:
+ * datasets of systems dropped from the supported list may still be on disk, and
+ * they must not end up in the index.
  */
 function generateIndex() {
   console.log('\n📋 Generating index.json...');
 
-  const files = fs
-    .readdirSync(DATASETS_DIR, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .filter((entry) => fs.existsSync(path.join(DATASETS_DIR, entry.name, DATASET_FILE)))
-    .map((entry) => ({
-      system: entry.name,
-      path: `${entry.name}/${DATASET_FILE}`,
-      crc32: calculateDatasetCRC32(
-        fs.readFileSync(path.join(DATASETS_DIR, entry.name, DATASET_FILE)),
-      ),
-    }));
+  const files = SYSTEMS.filter((system) =>
+    fs.existsSync(path.join(systemDir(DATASETS_DIR, system.name), DATASET_FILE)),
+  ).map((system) => ({
+    system: system.name,
+    media: system.media,
+    path: `${system.name}/${DATASET_FILE}`,
+    crc32: calculateDatasetCRC32(
+      fs.readFileSync(path.join(systemDir(DATASETS_DIR, system.name), DATASET_FILE)),
+    ),
+  }));
 
   const index = {
     files,

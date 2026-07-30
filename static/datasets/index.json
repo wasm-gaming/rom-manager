@@ -1,103 +1,146 @@
 {
   "files": [
     {
-      "system": "Atari - 2600",
-      "path": "Atari - 2600/dataset.json",
-      "crc32": "C61F51BF"
+      "system": "NES",
+      "media": "cartridge",
+      "path": "NES/dataset.json",
+      "crc32": "63AFF28D"
     },
     {
-      "system": "Atari - 5200",
-      "path": "Atari - 5200/dataset.json",
-      "crc32": "AF56D7FD"
+      "system": "SNES",
+      "media": "cartridge",
+      "path": "SNES/dataset.json",
+      "crc32": "3DF6298C"
     },
     {
-      "system": "Atari - 7800",
-      "path": "Atari - 7800/dataset.json",
-      "crc32": "094BD9DD"
+      "system": "GAMEBOY",
+      "media": "cartridge",
+      "path": "GAMEBOY/dataset.json",
+      "crc32": "F290A8E0"
     },
     {
-      "system": "Atari - Lynx",
-      "path": "Atari - Lynx/dataset.json",
-      "crc32": "A8840D5B"
+      "system": "GBC",
+      "media": "cartridge",
+      "path": "GBC/dataset.json",
+      "crc32": "882125D0"
     },
     {
-      "system": "Commodore - 64",
-      "path": "Commodore - 64/dataset.json",
-      "crc32": "65D73ACE"
+      "system": "GBA",
+      "media": "cartridge",
+      "path": "GBA/dataset.json",
+      "crc32": "1AD2D06B"
     },
     {
-      "system": "Commodore - Amiga",
-      "path": "Commodore - Amiga/dataset.json",
-      "crc32": "E20E2855"
+      "system": "N64",
+      "media": "cartridge",
+      "path": "N64/dataset.json",
+      "crc32": "62DC754A"
     },
     {
-      "system": "Nintendo - Game Boy",
-      "path": "Nintendo - Game Boy/dataset.json",
-      "crc32": "850761AB"
+      "system": "PokemonMini",
+      "media": "cartridge",
+      "path": "PokemonMini/dataset.json",
+      "crc32": "79011061"
     },
     {
-      "system": "Nintendo - Game Boy Advance",
-      "path": "Nintendo - Game Boy Advance/dataset.json",
-      "crc32": "64B7830C"
+      "system": "SMS",
+      "media": "cartridge",
+      "path": "SMS/dataset.json",
+      "crc32": "1FB4844D"
     },
     {
-      "system": "Nintendo - Game Boy Color",
-      "path": "Nintendo - Game Boy Color/dataset.json",
-      "crc32": "9240ED7F"
+      "system": "GameGear",
+      "media": "cartridge",
+      "path": "GameGear/dataset.json",
+      "crc32": "2075A87A"
     },
     {
-      "system": "Nintendo - GameCube",
-      "path": "Nintendo - GameCube/dataset.json",
-      "crc32": "8BD036AF"
+      "system": "MegaDrive",
+      "media": "cartridge",
+      "path": "MegaDrive/dataset.json",
+      "crc32": "16ED0FEF"
     },
     {
-      "system": "Nintendo - SNES",
-      "path": "Nintendo - SNES/dataset.json",
-      "crc32": "CA4DC950"
+      "system": "MegaCD",
+      "media": "disc",
+      "path": "MegaCD/dataset.json",
+      "crc32": "E35D54D0"
     },
     {
-      "system": "Nintendo - Wii",
-      "path": "Nintendo - Wii/dataset.json",
-      "crc32": "47D0F546"
+      "system": "S32X",
+      "media": "cartridge",
+      "path": "S32X/dataset.json",
+      "crc32": "8A142033"
     },
     {
-      "system": "Sega - Dreamcast",
-      "path": "Sega - Dreamcast/dataset.json",
-      "crc32": "497863E9"
-    },
-    {
-      "system": "Sega - Game Gear",
-      "path": "Sega - Game Gear/dataset.json",
-      "crc32": "BCCD5AF4"
-    },
-    {
-      "system": "Sega - Genesis",
-      "path": "Sega - Genesis/dataset.json",
-      "crc32": "9CB74ADE"
-    },
-    {
-      "system": "Sega - Saturn",
-      "path": "Sega - Saturn/dataset.json",
+      "system": "Saturn",
+      "media": "disc",
+      "path": "Saturn/dataset.json",
       "crc32": "4B1B2B7B"
     },
     {
-      "system": "Sony - PSP",
-      "path": "Sony - PSP/dataset.json",
-      "crc32": "2B382719"
+      "system": "PSX",
+      "media": "disc",
+      "path": "PSX/dataset.json",
+      "crc32": "A64A78F6"
     },
     {
-      "system": "Sony - PlayStation",
-      "path": "Sony - PlayStation/dataset.json",
-      "crc32": "FA660855"
+      "system": "TGFX16",
+      "media": "cartridge",
+      "path": "TGFX16/dataset.json",
+      "crc32": "D165ADBA"
     },
     {
-      "system": "Sony - PlayStation 2",
-      "path": "Sony - PlayStation 2/dataset.json",
-      "crc32": "252491C2"
+      "system": "TGFX16-CD",
+      "media": "disc",
+      "path": "TGFX16-CD/dataset.json",
+      "crc32": "51AC6D85"
+    },
+    {
+      "system": "NeoGeo-CD",
+      "media": "disc",
+      "path": "NeoGeo-CD/dataset.json",
+      "crc32": "D074BDB8"
+    },
+    {
+      "system": "Atari2600",
+      "media": "cartridge",
+      "path": "Atari2600/dataset.json",
+      "crc32": "C61F51BF"
+    },
+    {
+      "system": "ATARI5200",
+      "media": "cartridge",
+      "path": "ATARI5200/dataset.json",
+      "crc32": "AF56D7FD"
+    },
+    {
+      "system": "ATARI7800",
+      "media": "cartridge",
+      "path": "ATARI7800/dataset.json",
+      "crc32": "094BD9DD"
+    },
+    {
+      "system": "AtariLynx",
+      "media": "cartridge",
+      "path": "AtariLynx/dataset.json",
+      "crc32": "5DD67514"
+    },
+    {
+      "system": "WonderSwan",
+      "media": "cartridge",
+      "path": "WonderSwan/dataset.json",
+      "crc32": "FB72A1BD"
+    },
+    {
+      "system": "WonderSwanColor",
+      "media": "cartridge",
+      "path": "WonderSwanColor/dataset.json",
+      "crc32": "133C34AA"
     }
   ],
   "description": "ROM metadata datasets (auto-indexed on app startup)",
   "source": "Generated from Libretro database DAT files",
-  "generatedAt": "2026-07-29T22:02:20.518Z",
-  "systemCount": 19
+  "generatedAt": "2026-07-29T23:49:51.274Z",
+  "systemCount": 23
 }

@@ -6,9 +6,18 @@
  *   covers.json   Boxart filenames scraped from thumbnails.libretro.com
  *   dataset.json  Final dataset consumed by the application
  *
+ * `name` is the folder name MiSTer uses under `/games`, taken verbatim from
+ * MiSTer-devel/Distribution_MiSTer. The casing is inconsistent upstream
+ * (`Atari2600` but `ATARI5200`, `NEOGEO` but `NeoGeo-CD`) and is reproduced
+ * as-is on purpose: it has to match what sits on the user's SD card.
+ *
  * `dat` is the path inside libretro-database/metadat and `thumbnails` is the
- * folder name used by thumbnails.libretro.com, which does not always match the
- * short name we expose to the application.
+ * folder name used by thumbnails.libretro.com, neither of which matches the
+ * MiSTer name.
+ *
+ * `media` drives the on-disk layout: `cartridge` systems keep one file per
+ * variant at the system root, `disc` systems get a folder per game with a
+ * subfolder per variant.
  */
 
 import path from 'path';
@@ -27,87 +36,159 @@ export const INDEX_FILE = 'index.json';
 export const SYSTEMS = [
   // Nintendo
   {
-    name: 'Nintendo - SNES',
+    name: 'NES',
+    media: 'cartridge',
+    dat: 'no-intro/Nintendo - Nintendo Entertainment System.dat',
+    thumbnails: 'Nintendo - Nintendo Entertainment System',
+  },
+  {
+    name: 'SNES',
+    media: 'cartridge',
     dat: 'no-intro/Nintendo - Super Nintendo Entertainment System.dat',
     thumbnails: 'Nintendo - Super Nintendo Entertainment System',
   },
   {
-    name: 'Nintendo - Game Boy',
+    name: 'GAMEBOY',
+    media: 'cartridge',
     dat: 'no-intro/Nintendo - Game Boy.dat',
     thumbnails: 'Nintendo - Game Boy',
   },
   {
-    name: 'Nintendo - Game Boy Color',
+    name: 'GBC',
+    media: 'cartridge',
     dat: 'no-intro/Nintendo - Game Boy Color.dat',
     thumbnails: 'Nintendo - Game Boy Color',
   },
   {
-    name: 'Nintendo - Game Boy Advance',
+    name: 'GBA',
+    media: 'cartridge',
     dat: 'no-intro/Nintendo - Game Boy Advance.dat',
     thumbnails: 'Nintendo - Game Boy Advance',
   },
   {
-    name: 'Nintendo - GameCube',
-    dat: 'redump/Nintendo - GameCube.dat',
-    thumbnails: 'Nintendo - GameCube',
+    name: 'N64',
+    media: 'cartridge',
+    dat: 'no-intro/Nintendo - Nintendo 64.dat',
+    thumbnails: 'Nintendo - Nintendo 64',
   },
   {
-    name: 'Nintendo - Wii',
-    dat: 'redump/Nintendo - Wii.dat',
-    thumbnails: 'Nintendo - Wii',
+    name: 'PokemonMini',
+    media: 'cartridge',
+    dat: 'no-intro/Nintendo - Pokemon Mini.dat',
+    thumbnails: 'Nintendo - Pokemon Mini',
   },
 
   // Sega
   {
-    name: 'Sega - Genesis',
-    dat: 'no-intro/Sega - Mega Drive - Genesis.dat',
-    thumbnails: 'Sega - Mega Drive - Genesis',
+    name: 'SMS',
+    media: 'cartridge',
+    dat: 'no-intro/Sega - Master System - Mark III.dat',
+    thumbnails: 'Sega - Master System - Mark III',
   },
   {
-    name: 'Sega - Game Gear',
+    name: 'GameGear',
+    media: 'cartridge',
     dat: 'no-intro/Sega - Game Gear.dat',
     thumbnails: 'Sega - Game Gear',
   },
   {
-    name: 'Sega - Saturn',
-    dat: 'redump/Sega - Saturn.dat',
-    thumbnails: 'Sega - Saturn',
+    name: 'MegaDrive',
+    media: 'cartridge',
+    dat: 'no-intro/Sega - Mega Drive - Genesis.dat',
+    thumbnails: 'Sega - Mega Drive - Genesis',
   },
   {
-    name: 'Sega - Dreamcast',
-    dat: 'redump/Sega - Dreamcast.dat',
-    thumbnails: 'Sega - Dreamcast',
+    name: 'MegaCD',
+    media: 'disc',
+    dat: 'redump/Sega - Mega-CD - Sega CD.dat',
+    thumbnails: 'Sega - Mega-CD - Sega CD',
+  },
+  {
+    name: 'S32X',
+    media: 'cartridge',
+    dat: 'no-intro/Sega - 32X.dat',
+    thumbnails: 'Sega - 32X',
+  },
+  {
+    name: 'Saturn',
+    media: 'disc',
+    dat: 'redump/Sega - Saturn.dat',
+    thumbnails: 'Sega - Saturn',
   },
 
   // Sony
   {
-    name: 'Sony - PlayStation',
+    name: 'PSX',
+    media: 'disc',
     dat: 'redump/Sony - PlayStation.dat',
     thumbnails: 'Sony - PlayStation',
   },
+
+  // NEC
   {
-    name: 'Sony - PlayStation 2',
-    dat: 'redump/Sony - PlayStation 2.dat',
-    thumbnails: 'Sony - PlayStation 2',
+    name: 'TGFX16',
+    media: 'cartridge',
+    dat: 'no-intro/NEC - PC Engine - TurboGrafx 16.dat',
+    thumbnails: 'NEC - PC Engine - TurboGrafx 16',
   },
   {
-    name: 'Sony - PSP',
-    dat: 'no-intro/Sony - PlayStation Portable.dat',
-    thumbnails: 'Sony - PlayStation Portable',
+    name: 'TGFX16-CD',
+    media: 'disc',
+    dat: 'redump/NEC - PC Engine CD - TurboGrafx-CD.dat',
+    thumbnails: 'NEC - PC Engine CD - TurboGrafx-CD',
+  },
+
+  // SNK
+  //
+  // Only the CD side is covered. Neo Geo AES/MVS has no No-Intro or Redump
+  // DAT: MiSTer identifies those by Darksoft romset name (see
+  // `games/NEOGEO/romsets.xml` upstream), which carries no checksums and
+  // therefore cannot be matched by hash like every other system here.
+  {
+    name: 'NeoGeo-CD',
+    media: 'disc',
+    dat: 'redump/SNK - Neo Geo CD.dat',
+    thumbnails: 'SNK - Neo Geo CD',
   },
 
   // Atari
-  { name: 'Atari - 2600', dat: 'no-intro/Atari - 2600.dat', thumbnails: 'Atari - 2600' },
-  { name: 'Atari - 5200', dat: 'no-intro/Atari - 5200.dat', thumbnails: 'Atari - 5200' },
-  { name: 'Atari - 7800', dat: 'no-intro/Atari - 7800.dat', thumbnails: 'Atari - 7800' },
-  { name: 'Atari - Lynx', dat: 'no-intro/Atari - Lynx.dat', thumbnails: 'Atari - Lynx' },
-
-  // Commodore
-  { name: 'Commodore - 64', dat: 'no-intro/Commodore - 64.dat', thumbnails: 'Commodore - 64' },
   {
-    name: 'Commodore - Amiga',
-    dat: 'no-intro/Commodore - Amiga.dat',
-    thumbnails: 'Commodore - Amiga',
+    name: 'Atari2600',
+    media: 'cartridge',
+    dat: 'no-intro/Atari - 2600.dat',
+    thumbnails: 'Atari - 2600',
+  },
+  {
+    name: 'ATARI5200',
+    media: 'cartridge',
+    dat: 'no-intro/Atari - 5200.dat',
+    thumbnails: 'Atari - 5200',
+  },
+  {
+    name: 'ATARI7800',
+    media: 'cartridge',
+    dat: 'no-intro/Atari - 7800.dat',
+    thumbnails: 'Atari - 7800',
+  },
+  {
+    name: 'AtariLynx',
+    media: 'cartridge',
+    dat: 'no-intro/Atari - Lynx.dat',
+    thumbnails: 'Atari - Lynx',
+  },
+
+  // Bandai
+  {
+    name: 'WonderSwan',
+    media: 'cartridge',
+    dat: 'no-intro/Bandai - WonderSwan.dat',
+    thumbnails: 'Bandai - WonderSwan',
+  },
+  {
+    name: 'WonderSwanColor',
+    media: 'cartridge',
+    dat: 'no-intro/Bandai - WonderSwan Color.dat',
+    thumbnails: 'Bandai - WonderSwan Color',
   },
 ];
 

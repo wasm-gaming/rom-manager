@@ -16,12 +16,44 @@ revisión, idioma), con metadata y carátulas asociadas.
 
 ## Sistemas objetivo (cerrado, bloque "mainstream" de MiSTer FPGA)
 
-Usar los mismos nombres de sistema que usa MiSTer.
+El identificador de sistema es el nombre de carpeta que MiSTer usa bajo
+`/games`, tomado literalmente de `MiSTer-devel/Distribution_MiSTer`. El
+casing es inconsistente en el propio MiSTer (`Atari2600` pero `ATARI5200`,
+`NEOGEO` pero `NeoGeo-CD`) y se reproduce tal cual a propósito: tiene que
+coincidir con lo que hay en la SD del usuario.
 
-NES, SNES, Game Boy / Color, GBA, N64, Master System, Game Gear,
-Mega Drive/Genesis, Mega-CD/Sega CD, 32X, Saturn, PSX,
-Neo Geo (AES/MVS/CD), TurboGrafx-16/PC Engine (+CD),
-Atari 2600/5200/7800, Atari Lynx, WonderSwan/Color, Pokémon Mini.
+| Sistema (MiSTer) | Medio | DAT (libretro-database/metadat) |
+|---|---|---|
+| `NES` | cartucho | `no-intro/Nintendo - Nintendo Entertainment System.dat` |
+| `SNES` | cartucho | `no-intro/Nintendo - Super Nintendo Entertainment System.dat` |
+| `GAMEBOY` | cartucho | `no-intro/Nintendo - Game Boy.dat` |
+| `GBC` | cartucho | `no-intro/Nintendo - Game Boy Color.dat` |
+| `GBA` | cartucho | `no-intro/Nintendo - Game Boy Advance.dat` |
+| `N64` | cartucho | `no-intro/Nintendo - Nintendo 64.dat` |
+| `PokemonMini` | cartucho | `no-intro/Nintendo - Pokemon Mini.dat` |
+| `SMS` | cartucho | `no-intro/Sega - Master System - Mark III.dat` |
+| `GameGear` | cartucho | `no-intro/Sega - Game Gear.dat` |
+| `MegaDrive` | cartucho | `no-intro/Sega - Mega Drive - Genesis.dat` |
+| `MegaCD` | disco | `redump/Sega - Mega-CD - Sega CD.dat` |
+| `S32X` | cartucho | `no-intro/Sega - 32X.dat` |
+| `Saturn` | disco | `redump/Sega - Saturn.dat` |
+| `PSX` | disco | `redump/Sony - PlayStation.dat` |
+| `TGFX16` | cartucho | `no-intro/NEC - PC Engine - TurboGrafx 16.dat` |
+| `TGFX16-CD` | disco | `redump/NEC - PC Engine CD - TurboGrafx-CD.dat` |
+| `NeoGeo-CD` | disco | `redump/SNK - Neo Geo CD.dat` |
+| `Atari2600` | cartucho | `no-intro/Atari - 2600.dat` |
+| `ATARI5200` | cartucho | `no-intro/Atari - 5200.dat` |
+| `ATARI7800` | cartucho | `no-intro/Atari - 7800.dat` |
+| `AtariLynx` | cartucho | `no-intro/Atari - Lynx.dat` |
+| `WonderSwan` | cartucho | `no-intro/Bandai - WonderSwan.dat` |
+| `WonderSwanColor` | cartucho | `no-intro/Bandai - WonderSwan Color.dat` |
+
+**Neo Geo AES/MVS (`NEOGEO`) queda fuera.** No existe DAT de No-Intro ni de
+Redump para el cartucho: MiSTer identifica esos juegos por nombre de romset
+Darksoft (`games/NEOGEO/romsets.xml` en Distribution_MiSTer), un catálogo
+que aporta título, editor y año pero **ningún checksum**. Soportarlo exigiría
+una vía de identificación por nombre, en contra del principio "identificar
+por hash". Se pospone como funcionalidad aparte.
 
 (Sistemas de nicho de MiSTer quedan fuera por ahora: ColecoVision,
 Intellivision, Vectrex, Odyssey2, Channel F, VC4000, Arcadia 2001,
@@ -29,7 +61,7 @@ Astrocade, Gamate, SuperVision, Casio PV-1000, CreatiVision, MyVision,
 Super Vision 8000, Adventure Vision, BBC Bridge Companion, AY-3-8500.)
 
 La lista es **cerrada**: quedan también fuera los sistemas post-retro que el
-repositorio incluye hoy en `scripts/systems.mjs` y que deben retirarse
+repositorio incluía en `scripts/systems.mjs` y que se han retirado
 (GameCube, Wii, PlayStation 2, PSP, Dreamcast, Commodore 64, Amiga).
 
 ## Concepto de agrupación (juego ↔ variantes)
@@ -42,20 +74,24 @@ que depende de binarios nativos incompatibles con el navegador):
 - **"Candidato"**: cada entrada del DAT es una variante candidata a la que
   un fichero local puede o no matchear (catálogo teórico vs. lo que
   realmente tienes en disco).
-- **Agrupación por `cloneOf`** cuando el DAT lo trae (DATs "parent-clone" de
-  No-Intro/Redump) — más fiable que parsear el título. Si no está
-  disponible, fallback a agrupar por título base tras extraer tags de
-  región/idioma/revisión/flags del nombre.
+- **Agrupación por título base**, extrayendo los tags de
+  región/idioma/revisión/flags del nombre del DAT. La clave de grupo es el
+  resultado de `normalizeGameName`, que por tanto es el eje de todo el
+  sistema: agrupa, nombra la carpeta y resuelve la carátula.
 
-Prototipo de esta lógica **pendiente de implementar** en TypeScript puro (sin
-dependencias de Node): tipos `DatGame`, `GameVariant`, `GameGroup`,
-funciones `parseGameName`, `groupDatGames`, `hashLocalFile` (streaming +
-Web Crypto), `matchGroupsWithLocalFiles`. Irá en `src/core/rom-grouping.ts`.
+  El diseño original preveía agrupar por `cloneOf` (DATs "parent-clone" de
+  No-Intro/Redump), que sería más fiable que parsear el título. **No es
+  viable**: se ha verificado que ningún DAT de `libretro-database` incluye
+  `cloneof` ni `romof`, y los DATs parent-clone de No-Intro solo se obtienen
+  manualmente desde DAT-o-MATIC, lo que rompería la descarga automatizada.
+  La nomenclatura de No-Intro es lo bastante regular
+  (`Título (Región) (Rev 1)`) como para que el título base sea fiable dentro
+  de un mismo sistema.
 
-Requisito previo: el generador de datasets (`scripts/dat-to-json.mjs`) **no
-conserva hoy `cloneOf`/`romof`**, así que la agrupación parent-clone no es
-posible con el formato actual. Hay que emitirlo antes de construir nada
-encima.
+Pendiente de implementar en TypeScript puro (sin dependencias de Node):
+tipos `DatGame`, `GameVariant`, `GameGroup`, funciones `parseGameName`,
+`groupDatGames`, `hashLocalFile` (streaming + Web Crypto),
+`matchGroupsWithLocalFiles`. Irá en `src/core/rom-grouping.ts`.
 
 ## Estructura de carpetas
 
@@ -115,7 +151,7 @@ local**. Es el sufijo del fichero en sistemas de cartucho y el nombre de la
 subcarpeta en sistemas de disco. Segmentos en orden fijo unidos por `-`:
 
 ```
-<región>[-<revisión>][-<flag>][-<idioma>][-<crc8>]
+<región>[-<revisión>][-<flag>][-<idioma>][-<extra>][-<crc8>]
 ```
 
 - **región**: cadena de No-Intro literal (`USA`, `Europe`, `Japan`, `World`);
@@ -124,10 +160,31 @@ subcarpeta en sistemas de disco. Segmentos en orden fijo unidos por `-`:
 - **flag**: `beta`, `beta2`, `proto`, `demo`, `sample`, `unl`, `aftermarket`.
 - **idioma**: solo cuando es lo único que distingue dos variantes
   (`Europe-Es`).
+- **extra**: tag que el parser no interpreta, reducido a minúsculas sin
+  separadores (`(Virtual Console)` → `virtualconsole`). El vocabulario real es
+  abierto —unos 2000 tags distintos en los 23 datasets—, así que enumerarlo no
+  es viable; se añade solo cuando es lo que distingue dos variantes.
 - **crc8**: 8 hex del CRC32 de la ROM principal, añadido **solo** si tras lo
   anterior dos variantes del mismo grupo siguen colisionando. Se añade a
   todas las colisionantes, no solo a la segunda, para que el resultado no
   dependa del orden de iteración.
+
+Cada segmento opcional se añade únicamente en el grupo donde la clave más
+corta es ambigua, de modo que el caso común queda legible (`USA`, `Japan-rev1`).
+Sobre los 51 216 juegos de los 23 datasets esto produce 41 540 variantes sin
+ninguna necesitar el sufijo `crc8`.
+
+### Ficheros de una misma release
+
+Un DAT lista **una entrada por fichero**, no por release. Una misma release
+aparece repetida cuando se reparte en varios ficheros: los discos de un juego
+Redump (`(Disc 1)`, `(Disc 2)`…) y también los cartuchos partidos en varios
+chips, que repiten el nombre completo sin ningún tag que los distinga.
+
+Las entradas de una misma release se identifican por su **nombre completo sin
+el tag de disco** y se fusionan en una sola variante con varios ficheros.
+Derivarlo del nombre crudo, y no de los campos ya parseados, es lo que evita
+fusionar dos releases distintas que solo difieren en un tag no reconocido.
 
 ### Normalización de nombres
 
@@ -148,9 +205,13 @@ del ROM, el path de `.meta` y el matching de carátulas:
    truncado, añadir `-<crc8>`.
 
 El paso 4 usa a propósito el mismo saneado que aplica libretro al publicar
-thumbnails, de modo que **el nombre de la carpeta del juego coincide con el
-nombre del thumbnail**. El matching de carátulas no necesita tabla de
-correspondencia aparte.
+thumbnails, pero **el nombre de la carpeta del juego no coincide con el del
+thumbnail**: libretro nombra las carátulas con el nombre completo del DAT
+(`Final Fantasy VII (Europe) (Disc 1).png`), tags incluidos. La carátula es
+por tanto **por variante**, no por juego, y ya la resuelve entrada a entrada
+`scripts/dat-to-json.mjs`. Compartir el saneado sigue siendo útil porque
+garantiza que ningún nombre de carátula introduce caracteres que el sistema de
+ficheros no acepte.
 
 ## Colecciones
 

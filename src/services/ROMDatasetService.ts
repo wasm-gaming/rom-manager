@@ -1,14 +1,15 @@
 /**
  * ROM Dataset Service
- * 
+ *
  * Manages ROM metadata lookup via IndexedDB
- * - Auto-initializes IndexedDB with game data
+ * - Loads the dataset of a system on demand and caches it locally
  * - Provides O(1) lookups by CRC32, MD5, or SHA1
- * - Caches data locally for offline use
- * 
- * Usage:
+ *
+ * The datasets add up to tens of megabytes and tens of thousands of entries,
+ * so nothing is loaded until a system is actually needed:
+ *
+ *   await ROMDatasetService.ensureSystem('MegaDrive');
  *   const metadata = await ROMDatasetService.lookupByCrc('ABC123DE');
- *   const metadata = await ROMDatasetService.lookupBySha1('deadbeef...');
  */
 
 export interface ROMMetadata {
@@ -36,8 +37,11 @@ interface DatasetJSON {
   list: ROMMetadata[];
 }
 
+type DatasetMedia = 'cartridge' | 'disc';
+
 interface DatasetIndexEntry {
   system: string;
+  media: DatasetMedia;
   path: string;
   crc32: string;
 }
@@ -47,7 +51,7 @@ interface DatasetIndex {
 }
 
 const DB_NAME = 'rom-manager-datasets';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 const STORE_ROMS = 'roms';
 const META_STORE = 'datasetsMeta';
 const DATASET_FORMAT_VERSION = 5;
@@ -55,6 +59,9 @@ const DATASET_FORMAT_VERSION = 5;
 export class ROMDatasetService {
   private static db: IDBDatabase | null = null;
   private static initialized: Promise<IDBDatabase>;
+  private static index: Promise<DatasetIndex | null> | null = null;
+  /** Loads in flight, so concurrent callers on one system share a fetch. */
+  private static loading = new Map<string, Promise<void>>();
 
   /**
    * Initialize IndexedDB and load datasets
@@ -72,19 +79,13 @@ export class ROMDatasetService {
 
       request.onerror = () => reject(request.error);
       request.onsuccess = () => {
-        const db = request.result;
-        this.db = db;
-
-        // Auto-load datasets after DB is ready
-        this.loadDatasets().catch((error) => {
-          console.warn('Failed to auto-load datasets:', error.message);
-        });
-
-        resolve(db);
+        this.db = request.result;
+        resolve(request.result);
       };
 
       request.onupgradeneeded = (event) => {
         const db = (event.target as IDBOpenDBRequest).result;
+        const transaction = (event.target as IDBOpenDBRequest).transaction!;
 
         // Replace the duplicated checksum stores with one ROM store and indexes.
         for (const storeName of ['gamesByCrc', 'gamesByMd5', 'gamesBySha1']) {
@@ -93,7 +94,13 @@ export class ROMDatasetService {
           }
         }
 
-        if (!db.objectStoreNames.contains(STORE_ROMS)) {
+        if (db.objectStoreNames.contains(STORE_ROMS)) {
+          // The set of supported systems changed, so entries cached under the
+          // previous one would linger forever: no dataset claims them anymore
+          // and nothing would ever overwrite them.
+          transaction.objectStore(STORE_ROMS).clear();
+          transaction.objectStore(META_STORE).clear();
+        } else {
           const romStore = db.createObjectStore(STORE_ROMS, { keyPath: 'crc' });
           romStore.createIndex('md5', 'md5', { unique: false });
           romStore.createIndex('sha1', 'sha1', { unique: false });
@@ -117,35 +124,55 @@ export class ROMDatasetService {
   }
 
   /**
-  * Load all datasets from datasets/
+   * Read the dataset index, fetching it at most once per session.
    */
-  private static async loadDatasets(): Promise<void> {
-    // Ensure database is initialized
-    await this.getDB();
-
-    // Get list of datasets
-    const datasetsIndex = await fetch('/datasets/index.json')
+  private static async getIndex(): Promise<DatasetIndex | null> {
+    this.index ??= fetch('/datasets/index.json')
       .then((r) => (r.ok ? (r.json() as Promise<DatasetIndex>) : null))
-      .catch(() => null);
+      .catch(() => null)
+      .then((index) => (index && Array.isArray(index.files) ? index : null));
 
-    if (!datasetsIndex || !Array.isArray(datasetsIndex.files)) {
-      console.log('No dataset index found, skipping auto-load');
-      return;
-    }
+    return this.index;
+  }
 
-    // Load each dataset
-    for (const dataset of datasetsIndex.files) {
-      if (!this.isValidDatasetIndexEntry(dataset)) {
-        console.warn('Skipping invalid dataset index entry');
-        continue;
+  /**
+   * List the systems the datasets cover.
+   */
+  static async listSystems(): Promise<Array<{ system: string; media: DatasetMedia }>> {
+    const index = await this.getIndex();
+    if (!index) return [];
+
+    return index.files
+      .filter((entry) => this.isValidDatasetIndexEntry(entry))
+      .map(({ system, media }) => ({ system, media }));
+  }
+
+  /**
+   * Make sure the dataset of a system is available for lookups.
+   *
+   * Safe to call before every lookup: once the dataset is in IndexedDB and its
+   * checksum still matches the index, this resolves without any network use.
+   */
+  static async ensureSystem(system: string): Promise<void> {
+    const pending = this.loading.get(system);
+    if (pending) return pending;
+
+    const load = (async () => {
+      const index = await this.getIndex();
+      const entry = index?.files.find((file) => file.system === system);
+
+      if (!entry || !this.isValidDatasetIndexEntry(entry)) {
+        throw new Error(`No dataset available for system: ${system}`);
       }
 
-      try {
-        await this.loadDataset(dataset);
-      } catch (error) {
-        console.warn(`Failed to load dataset ${dataset.path}:`, error);
-      }
-    }
+      await this.loadDataset(entry);
+    })();
+
+    // A failed load must not be cached, so the next call can retry.
+    this.loading.set(system, load);
+    load.catch(() => this.loading.delete(system));
+
+    return load;
   }
 
   private static isValidDatasetIndexEntry(value: unknown): value is DatasetIndexEntry {
@@ -155,6 +182,7 @@ export class ROMDatasetService {
     return (
       typeof entry.system === 'string' &&
       entry.system.length > 0 &&
+      (entry.media === 'cartridge' || entry.media === 'disc') &&
       typeof entry.path === 'string' &&
       // Datasets live one folder deep, so anything else is a traversal attempt.
       /^[^/\\]+\/[^/\\]+\.json$/.test(entry.path) &&

@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
 import { useState } from 'preact/hooks';
 import { ROM_REGIONS, VIDEO_STANDARDS } from '../services/ROMMetadataService';
-import { RomRecord, gameNameOf } from '../services/RomLibraryService';
+import { RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { calculateCRC32, calculateMD5, calculateSHA1 } from '../services/ChecksumService';
 
@@ -108,6 +108,17 @@ export function MetadataEditor({
       const content = await loadContent();
       const crc32 = draft.crc32 || (await calculateCRC32(content));
       if (!draft.crc32) update('crc32', crc32);
+
+      // Datasets are loaded per system, so the ROM's own one has to be in
+      // place before any checksum can match.
+      const system = systemOf(romPath);
+      try {
+        await ROMDatasetService.ensureSystem(system);
+      } catch {
+        setError(`No dataset available for ${system}`);
+        setLookupPhase('complete');
+        return;
+      }
 
       let result = await ROMDatasetService.lookupByCrc(crc32);
       if (result) {
