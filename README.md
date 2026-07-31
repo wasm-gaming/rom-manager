@@ -106,6 +106,14 @@ npm run dataset:fetch-covers   # list the libretro-thumbnails repositories
 npm run dataset:to-json        # build static/datasets/ from what is downloaded
 ```
 
+Every dataset is regenerable from those three commands alone; nothing in
+`static/datasets/` is hand-made. A generated dataset can then be checked against
+a real collection of ROMs, which reads no file name and decompresses nothing:
+
+```bash
+npm run dataset:verify-romsets -- <folder> --system=NEOGEO
+```
+
 ## Todos
 
 - **Editable per-game metadata**: today the `.json` record is indexed by the file

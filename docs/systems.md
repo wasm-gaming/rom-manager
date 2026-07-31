@@ -64,6 +64,22 @@ identified, and 419 of those had a file name that was not the name of the set**.
 `members` in the dataset are distinct checksums and not files: four romsets ship
 the same chip twice, and an archive lists both copies under the one checksum.
 
+### Verifying it against real files
+
+A catalogue is a claim, so the dataset is checked against a collection of real
+romsets rather than against itself:
+
+```bash
+npm run dataset:verify-romsets -- <folder> --system=NEOGEO
+```
+
+It walks the folder, reads each archive with the application's own
+`zip-directory` — the index at the tail, nothing decompressed — and asks the
+dataset to name it, with the file name never read. The corpus this was written
+against is [`neogeoaesmvscomplete`](https://archive.org/details/neogeoaesmvscomplete)
+on the Internet Archive, which holds the MAME, Final Burn Neo and Geolith
+romsets of the library. Nothing of it lives in this repository.
+
 ### What is out
 
 - **Darksoft packs.** Their files are merged — `crom0` is the `c` chips joined,
