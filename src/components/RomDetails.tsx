@@ -137,11 +137,19 @@ interface CoverShown {
  * to several the answer is the only visible effect of the preference.
  */
 function CoverFigure({ cover, alt }: { cover?: CoverShown; alt: string }): JSX.Element {
-  if (!cover) return <div class="rom-info-cover placeholder">No cover</div>;
+  if (!cover) {
+    return (
+      <div class="rom-info-cover-wrapper">
+        <div class="rom-info-cover placeholder">No cover</div>
+      </div>
+    );
+  }
 
   return (
     <figure class="rom-info-cover-figure">
-      <img class="rom-info-cover" src={cover.url} alt={`${alt} boxart`} />
+      <div class="rom-info-cover-wrapper">
+        <img class="rom-info-cover" src={cover.url} alt={`${alt} boxart`} />
+      </div>
       <figcaption class="rom-info-cover-region">
         {cover.region ? `${cover.region} box` : 'Box of the game'}
       </figcaption>
