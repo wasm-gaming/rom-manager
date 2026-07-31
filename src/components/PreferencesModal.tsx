@@ -1,5 +1,6 @@
 import { JSX } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
+import { CloseIcon } from './icons';
 import { THEME_MODES, THEME_MODE_LABELS, type ThemeMode } from '../core/theme';
 import {
   REGION_ORDERS,
@@ -63,7 +64,7 @@ export function PreferencesModal({
       <header class="modal-header">
         <h3>Preferencias</h3>
         <button class="modal-close" onClick={() => dialog.current?.close()} title="Cerrar">
-          ✕
+          <CloseIcon />
         </button>
       </header>
 

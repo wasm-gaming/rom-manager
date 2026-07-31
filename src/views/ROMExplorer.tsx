@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { JSX } from 'preact';
+import { GearIcon } from '../components/icons';
 import { Tabs } from '../components/Tabs';
 import { FileTree } from '../components/FileTree';
 import { OrganizePanel } from '../components/OrganizePanel';
@@ -852,7 +853,7 @@ export function ROMExplorer(): JSX.Element {
         </div>
 
         <button class="header-prefs" onClick={() => setPreferences(true)} title="Preferencias">
-          ⚙
+          <GearIcon />
         </button>
       </header>
 

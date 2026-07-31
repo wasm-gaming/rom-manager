@@ -189,6 +189,30 @@ code {
     monospace;
 }
 
+/*
+ * A control's icon stands where a glyph used to, so it is sized in `em` and
+ * drawn in `currentColor`: it follows the font size of its button and inherits
+ * its colour, hover and disabled states included. The nudge below the baseline
+ * is what a glyph had built in, and what an inline `svg` does not.
+ */
+.icon {
+  flex: 0 0 auto;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.22em;
+}
+
+/* Beside a label, the two go in a line and the baseline nudge is off. */
+.icon-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.icon-label > .icon {
+  vertical-align: initial;
+}
+
 #app {
   min-height: 100vh;
 }

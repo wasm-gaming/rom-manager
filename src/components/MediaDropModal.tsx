@@ -1,4 +1,5 @@
 import { JSX } from 'preact';
+import { CloseIcon } from './icons';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import {
   GLOBAL_SCOPE,
@@ -104,7 +105,7 @@ export function MediaDropModal({
           {target.kind === 'game' ? `Añadir a ${target.title}` : `Añadir a ${target.path || 'la raíz'}`}
         </h3>
         <button class="modal-close" onClick={() => dialog.current?.close()} disabled={Boolean(busy)}>
-          ✕
+          <CloseIcon />
         </button>
       </header>
 

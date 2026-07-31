@@ -1,4 +1,5 @@
 import { JSX } from 'preact';
+import { CloseIcon } from './icons';
 import { useEffect, useRef } from 'preact/hooks';
 import type { ZipRefusal } from '../core/zip-directory';
 import { isPlaced, type IntakeItem } from '../services/RomIntakeService';
@@ -66,7 +67,7 @@ export function RomIntakeModal({
       <header class="modal-header">
         <h3>{systems.size === 1 ? `Añadir a ${[...systems][0]}` : 'Añadir a la biblioteca'}</h3>
         <button class="modal-close" onClick={() => dialog.current?.close()} disabled={Boolean(busy)}>
-          ✕
+          <CloseIcon />
         </button>
       </header>
 

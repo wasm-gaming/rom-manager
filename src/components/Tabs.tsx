@@ -1,4 +1,5 @@
 import { JSX } from 'preact';
+import { CloseIcon, PlusIcon } from './icons';
 
 export interface Origin {
   id: string;
@@ -41,13 +42,13 @@ export function Tabs({
               }}
               title="Close"
             >
-              ✕
+              <CloseIcon />
             </button>
           </div>
         ))}
       </div>
       <button class="tab-add" onClick={onAddOrigin} title="Open folder">
-        +
+        <PlusIcon />
       </button>
     </div>
   );

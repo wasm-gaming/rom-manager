@@ -1,4 +1,5 @@
 import { JSX } from 'preact';
+import { ArrowRightIcon, CloseIcon } from './icons';
 import type { OrganizePlan } from '../core/rom-organize';
 import type { UndoRecord } from '../services/OrganizeService';
 
@@ -45,7 +46,7 @@ export function OrganizePanel({
         <header class="organize-header">
           <h2>{applied ? `${system} organizado` : `Organizar ${system}`}</h2>
           <button class="organize-close" onClick={onClose} disabled={Boolean(busy)}>
-            ✕
+            <CloseIcon />
           </button>
         </header>
 
@@ -98,7 +99,9 @@ export function OrganizePanel({
                 {shorten(plan.moves).map((move) => (
                   <li key={move.from}>
                     <code>{move.from}</code>
-                    <span class="organize-arrow">→</span>
+                    <span class="organize-arrow">
+                      <ArrowRightIcon />
+                    </span>
                     <code>{move.to}</code>
                   </li>
                 ))}

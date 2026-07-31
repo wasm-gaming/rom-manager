@@ -12,6 +12,7 @@ import {
   systemOf,
 } from '../services/RomLibraryService';
 import { MetadataEditor } from './MetadataEditor';
+import { ArrowLeftIcon, PencilIcon, SaveIcon, StatusIcon } from './icons';
 import { calculateCRC32 } from '../services/ChecksumService';
 import type { WizardFile, WizardGame, WizardVariant } from '../core/wizard-tree';
 import type { Region } from '../core/rom-regions';
@@ -175,8 +176,8 @@ function RomFileView({
           <div class="rom-info-heading">
             <h3>{fileNameOf(path)}</h3>
             <p class="metadata-subtitle">Not in the library yet</p>
-            <button class="btn-primary" onClick={onEdit}>
-              ✎ Add metadata
+            <button class="btn-primary icon-label" onClick={onEdit}>
+              <PencilIcon /> Add metadata
             </button>
           </div>
         </div>
@@ -186,8 +187,8 @@ function RomFileView({
             <h3>{fileNameOf(path)}</h3>
             <p class="metadata-subtitle">Not in the library yet</p>
           </div>
-          <button class="btn-primary" onClick={onEdit}>
-            ✎ Add metadata
+          <button class="btn-primary icon-label" onClick={onEdit}>
+            <PencilIcon /> Add metadata
           </button>
         </div>
       )}
@@ -250,8 +251,8 @@ function RomInfoView({
             {record.releaseDate && <span class="tag">{record.releaseDate}</span>}
           </div>
 
-          <button class="btn-primary" onClick={onEdit}>
-            ✎ Edit
+          <button class="btn-primary icon-label" onClick={onEdit}>
+            <PencilIcon /> Edit
           </button>
         </div>
       </div>
@@ -294,12 +295,6 @@ const STATUS_LABELS: Record<MatchStatus, string> = {
   complete: 'Complete',
   partial: 'Incomplete',
   missing: 'Not in this folder',
-};
-
-const STATUS_MARKS: Record<MatchStatus, string> = {
-  complete: '●',
-  partial: '◐',
-  missing: '○',
 };
 
 function hasFiles(variant: WizardVariant): boolean {
@@ -348,7 +343,7 @@ function VariantRow({
     <li class={`variant status-${variant.status}`}>
       <div class="variant-heading">
         <span class="variant-mark" title={STATUS_LABELS[variant.status]}>
-          {STATUS_MARKS[variant.status]}
+          <StatusIcon status={variant.status} />
         </span>
         <span class="variant-key">{variant.key}</span>
         <span class="variant-support">
@@ -539,11 +534,17 @@ function RomBatchEditor({
 
       <div class="editor-actions">
         <button
-          class="btn-primary"
+          class="btn-primary icon-label"
           onClick={handleSave}
           disabled={saving || (!region && !videoStandard)}
         >
-          {saving ? 'Saving...' : `💾 Apply to ${count} games`}
+          {saving ? (
+            'Saving...'
+          ) : (
+            <>
+              <SaveIcon /> Apply to {count} games
+            </>
+          )}
         </button>
         <button class="btn-cancel" onClick={onCancel} disabled={saving}>
           Cancel
@@ -578,7 +579,7 @@ function RomSelectionView({
           </p>
         </div>
         <button
-          class="btn-primary"
+          class="btn-primary icon-label"
           onClick={onEdit}
           disabled={pending > 0}
           title={
@@ -587,7 +588,7 @@ function RomSelectionView({
               : 'Edit the fields shared by every selected game'
           }
         >
-          ✎ Edit {paths.length}
+          <PencilIcon /> Edit {paths.length}
         </button>
       </div>
 
@@ -623,8 +624,8 @@ export function RomDetails({
   loadContent,
 }: RomDetailsProps): JSX.Element {
   const back = onBack && (
-    <button class="btn-back" onClick={onBack.go} title="Back to the game">
-      ← {onBack.label}
+    <button class="btn-back icon-label" onClick={onBack.go} title="Back to the game">
+      <ArrowLeftIcon /> {onBack.label}
     </button>
   );
 

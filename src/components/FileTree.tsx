@@ -3,7 +3,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { StorageEntry, StorageNode } from '../services/StorageService';
 import type { MatchStatus } from '../core/rom-matching';
 import type { WizardGame, WizardNode } from '../core/wizard-tree';
-import { BundleIcon, FolderIcon, GameIcon } from './icons';
+import {
+  BundleIcon,
+  ChevronIcon,
+  DotIcon,
+  FolderIcon,
+  FolderPlusIcon,
+  GameIcon,
+  GroupIcon,
+  OrganizeIcon,
+  PlusIcon,
+  StatusIcon,
+  TrashIcon,
+} from './icons';
 
 interface FileTreeProps {
   node: StorageNode;
@@ -542,21 +554,21 @@ export function FileTree({
             disabled={busy}
             title="New folder in the selected folder"
           >
-            📁+
+            <FolderPlusIcon />
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={busy}
             title="Add files to the selected folder"
           >
-            ＋
+            <PlusIcon />
           </button>
           <button
             onClick={handleDeleteSelected}
             disabled={busy || selection.size === 0}
             title="Delete selected"
           >
-            🗑
+            <TrashIcon />
           </button>
         </div>
       </div>
@@ -617,7 +629,7 @@ export function FileTree({
                 }}
                 title={expanded.has(row.key) ? 'Collapse' : 'Expand'}
               >
-                {expanded.has(row.key) ? '▾' : '▸'}
+                <ChevronIcon open={expanded.has(row.key)} />
               </button>
             ) : (
               <span class="tree-caret" />
@@ -629,13 +641,13 @@ export function FileTree({
 
             {row.status && row.status !== 'complete' && (
               <span class="tree-status" title={STATUS_TITLES[row.status]}>
-                {row.status === 'partial' ? '◐' : '○'}
+                <StatusIcon status={row.status} />
               </span>
             )}
 
             {row.kind !== 'directory' && row.paths.some((path) => isInitialized?.(path)) && (
               <span class="tree-badge" title="Has library metadata">
-                ●
+                <DotIcon />
               </span>
             )}
 
@@ -650,7 +662,7 @@ export function FileTree({
                   isGrouped?.(row.path!) ? 'Browse this folder as it is' : 'Group this folder by game'
                 }
               >
-                ⊞
+                <GroupIcon />
               </button>
             )}
 
@@ -663,7 +675,7 @@ export function FileTree({
                 }}
                 title="Rename and sort this folder to match the catalogue"
               >
-                ⇄
+                <OrganizeIcon />
               </button>
             )}
           </li>

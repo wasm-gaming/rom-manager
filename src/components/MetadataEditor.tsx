@@ -4,6 +4,7 @@ import { ROM_REGIONS, VIDEO_STANDARDS } from '../services/ROMMetadataService';
 import { RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { calculateCRC32, calculateMD5, calculateSHA1 } from '../services/ChecksumService';
+import { CheckIcon, CloseIcon, HourglassIcon, SaveIcon, SearchIcon } from './icons';
 
 interface MetadataEditorProps {
   romPath: string;
@@ -193,11 +194,30 @@ export function MetadataEditor({
     }
   };
 
-  const lookupLabel = () => {
-    if (lookupPhase === 'crc32' && busy) return '🔍 Checking CRC32...';
-    if (lookupPhase === 'md5' && busy) return '⏳ Calculating MD5...';
-    if (lookupPhase === 'sha1' && busy) return '⏳ Calculating SHA1...';
-    return '🔍 Lookup Dataset';
+  const lookupLabel = (): JSX.Element => {
+    if (busy && lookupPhase === 'crc32')
+      return (
+        <>
+          <SearchIcon /> Checking CRC32...
+        </>
+      );
+    if (busy && lookupPhase === 'md5')
+      return (
+        <>
+          <HourglassIcon /> Calculating MD5...
+        </>
+      );
+    if (busy && lookupPhase === 'sha1')
+      return (
+        <>
+          <HourglassIcon /> Calculating SHA1...
+        </>
+      );
+    return (
+      <>
+        <SearchIcon /> Lookup Dataset
+      </>
+    );
   };
 
   return (
@@ -210,7 +230,7 @@ export function MetadataEditor({
         <button
           onClick={handleLookup}
           disabled={busy || saving || !canChecksum}
-          class="btn-lookup"
+          class="btn-lookup icon-label"
           title={
             canChecksum
               ? 'Look up game info from dataset (CRC32 → MD5 → SHA1)'
@@ -229,7 +249,7 @@ export function MetadataEditor({
             <div class="modal-header">
               <h3>Dataset Match Found</h3>
               <button class="modal-close" onClick={() => setLookupResult(null)}>
-                ✕
+                <CloseIcon />
               </button>
             </div>
 
@@ -286,13 +306,13 @@ export function MetadataEditor({
             <div class="modal-actions">
               <button
                 onClick={handleApplySelected}
-                class="btn-apply"
+                class="btn-apply icon-label"
                 disabled={selectedFields.size === 0}
               >
-                ✓ Apply Selected
+                <CheckIcon /> Apply Selected
               </button>
-              <button onClick={() => setLookupResult(null)} class="btn-cancel">
-                ✕ Cancel
+              <button onClick={() => setLookupResult(null)} class="btn-cancel icon-label">
+                <CloseIcon /> Cancel
               </button>
             </div>
           </div>
@@ -406,8 +426,14 @@ export function MetadataEditor({
       </div>
 
       <div class="editor-actions">
-        <button class="btn-primary" onClick={handleSave} disabled={saving}>
-          {saving ? 'Saving...' : '💾 Save'}
+        <button class="btn-primary icon-label" onClick={handleSave} disabled={saving}>
+          {saving ? (
+            'Saving...'
+          ) : (
+            <>
+              <SaveIcon /> Save
+            </>
+          )}
         </button>
         <button class="btn-cancel" onClick={onCancel} disabled={saving}>
           Cancel
