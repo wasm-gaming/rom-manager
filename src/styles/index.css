@@ -80,6 +80,20 @@
   --icon-box: #c58a4b;
   --icon-box-tape: #9c6630;
 
+  /* One hue each, so a column of rows reads as a column of kinds: silver for a
+     disc, sky for a picture, teal for saved games, paper grey for the rest. */
+  --icon-disc: #8fa3b6;
+  --icon-disc-mark: #eef3f8;
+  --icon-photo: #a8d1f0;
+  --icon-photo-hill: #4f9a67;
+  --icon-card: #4f8a87;
+  --icon-card-mark: #d5ecea;
+  /* Darker than a page looks like it should be: it is the one mark that is also
+     drawn faded, and pale grey at half strength on white is not drawn at all. */
+  --icon-paper: #c2cbd6;
+  --icon-paper-fold: #9caab9;
+  --icon-paper-mark: #7f8a99;
+
   --veil: rgba(0, 0, 0, 0.1);
   --veil-soft: rgba(0, 0, 0, 0.05);
   --scrim: rgba(0, 0, 0, 0.45);
@@ -158,6 +172,16 @@
   --icon-folder-back: #c08f34;
   --icon-box: #d0a06a;
   --icon-box-tape: #a2703d;
+
+  --icon-disc: #9db1c4;
+  --icon-disc-mark: #f0f5fa;
+  --icon-photo: #86b8dd;
+  --icon-photo-hill: #5fa974;
+  --icon-card: #6ba7a3;
+  --icon-card-mark: #e0f2f0;
+  --icon-paper: #b0bac6;
+  --icon-paper-fold: #929daa;
+  --icon-paper-mark: #5c6673;
 
   --veil: rgba(255, 255, 255, 0.12);
   --veil-soft: rgba(255, 255, 255, 0.07);
@@ -592,6 +616,17 @@ code {
   background-color: var(--ok-soft);
   outline: 1px dashed var(--ok);
   outline-offset: -1px;
+}
+
+/*
+ * A file the system left behind: `.DS_Store`, `.meta`. Faded rather than hidden,
+ * because the tree says what is on the disk. The fade is on the icon and the
+ * name and not on the row, so selecting one still paints at full strength — a
+ * row you cannot see you have picked is worse than a loud row.
+ */
+.tree-item.muted > .tree-icon,
+.tree-item.muted > .tree-name {
+  opacity: 0.55;
 }
 
 .tree-caret {

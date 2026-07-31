@@ -1,15 +1,17 @@
 import { JSX } from 'preact';
 import { useId } from 'preact/hooks';
+import { DISC_MIME, mimeOf, ROM_MIME, SAVE_MIME } from '../core/file-types';
 
 /**
  * The icons, drawn rather than typed.
  *
  * Two families, because two jobs.
  *
- * What a row *is* — a folder, a game, a bundle — keeps the colours of the emoji
- * it replaces: what tells a folder from a game at a glance is the amber against
- * the grey. Those come from the palette, so each theme gets a tone that reads on
- * its own background.
+ * What a row *is* — a folder, a game, a disc, a page — keeps the colours of the
+ * emoji it replaces: what tells a folder from a game at a glance is the amber
+ * against the grey. Those come from the palette, so each theme gets a tone that
+ * reads on its own background. Which of them a file gets is decided by its MIME
+ * type, in `iconOfName` at the foot of that family.
  *
  * What a control *does* is drawn in one stroke of `currentColor` and sized in
  * `em`, so every one of them takes the colour and the size of the text it stands
@@ -39,16 +41,63 @@ function Gamepad(): JSX.Element {
   );
 }
 
-/** Where the bundle's parcel sits, and what the pad is cut back by to fit it. */
-const PARCEL = { x: 15.1, y: 14.9, width: 7.8, height: 7, rx: 1.1 } as const;
+/** A box to draw a parcel in, which its tape is then measured from. */
+interface ParcelBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rx: number;
+}
 
-/** The parcel of a bundle, sized to sit in a corner as a sub-icon. */
-function Parcel(): JSX.Element {
+/** Where the bundle's parcel sits, and what the pad is cut back by to fit it. */
+const PARCEL: ParcelBox = { x: 15.1, y: 14.9, width: 7.8, height: 7, rx: 1.1 };
+
+/** The same parcel filling the whole box, which is what an archive is. */
+const ARCHIVE: ParcelBox = { x: 3.6, y: 5.3, width: 16.8, height: 14.2, rx: 1.7 };
+
+/**
+ * A parcel: a box and the tape across it.
+ *
+ * The tape is a share of the box and not a measurement, so one drawing holds at
+ * the 7.8 units of a corner mark and at the 16.8 of a whole icon. That matters
+ * because the two are the same object twice: the parcel on a bundle says "this
+ * game is several files", and it would say nothing at all if a zip on disk were
+ * drawn as something else.
+ */
+function Parcel({ x, y, width, height, rx }: ParcelBox): JSX.Element {
+  const band = height * 0.3;
+
   return (
     <>
-      <rect {...PARCEL} fill="var(--icon-box)" />
-      <rect x="15.1" y="17" width="7.8" height="1.6" fill="var(--icon-box-tape)" />
-      <rect x="18.1" y="14.9" width="1.6" height="2.1" fill="var(--icon-box-tape)" />
+      <rect x={x} y={y} width={width} height={height} rx={rx} fill="var(--icon-box)" />
+      <rect
+        x={x}
+        y={y + band}
+        width={width}
+        height={height * 0.229}
+        fill="var(--icon-box-tape)"
+      />
+      <rect
+        x={x + width * 0.385}
+        y={y}
+        width={width * 0.205}
+        height={band}
+        fill="var(--icon-box-tape)"
+      />
+    </>
+  );
+}
+
+/** The page both file marks are drawn on, with its top corner turned over. */
+function Sheet(): JSX.Element {
+  return (
+    <>
+      <path
+        d="M6.2 2.4h7.1L19.2 8.3v11.9a1.5 1.5 0 0 1-1.5 1.5H6.2a1.5 1.5 0 0 1-1.5-1.5V3.9a1.5 1.5 0 0 1 1.5-1.5z"
+        fill="var(--icon-paper)"
+      />
+      <path d="M13.3 2.4 19.2 8.3h-4.4a1.5 1.5 0 0 1-1.5-1.5z" fill="var(--icon-paper-fold)" />
     </>
   );
 }
@@ -105,9 +154,135 @@ export function BundleIcon(): JSX.Element {
       <g mask={`url(#${cut})`}>
         <Gamepad />
       </g>
-      <Parcel />
+      <Parcel {...PARCEL} />
     </svg>
   );
+}
+
+/** A zip, a 7z, a rar: the bundle's parcel with nothing else in the frame. */
+export function ArchiveIcon(): JSX.Element {
+  return (
+    <svg viewBox={BOX}>
+      <Parcel {...ARCHIVE} />
+    </svg>
+  );
+}
+
+/** A disc image. The hole and the shine are what keep it from being a dot. */
+export function DiscIcon(): JSX.Element {
+  return (
+    <svg viewBox={BOX}>
+      <circle cx="12" cy="12" r="9.2" fill="var(--icon-disc)" />
+      <path
+        d="M6.2 8.3a7 7 0 0 1 4.6-3.4"
+        fill="none"
+        stroke="var(--icon-disc-mark)"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <circle cx="12" cy="12" r="3.3" fill="var(--icon-disc-mark)" />
+      <circle cx="12" cy="12" r="1.25" fill="var(--icon-disc)" />
+    </svg>
+  );
+}
+
+/**
+ * A picture: boxart, a screenshot, anything the library keeps as an image.
+ *
+ * Two hills and not one, because a single triangle at this size reads as an
+ * arrow. They are clipped to the frame so the rounded corners stay rounded.
+ */
+export function ImageIcon(): JSX.Element {
+  const frame = `photo-${useId()}`;
+
+  return (
+    <svg viewBox={BOX}>
+      <clipPath id={frame}>
+        <rect x="2.8" y="4.6" width="18.4" height="14.8" rx="2" />
+      </clipPath>
+
+      <g clip-path={`url(#${frame})`}>
+        <rect x="2.8" y="4.6" width="18.4" height="14.8" fill="var(--icon-photo)" />
+        <circle cx="8.3" cy="9.4" r="2" fill="#f9ab00" />
+        <path d="M2.8 19.4 9.6 12l4 4.4 2.6-2.4 5 5.4z" fill="var(--icon-photo-hill)" />
+      </g>
+    </svg>
+  );
+}
+
+/**
+ * Saved games. A memory card rather than a floppy: the floppy is already the
+ * save button of the metadata editor, and one shape cannot mean two things.
+ */
+export function MemoryCardIcon(): JSX.Element {
+  return (
+    <svg viewBox={BOX}>
+      <path
+        d="M6.6 2.8h6.9c.4 0 .78.16 1.06.44l2.9 2.9c.28.28.44.66.44 1.06V19.8a1.4 1.4 0 0 1-1.4 1.4H6.6a1.4 1.4 0 0 1-1.4-1.4V4.2a1.4 1.4 0 0 1 1.4-1.4z"
+        fill="var(--icon-card)"
+      />
+      {/* Pins at the head, label at the foot: what tells a card from a page is
+          that both ends are busy. */}
+      <rect x="7.6" y="5.6" width="1.5" height="3.4" rx=".6" fill="var(--icon-card-mark)" />
+      <rect x="10.3" y="5.6" width="1.5" height="3.4" rx=".6" fill="var(--icon-card-mark)" />
+      <rect x="13" y="5.6" width="1.5" height="3.4" rx=".6" fill="var(--icon-card-mark)" />
+      <rect x="7.4" y="12.6" width="7.4" height="5.6" rx=".9" fill="var(--icon-card-mark)" />
+    </svg>
+  );
+}
+
+/** Something written: a readme, a `.dat`, a `.json`. */
+export function DocumentIcon(): JSX.Element {
+  return (
+    <svg viewBox={BOX}>
+      <Sheet />
+      <rect x="7.4" y="11.8" width="8.4" height="1.4" rx=".7" fill="var(--icon-paper-mark)" />
+      <rect x="7.4" y="14.6" width="8.4" height="1.4" rx=".7" fill="var(--icon-paper-mark)" />
+      <rect x="7.4" y="17.4" width="5.4" height="1.4" rx=".7" fill="var(--icon-paper-mark)" />
+    </svg>
+  );
+}
+
+/** A file nothing is known about, `.DS_Store` included: a page, left blank. */
+export function FileIcon(): JSX.Element {
+  return (
+    <svg viewBox={BOX}>
+      <Sheet />
+    </svg>
+  );
+}
+
+/**
+ * The mark for a MIME type, in three steps: the type itself, then its family,
+ * then the blank page.
+ *
+ * The family step is what keeps this table from needing a row for every image
+ * format anyone ever ships — and what makes the unlisted ones degrade to
+ * something true rather than to something wrong.
+ */
+const ICONS_BY_MIME: Readonly<Record<string, () => JSX.Element>> = {
+  [ROM_MIME]: GameIcon,
+  [DISC_MIME]: DiscIcon,
+  [SAVE_MIME]: MemoryCardIcon,
+  'application/zip': ArchiveIcon,
+  'application/x-7z-compressed': ArchiveIcon,
+  'application/vnd.rar': ArchiveIcon,
+  'application/gzip': ArchiveIcon,
+  'application/json': DocumentIcon,
+  'application/xml': DocumentIcon,
+};
+
+/** Whole families, for the types that are all drawn the same way. */
+const ICONS_BY_FAMILY: Readonly<Record<string, () => JSX.Element>> = {
+  image: ImageIcon,
+  text: DocumentIcon,
+};
+
+/** The icon a file's name earns it, which is the most a listing can say. */
+export function iconOfName(name: string): () => JSX.Element {
+  const mime = mimeOf(name);
+
+  return ICONS_BY_MIME[mime] ?? ICONS_BY_FAMILY[mime.split('/')[0]] ?? FileIcon;
 }
 
 /* ---------------------------------------------------------------------------

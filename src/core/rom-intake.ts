@@ -83,6 +83,16 @@ const SYSTEMS_BY_EXTENSION: Readonly<Record<string, readonly string[]>> = {
 };
 
 /**
+ * Every extension that names a system, which is the closest thing there is to a
+ * list of "this file is a game".
+ *
+ * Published because the file browser asks the same question for a different
+ * reason — what mark to draw next to a row — and a second copy of the list would
+ * part ways with this one the first time a system is added.
+ */
+export const ROM_EXTENSIONS: readonly string[] = Object.keys(SYSTEMS_BY_EXTENSION);
+
+/**
  * Ceiling above the largest cartridge there is, which is a Neo Geo one: the
  * `.neo` of Metal Slug 3 measures 90 MiB, well past the 64 MiB of Resident
  * Evil 2 on the N64 that this limit used to be cut to.

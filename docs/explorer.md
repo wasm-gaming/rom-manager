@@ -33,6 +33,36 @@ dragging or deleting moves or deletes them together. Since the tree no longer
 lists a game's files, the details panel is also the only route to one: the
 present ones are buttons that open it, with a way back to the game.
 
+## What a row's icon says
+
+A folder is a folder and a game row is a game. Every other row is a file, and
+its mark comes from the MIME type its name claims — the table is `file-types.ts`,
+and the list of extensions that name a system is the same one the intake uses to
+decide which catalogs are worth downloading, so the two cannot drift apart.
+
+| Mark | What it means |
+|---|---|
+| Folder | A directory |
+| Gamepad | The name carries a ROM extension |
+| Gamepad with a parcel | A game row: one game, however many files it holds |
+| Disc | A disc image: `cue`, `iso`, `chd`, `gdi`… |
+| Parcel | An archive: `zip`, `7z`, `rar` |
+| Picture | Boxart, a screenshot, anything `image/*` |
+| Memory card | A saved game: `srm`, `sav`, `state`, `mcr` |
+| Written page | A readme, a `.dat`, a `.json` |
+| Blank page | A file nothing is known about |
+
+The gamepad claims only what a listing can know: **this name looks like a ROM**.
+Whether the catalog actually recognizes the file is said elsewhere, twice — by
+the status disc of a game row and by the badge dot of a file with a library
+record — and neither of those is the icon. A file nobody can name gets the blank
+page rather than a guess, which is why `.DS_Store` stopped wearing a gamepad.
+
+Files an operating system leaves behind — anything starting with a dot — are
+shown **faded**, icon and name. They are not hidden: a browser that leaves out
+what is on the disk is lying about the disk. They are simply not allowed to be
+as loud as a game.
+
 ## Region preference order
 
 In the header, three buttons with the regions **in the order they are preferred**:

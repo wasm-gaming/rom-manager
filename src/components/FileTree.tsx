@@ -3,14 +3,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { StorageEntry, StorageNode } from '../services/StorageService';
 import type { MatchStatus } from '../core/rom-matching';
 import type { WizardGame, WizardNode } from '../core/wizard-tree';
+import { isHiddenName } from '../core/file-types';
 import {
   BundleIcon,
   ChevronIcon,
   DotIcon,
   FolderIcon,
   FolderPlusIcon,
-  GameIcon,
   GroupIcon,
+  iconOfName,
   OrganizeIcon,
   PlusIcon,
   StatusIcon,
@@ -58,18 +59,21 @@ const ROOT = '';
 /** Private payload for internal drags, so OS drops stay distinguishable. */
 const DRAG_MIME = 'application/x-rom-manager-paths';
 
-/** A `pending` row is left out: what stands in its slot is the spinner. */
-const ICONS: Record<Exclude<VisibleRow['kind'], 'pending'>, () => JSX.Element> = {
-  directory: FolderIcon,
-  file: GameIcon,
-  group: BundleIcon,
-};
+/**
+ * The mark of a row.
+ *
+ * A folder is a folder and a game row is a game, whatever they hold. A file is
+ * read by its name: the gamepad means "this is a ROM by its extension", which is
+ * all a listing knows, and everything else gets the mark of what it actually is.
+ * Whether the catalogue recognises a ROM is said twice already, by the status
+ * disc and by the badge dot, and neither of those is this.
+ */
+function RowIcon({ row }: { row: VisibleRow }): JSX.Element {
+  if (row.kind === 'pending') return <span class="tree-spinner" />;
+  if (row.kind === 'directory') return <FolderIcon />;
+  if (row.kind === 'group') return <BundleIcon />;
 
-/** The mark of a row: its icon, or the spinner of a folder still being read. */
-function RowIcon({ kind }: { kind: VisibleRow['kind'] }): JSX.Element {
-  if (kind === 'pending') return <span class="tree-spinner" />;
-
-  const Icon = ICONS[kind];
+  const Icon = iconOfName(row.label);
   return <Icon />;
 }
 
@@ -601,6 +605,10 @@ export function FileTree({
             class={[
               'tree-item',
               row.kind,
+              // Nobody put `.DS_Store` there on purpose. It is still shown — a
+              // browser that hides what is on disk is lying about the disk — but
+              // it does not get to be as loud as a game.
+              isHiddenName(row.label) ? 'muted' : '',
               row.status ? `status-${row.status}` : '',
               (row.path ? selection.has(row.path) : selectedGame === row.key) ? 'selected' : '',
               row.path && selectedFiles?.includes(row.path) ? 'active' : '',
@@ -635,7 +643,7 @@ export function FileTree({
               <span class="tree-caret" />
             )}
             <span class="tree-icon">
-              <RowIcon kind={row.kind} />
+              <RowIcon row={row} />
             </span>
             <span class="tree-name">{row.label}</span>
 
