@@ -45,12 +45,11 @@ const ROOT = '';
 /** Private payload for internal drags, so OS drops stay distinguishable. */
 const DRAG_MIME = 'application/x-rom-manager-paths';
 
-const ICONS: Record<VisibleRow['kind'], string> = {
+/** A `pending` row is left out: what stands in its slot is the spinner. */
+const ICONS: Record<Exclude<VisibleRow['kind'], 'pending'>, string> = {
   directory: '📁',
   file: '🎮',
   group: '📦',
-  // The spinner is drawn by the stylesheet, so the row leaves the slot empty.
-  pending: '',
 };
 
 const STATUS_TITLES = {
@@ -614,8 +613,8 @@ export function FileTree({
             ) : (
               <span class="tree-caret" />
             )}
-            <span class={row.kind === 'pending' ? 'tree-icon tree-spinner' : 'tree-icon'}>
-              {ICONS[row.kind]}
+            <span class="tree-icon">
+              {row.kind === 'pending' ? <span class="tree-spinner" /> : ICONS[row.kind]}
             </span>
             <span class="tree-name">{row.label}</span>
 
@@ -661,7 +660,10 @@ export function FileTree({
           </li>
         ))}
 
-        {rows.length === 0 && <li class="tree-empty">Empty folder</li>}
+        {/* Only once the root has actually been read: an empty tree is what a
+            folder still being listed looks like too, and saying it is empty
+            before knowing is a claim the next paint takes back. */}
+        {rows.length === 0 && children.has(ROOT) && <li class="tree-empty">Empty folder</li>}
       </ul>
     </div>
   );

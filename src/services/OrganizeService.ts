@@ -44,7 +44,7 @@ function parentOf(path: string): string {
  * `mkdir` only makes one level, and the same parents come up thousands of
  * times in a run, so what has been made is remembered.
  */
-async function ensureDir(node: StorageNode, path: string, made: Set<string>): Promise<void> {
+export async function ensureDir(node: StorageNode, path: string, made: Set<string>): Promise<void> {
   if (path === '' || made.has(path)) return;
 
   const parent = parentOf(path);

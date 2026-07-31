@@ -5,12 +5,14 @@ import { FileTree } from '../components/FileTree';
 import { OrganizePanel } from '../components/OrganizePanel';
 import { PreferencesModal } from '../components/PreferencesModal';
 import { MediaDropModal, type DropTarget, type DroppedImage } from '../components/MediaDropModal';
+import { RomIntakeModal } from '../components/RomIntakeModal';
 import { RomDetails } from '../components/RomDetails';
 import { storageService, StorageNode, StorageStat } from '../services/StorageService';
 import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
 import { GameCatalogService } from '../services/GameCatalogService';
 import { CoverService } from '../services/CoverService';
 import { OrganizeService, type UndoRecord } from '../services/OrganizeService';
+import { RomIntakeService, type IntakeItem, type IntakeProgress } from '../services/RomIntakeService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
 import { setThemeMode, themeModeSignal } from '../services/ThemeService';
@@ -80,6 +82,19 @@ function isFileDrag(event: DragEvent): boolean {
   return Array.from(event.dataTransfer?.types ?? []).includes('Files');
 }
 
+/**
+ * What identifying a dropped game is doing, as a line for the tree.
+ *
+ * A disc image takes a while to read, so it is reported as a share of itself
+ * rather than as one file among several: the wait is inside the file.
+ */
+function intakeNotice({ file, read, size, done, total }: IntakeProgress): string {
+  const share = size > 0 ? Math.min(100, Math.round((read / size) * 100)) : 100;
+  const position = total > 1 ? ` (${done + 1} de ${total})` : '';
+
+  return `Identificando ${file}: ${share}%${position}`;
+}
+
 export function ROMExplorer(): JSX.Element {
   const [storageNodes, setStorageNodes] = useState<Map<string, StorageNode>>(new Map());
   const [records, setRecords] = useState<Map<string, RomRecord | null>>(new Map());
@@ -103,6 +118,10 @@ export function ROMExplorer(): JSX.Element {
   const [dropError, setDropError] = useState<string | undefined>();
   /** True while files are over the details pane, so it can say it takes them. */
   const [dropping, setDropping] = useState(false);
+  /** Games dropped with nothing picked, once identified and awaiting a yes. */
+  const [intake, setIntake] = useState<IntakeItem[] | undefined>();
+  const [intakeBusy, setIntakeBusy] = useState<string | undefined>();
+  const [intakeError, setIntakeError] = useState<string | undefined>();
   /** Bumped when an image is written, so the pane picks the new boxart up. */
   const [mediaVersion, setMediaVersion] = useState(0);
   /** Bumped when a file is written, so the tree lists it without remounting. */
@@ -543,16 +562,79 @@ export function ROMExplorer(): JSX.Element {
     if (files.length === 0 || !activeNode) return;
 
     const destination = dropDestination();
+
+    // With nothing picked there is nowhere the files were said to go, so they
+    // are asked what they are: a game the catalogue knows brings its own answer.
     if (!destination) {
-      storeService.setError(
-        'No hay acciones disponibles: elige un juego para añadirle imágenes, o una carpeta para copiar los ficheros dentro.',
-      );
+      void handleIntake(files);
       return;
     }
 
     storeService.setError(undefined);
     setDropError(undefined);
     setDrop({ files, ...destination });
+  };
+
+  /**
+   * Works out which games were dropped, and offers to take them in.
+   *
+   * Nothing is written here: hashing the files is what says which system each
+   * one belongs to, and the answer is shown for the user to confirm — creating
+   * a system folder and copying a ROM into it is not something to do behind
+   * their back off a drag they may have aimed at something else.
+   */
+  const handleIntake = async (files: File[]) => {
+    if (!activeNode) return;
+
+    try {
+      storeService.setError(undefined);
+      setIntakeError(undefined);
+      setNotice(`Identificando ${files.length > 1 ? `${files.length} ficheros` : files[0].name}...`);
+
+      const items = await RomIntakeService.identify(activeNode, files, (progress) =>
+        setNotice(intakeNotice(progress)),
+      );
+
+      if (!items.some((item) => item.path)) {
+        storeService.setError(
+          'No se ha reconocido ningún juego: elige uno para añadirle imágenes, o una carpeta para copiar los ficheros dentro.',
+        );
+        return;
+      }
+
+      setIntake(items);
+    } catch (err) {
+      storeService.setError(
+        err instanceof Error ? err.message : 'No se pudieron identificar los ficheros',
+      );
+    } finally {
+      setNotice(undefined);
+    }
+  };
+
+  /** Copies in the games the user has just confirmed, folders and all. */
+  const handleIntakeConfirm = async () => {
+    if (!activeNode || !intake) return;
+
+    try {
+      setIntakeError(undefined);
+
+      await RomIntakeService.apply(activeNode, intake, ({ file, done, total }) =>
+        setIntakeBusy(`Copiando ${file}${total > 1 ? ` (${done + 1} de ${total})` : ''}...`),
+      );
+
+      setIntake(undefined);
+
+      // The ROMs that just landed are files nothing has hashed, and the system
+      // folder they went into may not have been there at all.
+      grouping.current.clear();
+      setGroupedRows(new Map());
+      setRefreshToken((token) => token + 1);
+    } catch (err) {
+      setIntakeError(err instanceof Error ? err.message : 'No se pudieron copiar los ficheros');
+    } finally {
+      setIntakeBusy(undefined);
+    }
   };
 
   /**
@@ -866,6 +948,21 @@ export function ROMExplorer(): JSX.Element {
             if (dropBusy) return;
             setDrop(undefined);
             setDropError(undefined);
+          }}
+        />
+      )}
+
+      {/* Only once the drop has been identified: what it says is the answer. */}
+      {intake && (
+        <RomIntakeModal
+          items={intake}
+          busy={intakeBusy}
+          error={intakeError}
+          onConfirm={handleIntakeConfirm}
+          onCancel={() => {
+            if (intakeBusy) return;
+            setIntake(undefined);
+            setIntakeError(undefined);
           }}
         />
       )}

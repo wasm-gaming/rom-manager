@@ -411,6 +411,7 @@ code {
 }
 
 .file-tree {
+  position: relative;
   flex: 0 0 380px;
   width: 380px;
   border-right: 1px solid var(--border);
@@ -472,13 +473,29 @@ code {
   font-size: 0.8rem;
 }
 
+/*
+ * How far the reading of a folder has got. It floats over the foot of the tree
+ * rather than sitting above it: a band in the flow would push every row down
+ * the moment the reading starts and pull them back up the moment it ends, which
+ * is a jump on either side of the very wait it is there to explain.
+ *
+ * Nothing can be done to it, so it does not take the pointer either: the rows
+ * underneath stay clickable and stay a drop target.
+ */
 .file-tree-notice {
-  margin: 0 0.75rem 0.5rem;
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 1;
   padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
   border-radius: 4px;
-  background-color: var(--accent-soft);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-md);
   color: var(--accent-ink);
   font-size: 0.8rem;
+  pointer-events: none;
 }
 
 .file-tree-body {
@@ -541,8 +558,13 @@ code {
   cursor: pointer;
 }
 
+/* A slot of its own, so every label starts at the same place whatever is in it:
+   an emoji, or the spinner of a folder still being read. */
 .tree-icon {
-  flex: 0 0 auto;
+  flex: 0 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.85rem;
 }
 
@@ -568,6 +590,7 @@ code {
 }
 
 .tree-spinner {
+  flex: 0 0 auto;
   width: 0.75rem;
   height: 0.75rem;
   border: 2px solid var(--border);
@@ -957,6 +980,11 @@ code {
  * on screen while it fades: without `overlay`, closing would drop it out of the
  * top layer at once and there would be nothing left to see fade. `@starting-style`
  * is the same trick for the way in: it gives the browser a value to come *from*.
+ *
+ * Everything the panel is laid out *by* therefore has to hold while it is
+ * closed, `flex-direction` above all: `display` stays `flex` for the length of
+ * the fade, so a column that only applied while open would fall back to a row
+ * and lay the header, the body and the buttons out side by side on the way out.
  */
 .modal-dialog {
   width: min(26rem, 90vw);
@@ -965,6 +993,7 @@ code {
   border: none;
   border-radius: 8px;
   overflow: hidden;
+  flex-direction: column;
   background-color: var(--surface);
   color: var(--text);
   box-shadow: var(--shadow-md);
@@ -974,7 +1003,6 @@ code {
 
 .modal-dialog[open] {
   display: flex;
-  flex-direction: column;
   opacity: 1;
 }
 
@@ -1176,6 +1204,59 @@ code {
   width: auto;
   font-size: 0.8125rem;
   padding: 0.35rem 0.5rem;
+}
+
+/* --- Taking in a game dropped with nothing picked --- */
+
+.intake-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* The title leads, because the game is what is being confirmed; the system and
+   the path underneath are what says where it is about to end up. */
+.intake-item {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.5rem 0.65rem;
+  background-color: var(--app-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.intake-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.intake-where {
+  font-size: 0.75rem;
+  color: var(--accent-ink);
+}
+
+.intake-path {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Nothing is going to be written for this one, so it reads as a note and not
+   as one of the games being added. */
+.intake-item.taken,
+.drop-files li.taken {
+  opacity: 0.6;
+}
+
+.intake-item.taken .intake-path {
+  color: var(--warn-ink);
 }
 
 .match-name {
