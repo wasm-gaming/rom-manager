@@ -124,6 +124,48 @@ const SLUG_LENGTH = 24;
  */
 const UNSAFE_CHARACTERS = /[&*/:`<>?\\|"]/g;
 
+const ROMAN_NUMERAL_PATTERN =
+  /\b(XXX|XXIX|XXVIII|XXVII|XXVI|XXV|XXIV|XXIII|XXII|XXI|XX|XIX|XVIII|XVII|XVI|XV|XIV|XIII|XII|XI|X|IX|VIII|VII|VI|V|IV|III|II)\b/g;
+
+const ROMAN_TO_ARABIC: Record<string, string> = {
+  XXX: '30',
+  XXIX: '29',
+  XXVIII: '28',
+  XXVII: '27',
+  XXVI: '26',
+  XXV: '25',
+  XXIV: '24',
+  XXIII: '23',
+  XXII: '22',
+  XXI: '21',
+  XX: '20',
+  XIX: '19',
+  XVIII: '18',
+  XVII: '17',
+  XVI: '16',
+  XV: '15',
+  XIV: '14',
+  XIII: '13',
+  XII: '12',
+  XI: '11',
+  X: '10',
+  IX: '9',
+  VIII: '8',
+  VII: '7',
+  VI: '6',
+  V: '5',
+  IV: '4',
+  III: '3',
+  II: '2',
+};
+
+/**
+ * Convert standalone Roman numerals (II through XXX) to Arabic numerals.
+ */
+export function normalizeRomanNumerals(text: string): string {
+  return text.replace(ROMAN_NUMERAL_PATTERN, (match) => ROMAN_TO_ARABIC[match] ?? match);
+}
+
 /**
  * Apply the libretro sanitization to a name.
  *
@@ -457,27 +499,33 @@ export function groupDatGames(games: DatGame[]): GameGroup[] {
 
   for (const game of games) {
     const parsed = parseGameName(game.name);
-    const id = normalizeGameName(game.name);
+    const rawId = normalizeGameName(game.name);
+    const groupKey = normalizeRomanNumerals(rawId).toLowerCase();
 
-    const entries = byTitle.get(id);
+    const entries = byTitle.get(groupKey);
     if (entries) entries.push({ parsed, game });
-    else byTitle.set(id, [{ parsed, game }]);
+    else byTitle.set(groupKey, [{ parsed, game }]);
   }
 
   const groups: GameGroup[] = [];
 
-  for (const [id, entries] of byTitle) {
+  for (const [_, entries] of byTitle) {
     // Sanitization and truncation can map two distinct titles onto one name.
     const titles = new Map<string, typeof entries>();
     for (const entry of entries) {
-      const existing = titles.get(entry.parsed.title);
+      const key = normalizeRomanNumerals(entry.parsed.title).toLowerCase();
+      const existing = titles.get(key);
       if (existing) existing.push(entry);
-      else titles.set(entry.parsed.title, [entry]);
+      else titles.set(key, [entry]);
     }
 
     const collides = titles.size > 1;
 
-    for (const [title, titleEntries] of titles) {
+    for (const [_, titleEntries] of titles) {
+      const sortedTitles = Array.from(new Set(titleEntries.map((e) => e.parsed.title))).sort();
+      const title = sortedTitles.find((t) => /\d/.test(t)) ?? sortedTitles[0];
+      const id = normalizeGameName(title);
+
       groups.push({
         id: collides ? `${id}-${checksumSuffix(titleEntries[0].game)}` : id,
         title,

@@ -3,6 +3,7 @@ import {
   DatGame,
   groupDatGames,
   normalizeGameName,
+  normalizeRomanNumerals,
   parseGameName,
   sanitizeName,
   variantKey,
@@ -12,6 +13,20 @@ import {
 function game(name: string, crc: string, extra: Partial<DatGame> = {}): DatGame {
   return { name, crc, ...extra };
 }
+
+describe('normalizeRomanNumerals', () => {
+  it('converts Roman numerals II to XXX to Arabic numerals', () => {
+    expect(normalizeRomanNumerals('Streets of Rage II')).toBe('Streets of Rage 2');
+    expect(normalizeRomanNumerals('Final Fantasy VII')).toBe('Final Fantasy 7');
+    expect(normalizeRomanNumerals('Dragon Quest IV')).toBe('Dragon Quest 4');
+    expect(normalizeRomanNumerals('Mega Man X')).toBe('Mega Man 10');
+  });
+
+  it('leaves non-Roman numeral words untouched', () => {
+    expect(normalizeRomanNumerals('I, Robot')).toBe('I, Robot');
+    expect(normalizeRomanNumerals('Super Mario Bros. 2')).toBe('Super Mario Bros. 2');
+  });
+});
 
 describe('parseGameName', () => {
   it('reads a plain title with no tags', () => {
@@ -135,6 +150,17 @@ describe('variantKey', () => {
 });
 
 describe('groupDatGames', () => {
+  it('groups Streets of Rage II and Streets of Rage 2 into the same game group', () => {
+    const groups = groupDatGames([
+      game('Streets of Rage II (USA)', '11111111'),
+      game('Streets of Rage 2 (Europe)', '22222222'),
+    ]);
+
+    expect(groups).toHaveLength(1);
+    expect(groups[0].id).toBe('Streets of Rage 2');
+    expect(groups[0].variants.map((v) => v.key)).toEqual(['Europe', 'USA']);
+  });
+
   it('gathers the releases of one game under a single entry', () => {
     const groups = groupDatGames([
       game('Sonic the Hedgehog (USA, Europe)', '11111111'),
