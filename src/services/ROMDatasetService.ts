@@ -146,7 +146,7 @@ export class ROMDatasetService {
    * Read the dataset index, fetching it at most once per session.
    */
   private static async getIndex(): Promise<DatasetIndex | null> {
-    this.index ??= fetch('/datasets/index.json')
+    this.index ??= fetch(`${import.meta.env.BASE_URL}datasets/index.json`)
       .then((r) => (r.ok ? (r.json() as Promise<DatasetIndex>) : null))
       .catch(() => null)
       .then((index) => (index && Array.isArray(index.files) ? index : null));
@@ -258,7 +258,7 @@ export class ROMDatasetService {
     }
 
     // Fetch dataset
-    const response = await fetch(`/datasets/${path}`);
+    const response = await fetch(`${import.meta.env.BASE_URL}datasets/${path}`);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${path}`);
     }
