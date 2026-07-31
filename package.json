@@ -2,6 +2,10 @@
   "name": "@wasm-gaming/rom-manager",
   "version": "0.1.0",
   "description": "Embeddable ROM metadata editor - like mp3tag for video game ROMs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wasm-gaming/rom-manager"
+  },
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
