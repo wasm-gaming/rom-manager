@@ -653,8 +653,7 @@ export function ROMExplorer(): JSX.Element {
     files: File[],
     destination: { target: DropTarget; game?: { id: string; system: string } },
   ) => {
-    const askable =
-      destination.target.kind === 'folder' && files.some((file) => !isImageName(file.name));
+    const askable = files.some((file) => !isImageName(file.name));
 
     if (!activeNode || !askable) {
       setDrop({ files, ...destination });
