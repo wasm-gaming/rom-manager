@@ -728,6 +728,8 @@ export function ROMExplorer(): JSX.Element {
     try {
       setIntakeError(undefined);
 
+      const addedPaths = intake.filter(isPlaced).map((item) => item.path!).filter(Boolean);
+
       await RomIntakeService.apply(activeNode, intake, ({ file, done, total }) =>
         setIntakeBusy(`Copiando ${file}${total > 1 ? ` (${done + 1} de ${total})` : ''}...`),
       );
@@ -739,6 +741,11 @@ export function ROMExplorer(): JSX.Element {
       grouping.current.clear();
       setGroupedRows(new Map());
       setRefreshToken((token) => token + 1);
+
+      if (addedPaths.length > 0) {
+        setGameFile(undefined);
+        await handleSelectionChange(addedPaths);
+      }
     } catch (err) {
       setIntakeError(err instanceof Error ? err.message : 'No se pudieron copiar los ficheros');
     } finally {
@@ -778,20 +785,26 @@ export function ROMExplorer(): JSX.Element {
         );
       }
 
+      const copiedPaths: string[] = [];
       for (const file of files) {
         setDropBusy(`Copiando ${file.name}...`);
         const path = directory ? `${directory}/${file.name}` : file.name;
         await activeNode.writeFile(path, new Uint8Array(await file.arrayBuffer()));
+        copiedPaths.push(path);
       }
 
+      const takenPaths: string[] = [];
       if (taken.length > 0) {
         await RomIntakeService.apply(activeNode, taken, ({ file, done, total }) =>
           setDropBusy(`Añadiendo ${file}${total > 1 ? ` (${done + 1} de ${total})` : ''}...`),
         );
+        takenPaths.push(...taken.filter(isPlaced).map((item) => item.path!).filter(Boolean));
       }
 
       setDrop(undefined);
       if (images.length > 0) setMediaVersion((version) => version + 1);
+
+      const addedPaths = takenPaths.length > 0 ? takenPaths : copiedPaths;
 
       if (files.length > 0 || taken.length > 0) {
         // A ROM that has just landed is a file nothing has hashed, so the rows
@@ -799,6 +812,11 @@ export function ROMExplorer(): JSX.Element {
         grouping.current.clear();
         setGroupedRows(new Map());
         setRefreshToken((token) => token + 1);
+      }
+
+      if (addedPaths.length > 0) {
+        setGameFile(undefined);
+        await handleSelectionChange(addedPaths);
       }
     } catch (err) {
       setDropError(err instanceof Error ? err.message : 'No se pudieron guardar los ficheros');
