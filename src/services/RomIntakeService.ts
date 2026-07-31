@@ -84,6 +84,99 @@ export function isPlaced(item: IntakeItem): boolean {
   return item.path !== undefined && !item.taken && !item.refused;
 }
 
+/** What taking a dropped file in would amount to, as one thing to show. */
+export interface IntakeOffer {
+  /** The release that names it: the first one the file turned out to hold. */
+  match: IntakeMatch;
+  /** Where that release lands, which need not be the folder dropped on. */
+  path: string;
+  /** Everything of this file that would be written, companions included. */
+  pending: IntakeItem[];
+}
+
+/** How a drop divides, once it is known which files go in as the games they are. */
+export interface DropSplit {
+  /** Files written into the folder dropped on, exactly as they arrived. */
+  copied: File[];
+  /** Items written where the catalogue puts them, the companions included. */
+  intake: IntakeItem[];
+  /** The companions swept along, which is why their files are not copied. */
+  along: IntakeItem[];
+}
+
+/** The file an item was read from: the drop itself, or the archive it held. */
+function fileOf(item: IntakeItem): File {
+  return item.source.kind === 'file' ? item.source.file : item.source.archive;
+}
+
+/**
+ * The items that came out of one dropped file.
+ *
+ * By identity and not by name: an archive's entries carry the very `File` they
+ * were read from, so two files dropped together under the same name — which a
+ * drag from two folders can do — stay apart.
+ */
+export function itemsOf(file: File, items: readonly IntakeItem[]): IntakeItem[] {
+  return items.filter((item) => fileOf(item) === file);
+}
+
+/**
+ * What a dropped file is, when a catalogue claims anything inside it.
+ *
+ * Absent when none does, which is the answer for a `.txt`, for an archive of
+ * pictures, and for a ROM no dataset lists — those have nowhere to go but the
+ * folder they were dropped on.
+ *
+ * An offer with nothing pending is a game already on disk: still worth saying,
+ * because "it is already there" is the reason nothing would be written and the
+ * user is owed it.
+ */
+export function offerOf(file: File, items: readonly IntakeItem[]): IntakeOffer | undefined {
+  const mine = itemsOf(file, items);
+  const named = mine.find((item) => item.match && item.path);
+  if (!named) return undefined;
+
+  return { match: named.match!, path: named.path!, pending: mine.filter(isPlaced) };
+}
+
+/**
+ * What the drop writes, once the user has said which files go in as games.
+ *
+ * A companion is a file no catalogue lists that still has a folder — a `.cue`
+ * dropped next to the track it points at, which `settle` gave the release's
+ * folder. It has no answer of its own to give: it follows the game it arrived
+ * with, and is copied as it is when that game is, because half a disc release in
+ * the right folder is worse than all of it in the wrong one.
+ *
+ * Only a loose companion follows. One that came out of an archive is part of
+ * that archive's own answer, and an archive kept whole is kept whole.
+ */
+export function splitDrop(
+  files: readonly File[],
+  taken: ReadonlySet<File>,
+  items: readonly IntakeItem[],
+): DropSplit {
+  const chosen = items.filter((item) => taken.has(fileOf(item)) && isPlaced(item));
+  const folders = new Set(chosen.filter((item) => item.match).map((item) => parentOf(item.path!)));
+
+  const along = items.filter(
+    (item) =>
+      item.source.kind === 'file' &&
+      !item.match &&
+      !taken.has(item.source.file) &&
+      isPlaced(item) &&
+      folders.has(parentOf(item.path!)),
+  );
+
+  const swept = new Set(along.map(fileOf));
+
+  return {
+    copied: files.filter((file) => !taken.has(file) && !swept.has(file)),
+    intake: [...chosen, ...along],
+    along,
+  };
+}
+
 function parentOf(path: string): string {
   const separator = path.lastIndexOf('/');
   return separator === -1 ? '' : path.slice(0, separator);

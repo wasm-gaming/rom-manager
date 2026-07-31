@@ -1302,10 +1302,48 @@ code {
   white-space: nowrap;
 }
 
-.drop-image .prefs-select {
+.drop-image .prefs-select,
+.drop-file .prefs-select {
   width: auto;
   font-size: 0.8125rem;
   padding: 0.35rem 0.5rem;
+}
+
+/* A file with two possible destinations: the name and the choice on one line,
+   and under them the path that choice writes to. */
+.drop-file {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  padding: 0.5rem 0.65rem;
+  background-color: var(--app-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.drop-file-name {
+  font-size: 0.8125rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Said instead of the choice, when there is no choice left to make. */
+.drop-file-note {
+  font-size: 0.75rem;
+  color: var(--warn-ink);
+}
+
+.drop-file-where {
+  grid-column: 1 / -1;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* --- Taking in a game dropped with nothing picked --- */

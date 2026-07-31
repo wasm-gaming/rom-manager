@@ -85,13 +85,37 @@ what is selected, not on the file:
 - **a game**: images go into its metadata, asking for type and region (see
   [Hand-added images](covers.md#hand-added-images)); anything else is copied into
   the folder where its ROMs are.
-- **a folder**: everything is added as-is, images included.
+- **a folder**: everything is added as-is, images included — except for what the
+  catalogue recognises, which is where it asks (see below).
 - **anything else** — a loose ROM, several files, nothing —: there is nowhere to
   put it, and it says there are no actions available instead of guessing.
 
 Nothing is written before it is confirmed: dropping a file is easy to do by
 accident and hard to undo. An internal drag from the tree itself does not count as
 a drop here; moving a ROM onto the panel means nothing.
+
+### As it is, or as the game it is
+
+A file dropped on a folder is looked up before the modal opens, so a game has two
+destinations to choose between and not one: **as it is** in the folder that was
+dropped on, or **as the game** in the folder the catalogue gives its release —
+unzipped, its checksum checked against the archive's index on the way out, and
+grouped with the copies of that game already there. The modal shows both paths,
+because a release does not always land where the drop pointed: a disc goes into a
+folder of its own, and a game from another system goes into that system's folder.
+
+**Taking it in is the answer offered first when the release lands in the folder
+that was dropped on**, or under it — the two answers then agree about where, and
+the catalogue's is the one that has been checked. Otherwise the file is kept as it
+is, because pointing at a folder is a literal instruction and a contradiction is
+not something to preselect.
+
+Asking is nearly free. An archive answers from its index, which already carries
+the CRC32 of each entry expanded, so nothing is decompressed to ask; a name that
+names no system — an image, a `.txt`, a `.cue` — is never hashed at all. Only a
+loose ROM is read end to end, and it reports its progress as a share of itself. A
+catalogue that cannot be read is not fatal: the modal opens saying so, offering
+the copy it can always do.
 
 ## Per-folder wizard activation
 

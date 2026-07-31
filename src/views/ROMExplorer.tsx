@@ -5,7 +5,7 @@ import { Tabs } from '../components/Tabs';
 import { FileTree } from '../components/FileTree';
 import { OrganizePanel } from '../components/OrganizePanel';
 import { PreferencesModal } from '../components/PreferencesModal';
-import { MediaDropModal, type DropTarget, type DroppedImage } from '../components/MediaDropModal';
+import { MediaDropModal, type DropDecision, type DropTarget } from '../components/MediaDropModal';
 import { RomIntakeModal } from '../components/RomIntakeModal';
 import { RomDetails } from '../components/RomDetails';
 import { storageService, StorageNode, StorageStat } from '../services/StorageService';
@@ -19,7 +19,7 @@ import { isWizardFolder, WizardConfigService } from '../services/WizardConfigSer
 import { setThemeMode, themeModeSignal } from '../services/ThemeService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
-import { imageExtensionOf, regionOfScope } from '../core/rom-media';
+import { imageExtensionOf, isImageName, regionOfScope } from '../core/rom-media';
 import { preferRegion, type Region } from '../core/rom-regions';
 import type { OrganizePlan } from '../core/rom-organize';
 import {
@@ -73,6 +73,8 @@ interface DropRequest {
   target: DropTarget;
   /** Where the images go, absent when the target is a plain folder. */
   game?: { id: string; system: string };
+  /** What the catalogue made of the files, when it was worth asking it. */
+  intake?: IntakeItem[];
 }
 
 /**
@@ -573,7 +575,54 @@ export function ROMExplorer(): JSX.Element {
 
     storeService.setError(undefined);
     setDropError(undefined);
-    setDrop({ files, ...destination });
+    void openDrop(files, destination);
+  };
+
+  /**
+   * Opens the drop, asking the catalogue first what the folder is being given.
+   *
+   * A file dropped on a folder has two possible destinations — the folder, and
+   * the one the release it turns out to be lives in — and the modal cannot offer
+   * the second without knowing what the file is. Reading an archive's index is
+   * what answers for a zipped game, so the common case costs nothing; a loose
+   * ROM is hashed, with the same progress line the other road shows.
+   *
+   * Only for a folder, and only for what could be a game: an image is a boxart
+   * and a drop on a game is a drop *for* that game, and neither has a second
+   * destination to be offered.
+   */
+  const openDrop = async (
+    files: File[],
+    destination: { target: DropTarget; game?: { id: string; system: string } },
+  ) => {
+    const askable =
+      destination.target.kind === 'folder' && files.some((file) => !isImageName(file.name));
+
+    if (!activeNode || !askable) {
+      setDrop({ files, ...destination });
+      return;
+    }
+
+    try {
+      setNotice(`Identificando ${files.length > 1 ? `${files.length} ficheros` : files[0].name}...`);
+
+      const items = await RomIntakeService.identify(activeNode, files, (progress) =>
+        setNotice(intakeNotice(progress)),
+      );
+
+      setDrop({ files, ...destination, intake: items });
+    } catch (err) {
+      // The copy still works without an answer, so the drop opens anyway and
+      // says why it is only offering the one destination.
+      setDrop({ files, ...destination });
+      setDropError(
+        `No se ha podido consultar el catálogo, así que sólo se pueden copiar tal cual: ${
+          err instanceof Error ? err.message : 'error desconocido'
+        }`,
+      );
+    } finally {
+      setNotice(undefined);
+    }
   };
 
   /**
@@ -642,10 +691,11 @@ export function ROMExplorer(): JSX.Element {
 
   /**
    * Writes what the drop said it would: images into the metadata of the game,
-   * under the name their kind and region give them, and everything else into the
-   * folder exactly as it is.
+   * under the name their kind and region give them, the files kept as they are
+   * into the folder, and the ones taken in as games wherever the catalogue puts
+   * them — which is `apply`'s business, folders, checksums and all.
    */
-  const handleDropConfirm = async (images: DroppedImage[], files: File[]) => {
+  const handleDropConfirm = async ({ images, files, intake: taken }: DropDecision) => {
     if (!activeNode || !drop) return;
 
     const { target } = drop;
@@ -677,10 +727,16 @@ export function ROMExplorer(): JSX.Element {
         await activeNode.writeFile(path, new Uint8Array(await file.arrayBuffer()));
       }
 
+      if (taken.length > 0) {
+        await RomIntakeService.apply(activeNode, taken, ({ file, done, total }) =>
+          setDropBusy(`Añadiendo ${file}${total > 1 ? ` (${done + 1} de ${total})` : ''}...`),
+        );
+      }
+
       setDrop(undefined);
       if (images.length > 0) setMediaVersion((version) => version + 1);
 
-      if (files.length > 0) {
+      if (files.length > 0 || taken.length > 0) {
         // A ROM that has just landed is a file nothing has hashed, so the rows
         // it belongs in have to be worked out again.
         grouping.current.clear();
@@ -944,6 +1000,7 @@ export function ROMExplorer(): JSX.Element {
         <MediaDropModal
           files={drop.files}
           target={drop.target}
+          intake={drop.intake}
           busy={dropBusy}
           error={dropError}
           onConfirm={handleDropConfirm}
