@@ -1,5 +1,5 @@
 {
-  "name": "@rom-manager/editor",
+  "name": "@wasm-gaming/rom-manager",
   "version": "0.1.0",
   "description": "Embeddable ROM metadata editor - like mp3tag for video game ROMs",
   "type": "module",
