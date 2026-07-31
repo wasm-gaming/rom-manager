@@ -17,6 +17,7 @@ import { calculateCRC32 } from '../services/ChecksumService';
 import type { WizardFile, WizardGame, WizardVariant } from '../core/wizard-tree';
 import type { Region } from '../core/rom-regions';
 import type { MatchStatus } from '../core/rom-matching';
+import { systemAspectRatio } from '../core/rom-covers';
 
 interface RomDetailsProps {
   /** ROM files selected in the tree, in tree order. */
@@ -136,10 +137,23 @@ interface CoverShown {
  * tell you which region's box you are looking at, and for a release that ships
  * to several the answer is the only visible effect of the preference.
  */
-function CoverFigure({ cover, alt }: { cover?: CoverShown; alt: string }): JSX.Element {
+function CoverFigure({
+  cover,
+  alt,
+  system,
+}: {
+  cover?: CoverShown;
+  alt: string;
+  system?: string;
+}): JSX.Element {
+  const defaultRatio = systemAspectRatio(system);
+  const [naturalRatio, setNaturalRatio] = useState<string | undefined>();
+  const url = cover?.url;
+  const currentRatio = naturalRatio || defaultRatio;
+
   if (!cover) {
     return (
-      <div class="rom-info-cover-wrapper">
+      <div class="rom-info-cover-wrapper" style={{ aspectRatio: defaultRatio }}>
         <div class="rom-info-cover placeholder">No cover</div>
       </div>
     );
@@ -147,8 +161,19 @@ function CoverFigure({ cover, alt }: { cover?: CoverShown; alt: string }): JSX.E
 
   return (
     <figure class="rom-info-cover-figure">
-      <div class="rom-info-cover-wrapper">
-        <img class="rom-info-cover" src={cover.url} alt={`${alt} boxart`} />
+      <div class="rom-info-cover-wrapper" style={{ aspectRatio: currentRatio }}>
+        <img
+          key={url}
+          class="rom-info-cover"
+          src={url}
+          alt={`${alt} boxart`}
+          onLoad={(e) => {
+            const img = e.currentTarget;
+            if (img.naturalWidth && img.naturalHeight) {
+              setNaturalRatio(`${img.naturalWidth} / ${img.naturalHeight}`);
+            }
+          }}
+        />
       </div>
       <figcaption class="rom-info-cover-region">
         {cover.region ? `${cover.region} box` : 'Box of the game'}
@@ -180,7 +205,7 @@ function RomFileView({
           mode, an unrecognised dump — simply has none, and gets no hero. */}
       {cover ? (
         <div class="rom-info-hero">
-          <CoverFigure cover={cover} alt={fileNameOf(path)} />
+          <CoverFigure cover={cover} alt={fileNameOf(path)} system={systemOf(path)} />
           <div class="rom-info-heading">
             <h3>{fileNameOf(path)}</h3>
             <p class="metadata-subtitle">Not in the library yet</p>
@@ -247,7 +272,7 @@ function RomInfoView({
   return (
     <div class="rom-info">
       <div class="rom-info-hero">
-        <CoverFigure cover={cover} alt={record.title || path} />
+        <CoverFigure cover={cover} alt={record.title || path} system={systemOf(path)} />
 
         <div class="rom-info-heading">
           <h2>{record.title || gameNameOf(path)}</h2>
@@ -404,7 +429,7 @@ function GameView({
   return (
     <div class="rom-info game-info">
       <div class="rom-info-hero">
-        <CoverFigure cover={cover} alt={game.title} />
+        <CoverFigure cover={cover} alt={game.title} system={systemOf(game.paths[0])} />
 
         <div class="rom-info-heading">
           <h2>{game.title}</h2>

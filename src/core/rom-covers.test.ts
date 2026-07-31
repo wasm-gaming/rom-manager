@@ -8,6 +8,7 @@ import {
   pickCover,
   storableCoversOf,
   storedCoverNamesOf,
+  systemAspectRatio,
   variantCoverUrl,
 } from './rom-covers';
 
@@ -382,5 +383,28 @@ describe('storableCoversOf', () => {
 
   it('offers nothing for a game with no boxart', () => {
     expect(storableCoversOf({ byRegion: {} })).toEqual([]);
+  });
+});
+
+describe('systemAspectRatio', () => {
+  it('returns 1 / 1 for square boxart systems like Game Boy and PlayStation', () => {
+    expect(systemAspectRatio('Game Boy')).toBe('1 / 1');
+    expect(systemAspectRatio('Game Boy Color')).toBe('1 / 1');
+    expect(systemAspectRatio('PlayStation')).toBe('1 / 1');
+    expect(systemAspectRatio('Nintendo DS')).toBe('1 / 1');
+  });
+
+  it('returns 4 / 3 for horizontal boxart systems like GBA, N64 and SNES', () => {
+    expect(systemAspectRatio('Game Boy Advance')).toBe('4 / 3');
+    expect(systemAspectRatio('Nintendo 64')).toBe('4 / 3');
+    expect(systemAspectRatio('Super Nintendo')).toBe('4 / 3');
+    expect(systemAspectRatio('SNES')).toBe('4 / 3');
+  });
+
+  it('returns 3 / 4 for vertical boxart systems and unknown systems', () => {
+    expect(systemAspectRatio('Nintendo Entertainment System')).toBe('3 / 4');
+    expect(systemAspectRatio('Sega Genesis')).toBe('3 / 4');
+    expect(systemAspectRatio('Mega Drive')).toBe('3 / 4');
+    expect(systemAspectRatio(undefined)).toBe('3 / 4');
   });
 });

@@ -279,3 +279,45 @@ export function storableCoversOf(covers: GameCovers): PublishedCover[] {
 
   return stored;
 }
+
+/**
+ * Expected boxart aspect-ratio (width / height) for a given console system name.
+ * Used to reserve appropriate space and prevent layout shifts before cover loads.
+ */
+export function systemAspectRatio(system?: string): string {
+  if (!system) return '3 / 4';
+
+  const sys = system.toLowerCase();
+
+  // Wide / Horizontal boxarts (~4:3)
+  if (
+    sys.includes('advance') ||
+    sys.includes('gba') ||
+    sys.includes('nintendo 64') ||
+    sys.includes('n64') ||
+    sys.includes('super nintendo') ||
+    sys.includes('snes') ||
+    sys.includes('super famicom')
+  ) {
+    return '4 / 3';
+  }
+
+  // Square boxarts (~1:1)
+  if (
+    sys.includes('game boy color') ||
+    sys.includes('gbc') ||
+    sys.includes('game boy') ||
+    sys.includes('gamegear') ||
+    sys.includes('game gear') ||
+    sys.includes('playstation') ||
+    sys.includes('ps1') ||
+    sys.includes('psx') ||
+    sys.includes('nintendo ds') ||
+    sys.includes('3ds')
+  ) {
+    return '1 / 1';
+  }
+
+  // Portrait / Vertical boxarts (~3:4)
+  return '3 / 4';
+}
