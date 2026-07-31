@@ -7,6 +7,11 @@
  * decides the system and the folder — which is then created if the library has
  * never held that system before.
  *
+ * An archive is opened first and each of its entries taken in on its own, since
+ * a zipped game is what a game usually arrives as. It is unzipped rather than
+ * kept as it is: the library is scanned by hashing its files against the
+ * catalogue, and an archive would be a stranger there forever.
+ *
  * Split in two on purpose. `identify` only reads, and what it returns is what
  * the user is shown; `apply` is the half that writes, and it never runs until
  * they have said so.
@@ -20,6 +25,8 @@ import {
   type DatasetSystem,
   type SystemMedia,
 } from '../core/rom-intake';
+import { refusalOf, type ZipEntry, type ZipRefusal } from '../core/zip-directory';
+import { extract, isArchive, readArchive } from './ArchiveService';
 import { streamCRC32 } from './ChecksumService';
 import { GAME_MARKER } from './LibraryScanService';
 import { ensureDir } from './OrganizeService';
@@ -36,9 +43,20 @@ export interface IntakeMatch {
   variant: string;
 }
 
-/** A dropped file and what is to become of it. */
+/** Where the bytes come from once there is a reason to read them. */
+export type IntakeSource =
+  | { kind: 'file'; file: File }
+  | { kind: 'entry'; archive: File; entry: ZipEntry };
+
+/** A game on its way in, and what is to become of it. */
 export interface IntakeItem {
-  file: File;
+  /** The name it takes on disk: the file's own, or the archive entry's. */
+  name: string;
+  /** Size expanded, which is what says a cartridge from a disc image. */
+  size: number;
+  source: IntakeSource;
+  /** The archive it came out of, absent for a file dropped as it is. */
+  archive?: string;
   /** Absent for a file no catalogue could hold, which is never hashed. */
   crc32?: string;
   /** The game it is, absent when no catalogue claims it. */
@@ -47,6 +65,8 @@ export interface IntakeItem {
   path?: string;
   /** True when something already sits there, which is never overwritten. */
   taken?: boolean;
+  /** Why this one is not on the table at all, when that is the case. */
+  refused?: ZipRefusal;
 }
 
 export interface IntakeProgress {
@@ -59,14 +79,19 @@ export interface IntakeProgress {
   total: number;
 }
 
-/** True for a file that has somewhere to go and nothing in the way. */
+/** True for a game that has somewhere to go and nothing in the way. */
 export function isPlaced(item: IntakeItem): boolean {
-  return item.path !== undefined && !item.taken;
+  return item.path !== undefined && !item.taken && !item.refused;
 }
 
 function parentOf(path: string): string {
   const separator = path.lastIndexOf('/');
   return separator === -1 ? '' : path.slice(0, separator);
+}
+
+/** `roms/Sonic (USA).md` -> `Sonic (USA).md`: folders inside an archive are not kept. */
+function nameOf(path: string): string {
+  return path.slice(path.lastIndexOf('/') + 1);
 }
 
 export class RomIntakeService {
@@ -75,7 +100,9 @@ export class RomIntakeService {
    * anything.
    *
    * A file whose name points at no catalogue is not hashed at all: reading six
-   * hundred megabytes to learn nothing is not worth the wait.
+   * hundred megabytes to learn nothing is not worth the wait. Neither is one
+   * that came out of an archive, which already knows its own checksum — that is
+   * what an archive keeps an index for.
    */
   static async identify(
     node: StorageNode,
@@ -87,33 +114,80 @@ export class RomIntakeService {
     const { ROMDatasetService } = await import('./ROMDatasetService');
 
     const available = await ROMDatasetService.listSystems();
-    const items: IntakeItem[] = [];
+    const items = await this.unpack(files);
+    const total = items.length;
 
-    for (const [done, file] of files.entries()) {
-      const candidates = candidateSystemsOf(file, available);
+    for (const [done, item] of items.entries()) {
+      if (item.refused) continue;
 
-      if (candidates.length === 0) {
-        items.push({ file });
-        continue;
+      const candidates = candidateSystemsOf(item, available);
+      if (candidates.length === 0) continue;
+
+      // An entry arrives knowing its own checksum; a loose file has to be read
+      // from end to end for it.
+      if (!item.crc32 && item.source.kind === 'file') {
+        const report = (read: number) =>
+          onProgress?.({ file: item.name, read, size: item.size, done, total });
+
+        report(0);
+        item.crc32 = await streamCRC32(item.source.file.stream(), report);
       }
 
-      onProgress?.({ file: file.name, read: 0, size: file.size, done, total: files.length });
+      if (!item.crc32) continue;
 
-      const crc32 = await streamCRC32(file.stream(), (read) =>
-        onProgress?.({ file: file.name, read, size: file.size, done, total: files.length }),
-      );
-
-      const found = await this.release(candidates, crc32, file.size);
-
-      items.push({
-        file,
-        crc32,
-        match: found?.match,
-        path: found ? `${found.folder}/${file.name}` : undefined,
-      });
+      const found = await this.release(candidates, item.crc32, item.size);
+      item.match = found?.match;
+      item.path = found ? `${found.folder}/${item.name}` : undefined;
     }
 
     return this.settle(node, items);
+  }
+
+  /**
+   * Turn the drop into the games it holds.
+   *
+   * An archive stands for its entries and not for itself, so it is opened and
+   * each one taken in on its own — an archive of a whole system arrives as one
+   * file and is a hundred games. One that cannot be read stays a single item
+   * saying why, because a drop that silently does nothing is worse than one that
+   * explains itself.
+   */
+  private static async unpack(files: File[]): Promise<IntakeItem[]> {
+    const items: IntakeItem[] = [];
+
+    for (const file of files) {
+      const source = { kind: 'file', file } as const;
+
+      if (!(await isArchive(file))) {
+        items.push({ name: file.name, size: file.size, source });
+        continue;
+      }
+
+      const contents = await readArchive(file).catch(() => ({ refused: 'damaged' as const }));
+
+      if ('refused' in contents) {
+        items.push({ name: file.name, size: file.size, source, refused: contents.refused });
+        continue;
+      }
+
+      for (const entry of contents.entries) {
+        if (entry.directory) continue;
+
+        items.push({
+          name: nameOf(entry.name),
+          size: entry.size,
+          source: { kind: 'entry', archive: file, entry },
+          archive: file.name,
+          // The index carries the checksum of the entry expanded, which is the
+          // very thing the catalogues are keyed by. It is a claim until `apply`
+          // checks it against the bytes.
+          crc32: refusalOf(entry) ? undefined : entry.crc32,
+          refused: refusalOf(entry),
+        });
+      }
+    }
+
+    return items;
   }
 
   /**
@@ -174,7 +248,8 @@ export class RomIntakeService {
     );
 
     for (const item of items) {
-      if (!item.path && shared) item.path = `${shared}/${item.file.name}`;
+      if (item.refused) continue;
+      if (!item.path && shared) item.path = `${shared}/${item.name}`;
       if (item.path) item.taken = await node.exists(item.path);
     }
 
@@ -187,6 +262,10 @@ export class RomIntakeService {
    * Only files with somewhere to go and nothing in the way are written: a name
    * already taken is left alone, because overwriting a ROM the user already has
    * is not something a drop should be able to do.
+   *
+   * An entry is expanded here and not before, and its checksum is checked
+   * against the bytes that come out — so an archive whose index did not describe
+   * what it held stops the run instead of quietly writing something else.
    */
   static async apply(
     node: StorageNode,
@@ -198,10 +277,15 @@ export class RomIntakeService {
     const written: string[] = [];
 
     for (const item of pending) {
-      onProgress?.({ file: item.file.name, done: written.length, total: pending.length });
+      onProgress?.({ file: item.name, done: written.length, total: pending.length });
+
+      const bytes =
+        item.source.kind === 'file'
+          ? new Uint8Array(await item.source.file.arrayBuffer())
+          : await extract(item.source.archive, item.source.entry);
 
       await ensureDir(node, parentOf(item.path!), made);
-      await node.writeFile(item.path!, new Uint8Array(await item.file.arrayBuffer()));
+      await node.writeFile(item.path!, bytes);
       written.push(item.path!);
 
       if (item.match?.media === 'disc') await this.mark(node, item.match, made);

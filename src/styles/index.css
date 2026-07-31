@@ -1239,6 +1239,12 @@ code {
   color: var(--accent-ink);
 }
 
+/* Where it was found, which is a fact about the drop and not about the game. */
+.intake-archive {
+  margin-left: 0.4rem;
+  color: var(--text-faint);
+}
+
 .intake-path {
   font-family: monospace;
   font-size: 0.75rem;

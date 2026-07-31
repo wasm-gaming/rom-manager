@@ -1,4 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { buildZip } from '../core/zip-builder.test-helper';
+import { findCentralDirectory, readCentralDirectory, type ZipEntry } from '../core/zip-directory';
 import { GAME_MARKER } from './LibraryScanService';
 import { RomIntakeService, isPlaced, type IntakeItem, type IntakeMatch } from './RomIntakeService';
 import type { StorageNode } from './StorageService';
@@ -25,9 +27,35 @@ class FakeStorage {
   }
 }
 
-/** A dropped file, which only ever has to answer for its name and its bytes. */
-function file(name: string, content = 'rom'): File {
-  return new File([content], name);
+/** A file dropped as it is, which only answers for its name and its bytes. */
+function loose(name: string, content = 'rom'): IntakeItem {
+  const file = new File([content], name);
+  return { name, size: file.size, source: { kind: 'file', file }, crc32: 'AAAA1111' };
+}
+
+/** A game inside an archive, laid out the way a zipper lays one out. */
+function zipped(archive: string, name: string, content: string, deflate = true): IntakeItem {
+  const bytes = buildZip([{ name, content, deflate }]);
+  const file = new File([bytes as BlobPart], archive);
+  const directory = findCentralDirectory(bytes)!;
+  const [entry] = readCentralDirectory(
+    bytes.subarray(directory.offset, directory.offset + directory.size),
+    directory.count,
+  );
+
+  return {
+    name,
+    size: entry.size,
+    source: { kind: 'entry', archive: file, entry },
+    archive,
+    crc32: entry.crc32,
+  };
+}
+
+/** The entry behind a zipped item, for the tests that go on to damage it. */
+function entryOf(item: IntakeItem): ZipEntry {
+  if (item.source.kind !== 'entry') throw new Error('Not an archive entry');
+  return item.source.entry;
 }
 
 function match(overrides: Partial<IntakeMatch> = {}): IntakeMatch {
@@ -41,9 +69,13 @@ function match(overrides: Partial<IntakeMatch> = {}): IntakeMatch {
   };
 }
 
-function item(overrides: Partial<IntakeItem> & { file: File }): IntakeItem {
-  return { crc32: 'AAAA1111', ...overrides };
-}
+const disc = match({
+  system: 'PSX',
+  media: 'disc',
+  gameId: 'Final Fantasy VII',
+  title: 'Final Fantasy VII',
+  variant: 'Europe',
+});
 
 let storage: FakeStorage;
 
@@ -53,22 +85,28 @@ beforeEach(() => {
 
 describe('isPlaced', () => {
   it('is true for a file with somewhere to go', () => {
-    expect(isPlaced(item({ file: file('smw.sfc'), path: 'SNES/smw.sfc' }))).toBe(true);
+    expect(isPlaced({ ...loose('smw.sfc'), path: 'SNES/smw.sfc' })).toBe(true);
   });
 
   it('is false for a file nothing claimed', () => {
-    expect(isPlaced(item({ file: file('notes.txt') }))).toBe(false);
+    expect(isPlaced(loose('notes.txt'))).toBe(false);
   });
 
   it('is false for a name already taken', () => {
-    expect(isPlaced(item({ file: file('smw.sfc'), path: 'SNES/smw.sfc', taken: true }))).toBe(false);
+    expect(isPlaced({ ...loose('smw.sfc'), path: 'SNES/smw.sfc', taken: true })).toBe(false);
+  });
+
+  it('is false for something the archive would not hand over', () => {
+    expect(isPlaced({ ...loose('smw.sfc'), path: 'SNES/smw.sfc', refused: 'encrypted' })).toBe(
+      false,
+    );
   });
 });
 
 describe('apply', () => {
   it('copies a cartridge into its system folder, creating it', async () => {
     const written = await RomIntakeService.apply(storage.asNode(), [
-      item({ file: file('smw.sfc', 'bytes'), path: 'SNES/smw.sfc', match: match() }),
+      { ...loose('smw.sfc', 'bytes'), path: 'SNES/smw.sfc', match: match() },
     ]);
 
     expect(written).toEqual(['SNES/smw.sfc']);
@@ -78,7 +116,7 @@ describe('apply', () => {
 
   it('keeps the name the file arrived with', async () => {
     await RomIntakeService.apply(storage.asNode(), [
-      item({ file: file('smw (u) [!].sfc'), path: 'SNES/smw (u) [!].sfc', match: match() }),
+      { ...loose('smw (u) [!].sfc'), path: 'SNES/smw (u) [!].sfc', match: match() },
     ]);
 
     expect([...storage.files.keys()]).toEqual(['SNES/smw (u) [!].sfc']);
@@ -88,7 +126,7 @@ describe('apply', () => {
     storage.files.set('SNES/smw.sfc', 'the one already there');
 
     const written = await RomIntakeService.apply(storage.asNode(), [
-      item({ file: file('smw.sfc', 'the new one'), path: 'SNES/smw.sfc', taken: true, match: match() }),
+      { ...loose('smw.sfc', 'the new one'), path: 'SNES/smw.sfc', taken: true, match: match() },
     ]);
 
     expect(written).toEqual([]);
@@ -96,7 +134,7 @@ describe('apply', () => {
   });
 
   it('writes nothing for a file no catalogue claimed', async () => {
-    const written = await RomIntakeService.apply(storage.asNode(), [item({ file: file('notes.txt') })]);
+    const written = await RomIntakeService.apply(storage.asNode(), [loose('notes.txt')]);
 
     expect(written).toEqual([]);
     expect(storage.files.size).toBe(0);
@@ -104,11 +142,7 @@ describe('apply', () => {
 
   it('marks a disc game as one, so the scan does not walk past it', async () => {
     await RomIntakeService.apply(storage.asNode(), [
-      item({
-        file: file('ff7.bin'),
-        path: 'PSX/Final Fantasy VII/Europe/ff7.bin',
-        match: match({ system: 'PSX', media: 'disc', gameId: 'Final Fantasy VII', title: 'Final Fantasy VII', variant: 'Europe' }),
-      }),
+      { ...loose('ff7.bin'), path: 'PSX/Final Fantasy VII/Europe/ff7.bin', match: disc },
     ]);
 
     expect(storage.directories.has('PSX/Final Fantasy VII/Europe')).toBe(true);
@@ -123,11 +157,7 @@ describe('apply', () => {
     storage.files.set(`PSX/Final Fantasy VII/${GAME_MARKER}`, 'written by hand');
 
     await RomIntakeService.apply(storage.asNode(), [
-      item({
-        file: file('ff7.bin'),
-        path: 'PSX/Final Fantasy VII/Europe/ff7.bin',
-        match: match({ system: 'PSX', media: 'disc', gameId: 'Final Fantasy VII', variant: 'Europe' }),
-      }),
+      { ...loose('ff7.bin'), path: 'PSX/Final Fantasy VII/Europe/ff7.bin', match: disc },
     ]);
 
     expect(storage.files.get(`PSX/Final Fantasy VII/${GAME_MARKER}`)).toBe('written by hand');
@@ -135,12 +165,11 @@ describe('apply', () => {
 
   it('copies the files that came along with the game', async () => {
     await RomIntakeService.apply(storage.asNode(), [
-      item({
-        file: file('ff7.bin'),
-        path: 'PSX/Final Fantasy VII/Europe/ff7.bin',
-        match: match({ system: 'PSX', media: 'disc', gameId: 'Final Fantasy VII', variant: 'Europe' }),
-      }),
-      item({ file: file('ff7.cue', 'FILE "ff7.bin" BINARY'), path: 'PSX/Final Fantasy VII/Europe/ff7.cue' }),
+      { ...loose('ff7.bin'), path: 'PSX/Final Fantasy VII/Europe/ff7.bin', match: disc },
+      {
+        ...loose('ff7.cue', 'FILE "ff7.bin" BINARY'),
+        path: 'PSX/Final Fantasy VII/Europe/ff7.cue',
+      },
     ]);
 
     expect(storage.files.get('PSX/Final Fantasy VII/Europe/ff7.cue')).toBe('FILE "ff7.bin" BINARY');
@@ -152,12 +181,40 @@ describe('apply', () => {
     await RomIntakeService.apply(
       storage.asNode(),
       [
-        item({ file: file('smw.sfc'), path: 'SNES/smw.sfc', match: match() }),
-        item({ file: file('zelda.sfc'), path: 'SNES/zelda.sfc', match: match() }),
+        { ...loose('smw.sfc'), path: 'SNES/smw.sfc', match: match() },
+        { ...loose('zelda.sfc'), path: 'SNES/zelda.sfc', match: match() },
       ],
       ({ file: name, done, total }) => seen.push(`${name}: ${done} of ${total}`),
     );
 
     expect(seen).toEqual(['smw.sfc: 0 of 2', 'zelda.sfc: 1 of 2']);
+  });
+
+  it('writes what an archive held, expanded and not as it was stored', async () => {
+    const item = zipped('smw.zip', 'smw.sfc', 'rom bytes'.repeat(40));
+
+    await RomIntakeService.apply(storage.asNode(), [
+      { ...item, path: 'SNES/smw.sfc', match: match() },
+    ]);
+
+    expect(storage.files.get('SNES/smw.sfc')).toBe('rom bytes'.repeat(40));
+  });
+
+  it('stops rather than write contents the archive did not describe', async () => {
+    const item = zipped('smw.zip', 'smw.sfc', 'rom bytes');
+    const entry = { ...entryOf(item), crc32: 'DEADBEEF' };
+
+    await expect(
+      RomIntakeService.apply(storage.asNode(), [
+        {
+          ...item,
+          source: { kind: 'entry', archive: (item.source as { archive: File }).archive, entry },
+          path: 'SNES/smw.sfc',
+          match: match(),
+        },
+      ]),
+    ).rejects.toThrow('no es el que el archivo declaraba');
+
+    expect(storage.files.size).toBe(0);
   });
 });

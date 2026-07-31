@@ -595,7 +595,9 @@ export function ROMExplorer(): JSX.Element {
         setNotice(intakeNotice(progress)),
       );
 
-      if (!items.some((item) => item.path)) {
+      // A refused archive opens the panel too: what it says is why nothing can
+      // be done with it, which is the thing worth knowing.
+      if (!items.some((item) => item.path || item.refused)) {
         storeService.setError(
           'No se ha reconocido ningún juego: elige uno para añadirle imágenes, o una carpeta para copiar los ficheros dentro.',
         );

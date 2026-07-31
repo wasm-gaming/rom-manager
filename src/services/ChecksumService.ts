@@ -12,9 +12,13 @@ import { createCRC32, crc32, md5 } from 'hash-wasm';
  *
  * The default polynomial is the one the DAT catalogues use, so the result can
  * be compared against them directly.
+ *
+ * Bytes already in hand are taken as they are: what comes out of an archive is
+ * a `Uint8Array` the size of the game, and copying it to be hashed would double
+ * what a disc image costs in memory.
  */
-export async function calculateCRC32(data: ArrayBuffer): Promise<string> {
-  return (await crc32(new Uint8Array(data))).toUpperCase();
+export async function calculateCRC32(data: ArrayBuffer | Uint8Array): Promise<string> {
+  return (await crc32(data instanceof Uint8Array ? data : new Uint8Array(data))).toUpperCase();
 }
 
 /**
