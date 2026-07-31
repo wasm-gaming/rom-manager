@@ -83,13 +83,17 @@ const SYSTEMS_BY_EXTENSION: Readonly<Record<string, readonly string[]>> = {
 };
 
 /**
- * The largest cartridge ever made, to the byte: Resident Evil 2 on the N64.
+ * Ceiling above the largest cartridge there is, which is a Neo Geo one: the
+ * `.neo` of Metal Slug 3 measures 90 MiB, well past the 64 MiB of Resident
+ * Evil 2 on the N64 that this limit used to be cut to.
  *
- * Nothing that ships on a cartridge is bigger, so a file that is cannot be one
- * whatever its extension says — which is what keeps a disc track named `.bin`
- * from downloading every cartridge catalogue on the way to the right answer.
+ * A file bigger than this cannot be a cartridge whatever its extension says,
+ * which is what keeps a disc track named `.bin` from downloading every
+ * cartridge catalogue on the way to the right answer. The exact figure is a
+ * round number and not a record: it only has to sit above the largest cartridge
+ * and below a disc image.
  */
-export const CARTRIDGE_SIZE_LIMIT = 64 * 1024 * 1024;
+export const CARTRIDGE_SIZE_LIMIT = 100 * 1024 * 1024;
 
 /** `Sonic (USA).md` -> `md`. Empty for a name that carries no extension. */
 export function romExtensionOf(name: string): string {

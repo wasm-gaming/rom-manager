@@ -39,11 +39,33 @@ See [Folder structure](folder-structure.md) and [Collections](collections.md).
 
 ## Neo Geo AES/MVS (`NEOGEO`) is out
 
-There is no No-Intro or Redump DAT for the cartridge: MiSTer identifies those
-games by Darksoft romset name (`games/NEOGEO/romsets.xml` in
-Distribution_MiSTer), a catalog that provides title, publisher and year but **no
-checksums at all**. Supporting it would require an identification path based on
-names, against the "identify by hash" principle. Postponed as a separate feature.
+Not for lack of hashes, which is the reason this document gave until 2026-07-31
+and is wrong. There is indeed no No-Intro or Redump DAT, but `libretro-database`
+ships `dat/SNK - Neo Geo.dat`: 278 sets, one `.neo` file each with its CRC32.
+`libretro-thumbnails/SNK_-_Neo_Geo` publishes the boxarts under exactly those
+names. The `.neo` half of the system is matchable by hash like any other.
+
+What does not fit is everything else the core reads. `NeoGeo_MiSTer` accepts
+`.neo` files, Darksoft sets and decrypted MAME sets, the last two as a folder or
+a zip of chip dumps declared in `games/NEOGEO/romsets.xml` — a catalog with
+title, publisher and year and **no checksums**. Identifying one of those means
+matching a *set* of inner files against an arcade DAT (`metadat/fbneo-split/`,
+1.8 MB and 10.6 MB), which is a second identification path and not a new row in
+the table above.
+
+Two more mismatches with the current model:
+
+- The DAT names sets (`(set 1)`, `(NGM-043)(NGH-043)`), not releases. The
+  variant key is built from region, revision, language and flags, and none of
+  them exist here: every variant would fall back to its `crc8` and every cover
+  to `*`.
+- A Darksoft pack sitting in `games/NEOGEO` is exactly what
+  [Collections](collections.md) says the manager must not touch.
+
+Postponed as a separate feature. Its first step is the `.neo` half, and the
+obstacle there is only that `dat/SNK - Neo Geo.dat` lives in `dat/` and not in
+`metadat/`, the single base `scripts/download-dats.mjs` knows how to download
+from.
 
 ## Systems left out
 

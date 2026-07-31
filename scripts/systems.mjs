@@ -174,10 +174,12 @@ export const SYSTEMS = [
 
   // SNK
   //
-  // Only the CD side is covered. Neo Geo AES/MVS has no No-Intro or Redump
-  // DAT: MiSTer identifies those by Darksoft romset name (see
-  // `games/NEOGEO/romsets.xml` upstream), which carries no checksums and
-  // therefore cannot be matched by hash like every other system here.
+  // Only the CD side is covered. Neo Geo AES/MVS is postponed, and not for the
+  // lack of hashes this comment used to claim: `.neo` sets do carry a CRC32
+  // (`dat/SNK - Neo Geo.dat`, outside the `metadat/` base downloaded here).
+  // What has no checksums are the Darksoft and MAME sets — folders or zips of
+  // chip dumps declared in `romsets.xml` — which need an identification path of
+  // their own. See docs/systems.md.
   {
     name: 'NeoGeo-CD',
     media: 'disc',

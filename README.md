@@ -110,5 +110,7 @@ npm run dataset:to-json        # build static/datasets/ from what is downloaded
   path, so in the canonical cartridge structure it ends up being per variant
   (`<Game>.<variant>.json`) instead of per game, which is what the design calls
   for.
-- **Neo Geo AES/MVS**: identification by romset name, with no checksums
-  available. See [docs/systems.md](docs/systems.md).
+- **Neo Geo AES/MVS**: the `.neo` sets do have CRC32s and published covers, so
+  half the system is one DAT away; Darksoft and MAME sets, zips of chip dumps
+  with no single-file checksum, need a second identification path.
+  See [docs/systems.md](docs/systems.md).
