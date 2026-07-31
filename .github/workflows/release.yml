@@ -42,7 +42,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          scope: '@rom-manager'
+          scope: '@wasm-gaming'
           registry-url: https://registry.npmjs.org
 
       - name: Upgrade npm for OIDC trusted publishing
@@ -63,7 +63,7 @@ jobs:
         run: npm test -- --run
 
       - name: Build app (Vite)
-        run: npm run build
+        run: npm run build -- --base /rom-manager/
 
       - name: Build library (tsup)
         run: npm run build:lib
