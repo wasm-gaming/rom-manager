@@ -10,6 +10,8 @@ export interface Origin {
   path: string;
   /** ROM files currently selected in the tree, in tree order. */
   selection?: string[];
+  /** True when restored from IndexedDB but not yet re-authorised by the user. */
+  locked?: boolean;
 }
 
 /**

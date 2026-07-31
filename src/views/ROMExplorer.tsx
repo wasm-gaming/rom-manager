@@ -17,6 +17,7 @@ import { RomIntakeService, type IntakeItem, type IntakeProgress } from '../servi
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
 import { setThemeMode, themeModeSignal } from '../services/ThemeService';
+import { HandleStoreService, type StoredHandle } from '../services/HandleStoreService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
 import { imageExtensionOf, isImageName, regionOfScope } from '../core/rom-media';
@@ -145,6 +146,8 @@ export function ROMExplorer(): JSX.Element {
   const grouping = useRef<Set<string>>(new Set());
   /** Object URLs minted for local covers, revoked when they are replaced. */
   const objectUrls = useRef<string[]>([]);
+  /** Persisted handles restored from IndexedDB on startup. */
+  const restoredHandles = useRef<Map<string, FileSystemDirectoryHandle>>(new Map());
 
   const originsMap =
     originsSignal.value instanceof Map ? originsSignal.value : new Map<string, Origin>();
@@ -160,6 +163,24 @@ export function ROMExplorer(): JSX.Element {
     return () => {
       for (const url of objectUrls.current) URL.revokeObjectURL(url);
     };
+  }, []);
+
+  /** Restore persisted directory handles from IndexedDB on startup. */
+  useEffect(() => {
+    HandleStoreService.loadAll()
+      .then((storedEntries) => {
+        for (const entry of storedEntries) {
+          restoredHandles.current.set(entry.id, entry.handle);
+          storeService.addOrigin({
+            id: entry.id,
+            name: entry.name,
+            path: entry.name,
+            selection: [],
+            locked: true,
+          });
+        }
+      })
+      .catch(() => undefined);
   }, []);
 
   /** The systems the dataset covers, which is what a folder is grouped against. */
@@ -306,6 +327,11 @@ export function ROMExplorer(): JSX.Element {
 
       setStorageNodes((current) => new Map(current).set(originId, nodeInstance));
       storeService.addOrigin({ id: originId, name, path, selection: [] });
+
+      const handle = nodeInstance.getHandle();
+      if (handle) {
+        HandleStoreService.save({ id: originId, name, handle }).catch(() => undefined);
+      }
     } catch (err) {
       storeService.setError(err instanceof Error ? err.message : 'Failed to open folder');
     } finally {
@@ -313,7 +339,37 @@ export function ROMExplorer(): JSX.Element {
     }
   };
 
-  const handleSelectOrigin = (originId: string) => {
+  const handleSelectOrigin = async (originId: string) => {
+    const origin = originsMap.get(originId);
+
+    if (origin?.locked) {
+      const savedHandle = restoredHandles.current.get(originId);
+      if (savedHandle) {
+        try {
+          storeService.setLoading(true);
+          storeService.setError(undefined);
+
+          const nodeInstance = storageService.createNodeInstance();
+          const authorized = await nodeInstance.initializeFromHandle(savedHandle);
+
+          if (!authorized) {
+            storeService.setError('Acceso denegado a la carpeta. Haz clic de nuevo para reintentar.');
+            return;
+          }
+
+          setStorageNodes((current) => new Map(current).set(originId, nodeInstance));
+          storeService.addOrigin({ ...origin, locked: false });
+        } catch (err) {
+          storeService.setError(
+            err instanceof Error ? err.message : 'No se pudo acceder a la carpeta guardada',
+          );
+          return;
+        } finally {
+          storeService.setLoading(false);
+        }
+      }
+    }
+
     indexedSystems.current = new Set();
     grouping.current = new Set();
     setInitialised(new Set());
@@ -500,6 +556,8 @@ export function ROMExplorer(): JSX.Element {
   }, [activeNode, organize, invalidateTree]);
 
   const handleCloseOrigin = (originId: string) => {
+    restoredHandles.current.delete(originId);
+    HandleStoreService.remove(originId).catch(() => undefined);
     storeService.removeOrigin(originId);
     setStorageNodes((current) => {
       const next = new Map(current);

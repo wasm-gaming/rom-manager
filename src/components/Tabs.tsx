@@ -1,5 +1,5 @@
 import { JSX } from 'preact';
-import { CloseIcon, PlusIcon } from './icons';
+import { CloseIcon, LockIcon, PlusIcon } from './icons';
 
 export interface Origin {
   id: string;
@@ -7,6 +7,7 @@ export interface Origin {
   path: string;
   selectedFile?: string;
   metadata?: Map<string, any>;
+  locked?: boolean;
 }
 
 interface TabsProps {
@@ -30,9 +31,15 @@ export function Tabs({
         {origins.map((origin) => (
           <div
             key={origin.id}
-            class={`tab ${activeOriginId === origin.id ? 'active' : ''}`}
+            class={`tab ${activeOriginId === origin.id ? 'active' : ''} ${origin.locked ? 'locked' : ''}`}
             onClick={() => onSelectOrigin?.(origin.id)}
+            title={origin.locked ? 'Click to reconnect' : undefined}
           >
+            {origin.locked && (
+              <span class="tab-lock">
+                <LockIcon />
+              </span>
+            )}
             <span class="tab-name">{origin.name}</span>
             <button
               class="tab-close"

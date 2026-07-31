@@ -323,6 +323,17 @@ code {
   text-overflow: ellipsis;
 }
 
+.tab.locked {
+  opacity: 0.75;
+}
+
+.tab-lock {
+  display: flex;
+  align-items: center;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
 .tab-close {
   background: none;
   border: none;

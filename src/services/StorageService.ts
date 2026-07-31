@@ -50,6 +50,31 @@ export class StorageNode {
     return true;
   }
 
+  /**
+   * Restores a node from a handle previously saved in IndexedDB, re-requesting
+   * the permission the browser revoked on reload.
+   *
+   * Returns `false` when the user denies the permission prompt — the handle is
+   * still valid and can be tried again from another click.
+   */
+  async initializeFromHandle(handle: FileSystemDirectoryHandle): Promise<boolean> {
+    this.adapter = FSAAdapter.fromHandle(handle);
+    const allowed = await this.adapter.ensurePermission();
+    if (!allowed) return false;
+
+    this.node = await VFSNode.open(this.adapter);
+    this.path = handle.name || 'Folder';
+    return true;
+  }
+
+  /**
+   * The underlying directory handle, so it can be persisted in IndexedDB after
+   * a successful {@link initialize}.
+   */
+  getHandle(): FileSystemDirectoryHandle | null {
+    return this.adapter ? (this.adapter as any).root ?? null : null;
+  }
+
   getPath(): string {
     return this.path;
   }
