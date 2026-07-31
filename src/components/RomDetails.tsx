@@ -318,18 +318,23 @@ function VariantRow({
   stats: Map<string, StorageStat | null>;
   onSelectFile?: (path: string) => void;
 }): JSX.Element {
+  // The size belongs to the copy on disk, the checksum to the release, so every
+  // file reads its CRC32 and not only the ones that are elsewhere: it is how you
+  // tell whether a dump found somewhere else is this one, and how you quote the
+  // one you have. A file that is here has been matched by that very number, so
+  // the catalogue's checksum is also its own.
   const files = (file: WizardFile, index: number) =>
     file.path ? (
       <li key={file.path} class="variant-file">
         <button class="btn-inline" onClick={() => onSelectFile?.(file.path!)}>
           {file.label}
         </button>
+        <code class="variant-file-crc" title="CRC32">
+          {file.crc}
+        </code>
         <span class="variant-file-size">{formatSize(stats.get(file.path)?.size ?? 0)}</span>
       </li>
     ) : (
-      // A file that is not here has no size and no path to be recognised by, so
-      // what it leaves is the checksum: it is how you tell whether a dump found
-      // elsewhere is this one.
       <li key={`missing:${index}`} class="variant-file missing">
         <span>{file.label}</span>
         <code class="variant-file-crc" title="CRC32">
