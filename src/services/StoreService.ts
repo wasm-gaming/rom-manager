@@ -56,6 +56,11 @@ export class StoreService {
     originsSignal.value = origins;
     if (!activeOriginIdSignal.value) {
       activeOriginIdSignal.value = origin.id;
+      try {
+        localStorage.setItem('rom-manager:active-origin-id', origin.id);
+      } catch {
+        // Ignore storage errors
+      }
     }
   }
 
@@ -75,13 +80,28 @@ export class StoreService {
     // If removed origin was active, switch to another
     if (activeOriginIdSignal.value === id) {
       const remaining = Array.from(origins.keys());
-      activeOriginIdSignal.value = remaining.length > 0 ? remaining[0] : undefined;
+      const nextActive = remaining.length > 0 ? remaining[0] : undefined;
+      activeOriginIdSignal.value = nextActive;
+      try {
+        if (nextActive) {
+          localStorage.setItem('rom-manager:active-origin-id', nextActive);
+        } else {
+          localStorage.removeItem('rom-manager:active-origin-id');
+        }
+      } catch {
+        // Ignore storage errors
+      }
     }
   }
 
   setActiveOrigin(id: string): void {
     if (this.getOriginsMap().has(id)) {
       activeOriginIdSignal.value = id;
+      try {
+        localStorage.setItem('rom-manager:active-origin-id', id);
+      } catch {
+        // Ignore storage errors
+      }
     }
   }
 

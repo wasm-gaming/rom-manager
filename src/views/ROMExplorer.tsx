@@ -13,11 +13,11 @@ import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibr
 import { GameCatalogService } from '../services/GameCatalogService';
 import { CoverService } from '../services/CoverService';
 import { OrganizeService, type UndoRecord } from '../services/OrganizeService';
-import { RomIntakeService, type IntakeItem, type IntakeProgress } from '../services/RomIntakeService';
+import { RomIntakeService, isPlaced, type IntakeItem, type IntakeProgress } from '../services/RomIntakeService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
 import { setThemeMode, themeModeSignal } from '../services/ThemeService';
-import { HandleStoreService, type StoredHandle } from '../services/HandleStoreService';
+import { HandleStoreService } from '../services/HandleStoreService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
 import { imageExtensionOf, isImageName, regionOfScope } from '../core/rom-media';
@@ -178,6 +178,14 @@ export function ROMExplorer(): JSX.Element {
             selection: [],
             locked: true,
           });
+        }
+        try {
+          const lastActiveId = localStorage.getItem('rom-manager:active-origin-id');
+          if (lastActiveId && storedEntries.some((entry) => entry.id === lastActiveId)) {
+            storeService.setActiveOrigin(lastActiveId);
+          }
+        } catch {
+          // Ignore storage errors
         }
       })
       .catch(() => undefined);
@@ -995,6 +1003,18 @@ export function ROMExplorer(): JSX.Element {
           <p>No folders opened</p>
           <button onClick={handleOpenFolder} disabled={loadingSignal.value}>
             {loadingSignal.value ? 'Opening...' : 'Open Folder'}
+          </button>
+        </div>
+      ) : activeOrigin?.locked || !activeNode ? (
+        <div class="empty-state-full">
+          <p>Carpeta seleccionada: <strong>{activeOrigin?.name ?? 'Carpeta'}</strong></p>
+          <button
+            onClick={() => activeOriginId && handleSelectOrigin(activeOriginId)}
+            disabled={loadingSignal.value}
+          >
+            {loadingSignal.value
+              ? 'Abriendo...'
+              : `Abrir «${activeOrigin?.name ?? 'carpeta'}»`}
           </button>
         </div>
       ) : (
