@@ -4,7 +4,7 @@
       "polymorphicComponent": "span"
     }
   },
-  "rules": {
+  "categories": {
     "correctness": "warn",
     "perf": "warn",
     "suspicious": "warn",
