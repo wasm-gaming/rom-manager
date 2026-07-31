@@ -45,8 +45,8 @@ export class StorageNode {
     }
 
     this.node = await VFSNode.open(this.adapter);
-    // Try to get the path from the handle if available
-    this.path = (this.adapter as any).handle?.name || 'Folder';
+    // Get the directory name from the root handle
+    this.path = this.adapter.root.name || 'Folder';
     return true;
   }
 
