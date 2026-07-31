@@ -21,9 +21,11 @@ uploaded anywhere. Real support only exists in Chromium browsers.
 
 ### How it works
 
-- **23 mainstream MiSTer systems**, identified by the exact folder name MiSTer
-  uses under `/games`. Each declares a fixed medium: cartridge or disc.
-  See [Target systems](docs/systems.md).
+- **24 mainstream MiSTer systems**, identified by the exact folder name MiSTer
+  uses under `/games`. Each declares a fixed medium: cartridge or disc. Neo Geo
+  is the one whose games also arrive as a romset — a folder or zip of chip
+  dumps, identified by the checksums of its members rather than by one of its
+  own. See [Target systems](docs/systems.md).
 - **Grouping by base title.** Every DAT entry is a candidate variant; the region,
   language, revision and flag tags in its name produce a variant key, and
   `normalizeGameName()` produces the group key that names the folder and resolves
@@ -73,7 +75,7 @@ Sony - PlayStation/Final Fantasy VII/USA/Final Fantasy VII (USA) (Disc 1).cue
 
 | Document | Contents |
 |---|---|
-| [docs/systems.md](docs/systems.md) | The closed list of supported systems, their medium and their DAT, and why Neo Geo AES/MVS is out. |
+| [docs/systems.md](docs/systems.md) | The closed list of supported systems, their medium and their DAT, and how Neo Geo romsets are identified by their members. |
 | [docs/grouping.md](docs/grouping.md) | Game ↔ variant grouping, variant identity, regions and video standards, name normalization. |
 | [docs/folder-structure.md](docs/folder-structure.md) | On-disk layout per medium, the `.meta/` layer, and the canonical organization operation with its undo log. |
 | [docs/covers.md](docs/covers.md) | One cover per region: how they are matched, chosen, downloaded and stored, plus hand-added images. |
@@ -110,7 +112,7 @@ npm run dataset:to-json        # build static/datasets/ from what is downloaded
   path, so in the canonical cartridge structure it ends up being per variant
   (`<Game>.<variant>.json`) instead of per game, which is what the design calls
   for.
-- **Neo Geo AES/MVS**: the `.neo` sets do have CRC32s and published covers, so
-  half the system is one DAT away; Darksoft and MAME sets, zips of chip dumps
-  with no single-file checksum, need a second identification path.
-  See [docs/systems.md](docs/systems.md).
+- **Neo Geo romsets in the browser**: the dataset already carries the members'
+  checksums, but the app does not read them yet — identifying a zip as a set,
+  taking one in whole instead of unpacking it, and naming a Neo Geo file after
+  its romset are still to be written. See [docs/systems.md](docs/systems.md).

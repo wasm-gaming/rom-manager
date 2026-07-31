@@ -97,6 +97,12 @@
       "crc32": "0AA43CBE"
     },
     {
+      "system": "NEOGEO",
+      "media": "cartridge",
+      "path": "NEOGEO/dataset.json",
+      "crc32": "2101AD3A"
+    },
+    {
       "system": "NeoGeo-CD",
       "media": "disc",
       "path": "NeoGeo-CD/dataset.json",
@@ -141,6 +147,6 @@
   ],
   "description": "ROM metadata datasets (auto-indexed on app startup)",
   "source": "Generated from Libretro database DAT files",
-  "generatedAt": "2026-07-30T14:07:29.504Z",
-  "systemCount": 23
+  "generatedAt": "2026-07-31T19:02:16.591Z",
+  "systemCount": 24
 }

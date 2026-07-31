@@ -23,6 +23,8 @@ import {
   DAT_FILE,
   INDEX_FILE,
   PROJECT_ROOT,
+  ROMSETS_FILE,
+  SETS_FILE,
   SYSTEMS,
   selectSystems,
   systemDir,
@@ -159,11 +161,23 @@ async function main() {
 
       if (!hasCovers) missingCovers++;
 
+      // A system whose games ship as a romset brings two more sources along.
+      // They are passed only when they are on disk, so a partial download
+      // produces a smaller dataset instead of failing the whole run.
+      const extra = [
+        [SETS_FILE, '--sets'],
+        [ROMSETS_FILE, '--romsets'],
+      ]
+        .map(([file, flag]) => [path.join(dir, file), flag])
+        .filter(([source]) => fs.existsSync(source))
+        .map(([source, flag]) => `${flag}=${source}`);
+
       console.log(`\n📦 ${system.name}`);
       await runScript('scripts/dat-to-json.mjs', [
         path.join(dir, DAT_FILE),
         path.join(dir, DATASET_FILE),
         ...(hasCovers ? [`--covers=${coversPath}`] : []),
+        ...extra,
       ]);
     }
 

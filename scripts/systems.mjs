@@ -4,6 +4,8 @@
  * Every system owns a folder under `static/datasets/<system>/`:
  *   source.dat    Raw DAT downloaded from libretro-database
  *   covers.json   Boxart filenames scraped from thumbnails.libretro.com
+ *   sets.dat      Members of each romset, for a system that has them
+ *   romsets.xml   What the core needs to load a romset, likewise
  *   dataset.json  Final dataset consumed by the application
  *
  * `name` is the folder name MiSTer uses under `/games`, taken verbatim from
@@ -11,9 +13,10 @@
  * (`Atari2600` but `ATARI5200`, `NEOGEO` but `NeoGeo-CD`) and is reproduced
  * as-is on purpose: it has to match what sits on the user's SD card.
  *
- * `dat` is the path inside libretro-database/metadat and `thumbnails` is the
- * folder name used by thumbnails.libretro.com, neither of which matches the
- * MiSTer name.
+ * `dat` is the path inside libretro-database, from its root and not from
+ * `metadat/`: most catalogues live there, but not all of them — `dat/` holds
+ * the ones that describe a whole romset as a single file. `thumbnails` is the
+ * folder name used by thumbnails.libretro.com. Neither matches the MiSTer name.
  *
  * `media` drives the on-disk layout: `cartridge` systems keep one file per
  * variant at the system root, `disc` systems get a folder per game with a
@@ -32,6 +35,10 @@ export const DAT_FILE = 'source.dat';
 export const COVERS_FILE = 'covers.json';
 export const DATASET_FILE = 'dataset.json';
 export const INDEX_FILE = 'index.json';
+/** Members of every romset of a system whose games ship as a set of files. */
+export const SETS_FILE = 'sets.dat';
+/** What the core needs to load a romset, which no checksum can say. */
+export const ROMSETS_FILE = 'romsets.xml';
 
 /** Folder of the thumbnail repositories that holds the box art. */
 export const BOXART_FOLDER = 'Named_Boxarts';
@@ -72,43 +79,43 @@ export const SYSTEMS = [
   {
     name: 'NES',
     media: 'cartridge',
-    dat: 'no-intro/Nintendo - Nintendo Entertainment System.dat',
+    dat: 'metadat/no-intro/Nintendo - Nintendo Entertainment System.dat',
     thumbnails: 'Nintendo - Nintendo Entertainment System',
   },
   {
     name: 'SNES',
     media: 'cartridge',
-    dat: 'no-intro/Nintendo - Super Nintendo Entertainment System.dat',
+    dat: 'metadat/no-intro/Nintendo - Super Nintendo Entertainment System.dat',
     thumbnails: 'Nintendo - Super Nintendo Entertainment System',
   },
   {
     name: 'GAMEBOY',
     media: 'cartridge',
-    dat: 'no-intro/Nintendo - Game Boy.dat',
+    dat: 'metadat/no-intro/Nintendo - Game Boy.dat',
     thumbnails: 'Nintendo - Game Boy',
   },
   {
     name: 'GBC',
     media: 'cartridge',
-    dat: 'no-intro/Nintendo - Game Boy Color.dat',
+    dat: 'metadat/no-intro/Nintendo - Game Boy Color.dat',
     thumbnails: 'Nintendo - Game Boy Color',
   },
   {
     name: 'GBA',
     media: 'cartridge',
-    dat: 'no-intro/Nintendo - Game Boy Advance.dat',
+    dat: 'metadat/no-intro/Nintendo - Game Boy Advance.dat',
     thumbnails: 'Nintendo - Game Boy Advance',
   },
   {
     name: 'N64',
     media: 'cartridge',
-    dat: 'no-intro/Nintendo - Nintendo 64.dat',
+    dat: 'metadat/no-intro/Nintendo - Nintendo 64.dat',
     thumbnails: 'Nintendo - Nintendo 64',
   },
   {
     name: 'PokemonMini',
     media: 'cartridge',
-    dat: 'no-intro/Nintendo - Pokemon Mini.dat',
+    dat: 'metadat/no-intro/Nintendo - Pokemon Mini.dat',
     thumbnails: 'Nintendo - Pokemon Mini',
   },
 
@@ -116,37 +123,37 @@ export const SYSTEMS = [
   {
     name: 'SMS',
     media: 'cartridge',
-    dat: 'no-intro/Sega - Master System - Mark III.dat',
+    dat: 'metadat/no-intro/Sega - Master System - Mark III.dat',
     thumbnails: 'Sega - Master System - Mark III',
   },
   {
     name: 'GameGear',
     media: 'cartridge',
-    dat: 'no-intro/Sega - Game Gear.dat',
+    dat: 'metadat/no-intro/Sega - Game Gear.dat',
     thumbnails: 'Sega - Game Gear',
   },
   {
     name: 'MegaDrive',
     media: 'cartridge',
-    dat: 'no-intro/Sega - Mega Drive - Genesis.dat',
+    dat: 'metadat/no-intro/Sega - Mega Drive - Genesis.dat',
     thumbnails: 'Sega - Mega Drive - Genesis',
   },
   {
     name: 'MegaCD',
     media: 'disc',
-    dat: 'redump/Sega - Mega-CD - Sega CD.dat',
+    dat: 'metadat/redump/Sega - Mega-CD - Sega CD.dat',
     thumbnails: 'Sega - Mega-CD - Sega CD',
   },
   {
     name: 'S32X',
     media: 'cartridge',
-    dat: 'no-intro/Sega - 32X.dat',
+    dat: 'metadat/no-intro/Sega - 32X.dat',
     thumbnails: 'Sega - 32X',
   },
   {
     name: 'Saturn',
     media: 'disc',
-    dat: 'redump/Sega - Saturn.dat',
+    dat: 'metadat/redump/Sega - Saturn.dat',
     thumbnails: 'Sega - Saturn',
   },
 
@@ -154,7 +161,7 @@ export const SYSTEMS = [
   {
     name: 'PSX',
     media: 'disc',
-    dat: 'redump/Sony - PlayStation.dat',
+    dat: 'metadat/redump/Sony - PlayStation.dat',
     thumbnails: 'Sony - PlayStation',
   },
 
@@ -162,28 +169,40 @@ export const SYSTEMS = [
   {
     name: 'TGFX16',
     media: 'cartridge',
-    dat: 'no-intro/NEC - PC Engine - TurboGrafx 16.dat',
+    dat: 'metadat/no-intro/NEC - PC Engine - TurboGrafx 16.dat',
     thumbnails: 'NEC - PC Engine - TurboGrafx 16',
   },
   {
     name: 'TGFX16-CD',
     media: 'disc',
-    dat: 'redump/NEC - PC Engine CD - TurboGrafx-CD.dat',
+    dat: 'metadat/redump/NEC - PC Engine CD - TurboGrafx-CD.dat',
     thumbnails: 'NEC - PC Engine CD - TurboGrafx-CD',
   },
 
   // SNK
   //
-  // Only the CD side is covered. Neo Geo AES/MVS is postponed, and not for the
-  // lack of hashes this comment used to claim: `.neo` sets do carry a CRC32
-  // (`dat/SNK - Neo Geo.dat`, outside the `metadat/` base downloaded here).
-  // What has no checksums are the Darksoft and MAME sets — folders or zips of
-  // chip dumps declared in `romsets.xml` — which need an identification path of
-  // their own. See docs/systems.md.
+  // Neo Geo is the one system whose games arrive in two shapes, so it is the
+  // one with more than one source. `dat` catalogues the `.neo` files, one file
+  // and one CRC32 like every other system here; `sets` catalogues the romsets,
+  // where a game is a folder or a zip of chip dumps and what identifies it is
+  // the checksums of its members; and `romsets` carries what neither of them
+  // can say — the hardware attributes MiSTer needs to load the thing.
+  {
+    name: 'NEOGEO',
+    media: 'cartridge',
+    dat: 'dat/SNK - Neo Geo.dat',
+    thumbnails: 'SNK - Neo Geo',
+    sets: {
+      dat: 'metadat/fbneo-split/FinalBurn Neo (ClrMame Pro XML, Arcade only).dat',
+      of: 'neogeo',
+    },
+    romsets:
+      'https://raw.githubusercontent.com/MiSTer-devel/NeoGeo_MiSTer/master/releases/romsets.xml',
+  },
   {
     name: 'NeoGeo-CD',
     media: 'disc',
-    dat: 'redump/SNK - Neo Geo CD.dat',
+    dat: 'metadat/redump/SNK - Neo Geo CD.dat',
     thumbnails: 'SNK - Neo Geo CD',
   },
 
@@ -191,25 +210,25 @@ export const SYSTEMS = [
   {
     name: 'Atari2600',
     media: 'cartridge',
-    dat: 'no-intro/Atari - 2600.dat',
+    dat: 'metadat/no-intro/Atari - 2600.dat',
     thumbnails: 'Atari - 2600',
   },
   {
     name: 'ATARI5200',
     media: 'cartridge',
-    dat: 'no-intro/Atari - 5200.dat',
+    dat: 'metadat/no-intro/Atari - 5200.dat',
     thumbnails: 'Atari - 5200',
   },
   {
     name: 'ATARI7800',
     media: 'cartridge',
-    dat: 'no-intro/Atari - 7800.dat',
+    dat: 'metadat/no-intro/Atari - 7800.dat',
     thumbnails: 'Atari - 7800',
   },
   {
     name: 'AtariLynx',
     media: 'cartridge',
-    dat: 'no-intro/Atari - Lynx.dat',
+    dat: 'metadat/no-intro/Atari - Lynx.dat',
     thumbnails: 'Atari - Lynx',
   },
 
@@ -217,13 +236,13 @@ export const SYSTEMS = [
   {
     name: 'WonderSwan',
     media: 'cartridge',
-    dat: 'no-intro/Bandai - WonderSwan.dat',
+    dat: 'metadat/no-intro/Bandai - WonderSwan.dat',
     thumbnails: 'Bandai - WonderSwan',
   },
   {
     name: 'WonderSwanColor',
     media: 'cartridge',
-    dat: 'no-intro/Bandai - WonderSwan Color.dat',
+    dat: 'metadat/no-intro/Bandai - WonderSwan Color.dat',
     thumbnails: 'Bandai - WonderSwan Color',
   },
 ];

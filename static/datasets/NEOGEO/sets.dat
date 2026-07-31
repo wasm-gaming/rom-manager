@@ -1,0 +1,2821 @@
+clrmamepro (
+	name "NEOGEO romsets"
+	description "NEOGEO romsets"
+)
+
+game (
+	name "2020bb"
+	description "2020 Super Baseball (set 1)"
+	rom ( name "030-p1.p1" size 524288 crc D396C9CB )
+	rom ( name "030-s1.s1" size 131072 crc 7015B8FC )
+	rom ( name "030-c1.c1" size 1048576 crc 4F5E19BD )
+	rom ( name "030-c2.c2" size 1048576 crc D6314BF0 )
+	rom ( name "030-c3.c3" size 1048576 crc 47FDDFEE )
+	rom ( name "030-c4.c4" size 1048576 crc 780D1C4E )
+	rom ( name "030-m1.m1" size 131072 crc 4CF466EC )
+	rom ( name "030-v1.v1" size 1048576 crc D4CA364E )
+	rom ( name "030-v2.v2" size 1048576 crc 54994455 )
+)
+game (
+	name "3countb"
+	description "3 Count Bout / Fire Suplex (NGM-043)(NGH-043)"
+	rom ( name "043-p1.p1" size 1048576 crc FFBDD928 )
+	rom ( name "043-s1.s1" size 131072 crc C362D484 )
+	rom ( name "043-c1.c1" size 2097152 crc BAD2D67F )
+	rom ( name "043-c2.c2" size 2097152 crc A7FBDA95 )
+	rom ( name "043-c3.c3" size 2097152 crc F00BE011 )
+	rom ( name "043-c4.c4" size 2097152 crc 1887E5C0 )
+	rom ( name "043-m1.m1" size 131072 crc 7EAB59CB )
+	rom ( name "043-v1.v1" size 2097152 crc 63688CE8 )
+	rom ( name "043-v2.v2" size 2097152 crc C69A827B )
+)
+game (
+	name "4play"
+	description "4 player input test"
+	rom ( name "4play_p1.rom" size 1048576 crc 3C3D741B )
+	rom ( name "4play_s1.rom" size 131072 crc DE828076 )
+	rom ( name "4play_c1.rom" size 131072 crc 7EE8CDCD )
+	rom ( name "4play_c2.rom" size 131072 crc 7EE8CDCD )
+	rom ( name "4play_m1.rom" size 131072 crc 5132580E )
+	rom ( name "4play_v1.rom" size 131072 crc 7EE8CDCD )
+)
+game (
+	name "sonicwi2"
+	description "Aero Fighters 2 / Sonic Wings 2"
+	rom ( name "075-p1.p1" size 2097152 crc 92871738 )
+	rom ( name "075-s1.s1" size 131072 crc C9EEC367 )
+	rom ( name "075-c1.c1" size 2097152 crc 3278E73E )
+	rom ( name "075-c2.c2" size 2097152 crc FE6355D6 )
+	rom ( name "075-c3.c3" size 2097152 crc C1B438F1 )
+	rom ( name "075-c4.c4" size 2097152 crc 1F777206 )
+	rom ( name "075-m1.m1" size 131072 crc BB828DF1 )
+	rom ( name "075-v1.v1" size 2097152 crc 7577E949 )
+	rom ( name "075-v2.v2" size 1048576 crc 021760CD )
+)
+game (
+	name "sonicwi3"
+	description "Aero Fighters 3 / Sonic Wings 3"
+	rom ( name "097-p1.p1" size 2097152 crc 0547121D )
+	rom ( name "097-s1.s1" size 131072 crc 8DD66743 )
+	rom ( name "097-c1.c1" size 4194304 crc 33D0D589 )
+	rom ( name "097-c2.c2" size 4194304 crc 186F8B43 )
+	rom ( name "097-c3.c3" size 2097152 crc C339FFF5 )
+	rom ( name "097-c4.c4" size 2097152 crc 84A40C6E )
+	rom ( name "097-m1.m1" size 131072 crc B20E4291 )
+	rom ( name "097-v1.v1" size 4194304 crc 6F885152 )
+	rom ( name "097-v2.v2" size 2097152 crc 3359E868 )
+)
+game (
+	name "aodk"
+	description "Aggressors of Dark Kombat / Tsuukai GANGAN Koushinkyoku (ADM-008)(ADH-008)"
+	rom ( name "074-p1.p1" size 2097152 crc 62369553 )
+	rom ( name "074-s1.s1" size 131072 crc 96148D2B )
+	rom ( name "074-c1.c1" size 2097152 crc A0B39344 )
+	rom ( name "074-c2.c2" size 2097152 crc 203F6074 )
+	rom ( name "074-c3.c3" size 2097152 crc 7FFF4D41 )
+	rom ( name "074-c4.c4" size 2097152 crc 48DB3E0A )
+	rom ( name "074-c5.c5" size 2097152 crc C74C5E51 )
+	rom ( name "074-c6.c6" size 2097152 crc 73E8E7E0 )
+	rom ( name "074-c7.c7" size 2097152 crc AC7DAA01 )
+	rom ( name "074-c8.c8" size 2097152 crc 14E7AD71 )
+	rom ( name "074-m1.m1" size 131072 crc 5A52A9D1 )
+	rom ( name "074-v1.v1" size 2097152 crc 7675B8FA )
+	rom ( name "074-v2.v2" size 2097152 crc A9DA86E9 )
+)
+game (
+	name "alpham2"
+	description "Alpha Mission II / ASO II - Last Guardian (NGM-007)(NGH-007)"
+	rom ( name "007-p1.p1" size 524288 crc 5B266F47 )
+	rom ( name "007-p2.p2" size 131072 crc EB9C1044 )
+	rom ( name "007-s1.s1" size 131072 crc 85EC9ACF )
+	rom ( name "007-c1.c1" size 1048576 crc 8FBA8FF3 )
+	rom ( name "007-c2.c2" size 1048576 crc 4DAD2945 )
+	rom ( name "007-c3.c3" size 524288 crc 68C2994E )
+	rom ( name "007-c4.c4" size 524288 crc 7D588349 )
+	rom ( name "007-m1.m1" size 131072 crc 28DFE2CD )
+	rom ( name "007-v1.v1" size 1048576 crc CD5DB931 )
+	rom ( name "007-v2.v2" size 1048576 crc 63E9B574 )
+)
+game (
+	name "androdun"
+	description "Andro Dunos (NGM-049)(NGH-049)"
+	rom ( name "049-p1.p1" size 524288 crc 3B857DA2 )
+	rom ( name "049-p2.p2" size 524288 crc 2F062209 )
+	rom ( name "049-s1.s1" size 131072 crc 6349DE5D )
+	rom ( name "049-c1.c1" size 1048576 crc 7ACE6DB3 )
+	rom ( name "049-c2.c2" size 1048576 crc B17024F7 )
+	rom ( name "049-m1.m1" size 131072 crc EDD2ACF4 )
+	rom ( name "049-v1.v1" size 1048576 crc CE43CB89 )
+)
+game (
+	name "aof"
+	description "Art of Fighting / Ryuuko no Ken (NGM-044)(NGH-044)"
+	rom ( name "044-p1.p1" size 524288 crc CA9F7A6D )
+	rom ( name "044-s1.s1" size 131072 crc 89903F39 )
+	rom ( name "044-c1.c1" size 2097152 crc DDAB98A7 )
+	rom ( name "044-c2.c2" size 2097152 crc D8CCD575 )
+	rom ( name "044-c3.c3" size 2097152 crc 403E898A )
+	rom ( name "044-c4.c4" size 2097152 crc 6235FBAA )
+	rom ( name "044-m1.m1" size 131072 crc 0987E4BB )
+	rom ( name "044-v2.v2" size 2097152 crc 3EC632EA )
+	rom ( name "044-v4.v4" size 2097152 crc 4B0F8E23 )
+)
+game (
+	name "aof2"
+	description "Art of Fighting 2 / Ryuuko no Ken 2 (NGM-056)"
+	rom ( name "056-p1.p1" size 1048576 crc A3B1D021 )
+	rom ( name "056-s1.s1" size 131072 crc 8B02638E )
+	rom ( name "056-c1.c1" size 2097152 crc 17B9CBD2 )
+	rom ( name "056-c2.c2" size 2097152 crc 5FD76B67 )
+	rom ( name "056-c3.c3" size 2097152 crc D2C88768 )
+	rom ( name "056-c4.c4" size 2097152 crc DB39B883 )
+	rom ( name "056-c5.c5" size 2097152 crc C3074137 )
+	rom ( name "056-c6.c6" size 2097152 crc 31DE68D3 )
+	rom ( name "056-c7.c7" size 2097152 crc 3F36DF57 )
+	rom ( name "056-c8.c8" size 2097152 crc E546D7A8 )
+	rom ( name "056-m1.m1" size 131072 crc F27E9D52 )
+	rom ( name "056-v1.v1" size 2097152 crc 4628FDE0 )
+	rom ( name "056-v2.v2" size 2097152 crc B710E2F2 )
+	rom ( name "056-v3.v3" size 1048576 crc D168C301 )
+)
+game (
+	name "aof3"
+	description "Art of Fighting 3 - The Path of the Warrior / Art of Fighting - Ryuuko no Ken Gaiden"
+	rom ( name "096-p1.p1" size 1048576 crc 9EDB420D )
+	rom ( name "096-p2.sp2" size 2097152 crc 4D5A2602 )
+	rom ( name "096-s1.s1" size 131072 crc CC7FD344 )
+	rom ( name "096-c1.c1" size 4194304 crc F17B8D89 )
+	rom ( name "096-c2.c2" size 4194304 crc 3840C508 )
+	rom ( name "096-c3.c3" size 4194304 crc 55F9EE1E )
+	rom ( name "096-c4.c4" size 4194304 crc 585B7E47 )
+	rom ( name "096-c5.c5" size 4194304 crc C75A753C )
+	rom ( name "096-c6.c6" size 4194304 crc 9A9D2F7A )
+	rom ( name "096-c7.c7" size 2097152 crc 51BD8AB2 )
+	rom ( name "096-c8.c8" size 2097152 crc 9A34F99C )
+	rom ( name "096-m1.m1" size 131072 crc CB07B659 )
+	rom ( name "096-v1.v1" size 2097152 crc E2C32074 )
+	rom ( name "096-v2.v2" size 2097152 crc A290EEE7 )
+	rom ( name "096-v3.v3" size 2097152 crc 199D12EA )
+)
+game (
+	name "badapple"
+	description "Bad Apple (Tech-Demo)"
+	rom ( name "bada-p1.bin" size 4194304 crc F68ADE5A )
+	rom ( name "bada-s1.bin" size 131072 crc BC7EBEE7 )
+	rom ( name "bada-c1.bin" size 51380224 crc 88DDC443 )
+	rom ( name "bada-c2.bin" size 51380224 crc B64FACE4 )
+	rom ( name "bada-m1.bin" size 65536 crc C11E8874 )
+	rom ( name "bada-v1.bin" size 5242880 crc 3B741894 )
+)
+game (
+	name "bakatono"
+	description "Bakatonosama Mahjong Manyuuki (MOM-002)(MOH-002)"
+	rom ( name "036-p1.p1" size 524288 crc 1C66B6FA )
+	rom ( name "036-s1.s1" size 131072 crc F3EF4485 )
+	rom ( name "036-c1.c1" size 1048576 crc FE7F1010 )
+	rom ( name "036-c2.c2" size 1048576 crc BBF003F5 )
+	rom ( name "036-c3.c3" size 1048576 crc 9AC0708E )
+	rom ( name "036-c4.c4" size 1048576 crc F2577D22 )
+	rom ( name "036-m1.m1" size 131072 crc F1385B96 )
+	rom ( name "036-v1.v1" size 1048576 crc 1C335DCE )
+	rom ( name "036-v2.v2" size 1048576 crc BBF79342 )
+)
+game (
+	name "b2b"
+	description "Bang Bang Busters (2010 NCI release)"
+	rom ( name "071.p1" size 524288 crc 7687197D )
+	rom ( name "071.s1" size 131072 crc 44E5F154 )
+	rom ( name "071.c1" size 2097152 crc 23D84A7A )
+	rom ( name "071.c2" size 2097152 crc CE7B6248 )
+	rom ( name "071.m1" size 131072 crc 6DA739AD )
+	rom ( name "071.v1" size 1048576 crc 50FEFFB0 )
+)
+game (
+	name "bangbead"
+	description "Bang Bead"
+	rom ( name "259-p1.p1" size 2097152 crc 88A37F8B )
+	rom ( name "259-c1.c1" size 8388608 crc 1F537F74 )
+	rom ( name "259-c2.c2" size 8388608 crc 0EFD98FF )
+	rom ( name "259-m1.m1" size 131072 crc 85668EE9 )
+	rom ( name "259-v1.v1" size 4194304 crc 088EB8AB )
+	rom ( name "259-v2.v2" size 1048576 crc 97528FE9 )
+)
+game (
+	name "bstars2"
+	description "Baseball Stars 2"
+	rom ( name "041-p1.p1" size 524288 crc 523567FD )
+	rom ( name "041-s1.s1" size 131072 crc 015C5C94 )
+	rom ( name "041-c1.c1" size 1048576 crc B39A12E1 )
+	rom ( name "041-c2.c2" size 1048576 crc 766CFC2F )
+	rom ( name "041-c3.c3" size 1048576 crc FB31339D )
+	rom ( name "041-c4.c4" size 1048576 crc 70457A0C )
+	rom ( name "041-m1.m1" size 131072 crc 15C177A6 )
+	rom ( name "041-v1.v1" size 1048576 crc CB1DA093 )
+	rom ( name "041-v2.v2" size 1048576 crc 1C954A9D )
+	rom ( name "041-v3.v3" size 524288 crc AFAA0180 )
+)
+game (
+	name "bstars"
+	description "Baseball Stars Professional (NGM-002)"
+	rom ( name "002-pg.p1" size 524288 crc C100B5F5 )
+	rom ( name "002-s1.s1" size 131072 crc 1A7FD0C6 )
+	rom ( name "002-c1.c1" size 524288 crc AAFF2A45 )
+	rom ( name "002-c2.c2" size 524288 crc 3BA0F7E4 )
+	rom ( name "002-c3.c3" size 524288 crc 96F0FDFA )
+	rom ( name "002-c4.c4" size 524288 crc 5FD87F2F )
+	rom ( name "002-c5.c5" size 524288 crc 807ED83B )
+	rom ( name "002-c6.c6" size 524288 crc 5A3CAD41 )
+	rom ( name "002-m1.m1" size 262144 crc 4ECAA4EE )
+	rom ( name "002-v11.v11" size 524288 crc B7B925BD )
+	rom ( name "002-v12.v12" size 524288 crc 329F26FC )
+	rom ( name "002-v13.v13" size 524288 crc 0C39F3C8 )
+	rom ( name "002-v14.v14" size 524288 crc C7E11C38 )
+	rom ( name "002-v21.v21" size 524288 crc 04A733D1 )
+)
+game (
+	name "flipshot"
+	description "Battle Flip Shot"
+	rom ( name "247-p1.p1" size 1048576 crc 95779094 )
+	rom ( name "247-s1.s1" size 131072 crc 6300185C )
+	rom ( name "247-c1.c1" size 2097152 crc C9EEDCB2 )
+	rom ( name "247-c2.c2" size 2097152 crc 7D6D6E87 )
+	rom ( name "247-m1.m1" size 131072 crc A9FE0144 )
+	rom ( name "247-v1.v1" size 2097152 crc 42EC743D )
+)
+game (
+	name "blazstar"
+	description "Blazing Star"
+	rom ( name "239-p1.p1" size 1048576 crc 183682F8 )
+	rom ( name "239-p2.sp2" size 2097152 crc 9A9F4154 )
+	rom ( name "239-s1.s1" size 131072 crc D56CB498 )
+	rom ( name "239-c1.c1" size 4194304 crc 84F6D584 )
+	rom ( name "239-c2.c2" size 4194304 crc 05A0CB22 )
+	rom ( name "239-c3.c3" size 4194304 crc 5FB69C9E )
+	rom ( name "239-c4.c4" size 4194304 crc 0BE028C4 )
+	rom ( name "239-c5.c5" size 4194304 crc 74BAE5F8 )
+	rom ( name "239-c6.c6" size 4194304 crc 4E0700D2 )
+	rom ( name "239-c7.c7" size 4194304 crc 010FF4FD )
+	rom ( name "239-c8.c8" size 4194304 crc DB60460E )
+	rom ( name "239-m1.m1" size 131072 crc D31A3AEA )
+	rom ( name "239-v1.v1" size 4194304 crc 1B8D5BF7 )
+	rom ( name "239-v2.v2" size 4194304 crc 74CF0A70 )
+)
+game (
+	name "bjourney"
+	description "Blue's Journey / Raguy (ALM-001)(ALH-001)"
+	rom ( name "022-p1.p1" size 1048576 crc 6A2F6D4A )
+	rom ( name "022-s1.s1" size 131072 crc 843C3624 )
+	rom ( name "022-c1.c1" size 1048576 crc 4D47A48C )
+	rom ( name "022-c2.c2" size 1048576 crc E8C1491A )
+	rom ( name "022-c3.c3" size 524288 crc 66E69753 )
+	rom ( name "022-c4.c4" size 524288 crc 71BFD48A )
+	rom ( name "022-m1.m1" size 131072 crc 8E1D4AB6 )
+	rom ( name "022-v11.v11" size 1048576 crc 2CB4AD91 )
+	rom ( name "022-v22.v22" size 1048576 crc 65A54D13 )
+)
+game (
+	name "breakrev"
+	description "Breakers Revenge"
+	rom ( name "245-p1.p1" size 2097152 crc C828876D )
+	rom ( name "245-s1.s1" size 131072 crc E7660A5D )
+	rom ( name "245-c1.c1" size 4194304 crc 68D4AE76 )
+	rom ( name "245-c2.c2" size 4194304 crc FDEE05CD )
+	rom ( name "245-c3.c3" size 4194304 crc 645077F3 )
+	rom ( name "245-c4.c4" size 4194304 crc 63AEB74C )
+	rom ( name "245-c5.c5" size 4194304 crc B5F40E7F )
+	rom ( name "245-c6.c6" size 4194304 crc D0337328 )
+	rom ( name "245-m1.m1" size 131072 crc 00F31C66 )
+	rom ( name "245-v1.v1" size 4194304 crc E255446C )
+	rom ( name "245-v2.v2" size 4194304 crc 9068198A )
+)
+game (
+	name "breakers"
+	description "Breakers"
+	rom ( name "230-p1.p1" size 2097152 crc ED24A6E6 )
+	rom ( name "230-s1.s1" size 131072 crc 076FB64C )
+	rom ( name "230-c1.c1" size 4194304 crc 68D4AE76 )
+	rom ( name "230-c2.c2" size 4194304 crc FDEE05CD )
+	rom ( name "230-c3.c3" size 4194304 crc 645077F3 )
+	rom ( name "230-c4.c4" size 4194304 crc 63AEB74C )
+	rom ( name "230-m1.m1" size 131072 crc 3951A1C1 )
+	rom ( name "230-v1.v1" size 4194304 crc 7F9ED279 )
+	rom ( name "230-v2.v2" size 4194304 crc 1D43E420 )
+)
+game (
+	name "burningf"
+	description "Burning Fight (NGM-018)(NGH-018)"
+	rom ( name "018-p1.p1" size 524288 crc 4092C8DB )
+	rom ( name "018-s1.s1" size 131072 crc 6799EA0D )
+	rom ( name "018-c1.c1" size 1048576 crc 25A25E9B )
+	rom ( name "018-c2.c2" size 1048576 crc D4378876 )
+	rom ( name "018-c3.c3" size 1048576 crc 862B60DA )
+	rom ( name "018-c4.c4" size 1048576 crc E2E0AFF7 )
+	rom ( name "018-m1.m1" size 131072 crc 0C939EE2 )
+	rom ( name "018-v1.v1" size 1048576 crc 508C9FFC )
+	rom ( name "018-v2.v2" size 1048576 crc 854EF277 )
+)
+game (
+	name "cabalng"
+	description "Cabal (Neo-Geo Conversion)"
+	rom ( name "cabal-p1.bin" size 1048576 crc BB193926 )
+	rom ( name "cabal-s1.bin" size 131072 crc 45F0BC5E )
+	rom ( name "cabal-c1.bin" size 1048576 crc 9F5EA8BB )
+	rom ( name "cabal-c2.bin" size 1048576 crc EDF277F2 )
+	rom ( name "cabal-m1.bin" size 65536 crc EFD97334 )
+	rom ( name "cabal-v1.bin" size 1048576 crc 1A5BBC12 )
+	rom ( name "cabal-v2.bin" size 1048576 crc A2B9C011 )
+)
+game (
+	name "ctomaday"
+	description "Captain Tomaday"
+	rom ( name "249-p1.p1" size 2097152 crc C9386118 )
+	rom ( name "249-s1.s1" size 131072 crc DC9EB372 )
+	rom ( name "249-c1.c1" size 4194304 crc 041FB8EE )
+	rom ( name "249-c2.c2" size 4194304 crc 74F3CDF4 )
+	rom ( name "249-m1.m1" size 131072 crc 80328A47 )
+	rom ( name "249-v1.v1" size 4194304 crc DE7C8F27 )
+	rom ( name "249-v2.v2" size 1048576 crc C8E40119 )
+)
+game (
+	name "neodemo"
+	description "Chaos Demo (Neo Geo)"
+	rom ( name "demo-p1.bin" size 524288 crc FBFCE2A4 )
+	rom ( name "demo-s1.bin" size 131072 crc CD19264F )
+	rom ( name "demo-c1.bin" size 1048576 crc 870B28EA )
+	rom ( name "demo-c2.bin" size 1048576 crc 1ECF8128 )
+	rom ( name "202-m1.bin" size 131072 crc 9C0291EA )
+	rom ( name "202-v1.bin" size 524288 crc DEBEB8FB )
+)
+game (
+	name "marukodq"
+	description "Chibi Marukochan Deluxe Quiz"
+	rom ( name "206-p1.p1" size 1048576 crc C33ED21E )
+	rom ( name "206-s1.s1" size 131072 crc F0B68780 )
+	rom ( name "206-c1.c1" size 4194304 crc 846E4E8E )
+	rom ( name "206-c2.c2" size 4194304 crc 1CBA876D )
+	rom ( name "206-c3.c3" size 1048576 crc 79AA2B48 )
+	rom ( name "206-c4.c4" size 1048576 crc 55E1314D )
+	rom ( name "206-m1.m1" size 131072 crc 0E22902E )
+	rom ( name "206-v1.v1" size 2097152 crc 5385ECA8 )
+	rom ( name "206-v2.v2" size 2097152 crc F8C55404 )
+)
+game (
+	name "cndi"
+	description "Chip n Dale (FMV Demo)"
+	rom ( name "cnd-p1.bin" size 8388608 crc 2DF9A41D )
+	rom ( name "cnd-s1.bin" size 65536 crc 63B8B25E )
+	rom ( name "cnd-c1.bin" size 4194304 crc 55BD32FC )
+	rom ( name "cnd-c2.bin" size 4194304 crc BBB43733 )
+	rom ( name "cnd-c3.bin" size 4194304 crc 715E0318 )
+	rom ( name "cnd-c4.bin" size 4194304 crc 016F3C7E )
+	rom ( name "cnd-c5.bin" size 4194304 crc 28C6CB8C )
+	rom ( name "cnd-c6.bin" size 4194304 crc 9C89503F )
+	rom ( name "cnd-c7.bin" size 4194304 crc 074DD407 )
+	rom ( name "cnd-c8.bin" size 4194304 crc 5DDB7DB5 )
+	rom ( name "cnd-m1.bin" size 8192 crc AE120A59 )
+	rom ( name "cnd-v1.bin" size 598016 crc 91D45537 )
+)
+game (
+	name "ironclad"
+	description "Choutetsu Brikin'ger - Iron clad (Prototype)"
+	rom ( name "proto_220-p1.p1" size 2097152 crc 62A942C6 )
+	rom ( name "proto_220-s1.s1" size 131072 crc 372FE217 )
+	rom ( name "proto_220-c1.c1" size 4194304 crc 9AA2B7DC )
+	rom ( name "proto_220-c2.c2" size 4194304 crc 8A2AD708 )
+	rom ( name "proto_220-c3.c3" size 4194304 crc D67FB15A )
+	rom ( name "proto_220-c4.c4" size 4194304 crc E73EA38B )
+	rom ( name "proto_220-m1.m1" size 131072 crc 3A08BB63 )
+	rom ( name "proto_220-v1.v1" size 4194304 crc 8F30A215 )
+)
+game (
+	name "cnbe"
+	description "Codename - Blut Engel (2006-01-19)"
+	rom ( name "cnbe-p1.bin" size 524288 crc 7ECE4186 )
+	rom ( name "cnbe-s1.bin" size 65536 crc 40A4698F )
+	rom ( name "cnbe-c1.bin" size 1048576 crc 0F4FEA6F )
+	rom ( name "cnbe-c2.bin" size 1048576 crc 3D5FC36F )
+	rom ( name "cnbe-m1.bin" size 131072 crc A5821C9C )
+	rom ( name "cnbe-v1.bin" size 524288 crc 70191764 )
+)
+game (
+	name "columnsn"
+	description "Columns (Neo Geo)"
+	rom ( name "2000-p1.bin" size 524288 crc C6C9888D )
+	rom ( name "2000-s1.bin" size 131072 crc 089A28A8 )
+	rom ( name "2000-c1.bin" size 524288 crc 9A579CAB )
+	rom ( name "2000-c2.bin" size 524288 crc 91D14043 )
+	rom ( name "nnp-m1.rom" size 65536 crc 7669DE64 )
+	rom ( name "nnp-v1.rom" size 524288 crc 504BF849 )
+)
+game (
+	name "crsword"
+	description "Crossed Swords (ALM-002)(ALH-002)"
+	rom ( name "037-p1.p1" size 524288 crc E7F2553C )
+	rom ( name "037-s1.s1" size 131072 crc 74651F27 )
+	rom ( name "037-c1.c1" size 1048576 crc 09DF6892 )
+	rom ( name "037-c2.c2" size 1048576 crc AC122A78 )
+	rom ( name "037-c3.c3" size 1048576 crc 9D7ED1CA )
+	rom ( name "037-c4.c4" size 1048576 crc 4A24395D )
+	rom ( name "037-m1.m1" size 131072 crc 9504B2C6 )
+	rom ( name "037-v1.v1" size 1048576 crc 61FEDF65 )
+)
+game (
+	name "crswd2bl"
+	description "Crossed Swords 2 (bootleg CD to cartridge conversion)"
+	rom ( name "054-p1.p1" size 2097152 crc 64836147 )
+	rom ( name "054-s1.s1" size 131072 crc 22E02DDD )
+	rom ( name "054-c1.c1" size 4194304 crc 8221B712 )
+	rom ( name "054-c2.c2" size 4194304 crc D6C6183D )
+	rom ( name "054-m1.m1" size 131072 crc 63E28343 )
+	rom ( name "054-v1.v1" size 2097152 crc 22D4B93B )
+)
+game (
+	name "cphd"
+	description "Crouching Poney Hidden Dragon (DEMO)"
+	rom ( name "cphd.p1" size 1048576 crc DE032A95 )
+	rom ( name "cphd.p2" size 8388608 crc 7A3A2E41 )
+	rom ( name "cphd.s1" size 131072 crc 1736099A )
+	rom ( name "cphd.c1" size 33554432 crc F3A4B475 )
+	rom ( name "cphd.c2" size 33554432 crc 05CE93A9 )
+	rom ( name "cphd.c3" size 33554432 crc 59450445 )
+	rom ( name "cphd.c4" size 33554432 crc 59450445 )
+	rom ( name "cphd.m1" size 65536 crc 535A7397 )
+	rom ( name "cphd.v1" size 33554432 crc 04EB9C07 )
+	rom ( name "cphd.v2" size 33554432 crc 9C9AEC7F )
+)
+game (
+	name "cyberlip"
+	description "Cyber-Lip (NGM-010)"
+	rom ( name "010-p1.p1" size 524288 crc 69A6B42D )
+	rom ( name "010-s1.s1" size 131072 crc 79A35264 )
+	rom ( name "010-c1.c1" size 524288 crc 8BBA5113 )
+	rom ( name "010-c2.c2" size 524288 crc CBF66432 )
+	rom ( name "010-c3.c3" size 524288 crc E4F86EFC )
+	rom ( name "010-c4.c4" size 524288 crc F7BE4674 )
+	rom ( name "010-c5.c5" size 524288 crc E8076DA0 )
+	rom ( name "010-c6.c6" size 524288 crc C495C567 )
+	rom ( name "010-m1.m1" size 131072 crc 8BE3A078 )
+	rom ( name "010-v11.v11" size 524288 crc 90224D22 )
+	rom ( name "010-v12.v12" size 524288 crc A0CF1834 )
+	rom ( name "010-v13.v13" size 524288 crc AE38BC84 )
+	rom ( name "010-v14.v14" size 524288 crc 70899BD2 )
+	rom ( name "010-v21.v21" size 524288 crc 586F4CB2 )
+)
+game (
+	name "dwi"
+	description "DarkWing Duck (FMV Demo)"
+	rom ( name "dwi-p1.bin" size 8388608 crc 8E3F2EA8 )
+	rom ( name "dwi-s1.bin" size 65536 crc 3DC5C1EF )
+	rom ( name "dwi-c1.bin" size 4194304 crc 2B8BDA94 )
+	rom ( name "dwi-c2.bin" size 4194304 crc 5345E4DE )
+	rom ( name "dwi-c3.bin" size 4194304 crc C6185F14 )
+	rom ( name "dwi-c4.bin" size 4194304 crc C9E59701 )
+	rom ( name "dwi-c5.bin" size 4194304 crc 42DD1C90 )
+	rom ( name "dwi-c6.bin" size 4194304 crc 9FA6D651 )
+	rom ( name "dwi-c7.bin" size 4194304 crc 5CFA6886 )
+	rom ( name "dwi-c8.bin" size 4194304 crc 59C37871 )
+	rom ( name "dwi-m1.bin" size 8192 crc 2249E065 )
+	rom ( name "dwi-v1.bin" size 634880 crc 13BB4CE4 )
+)
+game (
+	name "diggerma"
+	description "Digger Man"
+	rom ( name "dig-p1.bin" size 524288 crc EDA433D7 )
+	rom ( name "dig-s1.bin" size 131072 crc 9B3168F0 )
+	rom ( name "dig-c1.bin" size 524288 crc 3DB0A4ED )
+	rom ( name "dig-c2.bin" size 524288 crc 3E632161 )
+	rom ( name "dig-m1.bin" size 131072 crc E777A234 )
+	rom ( name "dig-v1.bin" size 524288 crc EE15BDA4 )
+)
+game (
+	name "doubledr"
+	description "Double Dragon (Neo-Geo)"
+	rom ( name "082-p1.p1" size 2097152 crc 34AB832A )
+	rom ( name "082-s1.s1" size 131072 crc BEF995C5 )
+	rom ( name "082-c1.c1" size 2097152 crc B478C725 )
+	rom ( name "082-c2.c2" size 2097152 crc 2857DA32 )
+	rom ( name "082-c3.c3" size 2097152 crc 8B0D378E )
+	rom ( name "082-c4.c4" size 2097152 crc C7D2F596 )
+	rom ( name "082-c5.c5" size 2097152 crc EC87BFF6 )
+	rom ( name "082-c6.c6" size 2097152 crc 844A8A11 )
+	rom ( name "082-c7.c7" size 1048576 crc 727C4D02 )
+	rom ( name "082-c8.c8" size 1048576 crc 69A5FA37 )
+	rom ( name "082-m1.m1" size 131072 crc 10B144DE )
+	rom ( name "082-v1.v1" size 2097152 crc CC1128E4 )
+	rom ( name "082-v2.v2" size 2097152 crc C3FF5554 )
+)
+game (
+	name "dragonsh"
+	description "Dragon's Heaven (development board)"
+	rom ( name "ep1.bin" size 524288 crc F353448C )
+	rom ( name "ep2.bin" size 524288 crc F25C71AD )
+	rom ( name "s1.s1" size 131072 crc 706477A7 )
+	rom ( name "no3.bin" size 16777216 crc 81821826 )
+	rom ( name "no4.bin" size 16777216 crc 3601D568 )
+)
+game (
+	name "ducki"
+	description "Duck Tales (FMV Demo)"
+	rom ( name "duck-p1.bin" size 8388608 crc F975711C )
+	rom ( name "duck-s1.bin" size 65536 crc 63B8B25E )
+	rom ( name "duck-c1.bin" size 4194304 crc 02ADABBA )
+	rom ( name "duck-c2.bin" size 4194304 crc 00BD87AC )
+	rom ( name "duck-c3.bin" size 4194304 crc 263307C8 )
+	rom ( name "duck-c4.bin" size 4194304 crc B8330C1E )
+	rom ( name "duck-c5.bin" size 4194304 crc CE99FCB8 )
+	rom ( name "duck-c6.bin" size 4194304 crc A6D30781 )
+	rom ( name "duck-c7.bin" size 4194304 crc EDA15323 )
+	rom ( name "duck-c8.bin" size 4194304 crc 400FD4CD )
+	rom ( name "duck-m1.bin" size 8192 crc 7761D993 )
+	rom ( name "duck-v1.bin" size 590336 crc 24B716EE )
+)
+game (
+	name "eightman"
+	description "Eight Man (NGM-025)(NGH-025)"
+	rom ( name "025-p1.p1" size 524288 crc 43344CB0 )
+	rom ( name "025-s1.s1" size 131072 crc A402202B )
+	rom ( name "025-c1.c1" size 1048576 crc 555E16A4 )
+	rom ( name "025-c2.c2" size 1048576 crc E1EE51C3 )
+	rom ( name "025-c3.c3" size 524288 crc 0923D5B0 )
+	rom ( name "025-c4.c4" size 524288 crc E3ECA67B )
+	rom ( name "025-m1.m1" size 131072 crc 9927034C )
+	rom ( name "025-v1.v1" size 1048576 crc 4558558A )
+	rom ( name "025-v2.v2" size 1048576 crc C5E052E9 )
+)
+game (
+	name "kabukikl"
+	description "Far East of Eden - Kabuki Klash / Tengai Makyou - Shin Den"
+	rom ( name "092-p1.p1" size 2097152 crc 28EC9B77 )
+	rom ( name "092-s1.s1" size 131072 crc A3D68EE2 )
+	rom ( name "092-c1.c1" size 4194304 crc 2A9FAB01 )
+	rom ( name "092-c2.c2" size 4194304 crc 6D2BAC02 )
+	rom ( name "092-c3.c3" size 4194304 crc 5DA735D6 )
+	rom ( name "092-c4.c4" size 4194304 crc DE07F997 )
+	rom ( name "092-m1.m1" size 131072 crc 91957EF6 )
+	rom ( name "092-v1.v1" size 2097152 crc 69E90596 )
+	rom ( name "092-v2.v2" size 2097152 crc 7ABDB75D )
+	rom ( name "092-v3.v3" size 2097152 crc ECCC98D3 )
+	rom ( name "092-v4.v4" size 1048576 crc A7C9C949 )
+)
+game (
+	name "fatfury1"
+	description "Fatal Fury - King of Fighters / Garou Densetsu - shukumei no tatakai (NGM-033)(NGH-033)"
+	rom ( name "033-p1.p1" size 524288 crc 47EBDC2F )
+	rom ( name "033-p2.p2" size 131072 crc C473AF1C )
+	rom ( name "033-s1.s1" size 131072 crc 3C3BDF8C )
+	rom ( name "033-c1.c1" size 1048576 crc 74317E54 )
+	rom ( name "033-c2.c2" size 1048576 crc 5BB952F3 )
+	rom ( name "033-c3.c3" size 1048576 crc 9B714A7C )
+	rom ( name "033-c4.c4" size 1048576 crc 9397476A )
+	rom ( name "033-m1.m1" size 131072 crc 5BE10FFD )
+	rom ( name "033-v1.v1" size 1048576 crc 212FD20D )
+	rom ( name "033-v2.v2" size 1048576 crc FA2AE47F )
+)
+game (
+	name "fatfury2"
+	description "Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)(NGH-047)"
+	rom ( name "047-p1.p1" size 1048576 crc ECFDBB69 )
+	rom ( name "047-s1.s1" size 131072 crc D7DBBF39 )
+	rom ( name "047-c1.c1" size 2097152 crc F72A939E )
+	rom ( name "047-c2.c2" size 2097152 crc 05119A0D )
+	rom ( name "047-c3.c3" size 2097152 crc 01E00738 )
+	rom ( name "047-c4.c4" size 2097152 crc 9FE27432 )
+	rom ( name "047-m1.m1" size 131072 crc 820B0BA7 )
+	rom ( name "047-v1.v1" size 2097152 crc D9D00784 )
+	rom ( name "047-v2.v2" size 2097152 crc 2C9A4B33 )
+)
+game (
+	name "fatfury3"
+	description "Fatal Fury 3 - Road to the Final Victory / Garou Densetsu 3 - haruka-naru tatakai (NGM-069)(NGH-069)"
+	rom ( name "069-p1.p1" size 1048576 crc A8BCFBBC )
+	rom ( name "069-sp2.sp2" size 2097152 crc DBE963ED )
+	rom ( name "069-s1.s1" size 131072 crc 0B33A800 )
+	rom ( name "069-c1.c1" size 4194304 crc E302F93C )
+	rom ( name "069-c2.c2" size 4194304 crc 1053A455 )
+	rom ( name "069-c3.c3" size 4194304 crc 1C0FDE2F )
+	rom ( name "069-c4.c4" size 4194304 crc A25FC3D0 )
+	rom ( name "069-c5.c5" size 2097152 crc B3EC6FA6 )
+	rom ( name "069-c6.c6" size 2097152 crc 69210441 )
+	rom ( name "069-m1.m1" size 131072 crc FCE72926 )
+	rom ( name "069-v1.v1" size 4194304 crc 2BDBD4DB )
+	rom ( name "069-v2.v2" size 4194304 crc A698A487 )
+	rom ( name "069-v3.v3" size 2097152 crc 581C5304 )
+)
+game (
+	name "fatfursp"
+	description "Fatal Fury Special / Garou Densetsu Special (set 1)(NGM-058)(NGH-058)"
+	rom ( name "058-p1.p1" size 1048576 crc 2F585BA2 )
+	rom ( name "058-p2.sp2" size 524288 crc D7C71A6B )
+	rom ( name "058-s1.s1" size 131072 crc 2DF03197 )
+	rom ( name "058-c1.c1" size 2097152 crc 044AB13C )
+	rom ( name "058-c2.c2" size 2097152 crc 11E6BF96 )
+	rom ( name "058-c3.c3" size 2097152 crc 6F7938D5 )
+	rom ( name "058-c4.c4" size 2097152 crc 4AD066FF )
+	rom ( name "058-c5.c5" size 2097152 crc 49C5E0BF )
+	rom ( name "058-c6.c6" size 2097152 crc 8FF1F43D )
+	rom ( name "058-m1.m1" size 131072 crc CCC5186E )
+	rom ( name "058-v1.v1" size 2097152 crc 55D7CE84 )
+	rom ( name "058-v2.v2" size 2097152 crc EE080B10 )
+	rom ( name "058-v3.v3" size 1048576 crc F9EB3D4A )
+)
+game (
+	name "fightfev"
+	description "Fight Fever (set 1)"
+	rom ( name "060-p1.p1" size 1048576 crc 2A104B50 )
+	rom ( name "060-s1.s1" size 131072 crc D62A72E9 )
+	rom ( name "060-c1.c1" size 2097152 crc 8908FFF9 )
+	rom ( name "060-c2.c2" size 2097152 crc C6649492 )
+	rom ( name "060-c3.c3" size 2097152 crc 0956B437 )
+	rom ( name "060-c4.c4" size 2097152 crc 026F3B62 )
+	rom ( name "060-m1.m1" size 131072 crc 0B7C4E65 )
+	rom ( name "060-v1.v1" size 2097152 crc F417C215 )
+	rom ( name "060-v2.v2" size 1048576 crc EFCFF7CF )
+)
+game (
+	name "fbfrenzy"
+	description "Football Frenzy (NGM-034)(NGH-034)"
+	rom ( name "034-p1.p1" size 524288 crc CDEF6B19 )
+	rom ( name "034-s1.s1" size 131072 crc 8472ED44 )
+	rom ( name "034-c1.c1" size 1048576 crc 91C56E78 )
+	rom ( name "034-c2.c2" size 1048576 crc 9743EA2F )
+	rom ( name "034-c3.c3" size 524288 crc E5AA65F5 )
+	rom ( name "034-c4.c4" size 524288 crc 0EB138CC )
+	rom ( name "034-m1.m1" size 131072 crc F41B16B8 )
+	rom ( name "034-v1.v1" size 1048576 crc 50C9D0DD )
+	rom ( name "034-v2.v2" size 1048576 crc 5AA15686 )
+)
+game (
+	name "ngfrog"
+	description "Frog Feast (Neo Geo)"
+	rom ( name "frg-p1.bin" size 524288 crc C26848DA )
+	rom ( name "frg-s1.bin" size 131072 crc 88F4CD13 )
+	rom ( name "frg-c1.bin" size 1048576 crc 7B2F9FB3 )
+	rom ( name "frg-c2.bin" size 1048576 crc A7F18A6F )
+	rom ( name "frg-c3.bin" size 1048576 crc 956BAC74 )
+	rom ( name "frg-c4.bin" size 1048576 crc 956BAC74 )
+	rom ( name "frg-m1.bin" size 131072 crc C825B484 )
+	rom ( name "frg-v1.bin" size 1048576 crc 2639DA11 )
+	rom ( name "frg-v2.bin" size 1048576 crc E5EDA58B )
+)
+game (
+	name "neogalag"
+	description "Galaga Demo (set 1)"
+	rom ( name "gal_p1.rom" size 1048576 crc 7226DB5C )
+	rom ( name "gal_s1.rom" size 8192 crc 90557449 )
+	rom ( name "gal_c1.rom" size 1048576 crc 6DE8C6F6 )
+	rom ( name "gal_c2.rom" size 1048576 crc FA5F0C1D )
+	rom ( name "gal_m1.rom" size 131072 crc 9C0291EA )
+	rom ( name "gal_v1.rom" size 524288 crc DEBEB8FB )
+)
+game (
+	name "galaxyfg"
+	description "Galaxy Fight - Universal Warriors"
+	rom ( name "078-p1.p1" size 2097152 crc 45906309 )
+	rom ( name "078-s1.s1" size 131072 crc 72F8923E )
+	rom ( name "078-c1.c1" size 2097152 crc C890C7C0 )
+	rom ( name "078-c2.c2" size 2097152 crc B6D25419 )
+	rom ( name "078-c3.c3" size 2097152 crc 9D87E761 )
+	rom ( name "078-c4.c4" size 2097152 crc 765D7CB8 )
+	rom ( name "078-c5.c5" size 2097152 crc E6B77E6A )
+	rom ( name "078-c6.c6" size 2097152 crc D779A181 )
+	rom ( name "078-c7.c7" size 1048576 crc 4F27D580 )
+	rom ( name "078-c8.c8" size 1048576 crc 0A7CC0D8 )
+	rom ( name "078-m1.m1" size 131072 crc 8E9E3B10 )
+	rom ( name "078-v1.v1" size 2097152 crc E3B735AC )
+	rom ( name "078-v2.v2" size 2097152 crc 6A8E78C2 )
+	rom ( name "078-v3.v3" size 1048576 crc 70BCA656 )
+)
+game (
+	name "ganryu"
+	description "Ganryu / Musashi Ganryuki"
+	rom ( name "252-p1.p1" size 2097152 crc 4B8AC4FB )
+	rom ( name "252-c1.c1" size 8388608 crc 50EE7882 )
+	rom ( name "252-c2.c2" size 8388608 crc 62585474 )
+	rom ( name "252-m1.m1" size 131072 crc 30CC4099 )
+	rom ( name "252-v1.v1" size 4194304 crc E5946733 )
+)
+game (
+	name "garou"
+	description "Garou - Mark of the Wolves (NGM-2530)"
+	rom ( name "kf.neo-sma" size 262144 crc 98BC93DC )
+	rom ( name "253-ep1.p1" size 2097152 crc EA3171A4 )
+	rom ( name "253-ep2.p2" size 2097152 crc 382F704B )
+	rom ( name "253-ep3.p3" size 2097152 crc E395BFDD )
+	rom ( name "253-ep4.p4" size 2097152 crc DA92C08E )
+	rom ( name "253-c1.c1" size 8388608 crc 0603E046 )
+	rom ( name "253-c2.c2" size 8388608 crc 0917D2A4 )
+	rom ( name "253-c3.c3" size 8388608 crc 6737C92D )
+	rom ( name "253-c4.c4" size 8388608 crc 5BA92EC6 )
+	rom ( name "253-c5.c5" size 8388608 crc 3EAB5557 )
+	rom ( name "253-c6.c6" size 8388608 crc 308D098B )
+	rom ( name "253-c7.c7" size 8388608 crc C0E995AE )
+	rom ( name "253-c8.c8" size 8388608 crc 21A11303 )
+	rom ( name "253-m1.m1" size 262144 crc 36A806BE )
+	rom ( name "253-v1.v1" size 4194304 crc 263E388C )
+	rom ( name "253-v2.v2" size 4194304 crc 2C6BC7BE )
+	rom ( name "253-v3.v3" size 4194304 crc 0425B27D )
+	rom ( name "253-v4.v4" size 4194304 crc A54BE8A9 )
+)
+game (
+	name "ghostbi"
+	description "Ghost Busters (FMV Demo)"
+	rom ( name "ghostb-p1.bin" size 1048576 crc AF69EF5F )
+	rom ( name "ghostb-p2.bin" size 4194304 crc F57E393F )
+	rom ( name "ghostb-s1.bin" size 65536 crc 63B8B25E )
+	rom ( name "ghostb-c1.bin" size 4194304 crc 4281FECD )
+	rom ( name "ghostb-c2.bin" size 4194304 crc 0F07018C )
+	rom ( name "ghostb-c3.bin" size 4194304 crc A4589B2A )
+	rom ( name "ghostb-c4.bin" size 4194304 crc 2A72BD04 )
+	rom ( name "ghostb-c5.bin" size 4194304 crc AD3B72F9 )
+	rom ( name "ghostb-c6.bin" size 4194304 crc 963E0941 )
+	rom ( name "ghostb-m1.bin" size 8192 crc 6624E642 )
+	rom ( name "ghostb-v1.bin" size 608768 crc 44864761 )
+)
+game (
+	name "gpilots"
+	description "Ghost Pilots (NGM-020)(NGH-020)"
+	rom ( name "020-p1.p1" size 524288 crc E6F2FE64 )
+	rom ( name "020-p2.p2" size 131072 crc EDCB22AC )
+	rom ( name "020-s1.s1" size 131072 crc A6D83D53 )
+	rom ( name "020-c1.c1" size 1048576 crc BD6FE78E )
+	rom ( name "020-c2.c2" size 1048576 crc 5F4A925C )
+	rom ( name "020-c3.c3" size 1048576 crc D1E42FD0 )
+	rom ( name "020-c4.c4" size 1048576 crc EDDE439B )
+	rom ( name "020-m1.m1" size 131072 crc 48409377 )
+	rom ( name "020-v11.v11" size 1048576 crc 1B526C8B )
+	rom ( name "020-v12.v12" size 524288 crc 4A9E6F03 )
+	rom ( name "020-v21.v21" size 524288 crc 7ABF113D )
+)
+game (
+	name "ghostlop"
+	description "Ghostlop (prototype)"
+	rom ( name "proto_228-p1.p1" size 1048576 crc 6033172E )
+	rom ( name "proto_228-s1.s1" size 131072 crc 83C24E81 )
+	rom ( name "proto_228-c1.c1" size 4194304 crc BFC99EFE )
+	rom ( name "proto_228-c2.c2" size 4194304 crc 69788082 )
+	rom ( name "proto_228-m1.m1" size 131072 crc FD833B33 )
+	rom ( name "proto_228-v1.v1" size 2097152 crc C603FCE6 )
+)
+game (
+	name "goalx3"
+	description "Goal! Goal! Goal!"
+	rom ( name "209-p1.p1" size 2097152 crc 2A019A79 )
+	rom ( name "209-s1.s1" size 131072 crc C0EAAD86 )
+	rom ( name "209-c1.c1" size 4194304 crc B49D980E )
+	rom ( name "209-c2.c2" size 4194304 crc 5649B015 )
+	rom ( name "209-c3.c3" size 1048576 crc 5F91BACE )
+	rom ( name "209-c4.c4" size 1048576 crc 1E9F76F2 )
+	rom ( name "209-m1.m1" size 131072 crc CD758325 )
+	rom ( name "209-v1.v1" size 2097152 crc EF214212 )
+)
+game (
+	name "gururin"
+	description "Gururin"
+	rom ( name "067-p1.p1" size 524288 crc 4CEA8A49 )
+	rom ( name "067-s1.s1" size 131072 crc B119E1EB )
+	rom ( name "067-c1.c1" size 2097152 crc 35866126 )
+	rom ( name "067-c2.c2" size 2097152 crc 9DB64084 )
+	rom ( name "067-m1.m1" size 131072 crc 9E3C6328 )
+	rom ( name "067-v1.v1" size 524288 crc CF23AFD0 )
+)
+game (
+	name "hypernoid"
+	description "Hypernoid (Ver. 20211128)"
+	rom ( name "hypernoid-p1.p1" size 1048576 crc E024FA76 )
+	rom ( name "hypernoid-s1.s1" size 131072 crc BB82AB71 )
+	rom ( name "hypernoid-c1.c1" size 2097152 crc 41D6140A )
+	rom ( name "hypernoid-c2.c2" size 2097152 crc 36F35DF2 )
+	rom ( name "hypernoid-m1.m1" size 524288 crc 6C8EAACC )
+	rom ( name "hypernoid-v.v1" size 4194304 crc DAFA1BDD )
+	rom ( name "hypernoid-v.v2" size 4194304 crc 85AD8283 )
+	rom ( name "hypernoid-v.v3" size 4194304 crc 86C27F0C )
+	rom ( name "hypernoid-v.v4" size 4194304 crc A3982244 )
+)
+game (
+	name "froman2b"
+	description "Idol Mahjong - final romance 2 (Neo CD Conversion)"
+	rom ( name "098.p1" size 524288 crc 09675541 )
+	rom ( name "098.s1" size 131072 crc 0E6A7C73 )
+	rom ( name "098.c1" size 4194304 crc 29148BF7 )
+	rom ( name "098.c2" size 4194304 crc 226B1263 )
+	rom ( name "098.m1" size 131072 crc DA4878CF )
+	rom ( name "098.v1" size 1048576 crc 6F8CCDDC )
+)
+game (
+	name "jockeygp"
+	description "Jockey Grand Prix (set 1)"
+	rom ( name "008-epr.p1" size 1048576 crc 2FB7F388 )
+	rom ( name "008-c1.c1" size 8388608 crc A9ACBF18 )
+	rom ( name "008-c2.c2" size 8388608 crc 6289EEF9 )
+	rom ( name "008-mg1.m1" size 524288 crc D163C690 )
+	rom ( name "008-v1.v1" size 2097152 crc 443EADBA )
+)
+game (
+	name "ltorb"
+	description "Jonas Indiana and the Lost Temple of RA (20050717)"
+	rom ( name "nnp-p1.rom" size 262144 crc 353F6B05 )
+	rom ( name "nnp-s1.rom" size 65536 crc 8224D8B7 )
+	rom ( name "nnp-c1.rom" size 524288 crc 8B607198 )
+	rom ( name "nnp-c2.rom" size 524288 crc 6B96B59C )
+	rom ( name "nnp-m1.rom" size 65536 crc 6847FD52 )
+	rom ( name "nnp-v1.rom" size 524288 crc 0329C2E7 )
+)
+game (
+	name "janshin"
+	description "Jyanshin Densetsu - Quest of Jongmaster"
+	rom ( name "048-p1.p1" size 1048576 crc FA818CBB )
+	rom ( name "048-s1.s1" size 131072 crc 8285B25A )
+	rom ( name "048-c1.c1" size 2097152 crc 3FA890E9 )
+	rom ( name "048-c2.c2" size 2097152 crc 59C48AD8 )
+	rom ( name "048-m1.m1" size 131072 crc 310467C7 )
+	rom ( name "048-v1.v1" size 2097152 crc F1947D2B )
+)
+game (
+	name "karnovr"
+	description "Karnov's Revenge / Fighter's History Dynamite"
+	rom ( name "066-p1.p1" size 1048576 crc 8C86FD22 )
+	rom ( name "066-s1.s1" size 131072 crc BAE5D5E5 )
+	rom ( name "066-c1.c1" size 2097152 crc 09DFE061 )
+	rom ( name "066-c2.c2" size 2097152 crc E0F6682A )
+	rom ( name "066-c3.c3" size 2097152 crc A673B4F7 )
+	rom ( name "066-c4.c4" size 2097152 crc CB3DC5F4 )
+	rom ( name "066-c5.c5" size 2097152 crc 9A28785D )
+	rom ( name "066-c6.c6" size 2097152 crc C15C01ED )
+	rom ( name "066-m1.m1" size 131072 crc 030BEAE4 )
+	rom ( name "066-v1.v1" size 2097152 crc 0B7EA37A )
+)
+game (
+	name "kotm"
+	description "King of the Monsters (set 1)"
+	rom ( name "016-p1.p1" size 524288 crc 1B818731 )
+	rom ( name "016-p2.p2" size 131072 crc 12AFDC2B )
+	rom ( name "016-s1.s1" size 131072 crc 1A2EEEB3 )
+	rom ( name "016-c1.c1" size 1048576 crc 71471C25 )
+	rom ( name "016-c2.c2" size 1048576 crc 320DB048 )
+	rom ( name "016-c3.c3" size 1048576 crc 98DE7995 )
+	rom ( name "016-c4.c4" size 1048576 crc 070506E2 )
+	rom ( name "016-m1.m1" size 131072 crc 9DA9CA10 )
+	rom ( name "016-v1.v1" size 1048576 crc 86C0A502 )
+	rom ( name "016-v2.v2" size 1048576 crc 5BC23EC5 )
+)
+game (
+	name "kotm2"
+	description "King of the Monsters 2 - The Next Thing (NGM-039)(NGH-039)"
+	rom ( name "039-p1.p1" size 524288 crc B372D54C )
+	rom ( name "039-p2.p2" size 524288 crc 28661AFE )
+	rom ( name "039-s1.s1" size 131072 crc 63EE053A )
+	rom ( name "039-c1.c1" size 2097152 crc 6D1C4AA9 )
+	rom ( name "039-c2.c2" size 2097152 crc F7B75337 )
+	rom ( name "039-c3.c3" size 524288 crc BFC4F0B2 )
+	rom ( name "039-c4.c4" size 524288 crc 81C9C250 )
+	rom ( name "039-m1.m1" size 131072 crc 0C5B2AD5 )
+	rom ( name "039-v2.v2" size 2097152 crc 86D34B25 )
+	rom ( name "039-v4.v4" size 1048576 crc 8FA62A0B )
+)
+game (
+	name "kizuna"
+	description "Kizuna Encounter - Super Tag Battle / Fu'un Super Tag Battle"
+	rom ( name "216-p1.p1" size 2097152 crc 75D2B3DE )
+	rom ( name "216-s1.s1" size 131072 crc EFDC72D7 )
+	rom ( name "059-c1.c1" size 2097152 crc 763BA611 )
+	rom ( name "059-c2.c2" size 2097152 crc E05E8CA6 )
+	rom ( name "216-c3.c3" size 4194304 crc 665C9F16 )
+	rom ( name "216-c4.c4" size 4194304 crc 7F5D03DB )
+	rom ( name "059-c5.c5" size 2097152 crc 59013F9E )
+	rom ( name "059-c6.c6" size 2097152 crc 1C8D5DEF )
+	rom ( name "059-c7.c7" size 2097152 crc C88F7035 )
+	rom ( name "059-c8.c8" size 2097152 crc 484CE3BA )
+	rom ( name "216-m1.m1" size 131072 crc 1B096820 )
+	rom ( name "059-v1.v1" size 2097152 crc 530C50FD )
+	rom ( name "216-v2.v2" size 2097152 crc 03667A8D )
+	rom ( name "059-v3.v3" size 2097152 crc 7038C2F9 )
+	rom ( name "216-v4.v4" size 2097152 crc 31B99BD6 )
+)
+game (
+	name "lasthope"
+	description "Last Hope (bootleg AES to MVS conversion, no coin support)"
+	rom ( name "ngdt-300-p1.bin" size 1048576 crc 3776A88F )
+	rom ( name "ngdt-300-s1.bin" size 65536 crc 0C0FF9E6 )
+	rom ( name "ngdt-300-c1.bin" size 4194304 crc 53EF41B5 )
+	rom ( name "ngdt-300-c2.bin" size 4194304 crc F9B15AB3 )
+	rom ( name "ngdt-300-c3.bin" size 4194304 crc 50CC21CF )
+	rom ( name "ngdt-300-c4.bin" size 4194304 crc 8486AD9E )
+	rom ( name "ngdt-300-m1.bin" size 131072 crc 113C870F )
+	rom ( name "ngdt-300-v1.bin" size 2097152 crc B765BAFE )
+	rom ( name "ngdt-300-v2.bin" size 2097152 crc 9FD0D559 )
+	rom ( name "ngdt-300-v3.bin" size 2097152 crc 6D5107E2 )
+)
+game (
+	name "lhcdb"
+	description "Last Hope CD Beta (Neo CD conversion)"
+	rom ( name "300-p1ch.bin" size 1048576 crc 0F7405D7 )
+	rom ( name "300-s1ch.bin" size 131072 crc 298495D6 )
+	rom ( name "300-c1ch.bin" size 4194304 crc 554E6B73 )
+	rom ( name "300-c2ch.bin" size 4194304 crc 7C84B0FC )
+	rom ( name "300-c3ch.bin" size 4194304 crc 28EC7555 )
+	rom ( name "300-c4ch.bin" size 4194304 crc 8B7C236B )
+	rom ( name "300-m1ch.bin" size 131072 crc D9F6C153 )
+	rom ( name "300-v1ch.bin" size 4194304 crc DE563EC3 )
+	rom ( name "300-v2ch.bin" size 4194304 crc 93478033 )
+	rom ( name "300-v3ch.bin" size 4194304 crc E0FC99CA )
+)
+game (
+	name "lresort"
+	description "Last Resort"
+	rom ( name "024-p1.p1" size 524288 crc 89C4AB97 )
+	rom ( name "024-s1.s1" size 131072 crc 5CEF5CC6 )
+	rom ( name "024-c1.c1" size 1048576 crc 3617C2DC )
+	rom ( name "024-c2.c2" size 1048576 crc 3F0A7FD8 )
+	rom ( name "024-c3.c3" size 524288 crc E9F745F8 )
+	rom ( name "024-c4.c4" size 524288 crc 7382FEFB )
+	rom ( name "024-m1.m1" size 131072 crc CEC19742 )
+	rom ( name "024-v1.v1" size 1048576 crc EFDFA063 )
+	rom ( name "024-v2.v2" size 1048576 crc 3C7997C0 )
+)
+game (
+	name "lbowling"
+	description "League Bowling (NGM-019)(NGH-019)"
+	rom ( name "019-p1.p1" size 524288 crc A2DE8445 )
+	rom ( name "019-s1.s1" size 131072 crc 5FCDC0ED )
+	rom ( name "019-c1.c1" size 524288 crc 4CCDEF18 )
+	rom ( name "019-c2.c2" size 524288 crc D4DD0802 )
+	rom ( name "019-m1.m1" size 131072 crc D568C17D )
+	rom ( name "019-v11.v11" size 524288 crc 0FB74872 )
+	rom ( name "019-v12.v12" size 524288 crc 029FAA57 )
+	rom ( name "019-v21.v21" size 524288 crc 2EFD5ADA )
+)
+game (
+	name "legendos"
+	description "Legend of Success Joe / Ashitano Joe Densetsu"
+	rom ( name "029-p1.p1" size 524288 crc 9D563F19 )
+	rom ( name "029-s1.s1" size 131072 crc BCD502F0 )
+	rom ( name "029-c1.c1" size 1048576 crc 2F5AB875 )
+	rom ( name "029-c2.c2" size 1048576 crc 318B2711 )
+	rom ( name "029-c3.c3" size 1048576 crc 6BC52CB2 )
+	rom ( name "029-c4.c4" size 1048576 crc 37EF298C )
+	rom ( name "029-m1.m1" size 131072 crc 6F2843F0 )
+	rom ( name "029-v1.v1" size 1048576 crc 85065452 )
+)
+game (
+	name "looptris"
+	description "Looptris (v.2021-12-26)"
+	rom ( name "looptris.p1" size 524288 crc 8FCB5104 )
+	rom ( name "looptris.s1" size 131072 crc 70E70448 )
+	rom ( name "looptris.c1" size 524288 crc B9413F13 )
+	rom ( name "looptris.c2" size 524288 crc 9409DBE8 )
+	rom ( name "looptris.m1" size 131072 crc E7105DF8 )
+	rom ( name "looptris.v1" size 524288 crc DFA63CD2 )
+)
+game (
+	name "magdrop3"
+	description "Magical Drop III"
+	rom ( name "233-p1.p1" size 1048576 crc 931E17FA )
+	rom ( name "233-s1.s1" size 131072 crc 7399E68A )
+	rom ( name "233-c1.c1" size 4194304 crc 65E3F4C4 )
+	rom ( name "233-c2.c2" size 4194304 crc 35DEA6C9 )
+	rom ( name "233-c3.c3" size 4194304 crc 0BA2C502 )
+	rom ( name "233-c4.c4" size 4194304 crc 70DBBD6D )
+	rom ( name "233-m1.m1" size 131072 crc 5BEAF34E )
+	rom ( name "233-v1.v1" size 4194304 crc 58839298 )
+	rom ( name "233-v2.v2" size 524288 crc D5E30DF4 )
+)
+game (
+	name "magdrop2"
+	description "Magical Drop II"
+	rom ( name "221-p1.p1" size 524288 crc 7BE82353 )
+	rom ( name "221-s1.s1" size 131072 crc 2A4063A3 )
+	rom ( name "221-c1.c1" size 4194304 crc 1F862A14 )
+	rom ( name "221-c2.c2" size 4194304 crc 14B90536 )
+	rom ( name "221-m1.m1" size 131072 crc BDDAE628 )
+	rom ( name "221-v1.v1" size 2097152 crc 7E5E53E4 )
+)
+game (
+	name "maglord"
+	description "Magician Lord (NGM-005)"
+	rom ( name "005-pg1.p1" size 524288 crc BD0A492D )
+	rom ( name "005-s1.s1" size 131072 crc 1C5369A2 )
+	rom ( name "005-c1.c1" size 524288 crc 806AEE34 )
+	rom ( name "005-c2.c2" size 524288 crc 34AA9A86 )
+	rom ( name "005-c3.c3" size 524288 crc C4C2B926 )
+	rom ( name "005-c4.c4" size 524288 crc 9C46DCF4 )
+	rom ( name "005-c5.c5" size 524288 crc 69086DEC )
+	rom ( name "005-c6.c6" size 524288 crc AB7AC142 )
+	rom ( name "005-m1.m1" size 262144 crc 26259F0F )
+	rom ( name "005-v11.v11" size 524288 crc CC0455FD )
+	rom ( name "005-v21.v21" size 524288 crc F94AB5B7 )
+	rom ( name "005-v22.v22" size 524288 crc 232CFD04 )
+)
+game (
+	name "mahretsu"
+	description "Mahjong Kyo Retsuden (NGM-004)(NGH-004)"
+	rom ( name "004-p1.p1" size 524288 crc FC6F53DB )
+	rom ( name "004-s1.s1" size 131072 crc 2BD05A06 )
+	rom ( name "004-c1.c1" size 524288 crc F1AE16BC )
+	rom ( name "004-c2.c2" size 524288 crc BDC13520 )
+	rom ( name "004-c3.c3" size 524288 crc 9C571A37 )
+	rom ( name "004-c4.c4" size 524288 crc 7E81CB29 )
+	rom ( name "004-m1.m1" size 131072 crc C71FBB3B )
+	rom ( name "004-v11.v11" size 524288 crc B2FB2153 )
+	rom ( name "004-v12.v12" size 524288 crc 8503317B )
+	rom ( name "004-v21.v21" size 524288 crc 4999FB27 )
+	rom ( name "004-v22.v22" size 524288 crc 776FA2A2 )
+	rom ( name "004-v23.v23" size 524288 crc B3E7EEEA )
+)
+game (
+	name "matrim"
+	description "Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)"
+	rom ( name "266-p1.p1" size 1048576 crc 5D4C2DC7 )
+	rom ( name "266-p2.sp2" size 4194304 crc A14B1906 )
+	rom ( name "266-c1.c1" size 8388608 crc 505F4E30 )
+	rom ( name "266-c2.c2" size 8388608 crc 3CB57482 )
+	rom ( name "266-c3.c3" size 8388608 crc F1CC6AD0 )
+	rom ( name "266-c4.c4" size 8388608 crc 45B806B7 )
+	rom ( name "266-c5.c5" size 8388608 crc 9A15DD6B )
+	rom ( name "266-c6.c6" size 8388608 crc 281CB939 )
+	rom ( name "266-c7.c7" size 8388608 crc 4B71F780 )
+	rom ( name "266-c8.c8" size 8388608 crc 29873D33 )
+	rom ( name "266-m1.m1" size 131072 crc 456C3E6C )
+	rom ( name "266-v1.v1" size 8388608 crc A4F83690 )
+	rom ( name "266-v2.v2" size 8388608 crc D0F69EDA )
+)
+game (
+	name "mslug"
+	description "Metal Slug - Super Vehicle-001"
+	rom ( name "201-p1.p1" size 2097152 crc 08D8DAA5 )
+	rom ( name "201-s1.s1" size 131072 crc 2F55958D )
+	rom ( name "201-c1.c1" size 4194304 crc 72813676 )
+	rom ( name "201-c2.c2" size 4194304 crc 96F62574 )
+	rom ( name "201-c3.c3" size 4194304 crc 5121456A )
+	rom ( name "201-c4.c4" size 4194304 crc F4AD59A3 )
+	rom ( name "201-m1.m1" size 131072 crc C28B3253 )
+	rom ( name "201-v1.v1" size 4194304 crc 23D22ED1 )
+	rom ( name "201-v2.v2" size 4194304 crc 472CF9DB )
+)
+game (
+	name "mslug2"
+	description "Metal Slug 2 - Super Vehicle-001/II (NGM-2410) (NGH-2410)"
+	rom ( name "241-p1.p1" size 1048576 crc 2A53C5DA )
+	rom ( name "241-p2.sp2" size 2097152 crc 38883F44 )
+	rom ( name "241-s1.s1" size 131072 crc F3D32F0F )
+	rom ( name "241-c1.c1" size 8388608 crc 394B5E0D )
+	rom ( name "241-c2.c2" size 8388608 crc E5806221 )
+	rom ( name "241-c3.c3" size 8388608 crc 9F6BFA6F )
+	rom ( name "241-c4.c4" size 8388608 crc 7D3E306F )
+	rom ( name "241-m1.m1" size 131072 crc 94520EBD )
+	rom ( name "241-v1.v1" size 4194304 crc 99EC20E8 )
+	rom ( name "241-v2.v2" size 4194304 crc ECB16799 )
+)
+game (
+	name "mslug3"
+	description "Metal Slug 3 (NGM-2560)"
+	rom ( name "green.neo-sma" size 262144 crc 9CD55736 )
+	rom ( name "256-pg1.p1" size 4194304 crc B07EDFD5 )
+	rom ( name "256-pg2.p2" size 4194304 crc 6097C26B )
+	rom ( name "256-c1.c1" size 8388608 crc 5A79C34E )
+	rom ( name "256-c2.c2" size 8388608 crc 944C362C )
+	rom ( name "256-c3.c3" size 8388608 crc 6E69D36F )
+	rom ( name "256-c4.c4" size 8388608 crc B755B4EB )
+	rom ( name "256-c5.c5" size 8388608 crc 7AACAB47 )
+	rom ( name "256-c6.c6" size 8388608 crc C698FD5D )
+	rom ( name "256-c7.c7" size 8388608 crc CFCEDDD2 )
+	rom ( name "256-c8.c8" size 8388608 crc 4D9BE34C )
+	rom ( name "256-m1.m1" size 524288 crc EAEEC116 )
+	rom ( name "256-v1.v1" size 4194304 crc F2690241 )
+	rom ( name "256-v2.v2" size 4194304 crc 7E2A10BD )
+	rom ( name "256-v3.v3" size 4194304 crc 0EAEC17C )
+	rom ( name "256-v4.v4" size 4194304 crc 9B4B22D4 )
+)
+game (
+	name "mslug4"
+	description "Metal Slug 4 (NGM-2630)"
+	rom ( name "263-p1.p1" size 1048576 crc 27E4DEF3 )
+	rom ( name "263-p2.sp2" size 4194304 crc FDB7AED8 )
+	rom ( name "263-c1.c1" size 8388608 crc 84865F8A )
+	rom ( name "263-c2.c2" size 8388608 crc 81DF97F2 )
+	rom ( name "263-c3.c3" size 8388608 crc 1A343323 )
+	rom ( name "263-c4.c4" size 8388608 crc 942CFB44 )
+	rom ( name "263-c5.c5" size 8388608 crc A748854F )
+	rom ( name "263-c6.c6" size 8388608 crc 5C8BA116 )
+	rom ( name "263-m1.m1" size 131072 crc 46AC8228 )
+	rom ( name "263-v1.v1" size 8388608 crc 01E9B9CD )
+	rom ( name "263-v2.v2" size 8388608 crc 4AB2BF81 )
+)
+game (
+	name "mslug5"
+	description "Metal Slug 5 (NGM-2680)"
+	rom ( name "268-p1cr.p1" size 4194304 crc D0466792 )
+	rom ( name "268-p2cr.p2" size 4194304 crc FBF6B61E )
+	rom ( name "268-c1c.c1" size 8388608 crc AB7C389A )
+	rom ( name "268-c2c.c2" size 8388608 crc 3560881B )
+	rom ( name "268-c3c.c3" size 8388608 crc 3AF955EA )
+	rom ( name "268-c4c.c4" size 8388608 crc C329C373 )
+	rom ( name "268-c5c.c5" size 8388608 crc 959C8177 )
+	rom ( name "268-c6c.c6" size 8388608 crc 010A831B )
+	rom ( name "268-c7c.c7" size 8388608 crc 6D72A969 )
+	rom ( name "268-c8c.c8" size 8388608 crc 551D720E )
+	rom ( name "268-m1.m1" size 524288 crc 4A5A6E0E )
+	rom ( name "268-v1c.v1" size 8388608 crc AE31D60C )
+	rom ( name "268-v2c.v2" size 8388608 crc C40613ED )
+)
+game (
+	name "mslugx"
+	description "Metal Slug X - Super Vehicle-001 (NGM-2500)(NGH-2500)"
+	rom ( name "250-p1.p1" size 1048576 crc 81F1F60B )
+	rom ( name "250-p2.ep1" size 4194304 crc 1FDA2E12 )
+	rom ( name "250-s1.s1" size 131072 crc FB6F441D )
+	rom ( name "250-c1.c1" size 8388608 crc 09A52C6F )
+	rom ( name "250-c2.c2" size 8388608 crc 31679821 )
+	rom ( name "250-c3.c3" size 8388608 crc FD602019 )
+	rom ( name "250-c4.c4" size 8388608 crc 31354513 )
+	rom ( name "250-c5.c5" size 8388608 crc A4B56124 )
+	rom ( name "250-c6.c6" size 8388608 crc 83E3E69D )
+	rom ( name "250-m1.m1" size 131072 crc FD42A842 )
+	rom ( name "250-v1.v1" size 4194304 crc C79EDE73 )
+	rom ( name "250-v2.v2" size 4194304 crc EA9AABE1 )
+	rom ( name "250-v3.v3" size 2097152 crc 2CA65102 )
+)
+game (
+	name "minasan"
+	description "Minasanno Okagesamadesu! Daisugorokutaikai (MOM-001)(MOH-001)"
+	rom ( name "027-p1.p1" size 524288 crc C8381327 )
+	rom ( name "027-s1.s1" size 131072 crc E5824BAA )
+	rom ( name "027-c1.c1" size 1048576 crc D0086F94 )
+	rom ( name "027-c2.c2" size 1048576 crc DA61F5A6 )
+	rom ( name "027-c3.c3" size 1048576 crc 08DF1228 )
+	rom ( name "027-c4.c4" size 1048576 crc 54E87696 )
+	rom ( name "027-m1.m1" size 131072 crc ADD5A226 )
+	rom ( name "027-v11.v11" size 1048576 crc 59AD4459 )
+	rom ( name "027-v21.v21" size 1048576 crc DF5B4EEB )
+)
+game (
+	name "miexchng"
+	description "Money Puzzle Exchanger / Money Idol Exchanger"
+	rom ( name "231-p1.p1" size 524288 crc 61BE1810 )
+	rom ( name "231-s1.s1" size 131072 crc FE0C0C53 )
+	rom ( name "231-c1.c1" size 2097152 crc 6C403BA3 )
+	rom ( name "231-c2.c2" size 2097152 crc 554BCD9B )
+	rom ( name "231-c3.c3" size 1048576 crc 4F6F7A63 )
+	rom ( name "231-c4.c4" size 1048576 crc 2E35E71B )
+	rom ( name "231-m1.m1" size 131072 crc DE41301B )
+	rom ( name "231-v1.v1" size 4194304 crc 113FB898 )
+)
+game (
+	name "mutnat"
+	description "Mutation Nation (NGM-014)(NGH-014)"
+	rom ( name "014-p1.p1" size 524288 crc 6F1699C8 )
+	rom ( name "014-s1.s1" size 131072 crc 99419733 )
+	rom ( name "014-c1.c1" size 1048576 crc 5E4381BF )
+	rom ( name "014-c2.c2" size 1048576 crc 69BA4E18 )
+	rom ( name "014-c3.c3" size 1048576 crc 890327D5 )
+	rom ( name "014-c4.c4" size 1048576 crc E4002651 )
+	rom ( name "014-m1.m1" size 131072 crc B6683092 )
+	rom ( name "014-v1.v1" size 1048576 crc 25419296 )
+	rom ( name "014-v2.v2" size 1048576 crc 0DE53D5E )
+)
+game (
+	name "nam1975"
+	description "NAM-1975 (NGM-001)(NGH-001)"
+	rom ( name "001-p1.p1" size 524288 crc CC9FC951 )
+	rom ( name "001-s1.s1" size 131072 crc 7988BA51 )
+	rom ( name "001-c1.c1" size 524288 crc 32EA98E1 )
+	rom ( name "001-c2.c2" size 524288 crc CBC4064C )
+	rom ( name "001-c3.c3" size 524288 crc 0151054C )
+	rom ( name "001-c4.c4" size 524288 crc 0A32570D )
+	rom ( name "001-c5.c5" size 524288 crc 90B74CC2 )
+	rom ( name "001-c6.c6" size 524288 crc E62BED58 )
+	rom ( name "001-m1.m1" size 262144 crc BA874463 )
+	rom ( name "001-v11.v11" size 524288 crc A7C3D5E5 )
+	rom ( name "001-v21.v21" size 524288 crc 55E670B3 )
+	rom ( name "001-v22.v22" size 524288 crc AB0D8368 )
+	rom ( name "001-v23.v23" size 524288 crc DF468E28 )
+)
+game (
+	name "neo2500"
+	description "Neo 2500 Demo"
+	rom ( name "2500-p1.bin" size 524288 crc 2321C0D8 )
+	rom ( name "2500-s1.bin" size 65536 crc 1A37925C )
+	rom ( name "2500-c1.bin" size 524288 crc 8C304B56 )
+	rom ( name "2500-c2.bin" size 524288 crc 9A0758D6 )
+	rom ( name "202-m1.bin" size 131072 crc 9C0291EA )
+	rom ( name "202-v1.bin" size 524288 crc DEBEB8FB )
+)
+game (
+	name "nblktiger"
+	description "Neo Black Tiger (Demo)"
+	rom ( name "nblktiegr-p1.bin" size 1048576 crc 18F34200 )
+	rom ( name "nblktiger-s1.bin" size 131072 crc A545B593 )
+	rom ( name "nblktiger-c1.bin" size 8388608 crc AA469494 )
+	rom ( name "nblktiger-c2.bin" size 8388608 crc FA07BA1E )
+	rom ( name "nblktiger-m1.bin" size 65536 crc 2037DC19 )
+	rom ( name "nblktiger-v1.bin" size 1048576 crc 3AC066E1 )
+	rom ( name "nblktiger-v2.bin" size 1048576 crc C5A12987 )
+	rom ( name "nblktiger-v3.bin" size 1048576 crc 3C623679 )
+	rom ( name "nblktiger-v4.bin" size 1048576 crc FBF00C96 )
+	rom ( name "nblktiger-v5.bin" size 1048576 crc 9B2031D4 )
+	rom ( name "nblktiger-v6.bin" size 1048576 crc 107CFC89 )
+	rom ( name "nblktiger-v7.bin" size 1048576 crc 0703B761 )
+	rom ( name "nblktiger-v8.bin" size 1048576 crc 8D525588 )
+	rom ( name "nblktiger-v9.bin" size 1048576 crc 97F073B6 )
+)
+game (
+	name "neobombe"
+	description "Neo Bomberman"
+	rom ( name "093-p1.p1" size 1048576 crc A1A71D0D )
+	rom ( name "093-s1.s1" size 131072 crc 4B3FA119 )
+	rom ( name "093-c1.c1" size 4194304 crc D1F328F8 )
+	rom ( name "093-c2.c2" size 4194304 crc 82C49540 )
+	rom ( name "093-c3.c3" size 524288 crc E37578C5 )
+	rom ( name "093-c4.c4" size 524288 crc 59826783 )
+	rom ( name "093-m1.m1" size 131072 crc E81E780B )
+	rom ( name "093-v1.v1" size 4194304 crc 02ABD4B0 )
+	rom ( name "093-v2.v2" size 2097152 crc A92B8B3D )
+)
+game (
+	name "neocstlv"
+	description "Neo CastleVania Demo"
+	rom ( name "cstlv_p1.rom" size 524288 crc 8D6CD9F2 )
+	rom ( name "cstlv_s1.rom" size 262144 crc BE950195 )
+	rom ( name "cstlv_c1.rom" size 1048576 crc 960A7414 )
+	rom ( name "cstlv_c2.rom" size 1048576 crc 24A961D0 )
+	rom ( name "cstlv_m1.rom" size 131072 crc 89C71460 )
+	rom ( name "cstlv_v1.rom" size 524288 crc DEBEB8FB )
+)
+game (
+	name "neodrift"
+	description "Neo Drift Out - New Technology"
+	rom ( name "213-p1.p1" size 2097152 crc E397D798 )
+	rom ( name "213-s1.s1" size 131072 crc B76B61BC )
+	rom ( name "213-c1.c1" size 4194304 crc 3EDC8BD3 )
+	rom ( name "213-c2.c2" size 4194304 crc 46AE5F16 )
+	rom ( name "213-m1.m1" size 131072 crc 200045F1 )
+	rom ( name "213-v1.v1" size 2097152 crc A421C076 )
+	rom ( name "213-v2.v2" size 2097152 crc 233C7DD9 )
+)
+game (
+	name "neocdz"
+	description "Neo Geo CDZ system"
+	rom ( name "neocd.bin" size 524288 crc DF9DE490 )
+)
+game (
+	name "neomrdo"
+	description "Neo Mr. Do!"
+	rom ( name "207-p1.p1" size 1048576 crc 334EA51E )
+	rom ( name "207-s1.s1" size 131072 crc 6AEBAFCE )
+	rom ( name "207-c1.c1" size 2097152 crc C7541B9D )
+	rom ( name "207-c2.c2" size 2097152 crc F57166D2 )
+	rom ( name "207-m1.m1" size 131072 crc B5B74A95 )
+	rom ( name "207-v1.v1" size 2097152 crc 4143C052 )
+)
+game (
+	name "neonopon"
+	description "Neo No Panepon (beta)"
+	rom ( name "nnp-p1.rom" size 524288 crc 8A792271 )
+	rom ( name "nnp-s1.rom" size 65536 crc 93E6FE7D )
+	rom ( name "nnp-c1.rom" size 1048576 crc 4A718AE3 )
+	rom ( name "nnp-c2.rom" size 1048576 crc 0E2CBC25 )
+	rom ( name "nnp-m1.rom" size 65536 crc 7669DE64 )
+	rom ( name "nnp-v1.rom" size 524288 crc 504BF849 )
+)
+game (
+	name "neopang"
+	description "Neo Pang"
+	rom ( name "pang_p1.rom" size 524288 crc DC5922EE )
+	rom ( name "pang_s1.rom" size 65536 crc D78BD9A0 )
+	rom ( name "pang_c1.rom" size 1048576 crc 62F5405C )
+	rom ( name "pang_c2.rom" size 1048576 crc E1183030 )
+	rom ( name "pang_m1.rom" size 131072 crc 9C0291EA )
+	rom ( name "pang_v1.rom" size 524288 crc DEBEB8FB )
+)
+game (
+	name "neopong"
+	description "Neo Pong (ver 1.1)"
+	rom ( name "pong_p1.rom" size 131072 crc 9F35E29D )
+	rom ( name "pong_s1.rom" size 131072 crc CD19264F )
+	rom ( name "pong_c1.rom" size 1048576 crc F5A57D1A )
+	rom ( name "pong_c2.rom" size 1048576 crc AFFDE64E )
+	rom ( name "pong_m1.rom" size 131072 crc 78C851CB )
+	rom ( name "pong_v1.rom" size 2097152 crc 6C31223C )
+)
+game (
+	name "nsmb"
+	description "Neo Super Mario Bros (Demo, v0.01)"
+	rom ( name "nsmb-p1.bin" size 1048576 crc 9E0FDED1 )
+	rom ( name "nsmb-s1.bin" size 131072 crc A545B593 )
+	rom ( name "nsmb-c1.bin" size 8388608 crc F187934C )
+	rom ( name "nsmb-c2.bin" size 8388608 crc 7ECFC8BB )
+	rom ( name "nsmb-m1.bin" size 65536 crc 3C99E181 )
+	rom ( name "nsmb-v1.bin" size 1048576 crc D1E4FC94 )
+	rom ( name "nsmb-v2.bin" size 1048576 crc 7D42FAB3 )
+	rom ( name "nsmb-v3.bin" size 1048576 crc 806B797D )
+	rom ( name "nsmb-v4.bin" size 1048576 crc FBF00C96 )
+	rom ( name "nsmb-v5.bin" size 1048576 crc 9B2031D4 )
+	rom ( name "nsmb-v6.bin" size 1048576 crc 107CFC89 )
+	rom ( name "nsmb-v7.bin" size 1048576 crc 0703B761 )
+	rom ( name "nsmb-v8.bin" size 1048576 crc 8D525588 )
+	rom ( name "nsmb-v9.bin" size 1048576 crc 97F073B6 )
+)
+game (
+	name "syscheck"
+	description "Neo System Check (ver 1.0b)"
+	rom ( name "sys-p1.rom" size 524288 crc A4ADBE1E )
+	rom ( name "sys-s1.rom" size 65536 crc 4774F28E )
+	rom ( name "sys-c1.rom" size 524288 crc 75660AAC )
+	rom ( name "sys-c2.rom" size 524288 crc 75660AAC )
+	rom ( name "sys-m1.rom" size 65536 crc 7669DE64 )
+	rom ( name "sys-v1.rom" size 524288 crc 504BF849 )
+)
+game (
+	name "neothndr"
+	description "Neo Thunder"
+	rom ( name "thund_p1.rom" size 1048576 crc F7050757 )
+	rom ( name "thund_s1.rom" size 131072 crc A545B593 )
+	rom ( name "thund_c1.rom" size 1048576 crc 48B9126E )
+	rom ( name "thund_c2.rom" size 1048576 crc 214DF62E )
+	rom ( name "thund_m1.rom" size 131072 crc 9C0291EA )
+	rom ( name "thund_v1.rom" size 524288 crc DEBEB8FB )
+)
+game (
+	name "turfmast"
+	description "Neo Turf Masters / Big Tournament Golf"
+	rom ( name "200-p1.p1" size 2097152 crc 28C83048 )
+	rom ( name "200-s1.s1" size 131072 crc 9A5402B2 )
+	rom ( name "200-c1.c1" size 4194304 crc 8E7BF41A )
+	rom ( name "200-c2.c2" size 4194304 crc 5A65A8CE )
+	rom ( name "200-m1.m1" size 131072 crc 9994AC00 )
+	rom ( name "200-v1.v1" size 2097152 crc 00FD48D2 )
+	rom ( name "200-v2.v2" size 2097152 crc 082ACB31 )
+	rom ( name "200-v3.v3" size 2097152 crc 7ABCA053 )
+	rom ( name "200-v4.v4" size 2097152 crc 6C7B4902 )
+)
+game (
+	name "neocup98"
+	description "Neo-Geo Cup '98 - The Road to the Victory"
+	rom ( name "244-p1.p1" size 2097152 crc F8FDB7A5 )
+	rom ( name "244-s1.s1" size 131072 crc 9BDDB697 )
+	rom ( name "244-c1.c1" size 8388608 crc C7A62B23 )
+	rom ( name "244-c2.c2" size 8388608 crc 33AA0F35 )
+	rom ( name "244-m1.m1" size 131072 crc A701B276 )
+	rom ( name "244-v1.v1" size 4194304 crc 79DEF46D )
+	rom ( name "244-v2.v2" size 2097152 crc B231902F )
+)
+game (
+	name "neotet"
+	description "NeoGeo 2-Player Tetris"
+	rom ( name "tet_p1.rom" size 524288 crc 3465569A )
+	rom ( name "tet_s1.rom" size 131072 crc A545B593 )
+	rom ( name "tet_c1.rom" size 524288 crc ACC6D1D4 )
+	rom ( name "tet_c2.rom" size 524288 crc 7EC06AB5 )
+	rom ( name "tet_m1.rom" size 131072 crc 6B3703C6 )
+	rom ( name "tet_v1.rom" size 524288 crc 2BE8E290 )
+)
+game (
+	name "neo3ddmo"
+	description "NeoGeo 3D! Demo"
+	rom ( name "neo3d_p1.rom" size 524288 crc 791F6042 )
+	rom ( name "neo3d_s1.rom" size 131072 crc CD19264F )
+	rom ( name "neo3d_c1.rom" size 1048576 crc A7EACA76 )
+	rom ( name "neo3d_c2.rom" size 1048576 crc 042F2CDE )
+	rom ( name "neo3d_m1.rom" size 131072 crc 7E74CC1F )
+	rom ( name "neo3d_v1.rom" size 524288 crc DEBEB8FB )
+)
+game (
+	name "neotris"
+	description "NeoTRIS (Free Beta 2, Ver. 202009)"
+	rom ( name "neotris-p1.bin" size 524288 crc 4CD619CF )
+	rom ( name "neotris-s1.bin" size 131072 crc 6809043A )
+	rom ( name "neotris-c1.bin" size 4194304 crc E1C8ECA9 )
+	rom ( name "neotris-c2.bin" size 4194304 crc 11CA6E64 )
+	rom ( name "neotris-c3.bin" size 4194304 crc 1D9E2046 )
+	rom ( name "neotris-c4.bin" size 4194304 crc 9091E795 )
+	rom ( name "neotris-c5.bin" size 4194304 crc BF278AFE )
+	rom ( name "neotris-c6.bin" size 4194304 crc 8EB17E24 )
+	rom ( name "neotris-m1.bin" size 65536 crc 5A63BB9D )
+	rom ( name "neotris-v1.bin" size 4194304 crc FEF16EB4 )
+	rom ( name "neotris-v2.bin" size 4194304 crc F0D28E19 )
+	rom ( name "neotris-v3.bin" size 4194304 crc FC652C8B )
+	rom ( name "neotris-v4.bin" size 4194304 crc C25764CA )
+)
+game (
+	name "ngem2k"
+	description "NGEM2K (beta 2006-01-18)"
+	rom ( name "ngem-p1.bin" size 524288 crc F2C42FE3 )
+	rom ( name "ngem-s1.bin" size 65536 crc FB3C02D2 )
+	rom ( name "ngem-c1.bin" size 1048576 crc A8E2AB47 )
+	rom ( name "ngem-c2.bin" size 1048576 crc A738EA1C )
+	rom ( name "ngem-m1.bin" size 131072 crc B1F44A15 )
+	rom ( name "ngem-v1.bin" size 524288 crc C32199F0 )
+)
+game (
+	name "ngftdemo"
+	description "NGF Transparency Demo"
+	rom ( name "ngftd_p1.rom" size 524288 crc 84D87190 )
+	rom ( name "ngftd_s1.rom" size 131072 crc A545B593 )
+	rom ( name "ngftd_c1.rom" size 2097152 crc B2FBA994 )
+	rom ( name "ngftd_c2.rom" size 2097152 crc 37495AB2 )
+	rom ( name "ngftd_m1.rom" size 131072 crc 5EA216BE )
+	rom ( name "ngftd_v1.rom" size 2097152 crc D03C87EB )
+)
+game (
+	name "nitd"
+	description "Nightmare in the Dark"
+	rom ( name "260-p1.p1" size 524288 crc 61361082 )
+	rom ( name "260-c1.c1" size 8388608 crc 147B0C7F )
+	rom ( name "260-c2.c2" size 8388608 crc D2B04B0D )
+	rom ( name "260-m1.m1" size 524288 crc 6407C5E5 )
+	rom ( name "260-v1.v1" size 4194304 crc 24B0480C )
+)
+game (
+	name "ncombat"
+	description "Ninja Combat (NGM-009)"
+	rom ( name "009-p1.p1" size 524288 crc B45FCFBF )
+	rom ( name "009-s1.s1" size 131072 crc D49AFEE8 )
+	rom ( name "009-c1.c1" size 524288 crc 33CC838E )
+	rom ( name "009-c2.c2" size 524288 crc 26877FEB )
+	rom ( name "009-c3.c3" size 524288 crc 3B60A05D )
+	rom ( name "009-c4.c4" size 524288 crc 39C2D039 )
+	rom ( name "009-c5.c5" size 524288 crc 67A4344E )
+	rom ( name "009-c6.c6" size 524288 crc 2ECA8B19 )
+	rom ( name "009-m1.m1" size 131072 crc B5819863 )
+	rom ( name "009-v11.v11" size 524288 crc CF32A59C )
+	rom ( name "009-v12.v12" size 524288 crc 7B3588B7 )
+	rom ( name "009-v13.v13" size 524288 crc 505A01B5 )
+	rom ( name "009-v21.v21" size 524288 crc 365F9011 )
+)
+game (
+	name "ncommand"
+	description "Ninja Commando"
+	rom ( name "050-p1.p1" size 1048576 crc 4E097C40 )
+	rom ( name "050-s1.s1" size 131072 crc DB8F9C8E )
+	rom ( name "050-c1.c1" size 1048576 crc 87421A0A )
+	rom ( name "050-c2.c2" size 1048576 crc C4CF5548 )
+	rom ( name "050-c3.c3" size 1048576 crc 03422C1E )
+	rom ( name "050-c4.c4" size 1048576 crc 0845EADB )
+	rom ( name "050-m1.m1" size 131072 crc 6FCF07D3 )
+	rom ( name "050-v1.v1" size 1048576 crc 23C3AB42 )
+	rom ( name "050-v2.v2" size 524288 crc 80B8A984 )
+)
+game (
+	name "ninjamas"
+	description "Ninja Master's - haoh-ninpo-cho"
+	rom ( name "217-p1.p1" size 1048576 crc 3E97ED69 )
+	rom ( name "217-p2.sp2" size 2097152 crc 191FCA88 )
+	rom ( name "217-s1.s1" size 131072 crc 8FF782F0 )
+	rom ( name "217-c1.c1" size 4194304 crc 5FE97BC4 )
+	rom ( name "217-c2.c2" size 4194304 crc 886E0D66 )
+	rom ( name "217-c3.c3" size 4194304 crc 59E8525F )
+	rom ( name "217-c4.c4" size 4194304 crc 8521ADD2 )
+	rom ( name "217-c5.c5" size 4194304 crc FB1896E5 )
+	rom ( name "217-c6.c6" size 4194304 crc 1C98C54B )
+	rom ( name "217-c7.c7" size 4194304 crc 8B0EDE2E )
+	rom ( name "217-c8.c8" size 4194304 crc A085BB61 )
+	rom ( name "217-m1.m1" size 131072 crc D00FB2AF )
+	rom ( name "217-v1.v1" size 4194304 crc 1C34E013 )
+	rom ( name "217-v2.v2" size 2097152 crc 22F1C681 )
+)
+game (
+	name "overtop"
+	description "Over Top"
+	rom ( name "212-p1.p1" size 2097152 crc 16C063A9 )
+	rom ( name "212-s1.s1" size 131072 crc 481D3DDC )
+	rom ( name "212-c1.c1" size 4194304 crc 50F43087 )
+	rom ( name "212-c2.c2" size 4194304 crc A5B39807 )
+	rom ( name "212-c3.c3" size 4194304 crc 9252EA02 )
+	rom ( name "212-c4.c4" size 4194304 crc 5F41A699 )
+	rom ( name "212-c5.c5" size 2097152 crc FC858BEF )
+	rom ( name "212-c6.c6" size 2097152 crc 0589C15E )
+	rom ( name "212-m1.m1" size 131072 crc FCAB6191 )
+	rom ( name "212-v1.v1" size 4194304 crc 013D4EF9 )
+)
+game (
+	name "panicbom"
+	description "Panic Bomber"
+	rom ( name "073-p1.p1" size 524288 crc ADC356AD )
+	rom ( name "073-s1.s1" size 131072 crc B876DE7E )
+	rom ( name "073-c1.c1" size 1048576 crc 8582E1B5 )
+	rom ( name "073-c2.c2" size 1048576 crc E15A093B )
+	rom ( name "073-m1.m1" size 131072 crc 3CDF5D88 )
+	rom ( name "073-v1.v1" size 2097152 crc 7FC86D2F )
+	rom ( name "073-v2.v2" size 1048576 crc 082ADFC7 )
+)
+game (
+	name "pgoal"
+	description "Pleasure Goal / Futsal - 5 on 5 Mini Soccer (NGM-219)"
+	rom ( name "219-p1.p1" size 2097152 crc 6AF0E574 )
+	rom ( name "219-s1.s1" size 131072 crc 002F3C88 )
+	rom ( name "219-c1.c1" size 4194304 crc 67FEC4DC )
+	rom ( name "219-c2.c2" size 4194304 crc 86ED01F2 )
+	rom ( name "219-c3.c3" size 2097152 crc 5FDAD0A5 )
+	rom ( name "219-c4.c4" size 2097152 crc F57B4A1C )
+	rom ( name "219-m1.m1" size 131072 crc 958EFDC8 )
+	rom ( name "219-v1.v1" size 4194304 crc D0AE33D9 )
+)
+game (
+	name "pnyaa"
+	description "Pochi and Nyaa (Ver 2.02)"
+	rom ( name "pn202.p1" size 1048576 crc BF34E71C )
+	rom ( name "267-c1.c1" size 8388608 crc 5EEBEE65 )
+	rom ( name "267-c2.c2" size 8388608 crc 2B67187B )
+	rom ( name "267-m1.m1" size 524288 crc C7853CCD )
+	rom ( name "267-v1.v1" size 4194304 crc E2E8E917 )
+)
+game (
+	name "poknight"
+	description "Poker Night"
+	rom ( name "2003-p1.bin" size 524288 crc 750421EE )
+	rom ( name "2003-s1.bin" size 131072 crc A26D2F09 )
+	rom ( name "2003-c1.bin" size 524288 crc 5FB2B761 )
+	rom ( name "2003-c2.bin" size 524288 crc F2B570E3 )
+	rom ( name "nnp-m1.rom" size 65536 crc 7669DE64 )
+	rom ( name "nnp-v1.rom" size 524288 crc 504BF849 )
+)
+game (
+	name "popbounc"
+	description "Pop 'n Bounce / Gapporin"
+	rom ( name "237-p1.p1" size 1048576 crc BE96E44F )
+	rom ( name "237-s1.s1" size 131072 crc B61CF595 )
+	rom ( name "237-c1.c1" size 2097152 crc EDA42D66 )
+	rom ( name "237-c2.c2" size 2097152 crc 5E633C65 )
+	rom ( name "237-m1.m1" size 131072 crc D4C946DD )
+	rom ( name "237-v1.v1" size 2097152 crc EDCB1BEB )
+)
+game (
+	name "pspikes2"
+	description "Power Spikes II (NGM-068)"
+	rom ( name "068-pg1.p1" size 1048576 crc 105A408F )
+	rom ( name "068-sg1.s1" size 131072 crc 18082299 )
+	rom ( name "068-c1.c1" size 1048576 crc 7F250F76 )
+	rom ( name "068-c2.c2" size 1048576 crc 20912873 )
+	rom ( name "068-c3.c3" size 1048576 crc 4B641BA1 )
+	rom ( name "068-c4.c4" size 1048576 crc 35072596 )
+	rom ( name "068-c5.c5" size 1048576 crc 151DD624 )
+	rom ( name "068-c6.c6" size 1048576 crc A6722604 )
+	rom ( name "068-mg1.m1" size 131072 crc B1C7911E )
+	rom ( name "068-v1.v1" size 1048576 crc 2CED86DF )
+	rom ( name "068-v2.v2" size 1048576 crc 970851AB )
+	rom ( name "068-v3.v3" size 1048576 crc 81FF05AA )
+)
+game (
+	name "preisle2"
+	description "Prehistoric Isle 2"
+	rom ( name "255-p1.p1" size 1048576 crc DFA3C0F3 )
+	rom ( name "255-p2.sp2" size 4194304 crc 42050B80 )
+	rom ( name "255-c1.c1" size 8388608 crc EA06000B )
+	rom ( name "255-c2.c2" size 8388608 crc 04E67D79 )
+	rom ( name "255-c3.c3" size 8388608 crc 60E31E08 )
+	rom ( name "255-c4.c4" size 8388608 crc 40371D69 )
+	rom ( name "255-c5.c5" size 8388608 crc 0B2E6ADF )
+	rom ( name "255-c6.c6" size 8388608 crc B001BDD3 )
+	rom ( name "255-m1.m1" size 131072 crc 8EFD4014 )
+	rom ( name "255-v1.v1" size 4194304 crc 5A14543D )
+	rom ( name "255-v2.v2" size 2097152 crc 6610D91A )
+)
+game (
+	name "neoprimo"
+	description "Primo Demo"
+	rom ( name "pri_p1.rom" size 1048576 crc A315FB81 )
+	rom ( name "pri_s1.rom" size 131072 crc A545B593 )
+	rom ( name "pri_c1.rom" size 1048576 crc D68941E1 )
+	rom ( name "pri_c2.rom" size 1048576 crc DF7E359F )
+	rom ( name "pri_m1.rom" size 131072 crc 9C0291EA )
+	rom ( name "pri_v1.rom" size 524288 crc DEBEB8FB )
+)
+game (
+	name "proneon"
+	description "Project Neon (Caravan Edition, prealpha v0.4.19)"
+	rom ( name "neon-p1.bin" size 524288 crc F45CAC3A )
+	rom ( name "neon-s1.bin" size 131072 crc F32DE862 )
+	rom ( name "neon-c1.bin" size 524288 crc 87DF580B )
+	rom ( name "neon-c2.bin" size 524288 crc 7B854CC1 )
+	rom ( name "neon-m1.bin" size 65536 crc 6D24CF93 )
+	rom ( name "neon-v1.bin" size 1048576 crc 2823CA49 )
+)
+game (
+	name "pulstar"
+	description "Pulstar"
+	rom ( name "089-p1.p1" size 1048576 crc 5E5847A2 )
+	rom ( name "089-p2.sp2" size 2097152 crc 028B774C )
+	rom ( name "089-s1.s1" size 131072 crc C79FC2C8 )
+	rom ( name "089-c1.c1" size 4194304 crc F4E97332 )
+	rom ( name "089-c2.c2" size 4194304 crc 836D14DA )
+	rom ( name "089-c3.c3" size 4194304 crc 913611C4 )
+	rom ( name "089-c4.c4" size 4194304 crc 44CEF0E3 )
+	rom ( name "089-c5.c5" size 4194304 crc 89BAA1D7 )
+	rom ( name "089-c6.c6" size 4194304 crc B2594D56 )
+	rom ( name "089-c7.c7" size 2097152 crc 6A5618CA )
+	rom ( name "089-c8.c8" size 2097152 crc A223572D )
+	rom ( name "089-m1.m1" size 131072 crc FF3DF7C7 )
+	rom ( name "089-v1.v1" size 4194304 crc 6F726ECB )
+	rom ( name "089-v2.v2" size 4194304 crc 9D2DB551 )
+)
+game (
+	name "pbobblen"
+	description "Puzzle Bobble / Bust-A-Move (Neo-Geo) (NGM-083)"
+	rom ( name "d96-07.ep1" size 524288 crc 6102CA14 )
+	rom ( name "d96-04.s1" size 131072 crc 9CAAE538 )
+	rom ( name "068-c1.c1" size 1048576 crc 7F250F76 )
+	rom ( name "068-c2.c2" size 1048576 crc 20912873 )
+	rom ( name "068-c3.c3" size 1048576 crc 4B641BA1 )
+	rom ( name "068-c4.c4" size 1048576 crc 35072596 )
+	rom ( name "d96-02.c5" size 524288 crc E89AD494 )
+	rom ( name "d96-03.c6" size 524288 crc 4B42D7EB )
+	rom ( name "d96-06.m1" size 131072 crc F424368A )
+	rom ( name "068-v1.v1" size 1048576 crc 2CED86DF )
+	rom ( name "068-v2.v2" size 1048576 crc 970851AB )
+	rom ( name "d96-01.v3" size 1048576 crc 0840CBC4 )
+	rom ( name "d96-05.v4" size 524288 crc 0A548948 )
+)
+game (
+	name "pbobbl2n"
+	description "Puzzle Bobble 2 / Bust-A-Move Again (Neo-Geo)"
+	rom ( name "248-p1.p1" size 1048576 crc 9D6C0754 )
+	rom ( name "248-s1.s1" size 131072 crc 0A3FEE41 )
+	rom ( name "248-c1.c1" size 4194304 crc D9115327 )
+	rom ( name "248-c2.c2" size 4194304 crc 77F9FDAC )
+	rom ( name "248-c3.c3" size 1048576 crc 8890BF7C )
+	rom ( name "248-c4.c4" size 1048576 crc 8EFEAD3F )
+	rom ( name "248-m1.m1" size 131072 crc 883097A9 )
+	rom ( name "248-v1.v1" size 4194304 crc 57FDE1FA )
+	rom ( name "248-v2.v2" size 4194304 crc 4B966EF3 )
+)
+game (
+	name "puzzledp"
+	description "Puzzle De Pon!"
+	rom ( name "202-p1.p1" size 524288 crc 2B61415B )
+	rom ( name "202-s1.s1" size 131072 crc CD19264F )
+	rom ( name "202-c1.c1" size 1048576 crc CC0095EF )
+	rom ( name "202-c2.c2" size 1048576 crc 42371307 )
+	rom ( name "202-m1.m1" size 131072 crc 9C0291EA )
+	rom ( name "202-v1.v1" size 524288 crc DEBEB8FB )
+)
+game (
+	name "joyjoy"
+	description "Puzzled / Joy Joy Kid (NGM-021)(NGH-021)"
+	rom ( name "021-p1.p1" size 524288 crc 39C3478F )
+	rom ( name "021-s1.s1" size 131072 crc 6956D778 )
+	rom ( name "021-c1.c1" size 524288 crc 509250EC )
+	rom ( name "021-c2.c2" size 524288 crc 09ED5258 )
+	rom ( name "021-m1.m1" size 262144 crc 5A4BE5E8 )
+	rom ( name "021-v11.v11" size 524288 crc 66C1E5C4 )
+	rom ( name "021-v21.v21" size 524288 crc 8ED20A86 )
+)
+game (
+	name "quizdais"
+	description "Quiz Daisousa Sen - The Last Count Down (NGM-023)(NGH-023)"
+	rom ( name "023-p1.p1" size 1048576 crc C488FDA3 )
+	rom ( name "023-s1.s1" size 131072 crc AC31818A )
+	rom ( name "023-c1.c1" size 1048576 crc 2999535A )
+	rom ( name "023-c2.c2" size 1048576 crc 876A99E6 )
+	rom ( name "023-m1.m1" size 131072 crc 2A2105E0 )
+	rom ( name "023-v1.v1" size 1048576 crc A53E5BD3 )
+)
+game (
+	name "quizkof"
+	description "Quiz King of Fighters (SAM-080)(SAH-080)"
+	rom ( name "080-p1.p1" size 1048576 crc 4440315E )
+	rom ( name "080-s1.s1" size 131072 crc D7B86102 )
+	rom ( name "080-c1.c1" size 2097152 crc EA1D764A )
+	rom ( name "080-c2.c2" size 2097152 crc D331D4A4 )
+	rom ( name "080-c3.c3" size 2097152 crc B4851BFE )
+	rom ( name "080-c4.c4" size 2097152 crc CA6F5460 )
+	rom ( name "080-m1.m1" size 131072 crc F5F44172 )
+	rom ( name "080-v1.v1" size 2097152 crc 0BE18F60 )
+	rom ( name "080-v2.v2" size 2097152 crc 4ABDE3FF )
+	rom ( name "080-v3.v3" size 2097152 crc F02844E2 )
+)
+game (
+	name "quizdai2"
+	description "Quiz Meitantei Neo & Geo - Quiz Daisousa Sen part 2 (NGM-042)(NGH-042)"
+	rom ( name "042-p1.p1" size 1048576 crc ED719DCF )
+	rom ( name "042-s1.s1" size 131072 crc 164FD6E6 )
+	rom ( name "042-c1.c1" size 1048576 crc CB5809A1 )
+	rom ( name "042-c2.c2" size 1048576 crc 1436DFEB )
+	rom ( name "042-c3.c3" size 524288 crc BCD4A518 )
+	rom ( name "042-c4.c4" size 524288 crc D602219B )
+	rom ( name "042-m1.m1" size 131072 crc BB19995D )
+	rom ( name "042-v1.v1" size 1048576 crc AF7F8247 )
+	rom ( name "042-v2.v2" size 1048576 crc C6474B59 )
+)
+game (
+	name "rotd"
+	description "Rage of the Dragons (NGM-264?)"
+	rom ( name "264-p1.p1" size 8388608 crc B8CC969D )
+	rom ( name "264-c1.c1" size 8388608 crc 4F148FEE )
+	rom ( name "264-c2.c2" size 8388608 crc 7CF5FF72 )
+	rom ( name "264-c3.c3" size 8388608 crc 64D84C98 )
+	rom ( name "264-c4.c4" size 8388608 crc 2F394A95 )
+	rom ( name "264-c5.c5" size 8388608 crc 6B99B978 )
+	rom ( name "264-c6.c6" size 8388608 crc 847D5C7D )
+	rom ( name "264-c7.c7" size 8388608 crc 231D681E )
+	rom ( name "264-c8.c8" size 8388608 crc C5EDB5C4 )
+	rom ( name "264-m1.m1" size 131072 crc 4DBD7B43 )
+	rom ( name "264-v1.v1" size 8388608 crc FA005812 )
+	rom ( name "264-v2.v2" size 8388608 crc C3DC8BF0 )
+)
+game (
+	name "ragnagrd"
+	description "Ragnagard / Shin-Oh-Ken"
+	rom ( name "218-p1.p1" size 2097152 crc CA372303 )
+	rom ( name "218-s1.s1" size 131072 crc 7D402F9A )
+	rom ( name "218-c1.c1" size 4194304 crc C31500A4 )
+	rom ( name "218-c2.c2" size 4194304 crc 98ABA1F9 )
+	rom ( name "218-c3.c3" size 4194304 crc 833C163A )
+	rom ( name "218-c4.c4" size 4194304 crc C1A30F69 )
+	rom ( name "218-c5.c5" size 4194304 crc 6B6DE0FF )
+	rom ( name "218-c6.c6" size 4194304 crc 94BEEFCF )
+	rom ( name "218-c7.c7" size 4194304 crc DE6F9B28 )
+	rom ( name "218-c8.c8" size 4194304 crc D9B311F6 )
+	rom ( name "218-m1.m1" size 131072 crc 17028BCF )
+	rom ( name "218-v1.v1" size 4194304 crc 61EEE7F4 )
+	rom ( name "218-v2.v2" size 4194304 crc 6104E20B )
+)
+game (
+	name "rbff1"
+	description "Real Bout Fatal Fury / Real Bout Garou Densetsu (NGM-095)(NGH-095)"
+	rom ( name "095-p1.p1" size 1048576 crc 63B4D8AE )
+	rom ( name "095-p2.sp2" size 2097152 crc CC15826E )
+	rom ( name "095-s1.s1" size 131072 crc B6BF5E08 )
+	rom ( name "069-c1.c1" size 4194304 crc E302F93C )
+	rom ( name "069-c2.c2" size 4194304 crc 1053A455 )
+	rom ( name "069-c3.c3" size 4194304 crc 1C0FDE2F )
+	rom ( name "069-c4.c4" size 4194304 crc A25FC3D0 )
+	rom ( name "095-c5.c5" size 4194304 crc 8B9B65DF )
+	rom ( name "095-c6.c6" size 4194304 crc 3E164718 )
+	rom ( name "095-c7.c7" size 2097152 crc CA605E12 )
+	rom ( name "095-c8.c8" size 2097152 crc 4E6BEB6C )
+	rom ( name "095-m1.m1" size 131072 crc 653492A7 )
+	rom ( name "069-v1.v1" size 4194304 crc 2BDBD4DB )
+	rom ( name "069-v2.v2" size 4194304 crc A698A487 )
+	rom ( name "095-v3.v3" size 4194304 crc 189D1C6C )
+)
+game (
+	name "rbff2"
+	description "Real Bout Fatal Fury 2 - The Newcomers / Real Bout Garou Densetsu 2 - the newcomers (NGM-2400)"
+	rom ( name "240-p1.p1" size 1048576 crc 80E41205 )
+	rom ( name "240-p2.sp2" size 4194304 crc 960AA88D )
+	rom ( name "240-s1.s1" size 131072 crc DA3B40DE )
+	rom ( name "240-c1.c1" size 8388608 crc EFFAC504 )
+	rom ( name "240-c2.c2" size 8388608 crc ED182D44 )
+	rom ( name "240-c3.c3" size 8388608 crc 22E0330A )
+	rom ( name "240-c4.c4" size 8388608 crc C19A07EB )
+	rom ( name "240-c5.c5" size 8388608 crc 244DFF5A )
+	rom ( name "240-c6.c6" size 8388608 crc 4609E507 )
+	rom ( name "240-m1.m1" size 262144 crc ED482791 )
+	rom ( name "240-v1.v1" size 4194304 crc F796265A )
+	rom ( name "240-v2.v2" size 4194304 crc 2CB3F3BB )
+	rom ( name "240-v3.v3" size 4194304 crc 8FE1367A )
+	rom ( name "240-v4.v4" size 2097152 crc 996704D8 )
+)
+game (
+	name "rbffspec"
+	description "Real Bout Fatal Fury Special / Real Bout Garou Densetsu Special"
+	rom ( name "223-p1.p1" size 1048576 crc F84A2D1D )
+	rom ( name "223-p2.sp2" size 4194304 crc ADDD8F08 )
+	rom ( name "223-s1.s1" size 131072 crc 7ECD6E8C )
+	rom ( name "223-c1.c1" size 4194304 crc EBAB05E2 )
+	rom ( name "223-c2.c2" size 4194304 crc 641868C3 )
+	rom ( name "223-c3.c3" size 4194304 crc CA00191F )
+	rom ( name "223-c4.c4" size 4194304 crc 1F23D860 )
+	rom ( name "223-c5.c5" size 4194304 crc 321E362C )
+	rom ( name "223-c6.c6" size 4194304 crc D8FCEF90 )
+	rom ( name "223-c7.c7" size 4194304 crc BC80DD2D )
+	rom ( name "223-c8.c8" size 4194304 crc 5AD62102 )
+	rom ( name "223-m1.m1" size 131072 crc 3FEE46BF )
+	rom ( name "223-v1.v1" size 4194304 crc 76673869 )
+	rom ( name "223-v2.v2" size 4194304 crc 7A275ACD )
+	rom ( name "223-v3.v3" size 4194304 crc 5A797FD2 )
+)
+game (
+	name "ridhero"
+	description "Riding Hero (NGM-006)(NGH-006)"
+	rom ( name "006-p1.p1" size 524288 crc D4AAF597 )
+	rom ( name "006-s1.s1" size 131072 crc EB5189F0 )
+	rom ( name "006-c1.c1" size 524288 crc 4A5C7F78 )
+	rom ( name "006-c2.c2" size 524288 crc E0B70ECE )
+	rom ( name "006-c3.c3" size 524288 crc 8ACFF765 )
+	rom ( name "006-c4.c4" size 524288 crc 205E3208 )
+	rom ( name "006-m1.m1" size 262144 crc 92E7B4FE )
+	rom ( name "006-v11.v11" size 524288 crc CDF74A42 )
+	rom ( name "006-v12.v12" size 524288 crc E2FD2371 )
+	rom ( name "006-v21.v21" size 524288 crc 94092BCE )
+	rom ( name "006-v22.v22" size 524288 crc 4E2CD7C3 )
+	rom ( name "006-v23.v23" size 524288 crc 069C71ED )
+	rom ( name "006-v24.v24" size 524288 crc 89FBB825 )
+	rom ( name "rhcom.bin" size 8192 crc E5CD6306 )
+)
+game (
+	name "roboarmy"
+	description "Robo Army (set 1)"
+	rom ( name "032-p1.p1" size 524288 crc CD11CBD4 )
+	rom ( name "032-s1.s1" size 131072 crc AC0DAA1B )
+	rom ( name "032-c1.c1" size 1048576 crc 97984C6C )
+	rom ( name "032-c2.c2" size 1048576 crc 65773122 )
+	rom ( name "032-c3.c3" size 524288 crc 40ADFCCD )
+	rom ( name "032-c4.c4" size 524288 crc 462571DE )
+	rom ( name "032-m1.m1" size 131072 crc 35EC952D )
+	rom ( name "032-v1.v1" size 1048576 crc 63791533 )
+	rom ( name "032-v2.v2" size 1048576 crc EB95DE70 )
+)
+game (
+	name "robocopi"
+	description "Robocop (FMV Demo)"
+	rom ( name "robo-p1.bin" size 8388608 crc ADCB4FE0 )
+	rom ( name "robo-s1.bin" size 65536 crc 63B8B25E )
+	rom ( name "robo-c1.bin" size 4194304 crc 8CF565A0 )
+	rom ( name "robo-c2.bin" size 4194304 crc 76EF561D )
+	rom ( name "robo-c3.bin" size 4194304 crc 7166790C )
+	rom ( name "robo-c4.bin" size 4194304 crc C0CDCBFC )
+	rom ( name "robo-c5.bin" size 4194304 crc A5DDC363 )
+	rom ( name "robo-c6.bin" size 4194304 crc 1FCC8FCE )
+	rom ( name "robo-c7.bin" size 4194304 crc BE9F9DA2 )
+	rom ( name "robo-c8.bin" size 4194304 crc 7CFF633A )
+	rom ( name "robo-m1.bin" size 8192 crc C4D35E83 )
+	rom ( name "robo-v1.bin" size 614400 crc ECB284A9 )
+)
+game (
+	name "samsho"
+	description "Samurai Shodown / Samurai Spirits (NGM-045)"
+	rom ( name "045-p1.p1" size 1048576 crc DFE51BF0 )
+	rom ( name "045-pg2.sp2" size 1048576 crc 46745B94 )
+	rom ( name "045-s1.s1" size 131072 crc 9142A4D3 )
+	rom ( name "045-c1.c1" size 2097152 crc 2E5873A4 )
+	rom ( name "045-c2.c2" size 2097152 crc 04FEBB10 )
+	rom ( name "045-c3.c3" size 2097152 crc F3DABD1E )
+	rom ( name "045-c4.c4" size 2097152 crc 935C62F0 )
+	rom ( name "045-c51.c5" size 1048576 crc 81932894 )
+	rom ( name "045-c61.c6" size 1048576 crc BE30612E )
+	rom ( name "045-m1.m1" size 131072 crc 95170640 )
+	rom ( name "045-v1.v1" size 2097152 crc 37F78A9B )
+	rom ( name "045-v2.v2" size 2097152 crc 568B20CF )
+)
+game (
+	name "samsho2"
+	description "Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063)(NGH-063)"
+	rom ( name "063-p1.p1" size 2097152 crc 22368892 )
+	rom ( name "063-s1.s1" size 131072 crc 64A5CD66 )
+	rom ( name "063-c1.c1" size 2097152 crc 86CD307C )
+	rom ( name "063-c2.c2" size 2097152 crc CDFCC4CA )
+	rom ( name "063-c3.c3" size 2097152 crc 7A63CCC7 )
+	rom ( name "063-c4.c4" size 2097152 crc 751025CE )
+	rom ( name "063-c5.c5" size 2097152 crc 20D3A475 )
+	rom ( name "063-c6.c6" size 2097152 crc AE4C0A88 )
+	rom ( name "063-c7.c7" size 2097152 crc 2DF3CBCF )
+	rom ( name "063-c8.c8" size 2097152 crc 1FFC6DFA )
+	rom ( name "063-m1.m1" size 131072 crc 56675098 )
+	rom ( name "063-v1.v1" size 2097152 crc 37703F91 )
+	rom ( name "063-v2.v2" size 2097152 crc 0142BDE8 )
+	rom ( name "063-v3.v3" size 2097152 crc D07FA5CA )
+	rom ( name "063-v4.v4" size 1048576 crc 24AAB4BB )
+)
+game (
+	name "samsho3"
+	description "Samurai Shodown III / Samurai Spirits - Zankurou Musouken (NGM-087)"
+	rom ( name "087-epr.ep1" size 524288 crc 23E09BB8 )
+	rom ( name "087-epr.ep2" size 524288 crc 256F5302 )
+	rom ( name "087-epr.ep3" size 524288 crc BF2DB5DD )
+	rom ( name "087-epr.ep4" size 524288 crc 53E60C58 )
+	rom ( name "087-p5.p5" size 1048576 crc E86CA4AF )
+	rom ( name "087-s1.s1" size 131072 crc 74EC7D9F )
+	rom ( name "087-c1.c1" size 4194304 crc 07A233BC )
+	rom ( name "087-c2.c2" size 4194304 crc 7A413592 )
+	rom ( name "087-c3.c3" size 4194304 crc 8B793796 )
+	rom ( name "087-c4.c4" size 4194304 crc 728FBF11 )
+	rom ( name "087-c5.c5" size 4194304 crc 172AB180 )
+	rom ( name "087-c6.c6" size 4194304 crc 002FF8F3 )
+	rom ( name "087-c7.c7" size 1048576 crc AE450E3D )
+	rom ( name "087-c8.c8" size 1048576 crc A9E82717 )
+	rom ( name "087-m1.m1" size 131072 crc 8E6440EB )
+	rom ( name "087-v1.v1" size 4194304 crc 84BDD9A0 )
+	rom ( name "087-v2.v2" size 2097152 crc AC0F261A )
+)
+game (
+	name "samsho4"
+	description "Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (NGM-222)(NGH-222)"
+	rom ( name "222-p1.p1" size 1048576 crc 1A5CB56D )
+	rom ( name "222-p2.sp2" size 4194304 crc B023CD8B )
+	rom ( name "222-s1.s1" size 131072 crc 8D3D3BF9 )
+	rom ( name "222-c1.c1" size 4194304 crc 68F2ED95 )
+	rom ( name "222-c2.c2" size 4194304 crc A6E9AFF0 )
+	rom ( name "222-c3.c3" size 4194304 crc C91B40F4 )
+	rom ( name "222-c4.c4" size 4194304 crc 359510A4 )
+	rom ( name "222-c5.c5" size 4194304 crc 9CFBB22D )
+	rom ( name "222-c6.c6" size 4194304 crc 685EFC32 )
+	rom ( name "222-c7.c7" size 4194304 crc D0F86F0D )
+	rom ( name "222-c8.c8" size 4194304 crc ADFC50E3 )
+	rom ( name "222-m1.m1" size 131072 crc 7615BC1B )
+	rom ( name "222-v1.v1" size 4194304 crc 7D6BA95F )
+	rom ( name "222-v2.v2" size 4194304 crc 6C33BB5D )
+	rom ( name "222-v3.v3" size 2097152 crc 831EA8C0 )
+)
+game (
+	name "samsho5"
+	description "Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 1)"
+	rom ( name "270-p1.p1" size 4194304 crc 4A2A09E6 )
+	rom ( name "270-p2.sp2" size 4194304 crc E0C74C85 )
+	rom ( name "270-c1.c1" size 8388608 crc 14FFFFAC )
+	rom ( name "270-c2.c2" size 8388608 crc 401F7299 )
+	rom ( name "270-c3.c3" size 8388608 crc 838F0260 )
+	rom ( name "270-c4.c4" size 8388608 crc 041560A5 )
+	rom ( name "270-c5.c5" size 8388608 crc BD30B52D )
+	rom ( name "270-c6.c6" size 8388608 crc 86A69C70 )
+	rom ( name "270-c7.c7" size 8388608 crc D28FBC3C )
+	rom ( name "270-c8.c8" size 8388608 crc 02C530A6 )
+	rom ( name "270-m1.m1" size 524288 crc 49C9901A )
+	rom ( name "270-v1.v1" size 8388608 crc 62E434EB )
+	rom ( name "270-v2.v2" size 8388608 crc 180F3C9A )
+)
+game (
+	name "samsh5sp"
+	description "Samurai Shodown V Special / Samurai Spirits Zero Special (NGM-2720)"
+	rom ( name "272-p1.p1" size 4194304 crc FB7A6BBA )
+	rom ( name "272-p2.sp2" size 4194304 crc 63492EA6 )
+	rom ( name "272-c1.c1" size 8388608 crc 4F97661A )
+	rom ( name "272-c2.c2" size 8388608 crc A3AFDA4F )
+	rom ( name "272-c3.c3" size 8388608 crc 8C3C7502 )
+	rom ( name "272-c4.c4" size 8388608 crc 32D5E2E2 )
+	rom ( name "272-c5.c5" size 8388608 crc 6CE085BC )
+	rom ( name "272-c6.c6" size 8388608 crc 05C8DC8E )
+	rom ( name "272-c7.c7" size 8388608 crc 1417B742 )
+	rom ( name "272-c8.c8" size 8388608 crc D49773CD )
+	rom ( name "272-m1.m1" size 524288 crc ADEEBF40 )
+	rom ( name "272-v1.v1" size 8388608 crc 76A94127 )
+	rom ( name "272-v2.v2" size 8388608 crc 4BA507F1 )
+)
+game (
+	name "savagere"
+	description "Savage Reign / Fu'un Mokushiroku - kakutou sousei"
+	rom ( name "059-p1.p1" size 2097152 crc 01D4E9C0 )
+	rom ( name "059-s1.s1" size 131072 crc E08978CA )
+	rom ( name "059-c1.c1" size 2097152 crc 763BA611 )
+	rom ( name "059-c2.c2" size 2097152 crc E05E8CA6 )
+	rom ( name "059-c3.c3" size 2097152 crc 3E4EBA4B )
+	rom ( name "059-c4.c4" size 2097152 crc 3C2A3808 )
+	rom ( name "059-c5.c5" size 2097152 crc 59013F9E )
+	rom ( name "059-c6.c6" size 2097152 crc 1C8D5DEF )
+	rom ( name "059-c7.c7" size 2097152 crc C88F7035 )
+	rom ( name "059-c8.c8" size 2097152 crc 484CE3BA )
+	rom ( name "059-m1.m1" size 131072 crc 29992EBA )
+	rom ( name "059-v1.v1" size 2097152 crc 530C50FD )
+	rom ( name "059-v2.v2" size 2097152 crc EB6F1CDB )
+	rom ( name "059-v3.v3" size 2097152 crc 7038C2F9 )
+)
+game (
+	name "sengoku"
+	description "Sengoku / Sengoku Denshou (NGM-017)(NGH-017)"
+	rom ( name "017-p1.p1" size 524288 crc F8A63983 )
+	rom ( name "017-p2.p2" size 131072 crc 3024BBB3 )
+	rom ( name "017-s1.s1" size 131072 crc B246204D )
+	rom ( name "017-c1.c1" size 1048576 crc B4EB82A1 )
+	rom ( name "017-c2.c2" size 1048576 crc D55C550D )
+	rom ( name "017-c3.c3" size 1048576 crc ED51EF65 )
+	rom ( name "017-c4.c4" size 1048576 crc F4F3C9CB )
+	rom ( name "017-m1.m1" size 131072 crc 9B4F34C6 )
+	rom ( name "017-v1.v1" size 1048576 crc 23663295 )
+	rom ( name "017-v2.v2" size 1048576 crc F61E6765 )
+)
+game (
+	name "sengoku2"
+	description "Sengoku 2 / Sengoku Denshou 2"
+	rom ( name "040-p1.p1" size 1048576 crc 6DDE02C2 )
+	rom ( name "040-s1.s1" size 131072 crc CD9802A3 )
+	rom ( name "040-c1.c1" size 2097152 crc FAA8EA99 )
+	rom ( name "040-c2.c2" size 2097152 crc 87D0EC65 )
+	rom ( name "040-c3.c3" size 524288 crc 24B5BA80 )
+	rom ( name "040-c4.c4" size 524288 crc 1C9E9930 )
+	rom ( name "040-m1.m1" size 131072 crc D4DE4BCA )
+	rom ( name "040-v1.v1" size 2097152 crc 71CB4B5D )
+	rom ( name "040-v2.v2" size 1048576 crc C5CECE01 )
+)
+game (
+	name "sengoku3"
+	description "Sengoku 3 / Sengoku Densho 2001 (set 1)"
+	rom ( name "261-ph1.p1" size 2097152 crc E0D4BC0A )
+	rom ( name "261-c1.c1" size 8388608 crc DED84D9C )
+	rom ( name "261-c2.c2" size 8388608 crc B8EB4348 )
+	rom ( name "261-c3.c3" size 8388608 crc 84E2034A )
+	rom ( name "261-c4.c4" size 8388608 crc 0B45AE53 )
+	rom ( name "261-m1.m1" size 524288 crc 7D501C39 )
+	rom ( name "261-v1.v1" size 4194304 crc 64C30081 )
+	rom ( name "261-v2.v2" size 4194304 crc 392A9C47 )
+	rom ( name "261-v3.v3" size 4194304 crc C1A7EBE3 )
+	rom ( name "261-v4.v4" size 2097152 crc 9000D085 )
+)
+game (
+	name "beast"
+	description "Shadow of the Beast (Neo Geo demo)"
+	rom ( name "2002-p1.bin" size 524288 crc 1F9E62A4 )
+	rom ( name "2002-s1.bin" size 131072 crc 05A417F5 )
+	rom ( name "2002-c1.bin" size 524288 crc E1974741 )
+	rom ( name "2002-c2.bin" size 524288 crc 9F5B9CF6 )
+	rom ( name "nnp-m1.rom" size 65536 crc 7669DE64 )
+	rom ( name "nnp-v1.rom" size 524288 crc 504BF849 )
+)
+game (
+	name "shocktro"
+	description "Shock Troopers (set 1)"
+	rom ( name "238-pg1.p1" size 1048576 crc EFEDF8DC )
+	rom ( name "238-p2.sp2" size 4194304 crc 5B4A09C5 )
+	rom ( name "238-s1.s1" size 131072 crc 1F95CEDB )
+	rom ( name "238-c1.c1" size 4194304 crc 90C6A181 )
+	rom ( name "238-c2.c2" size 4194304 crc 888720F0 )
+	rom ( name "238-c3.c3" size 4194304 crc 2C393AA3 )
+	rom ( name "238-c4.c4" size 4194304 crc B9E909EB )
+	rom ( name "238-c5.c5" size 4194304 crc C22C68EB )
+	rom ( name "238-c6.c6" size 4194304 crc 119323CD )
+	rom ( name "238-c7.c7" size 4194304 crc A72CE7ED )
+	rom ( name "238-c8.c8" size 4194304 crc 1C7C2EFB )
+	rom ( name "238-m1.m1" size 131072 crc 075B9518 )
+	rom ( name "238-v1.v1" size 4194304 crc 260C0BEF )
+	rom ( name "238-v2.v2" size 2097152 crc 4AD7D59E )
+)
+game (
+	name "shocktr2"
+	description "Shock Troopers - 2nd Squad"
+	rom ( name "246-p1.p1" size 1048576 crc 6D4B7781 )
+	rom ( name "246-p2.sp2" size 4194304 crc 72EA04C3 )
+	rom ( name "246-s1.s1" size 131072 crc 2A360637 )
+	rom ( name "246-c1.c1" size 8388608 crc 47AC9EC5 )
+	rom ( name "246-c2.c2" size 8388608 crc 7BCAB64F )
+	rom ( name "246-c3.c3" size 8388608 crc DB2F73E8 )
+	rom ( name "246-c4.c4" size 8388608 crc 5503854E )
+	rom ( name "246-c5.c5" size 8388608 crc 055B3701 )
+	rom ( name "246-c6.c6" size 8388608 crc 7E2CAAE1 )
+	rom ( name "246-m1.m1" size 131072 crc D0604AD1 )
+	rom ( name "246-v1.v1" size 4194304 crc 16986FC6 )
+	rom ( name "246-v2.v2" size 4194304 crc ADA41E83 )
+	rom ( name "246-v3.v3" size 2097152 crc A05BA5DB )
+)
+game (
+	name "svc"
+	description "SNK vs. Capcom - SVC Chaos (NGM-2690)(NGH-2690)"
+	rom ( name "269-p1.p1" size 4194304 crc 38E2005E )
+	rom ( name "269-p2.p2" size 4194304 crc 6D13797C )
+	rom ( name "269-c1r.c1" size 8388608 crc 887B4068 )
+	rom ( name "269-c2r.c2" size 8388608 crc 4E8903E4 )
+	rom ( name "269-c3r.c3" size 8388608 crc 7D9C55B0 )
+	rom ( name "269-c4r.c4" size 8388608 crc 8ACB5BB6 )
+	rom ( name "269-c5r.c5" size 8388608 crc 097A4157 )
+	rom ( name "269-c6r.c6" size 8388608 crc E19DF344 )
+	rom ( name "269-c7r.c7" size 8388608 crc D8F0340B )
+	rom ( name "269-c8r.c8" size 8388608 crc 2570B71B )
+	rom ( name "269-m1.m1" size 524288 crc F6819D00 )
+	rom ( name "269-v1.v1" size 8388608 crc C659B34C )
+	rom ( name "269-v2.v2" size 8388608 crc DD903835 )
+)
+game (
+	name "socbrawl"
+	description "Soccer Brawl (NGM-031)"
+	rom ( name "031-pg1.p1" size 524288 crc 17F034A7 )
+	rom ( name "031-s1.s1" size 131072 crc 4C117174 )
+	rom ( name "031-c1.c1" size 1048576 crc BD0A4EB8 )
+	rom ( name "031-c2.c2" size 1048576 crc EFDE5382 )
+	rom ( name "031-c3.c3" size 524288 crc 580F7F33 )
+	rom ( name "031-c4.c4" size 524288 crc ED297DE8 )
+	rom ( name "031-m1.m1" size 131072 crc CB37427C )
+	rom ( name "031-v1.v1" size 1048576 crc CC78497E )
+	rom ( name "031-v2.v2" size 1048576 crc DDA043C6 )
+)
+game (
+	name "spidermi"
+	description "Spiderman (FMV Demo)"
+	rom ( name "sman-p1.bin" size 1048576 crc 66B5CFE8 )
+	rom ( name "sman-p2.bin" size 4194304 crc 72082AEA )
+	rom ( name "sman-s1.bin" size 65536 crc 63B8B25E )
+	rom ( name "sman-c1.bin" size 4194304 crc 8E5CCFDD )
+	rom ( name "sman-c2.bin" size 4194304 crc A6406F5B )
+	rom ( name "sman-c3.bin" size 4194304 crc ADFFF926 )
+	rom ( name "sman-c4.bin" size 4194304 crc 068C307F )
+	rom ( name "sman-c5.bin" size 4194304 crc 9A5CF7A6 )
+	rom ( name "sman-c6.bin" size 4194304 crc 934F03C0 )
+	rom ( name "sman-m1.bin" size 8192 crc 6A02CB1D )
+	rom ( name "sman-v1.bin" size 614656 crc 95C138DA )
+)
+game (
+	name "spinmast"
+	description "Spin Master / Miracle Adventure"
+	rom ( name "062-p1.p1" size 1048576 crc 37ABA1AA )
+	rom ( name "062-p2.sp2" size 1048576 crc F025AB77 )
+	rom ( name "062-s1.s1" size 131072 crc 289E2BBE )
+	rom ( name "062-c1.c1" size 1048576 crc A9375AA2 )
+	rom ( name "062-c2.c2" size 1048576 crc 0E73B758 )
+	rom ( name "062-c3.c3" size 1048576 crc DF51E465 )
+	rom ( name "062-c4.c4" size 1048576 crc 38517E90 )
+	rom ( name "062-c5.c5" size 1048576 crc 7BABD692 )
+	rom ( name "062-c6.c6" size 1048576 crc CDE5ADE5 )
+	rom ( name "062-c7.c7" size 1048576 crc BB2FD7C0 )
+	rom ( name "062-c8.c8" size 1048576 crc 8D7BE933 )
+	rom ( name "062-m1.m1" size 131072 crc 76108B2F )
+	rom ( name "062-v1.v1" size 1048576 crc CC281AEF )
+)
+game (
+	name "stakwin"
+	description "Stakes Winner / Stakes Winner - GI kinzen seiha e no michi"
+	rom ( name "088-p1.p1" size 2097152 crc BD5814F6 )
+	rom ( name "088-s1.s1" size 131072 crc 073CB208 )
+	rom ( name "088-c1.c1" size 2097152 crc 6E733421 )
+	rom ( name "088-c2.c2" size 2097152 crc 4D865347 )
+	rom ( name "088-c3.c3" size 2097152 crc 8FA5A9EB )
+	rom ( name "088-c4.c4" size 2097152 crc 4604F0DC )
+	rom ( name "088-m1.m1" size 131072 crc 2FE1F499 )
+	rom ( name "088-v1.v1" size 2097152 crc B7785023 )
+)
+game (
+	name "stakwin2"
+	description "Stakes Winner 2"
+	rom ( name "227-p1.p1" size 2097152 crc DAF101D2 )
+	rom ( name "227-s1.s1" size 131072 crc 2A8C4462 )
+	rom ( name "227-c1.c1" size 4194304 crc 7D6C2AF4 )
+	rom ( name "227-c2.c2" size 4194304 crc 7E402D39 )
+	rom ( name "227-c3.c3" size 2097152 crc 93DFD660 )
+	rom ( name "227-c4.c4" size 2097152 crc 7EFEA43A )
+	rom ( name "227-m1.m1" size 131072 crc C8E5E0F9 )
+	rom ( name "227-v1.v1" size 4194304 crc B8F24181 )
+	rom ( name "227-v2.v2" size 4194304 crc EE39E260 )
+)
+game (
+	name "strhoop"
+	description "Street Hoop / Street Slam / Dunk Dream (DEM-004) (DEH-004)"
+	rom ( name "079-p1.p1" size 1048576 crc 5E78328E )
+	rom ( name "079-s1.s1" size 131072 crc 3AC06665 )
+	rom ( name "079-c1.c1" size 2097152 crc 0581C72A )
+	rom ( name "079-c2.c2" size 2097152 crc 5B9B8FB6 )
+	rom ( name "079-c3.c3" size 2097152 crc CD65BB62 )
+	rom ( name "079-c4.c4" size 2097152 crc A4C90213 )
+	rom ( name "079-m1.m1" size 131072 crc BEE3455A )
+	rom ( name "079-v1.v1" size 2097152 crc 718A2400 )
+	rom ( name "079-v2.v2" size 1048576 crc 720774EB )
+)
+game (
+	name "s1945p"
+	description "Strikers 1945 Plus"
+	rom ( name "254-p1.p1" size 1048576 crc FF8EFCFF )
+	rom ( name "254-p2.sp2" size 4194304 crc EFDFD4DD )
+	rom ( name "254-c1.c1" size 8388608 crc AE6FC8EF )
+	rom ( name "254-c2.c2" size 8388608 crc 436FA176 )
+	rom ( name "254-c3.c3" size 8388608 crc E53FF2DC )
+	rom ( name "254-c4.c4" size 8388608 crc 818672F0 )
+	rom ( name "254-c5.c5" size 8388608 crc 4580EACD )
+	rom ( name "254-c6.c6" size 8388608 crc E34970FC )
+	rom ( name "254-c7.c7" size 8388608 crc F2323239 )
+	rom ( name "254-c8.c8" size 8388608 crc 66848C7D )
+	rom ( name "254-m1.m1" size 131072 crc 994B4487 )
+	rom ( name "254-v1.v1" size 4194304 crc 844F58FB )
+	rom ( name "254-v2.v2" size 4194304 crc D9A248F0 )
+	rom ( name "254-v3.v3" size 4194304 crc 0B0D2D33 )
+	rom ( name "254-v4.v4" size 4194304 crc 6D13DC91 )
+)
+game (
+	name "sdodgeb"
+	description "Super Dodge Ball / Kunio no Nekketsu Toukyuu Densetsu"
+	rom ( name "208-p1.p1" size 2097152 crc 127F3D32 )
+	rom ( name "208-s1.s1" size 131072 crc 64ABD6B3 )
+	rom ( name "208-c1.c1" size 4194304 crc 93D8619B )
+	rom ( name "208-c2.c2" size 4194304 crc 1C737BB6 )
+	rom ( name "208-c3.c3" size 2097152 crc 14CB1703 )
+	rom ( name "208-c4.c4" size 2097152 crc C7165F19 )
+	rom ( name "208-m1.m1" size 131072 crc 0A5F3325 )
+	rom ( name "208-v1.v1" size 4194304 crc E7899A24 )
+)
+game (
+	name "ssideki"
+	description "Super Sidekicks / Tokuten Ou"
+	rom ( name "052-p1.p1" size 524288 crc 9CD97256 )
+	rom ( name "052-s1.s1" size 131072 crc 97689804 )
+	rom ( name "052-c1.c1" size 2097152 crc 53E1C002 )
+	rom ( name "052-c2.c2" size 2097152 crc 776A2D1F )
+	rom ( name "052-m1.m1" size 131072 crc 49F17D2D )
+	rom ( name "052-v1.v1" size 2097152 crc 22C097A5 )
+)
+game (
+	name "ssideki2"
+	description "Super Sidekicks 2 - The World Championship / Tokuten Ou 2 - real fight football (NGM-061)(NGH-061)"
+	rom ( name "061-p1.p1" size 1048576 crc 5969E0DC )
+	rom ( name "061-s1.s1" size 131072 crc 226D1B68 )
+	rom ( name "061-c1-16.c1" size 2097152 crc A626474F )
+	rom ( name "061-c2-16.c2" size 2097152 crc C3BE42AE )
+	rom ( name "061-c3-16.c3" size 2097152 crc 2A7B98B9 )
+	rom ( name "061-c4-16.c4" size 2097152 crc C0BE9A1F )
+	rom ( name "061-m1.m1" size 131072 crc 156F6951 )
+	rom ( name "061-v1.v1" size 2097152 crc F081C8D3 )
+	rom ( name "061-v2.v2" size 2097152 crc 7CD63302 )
+)
+game (
+	name "ssideki3"
+	description "Super Sidekicks 3 - The Next Glory / Tokuten Ou 3 - eikou e no michi"
+	rom ( name "081-p1.p1" size 2097152 crc 6BC27A3D )
+	rom ( name "081-s1.s1" size 131072 crc 7626DA34 )
+	rom ( name "081-c1.c1" size 2097152 crc 1FB68EBE )
+	rom ( name "081-c2.c2" size 2097152 crc B28D928F )
+	rom ( name "081-c3.c3" size 2097152 crc 3B2572E8 )
+	rom ( name "081-c4.c4" size 2097152 crc 47D26A7C )
+	rom ( name "081-c5.c5" size 2097152 crc 17D42F0D )
+	rom ( name "081-c6.c6" size 2097152 crc 6B53FB75 )
+	rom ( name "081-m1.m1" size 131072 crc 82FCD863 )
+	rom ( name "081-v1.v1" size 2097152 crc 201FA1E1 )
+	rom ( name "081-v2.v2" size 2097152 crc ACF29D96 )
+	rom ( name "081-v3.v3" size 2097152 crc E524E415 )
+)
+game (
+	name "moshougi"
+	description "Syougi No Tatsujin - Master of Shougi"
+	rom ( name "203-p1.p1" size 1048576 crc 7BA70E2D )
+	rom ( name "203-s1.s1" size 131072 crc BFDC8309 )
+	rom ( name "203-c1.c1" size 2097152 crc BBA9E8C0 )
+	rom ( name "203-c2.c2" size 2097152 crc 2574BE03 )
+	rom ( name "203-m1.m1" size 131072 crc A602C2C2 )
+	rom ( name "203-v1.v1" size 2097152 crc BAA2B9A5 )
+)
+game (
+	name "twsoc96"
+	description "Tecmo World Soccer '96"
+	rom ( name "086-p1.p1" size 1048576 crc 03E20AB6 )
+	rom ( name "086-s1.s1" size 131072 crc 6F5E2B3A )
+	rom ( name "086-c1.c1" size 4194304 crc 2611BC2A )
+	rom ( name "086-c2.c2" size 4194304 crc 6B0D6827 )
+	rom ( name "086-c3.c3" size 1048576 crc 750DDC0C )
+	rom ( name "086-c4.c4" size 1048576 crc 7A6E7D82 )
+	rom ( name "086-m1.m1" size 131072 crc CB82BC5D )
+	rom ( name "086-v1.v1" size 2097152 crc 97BF1986 )
+	rom ( name "086-v2.v2" size 2097152 crc B7EB05DF )
+)
+game (
+	name "tmnti"
+	description "Teenage Mutant Ninja Turtles (FMV Demo)"
+	rom ( name "tmnt-p1.bin" size 8388608 crc 2D5066FF )
+	rom ( name "tmnt-s1.bin" size 65536 crc 3DC5C1EF )
+	rom ( name "tmnt-c1.bin" size 4194304 crc AE1735C1 )
+	rom ( name "tmnt-c2.bin" size 4194304 crc 344281B5 )
+	rom ( name "tmnt-c3.bin" size 4194304 crc 1058A648 )
+	rom ( name "tmnt-c4.bin" size 4194304 crc 1C6BA1B0 )
+	rom ( name "tmnt-c5.bin" size 4194304 crc 73A89FB0 )
+	rom ( name "tmnt-c6.bin" size 4194304 crc A139246A )
+	rom ( name "tmnt-c7.bin" size 4194304 crc ED957842 )
+	rom ( name "tmnt-c8.bin" size 4194304 crc 8C15D91B )
+	rom ( name "tmnt-m1.bin" size 8192 crc 953542EF )
+	rom ( name "tmnt-v1.bin" size 608512 crc 273640C3 )
+)
+game (
+	name "teot"
+	description "The Eye of Typhoon (Beta 3 Version)"
+	rom ( name "teot-p1.bin" size 1048576 crc 2AF068C0 )
+	rom ( name "teot-p2.bin" size 8388608 crc 3DDC321D )
+	rom ( name "teot-s1.bin" size 131072 crc 52895190 )
+	rom ( name "teot-c1.bin" size 16777216 crc 360E5362 )
+	rom ( name "teot-c2.bin" size 16777216 crc 1FDFF0CE )
+	rom ( name "teot-m1.bin" size 65536 crc 5EDAA24D )
+	rom ( name "teot-v1.bin" size 8388608 crc 70042574 )
+	rom ( name "teot-v2.bin" size 8388608 crc D84D05B2 )
+)
+game (
+	name "irrmaze"
+	description "The Irritating Maze / Ultra Denryu Iraira Bou"
+	rom ( name "236-p1.p1" size 2097152 crc 4C2FF660 )
+	rom ( name "236-s1.s1" size 131072 crc 5D1CA640 )
+	rom ( name "236-c1.c1" size 4194304 crc C1D47902 )
+	rom ( name "236-c2.c2" size 4194304 crc E15F972E )
+	rom ( name "236-m1.m1" size 131072 crc 880A1ABD )
+	rom ( name "236-v1.v1" size 2097152 crc 5F89C3B4 )
+	rom ( name "236-v2.v2" size 1048576 crc 72E3ADD7 )
+	rom ( name "236-bios.sp1" size 131072 crc 853E6B96 )
+)
+game (
+	name "kof94"
+	description "The King of Fighters '94 (NGM-055)(NGH-055)"
+	rom ( name "055-p1.p1" size 2097152 crc F10A2042 )
+	rom ( name "055-s1.s1" size 131072 crc 825976C1 )
+	rom ( name "055-c1.c1" size 2097152 crc B96EF460 )
+	rom ( name "055-c2.c2" size 2097152 crc 15E096A7 )
+	rom ( name "055-c3.c3" size 2097152 crc 54F66254 )
+	rom ( name "055-c4.c4" size 2097152 crc 0B01765F )
+	rom ( name "055-c5.c5" size 2097152 crc EE759363 )
+	rom ( name "055-c6.c6" size 2097152 crc 498DA52C )
+	rom ( name "055-c7.c7" size 2097152 crc 62F66888 )
+	rom ( name "055-c8.c8" size 2097152 crc FE0A235D )
+	rom ( name "055-m1.m1" size 131072 crc F6E77CF5 )
+	rom ( name "055-v1.v1" size 2097152 crc 8889596D )
+	rom ( name "055-v2.v2" size 2097152 crc 25022B27 )
+	rom ( name "055-v3.v3" size 2097152 crc 83CF32C0 )
+)
+game (
+	name "kof95"
+	description "The King of Fighters '95 (NGM-084)"
+	rom ( name "084-p1.p1" size 2097152 crc 2CBA2716 )
+	rom ( name "084-s1.s1" size 131072 crc DE716F8A )
+	rom ( name "084-c1.c1" size 4194304 crc FE087E32 )
+	rom ( name "084-c2.c2" size 4194304 crc 07864E09 )
+	rom ( name "084-c3.c3" size 4194304 crc A4E65D1B )
+	rom ( name "084-c4.c4" size 4194304 crc C1ACE468 )
+	rom ( name "084-c5.c5" size 2097152 crc 8A2C1EDC )
+	rom ( name "084-c6.c6" size 2097152 crc F593AC35 )
+	rom ( name "084-c7.c7" size 1048576 crc 9904025F )
+	rom ( name "084-c8.c8" size 1048576 crc 78EB0F9B )
+	rom ( name "084-m1.m1" size 131072 crc 6F2D7429 )
+	rom ( name "084-v1.v1" size 4194304 crc 84861B56 )
+	rom ( name "084-v2.v2" size 2097152 crc B38A2803 )
+	rom ( name "084-v3.v3" size 1048576 crc D683A338 )
+)
+game (
+	name "kof96"
+	description "The King of Fighters '96 (NGM-214)"
+	rom ( name "214-p1.p1" size 1048576 crc 52755D74 )
+	rom ( name "214-p2.sp2" size 2097152 crc 002CCB73 )
+	rom ( name "214-s1.s1" size 131072 crc 1254CBDB )
+	rom ( name "214-c1.c1" size 4194304 crc 7ECF4AA2 )
+	rom ( name "214-c2.c2" size 4194304 crc 05B54F37 )
+	rom ( name "214-c3.c3" size 4194304 crc 64989A65 )
+	rom ( name "214-c4.c4" size 4194304 crc AFBEA515 )
+	rom ( name "214-c5.c5" size 4194304 crc 2A3BBD26 )
+	rom ( name "214-c6.c6" size 4194304 crc 44D30DC7 )
+	rom ( name "214-c7.c7" size 4194304 crc 3687331B )
+	rom ( name "214-c8.c8" size 4194304 crc FA1461AD )
+	rom ( name "214-m1.m1" size 131072 crc DABC427C )
+	rom ( name "214-v1.v1" size 4194304 crc 63F7B045 )
+	rom ( name "214-v2.v2" size 4194304 crc 25929059 )
+	rom ( name "214-v3.v3" size 2097152 crc 92A2257D )
+)
+game (
+	name "kof97"
+	description "The King of Fighters '97 (NGM-2320)"
+	rom ( name "232-p1.p1" size 1048576 crc 7DB81AD9 )
+	rom ( name "232-p2.sp2" size 4194304 crc 158B23F6 )
+	rom ( name "232-s1.s1" size 131072 crc 8514ECF5 )
+	rom ( name "232-c1.c1" size 8388608 crc 5F8BF0A1 )
+	rom ( name "232-c2.c2" size 8388608 crc E4D45C81 )
+	rom ( name "232-c3.c3" size 8388608 crc 581D6618 )
+	rom ( name "232-c4.c4" size 8388608 crc 49BB1E68 )
+	rom ( name "232-c5.c5" size 4194304 crc 34FC4E51 )
+	rom ( name "232-c6.c6" size 4194304 crc 4FF4D47B )
+	rom ( name "232-m1.m1" size 131072 crc 45348747 )
+	rom ( name "232-v1.v1" size 4194304 crc 22A2B5B5 )
+	rom ( name "232-v2.v2" size 4194304 crc 2304E744 )
+	rom ( name "232-v3.v3" size 4194304 crc 759EB954 )
+)
+game (
+	name "kof98"
+	description "The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (NGM-2420)"
+	rom ( name "242-p1.p1" size 2097152 crc 8893DF89 )
+	rom ( name "242-p2.sp2" size 4194304 crc 980ABA4C )
+	rom ( name "242-s1.s1" size 131072 crc 7F7B4805 )
+	rom ( name "242-c1.c1" size 8388608 crc E564ECD6 )
+	rom ( name "242-c2.c2" size 8388608 crc BD959B60 )
+	rom ( name "242-c3.c3" size 8388608 crc 22127B4F )
+	rom ( name "242-c4.c4" size 8388608 crc 0B4FA044 )
+	rom ( name "242-c5.c5" size 8388608 crc 9D10BED3 )
+	rom ( name "242-c6.c6" size 8388608 crc DA07B6A2 )
+	rom ( name "242-c7.c7" size 8388608 crc F6D7A38A )
+	rom ( name "242-c8.c8" size 8388608 crc C823E045 )
+	rom ( name "242-m1.m1" size 262144 crc 4EF7016B )
+	rom ( name "242-v1.v1" size 4194304 crc B9EA8051 )
+	rom ( name "242-v2.v2" size 4194304 crc CC11106E )
+	rom ( name "242-v3.v3" size 4194304 crc 044EA4E1 )
+	rom ( name "242-v4.v4" size 4194304 crc 7985EA30 )
+)
+game (
+	name "kof99"
+	description "The King of Fighters '99 - Millennium Battle (NGM-2510)"
+	rom ( name "ka.neo-sma" size 262144 crc 7766D09E )
+	rom ( name "251-p1.p1" size 4194304 crc 006E4532 )
+	rom ( name "251-p2.p2" size 4194304 crc 90175F15 )
+	rom ( name "251-c1.c1" size 8388608 crc 0F9E93FE )
+	rom ( name "251-c2.c2" size 8388608 crc E71E2EA3 )
+	rom ( name "251-c3.c3" size 8388608 crc 238755D2 )
+	rom ( name "251-c4.c4" size 8388608 crc 438C8B22 )
+	rom ( name "251-c5.c5" size 8388608 crc 0B0ABD0A )
+	rom ( name "251-c6.c6" size 8388608 crc 65BBF281 )
+	rom ( name "251-c7.c7" size 8388608 crc FF65F62E )
+	rom ( name "251-c8.c8" size 8388608 crc 8D921C68 )
+	rom ( name "251-m1.m1" size 131072 crc 5E74539C )
+	rom ( name "251-v1.v1" size 4194304 crc EF2EECC8 )
+	rom ( name "251-v2.v2" size 4194304 crc 73E211CA )
+	rom ( name "251-v3.v3" size 4194304 crc 821901DA )
+	rom ( name "251-v4.v4" size 2097152 crc B49E6178 )
+)
+game (
+	name "kof2000"
+	description "The King of Fighters 2000 (NGM-2570) (NGH-2570)"
+	rom ( name "neo-sma" size 262144 crc 71C6E6BB )
+	rom ( name "257-p1.p1" size 4194304 crc 60947B4C )
+	rom ( name "257-p2.p2" size 4194304 crc 1B7EC415 )
+	rom ( name "257-c1.c1" size 8388608 crc CEF1CDFA )
+	rom ( name "257-c2.c2" size 8388608 crc F7BF0003 )
+	rom ( name "257-c3.c3" size 8388608 crc 101E6560 )
+	rom ( name "257-c4.c4" size 8388608 crc BD2FC1B1 )
+	rom ( name "257-c5.c5" size 8388608 crc 89775412 )
+	rom ( name "257-c6.c6" size 8388608 crc FA7200D5 )
+	rom ( name "257-c7.c7" size 8388608 crc 7DA11FE4 )
+	rom ( name "257-c8.c8" size 8388608 crc B1AFA60B )
+	rom ( name "257-m1.m1" size 262144 crc 4B749113 )
+	rom ( name "257-v1.v1" size 4194304 crc 17CDE847 )
+	rom ( name "257-v2.v2" size 4194304 crc 1AFB20FF )
+	rom ( name "257-v3.v3" size 4194304 crc 4605036A )
+	rom ( name "257-v4.v4" size 4194304 crc 764BBD6B )
+)
+game (
+	name "kof2001"
+	description "The King of Fighters 2001 (NGM-262?)"
+	rom ( name "262-p1-08-e0.p1" size 1048576 crc 9381750D )
+	rom ( name "262-p2-08-e0.sp2" size 4194304 crc 8E0D8329 )
+	rom ( name "262-c1-08-e0.c1" size 8388608 crc 99CC785A )
+	rom ( name "262-c2-08-e0.c2" size 8388608 crc 50368CBF )
+	rom ( name "262-c3-08-e0.c3" size 8388608 crc FB14FF87 )
+	rom ( name "262-c4-08-e0.c4" size 8388608 crc 4397FAF8 )
+	rom ( name "262-c5-08-e0.c5" size 8388608 crc 91F24BE4 )
+	rom ( name "262-c6-08-e0.c6" size 8388608 crc A31E4403 )
+	rom ( name "262-c7-08-e0.c7" size 8388608 crc 54D9D1EC )
+	rom ( name "262-c8-08-e0.c8" size 8388608 crc 59289A6B )
+	rom ( name "265-262-m1.m1" size 262144 crc A7F8119F )
+	rom ( name "262-v1-08-e0.v1" size 4194304 crc 83D49ECF )
+	rom ( name "262-v2-08-e0.v2" size 4194304 crc 003F1843 )
+	rom ( name "262-v3-08-e0.v3" size 4194304 crc 2AE38DBE )
+	rom ( name "262-v4-08-e0.v4" size 4194304 crc 26EC4DD9 )
+)
+game (
+	name "kof2002"
+	description "The King of Fighters 2002 (NGM-2650)(NGH-2650)"
+	rom ( name "265-p1.p1" size 1048576 crc 9EDE7323 )
+	rom ( name "265-p2.sp2" size 4194304 crc 327266B8 )
+	rom ( name "265-c1.c1" size 8388608 crc 2B65A656 )
+	rom ( name "265-c2.c2" size 8388608 crc ADF18983 )
+	rom ( name "265-c3.c3" size 8388608 crc 875E9FD7 )
+	rom ( name "265-c4.c4" size 8388608 crc 2DA13947 )
+	rom ( name "265-c5.c5" size 8388608 crc 61BD165D )
+	rom ( name "265-c6.c6" size 8388608 crc 03FDD1EB )
+	rom ( name "265-c7.c7" size 8388608 crc 1A2749D8 )
+	rom ( name "265-c8.c8" size 8388608 crc AB0BB549 )
+	rom ( name "265-m1.m1" size 131072 crc 85AAA632 )
+	rom ( name "265-v1.v1" size 8388608 crc 15E8F3F5 )
+	rom ( name "265-v2.v2" size 8388608 crc DA41D6F9 )
+)
+game (
+	name "kof2003"
+	description "The King of Fighters 2003 (NGM-2710)"
+	rom ( name "271-p1c.p1" size 4194304 crc 530ECC14 )
+	rom ( name "271-p2c.p2" size 4194304 crc FD568DA9 )
+	rom ( name "271-p3c.p3" size 1048576 crc AEC5B4A9 )
+	rom ( name "271-c1c.c1" size 8388608 crc B1DC25D0 )
+	rom ( name "271-c2c.c2" size 8388608 crc D5362437 )
+	rom ( name "271-c3c.c3" size 8388608 crc 0A1FBEAB )
+	rom ( name "271-c4c.c4" size 8388608 crc 87B19A0C )
+	rom ( name "271-c5c.c5" size 8388608 crc 704EA371 )
+	rom ( name "271-c6c.c6" size 8388608 crc 20A1164C )
+	rom ( name "271-c7c.c7" size 8388608 crc 189ABA7F )
+	rom ( name "271-c8c.c8" size 8388608 crc 20EC4FDC )
+	rom ( name "271-m1c.m1" size 524288 crc F5515629 )
+	rom ( name "271-v1c.v1" size 8388608 crc FFA3F8C7 )
+	rom ( name "271-v2c.v2" size 8388608 crc 5382C7D1 )
+)
+game (
+	name "lastblad"
+	description "The Last Blade / Bakumatsu Roman - Gekka no Kenshi (NGM-2340)"
+	rom ( name "234-p1.p1" size 1048576 crc E123A5A3 )
+	rom ( name "234-p2.sp2" size 4194304 crc 0FDC289E )
+	rom ( name "234-s1.s1" size 131072 crc 95561412 )
+	rom ( name "234-c1.c1" size 8388608 crc 9F7E2BD3 )
+	rom ( name "234-c2.c2" size 8388608 crc 80623D3C )
+	rom ( name "234-c3.c3" size 8388608 crc 91AB1A30 )
+	rom ( name "234-c4.c4" size 8388608 crc 3D60B037 )
+	rom ( name "234-c5.c5" size 4194304 crc 1BA80CEE )
+	rom ( name "234-c6.c6" size 4194304 crc BEAFD091 )
+	rom ( name "234-m1.m1" size 131072 crc 087628EA )
+	rom ( name "234-v1.v1" size 4194304 crc ED66B76F )
+	rom ( name "234-v2.v2" size 4194304 crc A0E7F6E2 )
+	rom ( name "234-v3.v3" size 4194304 crc A506E1E2 )
+	rom ( name "234-v4.v4" size 4194304 crc 0E34157F )
+)
+game (
+	name "lastbld2"
+	description "The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (NGM-2430)(NGH-2430)"
+	rom ( name "243-pg1.p1" size 1048576 crc AF1E6554 )
+	rom ( name "243-pg2.sp2" size 4194304 crc ADD4A30B )
+	rom ( name "243-s1.s1" size 131072 crc C9CD2298 )
+	rom ( name "243-c1.c1" size 8388608 crc 5839444D )
+	rom ( name "243-c2.c2" size 8388608 crc DD087428 )
+	rom ( name "243-c3.c3" size 8388608 crc 6054CBE0 )
+	rom ( name "243-c4.c4" size 8388608 crc 8BD2A9D2 )
+	rom ( name "243-c5.c5" size 8388608 crc 6A503DCF )
+	rom ( name "243-c6.c6" size 8388608 crc EC9C36D0 )
+	rom ( name "243-m1.m1" size 131072 crc ACF12D10 )
+	rom ( name "243-v1.v1" size 4194304 crc F7EE6FBB )
+	rom ( name "243-v2.v2" size 4194304 crc AA9E4DF6 )
+	rom ( name "243-v3.v3" size 4194304 crc 4AC750B2 )
+	rom ( name "243-v4.v4" size 4194304 crc F5C64BA6 )
+)
+game (
+	name "superspy"
+	description "The Super Spy (NGM-011)(NGH-011)"
+	rom ( name "011-p1.p1" size 524288 crc C7F944B5 )
+	rom ( name "sp2.p2" size 131072 crc 811A4FAF )
+	rom ( name "011-s1.s1" size 131072 crc EC5FDB96 )
+	rom ( name "011-c1.c1" size 1048576 crc CAE7BE57 )
+	rom ( name "011-c2.c2" size 1048576 crc 9E29D986 )
+	rom ( name "011-c3.c3" size 1048576 crc 14832FF2 )
+	rom ( name "011-c4.c4" size 1048576 crc B7F63162 )
+	rom ( name "011-m1.m1" size 262144 crc CA661F1B )
+	rom ( name "011-v11.v11" size 1048576 crc 5C674D5C )
+	rom ( name "011-v12.v12" size 524288 crc 9F513D5A )
+	rom ( name "011-v21.v21" size 524288 crc 426CD040 )
+)
+game (
+	name "ssideki4"
+	description "The Ultimate 11 - The SNK Football Championship / Tokuten Ou - Honoo no Libero"
+	rom ( name "215-p1.p1" size 2097152 crc 519B4BA3 )
+	rom ( name "215-s1.s1" size 131072 crc F0FE5C36 )
+	rom ( name "215-c1.c1" size 4194304 crc 8FF444F5 )
+	rom ( name "215-c2.c2" size 4194304 crc 5B155037 )
+	rom ( name "215-c3.c3" size 4194304 crc 456A073A )
+	rom ( name "215-c4.c4" size 4194304 crc 43C182E1 )
+	rom ( name "215-c5.c5" size 2097152 crc 0C6F97EC )
+	rom ( name "215-c6.c6" size 2097152 crc 329C5E1B )
+	rom ( name "215-m1.m1" size 131072 crc A932081D )
+	rom ( name "215-v1.v1" size 4194304 crc 877D1409 )
+	rom ( name "215-v2.v2" size 2097152 crc 1BFA218B )
+)
+game (
+	name "trally"
+	description "Thrash Rally (ALM-003)(ALH-003)"
+	rom ( name "038-p1.p1" size 524288 crc 1E52A576 )
+	rom ( name "038-p2.p2" size 524288 crc A5193E2F )
+	rom ( name "038-s1.s1" size 131072 crc FFF62AE3 )
+	rom ( name "038-c1.c1" size 1048576 crc C58323D4 )
+	rom ( name "038-c2.c2" size 1048576 crc BBA9C29E )
+	rom ( name "038-c3.c3" size 524288 crc 3BB7B9D6 )
+	rom ( name "038-c4.c4" size 524288 crc A4513ECF )
+	rom ( name "038-m1.m1" size 131072 crc 0908707E )
+	rom ( name "038-v1.v1" size 1048576 crc 5CCD9FD5 )
+	rom ( name "038-v2.v2" size 524288 crc DDD8D1E6 )
+)
+game (
+	name "timesupd"
+	description "Time's UP! (Demo)"
+	rom ( name "tup_p1.rom" size 2097152 crc BE86ADB1 )
+	rom ( name "tup_s1.rom" size 131072 crc A545B593 )
+	rom ( name "tup_c1.rom" size 2097152 crc C19A300A )
+	rom ( name "tup_c2.rom" size 2097152 crc FDB3F7ED )
+	rom ( name "tup_m1.rom" size 131072 crc FE795D11 )
+	rom ( name "tup_v1.rom" size 4194304 crc 13B8F47B )
+	rom ( name "tup_v2.rom" size 4194304 crc 6FDD663D )
+)
+game (
+	name "timesup"
+	description "Time's UP!"
+	rom ( name "tup_p1.rom" size 1048576 crc B4BE3EDE )
+	rom ( name "tup_s1.rom" size 131072 crc A545B593 )
+	rom ( name "tup_c1.rom" size 2097152 crc 1C83FC38 )
+	rom ( name "tup_c2.rom" size 2097152 crc 2B3F48B4 )
+	rom ( name "tup_m1.rom" size 131072 crc 8B83308B )
+	rom ( name "tup_v1.rom" size 2097152 crc 1B48708B )
+	rom ( name "tup_v2.rom" size 2097152 crc 6B17DF84 )
+	rom ( name "tup_v3.rom" size 2097152 crc 6C798D46 )
+)
+game (
+	name "tophuntr"
+	description "Top Hunter - Roddy & Cathy (NGM-046)"
+	rom ( name "046-p1.p1" size 1048576 crc 69FA9E29 )
+	rom ( name "046-p2.sp2" size 1048576 crc F182CB3E )
+	rom ( name "046-s1.s1" size 131072 crc 14B01D7B )
+	rom ( name "046-c1.c1" size 1048576 crc FA720A4A )
+	rom ( name "046-c2.c2" size 1048576 crc C900C205 )
+	rom ( name "046-c3.c3" size 1048576 crc 880E3C25 )
+	rom ( name "046-c4.c4" size 1048576 crc 7A2248AA )
+	rom ( name "046-c5.c5" size 1048576 crc 4B735E45 )
+	rom ( name "046-c6.c6" size 1048576 crc 273171DF )
+	rom ( name "046-c7.c7" size 1048576 crc 12829C4C )
+	rom ( name "046-c8.c8" size 1048576 crc C944E03D )
+	rom ( name "046-m1.m1" size 131072 crc 3F84BB9F )
+	rom ( name "046-v1.v1" size 1048576 crc C1F9C2DB )
+	rom ( name "046-v2.v2" size 1048576 crc 56254A64 )
+	rom ( name "046-v3.v3" size 1048576 crc 58113FB1 )
+	rom ( name "046-v4.v4" size 1048576 crc 4F54C187 )
+)
+game (
+	name "tpgolf"
+	description "Top Player's Golf (NGM-003)(NGH-003)"
+	rom ( name "003-p1.p1" size 524288 crc F75549BA )
+	rom ( name "003-p2.p2" size 524288 crc B7809A8F )
+	rom ( name "003-s1.s1" size 131072 crc 7B3EB9B1 )
+	rom ( name "003-c1.c1" size 524288 crc 0315FBAF )
+	rom ( name "003-c2.c2" size 524288 crc B4C15D59 )
+	rom ( name "003-c3.c3" size 524288 crc 8CE3E8DA )
+	rom ( name "003-c4.c4" size 524288 crc 29725969 )
+	rom ( name "003-c5.c5" size 524288 crc 9A7146DA )
+	rom ( name "003-c6.c6" size 524288 crc 1E63411A )
+	rom ( name "003-c7.c7" size 524288 crc 2886710C )
+	rom ( name "003-c8.c8" size 524288 crc 422AF22D )
+	rom ( name "003-m1.m1" size 131072 crc 4CC545E6 )
+	rom ( name "003-v11.v11" size 524288 crc FF97F1CB )
+	rom ( name "003-v21.v21" size 524288 crc D34960C6 )
+	rom ( name "003-v22.v22" size 524288 crc 9A5F58D4 )
+	rom ( name "003-v23.v23" size 524288 crc 30F53E54 )
+	rom ( name "003-v24.v24" size 524288 crc 5BA0F501 )
+)
+game (
+	name "totc"
+	description "Treasure of the Caribbean"
+	rom ( name "316-p1.p1" size 1048576 crc 99604539 )
+	rom ( name "316-s1.s1" size 131072 crc 0A3FEE41 )
+	rom ( name "316-c1.c1" size 2097152 crc CDD6600F )
+	rom ( name "316-c1.c2" size 2097152 crc F362C271 )
+	rom ( name "316-m1.m1" size 131072 crc 18B23ACE )
+	rom ( name "316-v1.v1" size 2097152 crc 15C7F9E6 )
+	rom ( name "316-v2.v2" size 2097152 crc 1B264559 )
+	rom ( name "316-v3.v3" size 1048576 crc 84B62C5D )
+)
+game (
+	name "twinspri"
+	description "Twinkle Star Sprites"
+	rom ( name "224-p1.p1" size 2097152 crc 7697E445 )
+	rom ( name "224-s1.s1" size 131072 crc EEED5758 )
+	rom ( name "224-c1.c1" size 4194304 crc F7DA64AB )
+	rom ( name "224-c2.c2" size 4194304 crc 4C09BBFB )
+	rom ( name "224-c3.c3" size 1048576 crc C59E4129 )
+	rom ( name "224-c4.c4" size 1048576 crc B5532E53 )
+	rom ( name "224-m1.m1" size 131072 crc 364D6F96 )
+	rom ( name "224-v1.v1" size 4194304 crc FF57F088 )
+	rom ( name "224-v2.v2" size 2097152 crc 7AD26599 )
+)
+game (
+	name "vliner"
+	description "V-Liner (v0.7a)"
+	rom ( name "epr_7a.p1" size 524288 crc 052F93ED )
+	rom ( name "s-1.s1" size 131072 crc 972D8C31 )
+	rom ( name "c-1.c1" size 524288 crc 5118F7C0 )
+	rom ( name "c-2.c2" size 524288 crc EFE9B33E )
+	rom ( name "m-1.m1" size 65536 crc 9B92B7D1 )
+)
+game (
+	name "viewpoin"
+	description "Viewpoint"
+	rom ( name "051-p1.p1" size 1048576 crc 17AA899D )
+	rom ( name "051-s1.s1" size 131072 crc 9FEA5758 )
+	rom ( name "051-c1.c1" size 2097152 crc D624C132 )
+	rom ( name "051-c2.c2" size 2097152 crc 40D69F1E )
+	rom ( name "051-m1.m1" size 131072 crc 8E69F29A )
+	rom ( name "051-v2.v1" size 2097152 crc 019978B6 )
+	rom ( name "051-v4.v2" size 2097152 crc 5758F38C )
+)
+game (
+	name "gowcaizr"
+	description "Voltage Fighter - Gowcaizer / Choujin Gakuen Gowcaizer"
+	rom ( name "094-p1.p1" size 2097152 crc 33019545 )
+	rom ( name "094-s1.s1" size 131072 crc 2F8748A2 )
+	rom ( name "094-c1.c1" size 2097152 crc 042F6AF5 )
+	rom ( name "094-c2.c2" size 2097152 crc 0FBCD046 )
+	rom ( name "094-c3.c3" size 2097152 crc 58BFBAA1 )
+	rom ( name "094-c4.c4" size 2097152 crc 9451EE73 )
+	rom ( name "094-c5.c5" size 2097152 crc FF9CF48C )
+	rom ( name "094-c6.c6" size 2097152 crc 31BBD918 )
+	rom ( name "094-c7.c7" size 2097152 crc 2091EC04 )
+	rom ( name "094-c8.c8" size 2097152 crc D80DD241 )
+	rom ( name "094-m1.m1" size 131072 crc 78C851CB )
+	rom ( name "094-v1.v1" size 2097152 crc 6C31223C )
+	rom ( name "094-v2.v2" size 2097152 crc 8EDB776C )
+	rom ( name "094-v3.v3" size 1048576 crc C63B9285 )
+)
+game (
+	name "wakuwak7"
+	description "Waku Waku 7"
+	rom ( name "225-p1.p1" size 1048576 crc B14DA766 )
+	rom ( name "225-p2.sp2" size 2097152 crc FE190665 )
+	rom ( name "225-s1.s1" size 131072 crc 71C4B4B5 )
+	rom ( name "225-c1.c1" size 4194304 crc EE4FEA54 )
+	rom ( name "225-c2.c2" size 4194304 crc 0C549E2D )
+	rom ( name "225-c3.c3" size 4194304 crc AF0897C0 )
+	rom ( name "225-c4.c4" size 4194304 crc 4C66527A )
+	rom ( name "225-c5.c5" size 4194304 crc 8ECEA2B5 )
+	rom ( name "225-c6.c6" size 4194304 crc 0EB11A6D )
+	rom ( name "225-m1.m1" size 131072 crc 0634BBA6 )
+	rom ( name "225-v1.v1" size 4194304 crc 6195C6B4 )
+	rom ( name "225-v2.v2" size 4194304 crc 6159C5FE )
+)
+game (
+	name "wjammers"
+	description "Windjammers / Flying Power Disc"
+	rom ( name "065-p1.p1" size 1048576 crc 6692C140 )
+	rom ( name "065-s1.s1" size 131072 crc 074B5723 )
+	rom ( name "065-c1.c1" size 1048576 crc C7650204 )
+	rom ( name "065-c2.c2" size 1048576 crc D9F3E71D )
+	rom ( name "065-c3.c3" size 1048576 crc 40986386 )
+	rom ( name "065-c4.c4" size 1048576 crc 715E15FF )
+	rom ( name "065-m1.m1" size 131072 crc 52C23CFC )
+	rom ( name "065-v1.v1" size 1048576 crc CE8B3698 )
+	rom ( name "065-v2.v2" size 1048576 crc 659F9B96 )
+	rom ( name "065-v3.v3" size 1048576 crc 39F73061 )
+	rom ( name "065-v4.v4" size 1048576 crc 5DEE7963 )
+)
+game (
+	name "wh1"
+	description "World Heroes (ALM-005)"
+	rom ( name "053-epr.p1" size 524288 crc D42E1E9A )
+	rom ( name "053-epr.p2" size 524288 crc 0E33E8A3 )
+	rom ( name "053-s1.s1" size 131072 crc 8C2C2D6B )
+	rom ( name "053-c1.c1" size 2097152 crc 85EB5BCE )
+	rom ( name "053-c2.c2" size 2097152 crc EC93B048 )
+	rom ( name "053-c3.c3" size 1048576 crc 0DD64965 )
+	rom ( name "053-c4.c4" size 1048576 crc 9270D954 )
+	rom ( name "053-m1.m1" size 131072 crc 1BD9D04B )
+	rom ( name "053-v2.v2" size 2097152 crc A68DF485 )
+	rom ( name "053-v4.v4" size 1048576 crc 7BEA8F66 )
+)
+game (
+	name "wh2"
+	description "World Heroes 2 (ALM-006)(ALH-006)"
+	rom ( name "057-p1.p1" size 2097152 crc 65A891D9 )
+	rom ( name "057-s1.s1" size 131072 crc FCAEB3A4 )
+	rom ( name "057-c1.c1" size 2097152 crc 21C6BB91 )
+	rom ( name "057-c2.c2" size 2097152 crc A3999925 )
+	rom ( name "057-c3.c3" size 2097152 crc B725A219 )
+	rom ( name "057-c4.c4" size 2097152 crc 8D96425E )
+	rom ( name "057-c5.c5" size 2097152 crc B20354AF )
+	rom ( name "057-c6.c6" size 2097152 crc B13D1DE3 )
+	rom ( name "057-m1.m1" size 131072 crc 8FA3BC77 )
+	rom ( name "057-v1.v1" size 2097152 crc 8877E301 )
+	rom ( name "057-v2.v2" size 2097152 crc C1317FF4 )
+)
+game (
+	name "wh2j"
+	description "World Heroes 2 Jet (ADM-007)(ADH-007)"
+	rom ( name "064-p1.p1" size 2097152 crc 385A2E86 )
+	rom ( name "064-s1.s1" size 131072 crc 2A03998A )
+	rom ( name "064-c1.c1" size 2097152 crc 2EC87CEA )
+	rom ( name "064-c2.c2" size 2097152 crc 526B81AB )
+	rom ( name "064-c3.c3" size 2097152 crc 436D1B31 )
+	rom ( name "064-c4.c4" size 2097152 crc F9C8DD26 )
+	rom ( name "064-c5.c5" size 2097152 crc 8E34A9F4 )
+	rom ( name "064-c6.c6" size 2097152 crc A43E4766 )
+	rom ( name "064-c7.c7" size 2097152 crc 59D97215 )
+	rom ( name "064-c8.c8" size 2097152 crc FC092367 )
+	rom ( name "064-m1.m1" size 131072 crc D2EEC9D3 )
+	rom ( name "064-v1.v1" size 2097152 crc AA277109 )
+	rom ( name "064-v2.v2" size 2097152 crc B6527EDD )
+)
+game (
+	name "whp"
+	description "World Heroes Perfect"
+	rom ( name "090-p1.p1" size 2097152 crc AFAA4702 )
+	rom ( name "090-s1.s1" size 131072 crc 174A880F )
+	rom ( name "090-c1.c1" size 4194304 crc CD30ED9B )
+	rom ( name "090-c2.c2" size 4194304 crc 10EED5EE )
+	rom ( name "064-c3.c3" size 2097152 crc 436D1B31 )
+	rom ( name "064-c4.c4" size 2097152 crc F9C8DD26 )
+	rom ( name "064-c5.c5" size 2097152 crc 8E34A9F4 )
+	rom ( name "064-c6.c6" size 2097152 crc A43E4766 )
+	rom ( name "064-c7.c7" size 2097152 crc 59D97215 )
+	rom ( name "064-c8.c8" size 2097152 crc FC092367 )
+	rom ( name "090-m1.m1" size 131072 crc 28065668 )
+	rom ( name "090-v1.v1" size 2097152 crc 30CF2709 )
+	rom ( name "064-v2.v2" size 2097152 crc B6527EDD )
+	rom ( name "090-v3.v3" size 2097152 crc 1908A7CE )
+)
+game (
+	name "neoww2"
+	description "WW2 (Demo) - Arcade Development Project"
+	rom ( name "ww2_p1.rom" size 524288 crc D53762FF )
+	rom ( name "ww2_s1.rom" size 65536 crc 3FDA5D1A )
+	rom ( name "ww2_c1.rom" size 1048576 crc 955EFD3E )
+	rom ( name "ww2_c2.rom" size 1048576 crc C213940F )
+	rom ( name "ww2_m1.rom" size 131072 crc 99C2354E )
+	rom ( name "ww2_v1.rom" size 524288 crc DEBEB8FB )
+)
+game (
+	name "xenocrisis"
+	description "Xeno Crisis (NGM-BB01) (NGH-BB01)"
+	rom ( name "BB01-p1.p1" size 1048576 crc 637605A6 )
+	rom ( name "BB01-p2.p2" size 1048576 crc 84838145 )
+	rom ( name "BB01-s1.s1" size 131072 crc 7537EA79 )
+	rom ( name "BB01-c1.c1" size 2097152 crc AE51EF89 )
+	rom ( name "BB01-c2.c2" size 2097152 crc A8610100 )
+	rom ( name "BB01-m1.m1" size 65536 crc 28C13ED9 )
+	rom ( name "BB01-v1.v1" size 16777216 crc 60D57867 )
+)
+game (
+	name "zedblade"
+	description "Zed Blade / Operation Ragnarok"
+	rom ( name "076-p1.p1" size 524288 crc D7C1EFFD )
+	rom ( name "076-s1.s1" size 131072 crc F4C25DD5 )
+	rom ( name "076-c1.c1" size 2097152 crc 4D9CB038 )
+	rom ( name "076-c2.c2" size 2097152 crc 09233884 )
+	rom ( name "076-c3.c3" size 2097152 crc D06431E3 )
+	rom ( name "076-c4.c4" size 2097152 crc 4B1C089B )
+	rom ( name "076-m1.m1" size 131072 crc 7B5F3D0A )
+	rom ( name "076-v1.v1" size 2097152 crc 1A21D90C )
+	rom ( name "076-v2.v2" size 2097152 crc B61686C3 )
+	rom ( name "076-v3.v3" size 1048576 crc B90658FA )
+)
+game (
+	name "zintrckb"
+	description "Zintrick / Oshidashi Zentrix (hack / bootleg)"
+	rom ( name "zin-p1.bin" size 1048576 crc 06C8FCA7 )
+	rom ( name "zin-s1.bin" size 131072 crc A7AB0E81 )
+	rom ( name "zin-c1.bin" size 2097152 crc 76AEE189 )
+	rom ( name "zin-c2.bin" size 2097152 crc 844ED4B3 )
+	rom ( name "zin-m1.bin" size 131072 crc FD9627CA )
+	rom ( name "zin-v1.bin" size 2097152 crc C09F74F1 )
+)
+game (
+	name "zupapa"
+	description "Zupapa!"
+	rom ( name "070-p1.p1" size 1048576 crc 5A96203E )
+	rom ( name "070-c1.c1" size 8388608 crc F8AD02D8 )
+	rom ( name "070-c2.c2" size 8388608 crc 70156DDE )
+	rom ( name "070-epr.m1" size 131072 crc 5A3B3191 )
+	rom ( name "070-v1.v1" size 2097152 crc D3A7E1FF )
+)

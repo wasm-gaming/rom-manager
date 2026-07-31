@@ -32,109 +32,100 @@ import { normalizeGameName, parseGameName, sanitizeName } from '../src/core/rom-
 import { ANY_REGION, REGIONS, regionsOf, videoStandardsOf } from '../src/core/rom-regions.ts';
 
 /**
+ * Iterate the contents of every `<tag> ( … )` block of a DAT.
+ *
+ * Parenthesis are balanced and quoted strings skipped, because a name may open
+ * one that never closes — `Odekake Lester - Lelele no Le (^^; (Japan)` — and
+ * counting it would swallow the rest of the file. A game and each of its ROM
+ * entries are written the same way, so one scanner reads both, which is what
+ * lets a ROM be read as a block instead of as a pattern.
+ */
+function* blocksOf(text, tag) {
+  const opening = `${tag} (`;
+  let pos = 0;
+
+  for (;;) {
+    const start = text.indexOf(opening, pos);
+    if (start === -1) return;
+
+    // The tag has to be a word of its own, so `rom (` does not match `prom (`.
+    const before = start > 0 ? text[start - 1] : '\n';
+    if (!/[\s)]/.test(before)) {
+      pos = start + opening.length;
+      continue;
+    }
+
+    const open = start + tag.length + 1;
+    let index = open;
+    let depth = 0;
+
+    while (index < text.length) {
+      const char = text[index];
+
+      if (char === '"') {
+        const closing = text.indexOf('"', index + 1);
+        if (closing === -1) return;
+        index = closing + 1;
+        continue;
+      }
+
+      if (char === '(') depth++;
+      else if (char === ')' && --depth === 0) break;
+
+      index++;
+    }
+
+    if (index >= text.length) return;
+
+    yield text.slice(open + 1, index).trim();
+    pos = index + 1;
+  }
+}
+
+/**
+ * The file one ROM entry describes.
+ *
+ * Only the CRC32 is required. No-Intro and Redump publish MD5 and SHA1 as well,
+ * but the catalogue of a system whose games ship as one whole romset carries the
+ * CRC32 alone — and that is the checksum every lookup in this project is keyed
+ * by, so an entry with nothing else is still a complete answer.
+ */
+function romOf(block) {
+  const name = block.match(/\bname\s+"([^"]+)"/)?.[1];
+  const crc = block.match(/\bcrc\s+([0-9a-fA-F]+)/)?.[1];
+  if (!name || !crc) return null;
+
+  const size = block.match(/\bsize\s+(\d+)/)?.[1];
+
+  return {
+    name,
+    size: size === undefined ? undefined : Number(size),
+    crc: crc.toUpperCase(),
+    md5: block.match(/\bmd5\s+([0-9a-fA-F]+)/)?.[1]?.toUpperCase(),
+    sha1: block.match(/\bsha1\s+([0-9a-fA-F]+)/)?.[1]?.toUpperCase(),
+  };
+}
+
+/**
  * Parse clrmamepro DAT format with balanced parenthesis matching
  */
 function parseDat(datContent) {
   const games = [];
-  
-  // Find all balanced game ( ... ) blocks
-  let pos = 0;
-  while (true) {
-    // Find next "game ("
-    const gameIdx = datContent.indexOf('game (', pos);
-    if (gameIdx === -1) break;
-    
-    // Check that it's word-bounded (preceded by ) or whitespace or start)
-    const before = gameIdx > 0 ? datContent[gameIdx - 1] : '\n';
-    if (!/[\s\)]/.test(before)) {
-      pos = gameIdx + 6;
-      continue;
-    }
-    
-    // Find the opening paren position (after "game ")
-    let openIdx = gameIdx + 5; // Skip "game "
-    while (openIdx < datContent.length && datContent[openIdx] !== '(') {
-      openIdx++;
-    }
-    if (openIdx >= datContent.length) break;
-    
-    // Find balanced closing paren starting from the opening paren. Quoted
-    // strings are skipped because game names may contain unbalanced
-    // parenthesis, e.g. "Odekake Lester - Lelele no Le (^^; (Japan)".
-    let parenIdx = openIdx;
-    let depth = 0;
-    
-    while (parenIdx < datContent.length) {
-      const ch = datContent[parenIdx];
-      if (ch === '"') {
-        const closingQuote = datContent.indexOf('"', parenIdx + 1);
-        if (closingQuote === -1) break;
-        parenIdx = closingQuote + 1;
-        continue;
-      }
-      if (ch === '(') depth++;
-      else if (ch === ')') {
-        depth--;
-        if (depth === 0) {
-          // Found matching closing paren - content is between opening ( and closing )
-          const gameBlock = datContent.substring(openIdx + 1, parenIdx).trim();
-          
-          if (gameBlock.length > 0) {
-            const game = {};
-            
-            // Extract name
-            const nameMatch = gameBlock.match(/name\s+"([^"]+)"/);
-            if (nameMatch) {
-              game.name = nameMatch[1];
-            }
-            
-            // Extract description
-            const descMatch = gameBlock.match(/description\s+"([^"]+)"/);
-            if (descMatch) {
-              game.description = descMatch[1];
-            }
 
-            // Extract the DAT's explicit release region when available.
-            const regionMatch = gameBlock.match(/\bregion\s+"([^"]+)"/);
-            if (regionMatch) {
-              game.region = regionMatch[1];
-            }
-            
-            // Extract ROMs. Game and ROM names may themselves contain parentheses,
-            // so a simple `[^)]` matcher would truncate the ROM block prematurely.
-            const romRegex = /rom\s*\(\s*name\s+"([^"]+)"\s+size\s+(\d+)\s+crc\s+([0-9a-fA-F]+)(?:[\s\S]*?\bmd5\s+([0-9a-fA-F]+))?[\s\S]*?\bsha1\s+([0-9a-fA-F]+)/g;
-            game.roms = [];
-            
-            let romMatch;
-            while ((romMatch = romRegex.exec(gameBlock)) !== null) {
-              const rom = {
-                name: romMatch[1],
-                size: parseInt(romMatch[2], 10),
-                crc: romMatch[3].toUpperCase(),
-                md5: romMatch[4]?.toUpperCase(),
-                sha1: romMatch[5].toUpperCase()
-              };
-              
-              if (rom.name) {
-                game.roms.push(rom);
-              }
-            }
-            
-            if (game.name && game.roms.length > 0) {
-              games.push(game);
-            }
-          }
-          
-          pos = parenIdx + 1;
-          break;
-        }
-      }
-      parenIdx++;
-    }
-    
-    if (parenIdx >= datContent.length) break; // No matching paren found
+  for (const block of blocksOf(datContent, 'game')) {
+    if (!block) continue;
+
+    const game = {
+      name: block.match(/\bname\s+"([^"]+)"/)?.[1],
+      description: block.match(/\bdescription\s+"([^"]+)"/)?.[1],
+      // The DAT's explicit release region, when it carries one.
+      region: block.match(/\bregion\s+"([^"]+)"/)?.[1],
+      roms: [...blocksOf(block, 'rom')].map(romOf).filter(Boolean),
+    };
+
+    if (game.name && game.roms.length > 0) games.push(game);
   }
-  
+
   return games;
 }
 
@@ -269,21 +260,106 @@ function gameCoversOf(entry, candidates, boxart) {
   return covers;
 }
 
+/**
+ * The romsets of a system whose games ship as a set of files, keyed by the name
+ * that identifies one.
+ *
+ * A romset is not a file with a checksum but a group of them, so what it
+ * carries is the checksums of its members. One member is enough to name it —
+ * every set holds at least one that belongs to no other — and the rest say how
+ * much of it is there.
+ *
+ * The two catalogues of such a system are joined by that name and not by the
+ * title, which they spell differently often enough to matter. The single-file
+ * catalogue names each file after its romset, so the join key is already there.
+ */
+function loadSets(setsFile, romsetsFile, games, covers) {
+  if (!setsFile) return {};
+
+  const titleOf = new Map(
+    games.flatMap((game) =>
+      game.roms.map((rom) => [rom.name.replace(/\.[^.]+$/, ''), game.name]),
+    ),
+  );
+
+  const attributes = loadRomsets(romsetsFile);
+  const sets = {};
+
+  for (const set of parseDat(fs.readFileSync(setsFile, 'utf-8'))) {
+    // The title the boxarts are published under wins: it is the one the covers
+    // resolve against, and the one the rest of the app already speaks.
+    const title = titleOf.get(set.name) ?? set.description ?? set.name;
+    const attrs = attributes.get(set.name);
+
+    sets[set.name] = {
+      title,
+      cover: covers.byName.get(sanitizeName(title)),
+      // Distinct checksums, not files. Four romsets ship the same chip twice —
+      // `ngfrog` has two identical `c` roms — and an archive lists both entries
+      // with that one checksum, so counting files would leave a complete set
+      // looking like it is missing one.
+      members: [...new Set(set.roms.map((rom) => rom.crc))],
+      ...(attrs ? { attrs } : {}),
+    };
+  }
+
+  return sets;
+}
+
+/**
+ * What a core needs to load a romset, which no checksum can answer.
+ *
+ * Encryption chips, RAM size and wait states are properties of the board, and
+ * they live in the emulator's own catalogue rather than in a DAT. Only those
+ * are kept: the name, the title and the publisher are description, and the
+ * catalogues already carry them.
+ *
+ * The name may list alternate spellings joined by commas, and each one is a way
+ * of naming the same romset.
+ */
+function loadRomsets(romsetsFile) {
+  const attributes = new Map();
+  if (!romsetsFile) return attributes;
+
+  const described = new Set(['name', 'altname', 'altnamej', 'publisher', 'year']);
+  const xml = fs.readFileSync(romsetsFile, 'utf-8');
+
+  for (const [, declaration] of xml.matchAll(/<romset\s+([^>]*?)\/?>/g)) {
+    const pairs = [...declaration.matchAll(/(\w+)="([^"]*)"/g)];
+    const name = pairs.find(([, key]) => key === 'name')?.[2];
+    if (!name) continue;
+
+    const attrs = Object.fromEntries(
+      pairs.filter(([, key]) => !described.has(key)).map(([, key, value]) => [key, value]),
+    );
+
+    if (Object.keys(attrs).length === 0) continue;
+    for (const alternate of name.split(',')) attributes.set(alternate, attrs);
+  }
+
+  return attributes;
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const positional = args.filter((value) => !value.startsWith('--'));
   const coversArg = args.find((value) => value.startsWith('--covers='));
+  const setsArg = args.find((value) => value.startsWith('--sets='));
+  const romsetsArg = args.find((value) => value.startsWith('--romsets='));
 
   if (positional.length < 2) {
     console.error(
-      'Usage: node scripts/dat-to-json.mjs <input.dat> <output.json> [--covers=<covers.json>]',
+      'Usage: node scripts/dat-to-json.mjs <input.dat> <output.json> [--covers=<covers.json>]' +
+        ' [--sets=<sets.dat>] [--romsets=<romsets.xml>]',
     );
     process.exit(1);
   }
 
   const [inputFile, outputFile] = positional;
   const coversFile = coversArg?.slice('--covers='.length);
-  
+  const setsFile = setsArg?.slice('--sets='.length);
+  const romsetsFile = romsetsArg?.slice('--romsets='.length);
+
   try {
     // Read DAT file
     console.log(`📖 Reading DAT file: ${inputFile}`);
@@ -346,6 +422,19 @@ async function main() {
       });
     });
 
+    // A romset is a game of this system too, so its title takes part in the
+    // cover layers exactly like a single file does — and a set the other
+    // catalogue does not list is the only entry that title has.
+    const sets = loadSets(setsFile, romsetsFile, games, covers);
+
+    for (const set of Object.values(sets)) {
+      const title = normalizeGameName(set.title);
+      const entry = titles.get(title) ?? { regions: new Set(), covered: new Set(), matched: false };
+
+      if (set.cover) entry.matched = true;
+      titles.set(title, entry);
+    }
+
     // The fallback layer only carries what the exact match could not reach, and
     // only for games this DAT actually lists: a boxart for a game the user
     // cannot own would never be shown.
@@ -363,6 +452,9 @@ async function main() {
       0,
     );
 
+    const setList = Object.values(sets);
+    const members = setList.reduce((total, set) => total + set.members.length, 0);
+
     const output = {
       meta: {
         source: path.basename(inputFile),
@@ -371,9 +463,13 @@ async function main() {
         totalCovers: withCover,
         totalGameCovers: gameCoverCount,
         totalGameCoverUrls: gameCoverUrls,
+        ...(setList.length > 0
+          ? { totalSets: setList.length, totalSetMembers: members }
+          : {}),
         generated: new Date().toISOString()
       },
       covers: gameCovers,
+      ...(setList.length > 0 ? { sets } : {}),
       list
     };
 
@@ -388,6 +484,13 @@ async function main() {
     console.log('\n✅ Conversion successful!');
     console.log(`   Games: ${games.length}`);
     console.log(`   Files: ${list.length}`);
+    if (setList.length > 0) {
+      const withAttrs = setList.filter((set) => set.attrs).length;
+      console.log(
+        `   Sets: ${setList.length} with ${members} members, ` +
+          `${setList.filter((set) => set.cover).length} with a cover, ${withAttrs} with attributes`,
+      );
+    }
     console.log(
       `   Covers: ${withCover} by name, ${gameCoverUrls} by title over ${gameCoverCount} games`,
     );
