@@ -71,6 +71,15 @@
   --game: royalblue;
   --conflict-ink: #8d6e63;
 
+  /* The tree icons, which keep the colours of the emoji they replace. The four
+     face buttons are literals in the drawing: they hold up on either theme. */
+  --icon-pad: #5f6a77;
+  --icon-pad-mark: #ccd4dd;
+  --icon-folder: #e6ac3f;
+  --icon-folder-back: #c9902d;
+  --icon-box: #c58a4b;
+  --icon-box-tape: #9c6630;
+
   --veil: rgba(0, 0, 0, 0.1);
   --veil-soft: rgba(0, 0, 0, 0.05);
   --scrim: rgba(0, 0, 0, 0.45);
@@ -141,6 +150,14 @@
 
   --game: #8ab4f8;
   --conflict-ink: #c5aca4;
+
+  /* Lighter bodies and marks: the same greys would sink into the dark panel. */
+  --icon-pad: #828d9b;
+  --icon-pad-mark: #dfe5ec;
+  --icon-folder: #e0aa42;
+  --icon-folder-back: #c08f34;
+  --icon-box: #d0a06a;
+  --icon-box-tape: #a2703d;
 
   --veil: rgba(255, 255, 255, 0.12);
   --veil-soft: rgba(255, 255, 255, 0.07);
@@ -513,9 +530,16 @@ code {
   background-color: var(--ok-soft);
 }
 
+/*
+ * Everything in a row lines up on the first line of the name, not on the middle
+ * of the row: a name too long for the pane wraps, and centring would leave the
+ * icon and the marks floating between its two lines. The line box is as tall as
+ * an icon, so aligning the tops of both is enough to have them share a centre.
+ */
 .tree-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  line-height: 1.6rem;
   gap: 0.35rem;
   padding-top: 0.35rem;
   padding-bottom: 0.35rem;
@@ -549,27 +573,44 @@ code {
 .tree-caret {
   width: 1rem;
   flex: 0 0 1rem;
+  height: 1.6rem;
   padding: 0;
   border: none;
   background: none;
   color: var(--text-dim);
   font-size: 0.7rem;
-  line-height: 1;
+  line-height: 1.6rem;
   cursor: pointer;
 }
 
 /* A slot of its own, so every label starts at the same place whatever is in it:
-   an emoji, or the spinner of a folder still being read. */
+   an icon, or the spinner of a folder still being read. */
 .tree-icon {
-  flex: 0 0 1.25rem;
+  flex: 0 0 1.6rem;
+  height: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.85rem;
 }
 
+/* The icons carry their own colours — see `icons.tsx` — so the row only sizes
+   them. What tells the kinds apart is the amber against the grey. */
+.tree-icon > svg {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/*
+ * A line of its own, tighter than the row's, so a wrapped name does not read as
+ * two rows. The nudge down is what the difference costs: it puts the first line
+ * back on the icon's centre, which is what the row aligns by.
+ */
 .tree-name {
   flex: 1;
+  line-height: 1.35rem;
+  padding-top: 0.125rem;
   word-break: break-word;
 }
 
@@ -589,10 +630,11 @@ code {
   background-color: transparent;
 }
 
+/* Sized against the icons it stands in for, not against the text. */
 .tree-spinner {
   flex: 0 0 auto;
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 1rem;
+  height: 1rem;
   border: 2px solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
@@ -614,6 +656,7 @@ code {
 .tree-status {
   flex: 0 0 auto;
   font-size: 0.75rem;
+  line-height: 1.6rem;
   color: var(--warn);
 }
 
@@ -628,7 +671,7 @@ code {
   background: none;
   color: var(--text-disabled);
   font-size: 0.8rem;
-  line-height: 1;
+  line-height: 1.6rem;
   cursor: pointer;
 }
 
@@ -647,7 +690,7 @@ code {
   background: none;
   color: var(--text-disabled);
   font-size: 0.8rem;
-  line-height: 1;
+  line-height: 1.6rem;
   cursor: pointer;
 }
 
@@ -1406,7 +1449,7 @@ code {
   padding-right: 0.25rem;
   color: var(--ok);
   font-size: 0.6rem;
-  line-height: 1;
+  line-height: 1.6rem;
 }
 
 /* --- Details pane, shared chrome --- */

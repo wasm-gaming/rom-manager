@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { StorageEntry, StorageNode } from '../services/StorageService';
 import type { MatchStatus } from '../core/rom-matching';
 import type { WizardGame, WizardNode } from '../core/wizard-tree';
+import { BundleIcon, FolderIcon, GameIcon } from './icons';
 
 interface FileTreeProps {
   node: StorageNode;
@@ -46,11 +47,19 @@ const ROOT = '';
 const DRAG_MIME = 'application/x-rom-manager-paths';
 
 /** A `pending` row is left out: what stands in its slot is the spinner. */
-const ICONS: Record<Exclude<VisibleRow['kind'], 'pending'>, string> = {
-  directory: '📁',
-  file: '🎮',
-  group: '📦',
+const ICONS: Record<Exclude<VisibleRow['kind'], 'pending'>, () => JSX.Element> = {
+  directory: FolderIcon,
+  file: GameIcon,
+  group: BundleIcon,
 };
+
+/** The mark of a row: its icon, or the spinner of a folder still being read. */
+function RowIcon({ kind }: { kind: VisibleRow['kind'] }): JSX.Element {
+  if (kind === 'pending') return <span class="tree-spinner" />;
+
+  const Icon = ICONS[kind];
+  return <Icon />;
+}
 
 const STATUS_TITLES = {
   complete: 'Every file is here',
@@ -614,7 +623,7 @@ export function FileTree({
               <span class="tree-caret" />
             )}
             <span class="tree-icon">
-              {row.kind === 'pending' ? <span class="tree-spinner" /> : ICONS[row.kind]}
+              <RowIcon kind={row.kind} />
             </span>
             <span class="tree-name">{row.label}</span>
 
