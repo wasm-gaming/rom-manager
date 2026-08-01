@@ -266,7 +266,7 @@ export function ROMExplorer(): JSX.Element {
 
       setGameCover(
         resolved
-          ? { url: resolved.url, publishedUrl: resolved.publishedUrl ?? cover?.url, region }
+          ? { url: resolved.url, publishedUrl: cover?.url, region }
           : undefined,
       );
     };

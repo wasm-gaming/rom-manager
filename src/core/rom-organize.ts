@@ -1,4 +1,3 @@
-import type { GameGroup, GameVariant } from './rom-grouping';
 import type { MatchResult } from './rom-matching';
 
 /** Move one file from where it sits today to where the layout says it belongs. */
