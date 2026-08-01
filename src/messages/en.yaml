@@ -167,6 +167,12 @@ details:
     shipsTo: 'Ships to {region}'
     runsAt: 'Runs at {standard}'
     consolidate: 'Rename and sort to match the catalogue'
+    deleteVariant: 'Delete variant'
+    deleteFile: 'Delete file'
+    deleteTitle: 'Delete variant'
+    deleteMessage: 'Are you sure you want to delete the "{variant}" variant ({count} file(s))? This action cannot be undone.'
+    deleteFileTitle: 'Delete file'
+    deleteFileMessage: 'Are you sure you want to delete the file "{name}"? This action cannot be undone.'
   status:
     complete: 'Complete'
     partial: 'Incomplete'

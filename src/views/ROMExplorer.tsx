@@ -1026,6 +1026,30 @@ export function ROMExplorer(): JSX.Element {
     setCovers(new Map());
   };
 
+  const handleDeleteFiles = useCallback(
+    async (paths: string[]) => {
+      if (!activeNode || paths.length === 0) return;
+
+      const library = new RomLibrary(activeNode);
+      for (const path of paths) {
+        try {
+          if (activeNode.remove) {
+            await activeNode.remove(path);
+          } else if (activeNode.delete) {
+            await activeNode.delete(path);
+          }
+        } catch {
+          // Ignored if already removed
+        }
+        await library.remove(path).catch(() => {});
+      }
+
+      handleRemoved(paths);
+      setRefreshToken((token) => token + 1);
+    },
+    [activeNode],
+  );
+
   const handleGoInitialView = useCallback(() => {
     storeService.setSelection([]);
     setGame(undefined);
@@ -1109,6 +1133,7 @@ export function ROMExplorer(): JSX.Element {
               onSaveMany={handleSaveMany}
               onSelectFile={handleSelectFile}
               onOrganize={handleOrganize}
+              onRemove={handleDeleteFiles}
               onBack={
                 game && gameFile
                   ? { label: game.title, go: () => setGameFile(undefined) }

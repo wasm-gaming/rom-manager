@@ -12,7 +12,8 @@ import {
   systemOf,
 } from '@/services/RomLibraryService';
 import { MetadataEditor } from '@/views/ROMExplorer/MetadataEditor';
-import { ArrowLeftIcon, CheckIcon, CrossIcon, DoubleCheckIcon, OrganizeIcon, PencilIcon, SaveIcon, StatusIcon } from '@/components/icons';
+import { ArrowLeftIcon, CheckIcon, CrossIcon, DoubleCheckIcon, OrganizeIcon, PencilIcon, SaveIcon, StatusIcon, TrashIcon } from '@/components/icons';
+import { ConfirmModal } from '@/components/ConfirmModal';
 import { calculateCRC32 } from '@/services/ChecksumService';
 import type { WizardFile, WizardGame, WizardVariant } from '@/core/wizard-tree';
 import type { Region } from '@/core/rom-regions';
@@ -55,6 +56,8 @@ interface RomDetailsProps {
   onSelectFile?: (path: string) => void;
   /** Offered on folders and files that can be renamed and sorted to match the catalogue. */
   onOrganize?: (path: string) => void;
+  /** Callback to delete ROM files from disk. */
+  onRemove?: (paths: string[]) => void;
   /** Goes back to the game a file was opened from. */
   onBack?: { label: string; go: () => void };
   loadContent: (path: string) => Promise<ArrayBuffer>;
@@ -353,13 +356,21 @@ function VariantRow({
   cover,
   onSelectFile,
   onOrganize,
+  onRemove,
 }: {
   variant: WizardVariant;
   stats: Map<string, StorageStat | null>;
   cover?: CoverShown;
   onSelectFile?: (path: string) => void;
   onOrganize?: (path: string) => void;
+  onRemove?: (paths: string[]) => void;
 }): JSX.Element {
+  const [deleteTarget, setDeleteTarget] = useState<{
+    title: string;
+    message: string;
+    paths: string[];
+  } | null>(null);
+
   const activeUrl = cover?.publishedUrl || cover?.url;
   const isCoverActive =
     variant.status !== 'missing' &&
@@ -415,6 +426,22 @@ function VariantRow({
             <OrganizeIcon />
           </button>
         )}
+        {onRemove && (
+          <button
+            class="tree-remove"
+            onClick={(event) => {
+              event.stopPropagation();
+              setDeleteTarget({
+                title: t('details.variants.deleteFileTitle'),
+                message: t('details.variants.deleteFileMessage', { name: file.label }),
+                paths: [file.path!],
+              });
+            }}
+            title={t('details.variants.deleteFile')}
+          >
+            <TrashIcon />
+          </button>
+        )}
         <code class="variant-file-crc" title="CRC32">
           {file.crc}
         </code>
@@ -424,6 +451,7 @@ function VariantRow({
   };
 
   const displayKey = variant.key === 'Unknown' ? 'World / Arcade' : variant.key;
+  const presentPaths = variant.files.map((file) => file.path!).filter(Boolean);
 
   return (
     <li class={`variant status-${variant.status}${isCoverActive ? ' active-cover' : ''}`}>
@@ -449,8 +477,42 @@ function VariantRow({
             ? t('details.variants.files', { count: variant.files.length })
             : ''}
         </span>
+        {presentPaths.length > 0 && onRemove && (
+          <button
+            class="tree-remove"
+            onClick={(event) => {
+              event.stopPropagation();
+              setDeleteTarget({
+                title: t('details.variants.deleteTitle'),
+                message: t('details.variants.deleteMessage', {
+                  variant: displayKey,
+                  count: presentPaths.length,
+                }),
+                paths: presentPaths,
+              });
+            }}
+            title={t('details.variants.deleteVariant')}
+          >
+            <TrashIcon />
+          </button>
+        )}
       </div>
       <ul class="variant-files">{variant.files.map(files)}</ul>
+
+      {deleteTarget && (
+        <ConfirmModal
+          open={Boolean(deleteTarget)}
+          title={deleteTarget.title}
+          message={deleteTarget.message}
+          danger={true}
+          onConfirm={() => {
+            const paths = deleteTarget.paths;
+            setDeleteTarget(null);
+            onRemove?.(paths);
+          }}
+          onClose={() => setDeleteTarget(null)}
+        />
+      )}
     </li>
   );
 }
@@ -461,12 +523,14 @@ function GameView({
   stats,
   onSelectFile,
   onOrganize,
+  onRemove,
 }: {
   game: WizardGame;
   cover?: CoverShown;
   stats: Map<string, StorageStat | null>;
   onSelectFile?: (path: string) => void;
   onOrganize?: (path: string) => void;
+  onRemove?: (paths: string[]) => void;
 }): JSX.Element {
   const present = game.variants.filter(hasFiles);
   const missing = game.variants.filter((variant) => !hasFiles(variant));
@@ -513,6 +577,7 @@ function GameView({
             cover={cover}
             onSelectFile={onSelectFile}
             onOrganize={onOrganize}
+            onRemove={onRemove}
           />
         ))}
       </ul>
@@ -529,6 +594,7 @@ function GameView({
                 cover={cover}
                 onSelectFile={onSelectFile}
                 onOrganize={onOrganize}
+                onRemove={onRemove}
               />
             ))}
           </ul>
@@ -706,6 +772,7 @@ export function RomDetails({
   onSaveMany,
   onSelectFile,
   onOrganize,
+  onRemove,
   onBack,
   loadContent,
 }: RomDetailsProps): JSX.Element {
@@ -724,6 +791,7 @@ export function RomDetails({
         stats={stats}
         onSelectFile={onSelectFile}
         onOrganize={onOrganize}
+        onRemove={onRemove}
       />
     );
   }

@@ -167,6 +167,12 @@ details:
     shipsTo: 'Se vendió en {region}'
     runsAt: 'Funciona a {standard}'
     consolidate: 'Renombrar y ordenar según el catálogo'
+    deleteVariant: 'Borrar variante'
+    deleteFile: 'Borrar fichero'
+    deleteTitle: 'Borrar variante'
+    deleteMessage: '¿Seguro que quieres borrar la variante "{variant}" ({count} fichero(s))? Esta acción no se puede deshacer.'
+    deleteFileTitle: 'Borrar fichero'
+    deleteFileMessage: '¿Seguro que quieres borrar el fichero "{name}"? Esta acción no se puede deshacer.'
   status:
     complete: 'Completa'
     partial: 'Incompleta'

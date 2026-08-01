@@ -2785,6 +2785,25 @@ code {
   color: var(--accent);
 }
 
+.tree-remove {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0 0.2rem;
+  opacity: 0.65;
+  color: var(--text-faint);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.tree-remove:hover {
+  opacity: 1;
+  color: var(--danger, #ef5350);
+}
+
 .variant-file.missing {
   color: var(--text-disabled);
 }
