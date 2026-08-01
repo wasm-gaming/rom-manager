@@ -1,5 +1,5 @@
 import { JSX } from 'preact';
-import { CloseIcon, LockIcon, PlusIcon } from './icons';
+import { CloseIcon, LockIcon } from './icons';
 import { t } from '../services/I18nService';
 
 export interface Origin {
@@ -24,40 +24,35 @@ export function Tabs({
   activeOriginId,
   onSelectOrigin,
   onClose,
-  onAddOrigin,
 }: TabsProps): JSX.Element {
   return (
-    <div class="tabs-container">
-      <div class="tabs">
-        {origins.map((origin) => (
-          <div
-            key={origin.id}
-            class={`tab ${activeOriginId === origin.id ? 'active' : ''} ${origin.locked ? 'locked' : ''}`}
-            onClick={() => onSelectOrigin?.(origin.id)}
-            title={origin.locked ? t('tabs.reconnect') : undefined}
+    <div class="tabs">
+      {origins.map((origin) => (
+        <div
+          key={origin.id}
+          class={`tab ${activeOriginId === origin.id ? 'active' : ''} ${origin.locked ? 'locked' : ''}`}
+          onClick={() => onSelectOrigin?.(origin.id)}
+          title={origin.locked ? t('tabs.reconnect') : undefined}
+        >
+          {origin.locked && (
+            <span class="tab-lock">
+              <LockIcon />
+            </span>
+          )}
+          <span class="tab-name">{origin.name}</span>
+          <button
+            class="tab-close"
+            onClick={(e) => {
+              e.stopPropagation();
+              onClose?.(origin.id);
+            }}
+            title={t('tabs.close')}
           >
-            {origin.locked && (
-              <span class="tab-lock">
-                <LockIcon />
-              </span>
-            )}
-            <span class="tab-name">{origin.name}</span>
-            <button
-              class="tab-close"
-              onClick={(e) => {
-                e.stopPropagation();
-                onClose?.(origin.id);
-              }}
-              title={t('tabs.close')}
-            >
-              <CloseIcon />
-            </button>
-          </div>
-        ))}
-      </div>
-      <button class="tab-add" onClick={onAddOrigin} title={t('tabs.add')}>
-        <PlusIcon />
-      </button>
+            <CloseIcon />
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
+

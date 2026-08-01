@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { JSX } from 'preact';
-import { GearIcon } from '../components/icons';
+import { GearIcon, PlusIcon } from '../components/icons';
 import { BrandLogo } from '../components/BrandLogo';
 import { WelcomePanel } from '../components/WelcomePanel';
 import { Tabs } from '../components/Tabs';
@@ -24,7 +24,7 @@ import { HandleStoreService } from '../services/HandleStoreService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
 import { imageExtensionOf, isImageName, regionOfScope } from '../core/rom-media';
-import { preferRegion, type Region } from '../core/rom-regions';
+import { preferRegion, REGIONS, type Region } from '../core/rom-regions';
 import type { OrganizePlan } from '../core/rom-organize';
 import {
   storeService,
@@ -148,6 +148,8 @@ export function ROMExplorer(): JSX.Element {
   const [organizeBusy, setOrganizeBusy] = useState<string | undefined>();
   /** Whether the preferences panel is open. */
   const [preferences, setPreferences] = useState(false);
+  /** Whether the initial landing view is being shown. */
+  const [showLanding, setShowLanding] = useState(false);
   /** Bumped to remount the tree after the files underneath it have moved. */
   const [treeVersion, setTreeVersion] = useState(0);
 
@@ -350,6 +352,7 @@ export function ROMExplorer(): JSX.Element {
       const opened = await nodeInstance.initialize();
       if (!opened) return;
 
+      setShowLanding(false);
       const path = nodeInstance.getPath();
       const name = path?.split('/').pop() || 'Folder';
       const originId = `origin-${Date.now()}`;
@@ -369,6 +372,7 @@ export function ROMExplorer(): JSX.Element {
   };
 
   const handleSelectOrigin = async (originId: string) => {
+    setShowLanding(false);
     const origin = originsMap.get(originId);
 
     if (origin?.locked) {
@@ -983,58 +987,81 @@ export function ROMExplorer(): JSX.Element {
     setCovers(new Map());
   };
 
+  const handleGoInitialView = useCallback(() => {
+    storeService.setSelection([]);
+    setGame(undefined);
+    setGameFile(undefined);
+    setFolder(undefined);
+    setEditing(false);
+    setNotice(undefined);
+    setOrganize(undefined);
+    setShowLanding(true);
+  }, []);
+
   return (
     <div class="rom-explorer">
       <header class="explorer-header">
-        <h1 class="explorer-title">
-          <BrandLogo class="explorer-mark" />
-          {t('app.name')}
-        </h1>
-        <Tabs
-          origins={Array.from(originsMap.values())}
-          activeOriginId={activeOriginId}
-          onSelectOrigin={handleSelectOrigin}
-          onClose={handleCloseOrigin}
-          onAddOrigin={handleOpenFolder}
-        />
-        {/* The preference order, as the order itself: three buttons in the order
-            they are preferred in, and clicking one puts it first. Leaving the
-            other two as they were is what makes it a move and not a reshuffle. */}
-        <div class="header-regions" role="group" aria-label={t('header.regions.label')}>
-          {regionOrder.map((region, at) => (
-            <button
-              key={region}
-              class={`header-region ${at === 0 ? 'on' : ''}`}
-              // The order belongs to the open library's `.meta`, so with none
-              // open there is nowhere to write it.
-              disabled={!activeNode}
-              aria-pressed={at === 0}
-              title={
-                at === 0
-                  ? t('header.regions.preferred', { region })
-                  : t('header.regions.prefer', { region })
-              }
-              onClick={() => handleRegionOrderChange(preferRegion(regionOrder, region))}
-            >
-              {region}
-            </button>
-          ))}
+        <div class="header-left">
+          <h1
+            class="explorer-title clickable"
+            onClick={handleGoInitialView}
+            title={t('app.name')}
+          >
+            <BrandLogo class="explorer-mark" />
+            {t('app.name')}
+          </h1>
+          <button class="tab-add" onClick={handleOpenFolder} title={t('tabs.add')}>
+            <PlusIcon />
+          </button>
         </div>
 
-        <button
-          class="header-prefs"
-          onClick={() => setPreferences(true)}
-          title={t('header.preferences')}
-        >
-          <GearIcon />
-        </button>
+        <div class="header-right">
+          <Tabs
+            origins={Array.from(originsMap.values())}
+            activeOriginId={showLanding ? undefined : activeOriginId}
+            onSelectOrigin={handleSelectOrigin}
+            onClose={handleCloseOrigin}
+          />
+          <div class="header-right-actions">
+            {/* The preference order, statically rendered as | EU | US | JP | while
+                storing and updating region priority on click. */}
+            <div class="header-regions" role="group" aria-label={t('header.regions.label')}>
+              {REGIONS.map((region) => {
+                const isPreferred = regionOrder[0] === region;
+                return (
+                  <button
+                    key={region}
+                    class={`header-region ${isPreferred ? 'on' : ''}`}
+                    disabled={!activeNode || showLanding}
+                    aria-pressed={isPreferred}
+                    title={
+                      isPreferred
+                        ? t('header.regions.preferred', { region })
+                        : t('header.regions.prefer', { region })
+                    }
+                    onClick={() => handleRegionOrderChange(preferRegion(regionOrder, region))}
+                  >
+                    {region}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              class="header-prefs"
+              onClick={() => setPreferences(true)}
+              title={t('header.preferences')}
+            >
+              <GearIcon />
+            </button>
+          </div>
+        </div>
       </header>
 
       {errorSignal.value && <div class="error-message">{errorSignal.value}</div>}
 
-      {originsMap.size === 0 ? (
-        // Nothing has ever been opened, so this is the first thing anyone sees:
-        // what the app is for, and the one button that starts it.
+      {originsMap.size === 0 || showLanding ? (
+        // Initial view: shown before any folder is opened or when the title is clicked
         <WelcomePanel onOpenFolder={handleOpenFolder} loading={loadingSignal.value} />
       ) : activeOrigin?.locked || !activeNode ? (
         <div class="empty-state-full">

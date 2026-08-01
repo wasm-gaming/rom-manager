@@ -250,13 +250,38 @@ code {
 
 .explorer-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   background-color: var(--surface);
   border-bottom: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
+}
+
+.header-left {
+  flex: 0 0 380px;
+  width: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+.header-right {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1rem;
+  padding-left: 0.5rem;
+}
+
+.header-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .explorer-header h1 {
@@ -273,25 +298,24 @@ code {
   gap: 0.55rem;
 }
 
+.explorer-title.clickable {
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s;
+}
+
+.explorer-title.clickable:hover {
+  opacity: 0.85;
+}
+
 .explorer-mark {
   width: 1.6em;
   height: 1.6em;
   flex-shrink: 0;
 }
 
-.tabs-container {
-  display: flex;
-  gap: 0.5rem;
-  flex: 1;
-  align-items: center;
-  overflow: hidden;
-}
-
 /*
- * The open tabs, and only them, scroll: the button that opens another folder
- * belongs beside the last tab rather than out at the edge of the header, and it
- * has to stay reachable however many folders are open — which is why it sits
- * outside the scrolling strip and the strip is free to shrink under it.
+ * The open tabs, and only them, scroll: the strip shrinks when crowded.
  */
 .tabs {
   display: flex;
@@ -368,20 +392,25 @@ code {
 }
 
 .tab-add {
-  padding: 0.5rem 0.75rem;
-  background-color: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px 4px 0 0;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  font-weight: 600;
-  color: var(--accent);
-  transition: background-color 0.2s;
+  color: var(--text-dim);
+  transition: background-color 0.2s, color 0.2s;
   flex-shrink: 0;
 }
 
 .tab-add:hover {
-  background-color: var(--surface-3);
+  background-color: var(--surface-2);
+  color: var(--text);
 }
 
 /* The way into the preferences, kept at the far end of the header. */
