@@ -93,6 +93,10 @@ welcome:
       para una carpeta y se lo da sólo a esta pestaña. No hay servidor ni subida
       de nada. Soporte real sólo hay en navegadores Chromium.
 
+  footer:
+    legal: 'ROM Manager es software libre de código abierto. Todos los nombres de sistemas, marcas y carátulas son propiedad de sus respectivos dueños.'
+    github: 'Código en GitHub'
+
 library:
   locked:
     title: 'Carpeta recordada: {name}'

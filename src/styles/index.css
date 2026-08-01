@@ -868,6 +868,61 @@ code {
   color: var(--text-muted);
 }
 
+.welcome-footer {
+  width: 100%;
+  max-width: 60rem;
+  margin-top: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.welcome-footer-legal {
+  margin: 0;
+  font-size: 0.825rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.welcome-footer-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background-color: var(--surface-2);
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.welcome-footer-github svg {
+  font-size: 1.1rem;
+}
+
+.welcome-footer-github:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+  background-color: var(--surface-3);
+}
+
+@media (max-width: 640px) {
+  .welcome-footer {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+
 @media (max-width: 640px) {
   .welcome {
     padding: 1.5rem 1rem 3rem;

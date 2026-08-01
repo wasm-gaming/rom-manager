@@ -93,6 +93,10 @@ welcome:
       permission for one folder and grants it to this tab alone. There is no
       backend and no upload. Real support only exists in Chromium browsers.
 
+  footer:
+    legal: 'ROM Manager is free and open-source software. All system names, trademarks, and cover art belong to their respective owners.'
+    github: 'Code on GitHub'
+
 library:
   locked:
     title: 'Folder remembered: {name}'

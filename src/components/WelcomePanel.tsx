@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
 import { BrandLogo } from './BrandLogo';
 import { SystemLogo } from './SystemLogos';
-import { FolderPlusIcon } from './icons';
+import { FolderPlusIcon, GithubIcon } from './icons';
 import {
   HashIllustration,
   GroupingIllustration,
@@ -163,6 +163,19 @@ export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.
         <h3>{t('welcome.privacy.title')}</h3>
         <p>{t('welcome.privacy.body')}</p>
       </section>
+
+      <footer class="welcome-footer">
+        <p class="welcome-footer-legal">{t('welcome.footer.legal')}</p>
+        <a
+          class="welcome-footer-github"
+          href="https://github.com/wasm-gaming/rom-manager"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GithubIcon />
+          <span>{t('welcome.footer.github')}</span>
+        </a>
+      </footer>
     </div>
   );
 }
