@@ -222,22 +222,24 @@ function RomFileView({
 
   return (
     <div class="rom-file-view">
+      {onRemove && (
+        <button
+          class="btn-delete-topright"
+          onClick={() => setConfirmDelete(true)}
+          title={t('details.delete')}
+        >
+          <TrashIcon />
+        </button>
+      )}
       {cover ? (
         <div class="rom-info-hero">
           <CoverFigure cover={cover} alt={fileNameOf(path)} system={systemOf(path)} />
           <div class="rom-info-heading">
             <h3>{fileNameOf(path)}</h3>
             <p class="metadata-subtitle">{t('details.file.pending')}</p>
-            <div class="rom-info-actions">
-              <button class="btn-primary icon-label" onClick={onEdit}>
-                <PencilIcon /> {t('details.file.add')}
-              </button>
-              {onRemove && (
-                <button class="btn-danger icon-label" onClick={() => setConfirmDelete(true)}>
-                  <TrashIcon /> {t('details.delete')}
-                </button>
-              )}
-            </div>
+            <button class="btn-primary icon-label" onClick={onEdit}>
+              <PencilIcon /> {t('details.file.add')}
+            </button>
           </div>
         </div>
       ) : (
@@ -246,16 +248,9 @@ function RomFileView({
             <h3>{fileNameOf(path)}</h3>
             <p class="metadata-subtitle">{t('details.file.pending')}</p>
           </div>
-          <div class="rom-info-actions">
-            <button class="btn-primary icon-label" onClick={onEdit}>
-              <PencilIcon /> {t('details.file.add')}
-            </button>
-            {onRemove && (
-              <button class="btn-danger icon-label" onClick={() => setConfirmDelete(true)}>
-                <TrashIcon /> {t('details.delete')}
-              </button>
-            )}
-          </div>
+          <button class="btn-primary icon-label" onClick={onEdit}>
+            <PencilIcon /> {t('details.file.add')}
+          </button>
         </div>
       )}
 
@@ -322,6 +317,15 @@ function RomInfoView({
 
   return (
     <div class="rom-info">
+      {onRemove && (
+        <button
+          class="btn-delete-topright"
+          onClick={() => setConfirmDelete(true)}
+          title={t('details.delete')}
+        >
+          <TrashIcon />
+        </button>
+      )}
       <div class="rom-info-hero">
         <CoverFigure cover={cover} alt={record.title || path} system={systemOf(path)} />
 
@@ -335,16 +339,9 @@ function RomInfoView({
             {record.releaseDate && <span class="tag">{record.releaseDate}</span>}
           </div>
 
-          <div class="rom-info-actions">
-            <button class="btn-primary icon-label" onClick={onEdit}>
-              <PencilIcon /> {t('details.edit')}
-            </button>
-            {onRemove && (
-              <button class="btn-danger icon-label" onClick={() => setConfirmDelete(true)}>
-                <TrashIcon /> {t('details.delete')}
-              </button>
-            )}
-          </div>
+          <button class="btn-primary icon-label" onClick={onEdit}>
+            <PencilIcon /> {t('details.edit')}
+          </button>
         </div>
       </div>
 
