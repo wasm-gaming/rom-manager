@@ -20,7 +20,7 @@ Sessions and specifications live in [SESSIONS/](./SESSIONS/). Convention:
 1. Create or extend the appropriate session file in `SESSIONS/`
 2. Document the planned changes in detail
 3. Wait for user approval before proceeding
-4. When current session is completed, add "Status: Completed" at the end of the session file.
+4. When current session is completed, only when user explicitly order it, add "Status: Completed" and `walkthrough` at the end of the session file.
 
 ## Tasks
 

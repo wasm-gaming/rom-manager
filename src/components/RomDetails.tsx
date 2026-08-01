@@ -149,36 +149,38 @@ function CoverFigure({
 }): JSX.Element {
   const defaultRatio = systemAspectRatio(system);
   const [naturalRatio, setNaturalRatio] = useState<string | undefined>();
+  const [prevSystem, setPrevSystem] = useState<string | undefined>();
   const url = cover?.url;
-  const currentRatio = naturalRatio || defaultRatio;
 
-  if (!cover) {
-    return (
-      <div class="rom-info-cover-wrapper" style={{ aspectRatio: defaultRatio }}>
-        <div class="rom-info-cover placeholder">No cover</div>
-      </div>
-    );
+  if (system !== prevSystem) {
+    setPrevSystem(system);
+    setNaturalRatio(undefined);
   }
+
+  const currentRatio = naturalRatio || defaultRatio;
+  const regionLabel = cover?.region ? `${cover.region} box` : cover ? 'Box of the game' : '\u00A0';
 
   return (
     <figure class="rom-info-cover-figure">
       <div class="rom-info-cover-wrapper" style={{ aspectRatio: currentRatio }}>
-        <img
-          key={url}
-          class="rom-info-cover"
-          src={url}
-          alt={`${alt} boxart`}
-          onLoad={(e) => {
-            const img = e.currentTarget;
-            if (img.naturalWidth && img.naturalHeight) {
-              setNaturalRatio(`${img.naturalWidth} / ${img.naturalHeight}`);
-            }
-          }}
-        />
+        {cover ? (
+          <img
+            key={url}
+            class="rom-info-cover"
+            src={url}
+            alt={`${alt} boxart`}
+            onLoad={(e) => {
+              const img = e.currentTarget;
+              if (img.naturalWidth && img.naturalHeight) {
+                setNaturalRatio(`${img.naturalWidth} / ${img.naturalHeight}`);
+              }
+            }}
+          />
+        ) : (
+          <div class="rom-info-cover placeholder">No cover</div>
+        )}
       </div>
-      <figcaption class="rom-info-cover-region">
-        {cover.region ? `${cover.region} box` : 'Box of the game'}
-      </figcaption>
+      <figcaption class="rom-info-cover-region">{regionLabel}</figcaption>
     </figure>
   );
 }
