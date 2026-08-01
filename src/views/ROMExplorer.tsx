@@ -510,12 +510,9 @@ export function ROMExplorer(): JSX.Element {
   const invalidateTree = useCallback(() => {
     grouping.current.clear();
     setGroupedRows(new Map());
-    storeService.setSelection([]);
     setRecords(new Map());
     setStats(new Map());
-    setGame(undefined);
-    setGameFile(undefined);
-    setTreeVersion((version) => version + 1);
+    setRefreshToken((token) => token + 1);
   }, []);
 
   /**
