@@ -173,10 +173,11 @@ export class CoverService {
     system: string,
     gameId: string,
     cover: Cover,
+    overwrite = false,
   ): Promise<boolean> {
     if (!cover.url) return Boolean(cover.file);
 
-    return (await this.write(node, system, [coverFileNameOf(gameId, cover)], cover.url)) > 0;
+    return (await this.write(node, system, [coverFileNameOf(gameId, cover)], cover.url, overwrite)) > 0;
   }
 
   /**
@@ -191,10 +192,11 @@ export class CoverService {
     system: string,
     names: string[],
     url: string,
+    overwrite = false,
   ): Promise<number> {
     const missing: string[] = [];
     for (const name of names) {
-      if (!(await node.exists(coverPathOf(system, name)))) missing.push(name);
+      if (overwrite || !(await node.exists(coverPathOf(system, name)))) missing.push(name);
     }
 
     if (missing.length === 0) return names.length;
@@ -239,6 +241,7 @@ export class CoverService {
           system,
           shared.map((cover) => coverFileNameOf(gameId, cover)),
           url,
+          true,
         ),
       ),
     );
@@ -259,9 +262,11 @@ export class CoverService {
     gameId: string,
     cover?: Cover,
   ): Promise<{ url: string; stored: boolean } | undefined> {
+    if (!cover) return undefined;
+
     const local = await this.stored(node, system, gameId, cover);
     if (local) return { url: local, stored: true };
-    if (!cover?.url) return undefined;
+    if (!cover.url) return undefined;
 
     void this.cache(node, system, gameId, cover);
     return { url: cover.url, stored: false };

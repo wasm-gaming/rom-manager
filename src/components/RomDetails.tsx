@@ -126,6 +126,7 @@ function ChecksumRow({
 /** The boxart on screen, and which box it is. */
 interface CoverShown {
   url: string;
+  publishedUrl?: string;
   /** Absent when the image stands for the whole game rather than for a region. */
   region?: Region;
 }
@@ -353,7 +354,10 @@ function VariantRow({
   cover?: CoverShown;
   onSelectFile?: (path: string) => void;
 }): JSX.Element {
-  const isCoverActive = Boolean(cover?.region && variant.regions.includes(cover.region));
+  const activeUrl = cover?.publishedUrl || cover?.url;
+  const isCoverActive =
+    Boolean(activeUrl && variant.cover === activeUrl) ||
+    Boolean(cover?.region && !variant.cover && variant.regions.includes(cover.region));
 
   // The size belongs to the copy on disk, the checksum to the release, so every
   // file reads its CRC32 and not only the ones that are elsewhere: it is how you

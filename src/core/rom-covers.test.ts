@@ -174,6 +174,17 @@ describe('coversOf', () => {
 
     expect(variantCoverUrl(group.variants[0])).toBe(`${BOXARTS}/FF7.png`);
   });
+
+  it('prefers a variant present on disk over a missing one of equal region', () => {
+    const group = groupOf([
+      game('Super Mario World (Europe)', 'AAAA1111', `${BOXARTS}/SMW_EU.png`),
+      game('Super Mario World (Europe) (Rev 1)', 'BBBB2222', `${BOXARTS}/SMW_EU_Rev1.png`),
+    ]);
+
+    const covers = coversOf(group, undefined, new Set(['Europe-rev1']));
+
+    expect(covers.byRegion.EU).toBe(`${BOXARTS}/SMW_EU_Rev1.png`);
+  });
 });
 
 describe('pickCover', () => {
@@ -270,6 +281,13 @@ describe('pickCover', () => {
     expect(pickCover({ byRegion: {} }, { stored: { byRegion: {}, game: 'Sonic.case.png' } })).toEqual(
       { file: 'Sonic.case.png' },
     );
+  });
+
+  it('prefers a specific variantUrl when provided', () => {
+    expect(pickCover(covers, { variantUrl: 'us.png' })).toEqual({
+      url: 'us.png',
+      region: 'US',
+    });
   });
 });
 

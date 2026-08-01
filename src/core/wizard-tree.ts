@@ -13,7 +13,7 @@
  * siblings exist is the reason to group in the first place.
  */
 
-import { coverKeyOf, coversOf, type GameCovers } from './rom-covers';
+import { coverKeyOf, coversOf, variantCoverUrl, type GameCovers } from './rom-covers';
 import { REGIONS, type Region, type VideoStandard } from './rom-regions';
 import type { MatchResult, MatchStatus } from './rom-matching';
 
@@ -46,6 +46,7 @@ export interface WizardVariant {
   /** Video standards it runs at. */
   videoStandards: VideoStandard[];
   files: WizardFile[];
+  cover?: string;
 }
 
 /** A game, as a single row. */
@@ -129,6 +130,7 @@ export function buildWizardTree(
     const paths: string[] = [];
     /** Regions the files here ship to, so the boxart shown is one of theirs. */
     const presentRegions = new Set<Region>();
+    const presentVariantKeys = new Set<string>();
 
     for (const variant of matched.variants) {
       const files = variant.files.map((file): WizardFile => {
@@ -149,12 +151,17 @@ export function buildWizardTree(
         return { label: nameOf(path), path, crc };
       });
 
+      if (files.some((f) => f.path)) {
+        presentVariantKeys.add(variant.variant.key);
+      }
+
       variants.push({
         key: variant.variant.key,
         status: variant.status,
         regions: variant.variant.regions,
         videoStandards: variant.variant.videoStandards,
         files,
+        cover: variantCoverUrl(variant.variant),
       });
     }
 
@@ -169,7 +176,7 @@ export function buildWizardTree(
       status: matched.status,
       variants,
       paths,
-      covers: coversOf(matched.group, covers.get(coverKeyOf(matched.group))),
+      covers: coversOf(matched.group, covers.get(coverKeyOf(matched.group)), presentVariantKeys),
       presentRegions: REGIONS.filter((region) => presentRegions.has(region)),
     });
   }

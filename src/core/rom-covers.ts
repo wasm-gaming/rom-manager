@@ -85,9 +85,10 @@ const GAME = 'game';
  */
 const FALLBACK_RANK = 2;
 
-function rankOf(variant: GameVariant): number {
+function rankOf(variant: GameVariant, isPresent?: boolean): number {
+  const missingPenalty = isPresent === false ? 10 : 0;
   const wide = variant.regions.length > 1 ? FALLBACK_RANK + 1 : 0;
-  return wide + (variant.flags.length > 0 ? 1 : 0);
+  return missingPenalty + wide + (variant.flags.length > 0 ? 1 : 0);
 }
 
 /**
@@ -118,7 +119,11 @@ export function variantCoverUrl(variant: GameVariant): string | undefined {
  * arrive sorted by key, so equal ranks keep that order and the outcome does not
  * depend on how the DAT is listed.
  */
-export function coversOf(group: GameGroup, fallback?: GameCovers): GameCovers {
+export function coversOf(
+  group: GameGroup,
+  fallback?: GameCovers,
+  presentVariantKeys?: ReadonlySet<string>,
+): GameCovers {
   const best = new Map<Region | typeof GAME, { url: string; rank: number }>();
 
   // The game-level layer enters the race rather than being overwritten by it:
@@ -132,7 +137,8 @@ export function coversOf(group: GameGroup, fallback?: GameCovers): GameCovers {
     const url = variantCoverUrl(variant);
     if (!url) continue;
 
-    const rank = rankOf(variant);
+    const isPresent = presentVariantKeys ? presentVariantKeys.has(variant.key) : undefined;
+    const rank = rankOf(variant, isPresent);
     const keys: Array<Region | typeof GAME> =
       variant.regions.length > 0 ? [...variant.regions] : [GAME];
 
@@ -175,10 +181,23 @@ export function pickCover(
     order?: readonly Region[];
     /** Copies in `.meta`, which include whatever was added by hand. */
     stored?: StoredCovers;
+    /** Specific cover URL of the selected variant/file, if available */
+    variantUrl?: string;
+    /** Region of the selected variant, if available */
+    variantRegion?: Region;
   } = {},
 ): Cover | undefined {
   const order = options.order ?? DEFAULT_REGION_ORDER;
   const present = new Set(options.present ?? []);
+
+  if (options.variantUrl) {
+    const regionEntry = Object.entries(covers.byRegion).find(([, url]) => url === options.variantUrl);
+    const region =
+      options.variantRegion ??
+      (regionEntry && isRegion(regionEntry[0]) ? (regionEntry[0] as Region) : undefined);
+    const file = (region && options.stored?.byRegion[region]) || options.stored?.game;
+    return { url: options.variantUrl, file, region };
+  }
 
   const coverOf = (region: Region): Cover | undefined => {
     const file = options.stored?.byRegion[region];

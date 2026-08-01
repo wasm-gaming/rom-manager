@@ -115,7 +115,7 @@ export function ROMExplorer(): JSX.Element {
   /** The folder picked in the tree, which is where a dropped file would go. */
   const [folder, setFolder] = useState<string | undefined>();
   /** The boxart on screen for that game, and the region it is the box of. */
-  const [gameCover, setGameCover] = useState<{ url: string; region?: Region } | undefined>();
+  const [gameCover, setGameCover] = useState<{ url: string; publishedUrl?: string; region?: Region } | undefined>();
   /** A drop waiting to be confirmed, and what is being written once it is. */
   const [drop, setDrop] = useState<DropRequest | undefined>();
   const [dropBusy, setDropBusy] = useState<string | undefined>();
@@ -237,10 +237,16 @@ export function ROMExplorer(): JSX.Element {
         game.id,
       ).catch(() => undefined);
 
+      const selectedVariant = gameFile
+        ? game.variants.find((v) => v.files.some((f) => f.path === gameFile))
+        : undefined;
+
       const cover = pickCover(game.covers, {
         present: regionsOfFile(game, gameFile) ?? game.presentRegions,
         order: regionOrder,
         stored,
+        variantUrl: selectedVariant?.cover,
+        variantRegion: selectedVariant?.regions[0],
       });
 
       const resolved = await CoverService.resolve(activeNode, system, game.id, cover);
@@ -258,7 +264,11 @@ export function ROMExplorer(): JSX.Element {
       const region =
         cover && !isSharedCover(game.covers, cover) ? cover.region : undefined;
 
-      setGameCover(resolved ? { url: resolved.url, region } : undefined);
+      setGameCover(
+        resolved
+          ? { url: resolved.url, publishedUrl: resolved.publishedUrl ?? cover?.url, region }
+          : undefined,
+      );
     };
 
     show().catch(() => setGameCover(undefined));
