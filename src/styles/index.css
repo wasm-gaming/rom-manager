@@ -1209,6 +1209,8 @@ code {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .system-hero {
@@ -2144,6 +2146,8 @@ code {
   padding: 1.25rem;
   border-radius: 8px;
   box-shadow: var(--shadow-sm);
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .rom-info-hero {
