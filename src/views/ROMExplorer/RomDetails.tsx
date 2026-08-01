@@ -781,7 +781,6 @@ export function RomDetails({
         stats={stats}
         onSelectFile={onSelectFile}
         onOrganize={onOrganize}
-        onRemove={onRemove}
       />
     );
   }

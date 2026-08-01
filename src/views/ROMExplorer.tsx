@@ -1033,11 +1033,7 @@ export function ROMExplorer(): JSX.Element {
       const library = new RomLibrary(activeNode);
       for (const path of paths) {
         try {
-          if (activeNode.remove) {
-            await activeNode.remove(path);
-          } else if (activeNode.delete) {
-            await activeNode.delete(path);
-          }
+          await activeNode.remove(path);
         } catch {
           // Ignored if already removed
         }
