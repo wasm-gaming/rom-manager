@@ -1089,6 +1089,7 @@ export function ROMExplorer(): JSX.Element {
               paths={gameFile ? [gameFile] : selection}
               game={gameFile ? undefined : game}
               folder={folder}
+              wizardFolder={folder !== undefined && isGrouped(folder)}
               gameCover={gameCover}
               records={records}
               stats={stats}

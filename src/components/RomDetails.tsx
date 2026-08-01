@@ -28,6 +28,8 @@ interface RomDetailsProps {
   game?: WizardGame;
   /** The folder picked in the tree. */
   folder?: string;
+  /** Whether that folder is browsed grouped by game, which is what makes it a system. */
+  wizardFolder?: boolean;
   /**
    * Boxart of that game, already resolved to something an `<img>` accepts, and
    * the region it is the box of. It is also what a file of the game opened on
@@ -701,6 +703,7 @@ export function RomDetails({
   paths,
   game,
   folder,
+  wizardFolder = false,
   gameCover,
   records,
   stats,
@@ -737,7 +740,7 @@ export function RomDetails({
 
   if (paths.length === 0) {
     if (folder) {
-      return <SystemDetails folder={folder} />;
+      return <SystemDetails folder={folder} wizard={wizardFolder} />;
     }
     return <div class="empty-state">{t('details.empty')}</div>;
   }
