@@ -345,12 +345,16 @@ function hasFiles(variant: WizardVariant): boolean {
 function VariantRow({
   variant,
   stats,
+  cover,
   onSelectFile,
 }: {
   variant: WizardVariant;
   stats: Map<string, StorageStat | null>;
+  cover?: CoverShown;
   onSelectFile?: (path: string) => void;
 }): JSX.Element {
+  const isCoverActive = Boolean(cover?.region && variant.regions.includes(cover.region));
+
   // The size belongs to the copy on disk, the checksum to the release, so every
   // file reads its CRC32 and not only the ones that are elsewhere: it is how you
   // tell whether a dump found somewhere else is this one, and how you quote the
@@ -378,7 +382,7 @@ function VariantRow({
     );
 
   return (
-    <li class={`variant status-${variant.status}`}>
+    <li class={`variant status-${variant.status}${isCoverActive ? ' active-cover' : ''}`}>
       <div class="variant-heading">
         <span class="variant-mark" title={STATUS_LABELS[variant.status]}>
           <StatusIcon status={variant.status} />
@@ -458,6 +462,7 @@ function GameView({
             key={variant.key}
             variant={variant}
             stats={stats}
+            cover={cover}
             onSelectFile={onSelectFile}
           />
         ))}
@@ -474,6 +479,7 @@ function GameView({
                 key={variant.key}
                 variant={variant}
                 stats={stats}
+                cover={cover}
                 onSelectFile={onSelectFile}
               />
             ))}

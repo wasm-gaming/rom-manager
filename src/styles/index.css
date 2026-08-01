@@ -1893,6 +1893,10 @@ code {
   border-bottom: 1px solid var(--border-soft);
 }
 
+.variant.active-cover {
+  border-bottom-color: var(--accent);
+}
+
 .variant-heading {
   display: flex;
   align-items: baseline;
