@@ -158,11 +158,18 @@ function CoverFigure({
   }
 
   const currentRatio = naturalRatio || defaultRatio;
+  const isLandscape = (() => {
+    const parts = currentRatio.split('/').map((s) => parseFloat(s.trim()));
+    return parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1]) && parts[0] > parts[1];
+  })();
   const regionLabel = cover?.region ? `${cover.region} box` : cover ? 'Box of the game' : '\u00A0';
 
   return (
     <figure class="rom-info-cover-figure">
-      <div class="rom-info-cover-wrapper" style={{ aspectRatio: currentRatio }}>
+      <div
+        class={`rom-info-cover-wrapper ${isLandscape ? 'landscape' : ''}`}
+        style={{ aspectRatio: currentRatio }}
+      >
         {cover ? (
           <img
             key={url}
