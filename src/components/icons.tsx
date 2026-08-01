@@ -21,23 +21,241 @@ import { DISC_MIME, mimeOf, ROM_MIME, SAVE_MIME } from '../core/file-types';
 
 const BOX = '0 0 24 24';
 
+import { SystemLogo } from './SystemLogos';
+
 /** The gamepad's own shapes, shared by the plain icon and the bundle. */
-function Gamepad(): JSX.Element {
+function Gamepad({ systemId }: { systemId?: string }): JSX.Element {
+  const normalized = systemId?.toUpperCase();
+
+  // Mega Drive / Genesis / Mega-CD / 32X
+  if (
+    normalized === 'MEGADRIVE' ||
+    normalized === 'GENESIS' ||
+    normalized === 'MEGACD' ||
+    normalized === 'S32X'
+  ) {
+    return (
+      <>
+        {/* Mega Drive Crescent / Kidney Shape Controller Body */}
+        <path
+          d="M2.5 12.8c0-3.8 4-7.3 9.5-7.3s9.5 3.5 9.5 7.3c0 2.2-1.3 4.2-3.2 4.2-1.6 0-2.6-1.1-3.5-2.2l-.6-.8c-.5-.6-1.2-.9-1.9-.9s-1.4.3-1.9.9l-.6.8c-.9 1.1-1.9 2.2-3.5 2.2-1.9 0-3.3-2-3.3-4.2z"
+          fill="var(--icon-pad)"
+        />
+        {/* Direction Pad Base Circle & Cross */}
+        <circle cx="7.2" cy="12" r="3.2" fill="#0f172a" opacity="0.4" />
+        <rect x="6.2" y="9.8" width="2" height="4.4" rx=".5" fill="var(--icon-pad-mark)" />
+        <rect x="5" y="11" width="4.4" height="2" rx=".5" fill="var(--icon-pad-mark)" />
+        {/* Red START Button */}
+        <rect x="11" y="8.2" width="1.8" height="2.8" rx=".5" fill="#ef4444" transform="rotate(-15 11.9 9.6)" />
+        {/* A, B, C Buttons in Arc */}
+        <circle cx="14.8" cy="13.2" r="1.25" fill="#cbd5e1" />
+        <circle cx="17.2" cy="12.1" r="1.25" fill="#cbd5e1" />
+        <circle cx="19.5" cy="11.0" r="1.25" fill="#cbd5e1" />
+        {/* X, Y, Z Buttons above */}
+        <circle cx="14.4" cy="10.2" r="0.8" fill="#94a3b8" />
+        <circle cx="16.5" cy="9.3" r="0.8" fill="#94a3b8" />
+        <circle cx="18.6" cy="8.4" r="0.8" fill="#94a3b8" />
+      </>
+    );
+  }
+
+  // NES / Famicom
+  if (normalized === 'NES') {
+    return (
+      <>
+        <rect x="2" y="7" width="20" height="10" rx="1.5" fill="#334155" />
+        <rect x="4" y="8" width="16" height="4" fill="#0f172a" />
+        {/* Red D-Pad */}
+        <rect x="4.5" y="10" width="1.8" height="4" rx=".3" fill="#e60012" />
+        <rect x="3.4" y="11.1" width="4" height="1.8" rx=".3" fill="#e60012" />
+        {/* Red A/B Buttons */}
+        <circle cx="15.5" cy="12" r="1.3" fill="#e60012" />
+        <circle cx="18.5" cy="12" r="1.3" fill="#e60012" />
+        {/* Select / Start */}
+        <rect x="9.2" y="11.6" width="1.8" height="0.8" rx=".3" fill="#94a3b8" />
+        <rect x="11.8" y="11.6" width="1.8" height="0.8" rx=".3" fill="#94a3b8" />
+      </>
+    );
+  }
+
+  // Nintendo 64
+  if (normalized === 'N64') {
+    return (
+      <>
+        {/* N64 Trident Controller */}
+        <path
+          d="M4 8.5c0-1.5 1-3 2.5-3h11c1.5 0 2.5 1.5 2.5 3v2c0 2-1 4-2 6.5L16 20h-2.5l-1.5-6h-0.2l-1.5 6H8L6 16.5C5 14 4 11.5 4 10.5v-2z"
+          fill="var(--icon-pad)"
+        />
+        {/* Center Analog Stick Base */}
+        <circle cx="12" cy="10.5" r="2" fill="#94a3b8" />
+        {/* D-Pad on Left */}
+        <rect x="6.2" y="8.8" width="1.6" height="3.6" rx=".4" fill="var(--icon-pad-mark)" />
+        <rect x="5.2" y="9.8" width="3.6" height="1.6" rx=".4" fill="var(--icon-pad-mark)" />
+        {/* Red A & Blue B Buttons */}
+        <circle cx="15.5" cy="13.2" r="1.2" fill="#e60012" />
+        <circle cx="14.2" cy="11.4" r="1.1" fill="#3b82f6" />
+        {/* Yellow C Buttons */}
+        <circle cx="18.2" cy="10.5" r="0.9" fill="#eab308" />
+        <circle cx="16.8" cy="8.8" r="0.9" fill="#eab308" />
+      </>
+    );
+  }
+
+  // Sony PlayStation (PSX)
+  if (normalized === 'PSX') {
+    return (
+      <>
+        <path
+          d="M4.5 7.5h15c2.5 0 4.5 2 4.5 4.5v3c0 2.5-1.5 4.5-3.2 4.5-1.4 0-2.3-.9-3.2-1.9l-.6-.7c-.4-.5-1-.8-1.7-.8s-1.3.3-1.7.8l-.6.7c-.9 1-1.8 1.9-3.2 1.9-1.7 0-3.2-2-3.2-4.5v-3c0-2.5 2-4.5 4.5-4.5z"
+          fill="var(--icon-pad)"
+        />
+        {/* D-Pad */}
+        <rect x="5.8" y="9.8" width="2.2" height="5.2" rx=".5" fill="var(--icon-pad-mark)" />
+        <rect x="4.3" y="11.3" width="5.2" height="2.2" rx=".5" fill="var(--icon-pad-mark)" />
+        {/* PS Action Symbols: Triangle, Circle, Cross, Square */}
+        <polygon points="17.2,8.8 18.2,10.4 16.2,10.4" fill="#22c55e" />
+        <circle cx="19.4" cy="12.4" r="1" fill="#ef4444" />
+        <path d="M16.4 13.8l1.6 1.6m-1.6 0l1.6-1.6" stroke="#3b82f6" stroke-width="0.8" />
+        <rect x="14.2" y="11.4" width="1.8" height="1.8" rx="0.2" fill="#ec4899" />
+      </>
+    );
+  }
+
+  // Sega Saturn
+  if (normalized === 'SATURN') {
+    return (
+      <>
+        <ellipse cx="12" cy="12" rx="10" ry="6.5" fill="var(--icon-pad)" />
+        <circle cx="7" cy="12" r="2.8" fill="#0f172a" opacity="0.4" />
+        <rect x="6.2" y="10" width="1.6" height="4" rx=".4" fill="var(--icon-pad-mark)" />
+        <rect x="5" y="11.2" width="4" height="1.6" rx=".4" fill="var(--icon-pad-mark)" />
+        {/* A, B, C buttons */}
+        <circle cx="14.8" cy="13" r="1.1" fill="#6366f1" />
+        <circle cx="17" cy="12.2" r="1.1" fill="#6366f1" />
+        <circle cx="19.2" cy="11.4" r="1.1" fill="#6366f1" />
+      </>
+    );
+  }
+
+  // Master System (SMS)
+  if (normalized === 'SMS') {
+    return (
+      <>
+        <rect x="3" y="7" width="18" height="10" rx="1.5" fill="#0284c7" />
+        <rect x="5" y="9" width="6" height="6" fill="#0f172a" />
+        <line x1="5" y1="12" x2="11" y2="12" stroke="#ef4444" stroke-width="1.2" />
+        <line x1="8" y1="9" x2="8" y2="15" stroke="#ef4444" stroke-width="1.2" />
+        <circle cx="15.5" cy="12" r="1.3" fill="#cbd5e1" />
+        <circle cx="18.5" cy="12" r="1.3" fill="#cbd5e1" />
+      </>
+    );
+  }
+
+  // TurboGrafx-16 / PC Engine
+  if (normalized === 'TGFX16' || normalized === 'TGFX16-CD') {
+    return (
+      <>
+        <rect x="3" y="7" width="18" height="10" rx="2" fill="#d97706" />
+        <rect x="5" y="9" width="6" height="6" rx="1" fill="#78350f" />
+        <rect x="7" y="9.8" width="2" height="4.4" rx=".4" fill="#fef3c7" />
+        <rect x="5.8" y="11" width="4.4" height="2" rx=".4" fill="#fef3c7" />
+        <circle cx="15" cy="12" r="1.3" fill="#ef4444" />
+        <circle cx="18" cy="12" r="1.3" fill="#ef4444" />
+      </>
+    );
+  }
+
+  // Neo Geo
+  if (normalized === 'NEOGEO' || normalized === 'NEOGEO-CD') {
+    return (
+      <>
+        <rect x="3" y="7" width="18" height="10" rx="2" fill="#dc2626" />
+        <circle cx="7.5" cy="12" r="2" fill="#0f172a" />
+        <circle cx="7.5" cy="11.5" r="1.2" fill="#fef08a" />
+        <circle cx="13.2" cy="13.2" r="1.1" fill="#ef4444" />
+        <circle cx="15.2" cy="12" r="1.1" fill="#eab308" />
+        <circle cx="17.2" cy="11" r="1.1" fill="#22c55e" />
+        <circle cx="19.2" cy="10" r="1.1" fill="#3b82f6" />
+      </>
+    );
+  }
+
+  // Atari 2600 / 5200 / 7800 / Lynx
+  if (
+    normalized === 'ATARI2600' ||
+    normalized === 'ATARI5200' ||
+    normalized === 'ATARI7800' ||
+    normalized === 'ATARILYNX'
+  ) {
+    return (
+      <>
+        <rect x="7" y="11" width="10" height="7" rx="1.5" fill="#ea580c" />
+        <rect x="11" y="5" width="2" height="7" rx="0.5" fill="#78350f" />
+        <circle cx="12" cy="5" r="1" fill="#ef4444" />
+        <circle cx="9" cy="13" r="1.2" fill="#ef4444" />
+      </>
+    );
+  }
+
+  // Game Boy / GBC / GBA / Handhelds
+  if (
+    normalized === 'GAMEBOY' ||
+    normalized === 'GBC' ||
+    normalized === 'GBA' ||
+    normalized === 'GAMEGEAR' ||
+    normalized === 'WONDERSWAN' ||
+    normalized === 'WONDERSWANCOLOR' ||
+    normalized === 'POKEMONMINI'
+  ) {
+    return (
+      <>
+        <rect x="3" y="7" width="18" height="10" rx="2.5" fill="#3b82f6" />
+        <rect x="7" y="8.5" width="10" height="7" rx="1" fill="#0f172a" />
+        <circle cx="17.8" cy="12" r="1.1" fill="#cbd5e1" />
+        <rect x="4.2" y="10.8" width="1.6" height="3" rx=".4" fill="#cbd5e1" />
+        <rect x="3.5" y="11.5" width="3" height="1.6" rx=".4" fill="#cbd5e1" />
+      </>
+    );
+  }
+
+  // SNES / Standard Retro Gamepad Layout (Default)
   return (
     <>
+      {/* SNES / Retro Gamepad Body Shell (Well-proportioned horizontal contour) */}
       <path
-        d="M8 5.6H16C19.6 5.6 21.4 8 22 11.6L22.4 14.2C22.9 17.4 19.6 18.9 17.9 16.6L16 14H8L6.1 16.6C4.4 18.9 1.1 17.4 1.6 14.2L2 11.6C2.6 8 4.4 5.6 8 5.6Z"
+        d="M5.5 6.2h13c3.5 0 5.5 2.4 5.5 5.5s-2 5.5-5.5 5.5h-1.6c-1.1 0-2.1-.5-2.6-1.4l-.4-.8c-.4-.6-1.1-.9-1.9-.9s-1.5.3-1.9.9l-.4.8c-.5.9-1.5 1.4-2.6 1.4H5.5C2 17.2 0 14.8 0 11.7S2 6.2 5.5 6.2z"
         fill="var(--icon-pad)"
       />
-      {/* The D-pad: two rounded bars crossed, which stays a cross down at the
-          size a row gives it, where a drawn outline would fill in. */}
-      <rect x="6.4" y="7.4" width="2" height="5.2" rx=".7" fill="var(--icon-pad-mark)" />
-      <rect x="4.8" y="9" width="5.2" height="2" rx=".7" fill="var(--icon-pad-mark)" />
-      <circle cx="16.5" cy="7.9" r="1.15" fill="#f9ab00" />
-      <circle cx="18.8" cy="10.1" r="1.15" fill="#e94235" />
-      <circle cx="16.5" cy="12.3" r="1.15" fill="#34a853" />
-      <circle cx="14.2" cy="10.1" r="1.15" fill="#4285f4" />
+      {/* Inner Faceplate Contour */}
+      <path
+        d="M5.5 7.2h13c2.8 0 4.5 1.9 4.5 4.5s-1.7 4.5-4.5 4.5h-1.6c-.8 0-1.6-.4-2-1.1l-.4-.8c-.6-1-1.7-1.6-2.9-1.6s-2.3.6-2.9 1.6l-.4.8c-.4.7-1.2 1.1-2 1.1H5.5C2.7 16.2 1 14.3 1 11.7S2.7 7.2 5.5 7.2z"
+        fill="var(--icon-pad-face)"
+        opacity="0.15"
+      />
+      {/* D-Pad */}
+      <rect x="5.2" y="9.2" width="2.4" height="6.4" rx=".7" fill="var(--icon-pad-mark)" />
+      <rect x="3.2" y="11.2" width="6.4" height="2.4" rx=".7" fill="var(--icon-pad-mark)" />
+      {/* Four Colored Action Buttons (SNES Palette - Spacious Spacing) */}
+      <circle cx="17.2" cy="9.1" r="1.3" fill="#f9ab00" />
+      <circle cx="19.6" cy="11.7" r="1.3" fill="#e94235" />
+      <circle cx="17.2" cy="14.3" r="1.3" fill="#34a853" />
+      <circle cx="14.8" cy="11.7" r="1.3" fill="#4285f4" />
+      {/* Select & Start Pill Buttons */}
+      <rect x="9.6" y="12.3" width="1.9" height="0.85" rx=".4" fill="var(--icon-pad-mark)" transform="rotate(-20 10.5 12.7)" />
+      <rect x="11.9" y="12.3" width="1.9" height="0.85" rx=".4" fill="var(--icon-pad-mark)" transform="rotate(-20 12.8 12.7)" />
     </>
+  );
+}
+
+export function SystemFolderIcon({ systemId }: { systemId: string }): JSX.Element {
+  return (
+    <div class="system-folder-icon">
+      <FolderIcon />
+      <span class="system-folder-badge">
+        <SystemLogo systemId={systemId} />
+      </span>
+    </div>
   );
 }
 
@@ -118,10 +336,10 @@ export function FolderIcon(): JSX.Element {
   );
 }
 
-export function GameIcon(): JSX.Element {
+export function GameIcon({ systemId }: IconProps = {}): JSX.Element {
   return (
     <svg viewBox={BOX}>
-      <Gamepad />
+      <Gamepad systemId={systemId} />
     </svg>
   );
 }
@@ -139,7 +357,7 @@ export function GameIcon(): JSX.Element {
  * the same element as a transform it would be resolved in the transformed
  * space, and land somewhere else entirely.
  */
-export function BundleIcon(): JSX.Element {
+export function BundleIcon({ systemId }: IconProps = {}): JSX.Element {
   const cut = `bundle-cut-${useId()}`;
 
   return (
@@ -152,7 +370,7 @@ export function BundleIcon(): JSX.Element {
       </mask>
 
       <g mask={`url(#${cut})`}>
-        <Gamepad />
+        <Gamepad systemId={systemId} />
       </g>
       <Parcel {...PARCEL} />
     </svg>
@@ -255,12 +473,17 @@ export function FileIcon(): JSX.Element {
 /**
  * The mark for a MIME type, in three steps: the type itself, then its family,
  * then the blank page.
- *
+ */
+export interface IconProps {
+  systemId?: string;
+}
+
+/**
  * The family step is what keeps this table from needing a row for every image
  * format anyone ever ships — and what makes the unlisted ones degrade to
  * something true rather than to something wrong.
  */
-const ICONS_BY_MIME: Readonly<Record<string, () => JSX.Element>> = {
+const ICONS_BY_MIME: Readonly<Record<string, (props?: IconProps) => JSX.Element>> = {
   [ROM_MIME]: GameIcon,
   [DISC_MIME]: DiscIcon,
   [SAVE_MIME]: MemoryCardIcon,
@@ -273,13 +496,13 @@ const ICONS_BY_MIME: Readonly<Record<string, () => JSX.Element>> = {
 };
 
 /** Whole families, for the types that are all drawn the same way. */
-const ICONS_BY_FAMILY: Readonly<Record<string, () => JSX.Element>> = {
+const ICONS_BY_FAMILY: Readonly<Record<string, (props?: IconProps) => JSX.Element>> = {
   image: ImageIcon,
   text: DocumentIcon,
 };
 
 /** The icon a file's name earns it, which is the most a listing can say. */
-export function iconOfName(name: string): () => JSX.Element {
+export function iconOfName(name: string): (props?: IconProps) => JSX.Element {
   const mime = mimeOf(name);
 
   return ICONS_BY_MIME[mime] ?? ICONS_BY_FAMILY[mime.split('/')[0]] ?? FileIcon;

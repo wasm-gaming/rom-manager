@@ -5,6 +5,8 @@ import type { MatchStatus } from '../core/rom-matching';
 import type { WizardGame, WizardNode } from '../core/wizard-tree';
 import { isHiddenName } from '../core/file-types';
 import { t } from '../services/I18nService';
+import { systemOf } from '../services/RomLibraryService';
+import { getSystemInfo } from '../core/system-info';
 import {
   BundleIcon,
   ChevronIcon,
@@ -16,6 +18,7 @@ import {
   OrganizeIcon,
   PlusIcon,
   StatusIcon,
+  SystemFolderIcon,
   TrashIcon,
 } from './icons';
 
@@ -71,11 +74,20 @@ const DRAG_MIME = 'application/x-rom-manager-paths';
  */
 function RowIcon({ row }: { row: VisibleRow }): JSX.Element {
   if (row.kind === 'pending') return <span class="tree-spinner" />;
-  if (row.kind === 'directory') return <FolderIcon />;
-  if (row.kind === 'group') return <BundleIcon />;
+  if (row.kind === 'directory') {
+    const system = getSystemInfo(row.path || row.label);
+    if (system) {
+      return <SystemFolderIcon systemId={system.id} />;
+    }
+    return <FolderIcon />;
+  }
+
+  const systemId = row.paths[0] ? systemOf(row.paths[0]) : row.path ? systemOf(row.path) : undefined;
+
+  if (row.kind === 'group') return <BundleIcon systemId={systemId} />;
 
   const Icon = iconOfName(row.label);
-  return <Icon />;
+  return <Icon systemId={systemId} />;
 }
 
 const STATUS_KEYS = {

@@ -934,6 +934,39 @@ code {
   height: 1.6rem;
 }
 
+.system-folder-icon {
+  position: relative;
+  width: 1.6rem;
+  height: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.system-folder-icon > svg {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.system-folder-badge {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  width: 1.05rem;
+  height: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.system-folder-badge > svg {
+  width: 100%;
+  height: 100%;
+}
+
 /*
  * A line of its own, tighter than the row's, so a wrapped name does not read as
  * two rows. The nudge down is what the difference costs: it puts the first line
