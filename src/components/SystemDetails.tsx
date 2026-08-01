@@ -13,11 +13,11 @@ export function SystemDetails({ folder }: SystemDetailsProps): JSX.Element {
   if (!info) {
     return (
       <div class="system-details generic">
-        <div class="system-hero">
-          <div class="system-logo-wrapper">
+        <div class="system-hero centered">
+          <div class="system-logo-wrapper large">
             <SystemLogo systemId="generic" />
           </div>
-          <div class="system-heading">
+          <div class="system-heading centered">
             <h2>{folder || 'Folder'}</h2>
             <p class="metadata-subtitle">Directory / Collection</p>
           </div>
@@ -34,17 +34,24 @@ export function SystemDetails({ folder }: SystemDetailsProps): JSX.Element {
 
   return (
     <div class="system-details">
-      <div class="system-hero">
-        <div class="system-logo-wrapper" style={{ borderColor: info.accentColor }}>
+      <div class="system-hero centered">
+        <div class="system-logo-wrapper large" style={{ borderColor: info.accentColor }}>
           <SystemLogo systemId={info.id} />
         </div>
 
-        <div class="system-heading">
+        <div class="system-heading centered">
           <h2>{info.name}</h2>
           <p class="system-fullname">{info.fullName}</p>
 
-          <div class="system-meta-tags">
-            <span class="tag manufacturer" style={{ backgroundColor: `${info.accentColor}22`, color: info.accentColor, borderColor: `${info.accentColor}55` }}>
+          <div class="system-meta-tags centered">
+            <span
+              class="tag manufacturer"
+              style={{
+                backgroundColor: `${info.accentColor}22`,
+                color: info.accentColor,
+                borderColor: `${info.accentColor}55`,
+              }}
+            >
               {info.manufacturer}
             </span>
             <span class="tag year">{info.releaseYear}</span>

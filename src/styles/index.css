@@ -946,29 +946,49 @@ code {
 .system-details {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .system-hero {
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  padding-bottom: 1.25rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-soft);
 }
 
+.system-hero.centered {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
 .system-logo-wrapper {
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
   background-color: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.75rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow);
   border: 2px solid var(--border);
   flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.system-logo-wrapper.large {
+  width: 128px;
+  height: 128px;
+  border-radius: 28px;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--surface), var(--surface-2));
+}
+
+.system-logo-wrapper:hover {
+  transform: scale(1.03);
 }
 
 .system-logo-svg {
@@ -976,16 +996,23 @@ code {
   height: 100%;
 }
 
+.system-heading.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .system-heading h2 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--text);
+  letter-spacing: -0.01em;
 }
 
 .system-fullname {
-  margin: 0.25rem 0 0.75rem 0;
-  font-size: 0.875rem;
+  margin: 0.35rem 0 0.85rem 0;
+  font-size: 0.95rem;
   color: var(--text-2);
 }
 
@@ -995,11 +1022,15 @@ code {
   gap: 0.5rem;
 }
 
+.system-meta-tags.centered {
+  justify-content: center;
+}
+
 .system-meta-tags .tag {
   font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
 }
 
 .system-meta-tags .tag.manufacturer {
