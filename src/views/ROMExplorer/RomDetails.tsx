@@ -208,13 +208,16 @@ function RomFileView({
   cover,
   loadContent,
   onEdit,
+  onRemove,
 }: {
   path: string;
   stat: StorageStat | null | undefined;
   cover?: CoverShown;
   loadContent: (path: string) => Promise<ArrayBuffer>;
   onEdit: () => void;
+  onRemove?: (paths: string[]) => void;
 }): JSX.Element {
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const size = stat?.size ?? 0;
 
   return (
@@ -225,9 +228,16 @@ function RomFileView({
           <div class="rom-info-heading">
             <h3>{fileNameOf(path)}</h3>
             <p class="metadata-subtitle">{t('details.file.pending')}</p>
-            <button class="btn-primary icon-label" onClick={onEdit}>
-              <PencilIcon /> {t('details.file.add')}
-            </button>
+            <div class="rom-info-actions">
+              <button class="btn-primary icon-label" onClick={onEdit}>
+                <PencilIcon /> {t('details.file.add')}
+              </button>
+              {onRemove && (
+                <button class="btn-danger icon-label" onClick={() => setConfirmDelete(true)}>
+                  <TrashIcon /> {t('details.delete')}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       ) : (
@@ -236,9 +246,16 @@ function RomFileView({
             <h3>{fileNameOf(path)}</h3>
             <p class="metadata-subtitle">{t('details.file.pending')}</p>
           </div>
-          <button class="btn-primary icon-label" onClick={onEdit}>
-            <PencilIcon /> {t('details.file.add')}
-          </button>
+          <div class="rom-info-actions">
+            <button class="btn-primary icon-label" onClick={onEdit}>
+              <PencilIcon /> {t('details.file.add')}
+            </button>
+            {onRemove && (
+              <button class="btn-danger icon-label" onClick={() => setConfirmDelete(true)}>
+                <TrashIcon /> {t('details.delete')}
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -268,6 +285,20 @@ function RomFileView({
         </div>
         <ChecksumRow path={path} size={size} loadContent={loadContent} />
       </div>
+
+      {confirmDelete && (
+        <ConfirmModal
+          open={confirmDelete}
+          title={t('details.variants.deleteFileTitle')}
+          message={t('details.variants.deleteFileMessage', { name: fileNameOf(path) })}
+          danger={true}
+          onConfirm={() => {
+            setConfirmDelete(false);
+            onRemove?.([path]);
+          }}
+          onClose={() => setConfirmDelete(false)}
+        />
+      )}
     </div>
   );
 }
@@ -278,13 +309,17 @@ function RomInfoView({
   stat,
   cover,
   onEdit,
+  onRemove,
 }: {
   path: string;
   record: RomRecord;
   stat: StorageStat | null | undefined;
   cover?: CoverShown;
   onEdit: () => void;
+  onRemove?: (paths: string[]) => void;
 }): JSX.Element {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
   return (
     <div class="rom-info">
       <div class="rom-info-hero">
@@ -300,9 +335,16 @@ function RomInfoView({
             {record.releaseDate && <span class="tag">{record.releaseDate}</span>}
           </div>
 
-          <button class="btn-primary icon-label" onClick={onEdit}>
-            <PencilIcon /> {t('details.edit')}
-          </button>
+          <div class="rom-info-actions">
+            <button class="btn-primary icon-label" onClick={onEdit}>
+              <PencilIcon /> {t('details.edit')}
+            </button>
+            {onRemove && (
+              <button class="btn-danger icon-label" onClick={() => setConfirmDelete(true)}>
+                <TrashIcon /> {t('details.delete')}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -336,6 +378,20 @@ function RomInfoView({
           <span class="fact-value">{formatDate(record.updatedAt)}</span>
         </div>
       </div>
+
+      {confirmDelete && (
+        <ConfirmModal
+          open={confirmDelete}
+          title={t('details.variants.deleteFileTitle')}
+          message={t('details.variants.deleteFileMessage', { name: fileNameOf(path) })}
+          danger={true}
+          onConfirm={() => {
+            setConfirmDelete(false);
+            onRemove?.([path]);
+          }}
+          onClose={() => setConfirmDelete(false)}
+        />
+      )}
     </div>
   );
 }
@@ -356,21 +412,13 @@ function VariantRow({
   cover,
   onSelectFile,
   onOrganize,
-  onRemove,
 }: {
   variant: WizardVariant;
   stats: Map<string, StorageStat | null>;
   cover?: CoverShown;
   onSelectFile?: (path: string) => void;
   onOrganize?: (path: string) => void;
-  onRemove?: (paths: string[]) => void;
 }): JSX.Element {
-  const [deleteTarget, setDeleteTarget] = useState<{
-    title: string;
-    message: string;
-    paths: string[];
-  } | null>(null);
-
   const activeUrl = cover?.publishedUrl || cover?.url;
   const isCoverActive =
     variant.status !== 'missing' &&
@@ -426,22 +474,6 @@ function VariantRow({
             <OrganizeIcon />
           </button>
         )}
-        {onRemove && (
-          <button
-            class="tree-remove"
-            onClick={(event) => {
-              event.stopPropagation();
-              setDeleteTarget({
-                title: t('details.variants.deleteFileTitle'),
-                message: t('details.variants.deleteFileMessage', { name: file.label }),
-                paths: [file.path!],
-              });
-            }}
-            title={t('details.variants.deleteFile')}
-          >
-            <TrashIcon />
-          </button>
-        )}
         <code class="variant-file-crc" title="CRC32">
           {file.crc}
         </code>
@@ -451,7 +483,6 @@ function VariantRow({
   };
 
   const displayKey = variant.key === 'Unknown' ? 'World / Arcade' : variant.key;
-  const presentPaths = variant.files.map((file) => file.path!).filter(Boolean);
 
   return (
     <li class={`variant status-${variant.status}${isCoverActive ? ' active-cover' : ''}`}>
@@ -477,42 +508,8 @@ function VariantRow({
             ? t('details.variants.files', { count: variant.files.length })
             : ''}
         </span>
-        {presentPaths.length > 0 && onRemove && (
-          <button
-            class="tree-remove"
-            onClick={(event) => {
-              event.stopPropagation();
-              setDeleteTarget({
-                title: t('details.variants.deleteTitle'),
-                message: t('details.variants.deleteMessage', {
-                  variant: displayKey,
-                  count: presentPaths.length,
-                }),
-                paths: presentPaths,
-              });
-            }}
-            title={t('details.variants.deleteVariant')}
-          >
-            <TrashIcon />
-          </button>
-        )}
       </div>
       <ul class="variant-files">{variant.files.map(files)}</ul>
-
-      {deleteTarget && (
-        <ConfirmModal
-          open={Boolean(deleteTarget)}
-          title={deleteTarget.title}
-          message={deleteTarget.message}
-          danger={true}
-          onConfirm={() => {
-            const paths = deleteTarget.paths;
-            setDeleteTarget(null);
-            onRemove?.(paths);
-          }}
-          onClose={() => setDeleteTarget(null)}
-        />
-      )}
     </li>
   );
 }
@@ -523,14 +520,12 @@ function GameView({
   stats,
   onSelectFile,
   onOrganize,
-  onRemove,
 }: {
   game: WizardGame;
   cover?: CoverShown;
   stats: Map<string, StorageStat | null>;
   onSelectFile?: (path: string) => void;
   onOrganize?: (path: string) => void;
-  onRemove?: (paths: string[]) => void;
 }): JSX.Element {
   const present = game.variants.filter(hasFiles);
   const missing = game.variants.filter((variant) => !hasFiles(variant));
@@ -577,7 +572,6 @@ function GameView({
             cover={cover}
             onSelectFile={onSelectFile}
             onOrganize={onOrganize}
-            onRemove={onRemove}
           />
         ))}
       </ul>
@@ -594,7 +588,6 @@ function GameView({
                 cover={cover}
                 onSelectFile={onSelectFile}
                 onOrganize={onOrganize}
-                onRemove={onRemove}
               />
             ))}
           </ul>
@@ -858,6 +851,7 @@ export function RomDetails({
           cover={cover}
           loadContent={loadContent}
           onEdit={onEdit}
+          onRemove={onRemove}
         />
       </>
     );
@@ -866,7 +860,14 @@ export function RomDetails({
   return (
     <>
       {back}
-      <RomInfoView path={path} record={record} stat={stat} cover={cover} onEdit={onEdit} />
+      <RomInfoView
+        path={path}
+        record={record}
+        stat={stat}
+        cover={cover}
+        onEdit={onEdit}
+        onRemove={onRemove}
+      />
     </>
   );
 }

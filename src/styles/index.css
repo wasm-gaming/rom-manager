@@ -2593,6 +2593,14 @@ code {
   gap: 0.5rem;
 }
 
+.rom-info-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
 .rom-info-heading h2 {
   margin: 0;
   font-size: 1.5rem;

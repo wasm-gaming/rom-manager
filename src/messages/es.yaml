@@ -154,6 +154,7 @@ details:
     pending: 'Todavía no está en la biblioteca'
     add: 'Añadir metadatos'
   edit: 'Editar'
+  delete: 'Borrar'
   checksum:
     calculate: 'Calcular'
     calculating: 'Calculando…'

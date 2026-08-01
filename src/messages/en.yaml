@@ -154,6 +154,7 @@ details:
     pending: 'Not in the library yet'
     add: 'Add metadata'
   edit: 'Edit'
+  delete: 'Delete'
   checksum:
     calculate: 'Calculate'
     calculating: 'Calculating…'
