@@ -16,6 +16,10 @@ const CAPABILITIES = ['hash', 'grouping', 'covers', 'consolidate'] as const;
 
 const STEPS = ['step1', 'step2', 'step3'] as const;
 
+const TOP_ROW_IDS = ['GAMEBOY', 'GBC', 'GameGear', 'SMS', 'TGFX16', 'Atari2600', 'WonderSwan', 'PokemonMini'];
+const MIDDLE_ROW_IDS = ['NES', 'SNES', 'N64', 'GBA', 'MegaDrive', 'PSX', 'Saturn', 'NEOGEO'];
+const BOTTOM_ROW_IDS = ['MegaCD', 'S32X', 'TGFX16-CD', 'NeoGeo-CD', 'ATARI5200', 'ATARI7800', 'AtariLynx', 'WonderSwanColor'];
+
 /**
  * The first screen, when no folder has ever been opened.
  *
@@ -30,6 +34,17 @@ const STEPS = ['step1', 'step2', 'step3'] as const;
  */
 export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.Element {
   const systems = getAllSystemsInfo();
+  const systemMap = new Map(systems.map((s) => [s.id, s]));
+
+  const middleSystems = MIDDLE_ROW_IDS.map((id) => systemMap.get(id)).filter((s): s is typeof s & {} => s !== undefined);
+  const topSystems = TOP_ROW_IDS.map((id) => systemMap.get(id)).filter((s): s is typeof s & {} => s !== undefined);
+  const bottomSystems = BOTTOM_ROW_IDS.map((id) => systemMap.get(id)).filter((s): s is typeof s & {} => s !== undefined);
+
+  const assigned = new Set([...TOP_ROW_IDS, ...MIDDLE_ROW_IDS, ...BOTTOM_ROW_IDS]);
+  const unassigned = systems.filter((s) => !assigned.has(s.id));
+  if (unassigned.length > 0) {
+    topSystems.push(...unassigned);
+  }
 
   return (
     <div class="welcome">
@@ -80,22 +95,49 @@ export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.
         </ol>
       </section>
 
-      <section class="welcome-section">
+      <section class="welcome-section welcome-systems-section">
         <h3>{t('welcome.systems.title')}</h3>
         <p class="welcome-hint">{t('welcome.systems.hint', { count: systems.length })}</p>
-        {/* Each System with its own mark: a list of folder names is a list of
-            folder names, and the shapes are what someone recognises their own
-            collection in. */}
-        <ul class="welcome-systems">
-          {systems.map((system) => (
-            <li key={system.id} class="welcome-system" title={system.fullName}>
-              <span class="welcome-system-logo" style={{ borderColor: `${system.accentColor}55` }}>
-                <SystemLogo systemId={system.id} />
-              </span>
-              <span class="welcome-system-name">{system.name}</span>
-            </li>
-          ))}
-        </ul>
+        <div class="welcome-systems">
+          <div class="welcome-systems-row welcome-systems-row--top">
+            <ul class="welcome-systems-track">
+              {[...topSystems, ...topSystems].map((system, idx) => (
+                <li key={`top-${system.id}-${idx}`} class="welcome-system" title={system.fullName}>
+                  <span class="welcome-system-logo">
+                    <SystemLogo systemId={system.id} />
+                  </span>
+                  <span class="welcome-system-name">{system.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="welcome-systems-row welcome-systems-row--middle">
+            <ul class="welcome-systems-track">
+              {[...middleSystems, ...middleSystems].map((system, idx) => (
+                <li key={`mid-${system.id}-${idx}`} class="welcome-system" title={system.fullName}>
+                  <span class="welcome-system-logo">
+                    <SystemLogo systemId={system.id} />
+                  </span>
+                  <span class="welcome-system-name">{system.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="welcome-systems-row welcome-systems-row--bottom">
+            <ul class="welcome-systems-track">
+              {[...bottomSystems, ...bottomSystems].map((system, idx) => (
+                <li key={`bot-${system.id}-${idx}`} class="welcome-system" title={system.fullName}>
+                  <span class="welcome-system-logo">
+                    <SystemLogo systemId={system.id} />
+                  </span>
+                  <span class="welcome-system-name">{system.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </section>
 
       <section class="welcome-note">
