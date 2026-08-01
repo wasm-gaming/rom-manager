@@ -19,6 +19,7 @@ import type { Region } from '../core/rom-regions';
 import type { MatchStatus } from '../core/rom-matching';
 import { systemAspectRatio } from '../core/rom-covers';
 import { SystemDetails } from './SystemDetails';
+import { t } from '../services/I18nService';
 
 interface RomDetailsProps {
   /** ROM files selected in the tree, in tree order. */
@@ -94,7 +95,9 @@ function ChecksumRow({
     return (
       <div class="fact">
         <span class="fact-label">CRC32</span>
-        <span class="fact-value muted">Skipped — over {formatSize(CRC32_SIZE_LIMIT)}</span>
+        <span class="fact-value muted">
+          {t('details.checksum.skipped', { limit: formatSize(CRC32_SIZE_LIMIT) })}
+        </span>
       </div>
     );
   }
@@ -105,7 +108,7 @@ function ChecksumRow({
       setError(undefined);
       setValue(await calculateCRC32(await loadContent(path)));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Checksum failed');
+      setError(err instanceof Error ? err.message : t('details.checksum.failed'));
     } finally {
       setBusy(false);
     }
@@ -113,13 +116,13 @@ function ChecksumRow({
 
   return (
     <div class="fact">
-      <span class="fact-label">CRC32</span>
+      <span class="fact-label">{t('details.facts.crc32')}</span>
       <span class="fact-value">
         {value ? (
           <code>{value}</code>
         ) : (
           <button class="btn-inline" onClick={compute} disabled={busy}>
-            {busy ? 'Calculating...' : 'Calculate'}
+            {busy ? t('details.checksum.calculating') : t('details.checksum.calculate')}
           </button>
         )}
         {error && <span class="fact-error">{error}</span>}
@@ -167,7 +170,11 @@ function CoverFigure({
     const parts = currentRatio.split('/').map((s) => parseFloat(s.trim()));
     return parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1]) && parts[0] > parts[1];
   })();
-  const regionLabel = cover?.region ? `${cover.region} box` : cover ? 'Box of the game' : '\u00A0';
+  const regionLabel = cover?.region
+    ? t('details.cover.region', { region: cover.region })
+    : cover
+      ? t('details.cover.game')
+      : '\u00A0';
 
   return (
     <figure class="rom-info-cover-figure">
@@ -180,7 +187,7 @@ function CoverFigure({
             key={url}
             class="rom-info-cover"
             src={url}
-            alt={`${alt} boxart`}
+            alt={t('details.cover.alt', { title: alt })}
             onLoad={(e) => {
               const img = e.currentTarget;
               if (img.naturalWidth && img.naturalHeight) {
@@ -189,7 +196,7 @@ function CoverFigure({
             }}
           />
         ) : (
-          <div class="rom-info-cover placeholder">No cover</div>
+          <div class="rom-info-cover placeholder">{t('details.cover.none')}</div>
         )}
       </div>
       <figcaption class="rom-info-cover-region">{regionLabel}</figcaption>
@@ -223,9 +230,9 @@ function RomFileView({
           <CoverFigure cover={cover} alt={fileNameOf(path)} system={systemOf(path)} />
           <div class="rom-info-heading">
             <h3>{fileNameOf(path)}</h3>
-            <p class="metadata-subtitle">Not in the library yet</p>
+            <p class="metadata-subtitle">{t('details.file.pending')}</p>
             <button class="btn-primary icon-label" onClick={onEdit}>
-              <PencilIcon /> Add metadata
+              <PencilIcon /> {t('details.file.add')}
             </button>
           </div>
         </div>
@@ -233,36 +240,37 @@ function RomFileView({
         <div class="rom-file-header">
           <div>
             <h3>{fileNameOf(path)}</h3>
-            <p class="metadata-subtitle">Not in the library yet</p>
+            <p class="metadata-subtitle">{t('details.file.pending')}</p>
           </div>
           <button class="btn-primary icon-label" onClick={onEdit}>
-            <PencilIcon /> Add metadata
+            <PencilIcon /> {t('details.file.add')}
           </button>
         </div>
       )}
 
       <div class="facts">
         <div class="fact">
-          <span class="fact-label">System</span>
+          <span class="fact-label">{t('details.facts.system')}</span>
           <span class="fact-value">{systemOf(path) || '—'}</span>
         </div>
         <div class="fact">
-          <span class="fact-label">Format</span>
+          <span class="fact-label">{t('details.facts.format')}</span>
           <span class="fact-value">
-            {romMetadataService.getROMFormat(path)} ({extensionOf(path) || 'no extension'})
+            {romMetadataService.getROMFormat(path)} (
+            {extensionOf(path) || t('details.facts.noExtension')})
           </span>
         </div>
         <div class="fact">
-          <span class="fact-label">Size</span>
+          <span class="fact-label">{t('details.facts.size')}</span>
           <span class="fact-value">{formatSize(size)}</span>
         </div>
         <div class="fact">
-          <span class="fact-label">Modified</span>
+          <span class="fact-label">{t('details.facts.modified')}</span>
           <span class="fact-value">{formatDate(stat?.mtime)}</span>
         </div>
         <div class="fact">
-          <span class="fact-label">Added to library</span>
-          <span class="fact-value muted">Not initialised</span>
+          <span class="fact-label">{t('details.facts.added')}</span>
+          <span class="fact-value muted">{t('details.facts.notInitialized')}</span>
         </div>
         <ChecksumRow path={path} size={size} loadContent={loadContent} />
       </div>
@@ -300,7 +308,7 @@ function RomInfoView({
           </div>
 
           <button class="btn-primary icon-label" onClick={onEdit}>
-            <PencilIcon /> Edit
+            <PencilIcon /> {t('details.edit')}
           </button>
         </div>
       </div>
@@ -309,29 +317,29 @@ function RomInfoView({
 
       <div class="facts">
         <div class="fact">
-          <span class="fact-label">File</span>
+          <span class="fact-label">{t('details.facts.file')}</span>
           <span class="fact-value">{fileNameOf(path)}</span>
         </div>
         {record.publisher && (
           <div class="fact">
-            <span class="fact-label">Publisher</span>
+            <span class="fact-label">{t('details.facts.publisher')}</span>
             <span class="fact-value">{record.publisher}</span>
           </div>
         )}
         <div class="fact">
-          <span class="fact-label">Size</span>
+          <span class="fact-label">{t('details.facts.size')}</span>
           <span class="fact-value">{formatSize(stat?.size ?? 0)}</span>
         </div>
         <div class="fact">
-          <span class="fact-label">CRC32</span>
+          <span class="fact-label">{t('details.facts.crc32')}</span>
           <span class="fact-value">{record.crc32 ? <code>{record.crc32}</code> : '—'}</span>
         </div>
         <div class="fact">
-          <span class="fact-label">Added to library</span>
+          <span class="fact-label">{t('details.facts.added')}</span>
           <span class="fact-value">{formatDate(record.addedAt)}</span>
         </div>
         <div class="fact">
-          <span class="fact-label">Updated</span>
+          <span class="fact-label">{t('details.facts.updated')}</span>
           <span class="fact-value">{formatDate(record.updatedAt)}</span>
         </div>
       </div>
@@ -339,10 +347,10 @@ function RomInfoView({
   );
 }
 
-const STATUS_LABELS: Record<MatchStatus, string> = {
-  complete: 'Complete',
-  partial: 'Incomplete',
-  missing: 'Not in this folder',
+const STATUS_KEYS: Record<MatchStatus, string> = {
+  complete: 'details.status.complete',
+  partial: 'details.status.partial',
+  missing: 'details.status.missing',
 };
 
 function hasFiles(variant: WizardVariant): boolean {
@@ -393,7 +401,7 @@ function VariantRow({
               event.stopPropagation();
               onOrganize(file.path!);
             }}
-            title="Rename and sort to match the catalogue"
+            title={t('details.variants.consolidate')}
           >
             <OrganizeIcon />
           </button>
@@ -409,31 +417,33 @@ function VariantRow({
         <code class="variant-file-crc" title="CRC32">
           {file.crc}
         </code>
-        <span class="variant-file-size">missing</span>
+        <span class="variant-file-size">{t('details.variants.missingFile')}</span>
       </li>
     );
 
   return (
     <li class={`variant status-${variant.status}${isCoverActive ? ' active-cover' : ''}`}>
       <div class="variant-heading">
-        <span class="variant-mark" title={STATUS_LABELS[variant.status]}>
+        <span class="variant-mark" title={t(STATUS_KEYS[variant.status])}>
           <StatusIcon status={variant.status} />
         </span>
         <span class="variant-key">{variant.key}</span>
         <span class="variant-support">
           {variant.regions.map((region) => (
-            <span key={region} class="tag region" title={`Ships to ${region}`}>
+            <span key={region} class="tag region" title={t('details.variants.shipsTo', { region })}>
               {region}
             </span>
           ))}
           {variant.videoStandards.map((standard) => (
-            <span key={standard} class="tag video" title={`Runs at ${standard}`}>
+            <span key={standard} class="tag video" title={t('details.variants.runsAt', { standard })}>
               {standard}
             </span>
           ))}
         </span>
         <span class="variant-count">
-          {variant.files.length > 1 ? `${variant.files.length} files` : ''}
+          {variant.files.length > 1
+            ? t('details.variants.files', { count: variant.files.length })
+            : ''}
         </span>
       </div>
       <ul class="variant-files">{variant.files.map(files)}</ul>
@@ -476,7 +486,7 @@ function GameView({
           {/* One badge per release that is here: which ones you have reads
               better than how many, and the missing ones have their own list. */}
           <div class="rom-info-tags">
-            <span class={`tag status-${game.status}`}>{STATUS_LABELS[game.status]}</span>
+            <span class={`tag status-${game.status}`}>{t(STATUS_KEYS[game.status])}</span>
             {present.map((variant) => (
               <span key={variant.key} class="tag">
                 {variant.key}
@@ -489,7 +499,7 @@ function GameView({
       {/* No facts table: the name on disk, how many releases there are, how many
           files are here and how much they weigh are all already read below, one
           release at a time and with more to say. */}
-      <h4 class="variants-title">Versions</h4>
+      <h4 class="variants-title">{t('details.variants.title')}</h4>
       <ul class="variants">
         {present.map((variant) => (
           <VariantRow
@@ -507,7 +517,7 @@ function GameView({
           disk, so the absent ones stay folded until they are asked for. */}
       {missing.length > 0 && (
         <details class="variants-missing">
-          <summary>{missing.length} more the catalogue knows of</summary>
+          <summary>{t('details.variants.more', { count: missing.length })}</summary>
           <ul class="variants">
             {missing.map((variant) => (
               <VariantRow
@@ -569,7 +579,7 @@ function RomBatchEditor({
       setError(undefined);
       await onSave(changes);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not save the records');
+      setError(err instanceof Error ? err.message : t('details.batch.error'));
       setSaving(false);
     }
   };
@@ -578,17 +588,19 @@ function RomBatchEditor({
     <div class="metadata-editor">
       <div class="metadata-header">
         <div>
-          <h3>Edit {count} games</h3>
-          <p class="metadata-subtitle">Only the fields shared by every game can be changed</p>
+          <h3>{t('details.batch.title', { count })}</h3>
+          <p class="metadata-subtitle">{t('details.batch.subtitle')}</p>
         </div>
       </div>
 
       {error && <div class="lookup-error">{error}</div>}
 
       <div class="form-group">
-        <label>Region</label>
+        <label>{t('editor.fields.region')}</label>
         <select value={region} onChange={(event) => setRegion((event.target as HTMLSelectElement).value)}>
-          <option value="">Keep current ({currentRegion || 'mixed'})</option>
+          <option value="">
+            {t('details.batch.keep', { value: currentRegion || t('details.batch.mixed') })}
+          </option>
           {ROM_REGIONS.map((value) => (
             <option key={value} value={value}>
               {value}
@@ -598,12 +610,14 @@ function RomBatchEditor({
       </div>
 
       <div class="form-group">
-        <label>Video Standard</label>
+        <label>{t('editor.fields.videoStandard')}</label>
         <select
           value={videoStandard}
           onChange={(event) => setVideoStandard((event.target as HTMLSelectElement).value)}
         >
-          <option value="">Keep current ({currentVideo || 'mixed'})</option>
+          <option value="">
+            {t('details.batch.keep', { value: currentVideo || t('details.batch.mixed') })}
+          </option>
           {VIDEO_STANDARDS.map((value) => (
             <option key={value} value={value}>
               {value}
@@ -619,15 +633,15 @@ function RomBatchEditor({
           disabled={saving || (!region && !videoStandard)}
         >
           {saving ? (
-            'Saving...'
+            t('details.batch.saving')
           ) : (
             <>
-              <SaveIcon /> Apply to {count} games
+              <SaveIcon /> {t('details.batch.apply', { count })}
             </>
           )}
         </button>
         <button class="btn-cancel" onClick={onCancel} disabled={saving}>
-          Cancel
+          {t('editor.cancel')}
         </button>
       </div>
     </div>
@@ -651,24 +665,20 @@ function RomSelectionView({
     <div class="rom-selection">
       <div class="rom-file-header">
         <div>
-          <h3>{paths.length} ROMs selected</h3>
+          <h3>{t('details.selection.title', { count: paths.length })}</h3>
           <p class="metadata-subtitle">
             {pending === 0
-              ? 'All of them are in the library'
-              : `${pending} of them are not in the library yet`}
+              ? t('details.selection.ready')
+              : t('details.selection.pending', { count: pending })}
           </p>
         </div>
         <button
           class="btn-primary icon-label"
           onClick={onEdit}
           disabled={pending > 0}
-          title={
-            pending > 0
-              ? 'Every selected ROM has to be in the library before editing in batch'
-              : 'Edit the fields shared by every selected game'
-          }
+          title={pending > 0 ? t('details.selection.gate') : t('details.selection.hint')}
         >
-          <PencilIcon /> Edit {paths.length}
+          <PencilIcon /> {t('details.selection.edit', { count: paths.length })}
         </button>
       </div>
 
@@ -706,7 +716,7 @@ export function RomDetails({
   loadContent,
 }: RomDetailsProps): JSX.Element {
   const back = onBack && (
-    <button class="btn-back icon-label" onClick={onBack.go} title="Back to the game">
+    <button class="btn-back icon-label" onClick={onBack.go} title={t('details.back')}>
       <ArrowLeftIcon /> {onBack.label}
     </button>
   );
@@ -729,7 +739,7 @@ export function RomDetails({
     if (folder) {
       return <SystemDetails folder={folder} />;
     }
-    return <div class="empty-state">Select a ROM to view its details</div>;
+    return <div class="empty-state">{t('details.empty')}</div>;
   }
 
   if (paths.length > 1) {

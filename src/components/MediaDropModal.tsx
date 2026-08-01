@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import {
   GLOBAL_SCOPE,
   isImageName,
-  MEDIA_KIND_LABELS,
   MEDIA_KINDS,
-  MEDIA_SCOPE_LABELS,
   MEDIA_SCOPES,
   type MediaKind,
   type MediaScope,
 } from '../core/rom-media';
+import { t } from '../services/I18nService';
 import {
   itemsOf,
   offerOf,
@@ -163,10 +162,7 @@ export function MediaDropModal({
       intake: split.intake,
     });
 
-  const destination =
-    target.kind === 'game'
-      ? `${target.folder || 'la raíz'}`
-      : `${target.path || 'la raíz'}`;
+  const destination = (target.kind === 'game' ? target.folder : target.path) || t('drop.root');
 
   const copiedTo = (file: File) => (folder ? `${folder}/${file.name}` : file.name);
 
@@ -175,21 +171,19 @@ export function MediaDropModal({
     if (!taking.has(file)) return copiedTo(file);
 
     const along = offer.pending.length - 1;
-    return along > 0 ? `${offer.path} · y ${along} más` : offer.path;
+    return along > 0 ? t('drop.andMore', { path: offer.path, count: along }) : offer.path;
   };
 
   const hint =
     offers.size > 0
-      ? `Tal cual se copia a ${destination}. Como juego va donde el catálogo lo pone, creando la ` +
-        'carpeta si no existe, y lo que salga de un archivo se descomprime y se comprueba que sea ' +
-        'lo que el archivo decía.'
-      : `Se copian tal cual a ${destination}.`;
+      ? t('drop.hint.intake', { folder: destination })
+      : t('drop.hint.plain', { folder: destination });
 
   return (
     <dialog
       ref={dialog}
       class="modal-dialog drop-dialog"
-      aria-label="Añadir ficheros"
+      aria-label={t('drop.label')}
       onClose={onCancel}
       onClick={(event) => {
         if (event.target === dialog.current && !busy) dialog.current?.close();
@@ -197,7 +191,9 @@ export function MediaDropModal({
     >
       <header class="modal-header">
         <h3>
-          {target.kind === 'game' ? `Añadir a ${target.title}` : `Añadir a ${target.path || 'la raíz'}`}
+          {target.kind === 'game'
+            ? t('drop.toGame', { title: target.title })
+            : t('drop.toFolder', { folder: target.path || t('drop.root') })}
         </h3>
         <button class="modal-close" onClick={() => dialog.current?.close()} disabled={Boolean(busy)}>
           <CloseIcon />
@@ -209,7 +205,7 @@ export function MediaDropModal({
 
         {images.length > 0 && (
           <section class="prefs-group">
-            <h4>{images.length > 1 ? 'Imágenes' : 'Imagen'}</h4>
+            <h4>{images.length > 1 ? t('drop.images.many') : t('drop.images.one')}</h4>
             {/* Kind and region are what the file name is made of, so the image
                 dropped for EU is read back as the box of EU. */}
             <ul class="drop-images">
@@ -228,7 +224,7 @@ export function MediaDropModal({
                   >
                     {MEDIA_KINDS.map((kind) => (
                       <option key={kind} value={kind}>
-                        {MEDIA_KIND_LABELS[kind]}
+                        {t(`media.kind.${kind}`)}
                       </option>
                     ))}
                   </select>
@@ -242,25 +238,23 @@ export function MediaDropModal({
                       })
                     }
                   >
+                    {/* A region names itself; only «every region» is a phrase. */}
                     {MEDIA_SCOPES.map((scope) => (
                       <option key={scope} value={scope}>
-                        {MEDIA_SCOPE_LABELS[scope]}
+                        {scope === GLOBAL_SCOPE ? t('media.scope.global') : scope}
                       </option>
                     ))}
                   </select>
                 </li>
               ))}
             </ul>
-            <p class="prefs-hint">
-              Se guardan en la metadata del juego y sustituyen a la carátula publicada de esa
-              región.
-            </p>
+            <p class="prefs-hint">{t('drop.images.hint')}</p>
           </section>
         )}
 
         {rest.length > 0 && (
           <section class="prefs-group">
-            <h4>{rest.length > 1 ? 'Ficheros' : 'Fichero'}</h4>
+            <h4>{rest.length > 1 ? t('drop.files.many') : t('drop.files.one')}</h4>
             <ul class="drop-files">
               {rest.map((file, at) => {
                 const offer = offers.get(file);
@@ -276,7 +270,7 @@ export function MediaDropModal({
                       <span class="drop-file-name" title={file.name}>
                         {file.name}
                       </span>
-                      <span class="drop-file-note">Va con el juego</span>
+                      <span class="drop-file-note">{t('drop.alongGame')}</span>
                       <span class="drop-file-where" title={along.path}>
                         {along.path}
                       </span>
@@ -300,12 +294,15 @@ export function MediaDropModal({
                           take(file, (event.target as HTMLSelectElement).value === 'game')
                         }
                       >
-                        <option value="copy">Tal cual</option>
-                        <option value="game">Como {offer.match.title}</option>
+                        <option value="copy">{t('drop.asIs')}</option>
+                        <option value="game">{t('drop.asGame', { title: offer.match.title })}</option>
                       </select>
                     ) : (
                       <span class="drop-file-note">
-                        {offer.match.title} ya está en {folderOf(offer.path) || 'la raíz'}
+                        {t('drop.already', {
+                          title: offer.match.title,
+                          folder: folderOf(offer.path) || t('drop.root'),
+                        })}
                       </span>
                     )}
                     <span class="drop-file-where" title={whereOf(file, offer)}>
@@ -322,10 +319,11 @@ export function MediaDropModal({
 
       <div class="modal-actions">
         <button class="btn-cancel" onClick={() => dialog.current?.close()} disabled={Boolean(busy)}>
-          Cancelar
+          {t('drop.cancel')}
         </button>
         <button class="btn-apply" onClick={confirm} disabled={Boolean(busy)}>
-          {busy ?? `Añadir ${files.length > 1 ? files.length : ''}`.trim()}
+          {busy ??
+            (files.length > 1 ? t('drop.confirmMany', { count: files.length }) : t('drop.confirm'))}
         </button>
       </div>
     </dialog>

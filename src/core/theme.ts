@@ -22,12 +22,6 @@ export const THEME_MODES: readonly ThemeMode[] = ['auto', 'light', 'dark'];
 
 export const DEFAULT_THEME_MODE: ThemeMode = 'auto';
 
-export const THEME_MODE_LABELS: Record<ThemeMode, string> = {
-  auto: 'Automático',
-  light: 'Claro',
-  dark: 'Oscuro',
-};
-
 /**
  * A stored or chosen mode, or the default when it is neither.
  *

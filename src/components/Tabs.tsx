@@ -1,5 +1,6 @@
 import { JSX } from 'preact';
 import { CloseIcon, LockIcon, PlusIcon } from './icons';
+import { t } from '../services/I18nService';
 
 export interface Origin {
   id: string;
@@ -33,7 +34,7 @@ export function Tabs({
             key={origin.id}
             class={`tab ${activeOriginId === origin.id ? 'active' : ''} ${origin.locked ? 'locked' : ''}`}
             onClick={() => onSelectOrigin?.(origin.id)}
-            title={origin.locked ? 'Click to reconnect' : undefined}
+            title={origin.locked ? t('tabs.reconnect') : undefined}
           >
             {origin.locked && (
               <span class="tab-lock">
@@ -47,14 +48,14 @@ export function Tabs({
                 e.stopPropagation();
                 onClose?.(origin.id);
               }}
-              title="Close"
+              title={t('tabs.close')}
             >
               <CloseIcon />
             </button>
           </div>
         ))}
       </div>
-      <button class="tab-add" onClick={onAddOrigin} title="Open folder">
+      <button class="tab-add" onClick={onAddOrigin} title={t('tabs.add')}>
         <PlusIcon />
       </button>
     </div>

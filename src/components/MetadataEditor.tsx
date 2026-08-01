@@ -5,6 +5,7 @@ import { RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { calculateCRC32, calculateMD5, calculateSHA1 } from '../services/ChecksumService';
 import { CheckIcon, CloseIcon, HourglassIcon, SaveIcon, SearchIcon } from './icons';
+import { t } from '../services/I18nService';
 
 interface MetadataEditorProps {
   romPath: string;
@@ -73,7 +74,7 @@ export function MetadataEditor({
       setError(null);
       await ensureChecksum();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Checksum failed');
+      setError(err instanceof Error ? err.message : t('editor.error.checksum'));
     } finally {
       setBusy(false);
     }
@@ -141,10 +142,10 @@ export function MetadataEditor({
         return;
       }
 
-      setError('No match found in datasets');
+      setError(t('editor.lookup.notFound'));
       setLookupPhase('complete');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Lookup failed');
+      setError(err instanceof Error ? err.message : t('editor.lookup.failed'));
       setLookupPhase('complete');
     } finally {
       setBusy(false);
@@ -189,7 +190,7 @@ export function MetadataEditor({
       setError(null);
       await onSave(draft);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not save the record');
+      setError(err instanceof Error ? err.message : t('editor.error.save'));
       setSaving(false);
     }
   };
@@ -198,24 +199,24 @@ export function MetadataEditor({
     if (busy && lookupPhase === 'crc32')
       return (
         <>
-          <SearchIcon /> Checking CRC32...
+          <SearchIcon /> {t('editor.lookup.crc32')}
         </>
       );
     if (busy && lookupPhase === 'md5')
       return (
         <>
-          <HourglassIcon /> Calculating MD5...
+          <HourglassIcon /> {t('editor.lookup.md5')}
         </>
       );
     if (busy && lookupPhase === 'sha1')
       return (
         <>
-          <HourglassIcon /> Calculating SHA1...
+          <HourglassIcon /> {t('editor.lookup.sha1')}
         </>
       );
     return (
       <>
-        <SearchIcon /> Lookup Dataset
+        <SearchIcon /> {t('editor.lookup.idle')}
       </>
     );
   };
@@ -231,11 +232,7 @@ export function MetadataEditor({
           onClick={handleLookup}
           disabled={busy || saving || !canChecksum}
           class="btn-lookup icon-label"
-          title={
-            canChecksum
-              ? 'Look up game info from dataset (CRC32 → MD5 → SHA1)'
-              : 'The file is too large to checksum'
-          }
+          title={canChecksum ? t('editor.lookup.hint') : t('editor.lookup.tooLarge')}
         >
           {lookupLabel()}
         </button>
@@ -247,7 +244,7 @@ export function MetadataEditor({
         <div class="lookup-modal-overlay" onClick={() => setLookupResult(null)}>
           <div class="lookup-modal" onClick={(event) => event.stopPropagation()}>
             <div class="modal-header">
-              <h3>Dataset Match Found</h3>
+              <h3>{t('editor.lookup.title')}</h3>
               <button class="modal-close" onClick={() => setLookupResult(null)}>
                 <CloseIcon />
               </button>
@@ -255,18 +252,18 @@ export function MetadataEditor({
 
             <div class="modal-content">
               <p class="match-name">
-                <strong>Match:</strong> {lookupResult.name}
+                <strong>{t('editor.lookup.match')}</strong> {lookupResult.name}
               </p>
 
               <div class="update-fields">
-                <h4>Select fields to update:</h4>
+                <h4>{t('editor.lookup.select')}</h4>
 
                 {LOOKUP_FIELDS.map((field) => {
                   const incoming =
                     field === 'title' ? lookupResult.name : (lookupResult[field] as string | undefined);
                   if (!incoming) return null;
 
-                  const current = (draft[field] as string | undefined) || '(empty)';
+                  const current = (draft[field] as string | undefined) || t('editor.lookup.empty');
 
                   return (
                     <div class="field-option" key={field}>
@@ -277,21 +274,21 @@ export function MetadataEditor({
                           onChange={() => toggleField(field)}
                         />
                         <span class="checkbox-text">
-                          <strong>{field}</strong>
+                          <strong>{t(`editor.fields.${field}`)}</strong>
                           {field === 'cover' ? (
                             <img
                               class="cover-preview"
                               src={incoming}
-                              alt={`${lookupResult.name} boxart`}
+                              alt={t('details.cover.alt', { title: lookupResult.name })}
                               loading="lazy"
                             />
                           ) : (
                             <span class="field-preview">
                               <span class="current">
-                                Current: <span class="value">{current}</span>
+                                {t('editor.lookup.current')} <span class="value">{current}</span>
                               </span>
                               <span class="new">
-                                New: <span class="value">{incoming}</span>
+                                {t('editor.lookup.incoming')} <span class="value">{incoming}</span>
                               </span>
                             </span>
                           )}
@@ -309,10 +306,10 @@ export function MetadataEditor({
                 class="btn-apply icon-label"
                 disabled={selectedFields.size === 0}
               >
-                <CheckIcon /> Apply Selected
+                <CheckIcon /> {t('editor.lookup.apply')}
               </button>
               <button onClick={() => setLookupResult(null)} class="btn-cancel icon-label">
-                <CloseIcon /> Cancel
+                <CloseIcon /> {t('editor.cancel')}
               </button>
             </div>
           </div>
@@ -321,21 +318,21 @@ export function MetadataEditor({
 
       {previewUrl && (
         <div class="form-group">
-          <label>Cover</label>
+          <label>{t('editor.fields.cover')}</label>
           <img
             class="cover-image"
             src={previewUrl}
-            alt={`${draft.title || gameNameOf(romPath)} boxart`}
+            alt={t('details.cover.alt', { title: draft.title || gameNameOf(romPath) })}
             loading="lazy"
           />
           <button class="btn-inline" onClick={() => update('cover', undefined)}>
-            Remove cover
+            {t('editor.removeCover')}
           </button>
         </div>
       )}
 
       <div class="form-group">
-        <label>Title</label>
+        <label>{t('editor.fields.title')}</label>
         <input
           type="text"
           value={draft.title || ''}
@@ -344,7 +341,7 @@ export function MetadataEditor({
       </div>
 
       <div class="form-group">
-        <label>Description</label>
+        <label>{t('editor.fields.description')}</label>
         <textarea
           rows={4}
           value={draft.description || ''}
@@ -353,7 +350,7 @@ export function MetadataEditor({
       </div>
 
       <div class="form-group">
-        <label>Release Date</label>
+        <label>{t('editor.fields.releaseDate')}</label>
         <input
           type="date"
           value={draft.releaseDate || ''}
@@ -362,7 +359,7 @@ export function MetadataEditor({
       </div>
 
       <div class="form-group">
-        <label>Publisher</label>
+        <label>{t('editor.fields.publisher')}</label>
         <input
           type="text"
           value={draft.publisher || ''}
@@ -371,12 +368,12 @@ export function MetadataEditor({
       </div>
 
       <div class="form-group">
-        <label>Region</label>
+        <label>{t('editor.fields.region')}</label>
         <select
           value={draft.region || ''}
           onChange={(event) => update('region', (event.target as HTMLSelectElement).value)}
         >
-          <option value="">Select...</option>
+          <option value="">{t('editor.select')}</option>
           {/* Keep an unknown value selectable so a lookup result is never silently dropped. */}
           {draft.region && !ROM_REGIONS.includes(draft.region) && (
             <option value={draft.region}>{draft.region}</option>
@@ -390,12 +387,12 @@ export function MetadataEditor({
       </div>
 
       <div class="form-group">
-        <label>Video Standard</label>
+        <label>{t('editor.fields.videoStandard')}</label>
         <select
           value={draft.videoStandard || ''}
           onChange={(event) => update('videoStandard', (event.target as HTMLSelectElement).value)}
         >
-          <option value="">Select...</option>
+          <option value="">{t('editor.select')}</option>
           {draft.videoStandard && !VIDEO_STANDARDS.includes(draft.videoStandard) && (
             <option value={draft.videoStandard}>{draft.videoStandard}</option>
           )}
@@ -408,18 +405,18 @@ export function MetadataEditor({
       </div>
 
       <div class="form-group">
-        <label>CRC32</label>
+        <label>{t('editor.fields.crc32')}</label>
         <div class="field-with-action">
           <input
             type="text"
             value={draft.crc32 || ''}
-            placeholder={canChecksum ? 'Not calculated' : 'File too large'}
+            placeholder={canChecksum ? t('editor.notCalculated') : t('editor.tooLarge')}
             disabled
             class="checksum-field"
           />
           {canChecksum && !draft.crc32 && (
             <button class="btn-inline" onClick={handleComputeChecksum} disabled={busy}>
-              Calculate
+              {t('editor.calculate')}
             </button>
           )}
         </div>
@@ -428,15 +425,15 @@ export function MetadataEditor({
       <div class="editor-actions">
         <button class="btn-primary icon-label" onClick={handleSave} disabled={saving}>
           {saving ? (
-            'Saving...'
+            t('editor.saving')
           ) : (
             <>
-              <SaveIcon /> Save
+              <SaveIcon /> {t('editor.save')}
             </>
           )}
         </button>
         <button class="btn-cancel" onClick={onCancel} disabled={saving}>
-          Cancel
+          {t('editor.cancel')}
         </button>
       </div>
     </div>

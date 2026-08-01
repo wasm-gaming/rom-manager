@@ -1,6 +1,7 @@
 import { JSX } from 'preact';
 import { getSystemInfo } from '../core/system-info';
 import { SystemLogo } from './SystemLogos';
+import { t } from '../services/I18nService';
 
 interface SystemDetailsProps {
   /** Selected folder path */
@@ -18,13 +19,13 @@ export function SystemDetails({ folder }: SystemDetailsProps): JSX.Element {
             <SystemLogo systemId="generic" />
           </div>
           <div class="system-heading centered">
-            <h2>{folder || 'Folder'}</h2>
-            <p class="metadata-subtitle">Directory / Collection</p>
+            <h2>{folder || t('system.folder')}</h2>
+            <p class="metadata-subtitle">{t('system.collection')}</p>
           </div>
         </div>
         <div class="facts">
           <div class="fact">
-            <span class="fact-label">Path</span>
+            <span class="fact-label">{t('system.path')}</span>
             <span class="fact-value"><code>{folder}</code></span>
           </div>
         </div>
@@ -55,18 +56,20 @@ export function SystemDetails({ folder }: SystemDetailsProps): JSX.Element {
               {info.manufacturer}
             </span>
             <span class="tag year">{info.releaseYear}</span>
-            <span class="tag media">{info.media === 'disc' ? 'Disc System' : 'Cartridge System'}</span>
+            <span class="tag media">
+              {info.media === 'disc' ? t('system.medium.disc') : t('system.medium.cartridge')}
+            </span>
           </div>
         </div>
       </div>
 
       <div class="system-description-box">
-        <h4>About this system</h4>
+        <h4>{t('system.about')}</h4>
         <p class="system-description">{info.description}</p>
       </div>
 
       <div class="system-extensions-box">
-        <h4>Habitual File Extensions</h4>
+        <h4>{t('system.extensions')}</h4>
         <div class="system-extensions-list">
           {info.commonExtensions.map((ext) => (
             <span key={ext} class="extension-pill">
@@ -78,19 +81,19 @@ export function SystemDetails({ folder }: SystemDetailsProps): JSX.Element {
 
       <div class="facts">
         <div class="fact">
-          <span class="fact-label">System Key</span>
+          <span class="fact-label">{t('system.key')}</span>
           <span class="fact-value"><code>{info.id}</code></span>
         </div>
         <div class="fact">
-          <span class="fact-label">Storage Structure</span>
+          <span class="fact-label">{t('system.structure.label')}</span>
           <span class="fact-value">
             {info.media === 'disc'
-              ? 'Game Subfolders (System/Game/Variant/...)'
-              : 'Flat System Folder (System/Game.ext)'}
+              ? t('system.structure.disc')
+              : t('system.structure.cartridge')}
           </span>
         </div>
         <div class="fact">
-          <span class="fact-label">Folder</span>
+          <span class="fact-label">{t('system.folder')}</span>
           <span class="fact-value"><code>{folder}</code></span>
         </div>
       </div>

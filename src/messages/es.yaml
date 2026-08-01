@@ -1,0 +1,388 @@
+# La interfaz, en español.
+#
+# El catálogo de referencia es `en.yaml`: lo que falte aquí se lee de allí, así
+# que una traducción a medias se ve en inglés a trozos y nunca en blanco.
+#
+# El vocabulario es el de THESAURUS.md, con estas equivalencias fijas:
+#   System → Sistema · Game → Juego · Variant → Variante
+#   Medium → Soporte (cartucho / disco) · Consolidate → Consolidar
+#   Plan → Plan · Cover Art → Carátula · DAT → DAT · Romset → Romset
+# Se usan esas palabras para esas cosas, y no sinónimos según convenga.
+
+app:
+  name: 'ROM Manager'
+  initializing: 'Arrancando…'
+
+header:
+  regions:
+    label: 'Prioridad de región'
+    preferred: 'Se prefiere la carátula de {region}'
+    prefer: 'Preferir la carátula de {region}'
+  preferences: 'Preferencias'
+
+tabs:
+  reconnect: 'Haz clic para volver a dar acceso'
+  close: 'Cerrar'
+  add: 'Abrir una carpeta'
+
+welcome:
+  tagline: 'Tu colección retro, leída donde está'
+  pitch: >-
+    ROM Manager abre una carpeta de ROMs y hace una biblioteca con ella: cada
+    fichero identificado por su checksum, cada Juego en una sola entrada con sus
+    Variantes, y su Carátula al lado. Funciona entero en el navegador, contra tu
+    propio disco.
+  open: 'Abrir carpeta'
+  opening: 'Abriendo…'
+  hint: 'No se sube nada. No se mueve nada sin enseñártelo antes.'
+
+  what:
+    title: 'Qué hace'
+    hash:
+      title: 'Identifica por checksum'
+      body: >-
+        Cada fichero se contrasta con los DAT de No-Intro y Redump por su CRC32.
+        El nombre de un fichero es lo que alguien escribió; el checksum es lo que
+        el fichero es.
+    grouping:
+      title: 'Una entrada por Juego'
+      body: >-
+        Regiones, revisiones e idiomas de un mismo título se pliegan en un solo
+        Juego, y sus Variantes se leen en el panel de detalles: cuáles tienes,
+        qué ficheros faltan y a dónde se vendió cada una.
+    covers:
+      title: 'Una carátula por región'
+      body: >-
+        Cajas de EU, US y JP sacadas de libretro-thumbnails y guardadas en la
+        biblioteca según navegas, así que siguen ahí con la red apagada. Un orden
+        de preferencia decide cuál se enseña.
+    consolidate:
+      title: 'Nada se mueve sin tu permiso'
+      body: >-
+        Consolidar un Sistema se calcula como un Plan y se te enseña entero. No
+        se renombra ni se mueve nada hasta que lo dices, y se puede deshacer justo
+        después.
+
+  how:
+    title: 'Cómo va'
+    step1:
+      title: 'Abre tu colección'
+      body: >-
+        Elige la carpeta donde viven tus Sistemas: la carpeta `games` de MiSTer,
+        o cualquiera montada igual.
+    step2:
+      title: 'Navégala por Juego'
+      body: >-
+        La carpeta de un Sistema se puede leer plana, tal cual está en disco, o
+        agrupada, con los ficheros reconocidos plegados en el Juego del que son
+        una edición.
+    step3:
+      title: 'Ordénala y complétala'
+      body: >-
+        Consolida la carpeta cuando el Plan te convenza, suelta carátulas o ROMs
+        directamente sobre el panel, y edita lo que el catálogo no sepa.
+
+  systems:
+    title: 'Sistemas que conoce'
+    hint: '{count} Sistemas, cada uno identificado por el nombre de carpeta que le da MiSTer.'
+
+  privacy:
+    title: 'No sale de tu máquina'
+    body: >-
+      Las carpetas se leen con la File System Access API, que te pide permiso
+      para una carpeta y se lo da sólo a esta pestaña. No hay servidor ni subida
+      de nada. Soporte real sólo hay en navegadores Chromium.
+
+library:
+  locked:
+    title: 'Carpeta recordada: {name}'
+    open: 'Abrir «{name}»'
+  opening: 'Abriendo…'
+
+tree:
+  title: 'Ficheros'
+  newFolder: 'Nueva carpeta dentro de la seleccionada'
+  addFiles: 'Añadir ficheros a la carpeta seleccionada'
+  delete: 'Borrar lo seleccionado'
+  expand: 'Desplegar'
+  collapse: 'Plegar'
+  initialized: 'Tiene metadatos en la biblioteca'
+  groupOn: 'Ver esta carpeta tal cual está en disco'
+  groupOff: 'Agrupar esta carpeta por Juego'
+  consolidate: 'Renombrar y ordenar esta carpeta según el catálogo'
+  empty: 'Carpeta vacía'
+  reading: 'Leyendo juegos…'
+  status:
+    complete: 'Están todos los ficheros'
+    partial: 'Faltan ficheros'
+    missing: 'No está en esta carpeta'
+  prompt:
+    folderName: 'Nombre de la carpeta nueva'
+  confirm:
+    delete: '¿Borrar {count} elemento(s)? Esto no se puede deshacer.'
+  error:
+    separator: 'El nombre de una carpeta no puede llevar separadores de ruta'
+    read: 'No se ha podido leer la carpeta'
+    operation: 'La operación ha fallado'
+    drag: 'No se ha podido leer lo que se arrastró'
+
+details:
+  empty: 'Elige una ROM para leer sus detalles'
+  back: 'Volver al Juego'
+  cover:
+    none: 'Sin carátula'
+    region: 'Caja de {region}'
+    game: 'Caja del Juego'
+    alt: 'Carátula de {title}'
+  facts:
+    system: 'Sistema'
+    format: 'Formato'
+    size: 'Tamaño'
+    modified: 'Modificado'
+    added: 'Añadido a la biblioteca'
+    file: 'Fichero'
+    publisher: 'Editora'
+    crc32: 'CRC32'
+    updated: 'Actualizado'
+    notInitialized: 'No está en la biblioteca'
+    noExtension: 'sin extensión'
+  file:
+    pending: 'Todavía no está en la biblioteca'
+    add: 'Añadir metadatos'
+  edit: 'Editar'
+  checksum:
+    calculate: 'Calcular'
+    calculating: 'Calculando…'
+    skipped: 'No se calcula — pasa de {limit}'
+    failed: 'No se ha podido calcular el checksum'
+  variants:
+    title: 'Variantes'
+    files: '{count} ficheros'
+    missingFile: 'falta'
+    more: 'otras {count} que el catálogo conoce'
+    shipsTo: 'Se vendió en {region}'
+    runsAt: 'Funciona a {standard}'
+    consolidate: 'Renombrar y ordenar según el catálogo'
+  status:
+    complete: 'Completa'
+    partial: 'Incompleta'
+    missing: 'No está en esta carpeta'
+  selection:
+    title: '{count} ROMs seleccionadas'
+    ready: 'Todas están en la biblioteca'
+    pending: '{count} de ellas todavía no están en la biblioteca'
+    edit: 'Editar {count}'
+    gate: 'Todas las ROMs seleccionadas tienen que estar en la biblioteca para editarlas en lote'
+    hint: 'Editar los campos que comparten todos los Juegos seleccionados'
+  batch:
+    title: 'Editando {count} Juegos'
+    subtitle: 'Sólo se pueden cambiar los campos que comparten todos los Juegos'
+    keep: 'Dejar como está ({value})'
+    mixed: 'mezclado'
+    apply: 'Aplicar a {count} Juegos'
+    saving: 'Guardando…'
+    error: 'No se han podido guardar las fichas'
+
+editor:
+  lookup:
+    idle: 'Buscar en el dataset'
+    crc32: 'Comprobando CRC32…'
+    md5: 'Calculando MD5…'
+    sha1: 'Calculando SHA1…'
+    hint: 'Buscar el Juego en el dataset (CRC32 → MD5 → SHA1)'
+    tooLarge: 'El fichero es demasiado grande para calcularle el checksum'
+    title: 'Encontrado en el dataset'
+    match: 'Coincide con:'
+    select: 'Campos que actualizar:'
+    current: 'Ahora:'
+    incoming: 'Nuevo:'
+    empty: '(vacío)'
+    apply: 'Aplicar los marcados'
+    notFound: 'Ningún dataset tiene este fichero'
+    failed: 'La búsqueda ha fallado'
+  fields:
+    cover: 'Carátula'
+    title: 'Título'
+    description: 'Descripción'
+    releaseDate: 'Fecha de salida'
+    publisher: 'Editora'
+    region: 'Región'
+    videoStandard: 'Estándar de vídeo'
+    crc32: 'CRC32'
+  select: 'Elige…'
+  removeCover: 'Quitar la carátula'
+  notCalculated: 'Sin calcular'
+  tooLarge: 'Fichero demasiado grande'
+  calculate: 'Calcular'
+  save: 'Guardar'
+  saving: 'Guardando…'
+  cancel: 'Cancelar'
+  error:
+    save: 'No se ha podido guardar la ficha'
+    checksum: 'No se ha podido calcular el checksum'
+
+drop:
+  label: 'Añadir ficheros'
+  toGame: 'Añadir a {title}'
+  toFolder: 'Añadir a {folder}'
+  root: 'la raíz'
+  images:
+    one: 'Imagen'
+    many: 'Imágenes'
+    hint: >-
+      Se guardan en los metadatos del Juego y sustituyen a la carátula publicada
+      de esa región.
+  files:
+    one: 'Fichero'
+    many: 'Ficheros'
+  asIs: 'Tal cual'
+  asGame: 'Como {title}'
+  alongGame: 'Va con el Juego'
+  already: '{title} ya está en {folder}'
+  andMore: '{path} · y {count} más'
+  hint:
+    plain: 'Se copian tal cual a {folder}.'
+    intake: >-
+      Tal cual van a {folder}. Como Juego, cada uno va donde lo pone el catálogo,
+      creando la carpeta si no existe, y lo que salga de un archivo se descomprime
+      y se comprueba que sea lo que el archivo decía.
+  cancel: 'Cancelar'
+  confirm: 'Añadir'
+  confirmMany: 'Añadir {count}'
+
+intake:
+  label: 'Añadir Juegos a la biblioteca'
+  toSystem: 'Añadir a {system}'
+  toLibrary: 'Añadir a la biblioteca'
+  games:
+    one: 'Juego'
+    many: 'Juegos ({count})'
+    hint: >-
+      La carpeta se crea si no existe. Lo que salga de un archivo se descomprime
+      y se comprueba que sea lo que el archivo decía.
+  taken: 'Ya está en {path}'
+  from: 'de {archive}'
+  companions:
+    one: 'Fichero que va con él'
+    many: 'Ficheros que van con él'
+    already: '{name} (ya está ahí)'
+    hint: 'No están en ningún catálogo, así que se copian junto al Juego.'
+  strays:
+    title: 'Sin reconocer'
+    hint: >-
+      Ningún catálogo los reclama, así que no se copian: elige una carpeta en el
+      árbol para meterlos tal cual.
+  refused:
+    title: 'No se pueden abrir'
+    zip64: 'el archivo usa Zip64, que esta versión no sabe leer'
+    encrypted: 'está cifrado'
+    method: 'usa una compresión que esta versión no sabe leer'
+    damaged: 'no se ha podido leer su índice'
+  cancel: 'Cancelar'
+  confirm: 'Añadir'
+  confirmMany: 'Añadir {count}'
+
+organize:
+  title: 'Consolidar {system}'
+  done: '{system} consolidado'
+  # Va detrás del número, que está en negrita y por eso queda fuera de la frase.
+  moving: 'por mover'
+  settled: 'ya en su sitio'
+  markers: 'Juegos marcados'
+  conflicts: 'sin tocar'
+  untouched: 'No se tocan'
+  reason:
+    duplicateTarget: 'otro fichero reclama el mismo nombre'
+    targetTaken: 'el nombre de destino ya está ocupado'
+    swap: 'varios ficheros se reclaman el sitio entre sí'
+  moved: 'Movidos'
+  willMove: 'Se moverán'
+  more: 'y {count} más'
+  settledAll: 'Todo está donde el catálogo dice que debe estar.'
+  undo: 'Deshacer'
+  close: 'Hecho'
+  cancel: 'Cancelar'
+  confirm: 'Mover {count} ficheros'
+  busy:
+    reading: 'Leyendo {system}…'
+    readingProgress: 'Leyendo {system}: {done} de {total}'
+    moving: 'Moviendo ficheros…'
+    movingProgress: 'Moviendo ficheros: {done} de {total}'
+    undoing: 'Devolviendo los ficheros a su sitio…'
+
+system:
+  folder: 'Carpeta'
+  collection: 'Carpeta / Colección'
+  path: 'Ruta'
+  about: 'Sobre este Sistema'
+  extensions: 'Extensiones habituales'
+  key: 'Clave del Sistema'
+  medium:
+    disc: 'Sistema de disco'
+    cartridge: 'Sistema de cartucho'
+  structure:
+    label: 'Estructura en disco'
+    disc: 'Una carpeta por Juego y una subcarpeta por Variante'
+    cartridge: 'Carpeta de Sistema plana (Sistema/Juego.ext)'
+
+media:
+  kind:
+    case: 'Carátula'
+    background: 'Fondo'
+    title: 'Pantalla de título'
+    snap: 'Captura'
+    logo: 'Logo'
+  scope:
+    global: 'Todas las regiones'
+
+prefs:
+  title: 'Preferencias'
+  close: 'Cerrar'
+  theme:
+    title: 'Tema'
+    hint: 'Automático sigue al sistema.'
+    auto: 'Automático'
+    light: 'Claro'
+    dark: 'Oscuro'
+  locale:
+    title: 'Idioma'
+    hint: 'Automático sigue al navegador.'
+    auto: 'Automático'
+  regions:
+    title: 'Prioridad de región'
+    hint: 'Orden en que se prefieren las carátulas. Se guarda en la biblioteca abierta.'
+    locked: 'Abre una carpeta para elegirlo: se guarda en la biblioteca.'
+
+errors:
+  openFolder: 'No se ha podido abrir la carpeta'
+  deniedFolder: 'Acceso denegado a la carpeta. Haz clic de nuevo para volver a pedirlo.'
+  savedFolder: 'No se ha podido abrir la carpeta guardada'
+  readSelection: 'No se ha podido leer la selección'
+  group: 'No se ha podido agrupar {path}'
+  viewMode: 'No se ha podido guardar el modo de vista'
+  regionOrder: 'No se ha podido guardar el orden de regiones'
+  plan: 'No se ha podido planear {system}'
+  organize: 'No se han podido mover los ficheros'
+  undo: 'No se ha podido deshacer'
+  identify: 'No se han podido identificar los ficheros'
+  writeFiles: 'No se han podido guardar los ficheros'
+  copyFiles: 'No se han podido copiar los ficheros'
+  noGame: >-
+    No se ha reconocido ningún Juego: elige uno para añadirle imágenes, o una
+    carpeta para copiar los ficheros dentro tal cual.
+  catalogue: >-
+    No se ha podido consultar el catálogo, así que sólo se pueden copiar tal
+    cual: {reason}
+  unknown: 'error desconocido'
+
+progress:
+  reading: 'Leyendo {path}: {done} de {total}'
+  identifying: 'Identificando {file}…'
+  identifyingMany: 'Identificando {count} ficheros…'
+  identifyingFile: 'Identificando {file}: {percent}%'
+  identifyingFileOf: 'Identificando {file}: {percent}% ({done} de {total})'
+  saving: 'Guardando {file}…'
+  copying: 'Copiando {file}…'
+  copyingOf: 'Copiando {file} ({done} de {total})…'
+  adding: 'Añadiendo {file}…'
+  addingOf: 'Añadiendo {file} ({done} de {total})…'

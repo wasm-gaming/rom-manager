@@ -3,6 +3,7 @@ import { CloseIcon } from './icons';
 import { useEffect, useRef } from 'preact/hooks';
 import type { ZipRefusal } from '../core/zip-directory';
 import { isPlaced, type IntakeItem } from '../services/RomIntakeService';
+import { t } from '../services/I18nService';
 
 interface RomIntakeModalProps {
   items: IntakeItem[];
@@ -14,11 +15,11 @@ interface RomIntakeModalProps {
 }
 
 /** Why something that was dropped is not on the table, in so many words. */
-const REFUSALS: Record<ZipRefusal, string> = {
-  zip64: 'el archivo usa Zip64, que esta versión no sabe leer',
-  encrypted: 'está cifrado',
-  method: 'usa una compresión que esta versión no sabe leer',
-  damaged: 'no se ha podido leer su índice',
+const REFUSAL_KEYS: Record<ZipRefusal, string> = {
+  zip64: 'intake.refused.zip64',
+  encrypted: 'intake.refused.encrypted',
+  method: 'intake.refused.method',
+  damaged: 'intake.refused.damaged',
 };
 
 /**
@@ -58,14 +59,18 @@ export function RomIntakeModal({
     <dialog
       ref={dialog}
       class="modal-dialog drop-dialog"
-      aria-label="Añadir juegos a la biblioteca"
+      aria-label={t('intake.label')}
       onClose={onCancel}
       onClick={(event) => {
         if (event.target === dialog.current && !busy) dialog.current?.close();
       }}
     >
       <header class="modal-header">
-        <h3>{systems.size === 1 ? `Añadir a ${[...systems][0]}` : 'Añadir a la biblioteca'}</h3>
+        <h3>
+          {systems.size === 1
+            ? t('intake.toSystem', { system: [...systems][0] })
+            : t('intake.toLibrary')}
+        </h3>
         <button class="modal-close" onClick={() => dialog.current?.close()} disabled={Boolean(busy)}>
           <CloseIcon />
         </button>
@@ -76,67 +81,69 @@ export function RomIntakeModal({
 
         {games.length > 0 && (
           <section class="prefs-group">
-            <h4>{games.length > 1 ? `Juegos (${games.length})` : 'Juego'}</h4>
+            <h4>
+              {games.length > 1 ? t('intake.games.many', { count: games.length }) : t('intake.games.one')}
+            </h4>
             <ul class="intake-list">
               {games.map((item, at) => (
                 <li key={`${at}:${item.name}`} class={`intake-item ${item.taken ? 'taken' : ''}`}>
                   <span class="intake-title">{item.match!.title}</span>
                   <span class="intake-where">
                     {item.match!.system} · {item.match!.variant}
-                    {item.archive && <span class="intake-archive">de {item.archive}</span>}
+                    {item.archive && (
+                      <span class="intake-archive">{t('intake.from', { archive: item.archive })}</span>
+                    )}
                   </span>
                   <span class="intake-path" title={item.path}>
-                    {item.taken ? `Ya está en ${item.path}` : item.path}
+                    {item.taken ? t('intake.taken', { path: item.path ?? '' }) : item.path}
                   </span>
                 </li>
               ))}
             </ul>
-            <p class="prefs-hint">
-              La carpeta se crea si no existe. Lo que sale de un archivo se descomprime, y se
-              comprueba que sea lo que el archivo decía.
-            </p>
+            <p class="prefs-hint">{t('intake.games.hint')}</p>
           </section>
         )}
 
         {companions.length > 0 && (
           <section class="prefs-group">
-            <h4>{companions.length > 1 ? 'Ficheros que van con él' : 'Fichero que va con él'}</h4>
+            <h4>
+              {companions.length > 1 ? t('intake.companions.many') : t('intake.companions.one')}
+            </h4>
             <ul class="drop-files">
               {companions.map((item, at) => (
                 <li key={`${at}:${item.name}`} class={item.taken ? 'taken' : ''}>
-                  {item.taken ? `${item.name} (ya está ahí)` : item.name}
+                  {item.taken ? t('intake.companions.already', { name: item.name }) : item.name}
                 </li>
               ))}
             </ul>
-            <p class="prefs-hint">No están en el catálogo, así que se copian junto al juego.</p>
+            <p class="prefs-hint">{t('intake.companions.hint')}</p>
           </section>
         )}
 
         {strays.length > 0 && (
           <section class="prefs-group">
-            <h4>Sin reconocer</h4>
+            <h4>{t('intake.strays.title')}</h4>
             <ul class="drop-files">
               {strays.map((item, at) => (
                 <li key={`${at}:${item.name}`}>
                   {item.name}
-                  {item.archive && <small class="intake-archive">de {item.archive}</small>}
+                  {item.archive && (
+                    <small class="intake-archive">{t('intake.from', { archive: item.archive })}</small>
+                  )}
                 </li>
               ))}
             </ul>
-            <p class="prefs-hint">
-              Ningún catálogo los reclama, así que no se copian: elige una carpeta en el árbol para
-              meterlos tal cual.
-            </p>
+            <p class="prefs-hint">{t('intake.strays.hint')}</p>
           </section>
         )}
 
         {refused.length > 0 && (
           <section class="prefs-group">
-            <h4>No se pueden abrir</h4>
+            <h4>{t('intake.refused.title')}</h4>
             <ul class="drop-files">
               {refused.map((item, at) => (
                 <li key={`${at}:${item.name}`}>
-                  {item.name} — {REFUSALS[item.refused!]}
+                  {item.name} — {t(REFUSAL_KEYS[item.refused!])}
                 </li>
               ))}
             </ul>
@@ -146,10 +153,10 @@ export function RomIntakeModal({
 
       <div class="modal-actions">
         <button class="btn-cancel" onClick={() => dialog.current?.close()} disabled={Boolean(busy)}>
-          Cancelar
+          {t('intake.cancel')}
         </button>
         <button class="btn-apply" onClick={onConfirm} disabled={Boolean(busy) || adding === 0}>
-          {busy ?? `Añadir ${adding > 1 ? adding : ''}`.trim()}
+          {busy ?? (adding > 1 ? t('intake.confirmMany', { count: adding }) : t('intake.confirm'))}
         </button>
       </div>
     </dialog>

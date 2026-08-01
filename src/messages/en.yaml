@@ -1,0 +1,389 @@
+# The interface, in English.
+#
+# This is the reference catalogue: it holds every key, and a key another
+# language is missing falls back to what is written here. Adding a string means
+# adding it to this file first.
+#
+# The vocabulary is THESAURUS.md's — System, Game, Variant, Medium, Consolidate,
+# Intake, Plan, DAT, Cover Art — and the words it defines are used for the
+# things it defines them for, here and in every translation.
+#
+# Placeholders are named, `{like_this}`, so a translation is free to put them
+# wherever its own grammar wants them.
+
+app:
+  name: 'ROM Manager'
+  initializing: 'Starting…'
+
+header:
+  regions:
+    label: 'Region priority'
+    preferred: 'The {region} cover art is preferred'
+    prefer: 'Prefer the {region} cover art'
+  preferences: 'Preferences'
+
+tabs:
+  reconnect: 'Click to grant access again'
+  close: 'Close'
+  add: 'Open a folder'
+
+welcome:
+  tagline: 'Your retro collection, read where it lives'
+  pitch: >-
+    ROM Manager opens a folder of ROMs and makes a library of it: every file
+    identified by its checksum, every Game shown as one entry with its Variants,
+    and its Cover Art alongside. It runs entirely in the browser, against your
+    own disk.
+  open: 'Open folder'
+  opening: 'Opening…'
+  hint: 'Nothing is uploaded. Nothing is moved without showing you first.'
+
+  what:
+    title: 'What it does'
+    hash:
+      title: 'Identified by checksum'
+      body: >-
+        Every file is matched against the No-Intro and Redump DATs by its CRC32.
+        A file name is what somebody typed; a checksum is what the file is.
+    grouping:
+      title: 'One entry per Game'
+      body: >-
+        Regions, revisions and languages of the same title fold into a single
+        Game, and its Variants are read in the details pane — which of them you
+        have, which files are missing, and where each one ships.
+    covers:
+      title: 'Cover Art per region'
+      body: >-
+        Boxes for EU, US and JP, taken from libretro-thumbnails and kept in the
+        library as you browse, so they stay there with the network off. A
+        preference order decides which one is shown.
+    consolidate:
+      title: 'Moves you approve first'
+      body: >-
+        Consolidating a System is worked out as a Plan and shown to you whole.
+        Nothing is renamed or moved until you say so, and it can be undone right
+        afterwards.
+
+  how:
+    title: 'How it goes'
+    step1:
+      title: 'Open your collection'
+      body: >-
+        Pick the folder your Systems live in — the MiSTer `games` folder, or
+        anything laid out like it.
+    step2:
+      title: 'Browse it by Game'
+      body: >-
+        A System folder can be read flat, as it is on disk, or grouped, with the
+        recognised files folded into the Game they are releases of.
+    step3:
+      title: 'Tidy it up and fill it in'
+      body: >-
+        Consolidate the folder when the Plan convinces you, drop covers or ROMs
+        straight onto the pane, and edit what the catalogue does not know.
+
+  systems:
+    title: 'Systems it knows'
+    hint: '{count} Systems, each one identified by the folder name MiSTer gives it.'
+
+  privacy:
+    title: 'It never leaves your machine'
+    body: >-
+      Folders are read through the File System Access API, which asks your
+      permission for one folder and grants it to this tab alone. There is no
+      backend and no upload. Real support only exists in Chromium browsers.
+
+library:
+  locked:
+    title: 'Folder remembered: {name}'
+    open: 'Open «{name}»'
+  opening: 'Opening…'
+
+tree:
+  title: 'Files'
+  newFolder: 'New folder inside the selected one'
+  addFiles: 'Add files to the selected folder'
+  delete: 'Delete what is selected'
+  expand: 'Expand'
+  collapse: 'Collapse'
+  initialized: 'Has library metadata'
+  groupOn: 'Browse this folder as it is on disk'
+  groupOff: 'Group this folder by Game'
+  consolidate: 'Rename and sort this folder to match the catalogue'
+  empty: 'Empty folder'
+  reading: 'Reading games…'
+  status:
+    complete: 'Every file is here'
+    partial: 'Some files are missing'
+    missing: 'Not in this folder'
+  prompt:
+    folderName: 'Name of the new folder'
+  confirm:
+    delete: 'Delete {count} item(s)? This cannot be undone.'
+  error:
+    separator: 'A folder name cannot contain path separators'
+    read: 'The folder could not be read'
+    operation: 'The operation failed'
+    drag: 'What was dragged could not be read'
+
+details:
+  empty: 'Pick a ROM to read its details'
+  back: 'Back to the Game'
+  cover:
+    none: 'No cover'
+    region: '{region} box'
+    game: 'Box of the Game'
+    alt: '{title} cover art'
+  facts:
+    system: 'System'
+    format: 'Format'
+    size: 'Size'
+    modified: 'Modified'
+    added: 'Added to the library'
+    file: 'File'
+    publisher: 'Publisher'
+    crc32: 'CRC32'
+    updated: 'Updated'
+    notInitialized: 'Not in the library'
+    noExtension: 'no extension'
+  file:
+    pending: 'Not in the library yet'
+    add: 'Add metadata'
+  edit: 'Edit'
+  checksum:
+    calculate: 'Calculate'
+    calculating: 'Calculating…'
+    skipped: 'Skipped — over {limit}'
+    failed: 'The checksum could not be calculated'
+  variants:
+    title: 'Variants'
+    files: '{count} files'
+    missingFile: 'missing'
+    more: '{count} more the catalogue knows of'
+    shipsTo: 'Ships to {region}'
+    runsAt: 'Runs at {standard}'
+    consolidate: 'Rename and sort to match the catalogue'
+  status:
+    complete: 'Complete'
+    partial: 'Incomplete'
+    missing: 'Not in this folder'
+  selection:
+    title: '{count} ROMs selected'
+    ready: 'All of them are in the library'
+    pending: '{count} of them are not in the library yet'
+    edit: 'Edit {count}'
+    gate: 'Every selected ROM has to be in the library before editing in batch'
+    hint: 'Edit the fields every selected Game shares'
+  batch:
+    title: 'Editing {count} Games'
+    subtitle: 'Only the fields every Game shares can be changed'
+    keep: 'Keep as it is ({value})'
+    mixed: 'mixed'
+    apply: 'Apply to {count} Games'
+    saving: 'Saving…'
+    error: 'The records could not be saved'
+
+editor:
+  lookup:
+    idle: 'Look up in the dataset'
+    crc32: 'Checking CRC32…'
+    md5: 'Calculating MD5…'
+    sha1: 'Calculating SHA1…'
+    hint: 'Look the Game up in the dataset (CRC32 → MD5 → SHA1)'
+    tooLarge: 'The file is too large to checksum'
+    title: 'Found in the dataset'
+    match: 'Match:'
+    select: 'Fields to update:'
+    current: 'Now:'
+    incoming: 'New:'
+    empty: '(empty)'
+    apply: 'Apply the ones ticked'
+    notFound: 'No dataset has this file'
+    failed: 'The lookup failed'
+  fields:
+    cover: 'Cover Art'
+    title: 'Title'
+    description: 'Description'
+    releaseDate: 'Release date'
+    publisher: 'Publisher'
+    region: 'Region'
+    videoStandard: 'Video standard'
+    crc32: 'CRC32'
+  select: 'Choose…'
+  removeCover: 'Remove the cover'
+  notCalculated: 'Not calculated'
+  tooLarge: 'File too large'
+  calculate: 'Calculate'
+  save: 'Save'
+  saving: 'Saving…'
+  cancel: 'Cancel'
+  error:
+    save: 'The record could not be saved'
+    checksum: 'The checksum could not be calculated'
+
+drop:
+  label: 'Add files'
+  toGame: 'Add to {title}'
+  toFolder: 'Add to {folder}'
+  root: 'the root'
+  images:
+    one: 'Image'
+    many: 'Images'
+    hint: >-
+      They are kept in the metadata of the Game and take the place of the
+      published cover for that region.
+  files:
+    one: 'File'
+    many: 'Files'
+  asIs: 'As it is'
+  asGame: 'As {title}'
+  alongGame: 'Goes with the Game'
+  already: '{title} is already in {folder}'
+  andMore: '{path} · and {count} more'
+  hint:
+    plain: 'They are copied as they are into {folder}.'
+    intake: >-
+      As they are, they go into {folder}. As a Game, each one goes where the
+      catalogue puts it, creating the folder if it is not there, and whatever
+      comes out of an archive is unpacked and checked against what the archive
+      claimed.
+  cancel: 'Cancel'
+  confirm: 'Add'
+  confirmMany: 'Add {count}'
+
+intake:
+  label: 'Add Games to the library'
+  toSystem: 'Add to {system}'
+  toLibrary: 'Add to the library'
+  games:
+    one: 'Game'
+    many: 'Games ({count})'
+    hint: >-
+      The folder is created if it is not there. Whatever comes out of an archive
+      is unpacked and checked against what the archive claimed.
+  taken: 'Already in {path}'
+  from: 'from {archive}'
+  companions:
+    one: 'File that goes with it'
+    many: 'Files that go with it'
+    already: '{name} (already there)'
+    hint: 'No catalogue claims them, so they are copied next to the Game.'
+  strays:
+    title: 'Not recognised'
+    hint: >-
+      No catalogue claims them, so they are not copied: pick a folder in the
+      tree to put them there as they are.
+  refused:
+    title: 'Cannot be opened'
+    zip64: 'the archive uses Zip64, which this version cannot read'
+    encrypted: 'it is encrypted'
+    method: 'it uses a compression this version cannot read'
+    damaged: 'its index could not be read'
+  cancel: 'Cancel'
+  confirm: 'Add'
+  confirmMany: 'Add {count}'
+
+organize:
+  title: 'Consolidate {system}'
+  done: '{system} consolidated'
+  # Said after the number, which is bold and therefore kept out of the sentence.
+  moving: 'to move'
+  settled: 'already in place'
+  markers: 'Games marked'
+  conflicts: 'left alone'
+  untouched: 'Left alone'
+  reason:
+    duplicateTarget: 'another file claims the same name'
+    targetTaken: 'the destination name is already taken'
+    swap: 'several files claim each other''s place'
+  moved: 'Moved'
+  willMove: 'To be moved'
+  more: 'and {count} more'
+  settledAll: 'Everything is where the catalogue says it should be.'
+  undo: 'Undo'
+  close: 'Done'
+  cancel: 'Cancel'
+  confirm: 'Move {count} files'
+  busy:
+    reading: 'Reading {system}…'
+    readingProgress: 'Reading {system}: {done} of {total}'
+    moving: 'Moving files…'
+    movingProgress: 'Moving files: {done} of {total}'
+    undoing: 'Putting the files back…'
+
+system:
+  folder: 'Folder'
+  collection: 'Folder / Collection'
+  path: 'Path'
+  about: 'About this System'
+  extensions: 'Usual file extensions'
+  key: 'System key'
+  medium:
+    disc: 'Disc System'
+    cartridge: 'Cartridge System'
+  structure:
+    label: 'On-disk structure'
+    disc: 'A folder per Game and a subfolder per Variant'
+    cartridge: 'Flat System folder (System/Game.ext)'
+
+media:
+  kind:
+    case: 'Cover Art'
+    background: 'Background'
+    title: 'Title screen'
+    snap: 'Screenshot'
+    logo: 'Logo'
+  scope:
+    global: 'Every region'
+
+prefs:
+  title: 'Preferences'
+  close: 'Close'
+  theme:
+    title: 'Theme'
+    hint: 'Automatic follows the system.'
+    auto: 'Automatic'
+    light: 'Light'
+    dark: 'Dark'
+  locale:
+    title: 'Language'
+    hint: 'Automatic follows the browser.'
+    auto: 'Automatic'
+  regions:
+    title: 'Region priority'
+    hint: 'The order cover art is preferred in. It is kept in the open library.'
+    locked: 'Open a folder to choose it: it is kept in the library.'
+
+errors:
+  openFolder: 'The folder could not be opened'
+  deniedFolder: 'Access to the folder was refused. Click again to ask for it once more.'
+  savedFolder: 'The remembered folder could not be opened'
+  readSelection: 'The selection could not be read'
+  group: '{path} could not be grouped'
+  viewMode: 'The view mode could not be saved'
+  regionOrder: 'The region order could not be saved'
+  plan: '{system} could not be planned'
+  organize: 'The files could not be moved'
+  undo: 'The move could not be undone'
+  identify: 'The files could not be identified'
+  writeFiles: 'The files could not be saved'
+  copyFiles: 'The files could not be copied'
+  noGame: >-
+    No Game was recognised: pick one to add images to it, or a folder to copy
+    the files into as they are.
+  catalogue: >-
+    The catalogue could not be reached, so they can only be copied as they are:
+    {reason}
+  unknown: 'unknown error'
+
+progress:
+  reading: 'Reading {path}: {done} of {total}'
+  identifying: 'Identifying {file}…'
+  identifyingMany: 'Identifying {count} files…'
+  identifyingFile: 'Identifying {file}: {percent}%'
+  identifyingFileOf: 'Identifying {file}: {percent}% ({done} of {total})'
+  saving: 'Saving {file}…'
+  copying: 'Copying {file}…'
+  copyingOf: 'Copying {file} ({done} of {total})…'
+  adding: 'Adding {file}…'
+  addingOf: 'Adding {file} ({done} of {total})…'

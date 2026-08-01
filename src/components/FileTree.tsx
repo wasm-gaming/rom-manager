@@ -4,6 +4,7 @@ import { StorageEntry, StorageNode } from '../services/StorageService';
 import type { MatchStatus } from '../core/rom-matching';
 import type { WizardGame, WizardNode } from '../core/wizard-tree';
 import { isHiddenName } from '../core/file-types';
+import { t } from '../services/I18nService';
 import {
   BundleIcon,
   ChevronIcon,
@@ -77,10 +78,10 @@ function RowIcon({ row }: { row: VisibleRow }): JSX.Element {
   return <Icon />;
 }
 
-const STATUS_TITLES = {
-  complete: 'Every file is here',
-  partial: 'Some files are missing',
-  missing: 'Not in this folder',
+const STATUS_KEYS = {
+  complete: 'tree.status.complete',
+  partial: 'tree.status.partial',
+  missing: 'tree.status.missing',
 } as const;
 
 /**
@@ -189,7 +190,7 @@ export function FileTree({
 
   useEffect(() => {
     loadDirectory(ROOT).catch((err) =>
-      setError(err instanceof Error ? err.message : 'Failed to read folder'),
+      setError(err instanceof Error ? err.message : t('tree.error.read')),
     );
   }, [loadDirectory]);
 
@@ -220,7 +221,7 @@ export function FileTree({
       setError(undefined);
       await operation();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Operation failed');
+      setError(err instanceof Error ? err.message : t('tree.error.operation'));
     } finally {
       setBusy(false);
     }
@@ -263,7 +264,7 @@ export function FileTree({
           result.push({
             key: `${path}/…`,
             depth,
-            label: 'Reading games…',
+            label: t('tree.reading'),
             kind: 'pending',
             paths: [],
             expandable: false,
@@ -559,11 +560,11 @@ export function FileTree({
 
   const handleCreateFolder = () => {
     const directory = targetDirectory();
-    const name = window.prompt('New folder name');
+    const name = window.prompt(t('tree.prompt.folderName'));
     if (!name) return;
 
     if (/[/\\]/.test(name) || name === '.' || name === '..') {
-      setError('A folder name cannot contain path separators');
+      setError(t('tree.error.separator'));
       return;
     }
 
@@ -590,7 +591,7 @@ export function FileTree({
     const paths = Array.from(selection);
     if (paths.length === 0) return;
 
-    if (!window.confirm(`Delete ${paths.length} item(s)? This cannot be undone.`)) return;
+    if (!window.confirm(t('tree.confirm.delete', { count: paths.length }))) return;
 
     void run(async () => {
       for (const path of paths) await node.remove(path);
@@ -665,33 +666,29 @@ export function FileTree({
     try {
       void moveInto(directory, parseDraggedPaths(payload));
     } catch {
-      setError('Could not read the dragged items');
+      setError(t('tree.error.drag'));
     }
   };
 
   return (
     <div class="file-tree">
       <div class="file-tree-header">
-        <h3>Files</h3>
+        <h3>{t('tree.title')}</h3>
         <div class="file-tree-actions">
-          <button
-            onClick={handleCreateFolder}
-            disabled={busy}
-            title="New folder in the selected folder"
-          >
+          <button onClick={handleCreateFolder} disabled={busy} title={t('tree.newFolder')}>
             <FolderPlusIcon />
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={busy}
-            title="Add files to the selected folder"
+            title={t('tree.addFiles')}
           >
             <PlusIcon />
           </button>
           <button
             onClick={handleDeleteSelected}
             disabled={busy || selection.size === 0}
-            title="Delete selected"
+            title={t('tree.delete')}
           >
             <TrashIcon />
           </button>
@@ -756,7 +753,7 @@ export function FileTree({
                   event.stopPropagation();
                   void toggleDirectory(row.path!);
                 }}
-                title={expanded.has(row.key) ? 'Collapse' : 'Expand'}
+                title={expanded.has(row.key) ? t('tree.collapse') : t('tree.expand')}
               >
                 <ChevronIcon open={expanded.has(row.key)} />
               </button>
@@ -769,13 +766,13 @@ export function FileTree({
             <span class="tree-name">{row.label}</span>
 
             {row.status && row.status !== 'complete' && (
-              <span class="tree-status" title={STATUS_TITLES[row.status]}>
+              <span class="tree-status" title={t(STATUS_KEYS[row.status])}>
                 <StatusIcon status={row.status} />
               </span>
             )}
 
             {row.kind !== 'directory' && row.paths.some((path) => isInitialized?.(path)) && (
-              <span class="tree-badge" title="Has library metadata">
+              <span class="tree-badge" title={t('tree.initialized')}>
                 <DotIcon />
               </span>
             )}
@@ -787,9 +784,7 @@ export function FileTree({
                   event.stopPropagation();
                   onToggleGrouping?.(row.path!);
                 }}
-                title={
-                  isGrouped?.(row.path!) ? 'Browse this folder as it is' : 'Group this folder by game'
-                }
+                title={isGrouped?.(row.path!) ? t('tree.groupOn') : t('tree.groupOff')}
               >
                 <GroupIcon />
               </button>
@@ -802,7 +797,7 @@ export function FileTree({
                   event.stopPropagation();
                   onOrganize(row.path!);
                 }}
-                title="Rename and sort this folder to match the catalogue"
+                title={t('tree.consolidate')}
               >
                 <OrganizeIcon />
               </button>
@@ -813,7 +808,7 @@ export function FileTree({
         {/* Only once the root has actually been read: an empty tree is what a
             folder still being listed looks like too, and saying it is empty
             before knowing is a claim the next paint takes back. */}
-        {rows.length === 0 && children.has(ROOT) && <li class="tree-empty">Empty folder</li>}
+        {rows.length === 0 && children.has(ROOT) && <li class="tree-empty">{t('tree.empty')}</li>}
       </ul>
     </div>
   );

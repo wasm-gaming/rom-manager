@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { JSX } from 'preact';
 import { GearIcon } from '../components/icons';
+import { BrandLogo } from '../components/BrandLogo';
+import { WelcomePanel } from '../components/WelcomePanel';
 import { Tabs } from '../components/Tabs';
 import { FileTree } from '../components/FileTree';
 import { OrganizePanel } from '../components/OrganizePanel';
@@ -17,6 +19,7 @@ import { RomIntakeService, isPlaced, type IntakeItem, type IntakeProgress } from
 import { ROMDatasetService } from '../services/ROMDatasetService';
 import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
 import { setThemeMode, themeModeSignal } from '../services/ThemeService';
+import { localePreferenceSignal, setLocalePreference, t } from '../services/I18nService';
 import { HandleStoreService } from '../services/HandleStoreService';
 import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
 import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
@@ -93,10 +96,18 @@ function isFileDrag(event: DragEvent): boolean {
  * rather than as one file among several: the wait is inside the file.
  */
 function intakeNotice({ file, read, size, done, total }: IntakeProgress): string {
-  const share = size > 0 ? Math.min(100, Math.round((read / size) * 100)) : 100;
-  const position = total > 1 ? ` (${done + 1} de ${total})` : '';
+  const percent = size > 0 ? Math.min(100, Math.round((read / size) * 100)) : 100;
 
-  return `Identificando ${file}: ${share}%${position}`;
+  return total > 1
+    ? t('progress.identifyingFileOf', { file, percent, done: done + 1, total })
+    : t('progress.identifyingFile', { file, percent });
+}
+
+/** «Identifying that file», or «identifying those five», as the drop happens. */
+function identifyingNotice(files: File[]): string {
+  return files.length > 1
+    ? t('progress.identifyingMany', { count: files.length })
+    : t('progress.identifying', { file: files[0].name });
 }
 
 export function ROMExplorer(): JSX.Element {
@@ -351,7 +362,7 @@ export function ROMExplorer(): JSX.Element {
         HandleStoreService.save({ id: originId, name, handle }).catch(() => undefined);
       }
     } catch (err) {
-      storeService.setError(err instanceof Error ? err.message : 'Failed to open folder');
+      storeService.setError(err instanceof Error ? err.message : t('errors.openFolder'));
     } finally {
       storeService.setLoading(false);
     }
@@ -371,16 +382,14 @@ export function ROMExplorer(): JSX.Element {
           const authorized = await nodeInstance.initializeFromHandle(savedHandle);
 
           if (!authorized) {
-            storeService.setError('Acceso denegado a la carpeta. Haz clic de nuevo para reintentar.');
+            storeService.setError(t('errors.deniedFolder'));
             return;
           }
 
           setStorageNodes((current) => new Map(current).set(originId, nodeInstance));
           storeService.addOrigin({ ...origin, locked: false });
         } catch (err) {
-          storeService.setError(
-            err instanceof Error ? err.message : 'No se pudo acceder a la carpeta guardada',
-          );
+          storeService.setError(err instanceof Error ? err.message : t('errors.savedFolder'));
           return;
         } finally {
           storeService.setLoading(false);
@@ -428,7 +437,7 @@ export function ROMExplorer(): JSX.Element {
         const system = systemFolderOf(path);
         const [match, covers, entries, media] = await Promise.all([
           GameCatalogService.load(activeNode, system, (progress) =>
-            setNotice(`Reading ${path}: ${progress.done} of ${progress.total}`),
+            setNotice(t('progress.reading', { path, done: progress.done, total: progress.total })),
           ),
           GameCatalogService.coversOf(system),
           activeNode.list(path),
@@ -442,7 +451,7 @@ export function ROMExplorer(): JSX.Element {
           ),
         );
       } catch (err) {
-        storeService.setError(err instanceof Error ? err.message : `Failed to group ${path}`);
+        storeService.setError(err instanceof Error ? err.message : t('errors.group', { path }));
       } finally {
         setNotice(undefined);
       }
@@ -461,7 +470,7 @@ export function ROMExplorer(): JSX.Element {
         const settings = await WizardConfigService.setWizard(activeNode, path, !grouped, systems);
         storeService.setWizardSettings(settings);
       } catch (err) {
-        storeService.setError(err instanceof Error ? err.message : 'Failed to save the view mode');
+        storeService.setError(err instanceof Error ? err.message : t('errors.viewMode'));
         return;
       }
 
@@ -487,9 +496,7 @@ export function ROMExplorer(): JSX.Element {
         const settings = await WizardConfigService.setRegionOrder(activeNode, order);
         storeService.setWizardSettings(settings);
       } catch (err) {
-        storeService.setError(
-          err instanceof Error ? err.message : 'Failed to save the region order',
-        );
+        storeService.setError(err instanceof Error ? err.message : t('errors.regionOrder'));
       }
     },
     [activeNode],
@@ -521,15 +528,15 @@ export function ROMExplorer(): JSX.Element {
 
       try {
         storeService.setError(undefined);
-        setOrganizeBusy(`Reading ${system}...`);
+        setOrganizeBusy(t('organize.busy.reading', { system }));
 
         const plan = await OrganizeService.plan(activeNode, system, (done, total) =>
-          setOrganizeBusy(`Reading ${system}: ${done} of ${total}`),
+          setOrganizeBusy(t('organize.busy.readingProgress', { system, done, total })),
         );
 
         setOrganize({ system, plan });
       } catch (err) {
-        storeService.setError(err instanceof Error ? err.message : `Failed to plan ${system}`);
+        storeService.setError(err instanceof Error ? err.message : t('errors.plan', { system }));
       } finally {
         setOrganizeBusy(undefined);
       }
@@ -542,19 +549,19 @@ export function ROMExplorer(): JSX.Element {
 
     try {
       storeService.setError(undefined);
-      setOrganizeBusy('Moving files...');
+      setOrganizeBusy(t('organize.busy.moving'));
 
       const applied = await OrganizeService.apply(
         activeNode,
         organize.system,
         organize.plan,
-        (done, total) => setOrganizeBusy(`Moving files: ${done} of ${total}`),
+        (done, total) => setOrganizeBusy(t('organize.busy.movingProgress', { done, total })),
       );
 
       setOrganize({ ...organize, applied });
       invalidateTree();
     } catch (err) {
-      storeService.setError(err instanceof Error ? err.message : 'Failed to organize');
+      storeService.setError(err instanceof Error ? err.message : t('errors.organize'));
     } finally {
       setOrganizeBusy(undefined);
     }
@@ -565,13 +572,13 @@ export function ROMExplorer(): JSX.Element {
 
     try {
       storeService.setError(undefined);
-      setOrganizeBusy('Putting files back...');
+      setOrganizeBusy(t('organize.busy.undoing'));
 
       await OrganizeService.undo(activeNode, organize.applied);
       setOrganize(undefined);
       invalidateTree();
     } catch (err) {
-      storeService.setError(err instanceof Error ? err.message : 'Failed to undo');
+      storeService.setError(err instanceof Error ? err.message : t('errors.undo'));
     } finally {
       setOrganizeBusy(undefined);
     }
@@ -683,7 +690,7 @@ export function ROMExplorer(): JSX.Element {
     }
 
     try {
-      setNotice(`Identificando ${files.length > 1 ? `${files.length} ficheros` : files[0].name}...`);
+      setNotice(identifyingNotice(files));
 
       const items = await RomIntakeService.identify(activeNode, files, (progress) =>
         setNotice(intakeNotice(progress)),
@@ -695,9 +702,9 @@ export function ROMExplorer(): JSX.Element {
       // says why it is only offering the one destination.
       setDrop({ files, ...destination });
       setDropError(
-        `No se ha podido consultar el catálogo, así que sólo se pueden copiar tal cual: ${
-          err instanceof Error ? err.message : 'error desconocido'
-        }`,
+        t('errors.catalogue', {
+          reason: err instanceof Error ? err.message : t('errors.unknown'),
+        }),
       );
     } finally {
       setNotice(undefined);
@@ -718,7 +725,7 @@ export function ROMExplorer(): JSX.Element {
     try {
       storeService.setError(undefined);
       setIntakeError(undefined);
-      setNotice(`Identificando ${files.length > 1 ? `${files.length} ficheros` : files[0].name}...`);
+      setNotice(identifyingNotice(files));
 
       const items = await RomIntakeService.identify(activeNode, files, (progress) =>
         setNotice(intakeNotice(progress)),
@@ -727,17 +734,13 @@ export function ROMExplorer(): JSX.Element {
       // A refused archive opens the panel too: what it says is why nothing can
       // be done with it, which is the thing worth knowing.
       if (!items.some((item) => item.path || item.refused)) {
-        storeService.setError(
-          'No se ha reconocido ningún juego: elige uno para añadirle imágenes, o una carpeta para copiar los ficheros dentro.',
-        );
+        storeService.setError(t('errors.noGame'));
         return;
       }
 
       setIntake(items);
     } catch (err) {
-      storeService.setError(
-        err instanceof Error ? err.message : 'No se pudieron identificar los ficheros',
-      );
+      storeService.setError(err instanceof Error ? err.message : t('errors.identify'));
     } finally {
       setNotice(undefined);
     }
@@ -753,7 +756,11 @@ export function ROMExplorer(): JSX.Element {
       const addedPaths = intake.filter(isPlaced).map((item) => item.path!).filter(Boolean);
 
       await RomIntakeService.apply(activeNode, intake, ({ file, done, total }) =>
-        setIntakeBusy(`Copiando ${file}${total > 1 ? ` (${done + 1} de ${total})` : ''}...`),
+        setIntakeBusy(
+          total > 1
+            ? t('progress.copyingOf', { file, done: done + 1, total })
+            : t('progress.copying', { file }),
+        ),
       );
 
       setIntake(undefined);
@@ -769,7 +776,7 @@ export function ROMExplorer(): JSX.Element {
         await handleSelectionChange(addedPaths);
       }
     } catch (err) {
-      setIntakeError(err instanceof Error ? err.message : 'No se pudieron copiar los ficheros');
+      setIntakeError(err instanceof Error ? err.message : t('errors.copyFiles'));
     } finally {
       setIntakeBusy(undefined);
     }
@@ -793,7 +800,7 @@ export function ROMExplorer(): JSX.Element {
       for (const image of images) {
         if (!drop.game) break;
 
-        setDropBusy(`Guardando ${image.file.name}...`);
+        setDropBusy(t('progress.saving', { file: image.file.name }));
         await CoverService.save(
           activeNode,
           drop.game.system,
@@ -809,7 +816,7 @@ export function ROMExplorer(): JSX.Element {
 
       const copiedPaths: string[] = [];
       for (const file of files) {
-        setDropBusy(`Copiando ${file.name}...`);
+        setDropBusy(t('progress.copying', { file: file.name }));
         const path = directory ? `${directory}/${file.name}` : file.name;
         await activeNode.writeFile(path, new Uint8Array(await file.arrayBuffer()));
         copiedPaths.push(path);
@@ -818,7 +825,11 @@ export function ROMExplorer(): JSX.Element {
       const takenPaths: string[] = [];
       if (taken.length > 0) {
         await RomIntakeService.apply(activeNode, taken, ({ file, done, total }) =>
-          setDropBusy(`Añadiendo ${file}${total > 1 ? ` (${done + 1} de ${total})` : ''}...`),
+          setDropBusy(
+            total > 1
+              ? t('progress.addingOf', { file, done: done + 1, total })
+              : t('progress.adding', { file }),
+          ),
         );
         takenPaths.push(...taken.filter(isPlaced).map((item) => item.path!).filter(Boolean));
       }
@@ -841,7 +852,7 @@ export function ROMExplorer(): JSX.Element {
         await handleSelectionChange(addedPaths);
       }
     } catch (err) {
-      setDropError(err instanceof Error ? err.message : 'No se pudieron guardar los ficheros');
+      setDropError(err instanceof Error ? err.message : t('errors.writeFiles'));
     } finally {
       setDropBusy(undefined);
     }
@@ -857,7 +868,7 @@ export function ROMExplorer(): JSX.Element {
       storeService.setError(undefined);
       await loadSelection(activeNode, paths);
     } catch (err) {
-      storeService.setError(err instanceof Error ? err.message : 'Failed to read the selection');
+      storeService.setError(err instanceof Error ? err.message : t('errors.readSelection'));
     }
   };
 
@@ -975,7 +986,10 @@ export function ROMExplorer(): JSX.Element {
   return (
     <div class="rom-explorer">
       <header class="explorer-header">
-        <h1>ROM Manager</h1>
+        <h1 class="explorer-title">
+          <BrandLogo class="explorer-mark" />
+          {t('app.name')}
+        </h1>
         <Tabs
           origins={Array.from(originsMap.values())}
           activeOriginId={activeOriginId}
@@ -986,7 +1000,7 @@ export function ROMExplorer(): JSX.Element {
         {/* The preference order, as the order itself: three buttons in the order
             they are preferred in, and clicking one puts it first. Leaving the
             other two as they were is what makes it a move and not a reshuffle. */}
-        <div class="header-regions" role="group" aria-label="Prioridad de región">
+        <div class="header-regions" role="group" aria-label={t('header.regions.label')}>
           {regionOrder.map((region, at) => (
             <button
               key={region}
@@ -996,7 +1010,9 @@ export function ROMExplorer(): JSX.Element {
               disabled={!activeNode}
               aria-pressed={at === 0}
               title={
-                at === 0 ? `Se prefiere la carátula de ${region}` : `Preferir la carátula de ${region}`
+                at === 0
+                  ? t('header.regions.preferred', { region })
+                  : t('header.regions.prefer', { region })
               }
               onClick={() => handleRegionOrderChange(preferRegion(regionOrder, region))}
             >
@@ -1005,7 +1021,11 @@ export function ROMExplorer(): JSX.Element {
           ))}
         </div>
 
-        <button class="header-prefs" onClick={() => setPreferences(true)} title="Preferencias">
+        <button
+          class="header-prefs"
+          onClick={() => setPreferences(true)}
+          title={t('header.preferences')}
+        >
           <GearIcon />
         </button>
       </header>
@@ -1013,22 +1033,21 @@ export function ROMExplorer(): JSX.Element {
       {errorSignal.value && <div class="error-message">{errorSignal.value}</div>}
 
       {originsMap.size === 0 ? (
-        <div class="empty-state-full">
-          <p>No folders opened</p>
-          <button onClick={handleOpenFolder} disabled={loadingSignal.value}>
-            {loadingSignal.value ? 'Opening...' : 'Open Folder'}
-          </button>
-        </div>
+        // Nothing has ever been opened, so this is the first thing anyone sees:
+        // what the app is for, and the one button that starts it.
+        <WelcomePanel onOpenFolder={handleOpenFolder} loading={loadingSignal.value} />
       ) : activeOrigin?.locked || !activeNode ? (
         <div class="empty-state-full">
-          <p>Carpeta seleccionada: <strong>{activeOrigin?.name ?? 'Carpeta'}</strong></p>
+          <p>
+            {t('library.locked.title', { name: activeOrigin?.name ?? t('system.folder') })}
+          </p>
           <button
             onClick={() => activeOriginId && handleSelectOrigin(activeOriginId)}
             disabled={loadingSignal.value}
           >
             {loadingSignal.value
-              ? 'Abriendo...'
-              : `Abrir «${activeOrigin?.name ?? 'carpeta'}»`}
+              ? t('library.opening')
+              : t('library.locked.open', { name: activeOrigin?.name ?? t('system.folder') })}
           </button>
         </div>
       ) : (
@@ -1098,6 +1117,10 @@ export function ROMExplorer(): JSX.Element {
         open={preferences}
         themeMode={themeModeSignal.value}
         onThemeModeChange={setThemeMode}
+        // The language is the browser's, like the theme, so it is never gated
+        // on a library being open.
+        locale={localePreferenceSignal.value}
+        onLocaleChange={setLocalePreference}
         regionOrder={regionOrder}
         // The order lives in the library's `.meta`, so it can only be changed
         // while one is open.

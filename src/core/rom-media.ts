@@ -20,14 +20,6 @@ export type MediaKind = 'case' | 'background' | 'title' | 'snap' | 'logo';
 /** Order the kinds are offered in, boxart first because it is the one shown. */
 export const MEDIA_KINDS: readonly MediaKind[] = ['case', 'background', 'title', 'snap', 'logo'];
 
-export const MEDIA_KIND_LABELS: Record<MediaKind, string> = {
-  case: 'Carátula',
-  background: 'Fondo',
-  title: 'Pantalla de título',
-  snap: 'Captura',
-  logo: 'Logo',
-};
-
 /** The kind the details pane shows, and the only one the catalogue publishes. */
 export const COVER_KIND: MediaKind = 'case';
 
@@ -47,13 +39,6 @@ export const GLOBAL_SCOPE = 'global';
 export type MediaScope = Region | typeof GLOBAL_SCOPE;
 
 export const MEDIA_SCOPES: readonly MediaScope[] = [...REGIONS, GLOBAL_SCOPE];
-
-export const MEDIA_SCOPE_LABELS: Record<MediaScope, string> = {
-  EU: 'EU',
-  US: 'US',
-  JP: 'JP',
-  global: 'Todas las regiones',
-};
 
 /** The region a scope names, absent when it stands for the whole game. */
 export function regionOfScope(scope: MediaScope): Region | undefined {
