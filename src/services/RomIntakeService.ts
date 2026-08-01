@@ -30,6 +30,7 @@ import { extract, isArchive, readArchive } from './ArchiveService';
 import { streamCRC32 } from './ChecksumService';
 import { GAME_MARKER } from './LibraryScanService';
 import { ensureDir } from './OrganizeService';
+import { recordDirOf, RomLibrary, type RomRecord } from './RomLibraryService';
 import type { StorageNode } from './StorageService';
 
 /** The release a dropped file turned out to be. */
@@ -416,7 +417,10 @@ export class RomIntakeService {
       await node.writeFile(item.path!, bytes);
       written.push(item.path!);
 
-      if (item.match?.media === 'disc') await this.mark(node, item.match, made);
+      if (item.match) {
+        await this.saveRecord(node, item, made);
+        if (item.match.media === 'disc') await this.mark(node, item.match, made);
+      }
     }
 
     return written;
@@ -445,5 +449,49 @@ export class RomIntakeService {
         JSON.stringify({ gameId: match.gameId, title: match.title, system: match.system }, null, 2),
       ),
     );
+  }
+
+  /**
+   * Automatically save a .meta sidecar record when a game is recognized by checksum.
+   */
+  private static async saveRecord(
+    node: StorageNode,
+    item: IntakeItem,
+    made: Set<string>,
+  ): Promise<void> {
+    if (!item.match || !item.path) return;
+
+    await ensureDir(node, recordDirOf(item.path), made);
+
+    const library = new RomLibrary(node);
+    const existing = await library.read(item.path);
+    if (existing) return;
+
+    const now = new Date().toISOString();
+    let extraMeta = null;
+
+    if (item.crc32) {
+      try {
+        const { ROMDatasetService } = await import('./ROMDatasetService');
+        extraMeta = await ROMDatasetService.lookupByCrc(item.crc32);
+      } catch {
+        // Ignored if dataset search fails
+      }
+    }
+
+    const record: RomRecord = {
+      version: 1,
+      id: item.match.gameId,
+      title: extraMeta?.name || item.match.title,
+      description: extraMeta?.description,
+      region: extraMeta?.region,
+      videoStandard: extraMeta?.videoStandard,
+      cover: extraMeta?.cover,
+      crc32: item.crc32,
+      addedAt: now,
+      updatedAt: now,
+    };
+
+    await library.write(item.path, record);
   }
 }

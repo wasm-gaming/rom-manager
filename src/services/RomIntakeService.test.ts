@@ -258,7 +258,8 @@ describe('apply', () => {
       { ...loose('smw (u) [!].sfc'), path: 'SNES/smw (u) [!].sfc', match: match() },
     ]);
 
-    expect([...storage.files.keys()]).toEqual(['SNES/smw (u) [!].sfc']);
+    expect(storage.files.has('SNES/smw (u) [!].sfc')).toBe(true);
+    expect(storage.files.has('.meta/SNES/smw (u) [!].json')).toBe(true);
   });
 
   it('leaves a name that is already taken alone', async () => {
@@ -355,5 +356,17 @@ describe('apply', () => {
     ).rejects.toThrow('no es el que el archivo declaraba');
 
     expect(storage.files.size).toBe(0);
+  });
+
+  it('creates .meta sidecar record when game is matched by checksum on intake', async () => {
+    await RomIntakeService.apply(storage.asNode(), [
+      { ...loose('smw.sfc'), path: 'SNES/smw.sfc', match: match(), crc32: 'AAAA1111' },
+    ]);
+
+    const metaFile = storage.files.get('.meta/SNES/smw.json');
+    expect(metaFile).toBeDefined();
+    const metaData = JSON.parse(metaFile!);
+    expect(metaData.title).toBe('Super Mario World');
+    expect(metaData.crc32).toBe('AAAA1111');
   });
 });
