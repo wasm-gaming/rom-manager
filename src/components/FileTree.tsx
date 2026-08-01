@@ -367,31 +367,152 @@ export function FileTree({
     if (row?.game && row.game !== reportedGame.current) selectPaths(new Set(row.paths), row.game);
   }, [rows, selectedGame, selectPaths]);
 
+  const revealDirectory = useCallback(
+    async (path: string) => {
+      if (path === ROOT) return;
+      setExpanded((current) => new Set(current).add(path));
+      if (!childrenRef.current.has(path)) await loadDirectory(path);
+    },
+    [loadDirectory],
+  );
+
+  const toggleDirectory = useCallback(
+    async (path: string) => {
+      if (expanded.has(path)) {
+        setExpanded((current) => {
+          const next = new Set(current);
+          next.delete(path);
+          return next;
+        });
+        return;
+      }
+
+      if (!childrenRef.current.has(path)) await loadDirectory(path);
+      setExpanded((current) => new Set(current).add(path));
+    },
+    [expanded, loadDirectory],
+  );
+
+  const selectRow = useCallback(
+    (row: VisibleRow) => {
+      if (row.kind === 'group') {
+        selectPaths(new Set(row.paths), row.game);
+        setAnchor(row.paths[0]);
+      } else if (row.path) {
+        selectPaths(new Set([row.path]));
+        setAnchor(row.path);
+      }
+      requestAnimationFrame(() => {
+        document.querySelector('.tree-item.selected')?.scrollIntoView({ block: 'nearest' });
+      });
+    },
+    [selectPaths],
+  );
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+
+      const activeEl = document.activeElement;
+      if (activeEl) {
+        const tagName = activeEl.tagName.toLowerCase();
+        if (
+          tagName === 'input' ||
+          tagName === 'textarea' ||
+          tagName === 'select' ||
+          (activeEl as HTMLElement).isContentEditable
+        ) {
+          return;
+        }
+      }
+
+      if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        return;
+      }
+
+      if (rows.length === 0) return;
+
+      const currentIndex = rows.findIndex((row) =>
+        row.path ? selection.has(row.path) : selectedGame === row.key,
+      );
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        if (currentIndex === -1) {
+          selectRow(rows[0]);
+        } else if (currentIndex > 0) {
+          selectRow(rows[currentIndex - 1]);
+        }
+        return;
+      }
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (currentIndex === -1) {
+          selectRow(rows[0]);
+        } else if (currentIndex < rows.length - 1) {
+          selectRow(rows[currentIndex + 1]);
+        }
+        return;
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        if (currentIndex === -1) {
+          selectRow(rows[0]);
+          return;
+        }
+        const currentRow = rows[currentIndex];
+        if (currentRow.kind === 'directory' && currentRow.path) {
+          if (expanded.has(currentRow.path)) {
+            void toggleDirectory(currentRow.path);
+          }
+        } else {
+          for (let i = currentIndex - 1; i >= 0; i--) {
+            if (rows[i].kind === 'directory' && rows[i].depth < currentRow.depth) {
+              selectRow(rows[i]);
+              break;
+            }
+          }
+        }
+        return;
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        if (currentIndex === -1) {
+          selectRow(rows[0]);
+          return;
+        }
+        const currentRow = rows[currentIndex];
+        if (currentRow.kind === 'directory' && currentRow.path) {
+          if (!expanded.has(currentRow.path)) {
+            void revealDirectory(currentRow.path);
+          }
+        }
+        return;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    rows,
+    selection,
+    selectedGame,
+    expanded,
+    groupedRows,
+    selectPaths,
+    selectRow,
+    toggleDirectory,
+    revealDirectory,
+  ]);
+
   /** Where new folders and uploads land: the selected folder, or root. */
   const targetDirectory = (): string => {
     const [path] = Array.from(selection);
     if (!path) return ROOT;
     return entriesByPath.get(path)?.kind === 'directory' ? path : parentOf(path);
-  };
-
-  const revealDirectory = async (path: string) => {
-    if (path === ROOT) return;
-    setExpanded((current) => new Set(current).add(path));
-    if (!childrenRef.current.has(path)) await loadDirectory(path);
-  };
-
-  const toggleDirectory = async (path: string) => {
-    if (expanded.has(path)) {
-      setExpanded((current) => {
-        const next = new Set(current);
-        next.delete(path);
-        return next;
-      });
-      return;
-    }
-
-    if (!childrenRef.current.has(path)) await loadDirectory(path);
-    setExpanded((current) => new Set(current).add(path));
   };
 
   const handleRowClick = (event: MouseEvent, row: VisibleRow) => {
