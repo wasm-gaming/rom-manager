@@ -547,6 +547,25 @@ export function CheckIcon(): JSX.Element {
   );
 }
 
+/** WhatsApp-style double check icon */
+export function DoubleCheckIcon(): JSX.Element {
+  return (
+    <svg {...STROKE}>
+      <path d="M2 12.5l4.5 4.5L15 7.5" />
+      <path d="M8 12.5l4.5 4.5L21 7.5" />
+    </svg>
+  );
+}
+
+/** Red cross / failure icon */
+export function CrossIcon(): JSX.Element {
+  return (
+    <svg {...STROKE}>
+      <path d="M18 6L6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
 export function ArrowLeftIcon(): JSX.Element {
   return (
     <svg {...STROKE}>

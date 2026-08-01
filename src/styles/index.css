@@ -2805,6 +2805,38 @@ code {
   font-size: 0.75rem;
 }
 
+.variant-validation-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  cursor: help;
+  transition: transform 0.15s ease;
+}
+
+.variant-validation-icon:hover {
+  transform: scale(1.15);
+}
+
+.variant-validation-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.variant-validation-icon.status-verified {
+  color: #22c55e; /* WhatsApp green double check */
+}
+
+.variant-validation-icon.status-structurally_valid {
+  color: #3b82f6; /* Single blue check */
+}
+
+.variant-validation-icon.status-incomplete {
+  color: #ef4444; /* Red cross */
+}
+
 /* Back to the game a file was opened from. */
 .btn-back {
   margin-bottom: 0.75rem;

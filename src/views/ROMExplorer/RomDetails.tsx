@@ -12,7 +12,7 @@ import {
   systemOf,
 } from '@/services/RomLibraryService';
 import { MetadataEditor } from '@/views/ROMExplorer/MetadataEditor';
-import { ArrowLeftIcon, OrganizeIcon, PencilIcon, SaveIcon, StatusIcon } from '@/components/icons';
+import { ArrowLeftIcon, CheckIcon, CrossIcon, DoubleCheckIcon, OrganizeIcon, PencilIcon, SaveIcon, StatusIcon } from '@/components/icons';
 import { calculateCRC32 } from '@/services/ChecksumService';
 import type { WizardFile, WizardGame, WizardVariant } from '@/core/wizard-tree';
 import type { Region } from '@/core/rom-regions';
@@ -20,6 +20,7 @@ import type { MatchStatus } from '@/core/rom-matching';
 import { systemAspectRatio } from '@/core/rom-covers';
 import { SystemDetails } from '@/views/ROMExplorer/SystemDetails';
 import { t } from '@/services/I18nService';
+import { validateNeoGeoVariant } from '@/core/neogeo-validator';
 
 interface RomDetailsProps {
   /** ROM files selected in the tree, in tree order. */
@@ -365,12 +366,43 @@ function VariantRow({
     (Boolean(activeUrl && variant.cover === activeUrl) ||
       Boolean(cover?.region && !variant.cover && variant.regions.includes(cover.region)));
 
-  const files = (file: WizardFile, index: number) =>
-    file.path ? (
+  const files = (file: WizardFile, index: number) => {
+    if (!file.path) {
+      return (
+        <li key={`missing:${index}`} class="variant-file missing">
+          <span>{file.label}</span>
+          <code class="variant-file-crc" title="CRC32">
+            {file.crc}
+          </code>
+          <span class="variant-file-size">{t('details.variants.missingFile')}</span>
+        </li>
+      );
+    }
+
+    const isNeoGeo = systemOf(file.path) === 'NEOGEO' || file.path.toLowerCase().endsWith('.neo');
+    const validation = isNeoGeo
+      ? validateNeoGeoVariant({
+          fileName: fileNameOf(file.path),
+          fileSize: stats.get(file.path)?.size,
+          datMatch: Boolean(file.crc),
+        })
+      : null;
+
+    return (
       <li key={file.path} class="variant-file">
         <button class="btn-inline" onClick={() => onSelectFile?.(file.path!)}>
           {file.label}
         </button>
+        {validation && (
+          <span
+            class={`variant-validation-icon status-${validation.status}`}
+            title={`${validation.statusLabel} (${validation.details})`}
+          >
+            {validation.status === 'verified' && <DoubleCheckIcon />}
+            {validation.status === 'structurally_valid' && <CheckIcon />}
+            {validation.status === 'incomplete' && <CrossIcon />}
+          </span>
+        )}
         {file.isConsolidated === false && onOrganize && (
           <button
             class="tree-organize"
@@ -388,15 +420,10 @@ function VariantRow({
         </code>
         <span class="variant-file-size">{formatSize(stats.get(file.path)?.size ?? 0)}</span>
       </li>
-    ) : (
-      <li key={`missing:${index}`} class="variant-file missing">
-        <span>{file.label}</span>
-        <code class="variant-file-crc" title="CRC32">
-          {file.crc}
-        </code>
-        <span class="variant-file-size">{t('details.variants.missingFile')}</span>
-      </li>
     );
+  };
+
+  const displayKey = variant.key === 'Unknown' ? 'World / Arcade' : variant.key;
 
   return (
     <li class={`variant status-${variant.status}${isCoverActive ? ' active-cover' : ''}`}>
@@ -404,7 +431,7 @@ function VariantRow({
         <span class="variant-mark" title={t(STATUS_KEYS[variant.status])}>
           <StatusIcon status={variant.status} />
         </span>
-        <span class="variant-key">{variant.key}</span>
+        <span class="variant-key">{displayKey}</span>
         <span class="variant-support">
           {variant.regions.map((region) => (
             <span key={region} class="tag region" title={t('details.variants.shipsTo', { region })}>
