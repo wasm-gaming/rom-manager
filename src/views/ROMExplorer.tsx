@@ -634,6 +634,20 @@ export function ROMExplorer(): JSX.Element {
       };
     }
 
+    if (selection.length === 1) {
+      const path = selection[0];
+      const record = records.get(path);
+      const title = record?.title || gameNameOf(path);
+      const gameId = record?.id || gameNameOf(path);
+      const system = systemOf(path);
+      const itemFolder = parentOf(path);
+
+      return {
+        target: { kind: 'game', title, folder: itemFolder },
+        game: { id: gameId, system },
+      };
+    }
+
     return folder === undefined ? undefined : { target: { kind: 'folder', path: folder } };
   };
 
@@ -937,10 +951,36 @@ export function ROMExplorer(): JSX.Element {
     await library.write(path, stored);
   };
 
-  const handleSave = async (path: string, record: RomRecord) => {
+  const handleSave = async (
+    path: string,
+    record: RomRecord,
+    coverFile?: File,
+    coverRemoved?: boolean,
+  ) => {
     if (!activeNode) return;
 
-    await persist(new RomLibrary(activeNode), path, record);
+    let updatedRecord = { ...record };
+
+    if (coverRemoved) {
+      updatedRecord.cover = undefined;
+    } else if (coverFile) {
+      const bytes = new Uint8Array(await coverFile.arrayBuffer());
+      const ext = coverFile.name.split('.').pop()?.toLowerCase() || 'png';
+      const gameId = record.id || gameNameOf(path);
+      const system = systemOf(path);
+
+      const savedCoverName = await CoverService.save(
+        activeNode,
+        system,
+        gameId,
+        { kind: 'case', extension: ext },
+        bytes,
+      );
+      updatedRecord.cover = savedCoverName;
+      setMediaVersion((v) => v + 1);
+    }
+
+    await persist(new RomLibrary(activeNode), path, updatedRecord);
 
     setInitialised((current) => new Set(current).add(gameKey(path)));
     setEditing(false);

@@ -1711,6 +1711,62 @@ code {
   background-color: var(--surface);
 }
 
+.cover-editor-group {
+  position: relative;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.cover-editor-group.dragging {
+  background-color: rgba(59, 130, 246, 0.08);
+  border-radius: 6px;
+}
+
+.cover-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.cover-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.btn-inline.btn-danger {
+  color: var(--danger, #ef4444);
+}
+
+.btn-inline.btn-danger:hover {
+  text-decoration: underline;
+}
+
+.cover-drop-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  background-color: var(--surface-2);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.cover-drop-zone:hover,
+.cover-editor-group.dragging .cover-drop-zone {
+  border-color: var(--accent);
+  background-color: rgba(59, 130, 246, 0.08);
+}
+
+.cover-drop-prompt {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
 .checksum-field {
   font-family: monospace !important;
   font-size: 0.85rem !important;

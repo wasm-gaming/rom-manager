@@ -43,7 +43,12 @@ interface RomDetailsProps {
   editing: boolean;
   onEdit: () => void;
   onCancelEdit: () => void;
-  onSave: (path: string, record: RomRecord) => Promise<void>;
+  onSave: (
+    path: string,
+    record: RomRecord,
+    coverFile?: File,
+    coverRemoved?: boolean,
+  ) => Promise<void>;
   onSaveMany: (changes: Partial<RomRecord>) => Promise<void>;
   /** Opens one file of the game being shown, since the tree no longer lists them. */
   onSelectFile?: (path: string) => void;
@@ -740,7 +745,9 @@ export function RomDetails({
         coverUrl={covers.get(path)}
         canChecksum={size <= CRC32_SIZE_LIMIT}
         loadContent={() => loadContent(path)}
-        onSave={(updated) => onSave(path, updated)}
+        onSave={(updated, coverFile, coverRemoved) =>
+          onSave(path, updated, coverFile, coverRemoved)
+        }
         onCancel={onCancelEdit}
       />
     );

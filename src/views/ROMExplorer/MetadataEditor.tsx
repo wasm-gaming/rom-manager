@@ -1,10 +1,11 @@
 import { JSX } from 'preact';
-import { useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { ROM_REGIONS, VIDEO_STANDARDS } from '@/services/ROMMetadataService';
 import { RomRecord, gameNameOf, systemOf } from '@/services/RomLibraryService';
 import { ROMDatasetService } from '@/services/ROMDatasetService';
 import { calculateCRC32, calculateMD5, calculateSHA1 } from '@/services/ChecksumService';
 import { CheckIcon, CloseIcon, HourglassIcon, SaveIcon, SearchIcon } from '@/components/icons';
+import { isImageName } from '@/core/rom-media';
 import { t } from '@/services/I18nService';
 
 interface MetadataEditorProps {
@@ -16,7 +17,7 @@ interface MetadataEditorProps {
   loadContent: () => Promise<ArrayBuffer>;
   /** False when the ROM is too large to hash on demand. */
   canChecksum: boolean;
-  onSave: (record: RomRecord) => Promise<void>;
+  onSave: (record: RomRecord, coverFile?: File, coverRemoved?: boolean) => Promise<void>;
   onCancel: () => void;
 }
 
@@ -50,7 +51,70 @@ export function MetadataEditor({
   const [selectedFields, setSelectedFields] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
 
-  const previewUrl = draft.cover?.startsWith('https://') ? draft.cover : coverUrl;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [pendingCoverFile, setPendingCoverFile] = useState<File | undefined>();
+  const [pendingCoverUrl, setPendingCoverUrl] = useState<string | undefined>();
+  const [coverRemoved, setCoverRemoved] = useState(false);
+  const [isCoverDragging, setIsCoverDragging] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (pendingCoverUrl) URL.revokeObjectURL(pendingCoverUrl);
+    };
+  }, [pendingCoverUrl]);
+
+  const activeCoverUrl = coverRemoved
+    ? undefined
+    : pendingCoverUrl || (draft.cover?.startsWith('https://') ? draft.cover : coverUrl);
+
+  const handleCoverFileSelected = (file: File) => {
+    if (!file.type.startsWith('image/') && !isImageName(file.name)) return;
+    if (pendingCoverUrl) URL.revokeObjectURL(pendingCoverUrl);
+
+    const objectUrl = URL.createObjectURL(file);
+    setPendingCoverFile(file);
+    setPendingCoverUrl(objectUrl);
+    setCoverRemoved(false);
+  };
+
+  const handleRemoveCover = () => {
+    if (pendingCoverUrl) URL.revokeObjectURL(pendingCoverUrl);
+    setPendingCoverFile(undefined);
+    setPendingCoverUrl(undefined);
+    setCoverRemoved(true);
+    setDraft((current) => ({ ...current, cover: undefined }));
+  };
+
+  const handleCoverDragOver = (event: JSX.TargetedDragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsCoverDragging(true);
+  };
+
+  const handleCoverDragLeave = (event: JSX.TargetedDragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsCoverDragging(false);
+  };
+
+  const handleCoverDrop = (event: JSX.TargetedDragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsCoverDragging(false);
+
+    const files = Array.from(event.dataTransfer?.files ?? []);
+    const imageFile = files.find((f) => f.type.startsWith('image/') || isImageName(f.name));
+    if (imageFile) {
+      handleCoverFileSelected(imageFile);
+    }
+  };
+
+  const handleFileInputChange = (event: JSX.TargetedEvent<HTMLInputElement, Event>) => {
+    const files = event.currentTarget.files;
+    if (files && files.length > 0) {
+      handleCoverFileSelected(files[0]);
+    }
+  };
 
   const update = <K extends keyof RomRecord>(field: K, value: RomRecord[K]) => {
     setDraft((current) => ({ ...current, [field]: value }));
@@ -177,7 +241,7 @@ export function MetadataEditor({
     try {
       setSaving(true);
       setError(null);
-      await onSave(draft);
+      await onSave(draft, pendingCoverFile, coverRemoved);
     } catch (err) {
       setError(err instanceof Error ? err.message : t('editor.error.save'));
       setSaving(false);
@@ -305,20 +369,54 @@ export function MetadataEditor({
         </div>
       )}
 
-      {previewUrl && (
-        <div class="form-group">
-          <label>{t('editor.fields.cover')}</label>
-          <img
-            class="cover-image"
-            src={previewUrl}
-            alt={t('details.cover.alt', { title: draft.title || gameNameOf(romPath) })}
-            loading="lazy"
-          />
-          <button class="btn-inline" onClick={() => update('cover', undefined)}>
-            {t('editor.removeCover')}
-          </button>
-        </div>
-      )}
+      <div
+        class={`form-group cover-editor-group ${isCoverDragging ? 'dragging' : ''}`}
+        onDragOver={handleCoverDragOver}
+        onDragLeave={handleCoverDragLeave}
+        onDrop={handleCoverDrop}
+      >
+        <label>{t('editor.fields.cover')}</label>
+        {activeCoverUrl ? (
+          <div class="cover-preview-wrapper">
+            <img
+              class="cover-image"
+              src={activeCoverUrl}
+              alt={t('details.cover.alt', { title: draft.title || gameNameOf(romPath) })}
+              loading="lazy"
+            />
+            <div class="cover-actions">
+              <button
+                type="button"
+                class="btn-inline"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {t('editor.changeCover')}
+              </button>
+              <button
+                type="button"
+                class="btn-inline btn-danger"
+                onClick={handleRemoveCover}
+              >
+                {t('editor.removeCover')}
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div
+            class="cover-drop-zone"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <span class="cover-drop-prompt">{t('editor.dropCoverOrClick')}</span>
+          </div>
+        )}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={handleFileInputChange}
+        />
+      </div>
 
       <div class="form-group">
         <label>{t('editor.fields.title')}</label>
