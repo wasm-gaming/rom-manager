@@ -12,7 +12,7 @@ import {
   systemOf,
 } from '../services/RomLibraryService';
 import { MetadataEditor } from './MetadataEditor';
-import { ArrowLeftIcon, PencilIcon, SaveIcon, StatusIcon } from './icons';
+import { ArrowLeftIcon, OrganizeIcon, PencilIcon, SaveIcon, StatusIcon } from './icons';
 import { calculateCRC32 } from '../services/ChecksumService';
 import type { WizardFile, WizardGame, WizardVariant } from '../core/wizard-tree';
 import type { Region } from '../core/rom-regions';
@@ -41,6 +41,8 @@ interface RomDetailsProps {
   onSaveMany: (changes: Partial<RomRecord>) => Promise<void>;
   /** Opens one file of the game being shown, since the tree no longer lists them. */
   onSelectFile?: (path: string) => void;
+  /** Offered on folders and files that can be renamed and sorted to match the catalogue. */
+  onOrganize?: (path: string) => void;
   /** Goes back to the game a file was opened from. */
   onBack?: { label: string; go: () => void };
   loadContent: (path: string) => Promise<ArrayBuffer>;
@@ -357,11 +359,13 @@ function VariantRow({
   stats,
   cover,
   onSelectFile,
+  onOrganize,
 }: {
   variant: WizardVariant;
   stats: Map<string, StorageStat | null>;
   cover?: CoverShown;
   onSelectFile?: (path: string) => void;
+  onOrganize?: (path: string) => void;
 }): JSX.Element {
   const activeUrl = cover?.publishedUrl || cover?.url;
   const isCoverActive =
@@ -379,6 +383,18 @@ function VariantRow({
         <button class="btn-inline" onClick={() => onSelectFile?.(file.path!)}>
           {file.label}
         </button>
+        {file.isConsolidated === false && onOrganize && (
+          <button
+            class="tree-organize"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOrganize(file.path!);
+            }}
+            title="Rename and sort to match the catalogue"
+          >
+            <OrganizeIcon />
+          </button>
+        )}
         <code class="variant-file-crc" title="CRC32">
           {file.crc}
         </code>
@@ -434,11 +450,13 @@ function GameView({
   cover,
   stats,
   onSelectFile,
+  onOrganize,
 }: {
   game: WizardGame;
   cover?: CoverShown;
   stats: Map<string, StorageStat | null>;
   onSelectFile?: (path: string) => void;
+  onOrganize?: (path: string) => void;
 }): JSX.Element {
   const present = game.variants.filter(hasFiles);
   const missing = game.variants.filter((variant) => !hasFiles(variant));
@@ -477,6 +495,7 @@ function GameView({
             stats={stats}
             cover={cover}
             onSelectFile={onSelectFile}
+            onOrganize={onOrganize}
           />
         ))}
       </ul>
@@ -494,6 +513,7 @@ function GameView({
                 stats={stats}
                 cover={cover}
                 onSelectFile={onSelectFile}
+                onOrganize={onOrganize}
               />
             ))}
           </ul>
@@ -677,6 +697,7 @@ export function RomDetails({
   onSave,
   onSaveMany,
   onSelectFile,
+  onOrganize,
   onBack,
   loadContent,
 }: RomDetailsProps): JSX.Element {
@@ -695,6 +716,7 @@ export function RomDetails({
         cover={gameCover}
         stats={stats}
         onSelectFile={onSelectFile}
+        onOrganize={onOrganize}
       />
     );
   }

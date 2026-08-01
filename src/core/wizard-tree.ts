@@ -16,6 +16,7 @@
 import { coverKeyOf, coversOf, variantCoverUrl, type GameCovers } from './rom-covers';
 import { REGIONS, type Region, type VideoStandard } from './rom-regions';
 import type { MatchResult, MatchStatus } from './rom-matching';
+import { targetOf } from './rom-organize';
 
 /** A row of a real directory listing, as the storage layer reports it. */
 export interface FolderEntry {
@@ -35,6 +36,8 @@ export interface WizardFile {
    * whether what you found is it.
    */
   crc: string;
+  /** True when the file is in its canonical organized location and name. */
+  isConsolidated?: boolean;
 }
 
 /** One release of a game, and how much of it is here. */
@@ -116,6 +119,7 @@ export function buildWizardTree(
   match: MatchResult,
   /** Boxarts by game, for the regions whose releases have none of their own. */
   covers: ReadonlyMap<string, GameCovers> = new Map(),
+  media: 'cartridge' | 'disc' = 'cartridge',
 ): WizardNode[] {
   const prefix = folder ? `${folder}/` : '';
   const nodes: WizardNode[] = [];
@@ -148,7 +152,12 @@ export function buildWizardTree(
         claimedFiles.add(path);
         for (const ancestor of ancestorsOf(path, folder)) claimedFolders.add(ancestor);
 
-        return { label: nameOf(path), path, crc };
+        const system = path.includes('/') ? path.slice(0, path.indexOf('/')) : '';
+        const datName = file.entry.fileName ?? file.entry.name;
+        const target = targetOf(system, media, matched.group, variant.variant, datName);
+        const isConsolidated = path === target;
+
+        return { label: nameOf(path), path, crc, isConsolidated };
       });
 
       if (files.some((f) => f.path)) {

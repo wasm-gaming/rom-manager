@@ -52,11 +52,11 @@ function extensionOf(name: string): string {
  * per game and a subfolder per variant, because a release there is several
  * files that have to stay together.
  */
-function targetOf(
+export function targetOf(
   system: string,
   media: 'cartridge' | 'disc',
-  group: GameGroup,
-  variant: GameVariant,
+  group: { id: string },
+  variant: { key: string },
   datName: string,
 ): string {
   if (media === 'disc') return `${system}/${group.id}/${variant.key}/${datName}`;
@@ -65,6 +65,18 @@ function targetOf(
   const base = `${system}/${group.id}.${variant.key}`;
   return extension ? `${base}.${extension}` : base;
 }
+
+export function isConsolidatedPath(
+  localPath: string,
+  system: string,
+  media: 'cartridge' | 'disc',
+  group: { id: string },
+  variant: { key: string },
+  datName: string,
+): boolean {
+  return localPath === targetOf(system, media, group, variant, datName);
+}
+
 
 interface Candidate {
   from: string;

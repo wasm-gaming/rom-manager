@@ -141,7 +141,7 @@ describe('buildWizardTree', () => {
     );
 
     expect(variantOf(gameRow(tree, 'Sonic the Hedgehog'), 'USA').files).toEqual([
-      { label: 'sonic_u.bin', path: 'MegaDrive/sonic_u.bin', crc: 'AAAA1111' },
+      { label: 'sonic_u.bin', path: 'MegaDrive/sonic_u.bin', crc: 'AAAA1111', isConsolidated: false },
     ]);
   });
 
@@ -159,7 +159,7 @@ describe('buildWizardTree', () => {
     // The checksum comes along with it: a file that is not here is not known by
     // its name, which the dataset made up, but by what it would hash to.
     expect(variantOf(gameRow(tree, 'Final Fantasy VII'), 'USA').files).toEqual([
-      { label: 'one.bin', path: 'PSX/Final Fantasy VII/USA/one.bin', crc: 'AAAA1111' },
+      { label: 'one.bin', path: 'PSX/Final Fantasy VII/USA/one.bin', crc: 'AAAA1111', isConsolidated: false },
       { label: 'ff7-2.bin', crc: 'BBBB2222' },
     ]);
   });
@@ -327,5 +327,31 @@ describe('buildWizardTree', () => {
       regions: ['EU', 'US'],
       videoStandards: ['PAL', 'NTSC'],
     });
+  });
+
+  it('marks files as consolidated if they match their canonical target path', () => {
+    const games = [game('Sonic the Hedgehog (USA)', 'AAAA1111', 'Sonic the Hedgehog (USA).md')];
+
+    // Non-consolidated file
+    const unorganizedTree = buildWizardTree(
+      'MegaDrive',
+      [file('MegaDrive/sonic.bin')],
+      match(games, [local('MegaDrive/sonic.bin', 'AAAA1111')]),
+      new Map(),
+      'cartridge',
+    );
+    const unorganizedVariant = variantOf(gameRow(unorganizedTree, 'Sonic the Hedgehog'), 'USA');
+    expect(unorganizedVariant.files[0].isConsolidated).toBe(false);
+
+    // Consolidated file
+    const organizedTree = buildWizardTree(
+      'MegaDrive',
+      [file('MegaDrive/Sonic the Hedgehog.USA.md')],
+      match(games, [local('MegaDrive/Sonic the Hedgehog.USA.md', 'AAAA1111')]),
+      new Map(),
+      'cartridge',
+    );
+    const organizedVariant = variantOf(gameRow(organizedTree, 'Sonic the Hedgehog'), 'USA');
+    expect(organizedVariant.files[0].isConsolidated).toBe(true);
   });
 });

@@ -426,16 +426,20 @@ export function ROMExplorer(): JSX.Element {
         storeService.setError(undefined);
 
         const system = systemFolderOf(path);
-        const [match, covers, entries] = await Promise.all([
+        const [match, covers, entries, media] = await Promise.all([
           GameCatalogService.load(activeNode, system, (progress) =>
             setNotice(`Reading ${path}: ${progress.done} of ${progress.total}`),
           ),
           GameCatalogService.coversOf(system),
           activeNode.list(path),
+          ROMDatasetService.mediaOf(system).catch(() => 'cartridge' as const),
         ]);
 
         setGroupedRows((current) =>
-          new Map(current).set(path, buildWizardTree(path, entries, match, covers)),
+          new Map(current).set(
+            path,
+            buildWizardTree(path, entries, match, covers, media ?? 'cartridge'),
+          ),
         );
       } catch (err) {
         storeService.setError(err instanceof Error ? err.message : `Failed to group ${path}`);
@@ -1075,6 +1079,7 @@ export function ROMExplorer(): JSX.Element {
               onSave={handleSave}
               onSaveMany={handleSaveMany}
               onSelectFile={handleSelectFile}
+              onOrganize={handleOrganize}
               onBack={
                 game && gameFile
                   ? { label: game.title, go: () => setGameFile(undefined) }
