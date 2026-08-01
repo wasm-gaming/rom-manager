@@ -382,8 +382,9 @@ function VariantRow({
 }): JSX.Element {
   const activeUrl = cover?.publishedUrl || cover?.url;
   const isCoverActive =
-    Boolean(activeUrl && variant.cover === activeUrl) ||
-    Boolean(cover?.region && !variant.cover && variant.regions.includes(cover.region));
+    variant.status !== 'missing' &&
+    (Boolean(activeUrl && variant.cover === activeUrl) ||
+      Boolean(cover?.region && !variant.cover && variant.regions.includes(cover.region)));
 
   // The size belongs to the copy on disk, the checksum to the release, so every
   // file reads its CRC32 and not only the ones that are elsewhere: it is how you
