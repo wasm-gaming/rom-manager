@@ -3,6 +3,8 @@
 
 Check [STACK.md](STACK.md)
 
+Check [THESAURUS.md](THESAURUS.md)
+
 ## Project Managment
 
 Sessions and specifications live in [SESSIONS/](./SESSIONS/). Convention:
