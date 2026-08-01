@@ -192,24 +192,6 @@ export function FileTree({
     [entriesByPath, onFolderChange, onGameChange, onSelectionChange],
   );
 
-  useEffect(() => {
-    if (!selectedFiles) return;
-
-    const current = Array.from(selection);
-    if (
-      current.length === selectedFiles.length &&
-      current.every((path, i) => path === selectedFiles[i])
-    ) {
-      return;
-    }
-
-    setSelection(new Set(selectedFiles));
-  }, [selectedFiles, selection]);
-
-  useEffect(() => {
-    onVisibleChange?.(rows.flatMap((row) => row.paths));
-  }, [rows, onVisibleChange]);
-
   const revealDirectory = useCallback(
     async (path: string) => {
       const parts = path.split('/');
@@ -223,6 +205,47 @@ export function FileTree({
     },
     [loadDirectory],
   );
+
+  useEffect(() => {
+    if (!selectedFiles || selectedFiles.length === 0) return;
+
+    const current = Array.from(selection);
+    if (
+      current.length === selectedFiles.length &&
+      current.every((path, i) => path === selectedFiles[i])
+    ) {
+      return;
+    }
+
+    setSelection(new Set(selectedFiles));
+
+    for (const path of selectedFiles) {
+      const parent = parentOf(path);
+      if (parent && parent !== ROOT) {
+        void revealDirectory(parent);
+      }
+    }
+  }, [selectedFiles, selection, revealDirectory]);
+
+  useEffect(() => {
+    if (selection.size === 0) return;
+
+    const matchingGroupRow = rows.find(
+      (row) => row.kind === 'group' && row.paths.some((p) => selection.has(p)),
+    );
+
+    if (matchingGroupRow && matchingGroupRow.game) {
+      setSelectedGame(matchingGroupRow.key);
+      if (matchingGroupRow.game !== reportedGame.current) {
+        reportedGame.current = matchingGroupRow.game;
+        onGameChange?.(matchingGroupRow.game);
+      }
+    }
+  }, [rows, selection, onGameChange]);
+
+  useEffect(() => {
+    onVisibleChange?.(rows.flatMap((row) => row.paths));
+  }, [rows, onVisibleChange]);
 
   const toggleDirectory = useCallback(
     async (path: string) => {

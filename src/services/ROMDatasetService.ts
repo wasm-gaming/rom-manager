@@ -589,6 +589,8 @@ export class ROMDatasetService {
       const { record, media } = await this.getMetaRecord(system).catch(() => ({ record: undefined, media: undefined }));
       if (!record?.sets) continue;
 
+      const systemRoms = await this.listSystemRoms(system).catch(() => [] as ROMMetadata[]);
+
       const sets = record.sets as Record<string, DatasetSetEntry>;
       for (const [setKey, setInfo] of Object.entries(sets)) {
         if (!setInfo.members || setInfo.members.length === 0) continue;
@@ -602,12 +604,9 @@ export class ROMDatasetService {
 
         if (matchedCount > maxMatchedCount) {
           maxMatchedCount = matchedCount;
-          const rom = Array.isArray(record.list)
-            ? record.list.find(
-                (r: any) =>
-                  r.name === setInfo.title || r.fileName === `${setKey}.neo`,
-              )
-            : undefined;
+          const rom = systemRoms.find(
+            (r) => r.name === setInfo.title || r.fileName === `${setKey}.neo`,
+          );
 
           bestMatch = {
             system,

@@ -195,8 +195,8 @@ export async function scanSystem(
 
           if (memberCrcs.length > 0) {
             const setMatch = await ROMDatasetService.lookupSetByMemberCrcs([system], memberCrcs);
-            if (setMatch?.crc) {
-              crc32 = setMatch.crc;
+            if (setMatch) {
+              crc32 = setMatch.crc ?? setMatch.setKey;
             }
           }
         }
