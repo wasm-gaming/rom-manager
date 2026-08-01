@@ -111,7 +111,7 @@ export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.
         <div class="welcome-systems">
           <div class="welcome-systems-row welcome-systems-row--top">
             <ul class="welcome-systems-track">
-              {[...topSystems, ...topSystems].map((system, idx) => (
+              {[...topSystems, ...topSystems, ...topSystems, ...topSystems].map((system, idx) => (
                 <li key={`top-${system.id}-${idx}`} class="welcome-system" title={system.fullName}>
                   <span class="welcome-system-logo">
                     <SystemLogo systemId={system.id} />
@@ -124,7 +124,7 @@ export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.
 
           <div class="welcome-systems-row welcome-systems-row--middle">
             <ul class="welcome-systems-track">
-              {[...middleSystems, ...middleSystems].map((system, idx) => (
+              {[...middleSystems, ...middleSystems, ...middleSystems, ...middleSystems].map((system, idx) => (
                 <li key={`mid-${system.id}-${idx}`} class="welcome-system" title={system.fullName}>
                   <span class="welcome-system-logo">
                     <SystemLogo systemId={system.id} />
@@ -137,7 +137,7 @@ export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.
 
           <div class="welcome-systems-row welcome-systems-row--bottom">
             <ul class="welcome-systems-track">
-              {[...bottomSystems, ...bottomSystems].map((system, idx) => (
+              {[...bottomSystems, ...bottomSystems, ...bottomSystems, ...bottomSystems].map((system, idx) => (
                 <li key={`bot-${system.id}-${idx}`} class="welcome-system" title={system.fullName}>
                   <span class="welcome-system-logo">
                     <SystemLogo systemId={system.id} />
