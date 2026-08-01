@@ -176,13 +176,18 @@ function Gamepad({ systemId }: { systemId?: string }): JSX.Element {
   if (normalized === 'NEOGEO' || normalized === 'NEOGEO-CD') {
     return (
       <>
-        <rect x="3" y="7" width="18" height="10" rx="2" fill="#dc2626" />
-        <circle cx="7.5" cy="12" r="2" fill="#0f172a" />
-        <circle cx="7.5" cy="11.5" r="1.2" fill="#fef08a" />
-        <circle cx="13.2" cy="13.2" r="1.1" fill="#ef4444" />
-        <circle cx="15.2" cy="12" r="1.1" fill="#eab308" />
-        <circle cx="17.2" cy="11" r="1.1" fill="#22c55e" />
-        <circle cx="19.2" cy="10" r="1.1" fill="#3b82f6" />
+        {/* Dark Charcoal Console Chassis */}
+        <rect x="2" y="6" width="20" height="13" rx="1.5" fill="#26272b" stroke="#141518" stroke-width="0.8" />
+        {/* Top Vent Strip & SNK marker */}
+        <rect x="2" y="6" width="20" height="3" fill="#1d1e22" />
+        <rect x="3" y="7" width="2.5" height="1" fill="#ffffff" />
+        {/* Cartridge Slot Recess */}
+        <rect x="5" y="10" width="14" height="3.5" rx="0.8" fill="#141518" />
+        <rect x="6" y="11" width="12" height="1.5" rx="0.4" fill="#0d0e10" />
+        {/* Gold Neo-Geo Accent */}
+        <rect x="9" y="15" width="6" height="1.8" rx="0.4" fill="#eab308" />
+        {/* Reset button indicator */}
+        <circle cx="5" cy="16" r="0.8" fill="#64748b" />
       </>
     );
   }

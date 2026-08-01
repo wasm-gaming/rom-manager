@@ -240,10 +240,52 @@ export function SystemLogo({ systemId, className = 'system-logo-svg' }: SystemLo
     case 'NEOGEO-CD':
       return (
         <svg viewBox="0 0 128 128" class={className} aria-label="Neo Geo Console">
-          <rect x="12" y="24" width="104" height="80" rx="8" fill="#dc2626" stroke="#991b1b" stroke-width="3" />
-          <rect x="24" y="36" width="80" height="20" rx="3" fill="#7f1d1d" />
-          <text x="64" y="50" font-size="12" font-weight="900" fill="#fef08a" text-anchor="middle">
-            NEO-GEO
+          {/* Main Charcoal Console Chassis */}
+          <rect x="10" y="20" width="108" height="88" rx="6" fill="#26272b" stroke="#141518" stroke-width="3" />
+
+          {/* Top Ventilation Ridge & Inset */}
+          <path d="M10 20h108v16H10z" fill="#1d1e22" />
+          <path d="M22 20v16M26 20v16M30 20v16M98 20v16M102 20v16M106 20v16" stroke="#141518" stroke-width="1.5" />
+          {/* Horizontal Vent Lines */}
+          <line x1="38" y1="25" x2="90" y2="25" stroke="#141518" stroke-width="1.5" />
+          <line x1="38" y1="28" x2="90" y2="28" stroke="#141518" stroke-width="1.5" />
+          <line x1="38" y1="31" x2="90" y2="31" stroke="#141518" stroke-width="1.5" />
+
+          {/* Top-Left SNK Logo */}
+          <text x="14" y="32" font-size="7" font-weight="900" fill="#ffffff" letter-spacing="0.5">
+            SNK
+          </text>
+
+          {/* Central Cartridge Slot Recess */}
+          <rect x="22" y="42" width="84" height="24" rx="4" fill="#18191c" stroke="#101113" stroke-width="1.5" />
+          <rect x="28" y="48" width="72" height="12" rx="2" fill="#0d0e10" />
+          <line x1="28" y1="54" x2="100" y2="54" stroke="#26272b" stroke-width="1" />
+
+          {/* Bottom Left Joystick Recess & Buttons */}
+          <ellipse cx="26" cy="80" rx="10" ry="12" fill="#1c1d20" stroke="#141518" stroke-width="1" />
+          <circle cx="26" cy="78" r="4.5" fill="#121315" stroke="#333438" stroke-width="1" />
+          <text x="26" y="96" font-size="3" font-weight="700" fill="#94a3b8" text-anchor="middle">
+            RESET
+          </text>
+
+          {/* Center Gold Typography Badge */}
+          <text x="64" y="77" font-size="9" font-weight="900" fill="#eab308" text-anchor="middle" letter-spacing="0.5">
+            NEO·GEO
+          </text>
+          <text x="64" y="83" font-size="3.5" font-weight="800" fill="#ca8a04" text-anchor="middle" letter-spacing="0.4">
+            MAX 330 MEGA
+          </text>
+          <text x="64" y="88" font-size="3" font-weight="700" fill="#ca8a04" text-anchor="middle" letter-spacing="0.3">
+            PRO-GEAR SPEC
+          </text>
+          <text x="64" y="93" font-size="2.6" font-weight="600" fill="#a16207" text-anchor="middle" letter-spacing="0.2">
+            ADVANCED ENTERTAINMENT SYSTEM
+          </text>
+
+          {/* Bottom Right Memory Card In Slot Indicator */}
+          <polygon points="98,90 102,90 100,93" fill="#cbd5e1" />
+          <text x="100" y="88" font-size="2.6" font-weight="700" fill="#94a3b8" text-anchor="middle">
+            CARD IN
           </text>
         </svg>
       );
