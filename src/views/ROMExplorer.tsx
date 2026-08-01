@@ -151,7 +151,7 @@ export function ROMExplorer(): JSX.Element {
   /** Whether the initial landing view is being shown. */
   const [showLanding, setShowLanding] = useState(false);
   /** Bumped to remount the tree after the files underneath it have moved. */
-  const [treeVersion, setTreeVersion] = useState(0);
+  const [treeVersion] = useState(0);
 
   /** Systems whose library folder has already been listed. */
   const indexedSystems = useRef<Set<string>>(new Set());

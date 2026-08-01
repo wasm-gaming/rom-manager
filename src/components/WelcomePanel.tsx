@@ -2,6 +2,12 @@ import { JSX } from 'preact';
 import { BrandLogo } from './BrandLogo';
 import { SystemLogo } from './SystemLogos';
 import { FolderPlusIcon } from './icons';
+import {
+  HashIllustration,
+  GroupingIllustration,
+  CoversIllustration,
+  ConsolidateIllustration,
+} from './WelcomeCardIllustrations';
 import { getAllSystemsInfo } from '../core/system-info';
 import { t } from '../services/I18nService';
 
@@ -13,6 +19,13 @@ interface WelcomePanelProps {
 
 /** What the app is, said once, for the one screen where nothing else is. */
 const CAPABILITIES = ['hash', 'grouping', 'covers', 'consolidate'] as const;
+
+const CAPABILITY_ILLUSTRATIONS = {
+  hash: HashIllustration,
+  grouping: GroupingIllustration,
+  covers: CoversIllustration,
+  consolidate: ConsolidateIllustration,
+} as const;
 
 const STEPS = ['step1', 'step2', 'step3'] as const;
 
@@ -69,12 +82,18 @@ export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.
       <section class="welcome-section">
         <h3>{t('welcome.what.title')}</h3>
         <ul class="welcome-cards">
-          {CAPABILITIES.map((capability) => (
-            <li key={capability} class="welcome-card">
-              <h4>{t(`welcome.what.${capability}.title`)}</h4>
-              <p>{t(`welcome.what.${capability}.body`)}</p>
-            </li>
-          ))}
+          {CAPABILITIES.map((capability) => {
+            const Illustration = CAPABILITY_ILLUSTRATIONS[capability];
+            return (
+              <li key={capability} class="welcome-card">
+                <div class="welcome-card-illustration">
+                  <Illustration />
+                </div>
+                <h4>{t(`welcome.what.${capability}.title`)}</h4>
+                <p>{t(`welcome.what.${capability}.body`)}</p>
+              </li>
+            );
+          })}
         </ul>
       </section>
 
