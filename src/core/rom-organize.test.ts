@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { groupDatGames, type DatGame } from './rom-grouping';
 import { matchGroupsWithLocalFiles, type LocalFile, type MatchResult } from './rom-matching';
-import { planOrganization, type OrganizePlan } from './rom-organize';
+import { filterPlanForPath, planOrganization, type OrganizePlan } from './rom-organize';
 
 function game(name: string, crc: string, fileName?: string): DatGame {
   return { name, crc, size: 1024, fileName: fileName ?? `${name}.md` };
@@ -202,3 +202,23 @@ describe('planOrganization', () => {
     expect(plan).toEqual({ moves: [], markers: [], conflicts: [], settled: 0 });
   });
 });
+
+describe('filterPlanForPath', () => {
+  it('filters organization plan moves to target single file', () => {
+    const games = [
+      game('Sonic the Hedgehog (USA)', 'AAAA1111', 'Sonic the Hedgehog (USA).md'),
+      game('Ristar (USA)', 'BBBB2222', 'Ristar (USA).md'),
+    ];
+    const fullPlan = planOrganization(
+      'MegaDrive',
+      'cartridge',
+      match(games, [local('MegaDrive/sonic.bin', 'AAAA1111'), local('MegaDrive/ristar.bin', 'BBBB2222')]),
+    );
+
+    const filtered = filterPlanForPath(fullPlan, 'MegaDrive/sonic.bin');
+    expect(filtered.moves).toEqual([
+      { from: 'MegaDrive/sonic.bin', to: 'MegaDrive/Sonic the Hedgehog.USA.md' },
+    ]);
+  });
+});
+

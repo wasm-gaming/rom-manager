@@ -25,7 +25,7 @@ import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizar
 import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
 import { imageExtensionOf, isImageName, regionOfScope } from '../core/rom-media';
 import { preferRegion, REGIONS, type Region } from '../core/rom-regions';
-import type { OrganizePlan } from '../core/rom-organize';
+import { filterPlanForPath, type OrganizePlan } from '../core/rom-organize';
 import {
   storeService,
   originsSignal,
@@ -534,9 +534,13 @@ export function ROMExplorer(): JSX.Element {
         storeService.setError(undefined);
         setOrganizeBusy(t('organize.busy.reading', { system }));
 
-        const plan = await OrganizeService.plan(activeNode, system, (done, total) =>
+        let plan = await OrganizeService.plan(activeNode, system, (done, total) =>
           setOrganizeBusy(t('organize.busy.readingProgress', { system, done, total })),
         );
+
+        if (path !== system) {
+          plan = filterPlanForPath(plan, path);
+        }
 
         setOrganize({ system, plan });
       } catch (err) {

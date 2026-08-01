@@ -207,3 +207,32 @@ function order(
 
   return moves;
 }
+
+/**
+ * Filter an organization plan down to a specific file or sub-path.
+ */
+export function filterPlanForPath(plan: OrganizePlan, targetPath: string): OrganizePlan {
+  const matchesPath = (path: string) => path === targetPath || path.startsWith(`${targetPath}/`);
+
+  const moves = plan.moves.filter((move) => matchesPath(move.from));
+  const conflicts = plan.conflicts.filter(
+    (conflict) => matchesPath(conflict.from) || matchesPath(conflict.to),
+  );
+
+  const markers = plan.markers.filter((marker) =>
+    moves.some(
+      (move) =>
+        move.to === marker.path ||
+        (marker.gameId && move.to.includes(marker.gameId)) ||
+        move.to.startsWith(marker.path.replace(/\/game\.json$/, '')),
+    ),
+  );
+
+  return {
+    moves,
+    markers,
+    conflicts,
+    settled: moves.length === 0 && conflicts.length === 0 ? 1 : 0,
+  };
+}
+
