@@ -942,6 +942,135 @@ code {
   font-size: 0.95rem;
 }
 
+/* System Details View */
+.system-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.system-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.system-logo-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background-color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+
+.system-logo-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.system-heading h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.system-fullname {
+  margin: 0.25rem 0 0.75rem 0;
+  font-size: 0.875rem;
+  color: var(--text-2);
+}
+
+.system-meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.system-meta-tags .tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.system-meta-tags .tag.manufacturer {
+  border: 1px solid currentColor;
+}
+
+.system-meta-tags .tag.year {
+  background-color: var(--surface);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+}
+
+.system-meta-tags .tag.media {
+  background-color: var(--surface);
+  color: var(--text-2);
+  border: 1px solid var(--border);
+}
+
+.system-description-box,
+.system-extensions-box {
+  background-color: var(--surface);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid var(--border-soft);
+}
+
+.system-description-box h4,
+.system-extensions-box h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+}
+
+.system-description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.system-extensions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.extension-pill {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.extension-pill:hover {
+  border-color: var(--focus);
+  transform: translateY(-1px);
+}
+
+.extension-pill code {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
 .metadata-editor {
   background-color: var(--surface);
   padding: 1.5rem;

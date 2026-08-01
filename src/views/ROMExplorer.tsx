@@ -1069,6 +1069,7 @@ export function ROMExplorer(): JSX.Element {
             <RomDetails
               paths={gameFile ? [gameFile] : selection}
               game={gameFile ? undefined : game}
+              folder={folder}
               gameCover={gameCover}
               records={records}
               stats={stats}

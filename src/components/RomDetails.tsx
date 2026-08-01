@@ -18,12 +18,15 @@ import type { WizardFile, WizardGame, WizardVariant } from '../core/wizard-tree'
 import type { Region } from '../core/rom-regions';
 import type { MatchStatus } from '../core/rom-matching';
 import { systemAspectRatio } from '../core/rom-covers';
+import { SystemDetails } from './SystemDetails';
 
 interface RomDetailsProps {
   /** ROM files selected in the tree, in tree order. */
   paths: string[];
   /** The game picked in the tree, which is shown instead of its files. */
   game?: WizardGame;
+  /** The folder picked in the tree. */
+  folder?: string;
   /**
    * Boxart of that game, already resolved to something an `<img>` accepts, and
    * the region it is the box of. It is also what a file of the game opened on
@@ -687,6 +690,7 @@ function RomSelectionView({
 export function RomDetails({
   paths,
   game,
+  folder,
   gameCover,
   records,
   stats,
@@ -722,6 +726,9 @@ export function RomDetails({
   }
 
   if (paths.length === 0) {
+    if (folder) {
+      return <SystemDetails folder={folder} />;
+    }
     return <div class="empty-state">Select a ROM to view its details</div>;
   }
 
