@@ -6,17 +6,10 @@ import { t } from '../services/I18nService';
 interface SystemDetailsProps {
   /** Selected folder path */
   folder: string;
-  /**
-   * Whether the folder is browsed grouped by game.
-   *
-   * Only then does it stand for a system: the console is what the wizard reads
-   * the folder as, and a plain listing — a subfolder, or a system folder taken
-   * out of wizard mode — is a folder and nothing more.
-   */
-  wizard: boolean;
+  wizard?: boolean;
 }
 
-export function SystemDetails({ folder, wizard }: SystemDetailsProps): JSX.Element {
+export function SystemDetails({ folder, wizard = false }: SystemDetailsProps): JSX.Element {
   const info = wizard ? getSystemInfo(folder) : undefined;
 
   if (!info) {

@@ -72,10 +72,17 @@ const DRAG_MIME = 'application/x-rom-manager-paths';
  * Whether the catalogue recognises a ROM is said twice already, by the status
  * disc and by the badge dot, and neither of those is this.
  */
-function RowIcon({ row }: { row: VisibleRow }): JSX.Element {
+function RowIcon({
+  row,
+  isGrouped,
+}: {
+  row: VisibleRow;
+  isGrouped?: (path: string) => boolean;
+}): JSX.Element {
   if (row.kind === 'pending') return <span class="tree-spinner" />;
   if (row.kind === 'directory') {
-    const system = getSystemInfo(row.path || row.label);
+    const isWizard = Boolean(row.path && isGrouped?.(row.path));
+    const system = isWizard ? getSystemInfo(row.path || row.label) : undefined;
     if (system) {
       return <SystemFolderIcon systemId={system.id} />;
     }
@@ -773,7 +780,7 @@ export function FileTree({
               <span class="tree-caret" />
             )}
             <span class="tree-icon">
-              <RowIcon row={row} />
+              <RowIcon row={row} isGrouped={isGrouped} />
             </span>
             <span class="tree-name">{row.label}</span>
 
