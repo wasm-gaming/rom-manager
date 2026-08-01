@@ -98,7 +98,7 @@ export function MediaDropModal({
     () =>
       new Set(
         [...offers]
-          .filter(([, offer]) => offer.pending.length > 0 && lands(offer.path, folder))
+          .filter(([, offer]) => offer.pending.length > 0)
           .map(([file]) => file),
       ),
   );
@@ -253,8 +253,8 @@ export function MediaDropModal({
                           take(file, (event.target as HTMLSelectElement).value === 'game')
                         }
                       >
-                        <option value="copy">{t('drop.asIs')}</option>
                         <option value="game">{t('drop.asGame', { title: offer.match.title })}</option>
+                        <option value="copy">{t('drop.asIs')}</option>
                       </select>
                     ) : (
                       <span class="drop-file-note">
