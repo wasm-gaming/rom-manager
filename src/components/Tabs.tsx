@@ -1,5 +1,5 @@
 import { JSX } from 'preact';
-import { CloseIcon, LockIcon } from './icons';
+import { CloseIcon, RefreshIcon } from './icons';
 import { t } from '../services/I18nService';
 
 export interface Origin {
@@ -36,7 +36,7 @@ export function Tabs({
         >
           {origin.locked && (
             <span class="tab-lock">
-              <LockIcon />
+              <RefreshIcon />
             </span>
           )}
           <span class="tab-name">{origin.name}</span>

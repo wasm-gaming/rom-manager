@@ -149,7 +149,7 @@ export function ROMExplorer(): JSX.Element {
   /** Whether the preferences panel is open. */
   const [preferences, setPreferences] = useState(false);
   /** Whether the initial landing view is being shown. */
-  const [showLanding, setShowLanding] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
   /** Bumped to remount the tree after the files underneath it have moved. */
   const [treeVersion] = useState(0);
 
@@ -1061,23 +1061,9 @@ export function ROMExplorer(): JSX.Element {
 
       {errorSignal.value && <div class="error-message">{errorSignal.value}</div>}
 
-      {originsMap.size === 0 || showLanding ? (
-        // Initial view: shown before any folder is opened or when the title is clicked
+      {originsMap.size === 0 || showLanding || activeOrigin?.locked || !activeNode ? (
+        // Initial view: shown before any folder is opened, on reload, or when title is clicked
         <WelcomePanel onOpenFolder={handleOpenFolder} loading={loadingSignal.value} />
-      ) : activeOrigin?.locked || !activeNode ? (
-        <div class="empty-state-full">
-          <p>
-            {t('library.locked.title', { name: activeOrigin?.name ?? t('system.folder') })}
-          </p>
-          <button
-            onClick={() => activeOriginId && handleSelectOrigin(activeOriginId)}
-            disabled={loadingSignal.value}
-          >
-            {loadingSignal.value
-              ? t('library.opening')
-              : t('library.locked.open', { name: activeOrigin?.name ?? t('system.folder') })}
-          </button>
-        </div>
       ) : (
         <div class="explorer-container">
           {activeNode && (
