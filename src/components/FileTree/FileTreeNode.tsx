@@ -78,63 +78,67 @@ export function FileTreeNode({
       }
       onDrop={row.kind === 'directory' && onDrop ? (event) => onDrop(event, row.path!) : undefined}
     >
-      {row.expandable ? (
-        <button
-          class="tree-caret"
-          onClick={(event) => {
-            event.stopPropagation();
-            onToggleDirectory(row.path!);
-          }}
-          title={expanded.has(row.key) ? 'Collapse' : 'Expand'}
-        >
-          <ChevronIcon open={expanded.has(row.key)} />
-        </button>
-      ) : (
-        <span class="tree-caret" />
-      )}
+      <div
+        class="tree-item-left"
+        onClick={() => {
+          if (row.expandable && row.path) {
+            onToggleDirectory(row.path);
+          }
+        }}
+      >
+        {row.expandable ? (
+          <span class="tree-caret" title={expanded.has(row.key) ? 'Collapse' : 'Expand'}>
+            <ChevronIcon open={expanded.has(row.key)} />
+          </span>
+        ) : (
+          <span class="tree-caret" />
+        )}
 
-      <span class="tree-icon">
-        <RowIcon row={row} isGrouped={isGrouped} />
-      </span>
-      <span class="tree-name">{row.label}</span>
-
-      {row.status && row.status !== 'complete' && (
-        <span class="tree-status" title={statusLabels[row.status] ?? row.status}>
-          <StatusIcon status={row.status as 'complete' | 'partial' | 'missing'} />
+        <span class="tree-icon">
+          <RowIcon row={row} isGrouped={isGrouped} />
         </span>
-      )}
+        <span class="tree-name">{row.label}</span>
+      </div>
 
-      {row.kind !== 'directory' && row.paths.some((path) => isInitialized?.(path)) && (
-        <span class="tree-badge" title="Has library record">
-          <DotIcon />
-        </span>
-      )}
+      <div class="tree-item-actions">
+        {row.status && row.status !== 'complete' && (
+          <span class="tree-status" title={statusLabels[row.status] ?? row.status}>
+            <StatusIcon status={row.status as 'complete' | 'partial' | 'missing'} />
+          </span>
+        )}
 
-      {row.kind === 'directory' && canGroup?.(row.path!) && (
-        <button
-          class={`tree-group-toggle ${isGrouped?.(row.path!) ? 'on' : ''}`}
-          onClick={(event) => {
-            event.stopPropagation();
-            onToggleGrouping?.(row.path!);
-          }}
-          title={isGrouped?.(row.path!) ? 'Browsing grouped by game' : 'Browse grouped by game'}
-        >
-          <GroupIcon />
-        </button>
-      )}
+        {row.kind !== 'directory' && row.paths.some((path) => isInitialized?.(path)) && (
+          <span class="tree-badge" title="Has library record">
+            <DotIcon />
+          </span>
+        )}
 
-      {row.kind === 'directory' && onOrganize && canGroup?.(row.path!) && (
-        <button
-          class="tree-organize"
-          onClick={(event) => {
-            event.stopPropagation();
-            onOrganize(row.path!);
-          }}
-          title="Consolidate folder"
-        >
-          <OrganizeIcon />
-        </button>
-      )}
+        {row.kind === 'directory' && canGroup?.(row.path!) && (
+          <button
+            class={`tree-group-toggle ${isGrouped?.(row.path!) ? 'on' : ''}`}
+            onClick={(event) => {
+              event.stopPropagation();
+              onToggleGrouping?.(row.path!);
+            }}
+            title={isGrouped?.(row.path!) ? 'Browsing grouped by game' : 'Browse grouped by game'}
+          >
+            <GroupIcon />
+          </button>
+        )}
+
+        {row.kind === 'directory' && onOrganize && canGroup?.(row.path!) && (
+          <button
+            class="tree-organize"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOrganize(row.path!);
+            }}
+            title="Consolidate folder"
+          >
+            <OrganizeIcon />
+          </button>
+        )}
+      </div>
     </li>
   );
 }

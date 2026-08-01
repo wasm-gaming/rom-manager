@@ -696,10 +696,11 @@ export function RomDetails({
     );
   }
 
+  if (folder && (paths.length === 0 || (paths.length === 1 && paths[0] === folder))) {
+    return <SystemDetails folder={folder} wizard={wizardFolder} />;
+  }
+
   if (paths.length === 0) {
-    if (folder) {
-      return <SystemDetails folder={folder} wizard={wizardFolder} />;
-    }
     return <div class="empty-state">{t('details.empty')}</div>;
   }
 
