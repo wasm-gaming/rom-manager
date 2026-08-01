@@ -1,6 +1,5 @@
 import { JSX } from 'preact';
-import { CloseIcon, RefreshIcon } from './icons';
-import { t } from '../services/I18nService';
+import { CloseIcon, RefreshIcon } from '@/components/icons';
 
 export interface Origin {
   id: string;
@@ -17,6 +16,10 @@ interface TabsProps {
   onSelectOrigin?: (originId: string) => void;
   onClose?: (originId: string) => void;
   onAddOrigin?: () => void;
+  labels?: {
+    reconnect?: string;
+    close?: string;
+  };
 }
 
 export function Tabs({
@@ -24,7 +27,11 @@ export function Tabs({
   activeOriginId,
   onSelectOrigin,
   onClose,
+  labels = {},
 }: TabsProps): JSX.Element {
+  const reconnectTitle = labels.reconnect ?? 'Reconnect folder';
+  const closeTitle = labels.close ?? 'Close tab';
+
   return (
     <div class="tabs">
       {origins.map((origin) => (
@@ -32,7 +39,7 @@ export function Tabs({
           key={origin.id}
           class={`tab ${activeOriginId === origin.id ? 'active' : ''} ${origin.locked ? 'locked' : ''}`}
           onClick={() => onSelectOrigin?.(origin.id)}
-          title={origin.locked ? t('tabs.reconnect') : undefined}
+          title={origin.locked ? reconnectTitle : undefined}
         >
           {origin.locked && (
             <span class="tab-lock">
@@ -46,7 +53,7 @@ export function Tabs({
               e.stopPropagation();
               onClose?.(origin.id);
             }}
-            title={t('tabs.close')}
+            title={closeTitle}
           >
             <CloseIcon />
           </button>

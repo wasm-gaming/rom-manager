@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
 import { useState } from 'preact/hooks';
-import { ROM_REGIONS, VIDEO_STANDARDS, romMetadataService } from '../services/ROMMetadataService';
-import { StorageStat } from '../services/StorageService';
+import { ROM_REGIONS, VIDEO_STANDARDS, romMetadataService } from '@/services/ROMMetadataService';
+import { StorageStat } from '@/services/StorageService';
 import {
   CRC32_SIZE_LIMIT,
   RomRecord,
@@ -10,16 +10,16 @@ import {
   fileNameOf,
   gameNameOf,
   systemOf,
-} from '../services/RomLibraryService';
-import { MetadataEditor } from './MetadataEditor';
-import { ArrowLeftIcon, OrganizeIcon, PencilIcon, SaveIcon, StatusIcon } from './icons';
-import { calculateCRC32 } from '../services/ChecksumService';
-import type { WizardFile, WizardGame, WizardVariant } from '../core/wizard-tree';
-import type { Region } from '../core/rom-regions';
-import type { MatchStatus } from '../core/rom-matching';
-import { systemAspectRatio } from '../core/rom-covers';
-import { SystemDetails } from './SystemDetails';
-import { t } from '../services/I18nService';
+} from '@/services/RomLibraryService';
+import { MetadataEditor } from '@/views/ROMExplorer/MetadataEditor';
+import { ArrowLeftIcon, OrganizeIcon, PencilIcon, SaveIcon, StatusIcon } from '@/components/icons';
+import { calculateCRC32 } from '@/services/ChecksumService';
+import type { WizardFile, WizardGame, WizardVariant } from '@/core/wizard-tree';
+import type { Region } from '@/core/rom-regions';
+import type { MatchStatus } from '@/core/rom-matching';
+import { systemAspectRatio } from '@/core/rom-covers';
+import { SystemDetails } from '@/views/ROMExplorer/SystemDetails';
+import { t } from '@/services/I18nService';
 
 interface RomDetailsProps {
   /** ROM files selected in the tree, in tree order. */
@@ -76,10 +76,6 @@ function formatDate(value: number | string | undefined): string {
   return Number.isNaN(date.getTime()) ? '—' : date.toLocaleString();
 }
 
-/**
- * CRC32 of a ROM that has no record yet. Hashing means reading the whole file,
- * so it stays behind a button and is refused outright for the large ones.
- */
 function ChecksumRow({
   path,
   size,
@@ -133,21 +129,12 @@ function ChecksumRow({
   );
 }
 
-/** The boxart on screen, and which box it is. */
 interface CoverShown {
   url: string;
   publishedUrl?: string;
-  /** Absent when the image stands for the whole game rather than for a region. */
   region?: Region;
 }
 
-/**
- * The boxart and what it is the box of.
- *
- * Worth saying with six possible preference orders: the image alone does not
- * tell you which region's box you are looking at, and for a release that ships
- * to several the answer is the only visible effect of the preference.
- */
 function CoverFigure({
   cover,
   alt,
@@ -206,7 +193,6 @@ function CoverFigure({
   );
 }
 
-/** A ROM the user has never edited: a plain file, described as one. */
 function RomFileView({
   path,
   stat,
@@ -224,9 +210,6 @@ function RomFileView({
 
   return (
     <div class="rom-file-view">
-      {/* The boxart of the game this file is a release of, chosen among the
-          regions *this* release ships to. A file with no game behind it — flat
-          mode, an unrecognised dump — simply has none, and gets no hero. */}
       {cover ? (
         <div class="rom-info-hero">
           <CoverFigure cover={cover} alt={fileNameOf(path)} system={systemOf(path)} />
@@ -280,7 +263,6 @@ function RomFileView({
   );
 }
 
-/** A ROM with a record: shown as a game, not as a file. */
 function RomInfoView({
   path,
   record,
@@ -359,14 +341,6 @@ function hasFiles(variant: WizardVariant): boolean {
   return variant.files.some((file) => file.path);
 }
 
-/**
- * One release: what it is called, where it ships and at what standard, how much
- * of it is here, and its files.
- *
- * The regions and the standards are the release's own and not the game's: a
- * world release runs both PAL and NTSC, and which regions a release covers is
- * what decides whose box is on screen.
- */
 function VariantRow({
   variant,
   stats,
@@ -386,11 +360,6 @@ function VariantRow({
     (Boolean(activeUrl && variant.cover === activeUrl) ||
       Boolean(cover?.region && !variant.cover && variant.regions.includes(cover.region)));
 
-  // The size belongs to the copy on disk, the checksum to the release, so every
-  // file reads its CRC32 and not only the ones that are elsewhere: it is how you
-  // tell whether a dump found somewhere else is this one, and how you quote the
-  // one you have. A file that is here has been matched by that very number, so
-  // the catalogue's checksum is also its own.
   const files = (file: WizardFile, index: number) =>
     file.path ? (
       <li key={file.path} class="variant-file">
@@ -454,13 +423,6 @@ function VariantRow({
   );
 }
 
-/**
- * A game as one thing: its boxart, and which of its releases the folder holds.
- *
- * The tree shows a game as a single row, so this is the only place the releases
- * can be read — and the only way into the files themselves, which is why the
- * present ones are buttons.
- */
 function GameView({
   game,
   cover,
@@ -486,8 +448,6 @@ function GameView({
           <h2>{game.title}</h2>
           <p class="rom-info-system">{systemOf(game.paths[0]) || '—'}</p>
 
-          {/* One badge per release that is here: which ones you have reads
-              better than how many, and the missing ones have their own list. */}
           <div class="rom-info-tags">
             <span class={`tag status-${game.status}`}>{t(STATUS_KEYS[game.status])}</span>
             {present.map((variant) => (
@@ -499,10 +459,19 @@ function GameView({
         </div>
       </div>
 
-      {/* No facts table: the name on disk, how many releases there are, how many
-          files are here and how much they weigh are all already read below, one
-          release at a time and with more to say. */}
-      <h4 class="variants-title">{t('details.variants.title')}</h4>
+      <div class="variants-heading">
+        <h3>{t('details.variants.title')}</h3>
+        {present.length > 0 && onOrganize && (
+          <button
+            class="tree-organize"
+            onClick={() => onOrganize(present[0].files.find((f) => f.path)?.path || game.paths[0])}
+            title={t('details.variants.consolidateAll')}
+          >
+            <OrganizeIcon />
+          </button>
+        )}
+      </div>
+
       <ul class="variants">
         {present.map((variant) => (
           <VariantRow
@@ -516,8 +485,6 @@ function GameView({
         ))}
       </ul>
 
-      {/* The catalogue can list fifteen releases of a game against the one on
-          disk, so the absent ones stay folded until they are asked for. */}
       {missing.length > 0 && (
         <details class="variants-missing">
           <summary>{t('details.variants.more', { count: missing.length })}</summary>
@@ -539,20 +506,12 @@ function GameView({
   );
 }
 
-/**
- * Shared value of a field across the selection, or `undefined` when the games
- * disagree — which is what the editor shows as "(mixed)".
- */
 function sharedValue(records: RomRecord[], field: keyof RomRecord): string | undefined {
   const first = records[0]?.[field];
   if (typeof first !== 'string') return undefined;
   return records.every((record) => record[field] === first) ? first : undefined;
 }
 
-/**
- * Batch editing only offers the fields that mean the same thing for every
- * selected game — a title or a cover does not, a region and a video standard do.
- */
 function RomBatchEditor({
   records,
   count,
@@ -651,7 +610,6 @@ function RomBatchEditor({
   );
 }
 
-/** Read-only summary of a multiple selection, and the gate to batch editing. */
 function RomSelectionView({
   paths,
   records,
@@ -726,7 +684,6 @@ export function RomDetails({
   );
 
   if (game) {
-    // Keyed by game so the folded releases of the last one do not stay unfolded.
     return (
       <GameView
         key={game.key}
@@ -770,9 +727,6 @@ export function RomDetails({
   const stat = stats.get(path);
   const size = stat?.size ?? 0;
 
-  // The boxart of the game this file is a release of, already chosen among the
-  // regions that release ships to. A file the record has a cover of its own for
-  // keeps it: it was picked by hand, for this file.
   const own = covers.get(path);
   const cover: CoverShown | undefined = own ? { url: own } : gameCover;
 

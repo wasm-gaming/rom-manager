@@ -1,16 +1,14 @@
 import { JSX } from 'preact';
-import { ArrowRightIcon, CloseIcon } from './icons';
-import { t } from '../services/I18nService';
-import type { OrganizePlan } from '../core/rom-organize';
-import type { UndoRecord } from '../services/OrganizeService';
+import { ArrowRightIcon, CloseIcon } from '@/components/icons';
+import { t } from '@/services/I18nService';
+import type { OrganizePlan } from '@/core/rom-organize';
+import type { UndoRecord } from '@/services/OrganizeService';
 
-/** How many rows of each list are worth rendering; a plan can hold thousands. */
 const PREVIEW_LIMIT = 200;
 
 interface OrganizePanelProps {
   system: string;
   plan: OrganizePlan;
-  /** Set once the plan has run, which turns the panel into a report. */
   applied?: UndoRecord;
   busy?: string;
   onConfirm: () => void;
@@ -22,14 +20,6 @@ function shorten<T>(items: T[]): T[] {
   return items.slice(0, PREVIEW_LIMIT);
 }
 
-/**
- * The preview standing between the user and the only operation that moves
- * their ROMs.
- *
- * Nothing here happens on opening: the panel shows what would change and waits.
- * Conflicts are listed as prominently as moves, because a file the manager
- * refuses to touch is the thing the user most needs to know about.
- */
 export function OrganizePanel({
   system,
   plan,

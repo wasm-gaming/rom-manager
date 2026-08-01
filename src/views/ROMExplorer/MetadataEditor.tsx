@@ -1,11 +1,11 @@
 import { JSX } from 'preact';
 import { useState } from 'preact/hooks';
-import { ROM_REGIONS, VIDEO_STANDARDS } from '../services/ROMMetadataService';
-import { RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
-import { ROMDatasetService } from '../services/ROMDatasetService';
-import { calculateCRC32, calculateMD5, calculateSHA1 } from '../services/ChecksumService';
-import { CheckIcon, CloseIcon, HourglassIcon, SaveIcon, SearchIcon } from './icons';
-import { t } from '../services/I18nService';
+import { ROM_REGIONS, VIDEO_STANDARDS } from '@/services/ROMMetadataService';
+import { RomRecord, gameNameOf, systemOf } from '@/services/RomLibraryService';
+import { ROMDatasetService } from '@/services/ROMDatasetService';
+import { calculateCRC32, calculateMD5, calculateSHA1 } from '@/services/ChecksumService';
+import { CheckIcon, CloseIcon, HourglassIcon, SaveIcon, SearchIcon } from '@/components/icons';
+import { t } from '@/services/I18nService';
 
 interface MetadataEditorProps {
   romPath: string;
@@ -31,7 +31,6 @@ interface DatasetResult {
 
 type LookupPhase = 'idle' | 'crc32' | 'md5' | 'sha1' | 'complete';
 
-/** Fields a dataset match can fill in, in the order the modal lists them. */
 const LOOKUP_FIELDS = ['title', 'description', 'region', 'videoStandard', 'cover'] as const;
 
 export function MetadataEditor({
@@ -51,15 +50,12 @@ export function MetadataEditor({
   const [selectedFields, setSelectedFields] = useState<Set<string>>(new Set());
   const [error, setError] = useState<string | null>(null);
 
-  // A cover the lookup just proposed is still a remote URL: it only becomes a
-  // file in the library once the record is saved.
   const previewUrl = draft.cover?.startsWith('https://') ? draft.cover : coverUrl;
 
   const update = <K extends keyof RomRecord>(field: K, value: RomRecord[K]) => {
     setDraft((current) => ({ ...current, [field]: value }));
   };
 
-  /** The CRC32 the editor works with, computing it on first request. */
   const ensureChecksum = async (): Promise<string> => {
     if (draft.crc32) return draft.crc32;
 
@@ -80,7 +76,6 @@ export function MetadataEditor({
     }
   };
 
-  /** Shows a match with every field it can fill in pre-selected. */
   const showLookupResult = (result: DatasetResult) => {
     setLookupResult(result);
 
@@ -95,10 +90,6 @@ export function MetadataEditor({
     setLookupPhase('complete');
   };
 
-  /**
-   * Walks the checksums from cheapest to dearest, stopping at the first hit —
-   * MD5 and SHA1 are only paid for when CRC32 comes back empty.
-   */
   const handleLookup = async () => {
     try {
       setBusy(true);
@@ -111,8 +102,6 @@ export function MetadataEditor({
       const crc32 = draft.crc32 || (await calculateCRC32(content));
       if (!draft.crc32) update('crc32', crc32);
 
-      // Datasets are loaded per system, so the ROM's own one has to be in
-      // place before any checksum can match.
       const system = systemOf(romPath);
       try {
         await ROMDatasetService.ensureSystem(system);
@@ -374,7 +363,6 @@ export function MetadataEditor({
           onChange={(event) => update('region', (event.target as HTMLSelectElement).value)}
         >
           <option value="">{t('editor.select')}</option>
-          {/* Keep an unknown value selectable so a lookup result is never silently dropped. */}
           {draft.region && !ROM_REGIONS.includes(draft.region) && (
             <option value={draft.region}>{draft.region}</option>
           )}

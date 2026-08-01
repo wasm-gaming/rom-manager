@@ -1,6 +1,12 @@
 import { JSX } from 'preact';
 import { useId } from 'preact/hooks';
-import { DISC_MIME, mimeOf, ROM_MIME, SAVE_MIME } from '../core/file-types';
+
+const DISC_EXTS = new Set(['iso', 'cue', 'chd', 'gdi', 'nrg', 'mdf', 'ccd', 'pbp']);
+const SAVE_EXTS = new Set(['sav', 'srm', 'state', 'st0', 'st1', 'st2', 'st3', 'st4', 'st5', 'mcr', 'mc']);
+const ARCHIVE_EXTS = new Set(['zip', '7z', 'rar', 'gz', 'tar']);
+const IMAGE_EXTS = new Set(['png', 'jpg', 'jpeg', 'gif', 'webp', 'bmp', 'svg']);
+const DOC_EXTS = new Set(['txt', 'json', 'xml', 'md', 'nfo', 'pdf', 'doc', 'dat']);
+
 
 /**
  * The icons, drawn rather than typed.
@@ -478,34 +484,15 @@ export interface IconProps {
   systemId?: string;
 }
 
-/**
- * The family step is what keeps this table from needing a row for every image
- * format anyone ever ships — and what makes the unlisted ones degrade to
- * something true rather than to something wrong.
- */
-const ICONS_BY_MIME: Readonly<Record<string, (props?: IconProps) => JSX.Element>> = {
-  [ROM_MIME]: GameIcon,
-  [DISC_MIME]: DiscIcon,
-  [SAVE_MIME]: MemoryCardIcon,
-  'application/zip': ArchiveIcon,
-  'application/x-7z-compressed': ArchiveIcon,
-  'application/vnd.rar': ArchiveIcon,
-  'application/gzip': ArchiveIcon,
-  'application/json': DocumentIcon,
-  'application/xml': DocumentIcon,
-};
-
-/** Whole families, for the types that are all drawn the same way. */
-const ICONS_BY_FAMILY: Readonly<Record<string, (props?: IconProps) => JSX.Element>> = {
-  image: ImageIcon,
-  text: DocumentIcon,
-};
-
 /** The icon a file's name earns it, which is the most a listing can say. */
 export function iconOfName(name: string): (props?: IconProps) => JSX.Element {
-  const mime = mimeOf(name);
-
-  return ICONS_BY_MIME[mime] ?? ICONS_BY_FAMILY[mime.split('/')[0]] ?? FileIcon;
+  const ext = name.split('.').pop()?.toLowerCase() || '';
+  if (DISC_EXTS.has(ext)) return DiscIcon;
+  if (SAVE_EXTS.has(ext)) return MemoryCardIcon;
+  if (ARCHIVE_EXTS.has(ext)) return ArchiveIcon;
+  if (IMAGE_EXTS.has(ext)) return ImageIcon;
+  if (DOC_EXTS.has(ext)) return DocumentIcon;
+  return FileIcon;
 }
 
 /* ---------------------------------------------------------------------------

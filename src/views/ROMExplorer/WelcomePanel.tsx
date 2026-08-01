@@ -1,15 +1,15 @@
 import { JSX } from 'preact';
-import { BrandLogo } from './BrandLogo';
-import { SystemLogo } from './SystemLogos';
-import { FolderPlusIcon, GithubIcon } from './icons';
+import { BrandLogo } from '@/components/BrandLogo';
+import { SystemLogo } from '@/components/SystemLogos';
+import { FolderPlusIcon, GithubIcon } from '@/components/icons';
 import {
   HashIllustration,
   GroupingIllustration,
   CoversIllustration,
   ConsolidateIllustration,
-} from './WelcomeCardIllustrations';
-import { getAllSystemsInfo } from '../core/system-info';
-import { t } from '../services/I18nService';
+} from '@/components/WelcomeCardIllustrations';
+import { getAllSystemsInfo } from '@/core/system-info';
+import { t } from '@/services/I18nService';
 
 interface WelcomePanelProps {
   onOpenFolder: () => void;
@@ -35,15 +35,6 @@ const BOTTOM_ROW_IDS = ['MegaCD', 'S32X', 'TGFX16-CD', 'NeoGeo-CD', 'ATARI5200',
 
 /**
  * The first screen, when no folder has ever been opened.
- *
- * It used to say `No folders opened`, which is a fact about the app rather than
- * an answer to the question someone opening it has: what is this, what will it
- * do to my collection, and where do my files go. So it says that instead — what
- * it does, how it goes, which Systems it knows and that nothing is uploaded —
- * with the folder picker as the one thing to press.
- *
- * The Systems are read from the catalogue rather than listed here, so the count
- * on screen cannot drift from the one the app actually supports.
  */
 export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.Element {
   const systems = getAllSystemsInfo();

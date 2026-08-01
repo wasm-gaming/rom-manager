@@ -1,5 +1,5 @@
 import { JSX } from 'preact';
-import { CloseIcon } from './icons';
+import { CloseIcon } from '@/components/icons';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import {
   GLOBAL_SCOPE,
@@ -8,15 +8,15 @@ import {
   MEDIA_SCOPES,
   type MediaKind,
   type MediaScope,
-} from '../core/rom-media';
-import { t } from '../services/I18nService';
+} from '@/core/rom-media';
+import { t } from '@/services/I18nService';
 import {
   itemsOf,
   offerOf,
   splitDrop,
   type IntakeItem,
   type IntakeOffer,
-} from '../services/RomIntakeService';
+} from '@/services/RomIntakeService';
 
 /** An image about to be kept, and what it is a picture of. */
 export interface DroppedImage {
@@ -37,10 +37,6 @@ export interface DropDecision {
 
 /**
  * Where a dropped file can go.
- *
- * A game takes images into its metadata and files into the folder its ROMs live
- * in; a folder takes anything, as it is. Those are the two, and a selection that
- * is neither never gets this far.
  */
 export type DropTarget =
   | { kind: 'game'; title: string; folder: string }
@@ -64,38 +60,11 @@ function folderOf(path: string): string {
   return separator === -1 ? '' : path.slice(0, separator);
 }
 
-/**
- * True when a release would land where the drop was aimed, which is what
- * decides whether taking it in is the answer offered first.
- *
- * Dropping a SNES game on `SNES` is a case where both answers write to the same
- * folder and the catalogue's is plainly the better one — unzipped, checked, and
- * grouped with what is already there. Dropping it on `MEGADRIVE` is a case where
- * taking it in would go against where the drop pointed, and a contradiction is
- * not something to preselect.
- */
 function lands(path: string, target: string): boolean {
   const folder = folderOf(path);
   return target === '' || folder === target || folder.startsWith(`${target}/`);
 }
 
-/**
- * What a drop on the details pane is about to do, before it does it.
- *
- * Dropping a file is easy to do by accident and hard to undo, so nothing is
- * written until this says what would be — and for an image it is also where the
- * two things only the user knows are asked: what the picture is of, and which
- * region's box it is. Those two are what the file name is made of, so they cannot
- * be guessed from the bytes.
- *
- * A file the catalogue recognised brings the other question: the folder it was
- * dropped on takes it as it arrived, and the release it turned out to be has a
- * folder of its own. Both are real answers — one keeps the archive, the other
- * opens it and checks what comes out — so it is asked rather than decided.
- *
- * A real `<dialog>` opened with `showModal`, so the top layer, the backdrop, the
- * focus trap and Escape are the browser's business.
- */
 export function MediaDropModal({
   files,
   target,
@@ -125,7 +94,6 @@ export function MediaDropModal({
     () => Object.fromEntries(images.map((file) => [file.name, { kind: 'case' as MediaKind, scope: GLOBAL_SCOPE as MediaScope }])),
   );
 
-  /** The files to take in as the games they are, instead of copying them. */
   const [taking, setTaking] = useState<Set<File>>(
     () =>
       new Set(
@@ -152,7 +120,6 @@ export function MediaDropModal({
       return next;
     });
 
-  /** What the drop writes as it stands, which is both what is shown and what is done. */
   const split = splitDrop(rest, taking, intake ?? []);
 
   const confirm = () =>
@@ -166,7 +133,6 @@ export function MediaDropModal({
 
   const copiedTo = (file: File) => (folder ? `${folder}/${file.name}` : file.name);
 
-  /** Where a file's bytes end up, which is the answer the row is about. */
   const whereOf = (file: File, offer: IntakeOffer): string => {
     if (!taking.has(file)) return copiedTo(file);
 
@@ -206,8 +172,6 @@ export function MediaDropModal({
         {images.length > 0 && (
           <section class="prefs-group">
             <h4>{images.length > 1 ? t('drop.images.many') : t('drop.images.one')}</h4>
-            {/* Kind and region are what the file name is made of, so the image
-                dropped for EU is read back as the box of EU. */}
             <ul class="drop-images">
               {images.map((file) => (
                 <li key={file.name} class="drop-image">
@@ -238,7 +202,6 @@ export function MediaDropModal({
                       })
                     }
                   >
-                    {/* A region names itself; only «every region» is a phrase. */}
                     {MEDIA_SCOPES.map((scope) => (
                       <option key={scope} value={scope}>
                         {scope === GLOBAL_SCOPE ? t('media.scope.global') : scope}
@@ -260,8 +223,6 @@ export function MediaDropModal({
                 const offer = offers.get(file);
 
                 if (!offer) {
-                  // A file no catalogue claimed says nothing beyond its name,
-                  // unless it is following a game in: that changes where it goes.
                   const [along] = itemsOf(file, split.along);
                   if (!along) return <li key={`${at}:${file.name}`}>{file.name}</li>;
 
@@ -283,8 +244,6 @@ export function MediaDropModal({
                     <span class="drop-file-name" title={file.name}>
                       {file.name}
                     </span>
-                    {/* Nothing pending means the release is on disk already, so
-                        the only thing left to do with the file is copy it. */}
                     {offer.pending.length > 0 ? (
                       <select
                         class="prefs-select"

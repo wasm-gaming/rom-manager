@@ -1,31 +1,29 @@
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { JSX } from 'preact';
-import { GearIcon, PlusIcon } from '../components/icons';
-import { BrandLogo } from '../components/BrandLogo';
-import { WelcomePanel } from '../components/WelcomePanel';
-import { Tabs } from '../components/Tabs';
-import { FileTree } from '../components/FileTree';
-import { OrganizePanel } from '../components/OrganizePanel';
-import { PreferencesModal } from '../components/PreferencesModal';
-import { MediaDropModal, type DropDecision, type DropTarget } from '../components/MediaDropModal';
-import { RomIntakeModal } from '../components/RomIntakeModal';
-import { RomDetails } from '../components/RomDetails';
-import { storageService, StorageNode, StorageStat } from '../services/StorageService';
-import { RomLibrary, RomRecord, gameNameOf, systemOf } from '../services/RomLibraryService';
-import { GameCatalogService } from '../services/GameCatalogService';
-import { CoverService } from '../services/CoverService';
-import { OrganizeService, type UndoRecord } from '../services/OrganizeService';
-import { RomIntakeService, isPlaced, type IntakeItem, type IntakeProgress } from '../services/RomIntakeService';
-import { ROMDatasetService } from '../services/ROMDatasetService';
-import { isWizardFolder, WizardConfigService } from '../services/WizardConfigService';
-import { setThemeMode, themeModeSignal } from '../services/ThemeService';
-import { localePreferenceSignal, setLocalePreference, t } from '../services/I18nService';
-import { HandleStoreService } from '../services/HandleStoreService';
-import { buildWizardTree, type WizardGame, type WizardNode } from '../core/wizard-tree';
-import { isSharedCover, pickCover, type StoredCovers } from '../core/rom-covers';
-import { imageExtensionOf, isImageName, regionOfScope } from '../core/rom-media';
-import { preferRegion, REGIONS, type Region } from '../core/rom-regions';
-import { filterPlanForPath, type OrganizePlan } from '../core/rom-organize';
+import { FileTree } from '@/components/FileTree';
+import { Header } from '@/views/ROMExplorer/Header';
+import { WelcomePanel } from '@/views/ROMExplorer/WelcomePanel';
+import { OrganizePanel } from '@/views/ROMExplorer/OrganizePanel';
+import { PreferencesModal } from '@/views/ROMExplorer/PreferencesModal';
+import { MediaDropModal, type DropDecision, type DropTarget } from '@/views/ROMExplorer/MediaDropModal';
+import { RomIntakeModal } from '@/views/ROMExplorer/RomIntakeModal';
+import { RomDetails } from '@/views/ROMExplorer/RomDetails';
+import { storageService, StorageNode, StorageStat } from '@/services/StorageService';
+import { RomLibrary, RomRecord, gameNameOf, systemOf } from '@/services/RomLibraryService';
+import { GameCatalogService } from '@/services/GameCatalogService';
+import { CoverService } from '@/services/CoverService';
+import { OrganizeService, type UndoRecord } from '@/services/OrganizeService';
+import { RomIntakeService, isPlaced, type IntakeItem, type IntakeProgress } from '@/services/RomIntakeService';
+import { ROMDatasetService } from '@/services/ROMDatasetService';
+import { isWizardFolder, WizardConfigService } from '@/services/WizardConfigService';
+import { setThemeMode, themeModeSignal } from '@/services/ThemeService';
+import { localePreferenceSignal, setLocalePreference, t } from '@/services/I18nService';
+import { HandleStoreService } from '@/services/HandleStoreService';
+import { buildWizardTree, type WizardGame, type WizardNode } from '@/core/wizard-tree';
+import { isSharedCover, pickCover, type StoredCovers } from '@/core/rom-covers';
+import { imageExtensionOf, isImageName, regionOfScope } from '@/core/rom-media';
+import type { Region } from '@/core/rom-regions';
+import { filterPlanForPath, type OrganizePlan } from '@/core/rom-organize';
 import {
   storeService,
   originsSignal,
@@ -35,7 +33,7 @@ import {
   knownSystemsSignal,
   wizardSettingsSignal,
   Origin,
-} from '../services/StoreService';
+} from '@/services/StoreService';
 
 /** Key behind the tree badges: a record is named after the game, not the file. */
 function gameKey(romPath: string): string {
@@ -1001,63 +999,19 @@ export function ROMExplorer(): JSX.Element {
 
   return (
     <div class="rom-explorer">
-      <header class="explorer-header">
-        <div class="header-left">
-          <h1
-            class="explorer-title clickable"
-            onClick={handleGoInitialView}
-            title={t('app.name')}
-          >
-            <BrandLogo class="explorer-mark" />
-            {t('app.name')}
-          </h1>
-          <button class="tab-add" onClick={handleOpenFolder} title={t('tabs.add')}>
-            <PlusIcon />
-          </button>
-        </div>
-
-        <div class="header-right">
-          <Tabs
-            origins={Array.from(originsMap.values())}
-            activeOriginId={showLanding ? undefined : activeOriginId}
-            onSelectOrigin={handleSelectOrigin}
-            onClose={handleCloseOrigin}
-          />
-          <div class="header-right-actions">
-            {/* The preference order, statically rendered as | EU | US | JP | while
-                storing and updating region priority on click. */}
-            <div class="header-regions" role="group" aria-label={t('header.regions.label')}>
-              {REGIONS.map((region) => {
-                const isPreferred = regionOrder[0] === region;
-                return (
-                  <button
-                    key={region}
-                    class={`header-region ${isPreferred ? 'on' : ''}`}
-                    disabled={!activeNode || showLanding}
-                    aria-pressed={isPreferred}
-                    title={
-                      isPreferred
-                        ? t('header.regions.preferred', { region })
-                        : t('header.regions.prefer', { region })
-                    }
-                    onClick={() => handleRegionOrderChange(preferRegion(regionOrder, region))}
-                  >
-                    {region}
-                  </button>
-                );
-              })}
-            </div>
-
-            <button
-              class="header-prefs"
-              onClick={() => setPreferences(true)}
-              title={t('header.preferences')}
-            >
-              <GearIcon />
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header
+        onGoInitialView={handleGoInitialView}
+        onOpenFolder={handleOpenFolder}
+        originsMap={originsMap}
+        activeOriginId={activeOriginId}
+        showLanding={showLanding}
+        onSelectOrigin={handleSelectOrigin}
+        onCloseOrigin={handleCloseOrigin}
+        regionOrder={regionOrder}
+        activeNode={activeNode}
+        onRegionOrderChange={handleRegionOrderChange}
+        onOpenPreferences={() => setPreferences(true)}
+      />
 
       {errorSignal.value && <div class="error-message">{errorSignal.value}</div>}
 

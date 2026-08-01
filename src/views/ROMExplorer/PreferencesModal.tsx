@@ -1,15 +1,15 @@
 import { JSX } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
-import { CloseIcon } from './icons';
-import { THEME_MODES, type ThemeMode } from '../core/theme';
-import { LOCALE_LABELS, LOCALE_PREFERENCES, type LocalePreference } from '../core/i18n';
-import { t } from '../services/I18nService';
+import { CloseIcon } from '@/components/icons';
+import { THEME_MODES, type ThemeMode } from '@/core/theme';
+import { LOCALE_LABELS, LOCALE_PREFERENCES, type LocalePreference } from '@/core/i18n';
+import { t } from '@/services/I18nService';
 import {
   REGION_ORDERS,
   parseRegionOrder,
   regionOrderKey,
   type Region,
-} from '../core/rom-regions';
+} from '@/core/rom-regions';
 
 interface PreferencesModalProps {
   open: boolean;
@@ -23,19 +23,6 @@ interface PreferencesModalProps {
   onClose: () => void;
 }
 
-/**
- * The settings that belong to nowhere in particular.
- *
- * Three of them so far, and they are deliberately not of the same kind: the
- * theme and the language are the browser's, the region order is the open
- * library's, which the panel says out loud rather than leaving the user to find
- * out by switching tabs.
- *
- * A real `<dialog>`, opened with `showModal`, so the top layer, the backdrop,
- * the focus trap and Escape are the browser's business and not ours. It stays
- * mounted and merely closed, because a panel torn out of the tree cannot be
- * seen fading out.
- */
 export function PreferencesModal({
   open,
   themeMode,
@@ -61,8 +48,6 @@ export function PreferencesModal({
       ref={dialog}
       class="modal-dialog"
       aria-label={t('prefs.title')}
-      // Escape and the backdrop close the dialog on their own, so the state
-      // behind it is caught up with here rather than at every closing button.
       onClose={onClose}
       onClick={(event) => {
         if (event.target === dialog.current) dialog.current?.close();
@@ -99,8 +84,6 @@ export function PreferencesModal({
 
         <section class="prefs-group">
           <h4>{t('prefs.locale.title')}</h4>
-          {/* Each language named in itself, so someone who opened the app in one
-              they cannot read still recognises the one they can. */}
           <div class="prefs-segmented" role="group" aria-label={t('prefs.locale.title')}>
             {LOCALE_PREFERENCES.map((preference) => (
               <button
@@ -118,9 +101,6 @@ export function PreferencesModal({
 
         <section class="prefs-group">
           <h4>{t('prefs.regions.title')}</h4>
-          {/* A game has a boxart per region, so which one shows is a choice —
-              and for a world release, whose single file ships everywhere, it is
-              the only thing that decides. */}
           <select
             class="prefs-select"
             value={regionOrderKey(regionOrder)}

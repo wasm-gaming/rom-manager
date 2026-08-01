@@ -1,160 +1,19 @@
 import { JSX } from 'preact';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { StorageEntry, StorageNode } from '../services/StorageService';
-import type { MatchStatus } from '../core/rom-matching';
-import type { WizardGame, WizardNode } from '../core/wizard-tree';
-import { isHiddenName } from '../core/file-types';
-import { t } from '../services/I18nService';
-import { systemOf } from '../services/RomLibraryService';
-import { getSystemInfo } from '../core/system-info';
+import { FileTreeProps, StorageEntryData, VisibleRow, WizardGameData } from './FileTree/types';
 import {
-  BundleIcon,
-  ChevronIcon,
-  DotIcon,
-  FolderIcon,
-  FolderPlusIcon,
-  GroupIcon,
-  iconOfName,
-  OrganizeIcon,
-  PlusIcon,
-  StatusIcon,
-  SystemFolderIcon,
-  TrashIcon,
-} from './icons';
+  contains,
+  DRAG_MIME,
+  join,
+  nameOf,
+  parentOf,
+  parseDraggedPaths,
+  ROOT,
+} from './FileTree/utils';
+import { FileTreeHeader } from './FileTree/FileTreeHeader';
+import { FileTreeNode } from './FileTree/FileTreeNode';
 
-interface FileTreeProps {
-  node: StorageNode;
-  /** ROM files the details pane is showing, so the rows can mirror it. */
-  selectedFiles?: string[];
-  /** Fires with every selected file, in tree order. Folders are left out. */
-  onSelectionChange?: (paths: string[]) => void;
-  /** Fires with the game a row stands for, or nothing when a plain row is picked. */
-  onGameChange?: (game?: WizardGame) => void;
-  /**
-   * Fires with the folder picked, or nothing when the selection is not exactly
-   * one. It is what a file dropped on the details pane would be added to.
-   */
-  onFolderChange?: (path?: string) => void;
-  /** Rows currently painted, so the owner can prefetch what they need. */
-  onVisibleChange?: (paths: string[]) => void;
-  /** True once a ROM has a record in the library. */
-  isInitialized?: (path: string) => boolean;
-  onRemoved?: (paths: string[]) => void;
-  /** True when a folder can be browsed grouped by game at all. */
-  canGroup?: (path: string) => boolean;
-  /** True when a folder is currently browsed grouped by game. */
-  isGrouped?: (path: string) => boolean;
-  /** Grouped rows of a folder, absent while they are still being worked out. */
-  groupedRows?: Map<string, WizardNode[]>;
-  /** A grouped folder came on screen with no rows yet. */
-  onGroupingNeeded?: (path: string) => void;
-  onToggleGrouping?: (path: string) => void;
-  /** Offered on the same folders as grouping: both need a dataset to work from. */
-  onOrganize?: (path: string) => void;
-  /** Progress of a long operation, such as hashing a system to group it. */
-  notice?: string;
-  /** Bumped by the owner to re-read what is on screen after it wrote a file. */
-  refreshToken?: number;
-}
-
-/** The origin root, which the adapter addresses as an empty path. */
-const ROOT = '';
-
-/** Private payload for internal drags, so OS drops stay distinguishable. */
-const DRAG_MIME = 'application/x-rom-manager-paths';
-
-/**
- * The mark of a row.
- *
- * A folder is a folder and a game row is a game, whatever they hold. A file is
- * read by its name: the gamepad means "this is a ROM by its extension", which is
- * all a listing knows, and everything else gets the mark of what it actually is.
- * Whether the catalogue recognises a ROM is said twice already, by the status
- * disc and by the badge dot, and neither of those is this.
- */
-function RowIcon({
-  row,
-  isGrouped,
-}: {
-  row: VisibleRow;
-  isGrouped?: (path: string) => boolean;
-}): JSX.Element {
-  if (row.kind === 'pending') return <span class="tree-spinner" />;
-  if (row.kind === 'directory') {
-    const isWizard = Boolean(row.path && isGrouped?.(row.path));
-    const system = isWizard ? getSystemInfo(row.path || row.label) : undefined;
-    if (system) {
-      return <SystemFolderIcon systemId={system.id} />;
-    }
-    return <FolderIcon />;
-  }
-
-  const systemId = row.paths[0] ? systemOf(row.paths[0]) : row.path ? systemOf(row.path) : undefined;
-
-  if (row.kind === 'group') return <BundleIcon systemId={systemId} />;
-
-  const Icon = iconOfName(row.label);
-  return <Icon systemId={systemId} />;
-}
-
-const STATUS_KEYS = {
-  complete: 'tree.status.complete',
-  partial: 'tree.status.partial',
-  missing: 'tree.status.missing',
-} as const;
-
-/**
- * A painted row.
- *
- * Grouping adds one kind of row that is not a file: a game. It does not unfold —
- * reading fifteen files as one game is the point of grouping — so its releases
- * are read in the details pane, and the row itself acts on every file of the
- * game at once: selecting it selects them, and so do dragging and deleting.
- *
- * It also adds a `pending` row, which stands in for a grouped folder whose games
- * are still being worked out. It holds no path, so nothing can be done to it.
- */
-interface VisibleRow {
-  key: string;
-  depth: number;
-  label: string;
-  kind: 'directory' | 'file' | 'group' | 'pending';
-  /** Real filesystem path, for the rows that are a single file or folder. */
-  path?: string;
-  /** Files on disk the row acts on. A game row has one per release it holds. */
-  paths: string[];
-  entry?: StorageEntry;
-  status?: MatchStatus;
-  /** The game a grouped row stands for, which is what the details pane shows. */
-  game?: WizardGame;
-  expandable: boolean;
-}
-
-function parentOf(path: string): string {
-  const separator = path.lastIndexOf('/');
-  return separator === -1 ? ROOT : path.slice(0, separator);
-}
-
-function nameOf(path: string): string {
-  return path.slice(path.lastIndexOf('/') + 1);
-}
-
-function join(directory: string, name: string): string {
-  return directory ? `${directory}/${name}` : name;
-}
-
-/** True when `path` is `directory` itself or one of its ancestors. */
-function contains(path: string, directory: string): boolean {
-  return directory === path || directory.startsWith(`${path}/`);
-}
-
-function parseDraggedPaths(payload: string): string[] {
-  const parsed = JSON.parse(payload);
-  if (!Array.isArray(parsed) || parsed.some((value) => typeof value !== 'string')) {
-    throw new Error('Invalid drag payload');
-  }
-  return parsed;
-}
+export type { FileTreeProps, VisibleRow };
 
 export function FileTree({
   node,
@@ -173,11 +32,11 @@ export function FileTree({
   onOrganize,
   notice,
   refreshToken,
+  labels = {},
 }: FileTreeProps): JSX.Element {
-  const [children, setChildren] = useState<Map<string, StorageEntry[]>>(new Map());
+  const [children, setChildren] = useState<Map<string, StorageEntryData[]>>(new Map());
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const [selection, setSelection] = useState<Set<string>>(new Set());
-  /** Key of the game row picked, which has no path of its own to be marked by. */
   const [selectedGame, setSelectedGame] = useState<string | undefined>();
   const [anchor, setAnchor] = useState<string | undefined>();
   const [dropTarget, setDropTarget] = useState<string | undefined>();
@@ -185,14 +44,11 @@ export function FileTree({
   const [busy, setBusy] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Loaded listings are read back inside async operations, where the state
-  // captured by the render would already be stale.
-  const childrenRef = useRef<Map<string, StorageEntry[]>>(new Map());
-  /** The game handed to the panel, to tell a rebuilt row from the same old one. */
-  const reportedGame = useRef<WizardGame | undefined>();
+  const childrenRef = useRef<Map<string, StorageEntryData[]>>(new Map());
+  const reportedGame = useRef<WizardGameData | undefined>();
 
   const setDirectories = useCallback(
-    (update: (current: Map<string, StorageEntry[]>) => Map<string, StorageEntry[]>) => {
+    (update: (current: Map<string, StorageEntryData[]>) => Map<string, StorageEntryData[]>) => {
       childrenRef.current = update(childrenRef.current);
       setChildren(childrenRef.current);
     },
@@ -209,14 +65,10 @@ export function FileTree({
 
   useEffect(() => {
     loadDirectory(ROOT).catch((err) =>
-      setError(err instanceof Error ? err.message : t('tree.error.read')),
+      setError(err instanceof Error ? err.message : 'Failed to read directory'),
     );
   }, [loadDirectory]);
 
-  /**
-   * Re-read every directory already on screen. Moves and deletions touch two
-   * directories at once, so refreshing only one of them would show stale rows.
-   */
   const refresh = useCallback(async () => {
     const paths = Array.from(childrenRef.current.keys());
     const listings = await Promise.all(
@@ -225,10 +77,6 @@ export function FileTree({
     setDirectories(() => new Map(listings));
   }, [node, setDirectories]);
 
-  /**
-   * A file the owner has just written — an image dropped on the details pane, or
-   * a ROM added to a folder — is on disk but not in what is on screen.
-   */
   useEffect(() => {
     if (!refreshToken) return;
     refresh().catch(() => undefined);
@@ -240,14 +88,14 @@ export function FileTree({
       setError(undefined);
       await operation();
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('tree.error.operation'));
+      setError(err instanceof Error ? err.message : 'Operation failed');
     } finally {
       setBusy(false);
     }
   };
 
   const entriesByPath = useMemo(() => {
-    const map = new Map<string, StorageEntry>();
+    const map = new Map<string, StorageEntryData>();
     for (const entries of children.values()) {
       for (const entry of entries) map.set(entry.path, entry);
     }
@@ -257,7 +105,7 @@ export function FileTree({
   const rows = useMemo(() => {
     const result: VisibleRow[] = [];
 
-    const pushEntry = (entry: StorageEntry, depth: number) => {
+    const pushEntry = (entry: StorageEntryData, depth: number) => {
       result.push({
         key: entry.path,
         depth,
@@ -276,14 +124,11 @@ export function FileTree({
       const grouped = groupedRows?.get(path);
 
       if (!grouped) {
-        // Hashing a whole system takes a while. Painting its files meanwhile
-        // would show the very listing grouping is there to replace, and then
-        // swap it out under the pointer once the games are known.
         if (isGrouped?.(path)) {
           result.push({
             key: `${path}/…`,
             depth,
-            label: t('tree.reading'),
+            label: labels.reading ?? 'Reading games…',
             kind: 'pending',
             paths: [],
             expandable: false,
@@ -295,103 +140,86 @@ export function FileTree({
         return;
       }
 
-      for (const wizard of grouped) {
+      for (const wizard of grouped as any[]) {
         if (wizard.kind === 'entry') {
           pushEntry(wizard.entry, depth);
-          continue;
+        } else {
+          const game = wizard.kind === 'game' ? wizard.game : wizard;
+          if (game) {
+            result.push({
+              key: `${path}:${game.id || game.key}`,
+              depth,
+              label: game.title,
+              kind: 'group',
+              paths: game.paths,
+              status: game.status,
+              game,
+              expandable: false,
+            });
+          }
         }
-
-        result.push({
-          key: wizard.key,
-          depth,
-          label: wizard.label,
-          kind: 'group',
-          paths: wizard.paths,
-          status: wizard.status,
-          game: wizard,
-          expandable: false,
-        });
       }
     };
 
     walk(ROOT, 0);
     return result;
-  }, [children, expanded, groupedRows, isGrouped]);
+  }, [children, expanded, groupedRows, isGrouped, labels.reading]);
+
+  useEffect(() => {
+    if (!groupedRows) return;
+    for (const row of rows) {
+      if (row.kind === 'pending' && row.key.endsWith('/…')) {
+        const path = row.key.slice(0, -2);
+        onGroupingNeeded?.(path);
+      }
+    }
+  }, [rows, groupedRows, onGroupingNeeded]);
+
+  const selectPaths = useCallback(
+    (paths: Set<string>, game?: WizardGameData) => {
+      setSelection(paths);
+      onSelectionChange?.(Array.from(paths));
+
+      if (game !== reportedGame.current) {
+        reportedGame.current = game;
+        onGameChange?.(game);
+      }
+
+      const folder = paths.size === 1 ? Array.from(paths)[0] : undefined;
+      const directory = folder && entriesByPath.get(folder)?.kind === 'directory' ? folder : undefined;
+      onFolderChange?.(directory);
+    },
+    [entriesByPath, onFolderChange, onGameChange, onSelectionChange],
+  );
+
+  useEffect(() => {
+    if (!selectedFiles) return;
+
+    const current = Array.from(selection);
+    if (
+      current.length === selectedFiles.length &&
+      current.every((path, i) => path === selectedFiles[i])
+    ) {
+      return;
+    }
+
+    setSelection(new Set(selectedFiles));
+  }, [selectedFiles, selection]);
 
   useEffect(() => {
     onVisibleChange?.(rows.flatMap((row) => row.paths));
   }, [rows, onVisibleChange]);
 
-  /** Every file the rows reach, in row order, the files inside games included. */
-  const filePaths = useMemo(
-    () => rows.flatMap((row) => (row.kind === 'directory' ? [] : row.paths)),
-    [rows],
-  );
-
-  /**
-   * Ask for the rows of a grouped folder the first time it is painted. Working
-   * them out means hashing the whole system, so it waits until the folder is
-   * actually on screen.
-   */
-  useEffect(() => {
-    if (!onGroupingNeeded || !isGrouped) return;
-
-    const folders = rows.filter((row) => row.kind === 'directory' && expanded.has(row.path!));
-    for (const row of folders) {
-      if (isGrouped(row.path!) && !groupedRows?.has(row.path!)) onGroupingNeeded(row.path!);
-    }
-  }, [rows, expanded, groupedRows, isGrouped, onGroupingNeeded]);
-
-  /** The folder picked, when that is exactly what the selection is. */
-  const folderOf = useCallback(
-    (paths: Set<string>): string | undefined => {
-      if (paths.size !== 1) return undefined;
-
-      const [path] = Array.from(paths);
-      return entriesByPath.get(path)?.kind === 'directory' ? path : undefined;
-    },
-    [entriesByPath],
-  );
-
-  /**
-   * Applies a selection and reports the files in it. Folders carry no metadata,
-   * so they are reported apart from the files: what the details pane can show of
-   * one is nothing, but it is still somewhere a dropped file can go.
-   *
-   * A game is reported alongside its files: the details pane shows the game,
-   * and the files are what a drag or a delete would act on.
-   */
-  const selectPaths = useCallback(
-    (paths: Set<string>, game?: WizardGame) => {
-      setSelection(paths);
-      setSelectedGame(game?.key);
-      reportedGame.current = game;
-
-      onSelectionChange?.(filePaths.filter((path) => paths.has(path)));
-      onGameChange?.(game);
-      onFolderChange?.(folderOf(paths));
-    },
-    [filePaths, folderOf, onSelectionChange, onGameChange, onFolderChange],
-  );
-
-  /**
-   * A game whose rows have been worked out again is a different object for the
-   * same row — that is what happens when a ROM lands in the folder — so it is
-   * picked again. Without this the panel would keep showing the releases the
-   * folder held before, and its files would be the ones it held then.
-   */
-  useEffect(() => {
-    if (!selectedGame) return;
-
-    const row = rows.find((candidate) => candidate.key === selectedGame);
-    if (row?.game && row.game !== reportedGame.current) selectPaths(new Set(row.paths), row.game);
-  }, [rows, selectedGame, selectPaths]);
-
   const revealDirectory = useCallback(
     async (path: string) => {
-      if (path === ROOT) return;
-      setExpanded((current) => new Set(current).add(path));
-      if (!childrenRef.current.has(path)) await loadDirectory(path);
+      const parts = path.split('/');
+      let current = '';
+
+      for (let i = 0; i < parts.length; i++) {
+        current = current ? `${current}/${parts[i]}` : parts[i];
+        if (!childrenRef.current.has(current)) await loadDirectory(current);
+        setExpanded((prev) => new Set(prev).add(current));
+      }
     },
     [loadDirectory],
   );
@@ -415,6 +243,7 @@ export function FileTree({
 
   const selectRow = useCallback(
     (row: VisibleRow) => {
+      setSelectedGame(row.kind === 'group' ? row.key : undefined);
       if (row.kind === 'group') {
         selectPaths(new Set(row.paths), row.game);
         setAnchor(row.paths[0]);
@@ -528,7 +357,6 @@ export function FileTree({
     revealDirectory,
   ]);
 
-  /** Where new folders and uploads land: the selected folder, or root. */
   const targetDirectory = (): string => {
     const [path] = Array.from(selection);
     if (!path) return ROOT;
@@ -536,8 +364,7 @@ export function FileTree({
   };
 
   const handleRowClick = (event: MouseEvent, row: VisibleRow) => {
-    // A game is one thing, so it is picked whole; the modifiers only make sense
-    // over the plain rows.
+    setSelectedGame(row.kind === 'group' ? row.key : undefined);
     if (row.kind === 'group') {
       selectPaths(new Set(row.paths), row.game);
       setAnchor(row.paths[0]);
@@ -548,22 +375,18 @@ export function FileTree({
 
     const paths = rows.flatMap((candidate) => (candidate.path ? [candidate.path] : []));
 
-    if (event.shiftKey && anchor) {
+    if (event.shiftKey && anchor && paths.includes(anchor) && paths.includes(row.path)) {
       const from = paths.indexOf(anchor);
       const to = paths.indexOf(row.path);
-
-      if (from !== -1 && to !== -1) {
-        const [start, end] = from < to ? [from, to] : [to, from];
-        selectPaths(new Set(paths.slice(start, end + 1)));
-        return;
-      }
+      const slice = paths.slice(Math.min(from, to), Math.max(from, to) + 1);
+      selectPaths(new Set(slice));
+      return;
     }
 
-    if (event.ctrlKey || event.metaKey) {
+    if (event.metaKey || event.ctrlKey) {
       const next = new Set(selection);
       if (next.has(row.path)) next.delete(row.path);
       else next.add(row.path);
-
       selectPaths(next);
       setAnchor(row.path);
       return;
@@ -571,88 +394,82 @@ export function FileTree({
 
     selectPaths(new Set([row.path]));
     setAnchor(row.path);
-
-    if (row.kind === 'directory') {
-      void toggleDirectory(row.path);
-    }
   };
 
   const handleCreateFolder = () => {
-    const directory = targetDirectory();
-    const name = window.prompt(t('tree.prompt.folderName'));
+    if (!node.createDirectory) return;
+
+    const target = targetDirectory();
+    const suggested = join(target, 'new-folder');
+    const name = window.prompt('Directory name:', suggested);
     if (!name) return;
 
-    if (/[/\\]/.test(name) || name === '.' || name === '..') {
-      setError(t('tree.error.separator'));
-      return;
-    }
-
     void run(async () => {
-      await node.createDirectory(join(directory, name));
-      await revealDirectory(directory);
+      await node.createDirectory?.(name);
+      await revealDirectory(name);
       await refresh();
+      selectPaths(new Set([name]));
     });
   };
 
-  const addFiles = async (files: FileList, directory: string) => {
+  const addFiles = async (files: FileList | File[], destination: string) => {
+    if (!node.write) return;
+
     await run(async () => {
+      const written: string[] = [];
+
       for (const file of Array.from(files)) {
-        const content = new Uint8Array(await file.arrayBuffer());
-        await node.writeFile(join(directory, file.name), content);
+        const path = join(destination, file.name);
+        await node.write?.(path, await file.arrayBuffer());
+        written.push(path);
       }
 
-      await revealDirectory(directory);
+      await revealDirectory(destination);
       await refresh();
+      if (written.length > 0) selectPaths(new Set(written));
     });
   };
 
   const handleDeleteSelected = () => {
-    const paths = Array.from(selection);
-    if (paths.length === 0) return;
+    if (selection.size === 0 || !node.delete) return;
 
-    if (!window.confirm(t('tree.confirm.delete', { count: paths.length }))) return;
+    const paths = Array.from(selection);
+    const names = paths.map((path) => nameOf(path)).join(', ');
+    if (!window.confirm(`Delete ${names}?`)) return;
 
     void run(async () => {
-      for (const path of paths) await node.remove(path);
-
-      selectPaths(new Set());
-      setExpanded((current) => {
-        const next = new Set(current);
-        for (const path of current) {
-          if (paths.some((removed) => contains(removed, path))) next.delete(path);
-        }
-        return next;
-      });
+      for (const path of paths) await node.delete?.(path);
 
       onRemoved?.(paths);
-      await refresh();    });
+      selectPaths(new Set());
+      await refresh();
+    });
   };
 
   const moveInto = async (directory: string, paths: string[]) => {
+    if (!node.move) return;
+
+    const valid = paths.filter((path) => !contains(path, directory));
+    if (valid.length === 0) return;
+
     await run(async () => {
-      for (const path of paths) {
-        // Dropping a folder on itself or on its own subtree would erase it.
-        if (contains(path, directory)) continue;
+      const moved: string[] = [];
 
-        const target = join(directory, nameOf(path));
-        if (target === path) continue;
-
-        await node.move(path, target);
+      for (const path of valid) {
+        const destination = join(directory, nameOf(path));
+        await node.move?.(path, destination);
+        moved.push(destination);
       }
 
-      selectPaths(new Set());
-      // Nothing lives at those paths anymore, so whatever was read from them —
-      // the grouped rows above all — has to be worked out again.
-      onRemoved?.(paths);
       await revealDirectory(directory);
       await refresh();
+      selectPaths(new Set(moved));
     });
   };
 
   const handleDragStart = (event: DragEvent, row: VisibleRow) => {
     if (!event.dataTransfer) return;
 
-    // Dragging an unselected row starts a fresh selection, like a file manager.
     const held = row.paths.every((path) => selection.has(path));
     const dragged = held ? Array.from(selection) : row.paths;
     if (!held) selectPaths(new Set(row.paths), row.game);
@@ -685,34 +502,30 @@ export function FileTree({
     try {
       void moveInto(directory, parseDraggedPaths(payload));
     } catch {
-      setError(t('tree.error.drag'));
+      setError('Invalid drag operation');
     }
+  };
+
+  const statusLabels: Record<string, string> = {
+    complete: labels.statusComplete ?? 'Complete',
+    partial: labels.statusPartial ?? 'Partial',
+    missing: labels.statusMissing ?? 'Missing',
   };
 
   return (
     <div class="file-tree">
-      <div class="file-tree-header">
-        <h3>{t('tree.title')}</h3>
-        <div class="file-tree-actions">
-          <button onClick={handleCreateFolder} disabled={busy} title={t('tree.newFolder')}>
-            <FolderPlusIcon />
-          </button>
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={busy}
-            title={t('tree.addFiles')}
-          >
-            <PlusIcon />
-          </button>
-          <button
-            onClick={handleDeleteSelected}
-            disabled={busy || selection.size === 0}
-            title={t('tree.delete')}
-          >
-            <TrashIcon />
-          </button>
-        </div>
-      </div>
+      <FileTreeHeader
+        busy={busy}
+        hasSelection={selection.size > 0}
+        onCreateFolder={handleCreateFolder}
+        onAddFiles={() => fileInputRef.current?.click()}
+        onDeleteSelected={handleDeleteSelected}
+        labels={{
+          newFolder: labels.collapseAll,
+          addFiles: labels.expandAll,
+          delete: labels.delete,
+        }}
+      />
 
       <input
         ref={fileInputRef}
@@ -737,97 +550,29 @@ export function FileTree({
         onDrop={(event) => handleDrop(event, ROOT)}
       >
         {rows.map((row) => (
-          <li
+          <FileTreeNode
             key={row.key}
-            class={[
-              'tree-item',
-              row.kind,
-              // Nobody put `.DS_Store` there on purpose. It is still shown — a
-              // browser that hides what is on disk is lying about the disk — but
-              // it does not get to be as loud as a game.
-              isHiddenName(row.label) ? 'muted' : '',
-              row.status ? `status-${row.status}` : '',
-              (row.path ? selection.has(row.path) : selectedGame === row.key) ? 'selected' : '',
-              row.path && selectedFiles?.includes(row.path) ? 'active' : '',
-              // Rows with no path of their own are not a drop target: comparing
-              // one to `dropTarget` would match every one of them while nothing
-              // is being dragged.
-              row.path !== undefined && dropTarget === row.path ? 'drop-target' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
-            style={{ paddingLeft: `${0.5 + row.depth * 0.6}rem` }}
-            draggable={row.paths.length > 0}
-            onClick={(event) => handleRowClick(event, row)}
-            onDragStart={(event) => handleDragStart(event, row)}
-            onDragOver={
-              row.kind === 'directory' ? (event) => handleDragOver(event, row.path!) : undefined
-            }
-            onDrop={row.kind === 'directory' ? (event) => handleDrop(event, row.path!) : undefined}
-          >
-            {row.expandable ? (
-              <button
-                class="tree-caret"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  void toggleDirectory(row.path!);
-                }}
-                title={expanded.has(row.key) ? t('tree.collapse') : t('tree.expand')}
-              >
-                <ChevronIcon open={expanded.has(row.key)} />
-              </button>
-            ) : (
-              <span class="tree-caret" />
-            )}
-            <span class="tree-icon">
-              <RowIcon row={row} isGrouped={isGrouped} />
-            </span>
-            <span class="tree-name">{row.label}</span>
-
-            {row.status && row.status !== 'complete' && (
-              <span class="tree-status" title={t(STATUS_KEYS[row.status])}>
-                <StatusIcon status={row.status} />
-              </span>
-            )}
-
-            {row.kind !== 'directory' && row.paths.some((path) => isInitialized?.(path)) && (
-              <span class="tree-badge" title={t('tree.initialized')}>
-                <DotIcon />
-              </span>
-            )}
-
-            {row.kind === 'directory' && canGroup?.(row.path!) && (
-              <button
-                class={`tree-group-toggle ${isGrouped?.(row.path!) ? 'on' : ''}`}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onToggleGrouping?.(row.path!);
-                }}
-                title={isGrouped?.(row.path!) ? t('tree.groupOn') : t('tree.groupOff')}
-              >
-                <GroupIcon />
-              </button>
-            )}
-
-            {row.kind === 'directory' && onOrganize && canGroup?.(row.path!) && (
-              <button
-                class="tree-organize"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onOrganize(row.path!);
-                }}
-                title={t('tree.consolidate')}
-              >
-                <OrganizeIcon />
-              </button>
-            )}
-          </li>
+            row={row}
+            selection={selection}
+            selectedGame={selectedGame}
+            selectedFiles={selectedFiles}
+            dropTarget={dropTarget}
+            expanded={expanded}
+            isGrouped={isGrouped}
+            isInitialized={isInitialized}
+            canGroup={canGroup}
+            onToggleDirectory={(path) => void toggleDirectory(path)}
+            onRowClick={handleRowClick}
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onToggleGrouping={onToggleGrouping}
+            onOrganize={onOrganize}
+            statusLabels={statusLabels}
+          />
         ))}
 
-        {/* Only once the root has actually been read: an empty tree is what a
-            folder still being listed looks like too, and saying it is empty
-            before knowing is a claim the next paint takes back. */}
-        {rows.length === 0 && children.has(ROOT) && <li class="tree-empty">{t('tree.empty')}</li>}
+        {rows.length === 0 && children.has(ROOT) && <li class="tree-empty">Empty directory</li>}
       </ul>
     </div>
   );

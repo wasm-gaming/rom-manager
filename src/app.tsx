@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks';
-import { ROMExplorer } from './views/ROMExplorer';
-import { initTheme } from './services/ThemeService';
-import { initLocale, t } from './services/I18nService';
+import { ROMExplorer } from '@/views/ROMExplorer';
+import { initTheme } from '@/services/ThemeService';
+import { initLocale, t } from '@/services/I18nService';
 
 export function App() {
   const [initialized, setInitialized] = useState(false);

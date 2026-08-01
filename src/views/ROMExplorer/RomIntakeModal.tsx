@@ -1,9 +1,9 @@
 import { JSX } from 'preact';
-import { CloseIcon } from './icons';
+import { CloseIcon } from '@/components/icons';
 import { useEffect, useRef } from 'preact/hooks';
-import type { ZipRefusal } from '../core/zip-directory';
-import { isPlaced, type IntakeItem } from '../services/RomIntakeService';
-import { t } from '../services/I18nService';
+import type { ZipRefusal } from '@/core/zip-directory';
+import { isPlaced, type IntakeItem } from '@/services/RomIntakeService';
+import { t } from '@/services/I18nService';
 
 interface RomIntakeModalProps {
   items: IntakeItem[];
@@ -22,17 +22,6 @@ const REFUSAL_KEYS: Record<ZipRefusal, string> = {
   damaged: 'intake.refused.damaged',
 };
 
-/**
- * What a game dropped on the app turned out to be, before it is taken in.
- *
- * Everything here was worked out from the bytes — the system, the game, the
- * folder it would go in — and none of it is anything the user asked for, so it
- * is all said out loud and waits: adding a file to a library is easy to do by
- * accident and, once several systems' folders exist, tedious to undo by hand.
- *
- * A real `<dialog>` opened with `showModal`, so the top layer, the backdrop, the
- * focus trap and Escape are the browser's business.
- */
 export function RomIntakeModal({
   items,
   busy,
@@ -47,7 +36,6 @@ export function RomIntakeModal({
   }, []);
 
   const games = items.filter((item) => item.match && !item.refused);
-  /** Files that go along with a game without being one: a `.cue`, a manual. */
   const companions = items.filter((item) => !item.match && item.path && !item.refused);
   const strays = items.filter((item) => !item.path && !item.refused);
   const refused = items.filter((item) => item.refused);

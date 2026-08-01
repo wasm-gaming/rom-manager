@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
-import { getSystemInfo } from '../core/system-info';
-import { SystemLogo } from './SystemLogos';
-import { t } from '../services/I18nService';
+import { getSystemInfo } from '@/core/system-info';
+import { SystemLogo } from '@/components/SystemLogos';
+import { t } from '@/services/I18nService';
 
 interface SystemDetailsProps {
   /** Selected folder path */
