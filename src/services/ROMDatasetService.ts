@@ -35,6 +35,23 @@ interface DatasetMeta {
   generated: string;
 }
 
+export interface DatasetSetEntry {
+  title: string;
+  cover?: string;
+  members: string[];
+  attrs?: Record<string, unknown>;
+}
+
+export interface SetLookupMatch {
+  system: string;
+  media: DatasetMedia;
+  setKey: string;
+  title: string;
+  crc?: string;
+  cover?: string;
+  attrs?: Record<string, unknown>;
+}
+
 interface DatasetJSON {
   meta: DatasetMeta;
   /**
@@ -44,6 +61,7 @@ interface DatasetJSON {
    * what `list` already carries.
    */
   covers?: Record<string, Record<string, string>>;
+  sets?: Record<string, DatasetSetEntry>;
   list: ROMMetadata[];
 }
 
@@ -80,7 +98,9 @@ export class ROMDatasetService {
    * Initialize IndexedDB and load datasets
    */
   static {
-    this.initialized = this.initializeDB();
+    if (typeof indexedDB !== 'undefined') {
+      this.initialized = this.initializeDB();
+    }
   }
 
   /**
@@ -296,6 +316,7 @@ export class ROMDatasetService {
       system,
       crc32,
       covers: this.sanitizeCovers(dataset.covers),
+      sets: dataset.sets,
       formatVersion: DATASET_FORMAT_VERSION,
       loadedAt: new Date().toISOString()
     });
@@ -548,6 +569,79 @@ export class ROMDatasetService {
       };
       request.onerror = () => reject(request.error);
     });
+  }
+
+  /**
+   * Look up a set of member CRC32s across candidate systems.
+   * Returns the best matching set if member CRC32s match.
+   */
+  static async lookupSetByMemberCrcs(
+    systems: string[],
+    memberCrcs: string[],
+  ): Promise<SetLookupMatch | undefined> {
+    if (systems.length === 0 || memberCrcs.length === 0) return undefined;
+
+    const upperCrcs = new Set(memberCrcs.map((c) => c.toUpperCase()));
+    let bestMatch: SetLookupMatch | undefined;
+    let maxMatchedCount = 0;
+
+    for (const system of systems) {
+      const { record, media } = await this.getMetaRecord(system).catch(() => ({ record: undefined, media: undefined }));
+      if (!record?.sets) continue;
+
+      const sets = record.sets as Record<string, DatasetSetEntry>;
+      for (const [setKey, setInfo] of Object.entries(sets)) {
+        if (!setInfo.members || setInfo.members.length === 0) continue;
+
+        let matchedCount = 0;
+        for (const memberCrc of setInfo.members) {
+          if (upperCrcs.has(memberCrc.toUpperCase())) {
+            matchedCount++;
+          }
+        }
+
+        if (matchedCount > maxMatchedCount) {
+          maxMatchedCount = matchedCount;
+          const rom = Array.isArray(record.list)
+            ? record.list.find(
+                (r: any) =>
+                  r.name === setInfo.title || r.fileName === `${setKey}.neo`,
+              )
+            : undefined;
+
+          bestMatch = {
+            system,
+            media: media ?? 'cartridge',
+            setKey,
+            title: setInfo.title,
+            crc: rom?.crc ? String(rom.crc).toUpperCase() : undefined,
+            cover: this.sanitizeCoverUrl(setInfo.cover),
+            attrs: setInfo.attrs,
+          };
+        }
+      }
+    }
+
+    return bestMatch;
+  }
+
+  private static async getMetaRecord(system: string): Promise<{ record?: any; media?: DatasetMedia }> {
+    await this.ensureSystem(system);
+
+    const index = await this.getIndex();
+    const entry = index?.files.find((file) => file.system === system);
+    if (!entry) return {};
+
+    const db = await this.getDB();
+    const store = db.transaction([META_STORE], 'readonly').objectStore(META_STORE);
+
+    const record = await new Promise<any>((resolve, reject) => {
+      const request = store.get(entry.path);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+
+    return { record, media: entry.media };
   }
 
   /**

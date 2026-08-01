@@ -25,6 +25,7 @@ const RECORD_VERSION = 1;
  */
 export interface RomRecord {
   version: number;
+  id?: string;
   title?: string;
   description?: string;
   releaseDate?: string;

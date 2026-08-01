@@ -413,14 +413,19 @@ export function FileTree({
   };
 
   const addFiles = async (files: FileList | File[], destination: string) => {
-    if (!node.write) return;
+    if (!node.writeFile && !node.write) return;
 
     await run(async () => {
       const written: string[] = [];
 
       for (const file of Array.from(files)) {
         const path = join(destination, file.name);
-        await node.write?.(path, await file.arrayBuffer());
+        const bytes = new Uint8Array(await file.arrayBuffer());
+        if (node.writeFile) {
+          await node.writeFile(path, bytes);
+        } else if (node.write) {
+          await node.write(path, bytes.buffer);
+        }
         written.push(path);
       }
 
@@ -431,14 +436,20 @@ export function FileTree({
   };
 
   const handleDeleteSelected = () => {
-    if (selection.size === 0 || !node.delete) return;
+    if (selection.size === 0 || (!node.remove && !node.delete)) return;
 
     const paths = Array.from(selection);
     const names = paths.map((path) => nameOf(path)).join(', ');
     if (!window.confirm(`Delete ${names}?`)) return;
 
     void run(async () => {
-      for (const path of paths) await node.delete?.(path);
+      for (const path of paths) {
+        if (node.remove) {
+          await node.remove(path);
+        } else if (node.delete) {
+          await node.delete(path);
+        }
+      }
 
       onRemoved?.(paths);
       selectPaths(new Set());

@@ -74,7 +74,15 @@ function findLocal(entry: DatGame, index: Map<string, LocalFile[]>): LocalFile |
   const candidates = index.get(entry.crc.toUpperCase());
   if (!candidates) return null;
 
-  return candidates.find((file) => entry.size === undefined || file.size === entry.size) ?? null;
+  return (
+    candidates.find(
+      (file) =>
+        entry.size === undefined ||
+        file.size === entry.size ||
+        file.path.toLowerCase().endsWith('.zip') ||
+        file.path.toLowerCase().endsWith('.7z'),
+    ) ?? null
+  );
 }
 
 function statusOf(present: number, total: number): MatchStatus {

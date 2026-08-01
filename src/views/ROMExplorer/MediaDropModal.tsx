@@ -60,10 +60,7 @@ function folderOf(path: string): string {
   return separator === -1 ? '' : path.slice(0, separator);
 }
 
-function lands(path: string, target: string): boolean {
-  const folder = folderOf(path);
-  return target === '' || folder === target || folder.startsWith(`${target}/`);
-}
+
 
 export function MediaDropModal({
   files,

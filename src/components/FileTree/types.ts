@@ -9,8 +9,11 @@ export interface StorageEntryData {
 export interface StorageNodeData {
   list: (path: string) => Promise<StorageEntryData[]>;
   read?: (path: string) => Promise<ArrayBuffer>;
+  readFile?: (path: string) => Promise<Uint8Array>;
   write?: (path: string, content: ArrayBuffer | Blob) => Promise<void>;
+  writeFile?: (path: string, content: Uint8Array) => Promise<void>;
   delete?: (path: string) => Promise<void>;
+  remove?: (path: string) => Promise<void>;
   move?: (from: string, to: string) => Promise<void>;
   createDirectory?: (path: string) => Promise<void>;
 }

@@ -174,9 +174,38 @@ export async function scanSystem(
     const known = cached.get(file.path);
     const reusable = known && known.size === stat.size && known.mtime === stat.mtime;
 
-    const crc32 = reusable
-      ? known.crc32
-      : await streamCRC32(await node.readStream(file.path));
+    let crc32: string | undefined;
+
+    if (reusable) {
+      crc32 = known.crc32;
+    } else if (file.name.toLowerCase().endsWith('.zip') || file.name.toLowerCase().endsWith('.7z')) {
+      try {
+        const { findCentralDirectory, readCentralDirectory } = await import('../core/zip-directory');
+        const { ROMDatasetService } = await import('./ROMDatasetService');
+        const bytes = await node.readFile(file.path);
+        const directory = findCentralDirectory(bytes);
+        if (directory) {
+          const entries = readCentralDirectory(
+            bytes.subarray(directory.offset, directory.offset + directory.size),
+            directory.count,
+          );
+          const memberCrcs = entries
+            .filter((e) => !e.directory && Boolean(e.crc32))
+            .map((e) => e.crc32.toUpperCase());
+
+          if (memberCrcs.length > 0) {
+            const setMatch = await ROMDatasetService.lookupSetByMemberCrcs([system], memberCrcs);
+            if (setMatch?.crc) {
+              crc32 = setMatch.crc;
+            }
+          }
+        }
+      } catch {
+        // Fall back to streamCRC32 below
+      }
+    }
+
+    crc32 ??= await streamCRC32(await node.readStream(file.path));
 
     fresh.set(file.path, { size: stat.size, mtime: stat.mtime, crc32 });
     result.push({ path: file.path, size: stat.size, crc32 });

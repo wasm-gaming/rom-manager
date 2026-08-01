@@ -207,11 +207,11 @@ export class RomIntakeService {
     const { ROMDatasetService } = await import('./ROMDatasetService');
 
     const available = await ROMDatasetService.listSystems();
-    const items = await this.unpack(files);
+    const items = await this.unpack(files, available);
     const total = items.length;
 
     for (const [done, item] of items.entries()) {
-      if (item.refused) continue;
+      if (item.refused || item.match) continue;
 
       const candidates = candidateSystemsOf(item, available);
       if (candidates.length === 0) continue;
@@ -245,7 +245,8 @@ export class RomIntakeService {
    * saying why, because a drop that silently does nothing is worse than one that
    * explains itself.
    */
-  private static async unpack(files: File[]): Promise<IntakeItem[]> {
+  private static async unpack(files: File[], available?: readonly DatasetSystem[]): Promise<IntakeItem[]> {
+    const { ROMDatasetService } = await import('./ROMDatasetService');
     const items: IntakeItem[] = [];
 
     for (const file of files) {
@@ -261,6 +262,40 @@ export class RomIntakeService {
       if ('refused' in contents) {
         items.push({ name: file.name, size: file.size, source, refused: contents.refused });
         continue;
+      }
+
+      // If the archive's member CRC32s match a known set as a whole (e.g. arcade romset),
+      // take the archive whole rather than unpacking entries.
+      const memberCrcs = contents.entries
+        .filter((e) => !e.directory && !refusalOf(e) && Boolean(e.crc32))
+        .map((e) => e.crc32!);
+
+      if (memberCrcs.length > 0 && available && available.length > 0) {
+        const candidates = candidateSystemsOf({ name: file.name, size: file.size }, available);
+        if (candidates.length > 0) {
+          const setMatch = await ROMDatasetService.lookupSetByMemberCrcs(
+            candidates.map((c) => c.system),
+            memberCrcs,
+          );
+
+          if (setMatch) {
+            items.push({
+              name: file.name,
+              size: file.size,
+              source,
+              crc32: setMatch.setKey,
+              match: {
+                system: setMatch.system,
+                media: setMatch.media,
+                gameId: setMatch.title,
+                title: setMatch.title,
+                variant: setMatch.setKey,
+              },
+              path: `${setMatch.system}/${file.name}`,
+            });
+            continue;
+          }
+        }
       }
 
       for (const entry of contents.entries) {

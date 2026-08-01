@@ -68,6 +68,8 @@ const SYSTEMS_BY_EXTENSION: Readonly<Record<string, readonly string[]>> = {
   lyx: ['AtariLynx'],
   ws: ['WonderSwan'],
   wsc: ['WonderSwanColor'],
+  neo: ['NEOGEO'],
+  zip: ['NEOGEO'],
   bin: [
     'MegaDrive',
     'Atari2600',
@@ -90,7 +92,9 @@ const SYSTEMS_BY_EXTENSION: Readonly<Record<string, readonly string[]>> = {
  * reason — what mark to draw next to a row — and a second copy of the list would
  * part ways with this one the first time a system is added.
  */
-export const ROM_EXTENSIONS: readonly string[] = Object.keys(SYSTEMS_BY_EXTENSION);
+export const ROM_EXTENSIONS: readonly string[] = Object.keys(SYSTEMS_BY_EXTENSION).filter(
+  (ext) => ext !== 'zip',
+);
 
 /**
  * Ceiling above the largest cartridge there is, which is a Neo Geo one: the

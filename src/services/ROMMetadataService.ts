@@ -54,6 +54,7 @@ export const ROM_REGIONS: readonly string[] = [
 export const VIDEO_STANDARDS: readonly string[] = ['NTSC', 'PAL', 'PAL, NTSC', 'SECAM'];
 
 export interface ROMMetadata {
+  id?: string;
   filename: string;
   path: string;
   format: string;
