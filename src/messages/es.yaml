@@ -392,3 +392,12 @@ progress:
   copyingOf: 'Copiando {file} ({done} de {total})…'
   adding: 'Añadiendo {file}…'
   addingOf: 'Añadiendo {file} ({done} de {total})…'
+
+modal:
+  confirm: 'Confirmar'
+  cancel: 'Cancelar'
+  close: 'Cerrar'
+  delete: 'Eliminar'
+  createFolderTitle: 'Nueva carpeta'
+  deleteTitle: 'Confirmar eliminación'
+

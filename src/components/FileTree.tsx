@@ -12,6 +12,9 @@ import {
 } from './FileTree/utils';
 import { FileTreeHeader } from './FileTree/FileTreeHeader';
 import { FileTreeNode } from './FileTree/FileTreeNode';
+import { ConfirmModal } from '@/components/ConfirmModal';
+import { PromptModal } from '@/components/PromptModal';
+import { t } from '@/services/I18nService';
 
 export type { FileTreeProps, VisibleRow };
 
@@ -42,6 +45,8 @@ export function FileTree({
   const [dropTarget, setDropTarget] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
   const [busy, setBusy] = useState(false);
+  const [createFolderState, setCreateFolderState] = useState<{ open: boolean; suggested: string } | null>(null);
+  const [deleteConfirmState, setDeleteConfirmState] = useState<{ open: boolean; paths: string[] } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const childrenRef = useRef<Map<string, StorageEntryData[]>>(new Map());
@@ -424,9 +429,11 @@ export function FileTree({
 
     const target = targetDirectory();
     const suggested = join(target, 'new-folder');
-    const name = window.prompt('Directory name:', suggested);
-    if (!name) return;
+    setCreateFolderState({ open: true, suggested });
+  };
 
+  const handleConfirmCreateFolder = (name: string) => {
+    setCreateFolderState(null);
     void run(async () => {
       await node.createDirectory?.(name);
       await revealDirectory(name);
@@ -462,8 +469,13 @@ export function FileTree({
     if (selection.size === 0 || (!node.remove && !node.delete)) return;
 
     const paths = Array.from(selection);
-    const names = paths.map((path) => nameOf(path)).join(', ');
-    if (!window.confirm(`Delete ${names}?`)) return;
+    setDeleteConfirmState({ open: true, paths });
+  };
+
+  const handleConfirmDelete = () => {
+    if (!deleteConfirmState) return;
+    const paths = deleteConfirmState.paths;
+    setDeleteConfirmState(null);
 
     void run(async () => {
       for (const path of paths) {
@@ -608,6 +620,28 @@ export function FileTree({
 
         {rows.length === 0 && children.has(ROOT) && <li class="tree-empty">Empty directory</li>}
       </ul>
+
+      {createFolderState && (
+        <PromptModal
+          open={createFolderState.open}
+          title={t('modal.createFolderTitle')}
+          message={t('tree.prompt.folderName')}
+          defaultValue={createFolderState.suggested}
+          onSubmit={handleConfirmCreateFolder}
+          onClose={() => setCreateFolderState(null)}
+        />
+      )}
+
+      {deleteConfirmState && (
+        <ConfirmModal
+          open={deleteConfirmState.open}
+          title={t('modal.deleteTitle')}
+          message={t('tree.confirm.delete', { count: deleteConfirmState.paths.length })}
+          danger={true}
+          onConfirm={handleConfirmDelete}
+          onClose={() => setDeleteConfirmState(null)}
+        />
+      )}
     </div>
   );
 }

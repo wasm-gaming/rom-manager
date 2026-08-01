@@ -393,3 +393,12 @@ progress:
   copyingOf: 'Copying {file} ({done} of {total})…'
   adding: 'Adding {file}…'
   addingOf: 'Adding {file} ({done} of {total})…'
+
+modal:
+  confirm: 'Confirm'
+  cancel: 'Cancel'
+  close: 'Close'
+  delete: 'Delete'
+  createFolderTitle: 'New Folder'
+  deleteTitle: 'Confirm Deletion'
+

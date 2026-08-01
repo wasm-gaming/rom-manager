@@ -52,7 +52,19 @@ export function MetadataEditor({
   const [error, setError] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const lookupDialog = useRef<HTMLDialogElement>(null);
   const [pendingCoverFile, setPendingCoverFile] = useState<File | undefined>();
+
+  useEffect(() => {
+    const element = lookupDialog.current;
+    if (!element) return;
+
+    if (lookupResult && !element.open) {
+      element.showModal();
+    } else if (!lookupResult && element.open) {
+      element.close();
+    }
+  }, [lookupResult]);
   const [pendingCoverUrl, setPendingCoverUrl] = useState<string | undefined>();
   const [coverRemoved, setCoverRemoved] = useState(false);
   const [isCoverDragging, setIsCoverDragging] = useState(false);
@@ -294,79 +306,85 @@ export function MetadataEditor({
       {error && <div class="lookup-error">{error}</div>}
 
       {lookupResult && (
-        <div class="lookup-modal-overlay" onClick={() => setLookupResult(null)}>
-          <div class="lookup-modal" onClick={(event) => event.stopPropagation()}>
-            <div class="modal-header">
-              <h3>{t('editor.lookup.title')}</h3>
-              <button class="modal-close" onClick={() => setLookupResult(null)}>
-                <CloseIcon />
-              </button>
-            </div>
+        <dialog
+          ref={lookupDialog}
+          class="modal-dialog lookup-dialog"
+          aria-label={t('editor.lookup.title')}
+          onClose={() => setLookupResult(null)}
+          onClick={(event) => {
+            if (event.target === lookupDialog.current) setLookupResult(null);
+          }}
+        >
+          <header class="modal-header">
+            <h3>{t('editor.lookup.title')}</h3>
+            <button class="modal-close" onClick={() => setLookupResult(null)}>
+              <CloseIcon />
+            </button>
+          </header>
 
-            <div class="modal-content">
-              <p class="match-name">
-                <strong>{t('editor.lookup.match')}</strong> {lookupResult.name}
-              </p>
+          <div class="modal-content">
+            <p class="match-name">
+              <strong>{t('editor.lookup.match')}</strong> {lookupResult.name}
+            </p>
 
-              <div class="update-fields">
-                <h4>{t('editor.lookup.select')}</h4>
+            <div class="update-fields">
+              <h4>{t('editor.lookup.select')}</h4>
 
-                {LOOKUP_FIELDS.map((field) => {
-                  const incoming =
-                    field === 'title' ? lookupResult.name : (lookupResult[field] as string | undefined);
-                  if (!incoming) return null;
+              {LOOKUP_FIELDS.map((field) => {
+                const incoming =
+                  field === 'title' ? lookupResult.name : (lookupResult[field] as string | undefined);
+                if (!incoming) return null;
 
-                  const current = (draft[field] as string | undefined) || t('editor.lookup.empty');
+                const current = (draft[field] as string | undefined) || t('editor.lookup.empty');
 
-                  return (
-                    <div class="field-option" key={field}>
-                      <label class="checkbox-label">
-                        <input
-                          type="checkbox"
-                          checked={selectedFields.has(field)}
-                          onChange={() => toggleField(field)}
-                        />
-                        <span class="checkbox-text">
-                          <strong>{t(`editor.fields.${field}`)}</strong>
-                          {field === 'cover' ? (
-                            <img
-                              class="cover-preview"
-                              src={incoming}
-                              alt={t('details.cover.alt', { title: lookupResult.name })}
-                              loading="lazy"
-                            />
-                          ) : (
-                            <span class="field-preview">
-                              <span class="current">
-                                {t('editor.lookup.current')} <span class="value">{current}</span>
-                              </span>
-                              <span class="new">
-                                {t('editor.lookup.incoming')} <span class="value">{incoming}</span>
-                              </span>
+                return (
+                  <div class="field-option" key={field}>
+                    <label class="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={selectedFields.has(field)}
+                        onChange={() => toggleField(field)}
+                      />
+                      <span class="checkbox-text">
+                        <strong>{t(`editor.fields.${field}`)}</strong>
+                        {field === 'cover' ? (
+                          <img
+                            class="cover-preview"
+                            src={incoming}
+                            alt={t('details.cover.alt', { title: lookupResult.name })}
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span class="field-preview">
+                            <span class="current">
+                              {t('editor.lookup.current')} <span class="value">{current}</span>
                             </span>
-                          )}
-                        </span>
-                      </label>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div class="modal-actions">
-              <button
-                onClick={handleApplySelected}
-                class="btn-apply icon-label"
-                disabled={selectedFields.size === 0}
-              >
-                <CheckIcon /> {t('editor.lookup.apply')}
-              </button>
-              <button onClick={() => setLookupResult(null)} class="btn-cancel icon-label">
-                <CloseIcon /> {t('editor.cancel')}
-              </button>
+                            <span class="new">
+                              {t('editor.lookup.incoming')} <span class="value">{incoming}</span>
+                            </span>
+                          </span>
+                        )}
+                      </span>
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </div>
+
+          <div class="modal-actions">
+            <button onClick={() => setLookupResult(null)} class="btn-cancel icon-label">
+              <CloseIcon /> {t('editor.cancel')}
+            </button>
+            <button
+              onClick={handleApplySelected}
+              class="btn-apply icon-label"
+              disabled={selectedFields.size === 0}
+            >
+              <CheckIcon /> {t('editor.lookup.apply')}
+            </button>
+          </div>
+        </dialog>
       )}
 
       <div

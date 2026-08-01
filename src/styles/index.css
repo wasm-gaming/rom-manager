@@ -1899,37 +1899,21 @@ code {
   }
 }
 
-/* Lookup Modal Overlay */
-.lookup-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--scrim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+/* Lookup & Specific Modal Sizes */
+.modal-dialog.lookup-dialog {
+  width: min(500px, 90vw);
 }
 
-.lookup-modal {
-  background-color: var(--surface);
-  border-radius: 8px;
-  box-shadow: var(--shadow-md);
-  max-width: 500px;
-  width: 90%;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+.modal-dialog.confirm-dialog,
+.modal-dialog.prompt-dialog {
+  width: min(24rem, 90vw);
 }
 
 .modal-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem;
   border-bottom: 1px solid var(--border);
   background-color: var(--surface-2);
 }
@@ -1937,6 +1921,7 @@ code {
 .modal-header h3 {
   margin: 0;
   font-size: 1.1rem;
+  font-weight: 600;
   color: var(--text);
 }
 
@@ -1953,7 +1938,7 @@ code {
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .modal-close:hover {
@@ -1961,10 +1946,49 @@ code {
   color: var(--text);
 }
 
+.modal-close:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .modal-content {
   padding: 1.5rem;
   overflow-y: auto;
   flex: 1;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0;
+}
+
+.modal-message {
+  margin: 0 0 0.75rem 0;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.prompt-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background-color: var(--surface-2);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  margin-top: 0.25rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.prompt-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-veil);
 }
 
 /* --- Preferences --- */
@@ -2275,17 +2299,23 @@ code {
   border-top: 1px solid var(--border);
   background-color: var(--surface-2);
   justify-content: flex-end;
+  align-items: center;
 }
 
 .modal-actions .btn-apply,
-.modal-actions .btn-cancel {
+.modal-actions .btn-cancel,
+.modal-actions .btn-danger {
   padding: 0.5rem 1.25rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
-  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
 .modal-actions .btn-apply {
@@ -2303,12 +2333,31 @@ code {
 }
 
 .modal-actions .btn-cancel {
+  background-color: var(--surface-3);
+  color: var(--text);
+}
+
+.modal-actions .btn-cancel:hover:not(:disabled) {
+  background-color: var(--veil-strong);
+}
+
+.modal-actions .btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal-actions .btn-danger {
   background-color: var(--danger);
   color: var(--danger-on);
 }
 
-.modal-actions .btn-cancel:hover {
+.modal-actions .btn-danger:hover:not(:disabled) {
   background-color: var(--danger-hover);
+}
+
+.modal-actions .btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* --- Library state in the tree --- */
