@@ -96,13 +96,48 @@ export function SystemLogo({ systemId, className = 'system-logo-svg' }: SystemLo
     case 'GBA':
       return (
         <svg viewBox="0 0 128 128" class={className} aria-label="Game Boy Advance Console">
-          <path d="M16 38c0-10 8-18 18-18h60c10 0 18 8 18 18v52c0 10-8 18-18 18H34c-10 0-18-8-18-18V38z" fill="#2563eb" stroke="#1d4ed8" stroke-width="3" />
-          <rect x="34" y="28" width="60" height="44" rx="6" fill="#0f172a" />
-          <rect x="38" y="32" width="52" height="36" rx="3" fill="#0369a1" />
-          <circle cx="102" cy="46" r="5" fill="#cbd5e1" />
-          <circle cx="108" cy="58" r="5" fill="#cbd5e1" />
-          <rect x="22" y="48" width="14" height="5" rx="1.5" fill="#cbd5e1" />
-          <rect x="26.5" y="43.5" width="5" height="14" rx="1.5" fill="#cbd5e1" />
+          {/* Top L / R Shoulder Bumpers Backing */}
+          <path
+            d="M24 30C24 24 36 22 50 22h28c14 0 26 2 26 8 2 8 8 16 8 34 0 18-6 26-8 34H24c-2-8-8-16-8-34 0-18 6-26 8-34z"
+            fill="#d1d5db"
+            stroke="#9ca3af"
+            stroke-width="2"
+          />
+          {/* Authentic Indigo Body (Wide horizontal curve layout) */}
+          <path
+            d="M44 26h40c10 0 18 2 25 7 9 6 13 18 13 31 0 14-4 25-13 31-7 5-15 7-25 7H44c-10 0-18-2-25-7-9-6-13-17-13-31 0-13 4-25 13-31 7-5 15-7 25-7z"
+            fill="#544697"
+            stroke="#382e6e"
+            stroke-width="2.5"
+          />
+          {/* Center Screen Bezel */}
+          <path
+            d="M38 34h52c6 0 10 4 10 10v38c0 10-6 14-12 14H40c-6 0-12-4-12-14V44c0-6 4-10 10-10z"
+            fill="#232328"
+            stroke="#17171a"
+            stroke-width="1.5"
+          />
+          {/* Screen Display Inset */}
+          <rect x="42" y="39" width="44" height="33" rx="3" fill="#121316" />
+          <rect x="44" y="41" width="40" height="29" rx="1.5" fill="#1c1e24" />
+          {/* D-Pad (Light Silver Cross on Left Wing) */}
+          <rect x="20" y="54" width="14" height="6" rx="1.5" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.8" />
+          <rect x="24" y="50" width="6" height="14" rx="1.5" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.8" />
+          <circle cx="27" cy="57" r="1.5" fill="#cbd5e1" />
+          {/* SELECT & START Angled Pills below D-Pad */}
+          <rect x="20" y="70" width="14" height="4.5" rx="2.25" fill="#362f63" transform="rotate(25 27 72.25)" />
+          <circle cx="31" cy="74" r="1.5" fill="#e2e8f0" />
+          <rect x="20" y="78" width="14" height="4.5" rx="2.25" fill="#362f63" transform="rotate(25 27 80.25)" />
+          <circle cx="31" cy="82" r="1.5" fill="#e2e8f0" />
+          {/* A & B Action Buttons (Light Silver angled buttons on Right Wing) */}
+          <circle cx="88" cy="62" r="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1" />
+          <circle cx="99" cy="54" r="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1" />
+          {/* Speaker Ventilation Grille Lines (Bottom Right) */}
+          <line x1="88" y1="76" x2="99" y2="73" stroke="#362f63" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="88" y1="80" x2="99" y2="77" stroke="#362f63" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="88" y1="84" x2="99" y2="81" stroke="#362f63" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="88" y1="88" x2="99" y2="85" stroke="#362f63" stroke-width="1.8" stroke-linecap="round" />
+          <line x1="88" y1="92" x2="99" y2="89" stroke="#362f63" stroke-width="1.8" stroke-linecap="round" />
         </svg>
       );
 

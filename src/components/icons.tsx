@@ -209,11 +209,37 @@ function Gamepad({ systemId }: { systemId?: string }): JSX.Element {
     );
   }
 
-  // Game Boy / GBC / GBA / Handhelds
+  // Game Boy Advance (GBA)
+  if (normalized === 'GBA') {
+    return (
+      <>
+        {/* Top L / R Shoulder Bumpers */}
+        <path d="M4 6.5C4 5.5 6.5 5 12 5s8 1 8 1.5v3H4v-3z" fill="#cbd5e1" />
+        {/* Indigo GBA Horizontal Shell Body */}
+        <path
+          d="M7 6h10c2.5 0 4.5.8 5.5 2.2 1 1.5 1 3.8 1 3.8s0 2.3-1 3.8C21.5 17.2 19.5 18 17 18H7c-2.5 0-4.5-.8-5.5-2.2C.5 14.3.5 12 .5 12s0-2.3 1-3.8C2.5 6.8 4.5 6 7 6z"
+          fill="#544697"
+        />
+        {/* Screen Frame Bezel */}
+        <rect x="7" y="7" width="10" height="9.5" rx="1.5" fill="#232328" />
+        <rect x="8" y="8" width="8" height="6" rx="0.8" fill="#121316" />
+        {/* Silver D-Pad */}
+        <rect x="3.2" y="10.8" width="2.6" height="1.1" rx=".3" fill="#e2e8f0" />
+        <rect x="3.95" y="10.05" width="1.1" height="2.6" rx=".3" fill="#e2e8f0" />
+        {/* Silver A / B Buttons */}
+        <circle cx="17.4" cy="12.2" r="1.0" fill="#e2e8f0" />
+        <circle cx="19.2" cy="10.6" r="1.0" fill="#e2e8f0" />
+        {/* Start / Select Pills */}
+        <rect x="3.8" y="13" width="1.8" height="0.7" rx=".3" fill="#362f63" transform="rotate(20 4.7 13.35)" />
+        <rect x="3.8" y="14.2" width="1.8" height="0.7" rx=".3" fill="#362f63" transform="rotate(20 4.7 14.55)" />
+      </>
+    );
+  }
+
+  // Game Boy / GBC / Handhelds
   if (
     normalized === 'GAMEBOY' ||
     normalized === 'GBC' ||
-    normalized === 'GBA' ||
     normalized === 'GAMEGEAR' ||
     normalized === 'WONDERSWAN' ||
     normalized === 'WONDERSWANCOLOR' ||
