@@ -589,6 +589,48 @@ code {
   cursor: not-allowed;
 }
 
+.welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.welcome-secondary {
+  margin-top: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: border-color 0.2s;
+}
+
+.welcome-secondary:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.welcome-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.prefs-storage-meter {
+  height: 6px;
+  border-radius: 3px;
+  background-color: var(--border);
+  overflow: hidden;
+}
+
+.prefs-storage-meter > span {
+  display: block;
+  height: 100%;
+  background-color: var(--accent);
+}
+
 .welcome-hint {
   margin: 0;
   font-size: 0.875rem;

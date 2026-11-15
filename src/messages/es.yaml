@@ -35,6 +35,9 @@ welcome:
   open: 'Abrir carpeta'
   opening: 'Abriendo…'
   hint: 'No se sube nada. No se mueve nada sin enseñártelo antes.'
+  library: 'Abrir mi biblioteca'
+  openFolder: 'Abrir una carpeta'
+  libraryHint: 'Tu biblioteca vive en este navegador. No se sube nada; en escritorio puedes sincronizarla con una carpeta.'
 
   what:
     title: 'Qué hace'
@@ -102,6 +105,16 @@ library:
     title: 'Carpeta recordada: {name}'
     open: 'Abrir «{name}»'
   opening: 'Abriendo…'
+  name: 'Biblioteca'
+  add: 'Añadir ROMs'
+  sync:
+    action: 'Sincronizar con la biblioteca'
+    title: 'Sincronizar «{folder}» con la biblioteca'
+    message: 'Los juegos de la carpeta se copian a la biblioteca y los de la biblioteca a la carpeta, hasta que las dos sean iguales. Si un archivo cambió en los dos sitios se guardan ambas versiones. La biblioteca ocupará en este navegador el mismo espacio que la carpeta.'
+    confirm: 'Sincronizar'
+    running: 'Sincronizando con la biblioteca…'
+    done: 'Sincronizado: {toLibrary} a la biblioteca, {toFolder} a la carpeta, {conflicts} con dos versiones.'
+    same: 'La carpeta y la biblioteca ya eran iguales.'
 
 tree:
   title: 'Ficheros'
@@ -365,9 +378,18 @@ prefs:
     title: 'Prioridad de región'
     hint: 'Orden en que se prefieren las carátulas. Se guarda en la biblioteca abierta.'
     locked: 'Abre una carpeta para elegirlo: se guarda en la biblioteca.'
+  storage:
+    title: 'Almacenamiento'
+    usage: '{used} usados de {quota} disponibles en este navegador'
+    unknown: 'Este navegador no dice cuánto espacio queda.'
+    persistent: 'Persistente: el navegador no borrará tu biblioteca para hacer sitio.'
+    bestEffort: 'Sin garantía: el navegador podría borrar la biblioteca si le falta espacio (o, en iPhone, tras días sin usarla si no la instalas en la pantalla de inicio).'
+    ask: 'Pedir almacenamiento persistente'
 
 errors:
   openFolder: 'No se ha podido abrir la carpeta'
+  library: 'No se ha podido abrir la biblioteca de este navegador'
+  sync: 'No se ha podido sincronizar con la biblioteca'
   deniedFolder: 'Acceso denegado a la carpeta. Haz clic de nuevo para volver a pedirlo.'
   savedFolder: 'No se ha podido abrir la carpeta guardada'
   readSelection: 'No se ha podido leer la selección'

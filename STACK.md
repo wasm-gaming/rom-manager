@@ -6,7 +6,8 @@ This document describes the technical stack, codebase architecture, build tools,
 
 ## 1. Core Architecture & Design Principles
 
-- **100% Client-Side / Zero Backend**: Operates strictly inside the user's browser using the Chromium **File System Access API** (`showDirectoryPicker`, `FileSystemHandle`). Files are never uploaded to any remote server.
+- **100% Client-Side / Zero Backend**: Operates strictly inside the user's browser. Files are never uploaded to any remote server.
+- **The library lives in OPFS**: the default storage, on every device, is the browser's origin-private file system (`rom-manager/library/`): no prompts, no permission lost on reload, phones included. ROMs are added one by one (file picker or drop). On desktop Chromium a real folder can also be opened (**File System Access API**) and **synced two-way** with the library; cloud drives (Google Drive, Box) are to join the same sync later.
 - **Hash-Based Identification**: Deterministic ROM identification via CRC32/MD5/SHA1 checksums checked against DAT catalogs (No-Intro / Redump). Local file names are never trusted as absolute authority.
 - **Non-Destructive Plan-First Operations**: File moving and renaming operations are calculated as a **Plan** first, requiring user preview and explicit approval before any disk modification takes place.
 - **Curated Collections Protection**: Dedicated user-created collection subfolders are strictly unmanaged and preserved untouched.
@@ -25,7 +26,8 @@ This document describes the technical stack, codebase architecture, build tools,
 ### Web APIs & Hashing
 - **File System Access API**: Native Chromium directory handle management, file streaming, and in-place file system operations.
 - **WASM Hashing**: `hash-wasm` (`^4.12.0`) for WebAssembly-powered, high-performance client-side checksum calculation (CRC32, MD5, SHA1).
-- **VFS Sync**: `@cloudauthn/vfs-sync` (`^0.1.24`) for directory handle persistence across reloads via IndexedDB.
+- **OPFS**: the library's storage (`OPFSAdapter`), with `navigator.storage.persist()` asked on the first import and usage / quota shown in Preferences (`LibraryStorageService`).
+- **VFS Sync**: `@cloudauthn/vfs-sync` (`^0.1.24`) — the storage layer for both the library (`OPFSAdapter`) and opened folders (`FSAAdapter`), and the two-way `sync()` between them (conflicting edits kept as copies).
 
 ### Build Tools & Tooling
 - **Application Bundler & Dev Server**: Vite (`^5.4.8`) via `@preact/preset-vite` (`^2.8.2`).
@@ -90,6 +92,10 @@ rom-manager/
   - **Cartridge Systems**: Organized in flat file structures (`<System>/<Game>.<variant>.<ext>`).
   - **Disc Systems**: Organized in dedicated folders per game and subfolders per variant (`<System>/<Game>/<variant>/...`).
   - **Neo Geo / Romsets**: Zip/Folder chip dump checksum validation based on member file checksums rather than single archive checksum.
+
+### The library's layout (a contract other apps read)
+- OPFS `rom-manager/library/` holds what a picked folder would: `<System>/<file>` (System = the dataset folder name: `GBA`, `GAMEBOY`, `SNES`, `MegaDrive`…), the `.meta/` sidecar below, and vfs-sync's `.vfs/` control folder.
+- Served from the same origin (play.germade.dev `/roms/`), play.germade reads this library to play from it; changes to this layout are breaking for it.
 
 ### Metadata & Persistence (`.meta/`)
 - Metadata lives entirely outside ROM folders in `.meta/`:

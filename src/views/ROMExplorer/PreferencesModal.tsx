@@ -1,9 +1,14 @@
 import { JSX } from 'preact';
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import { CloseIcon } from '@/components/icons';
 import { THEME_MODES, type ThemeMode } from '@/core/theme';
 import { LOCALE_LABELS, LOCALE_PREFERENCES, type LocalePreference } from '@/core/i18n';
 import { t } from '@/services/I18nService';
+import {
+  LibraryStorageService,
+  formatBytes,
+  type LibraryStorageStatus,
+} from '@/services/LibraryStorageService';
 import {
   REGION_ORDERS,
   parseRegionOrder,
@@ -20,6 +25,8 @@ interface PreferencesModalProps {
   regionOrder: readonly Region[];
   /** Absent while no library is open: the order is stored in the folder's `.meta`. */
   onRegionOrderChange?: (order: readonly Region[]) => void;
+  /** Whether there is a library (OPFS) to report on. */
+  library?: boolean;
   onClose: () => void;
 }
 
@@ -31,9 +38,22 @@ export function PreferencesModal({
   onLocaleChange,
   regionOrder,
   onRegionOrderChange,
+  library = false,
   onClose,
 }: PreferencesModalProps): JSX.Element {
   const dialog = useRef<HTMLDialogElement>(null);
+  const [storage, setStorage] = useState<LibraryStorageStatus | undefined>();
+
+  // Read each time the panel opens: an import since the last look changes it.
+  useEffect(() => {
+    if (!open || !library) return;
+    LibraryStorageService.status().then(setStorage).catch(() => setStorage(undefined));
+  }, [open, library]);
+
+  const askPersistence = async () => {
+    await LibraryStorageService.persist();
+    setStorage(await LibraryStorageService.status());
+  };
 
   useEffect(() => {
     const element = dialog.current;
@@ -119,6 +139,37 @@ export function PreferencesModal({
             {onRegionOrderChange ? t('prefs.regions.hint') : t('prefs.regions.locked')}
           </p>
         </section>
+
+        {library && (
+          <section class="prefs-group">
+            <h4>{t('prefs.storage.title')}</h4>
+            {storage?.usage != null && storage.quota != null ? (
+              <>
+                <div class="prefs-storage-meter" aria-hidden="true">
+                  <span style={{ width: `${Math.min(100, (storage.usage / storage.quota) * 100)}%` }} />
+                </div>
+                <p class="prefs-hint">
+                  {t('prefs.storage.usage', {
+                    used: formatBytes(storage.usage),
+                    quota: formatBytes(storage.quota),
+                  })}
+                </p>
+              </>
+            ) : (
+              <p class="prefs-hint">{t('prefs.storage.unknown')}</p>
+            )}
+            {storage?.persistent ? (
+              <p class="prefs-hint">{t('prefs.storage.persistent')}</p>
+            ) : (
+              <>
+                <p class="prefs-hint">{t('prefs.storage.bestEffort')}</p>
+                <button class="prefs-segment" onClick={() => void askPersistence()}>
+                  {t('prefs.storage.ask')}
+                </button>
+              </>
+            )}
+          </section>
+        )}
       </div>
     </dialog>
   );

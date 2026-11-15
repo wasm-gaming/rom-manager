@@ -1,13 +1,18 @@
 import { JSX } from 'preact';
 import { BrandLogo } from '@/components/BrandLogo';
-import { GearIcon, PlusIcon } from '@/components/icons';
+import { GearIcon, PlusIcon, SyncIcon, UploadIcon } from '@/components/icons';
 import { Tabs, Origin } from '@/components/Tabs';
 import { REGIONS, preferRegion, type Region } from '@/core/rom-regions';
 import { t } from '@/services/I18nService';
 
 interface HeaderProps {
   onGoInitialView: () => void;
-  onOpenFolder: () => void;
+  /** Absent where no folder can be opened (phones): the "+" is not shown. */
+  onOpenFolder?: () => void;
+  /** Adds ROMs to the open library or folder, through a file picker. */
+  onAddRoms?: () => void;
+  /** Present when the open tab is a folder the library can sync with. */
+  onSync?: () => void;
   originsMap: Map<string, Origin>;
   activeOriginId?: string;
   showLanding: boolean;
@@ -22,6 +27,8 @@ interface HeaderProps {
 export function Header({
   onGoInitialView,
   onOpenFolder,
+  onAddRoms,
+  onSync,
   originsMap,
   activeOriginId,
   showLanding,
@@ -43,9 +50,11 @@ export function Header({
           <BrandLogo class="explorer-mark" />
           {t('app.name')}
         </h1>
-        <button class="tab-add" onClick={onOpenFolder} title={t('tabs.add')}>
-          <PlusIcon />
-        </button>
+        {onOpenFolder && (
+          <button class="tab-add" onClick={onOpenFolder} title={t('tabs.add')}>
+            <PlusIcon />
+          </button>
+        )}
       </div>
 
       <div class="header-right">
@@ -60,6 +69,16 @@ export function Header({
           }}
         />
         <div class="header-right-actions">
+          {onAddRoms && (
+            <button class="header-prefs" onClick={onAddRoms} title={t('library.add')}>
+              <UploadIcon />
+            </button>
+          )}
+          {onSync && (
+            <button class="header-prefs" onClick={onSync} title={t('library.sync.action')}>
+              <SyncIcon />
+            </button>
+          )}
           <div class="header-regions" role="group" aria-label={t('header.regions.label')}>
             {REGIONS.map((region) => {
               const isPreferred = regionOrder[0] === region;
