@@ -589,6 +589,48 @@ code {
   cursor: not-allowed;
 }
 
+.welcome-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.welcome-secondary {
+  margin-top: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  background-color: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: border-color 0.2s;
+}
+
+.welcome-secondary:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.welcome-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.prefs-storage-meter {
+  height: 6px;
+  border-radius: 3px;
+  background-color: var(--border);
+  overflow: hidden;
+}
+
+.prefs-storage-meter > span {
+  display: block;
+  height: 100%;
+  background-color: var(--accent);
+}
+
 .welcome-hint {
   margin: 0;
   font-size: 0.875rem;
@@ -2934,4 +2976,280 @@ code {
 .rom-selection-system {
   color: var(--text-dim);
   flex-shrink: 0;
+}
+
+/* ── Phones: the explorer as swiped panels (MobilePanels) ─────────────────── */
+
+.mobile-panels-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-panels-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface);
+}
+
+.mobile-panels-title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-back {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.mobile-back svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.mobile-dots {
+  display: flex;
+  gap: 0.15rem;
+}
+
+.mobile-dot {
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.mobile-dot::after {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--border);
+  transition: background-color 0.2s, width 0.2s;
+}
+
+.mobile-dot.on::after {
+  width: 1.1rem;
+  border-radius: 0.25rem;
+  background-color: var(--accent);
+}
+
+.mobile-dot:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.mobile-panels {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.mobile-panels::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-panel {
+  flex: 0 0 100%;
+  min-width: 0;
+  overflow-y: auto;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overscroll-behavior-y: contain;
+  box-sizing: border-box;
+}
+
+/* The game panel hosts the desktop details pane: give it the room it expects. */
+.mobile-panel[data-panel='game'] {
+  padding: 0.75rem;
+}
+
+.mobile-list {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+}
+
+.mobile-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: none;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.mobile-row.on {
+  background-color: var(--surface-2);
+}
+
+.mobile-row-logo {
+  flex: 0 0 3rem;
+  display: grid;
+  place-items: center;
+  height: 2.5rem;
+}
+
+.mobile-row-logo svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.mobile-row-cover {
+  flex: 0 0 2.75rem;
+  height: 2.75rem;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--surface-2);
+}
+
+.mobile-row-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mobile-row-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.mobile-row-text strong {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobile-row-text small {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.mobile-empty {
+  margin: 2rem 1.25rem;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-dot::after {
+    transition: none;
+  }
+}
+
+/* Inside the game panel the variant rows wrap: the file name takes a line of its own. */
+.mobile-panel .variant-file {
+  flex-wrap: wrap;
+}
+
+.mobile-panel .variant-file .btn-inline {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px), (max-height: 500px) and (pointer: coarse) {
+  /* The header: title and its buttons on one row, tabs and actions on the next. */
+  .explorer-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .header-left {
+    flex: 1 1 100%;
+    width: auto;
+    padding-right: 0;
+  }
+
+  .explorer-title {
+    font-size: 1.1rem;
+  }
+
+  .header-right {
+    flex: 1 1 100%;
+    padding-left: 0;
+    gap: 0.5rem;
+  }
+
+  .header-regions {
+    display: none;
+  }
+
+  /* Dialogs fit the screen; their buttons wrap instead of running off it. */
+  .modal-dialog {
+    width: calc(100vw - 1rem);
+    max-width: calc(100vw - 1rem);
+    max-height: calc(100dvh - 1rem);
+  }
+
+  .modal-dialog .modal-actions,
+  .modal-dialog footer {
+    flex-wrap: wrap;
+  }
+}
+
+/* A phone held sideways: every row of height counts, so the header is one line. */
+@media (max-height: 500px) and (pointer: coarse) {
+  .explorer-header {
+    flex-wrap: nowrap;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .header-left {
+    flex: 0 0 auto;
+    gap: 0.5rem;
+  }
+
+  .header-right {
+    flex: 1 1 auto;
+  }
+
+  .explorer-title {
+    font-size: 1rem;
+  }
+
+  .mobile-panels-bar {
+    padding: 0.25rem 0.75rem;
+  }
 }

@@ -1,4 +1,39 @@
-import { VFSNode, FSAAdapter } from '@cloudauthn/vfs-sync';
+import {
+  VFSNode,
+  FSAAdapter,
+  OPFSAdapter,
+  isOPFSAvailable,
+  sync,
+  type VFSAdapter as Adapter,
+  type SyncResult,
+} from '@cloudauthn/vfs-sync';
+
+/**
+ * Where the library lives inside the origin-private file system. Namespaced, because the
+ * origin may be shared: served from play.germade.dev, the launcher's own folders sit next
+ * to it in the same OPFS.
+ */
+export const LIBRARY_PATH = 'rom-manager/library';
+
+/** The id of the library's origin (tab): there is one, and it cannot be closed. */
+export const LIBRARY_ORIGIN_ID = 'library';
+
+/** Whether this browser can hold the library at all (OPFS). */
+export function isLibraryAvailable(): boolean {
+  try {
+    return isOPFSAvailable();
+  } catch {
+    return false;
+  }
+}
+
+/** Whether a real folder can be opened (File System Access API: desktop Chromium). */
+export function canOpenFolders(): boolean {
+  return typeof (globalThis as { showDirectoryPicker?: unknown }).showDirectoryPicker === 'function';
+}
+
+/** What a node stores into: the app's own library (OPFS), or a folder the user picked. */
+export type StorageKind = 'library' | 'folder';
 
 /**
  * A single file or folder inside an opened origin.
@@ -30,8 +65,40 @@ const HIDDEN_DIRS = new Set(['.vfs', '.roms', '.meta']);
  */
 export class StorageNode {
   private node: VFSNode | null = null;
-  private adapter: FSAAdapter | null = null;
+  private adapter: Adapter | null = null;
   private path: string = '';
+  private storageKind: StorageKind = 'folder';
+
+  /** The library (OPFS) or a picked folder. */
+  get kind(): StorageKind {
+    return this.storageKind;
+  }
+
+  /**
+   * Opens the library: a folder of the origin-private file system. Never prompts and
+   * never loses permission, so it is there on every start, on phones too.
+   */
+  async initializeLibrary(path: string = LIBRARY_PATH): Promise<void> {
+    const adapter = await OPFSAdapter.open({ path });
+    await this.attach(adapter, 'library', 'library');
+  }
+
+  /** Opens a node over any adapter — how tests (MemoryAdapter) and the library get one. */
+  async attach(adapter: Adapter, kind: StorageKind, name: string): Promise<void> {
+    this.adapter = adapter;
+    this.node = await VFSNode.open(adapter);
+    this.storageKind = kind;
+    this.path = name;
+  }
+
+  /**
+   * Two-way sync with another node — the library and a folder on disk, later a cloud
+   * drive. A file changed on both sides is kept twice (the newer one under its name, the
+   * other as a conflict copy) rather than lost. Both trees end up identical.
+   */
+  async syncWith(other: StorageNode): Promise<SyncResult> {
+    return sync(this.requireNode(), other.requireNode());
+  }
 
   async initialize(): Promise<boolean> {
     try {
@@ -45,8 +112,9 @@ export class StorageNode {
     }
 
     this.node = await VFSNode.open(this.adapter);
+    this.storageKind = 'folder';
     // Get the directory name from the root handle
-    this.path = this.adapter.root.name || 'Folder';
+    this.path = (this.adapter as FSAAdapter).root.name || 'Folder';
     return true;
   }
 
@@ -58,11 +126,13 @@ export class StorageNode {
    * still valid and can be tried again from another click.
    */
   async initializeFromHandle(handle: FileSystemDirectoryHandle): Promise<boolean> {
-    this.adapter = FSAAdapter.fromHandle(handle);
-    const allowed = await this.adapter.ensurePermission();
+    const adapter = FSAAdapter.fromHandle(handle);
+    this.adapter = adapter;
+    const allowed = await adapter.ensurePermission();
     if (!allowed) return false;
 
-    this.node = await VFSNode.open(this.adapter);
+    this.node = await VFSNode.open(adapter);
+    this.storageKind = 'folder';
     this.path = handle.name || 'Folder';
     return true;
   }
@@ -72,6 +142,7 @@ export class StorageNode {
    * a successful {@link initialize}.
    */
   getHandle(): FileSystemDirectoryHandle | null {
+    if (this.storageKind !== 'folder') return null;
     return this.adapter ? (this.adapter as any).root ?? null : null;
   }
 
@@ -83,7 +154,8 @@ export class StorageNode {
     return this.node;
   }
 
-  private requireNode(): VFSNode {
+  /** @internal — the VFS node, for {@link syncWith}. */
+  requireNode(): VFSNode {
     if (!this.node) throw new Error('Storage not initialized');
     return this.node;
   }

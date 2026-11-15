@@ -8,7 +8,17 @@ import { PreferencesModal } from '@/views/ROMExplorer/PreferencesModal';
 import { MediaDropModal, type DropDecision, type DropTarget } from '@/views/ROMExplorer/MediaDropModal';
 import { RomIntakeModal } from '@/views/ROMExplorer/RomIntakeModal';
 import { RomDetails } from '@/views/ROMExplorer/RomDetails';
-import { storageService, StorageNode, StorageStat } from '@/services/StorageService';
+import { MobilePanels } from '@/views/ROMExplorer/MobilePanels';
+import {
+  storageService,
+  StorageNode,
+  StorageStat,
+  LIBRARY_ORIGIN_ID,
+  canOpenFolders,
+  isLibraryAvailable,
+} from '@/services/StorageService';
+import { LibraryStorageService } from '@/services/LibraryStorageService';
+import { ConfirmModal } from '@/components/ConfirmModal';
 import { RomLibrary, RomRecord, gameNameOf, systemOf } from '@/services/RomLibraryService';
 import { GameCatalogService } from '@/services/GameCatalogService';
 import { CoverService } from '@/services/CoverService';
@@ -83,6 +93,24 @@ interface DropRequest {
  * True for a drop of files from outside the app. An internal drag carries paths
  * instead, and moving a ROM onto the details pane means nothing.
  */
+/** Below this width the explorer is a row of swiped panels instead of a tree and a pane. */
+// A phone held sideways (844 × 390) is still a phone: low and touch-driven.
+const PHONE_QUERY = '(max-width: 760px), (max-height: 500px) and (pointer: coarse)';
+
+/** Whether a media query matches, kept up to date. */
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() => globalThis.matchMedia?.(query).matches ?? false);
+  useEffect(() => {
+    const list = globalThis.matchMedia?.(query);
+    if (!list) return;
+    const onChange = () => setMatches(list.matches);
+    onChange();
+    list.addEventListener('change', onChange);
+    return () => list.removeEventListener('change', onChange);
+  }, [query]);
+  return matches;
+}
+
 function isFileDrag(event: DragEvent): boolean {
   return Array.from(event.dataTransfer?.types ?? []).includes('Files');
 }
@@ -159,6 +187,17 @@ export function ROMExplorer(): JSX.Element {
   const objectUrls = useRef<string[]>([]);
   /** Persisted handles restored from IndexedDB on startup. */
   const restoredHandles = useRef<Map<string, FileSystemDirectoryHandle>>(new Map());
+  /** The hidden file picker behind "Añadir ROMs". */
+  const romPicker = useRef<HTMLInputElement>(null);
+  /** Where the next pick goes: the library from the welcome panel, else the open tab. */
+  const pickTarget = useRef<'library' | 'active'>('active');
+  /** The sync of a folder with the library, while it is asked and while it runs. */
+  const [syncAsk, setSyncAsk] = useState(false);
+  const [syncBusy, setSyncBusy] = useState(false);
+  /** Whether this browser has a library (OPFS) at all; phones without one only get folders. */
+  const libraryAvailable = isLibraryAvailable();
+  const phone = useMediaQuery(PHONE_QUERY);
+  const foldersAvailable = canOpenFolders();
 
   const originsMap =
     originsSignal.value instanceof Map ? originsSignal.value : new Map<string, Origin>();
@@ -176,9 +215,32 @@ export function ROMExplorer(): JSX.Element {
     };
   }, []);
 
-  /** Restore persisted directory handles from IndexedDB on startup. */
+  /**
+   * The library first: the app's own folder in OPFS, there on every start without a
+   * prompt — on phones, the only storage there is. Then the folders saved from earlier
+   * sessions, locked until the user gives access again.
+   */
   useEffect(() => {
-    HandleStoreService.loadAll()
+    const openLibrary = async () => {
+      if (!libraryAvailable) return;
+      try {
+        const library = storageService.createNodeInstance();
+        await library.initializeLibrary();
+        setStorageNodes((current) => new Map(current).set(LIBRARY_ORIGIN_ID, library));
+        storeService.addOrigin({
+          id: LIBRARY_ORIGIN_ID,
+          name: t('library.name'),
+          path: 'OPFS',
+          selection: [],
+          kind: 'library',
+        });
+      } catch (err) {
+        storeService.setError(err instanceof Error ? err.message : t('errors.library'));
+      }
+    };
+
+    openLibrary()
+      .then(() => HandleStoreService.loadAll())
       .then((storedEntries) => {
         for (const entry of storedEntries) {
           restoredHandles.current.set(entry.id, entry.handle);
@@ -188,11 +250,15 @@ export function ROMExplorer(): JSX.Element {
             path: entry.name,
             selection: [],
             locked: true,
+            kind: 'folder',
           });
         }
         try {
           const lastActiveId = localStorage.getItem('rom-manager:active-origin-id');
-          if (lastActiveId && storedEntries.some((entry) => entry.id === lastActiveId)) {
+          if (
+            lastActiveId &&
+            (lastActiveId === LIBRARY_ORIGIN_ID || storedEntries.some((entry) => entry.id === lastActiveId))
+          ) {
             storeService.setActiveOrigin(lastActiveId);
           }
         } catch {
@@ -356,7 +422,7 @@ export function ROMExplorer(): JSX.Element {
       const originId = `origin-${Date.now()}`;
 
       setStorageNodes((current) => new Map(current).set(originId, nodeInstance));
-      storeService.addOrigin({ id: originId, name, path, selection: [] });
+      storeService.addOrigin({ id: originId, name, path, selection: [], kind: 'folder' });
 
       const handle = nodeInstance.getHandle();
       if (handle) {
@@ -587,7 +653,78 @@ export function ROMExplorer(): JSX.Element {
     }
   }, [activeNode, organize, invalidateTree]);
 
+  /** Asks the browser to keep the library, the first time something goes into it. */
+  const askPersistenceOnce = async () => {
+    try {
+      if (localStorage.getItem('rom-manager:persist-asked')) return;
+      localStorage.setItem('rom-manager:persist-asked', '1');
+    } catch {
+      // Without localStorage it is asked each time, which is harmless.
+    }
+    await LibraryStorageService.persist();
+  };
+
+  /** "Añadir ROMs": a file picker, so phones (no drag and drop, no folders) can add too. */
+  const handleAddRoms = (target: 'library' | 'active' = 'active') => {
+    pickTarget.current = target;
+    romPicker.current?.click();
+  };
+
+  const handleRomsPicked = async (event: JSX.TargetedEvent<HTMLInputElement>) => {
+    const input = event.currentTarget;
+    const files = Array.from(input.files ?? []);
+    input.value = ''; // the same file can be picked again
+    if (files.length === 0) return;
+
+    const library = storageNodes.get(LIBRARY_ORIGIN_ID);
+    const toLibrary =
+      pickTarget.current === 'library' || showLanding || !activeNode || activeOrigin?.locked;
+    const node = toLibrary ? library : activeNode;
+    if (!node) return;
+
+    if (toLibrary && activeOriginId !== LIBRARY_ORIGIN_ID) await handleSelectOrigin(LIBRARY_ORIGIN_ID);
+    setShowLanding(false);
+    await handleIntake(files, node);
+  };
+
+  /**
+   * Two-way sync of the open folder with the library. The first one is how a folder
+   * used before the library existed moves into it; afterwards it keeps the two equal.
+   */
+  const handleSyncConfirm = async () => {
+    const library = storageNodes.get(LIBRARY_ORIGIN_ID);
+    if (!library || !activeNode || activeNode === library) return;
+
+    try {
+      setSyncBusy(true);
+      storeService.setError(undefined);
+      setNotice(t('library.sync.running'));
+      const result = await library.syncWith(activeNode);
+      void askPersistenceOnce();
+      setNotice(
+        result.changed
+          ? t('library.sync.done', {
+              toLibrary: result.transferred.toA,
+              toFolder: result.transferred.toB,
+              conflicts: result.conflicts.length,
+            })
+          : t('library.sync.same'),
+      );
+      grouping.current.clear();
+      setGroupedRows(new Map());
+      setRefreshToken((token) => token + 1);
+    } catch (err) {
+      setNotice(undefined);
+      storeService.setError(err instanceof Error ? err.message : t('errors.sync'));
+    } finally {
+      setSyncBusy(false);
+      setSyncAsk(false);
+    }
+  };
+
   const handleCloseOrigin = (originId: string) => {
+    // The library is the app's own storage: it is never closed.
+    if (originId === LIBRARY_ORIGIN_ID) return;
     restoredHandles.current.delete(originId);
     HandleStoreService.remove(originId).catch(() => undefined);
     storeService.removeOrigin(originId);
@@ -736,15 +873,15 @@ export function ROMExplorer(): JSX.Element {
    * a system folder and copying a ROM into it is not something to do behind
    * their back off a drag they may have aimed at something else.
    */
-  const handleIntake = async (files: File[]) => {
-    if (!activeNode) return;
+  const handleIntake = async (files: File[], node: StorageNode | undefined = activeNode) => {
+    if (!node) return;
 
     try {
       storeService.setError(undefined);
       setIntakeError(undefined);
       setNotice(identifyingNotice(files));
 
-      const items = await RomIntakeService.identify(activeNode, files, (progress) =>
+      const items = await RomIntakeService.identify(node, files, (progress) =>
         setNotice(intakeNotice(progress)),
       );
 
@@ -781,6 +918,10 @@ export function ROMExplorer(): JSX.Element {
       );
 
       setIntake(undefined);
+
+      // The first ROMs into the library are when it starts to matter whether the
+      // browser keeps it: ask for persistent storage then, once.
+      if (activeOrigin?.kind === 'library') void askPersistenceOnce();
 
       // The ROMs that just landed are files nothing has hashed, and the system
       // folder they went into may not have been there at all.
@@ -1057,11 +1198,59 @@ export function ROMExplorer(): JSX.Element {
     setShowLanding(true);
   }, []);
 
+  /** What the details pane shows — on a phone, the third panel. */
+  const details = (
+    <RomDetails
+      paths={gameFile ? [gameFile] : selection}
+      game={gameFile ? undefined : game}
+      folder={folder}
+      wizardFolder={folder !== undefined && isGrouped(folder)}
+      gameCover={gameCover}
+      records={records}
+      stats={stats}
+      covers={covers}
+      editing={editing}
+      onEdit={() => setEditing(true)}
+      onCancelEdit={() => setEditing(false)}
+      onSave={handleSave}
+      onSaveMany={handleSaveMany}
+      onSelectFile={handleSelectFile}
+      onOrganize={handleOrganize}
+      onRemove={handleDeleteFiles}
+      onBack={
+        game && gameFile
+          ? { label: game.title, go: () => setGameFile(undefined) }
+          : undefined
+      }
+      loadContent={loadContent}
+    />
+  );
+
+  /** A game picked in the phone panels: loaded the way the tree loads one. */
+  const handlePanelGame = useCallback(
+    (picked?: WizardGame) => {
+      handleGameChange(picked);
+      void handleSelectionChange(picked ? picked.paths : []);
+    },
+    // handleSelectionChange is re-created each render; the node is what it depends on.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [handleGameChange, activeNode],
+  );
+
   return (
     <div class="rom-explorer">
       <Header
         onGoInitialView={handleGoInitialView}
-        onOpenFolder={handleOpenFolder}
+        onOpenFolder={foldersAvailable ? handleOpenFolder : undefined}
+        onAddRoms={storageNodes.size > 0 ? () => handleAddRoms('active') : undefined}
+        onSync={
+          !showLanding &&
+          activeNode &&
+          activeOrigin?.kind !== 'library' &&
+          storageNodes.has(LIBRARY_ORIGIN_ID)
+            ? () => setSyncAsk(true)
+            : undefined
+        }
         originsMap={originsMap}
         activeOriginId={activeOriginId}
         showLanding={showLanding}
@@ -1077,7 +1266,27 @@ export function ROMExplorer(): JSX.Element {
 
       {originsMap.size === 0 || showLanding || activeOrigin?.locked || !activeNode ? (
         // Initial view: shown before any folder is opened, on reload, or when title is clicked
-        <WelcomePanel onOpenFolder={handleOpenFolder} loading={loadingSignal.value} />
+        <WelcomePanel
+          onOpenFolder={foldersAvailable ? handleOpenFolder : undefined}
+          onOpenLibrary={
+            storageNodes.has(LIBRARY_ORIGIN_ID) ? () => void handleSelectOrigin(LIBRARY_ORIGIN_ID) : undefined
+          }
+          onAddRoms={storageNodes.has(LIBRARY_ORIGIN_ID) ? () => handleAddRoms('library') : undefined}
+          loading={loadingSignal.value}
+        />
+      ) : phone && activeNode ? (
+        <MobilePanels
+          key={activeOriginId}
+          node={activeNode}
+          refreshToken={refreshToken}
+          knownSystems={knownSystems}
+          groupedRows={groupedRows}
+          onGroupingNeeded={handleGroupingNeeded}
+          onPickGame={handlePanelGame}
+          regionOrder={regionOrder}
+        >
+          {details}
+        </MobilePanels>
       ) : (
         <div class="explorer-container">
           {activeNode && (
@@ -1113,30 +1322,7 @@ export function ROMExplorer(): JSX.Element {
             }}
             onDrop={handlePaneDrop}
           >
-            <RomDetails
-              paths={gameFile ? [gameFile] : selection}
-              game={gameFile ? undefined : game}
-              folder={folder}
-              wizardFolder={folder !== undefined && isGrouped(folder)}
-              gameCover={gameCover}
-              records={records}
-              stats={stats}
-              covers={covers}
-              editing={editing}
-              onEdit={() => setEditing(true)}
-              onCancelEdit={() => setEditing(false)}
-              onSave={handleSave}
-              onSaveMany={handleSaveMany}
-              onSelectFile={handleSelectFile}
-              onOrganize={handleOrganize}
-              onRemove={handleDeleteFiles}
-              onBack={
-                game && gameFile
-                  ? { label: game.title, go: () => setGameFile(undefined) }
-                  : undefined
-              }
-              loadContent={loadContent}
-            />
+            {details}
           </div>
         </div>
       )}
@@ -1155,7 +1341,31 @@ export function ROMExplorer(): JSX.Element {
         // The order lives in the library's `.meta`, so it can only be changed
         // while one is open.
         onRegionOrderChange={activeNode ? handleRegionOrderChange : undefined}
+        library={storageNodes.has(LIBRARY_ORIGIN_ID)}
         onClose={() => setPreferences(false)}
+      />
+
+      {/* Behind "Añadir ROMs". No `accept`: iOS greys out extensions it has no type
+          for, and the intake already says what it could not take. */}
+      <input
+        ref={romPicker}
+        type="file"
+        multiple
+        hidden
+        onChange={(event) => void handleRomsPicked(event)}
+      />
+
+      <ConfirmModal
+        open={syncAsk}
+        title={t('library.sync.title', { folder: activeOrigin?.name ?? '' })}
+        message={t('library.sync.message')}
+        confirmLabel={t('library.sync.confirm')}
+        danger={false}
+        busy={syncBusy}
+        onConfirm={() => void handleSyncConfirm()}
+        onClose={() => {
+          if (!syncBusy) setSyncAsk(false);
+        }}
       />
 
       {/* Only while there is a drop to read: what it says depends entirely on

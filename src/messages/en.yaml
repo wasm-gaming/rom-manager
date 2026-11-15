@@ -37,6 +37,9 @@ welcome:
   open: 'Open folder'
   opening: 'Opening…'
   hint: 'Nothing is uploaded. Nothing is moved without showing you first.'
+  library: 'Open my library'
+  openFolder: 'Open a folder'
+  libraryHint: 'Your library lives in this browser. Nothing is uploaded; on a desktop you can sync it with a folder.'
 
   what:
     title: 'What it does'
@@ -102,6 +105,16 @@ library:
     title: 'Folder remembered: {name}'
     open: 'Open «{name}»'
   opening: 'Opening…'
+  name: 'Library'
+  add: 'Add ROMs'
+  sync:
+    action: 'Sync with the library'
+    title: 'Sync “{folder}” with the library'
+    message: "The folder's games are copied to the library and the library's to the folder, until both are the same. A file changed in both places is kept in both versions. The library will take as much room in this browser as the folder."
+    confirm: 'Sync'
+    running: 'Syncing with the library…'
+    done: 'Synced: {toLibrary} to the library, {toFolder} to the folder, {conflicts} kept in two versions.'
+    same: 'The folder and the library were already the same.'
 
 tree:
   title: 'Files'
@@ -366,8 +379,32 @@ prefs:
     title: 'Region priority'
     hint: 'The order cover art is preferred in. It is kept in the open library.'
     locked: 'Open a folder to choose it: it is kept in the library.'
+  storage:
+    title: 'Storage'
+    usage: '{used} used of {quota} available in this browser'
+    unknown: 'This browser does not say how much room is left.'
+    persistent: 'Persistent: the browser will not clear your library to make room.'
+    bestEffort: 'Best effort: the browser may clear the library when it runs out of room (or, on an iPhone, after days unused unless it is added to the home screen).'
+    ask: 'Ask for persistent storage'
+
+
+mobile:
+  nav: 'Library navigation'
+  systems: 'Systems'
+  games: 'Games'
+  game: 'Game'
+  reading: 'Reading…'
+  noSystems: 'No games yet. Use “Add ROMs”.'
+  pickSystem: 'Pick a system.'
+  noGames: 'No games in this system.'
+  pickGame: 'Pick a game.'
+  gameCount: '{count} games'
+  versions: '{count} files'
+  oneVersion: '1 file'
 
 errors:
+  library: "Could not open this browser's library"
+  sync: 'Could not sync with the library'
   openFolder: 'The folder could not be opened'
   deniedFolder: 'Access to the folder was refused. Click again to ask for it once more.'
   savedFolder: 'The remembered folder could not be opened'

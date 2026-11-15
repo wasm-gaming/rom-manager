@@ -1,7 +1,7 @@
 import { JSX } from 'preact';
 import { BrandLogo } from '@/components/BrandLogo';
 import { SystemLogo } from '@/components/SystemLogos';
-import { FolderPlusIcon, GithubIcon } from '@/components/icons';
+import { FolderPlusIcon, GithubIcon, LibraryIcon, UploadIcon } from '@/components/icons';
 import {
   HashIllustration,
   GroupingIllustration,
@@ -12,7 +12,12 @@ import { getAllSystemsInfo } from '@/core/system-info';
 import { t } from '@/services/I18nService';
 
 interface WelcomePanelProps {
-  onOpenFolder: () => void;
+  /** Absent where no folder can be opened (phones). */
+  onOpenFolder?: () => void;
+  /** Enters the library (OPFS); absent where the browser has none. */
+  onOpenLibrary?: () => void;
+  /** Adds ROMs to the library through a file picker. */
+  onAddRoms?: () => void;
   /** True while the folder picker is up or the folder is being read. */
   loading?: boolean;
 }
@@ -36,7 +41,7 @@ const BOTTOM_ROW_IDS = ['MegaCD', 'S32X', 'TGFX16-CD', 'NeoGeo-CD', 'ATARI5200',
 /**
  * The first screen, when no folder has ever been opened.
  */
-export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.Element {
+export function WelcomePanel({ onOpenFolder, onOpenLibrary, onAddRoms, loading }: WelcomePanelProps): JSX.Element {
   const systems = getAllSystemsInfo();
   const systemMap = new Map(systems.map((s) => [s.id, s]));
 
@@ -62,12 +67,33 @@ export function WelcomePanel({ onOpenFolder, loading }: WelcomePanelProps): JSX.
 
         <p class="welcome-pitch">{t('welcome.pitch')}</p>
 
-        <button class="welcome-cta icon-label" onClick={onOpenFolder} disabled={loading}>
-          <FolderPlusIcon />
-          {loading ? t('welcome.opening') : t('welcome.open')}
-        </button>
+        {onOpenLibrary && (
+          <div class="welcome-actions">
+            <button class="welcome-cta icon-label" onClick={onOpenLibrary} disabled={loading}>
+              <LibraryIcon />
+              {t('welcome.library')}
+            </button>
+            {onAddRoms && (
+              <button class="welcome-secondary icon-label" onClick={onAddRoms} disabled={loading}>
+                <UploadIcon />
+                {t('library.add')}
+              </button>
+            )}
+          </div>
+        )}
 
-        <p class="welcome-hint">{t('welcome.hint')}</p>
+        {onOpenFolder && (
+          <button
+            class={`${onOpenLibrary ? 'welcome-secondary' : 'welcome-cta'} icon-label`}
+            onClick={onOpenFolder}
+            disabled={loading}
+          >
+            <FolderPlusIcon />
+            {loading ? t('welcome.opening') : onOpenLibrary ? t('welcome.openFolder') : t('welcome.open')}
+          </button>
+        )}
+
+        <p class="welcome-hint">{onOpenLibrary ? t('welcome.libraryHint') : t('welcome.hint')}</p>
       </section>
 
       <section class="welcome-section">

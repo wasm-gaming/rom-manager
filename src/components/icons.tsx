@@ -758,3 +758,35 @@ export function GithubIcon(props: JSX.SVGAttributes<SVGSVGElement>): JSX.Element
   );
 }
 
+
+/** A tray with an arrow into it: add files. */
+export function UploadIcon(): JSX.Element {
+  return (
+    <svg {...STROKE}>
+      <path d="M12 15V4M7.5 8.5 12 4l4.5 4.5" />
+      <path d="M4 14v4.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V14" />
+    </svg>
+  );
+}
+
+/** Two arrows chasing each other: sync. */
+export function SyncIcon(): JSX.Element {
+  return (
+    <svg {...STROKE}>
+      <path d="M20 11a8 8 0 0 0-14.3-4.9L4 8" />
+      <path d="M4 4v4h4" />
+      <path d="M4 13a8 8 0 0 0 14.3 4.9L20 16" />
+      <path d="M20 20v-4h-4" />
+    </svg>
+  );
+}
+
+/** Three spines on a shelf: the library. */
+export function LibraryIcon(): JSX.Element {
+  return (
+    <svg {...STROKE}>
+      <path d="M5 4h3v16H5zM10 4h3v16h-3z" />
+      <path d="m15.5 5.2 2.9-.8 3.3 15.4-2.9.8z" />
+    </svg>
+  );
+}

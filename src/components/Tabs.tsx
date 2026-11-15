@@ -1,5 +1,5 @@
 import { JSX } from 'preact';
-import { CloseIcon, RefreshIcon } from '@/components/icons';
+import { CloseIcon, LibraryIcon, RefreshIcon } from '@/components/icons';
 
 export interface Origin {
   id: string;
@@ -8,6 +8,7 @@ export interface Origin {
   selectedFile?: string;
   metadata?: Map<string, any>;
   locked?: boolean;
+  kind?: 'library' | 'folder';
 }
 
 interface TabsProps {
@@ -46,17 +47,25 @@ export function Tabs({
               <RefreshIcon />
             </span>
           )}
+          {origin.kind === 'library' && (
+            <span class="tab-lock">
+              <LibraryIcon />
+            </span>
+          )}
           <span class="tab-name">{origin.name}</span>
-          <button
-            class="tab-close"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose?.(origin.id);
-            }}
-            title={closeTitle}
-          >
-            <CloseIcon />
-          </button>
+          {/* The library is the app's own storage: there is nothing to close. */}
+          {origin.kind !== 'library' && (
+            <button
+              class="tab-close"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose?.(origin.id);
+              }}
+              title={closeTitle}
+            >
+              <CloseIcon />
+            </button>
+          )}
         </div>
       ))}
     </div>

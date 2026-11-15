@@ -12,6 +12,8 @@ export interface Origin {
   selection?: string[];
   /** True when restored from IndexedDB but not yet re-authorised by the user. */
   locked?: boolean;
+  /** The app's own library (OPFS) — always there, never closed — or a folder on disk. */
+  kind?: 'library' | 'folder';
 }
 
 /**
