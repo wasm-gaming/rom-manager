@@ -387,6 +387,21 @@ prefs:
     bestEffort: 'Best effort: the browser may clear the library when it runs out of room (or, on an iPhone, after days unused unless it is added to the home screen).'
     ask: 'Ask for persistent storage'
 
+
+mobile:
+  nav: 'Library navigation'
+  systems: 'Systems'
+  games: 'Games'
+  game: 'Game'
+  reading: 'Reading…'
+  noSystems: 'No games yet. Use “Add ROMs”.'
+  pickSystem: 'Pick a system.'
+  noGames: 'No games in this system.'
+  pickGame: 'Pick a game.'
+  gameCount: '{count} games'
+  versions: '{count} files'
+  oneVersion: '1 file'
+
 errors:
   library: "Could not open this browser's library"
   sync: 'Could not sync with the library'

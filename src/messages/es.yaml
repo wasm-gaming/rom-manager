@@ -386,6 +386,21 @@ prefs:
     bestEffort: 'Sin garantía: el navegador podría borrar la biblioteca si le falta espacio (o, en iPhone, tras días sin usarla si no la instalas en la pantalla de inicio).'
     ask: 'Pedir almacenamiento persistente'
 
+
+mobile:
+  nav: 'Navegación de la biblioteca'
+  systems: 'Sistemas'
+  games: 'Juegos'
+  game: 'Juego'
+  reading: 'Leyendo…'
+  noSystems: 'Todavía no hay juegos. Usa «Añadir ROMs».'
+  pickSystem: 'Elige un sistema.'
+  noGames: 'No hay juegos en este sistema.'
+  pickGame: 'Elige un juego.'
+  gameCount: '{count} juegos'
+  versions: '{count} archivos'
+  oneVersion: '1 archivo'
+
 errors:
   openFolder: 'No se ha podido abrir la carpeta'
   library: 'No se ha podido abrir la biblioteca de este navegador'

@@ -8,6 +8,7 @@ import { PreferencesModal } from '@/views/ROMExplorer/PreferencesModal';
 import { MediaDropModal, type DropDecision, type DropTarget } from '@/views/ROMExplorer/MediaDropModal';
 import { RomIntakeModal } from '@/views/ROMExplorer/RomIntakeModal';
 import { RomDetails } from '@/views/ROMExplorer/RomDetails';
+import { MobilePanels } from '@/views/ROMExplorer/MobilePanels';
 import {
   storageService,
   StorageNode,
@@ -92,6 +93,24 @@ interface DropRequest {
  * True for a drop of files from outside the app. An internal drag carries paths
  * instead, and moving a ROM onto the details pane means nothing.
  */
+/** Below this width the explorer is a row of swiped panels instead of a tree and a pane. */
+// A phone held sideways (844 × 390) is still a phone: low and touch-driven.
+const PHONE_QUERY = '(max-width: 760px), (max-height: 500px) and (pointer: coarse)';
+
+/** Whether a media query matches, kept up to date. */
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(() => globalThis.matchMedia?.(query).matches ?? false);
+  useEffect(() => {
+    const list = globalThis.matchMedia?.(query);
+    if (!list) return;
+    const onChange = () => setMatches(list.matches);
+    onChange();
+    list.addEventListener('change', onChange);
+    return () => list.removeEventListener('change', onChange);
+  }, [query]);
+  return matches;
+}
+
 function isFileDrag(event: DragEvent): boolean {
   return Array.from(event.dataTransfer?.types ?? []).includes('Files');
 }
@@ -177,6 +196,7 @@ export function ROMExplorer(): JSX.Element {
   const [syncBusy, setSyncBusy] = useState(false);
   /** Whether this browser has a library (OPFS) at all; phones without one only get folders. */
   const libraryAvailable = isLibraryAvailable();
+  const phone = useMediaQuery(PHONE_QUERY);
   const foldersAvailable = canOpenFolders();
 
   const originsMap =
@@ -1178,6 +1198,45 @@ export function ROMExplorer(): JSX.Element {
     setShowLanding(true);
   }, []);
 
+  /** What the details pane shows — on a phone, the third panel. */
+  const details = (
+    <RomDetails
+      paths={gameFile ? [gameFile] : selection}
+      game={gameFile ? undefined : game}
+      folder={folder}
+      wizardFolder={folder !== undefined && isGrouped(folder)}
+      gameCover={gameCover}
+      records={records}
+      stats={stats}
+      covers={covers}
+      editing={editing}
+      onEdit={() => setEditing(true)}
+      onCancelEdit={() => setEditing(false)}
+      onSave={handleSave}
+      onSaveMany={handleSaveMany}
+      onSelectFile={handleSelectFile}
+      onOrganize={handleOrganize}
+      onRemove={handleDeleteFiles}
+      onBack={
+        game && gameFile
+          ? { label: game.title, go: () => setGameFile(undefined) }
+          : undefined
+      }
+      loadContent={loadContent}
+    />
+  );
+
+  /** A game picked in the phone panels: loaded the way the tree loads one. */
+  const handlePanelGame = useCallback(
+    (picked?: WizardGame) => {
+      handleGameChange(picked);
+      void handleSelectionChange(picked ? picked.paths : []);
+    },
+    // handleSelectionChange is re-created each render; the node is what it depends on.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [handleGameChange, activeNode],
+  );
+
   return (
     <div class="rom-explorer">
       <Header
@@ -1215,6 +1274,19 @@ export function ROMExplorer(): JSX.Element {
           onAddRoms={storageNodes.has(LIBRARY_ORIGIN_ID) ? () => handleAddRoms('library') : undefined}
           loading={loadingSignal.value}
         />
+      ) : phone && activeNode ? (
+        <MobilePanels
+          key={activeOriginId}
+          node={activeNode}
+          refreshToken={refreshToken}
+          knownSystems={knownSystems}
+          groupedRows={groupedRows}
+          onGroupingNeeded={handleGroupingNeeded}
+          onPickGame={handlePanelGame}
+          regionOrder={regionOrder}
+        >
+          {details}
+        </MobilePanels>
       ) : (
         <div class="explorer-container">
           {activeNode && (
@@ -1250,30 +1322,7 @@ export function ROMExplorer(): JSX.Element {
             }}
             onDrop={handlePaneDrop}
           >
-            <RomDetails
-              paths={gameFile ? [gameFile] : selection}
-              game={gameFile ? undefined : game}
-              folder={folder}
-              wizardFolder={folder !== undefined && isGrouped(folder)}
-              gameCover={gameCover}
-              records={records}
-              stats={stats}
-              covers={covers}
-              editing={editing}
-              onEdit={() => setEditing(true)}
-              onCancelEdit={() => setEditing(false)}
-              onSave={handleSave}
-              onSaveMany={handleSaveMany}
-              onSelectFile={handleSelectFile}
-              onOrganize={handleOrganize}
-              onRemove={handleDeleteFiles}
-              onBack={
-                game && gameFile
-                  ? { label: game.title, go: () => setGameFile(undefined) }
-                  : undefined
-              }
-              loadContent={loadContent}
-            />
+            {details}
           </div>
         </div>
       )}
