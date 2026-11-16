@@ -12,12 +12,15 @@
   import type { WizardGame, WizardNode } from '../helpers/wizard-tree'
   import type { IntakeItem, IntakeProgress } from '../lib/RomIntakeService'
   import type { DropDecision, DropTarget } from '../lib/drop'
+  import type { ModRecord } from '../helpers/library-index'
+  import type { ModImportResult } from '../lib/ModService'
 
   const [
     Header, WelcomePanel, FileTree, RomDetails, MobilePanels, PreferencesModal, MediaDropModal, RomIntakeModal, OrganizePanel, ConfirmModal,
     { storageService, LIBRARY_ORIGIN_ID, canOpenFolders, isLibraryAvailable }, { LibraryStorageService }, { RomLibrary, gameNameOf, systemOf }, { GameCatalogService }, { CoverService }, { OrganizeService }, { RomIntakeService, isPlaced },
     { ROMDatasetService }, { isWizardFolder, WizardConfigService }, { setThemeMode }, { setLocalePreference }, { HandleStoreService },
     { buildWizardTree }, { isSharedCover, pickCover }, { imageExtensionOf, isImageName, regionOfScope }, { filterPlanForPath }, { storeService }, { ui, t },
+    { LibraryIndexService }, { ModService }, { gameIdOf }, { isPatchName },
   ] = await $importAll([
     './Header.html', './WelcomePanel.html', './FileTree.html', './RomDetails.html', './MobilePanels.html',
     './PreferencesModal.html', './MediaDropModal.html', './RomIntakeModal.html', './OrganizePanel.html', '../components/ConfirmModal.html',
@@ -26,6 +29,7 @@
     '../lib/ROMDatasetService', '../lib/WizardConfigService', '../lib/ThemeService', '../lib/I18nService',
     '../lib/HandleStoreService', '../helpers/wizard-tree', '../helpers/rom-covers', '../helpers/rom-media', '../helpers/rom-organize',
     '../lib/StoreService', '../lib/ui-state',
+    '../lib/LibraryIndexService', '../lib/ModService', '../helpers/library-index', '../helpers/patch',
   ])
 
   /** Key behind the tree badges: a record is named after the game, not the file. */
@@ -72,6 +76,8 @@
     restoredHandles = new Map<string, FileSystemDirectoryHandle>()
     /** Where the next pick goes: the library from the welcome panel, else the open tab. */
     pickTarget: 'library' | 'active' = 'active'
+    /** Mods picked together with ROMs: taken once the ROMs are in (or the intake is dropped). */
+    pendingMods: (() => Promise<void>) | undefined = undefined
   }
   const book = new Book()
 
@@ -103,6 +109,9 @@
   let intakeError: string | undefined = undefined
   /** Bumped when an image is written, so the pane picks the new boxart up. */
   let mediaVersion = 0
+  /** The mods of the open game's system, and a counter bumped when they change. */
+  let gameMods: { system: string; mods: ModRecord[] } | undefined = undefined
+  let modsVersion = 0
   /** Bumped when a file is written, so the tree lists it without remounting. */
   let refreshToken = 0
   /** The organize preview, once one has been worked out and not yet dismissed. */
@@ -315,6 +324,8 @@
         ROMDatasetService.mediaOf(system).catch(() => 'cartridge'),
       ])
       groupedRows = new Map(groupedRows).set(path, buildWizardTree(path, entries, match, systemCovers, medium ?? 'cartridge'))
+      // The match is in hand: the library index other apps read is written from it.
+      void LibraryIndexService.write(node, system, match).catch(() => {})
     } catch (err) {
       storeService.setError(err instanceof Error ? err.message : t('errors.group', { path }))
     } finally {
@@ -361,6 +372,131 @@
     })
   }
 
+  /**
+   * The library index (`.meta/<System>/index.json`) of every system a change touched,
+   * rewritten one system at a time, after the change and without holding the screen.
+   */
+  const reindex = (() => {
+    let chain: Promise<void> = Promise.resolve()
+    return (paths: readonly string[], node: StorageNode | undefined = activeNode) => {
+      if (!node) return
+      const systems = paths.map(systemFolderOf).filter(Boolean)
+      if (systems.length === 0) return
+      chain = chain.then(() => LibraryIndexService.refreshMany(node, systems)).catch(() => {})
+    }
+  })()
+
+  /** After a sync, both sides: every system that already had an index. */
+  const reindexAll = (node: StorageNode | undefined) => {
+    if (!node) return
+    void LibraryIndexService.readAll(node).then((indexes: Array<{ system: string }>) => reindex(indexes.map((index) => index.system), node))
+  }
+
+  /** The mods of the open game's system, read again when the game or the mods change. */
+  const loadMods = (() => {
+    let token = 0
+    return (node: StorageNode | undefined, picked: WizardGame | undefined, _version: number) => {
+      const mine = ++token
+      if (!node || !picked) {
+        gameMods = undefined
+        return
+      }
+      const system = systemOf(picked.paths[0])
+      queueMicrotask(async () => {
+        const mods = await ModService.list(node, system).catch(() => [])
+        if (mine === token) gameMods = { system, mods }
+      })
+    }
+  })()
+  $: loadMods(activeNode, game, modsVersion)
+
+  /** Where mods added now would go: the game on screen, else the system on screen. */
+  const modContext = (): { system?: string; gameId?: string } => {
+    if (game) return { system: systemOf(game.paths[0]), gameId: gameIdOf(game.title) }
+    const place = folder ?? (selection.length === 1 ? selection[0] : undefined)
+    const system = place ? systemFolderOf(place) : undefined
+    return system && knownSet.has(system) ? { system } : {}
+  }
+
+  /** What adding mods did, as one line. */
+  const modsNotice = (result: ModImportResult): string => {
+    const parts: string[] = []
+    const assigned = result.added.filter((added) => added.gameId).length
+    if (result.added.length > 0) parts.push(t('mods.added', { count: result.added.length, assigned }))
+    if (result.duplicates.length > 0) parts.push(t('mods.duplicates', { count: result.duplicates.length }))
+    for (const { name, reason } of result.rejected) parts.push(t(`mods.refused.${reason}`, { name }))
+    return parts.join(' · ')
+  }
+
+  /** Patches go in as mods; the rest of the files carry on as they would have. */
+  const takeMods = async (files: File[], node: StorageNode | undefined = activeNode): Promise<File[]> => {
+    const patches = files.filter((file) => isPatchName(file.name))
+    if (patches.length === 0 || !node) return files
+    const rest = files.filter((file) => !isPatchName(file.name))
+    // Mods after ROMs, so a ROM and its mod picked together find each other.
+    const run = async () => {
+      try {
+        const result = await ModService.import(node, patches, modContext())
+        modsVersion += 1
+        notice = modsNotice(result)
+        setTimeout(() => {
+          if (notice === modsNotice(result)) notice = undefined
+        }, 6000)
+      } catch (err) {
+        storeService.setError(err instanceof Error ? err.message : t('mods.errors.import'))
+      }
+    }
+    if (rest.length === 0) await run()
+    else book.pendingMods = run
+    return rest
+  }
+
+  /**
+   * New ROMs are in: their systems' indexes are rewritten — first, when mods picked with
+   * them are waiting, since a BPS / UPS finds its game there.
+   */
+  const afterRomsLanded = async (node: StorageNode, paths: string[]) => {
+    if (!book.pendingMods) {
+      reindex(paths, node)
+      return
+    }
+    await LibraryIndexService.refreshMany(node, paths.map(systemFolderOf))
+    await flushMods()
+  }
+
+  /** Runs the mods that were waiting for their ROMs to go in. */
+  const flushMods = async () => {
+    const run = book.pendingMods
+    book.pendingMods = undefined
+    if (run) await run()
+  }
+
+  /** What the game's mods section can do, handed down as functions (it waits on them). */
+  const modActions = {
+    rename: (sha1: string, name: string) => renameMod(sha1, name),
+    assign: (sha1: string, assign: boolean) => assignMod(sha1, assign),
+    remove: (sha1: string) => removeMod(sha1),
+  }
+
+  const renameMod = async (sha1: string, name: string) => {
+    const node = activeNode
+    if (!node || !gameMods) return
+    await ModService.update(node, gameMods.system, sha1, { name })
+    modsVersion += 1
+  }
+  const assignMod = async (sha1: string, assign: boolean) => {
+    const node = activeNode
+    if (!node || !gameMods || !game) return
+    await ModService.update(node, gameMods.system, sha1, { gameId: assign ? gameIdOf(game.title) : undefined })
+    modsVersion += 1
+  }
+  const removeMod = async (sha1: string) => {
+    const node = activeNode
+    if (!node || !gameMods) return
+    await ModService.remove(node, gameMods.system, sha1)
+    modsVersion += 1
+  }
+
   /** Works out what organizing a folder would do, and shows it. Nothing moves until the user says so. */
   const planOrganize = async (path: string) => {
     const node = activeNode
@@ -393,6 +529,7 @@
       })
       organize = { ...current, applied }
       invalidateTree()
+      reindex([current.system])
     } catch (err) {
       storeService.setError(err instanceof Error ? err.message : t('errors.organize'))
     } finally {
@@ -410,6 +547,7 @@
       await OrganizeService.undo(node, current.applied)
       organize = undefined
       invalidateTree()
+      reindex([current.system])
     } catch (err) {
       storeService.setError(err instanceof Error ? err.message : t('errors.undo'))
     } finally {
@@ -445,7 +583,8 @@
     if (!node) return
     if (toLibrary && ui.activeOriginId !== LIBRARY_ORIGIN_ID) await selectOrigin(LIBRARY_ORIGIN_ID)
     showLanding = false
-    await identifyIntake(files, node)
+    const roms = await takeMods(files, node)
+    if (roms.length > 0) await identifyIntake(roms, node)
   }
 
   /** Two-way sync of the open folder with the library (the first one is how a folder moves in). */
@@ -465,6 +604,8 @@
       book.grouping.clear()
       groupedRows = new Map()
       refreshToken += 1
+      reindexAll(libraryNode)
+      reindexAll(node)
     } catch (err) {
       notice = undefined
       storeService.setError(err instanceof Error ? err.message : t('errors.sync'))
@@ -533,8 +674,12 @@
     if (!isFileDrag(event)) return
     event.preventDefault()
     dropping = false
-    const files = Array.from(event.dataTransfer?.files ?? [])
-    if (files.length === 0 || !activeNode) return
+    void paneDrop(Array.from(event.dataTransfer?.files ?? []))
+  }
+  const paneDrop = async (dropped: File[]) => {
+    if (dropped.length === 0 || !activeNode) return
+    const files = await takeMods(dropped)
+    if (files.length === 0) return
     const destination = dropDestination()
     // With nothing picked there is nowhere the files were said to go: ask what they are.
     if (!destination) {
@@ -582,11 +727,13 @@
       // A refused archive opens the panel too: why nothing can be done is worth knowing.
       if (!items.some((item: IntakeItem) => item.path || item.refused)) {
         storeService.setError(t('errors.noGame'))
+        void flushMods()
         return
       }
       intake = items
     } catch (err) {
       storeService.setError(err instanceof Error ? err.message : t('errors.identify'))
+      void flushMods()
     } finally {
       notice = undefined
     }
@@ -614,6 +761,7 @@
         gameFile = undefined
         await selectionChange(addedPaths)
       }
+      await afterRomsLanded(node, addedPaths)
     } catch (err) {
       intakeError = err instanceof Error ? err.message : t('errors.copyFiles')
     } finally {
@@ -668,6 +816,7 @@
         gameFile = undefined
         await selectionChange(addedPaths)
       }
+      await afterRomsLanded(node, [...copiedPaths, ...takenPaths])
     } catch (err) {
       dropError = err instanceof Error ? err.message : t('errors.writeFiles')
     } finally {
@@ -679,12 +828,14 @@
     if (dropBusy) return
     drop = undefined
     dropError = undefined
+    void flushMods()
   }
 
   const cancelIntake = () => {
     if (intakeBusy) return
     intake = undefined
     intakeError = undefined
+    void flushMods()
   }
 
   const selectionChange = async (paths: string[]) => {
@@ -772,6 +923,7 @@
   }
 
   const removed = (paths: string[]) => {
+    reindex(paths)
     // The grouped rows were worked out with those files there: read the folders again (a listing, not a rehash).
     book.grouping.clear()
     groupedRows = new Map()
@@ -933,6 +1085,8 @@
         :can-organize="true"
         :can-remove="true"
         :back="back"
+        :mods="gameMods?.mods ?? []"
+        :mod-actions="modActions"
         @edit="editing = true"
         @cancel-edit="editing = false"
         @select-file="selectFile($event.detail)"
@@ -960,6 +1114,7 @@
       @folder-change="folder = $event.detail ?? undefined"
       @visible-change="visibleChange($event.detail)"
       @removed="removed($event.detail)"
+      @changed="reindex($event.detail)"
       @grouping-needed="groupingNeeded($event.detail)"
       @toggle-grouping="toggleGrouping($event.detail)"
       @organize="planOrganize($event.detail)"
@@ -983,6 +1138,8 @@
         :can-organize="true"
         :can-remove="true"
         :back="back"
+        :mods="gameMods?.mods ?? []"
+        :mod-actions="modActions"
         @edit="editing = true"
         @cancel-edit="editing = false"
         @select-file="selectFile($event.detail)"

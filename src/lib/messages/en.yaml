@@ -446,3 +446,29 @@ modal:
   createFolderTitle: 'New Folder'
   deleteTitle: 'Confirm Deletion'
 
+
+mods:
+  title: 'Mods'
+  empty: 'No mods for this game.'
+  hint: 'Add IPS, BPS or UPS patches with "Add ROMs" or by dropping them here. A mod never changes the ROM.'
+  unassigned: '{count} unassigned in this system'
+  assign: 'Assign to this game'
+  unassign: 'Unassign'
+  rename: 'Rename'
+  renameTitle: 'Rename mod'
+  remove: 'Remove'
+  removeTitle: 'Remove mod'
+  removeMessage: 'Remove the mod "{name}"? Its patch file is deleted.'
+  added: '{count} mod(s) added, {assigned} to their game'
+  duplicates: '{count} already in the library'
+  fit:
+    fits: 'Fits a version here'
+    other: 'For another version'
+    unknown: 'IPS: version not checked'
+  refused:
+    not-a-patch: '"{name}" is not an IPS, BPS or UPS patch'
+    damaged: '"{name}" is damaged'
+    no-system: '"{name}": open the game or the system it is for, then add it'
+  errors:
+    import: 'The mods could not be added.'
+    change: 'The mod could not be changed.'

@@ -1,0 +1,117 @@
+<!--
+  A game's mods (IPS / BPS / UPS), in its details: name, format, and whether it fits a
+  version that is here; rename, unassign, remove. The system's unassigned mods follow,
+  each with "Assign to this game".
+
+  `mods` are the system's (ModRecord[]); `versions` the CRCs of the versions on disk;
+  `actions` = { rename(sha1, name), assign(sha1, assign: boolean), remove(sha1) }, all async.
+-->
+<script :setup="{ game, mods = [], versions = [], actions }" lang="ts">
+  const [Icon, PromptModal, ConfirmModal, { gameIdOf, modFit }, { t }] = await $importAll([
+    '../components/Icon.html',
+    '../components/PromptModal.html',
+    '../components/ConfirmModal.html',
+    '../helpers/library-index',
+    '../lib/ui-state',
+  ])
+
+  let renaming: { sha1: string; name: string } | undefined = undefined
+  let removing: { sha1: string; name: string } | undefined = undefined
+  let busy = false
+  let error: string | undefined = undefined
+
+  $: gameId = gameIdOf(game.title)
+  $: assigned = mods.filter((mod: any) => mod.gameId === gameId)
+  $: unassigned = mods.filter((mod: any) => !mod.gameId)
+  const fitOf = (mod: { sourceCrc?: string }) => modFit(mod, versions)
+
+  const act = async (run: () => Promise<unknown>) => {
+    try {
+      busy = true
+      error = undefined
+      await run()
+    } catch (err) {
+      error = err instanceof Error ? err.message : t('mods.errors.change')
+    } finally {
+      busy = false
+    }
+  }
+  const rename = (name: string) => {
+    const current = renaming
+    renaming = undefined
+    if (current && name && name !== current.name) void act(() => actions.rename(current.sha1, name))
+  }
+  const remove = () => {
+    const current = removing
+    removing = undefined
+    if (current) void act(() => actions.remove(current.sha1))
+  }
+</script>
+<section class="game-mods">
+  <div class="variants-heading">
+    <h3>{{ t('mods.title') }}</h3>
+  </div>
+  <p :if="assigned.length === 0" class="mods-empty">{{ t('mods.empty') }}</p>
+  <ul :else class="mods">
+    <li :each="mod in assigned" :key="mod.sha1" class="mod-row">
+      <span class="mod-name" :title="mod.name">{{ mod.name }}</span>
+      <span class="tag">{{ mod.format.toUpperCase() }}</span>
+      <span :class="`tag mod-fit mod-fit-${fitOf(mod)} ${fitOf(mod) === 'fits' ? 'status-complete' : ''}`" :title="mod.sourceCrc ? `CRC32 ${mod.sourceCrc}` : ''">{{ t(`mods.fit.${fitOf(mod)}`) }}</span>
+      <span class="mod-actions">
+        <button class="tree-organize" :disabled="busy" @click="renaming = { sha1: mod.sha1, name: mod.name }" :title="t('mods.rename')">
+          <Icon name="pencil" />
+        </button>
+        <button class="tree-organize" :disabled="busy" @click="act(() => actions.assign(mod.sha1, false))" :title="t('mods.unassign')">
+          <Icon name="close" />
+        </button>
+        <button class="tree-organize" :disabled="busy" @click="removing = { sha1: mod.sha1, name: mod.name }" :title="t('mods.remove')">
+          <Icon name="trash" />
+        </button>
+      </span>
+    </li>
+  </ul>
+
+  <details :if="unassigned.length > 0" class="variants-missing">
+    <summary>{{ t('mods.unassigned', { count: unassigned.length }) }}</summary>
+    <ul class="mods">
+      <li :each="mod in unassigned" :key="mod.sha1" class="mod-row">
+        <span class="mod-name" :title="mod.name">{{ mod.name }}</span>
+        <span class="tag">{{ mod.format.toUpperCase() }}</span>
+        <span class="mod-actions">
+          <button class="mod-assign" :disabled="busy" @click="act(() => actions.assign(mod.sha1, true))">
+            <Icon name="plus" /> {{ t('mods.assign') }}
+          </button>
+          <button class="tree-organize" :disabled="busy" @click="removing = { sha1: mod.sha1, name: mod.name }" :title="t('mods.remove')">
+            <Icon name="trash" />
+          </button>
+        </span>
+      </li>
+    </ul>
+  </details>
+
+  <p :if="error" class="mods-error" role="alert">{{ error }}</p>
+  <p class="mods-hint">{{ t('mods.hint') }}</p>
+
+  <PromptModal
+    :if="renaming"
+    :open="true"
+    :close-label="t('prefs.close')"
+    :cancel-label="t('drop.cancel')"
+    :submit-label="t('modal.confirm')"
+    :title="t('mods.renameTitle')"
+    :default-value="renaming.name"
+    @submit="rename($event.detail)"
+    @close="renaming = undefined"
+  />
+  <ConfirmModal
+    :if="removing"
+    :open="true"
+    :close-label="t('prefs.close')"
+    :cancel-label="t('drop.cancel')"
+    :confirm-label="t('modal.delete')"
+    :title="t('mods.removeTitle')"
+    :message="t('mods.removeMessage', { name: removing.name })"
+    @confirm="remove()"
+    @close="removing = undefined"
+  />
+</section>

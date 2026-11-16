@@ -121,7 +121,33 @@ rom-manager/
   - `.meta/<system>/<Game>.json`: Editable per-game metadata.
   - `.meta/<system>/<Game>.<region>.case.png`: Cached cover art images per region.
   - `.meta/<system>/scan.json`: Local hash calculation cache to avoid re-hashing unchanged files.
+  - `.meta/<system>/index.json`: **the library index** (below).
+  - `.meta/<system>/mods.json` + `.meta/<system>/mods/<sha1>.<ips|bps|ups>`: the mods (below).
   - `.meta/wizard.json`: Per-folder explorer settings and configuration.
+
+### The library index (`.meta/<System>/index.json`, a contract)
+- Written by `lib/LibraryIndexService` whenever a system's games are worked out, and after every
+  change: intake, drop, delete, tree add / move, organize / undo, sync, any change to the mods. Built by
+  `helpers/library-index.ts` (pure); the shape is pinned by `library-index.test.ts`.
+- `{ version: 1, system, generatedAt, games: { <gameId>: { title, versions: [...], mods: [...] } } }`
+  - **`gameId`** = play.germade's `slug()` of the normalized title (`gameIdOf`), so the saves engines
+    keep in `<engine>/<gameId>/` stay where they are.
+  - **version**: `{ path, files?, crc, size, variant?, regions, revision?, verified }`. `crc` (CRC32,
+    8 upper-case hex digits) is the version's key: the scan cache already has it, a SHA-1 would mean
+    reading the library again. Files no DAT knows are games named after their file, `verified: false`.
+  - **mod**: `{ sha1, name, format, path, sourceCrc?, targetCrc?, fits? }`; `fits` is the CRC of the
+    version a BPS / UPS applies to, when that version is here.
+- Exported by the npm library: `LibraryIndex` types, `gameIdOf`, `slugOf`, `parseLibraryIndex`,
+  `ownerOfCrc`, `modFit`.
+
+### Mods (`lib/ModService`, `helpers/patch.ts`)
+- IPS / BPS / UPS, read and applied in memory (`applyPatch`); a mod never changes the stored ROM.
+- Added with "Add ROMs" or by a drop, together with ROMs or alone (taken after the ROMs):
+  - a BPS / UPS goes to the game whose version has its source CRC (looked up in the indexes);
+  - otherwise to the game on screen, or unassigned in the system on screen;
+  - with neither, it is refused with a reason.
+- Shown in the game's details (desktop and the phone's game panel). For each mod: whether it fits a
+  version that is here; rename, unassign, remove. The system's unassigned mods can be assigned.
 
 ### Title Grouping & Normalization
 - **Base Title Parsing**: Parses DAT titles to extract base game titles, stripping flags, revisions, languages, and regional tags.

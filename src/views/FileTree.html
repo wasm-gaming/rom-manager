@@ -6,7 +6,8 @@
   Events:
     selection-change (paths)   game-change (game | undefined)
     folder-change (path | undefined)   visible-change (paths)
-    removed (paths)   grouping-needed (path)   toggle-grouping (path)   organize (path)
+    removed (paths)   changed (paths written or moved, both ends)
+    grouping-needed (path)   toggle-grouping (path)   organize (path)
 
   `isInitialized`, `canGroup` and `isGrouped` are questions the parent answers;
   `groupedRows` (a Map, folder → rows) is what grouping has produced so far.
@@ -401,6 +402,7 @@
       await revealDirectory(destination)
       await refresh()
       if (written.length > 0) selectPaths(new Set(written))
+      $emit('changed', written)
     })
   }
 
@@ -441,6 +443,7 @@
         await node.move?.(path, destination)
         moved.push(destination)
       }
+      $emit('changed', [...valid, ...moved])
       await revealDirectory(directory)
       await refresh()
       selectPaths(new Set(moved))

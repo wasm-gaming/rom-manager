@@ -445,3 +445,29 @@ modal:
   createFolderTitle: 'Nueva carpeta'
   deleteTitle: 'Confirmar eliminación'
 
+
+mods:
+  title: 'Mods'
+  empty: 'Este juego no tiene mods.'
+  hint: 'Añade parches IPS, BPS o UPS con «Añadir ROMs» o soltándolos aquí. Un mod nunca cambia la ROM.'
+  unassigned: '{count} sin asignar en este sistema'
+  assign: 'Asignar a este juego'
+  unassign: 'Quitar del juego'
+  rename: 'Renombrar'
+  renameTitle: 'Renombrar mod'
+  remove: 'Eliminar'
+  removeTitle: 'Eliminar mod'
+  removeMessage: '¿Eliminar el mod «{name}»? Se borra su archivo de parche.'
+  added: '{count} mod(s) añadido(s), {assigned} a su juego'
+  duplicates: '{count} ya estaba(n) en la biblioteca'
+  fit:
+    fits: 'Encaja con una versión de aquí'
+    other: 'Para otra versión'
+    unknown: 'IPS: versión sin comprobar'
+  refused:
+    not-a-patch: '«{name}» no es un parche IPS, BPS ni UPS'
+    damaged: '«{name}» está dañado'
+    no-system: '«{name}»: abre el juego o el sistema al que va y añádelo'
+  errors:
+    import: 'No se pudieron añadir los mods.'
+    change: 'No se pudo cambiar el mod.'

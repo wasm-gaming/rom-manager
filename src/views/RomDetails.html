@@ -9,10 +9,11 @@
   Events: edit, cancel-edit, select-file (path), organize (path),
   remove (paths), back. The async ones are functions, because the editor waits
   on them: `onSave(path, record, coverFile?, coverRemoved?)`,
-  `onSaveMany(changes)`, `loadContent(path)`.
+  `onSaveMany(changes)`, `loadContent(path)`, and the game's mods (`mods`, the
+  system's) through `modActions` (see GameMods).
 -->
 <script
-  :setup="{ paths = [], game = undefined, folder = undefined, wizardFolder = false, gameCover = undefined, records, stats, covers, editing = false, onSave, onSaveMany, loadContent, canOrganize = false, canRemove = false, back = undefined }"
+  :setup="{ paths = [], game = undefined, folder = undefined, wizardFolder = false, gameCover = undefined, records, stats, covers, editing = false, onSave, onSaveMany, loadContent, canOrganize = false, canRemove = false, back = undefined, mods = [], modActions = undefined }"
   lang="ts"
 >
   const [Icon, SystemDetails, MetadataEditor, { CRC32_SIZE_LIMIT, emptyRecord, gameNameOf }, { t }] = await $importAll([
@@ -39,6 +40,8 @@
   :cover="gameCover"
   :stats="stats"
   :can-organize="canOrganize"
+  :mods="mods"
+  :mod-actions="modActions"
   @select-file="$emit('select-file', $event.detail)"
   @organize="$emit('organize', $event.detail)"
 />
@@ -393,8 +396,8 @@
 
 <!-- A game: its cover, status, the variants on disk, and the others the catalogue knows. -->
 <template name="GameView">
-  <script :setup="{ game, cover = undefined, stats, canOrganize = false }" lang="ts">
-    const [Icon, { systemOf }, { t }] = await $importAll(['../components/Icon.html', '../lib/RomLibraryService', '../lib/ui-state'])
+  <script :setup="{ game, cover = undefined, stats, canOrganize = false, mods = [], modActions = undefined }" lang="ts">
+    const [Icon, GameMods, { systemOf }, { t }] = await $importAll(['../components/Icon.html', './GameMods.html', '../lib/RomLibraryService', '../lib/ui-state'])
 
     const STATUS_KEYS: Record<string, string> = {
       complete: 'details.status.complete',
@@ -405,6 +408,8 @@
 
     $: present = game.variants.filter(hasFiles)
     $: missing = game.variants.filter((variant: any) => !hasFiles(variant))
+    /** The CRC32 of every file here, which is what a BPS / UPS says it is made for. */
+    $: versionCrcs = present.flatMap((variant: any) => variant.files.filter((file: any) => file.path).map((file: any) => ({ crc: file.crc })))
 
     const organizeAll = () => $emit('organize', present[0].files.find((f: { path?: string }) => f.path)?.path || game.paths[0])
   </script>
@@ -456,6 +461,8 @@
         />
       </ul>
     </details>
+
+    <GameMods :if="modActions" :game="game" :mods="mods" :versions="versionCrcs" :actions="modActions" />
   </div>
 </template>
 

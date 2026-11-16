@@ -2893,6 +2893,91 @@ code {
   color: var(--danger, #ef5350);
 }
 
+/* A game's mods: one line each, its actions at the end. */
+.game-mods {
+  margin-top: 1rem;
+}
+
+.mods {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mod-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 0.8125rem;
+}
+
+.mod-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mod-row .tag {
+  flex: 0 0 auto;
+}
+
+.mod-fit-other {
+  color: var(--text-faint);
+}
+
+.mod-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mod-actions .tree-organize {
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0.2rem;
+  opacity: 0.75;
+}
+
+.mod-actions .tree-organize:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.mod-assign {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.375rem;
+  background: none;
+  color: var(--text-2);
+  font: inherit;
+  cursor: pointer;
+}
+
+.mod-assign:hover {
+  color: var(--accent);
+}
+
+.mods-empty,
+.mods-hint {
+  margin: 0.375rem 0 0;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+}
+
+.mods-error {
+  margin: 0.375rem 0 0;
+  color: var(--danger, #e5484d);
+  font-size: 0.8125rem;
+}
+
 .variant-file.missing {
   color: var(--text-disabled);
 }
