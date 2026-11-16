@@ -6,6 +6,6 @@
  * exactly what `translate()` walks, so the type says that and no more.
  */
 declare module '*.yaml' {
-  const messages: import('../core/i18n').Messages;
+  const messages: import('../helpers/i18n').Messages;
   export default messages;
 }

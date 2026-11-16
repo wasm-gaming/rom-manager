@@ -18,14 +18,16 @@ This document describes the technical stack, codebase architecture, build tools,
 
 ### Frontend & UI
 - **Language**: TypeScript (`^5.6.2`), targeting ESNext / modern web platforms.
-- **UI Library**: Preact (`^10.24.2`) for lightweight component rendering.
-- **Routing**: `preact-router` (`^4.1.2`).
-- **State Management**: `@preact/signals` (`^1.3.0`) for reactive local and global state.
+- **UI Library**: jq79 (`0.7.14`, pinned) — single-file `.html` components
+  (`<script :setup lang="ts">`, `$:` reactive declarations, `:if` / `:each`, `$batch`), compiled by
+  the `jq79/vite` plugin. The same library as the engine apps and play.germade.
+- **State Management**: plain stores read through jq79's reactivity — `appState` (`StoreService`),
+  `i18nState`, `themeState`, and the `UiState` getters in `src/lib/ui-state.ts`.
 - **Styling**: Vanilla CSS with modern CSS variables, CSS grid/flexbox layouts, responsive design, dark theme styling, glassmorphism, and hardware-accelerated animations.
 - **Responsive rules** (`src/styles/index.css`):
   - **One layout switch, at 768px**: at 768px and below (or a phone held sideways:
     `max-height: 500px` + `pointer: coarse`) the explorer becomes the swiped panels (`PHONE_QUERY`
-    in `ROMExplorer.tsx` and the CSS `@media` match).
+    in `src/views/ROMExplorer.html` and the CSS `@media` match).
   - The design is checked at 460px.
   - **Below 460px the root font size is `100vw / 28.75`** (16px at 460px): the 460px layout
     shrinks linearly instead of reflowing.
@@ -40,8 +42,8 @@ This document describes the technical stack, codebase architecture, build tools,
 - **VFS Sync**: `@cloudauthn/vfs-sync` (`^0.1.24`) — the storage layer for both the library (`OPFSAdapter`) and opened folders (`FSAAdapter`), and the two-way `sync()` between them (conflicting edits kept as copies).
 
 ### Build Tools & Tooling
-- **Application Bundler & Dev Server**: Vite (`^5.4.8`) via `@preact/preset-vite` (`^2.8.2`).
-- **Embeddable Library Bundler**: `tsup` (`^8.3.5`) compiling `src/index.ts` to `dist/index.js` and `dist/index.d.ts`.
+- **Application Bundler & Dev Server**: Vite (`^5.4.8`) with the `jq79/vite` plugin.
+- **Embeddable Library Bundler**: `tsup` (`^8.3.5`) compiling `src/lib/index.ts` to `dist/index.js` and `dist/index.d.ts`.
 - **Scripts Runtime**: Node.js (`>=24.0.0`) using ES modules (`"type": "module"`).
 - **Linter**: `oxlint` (`^1.0.0`) for ultra-fast TypeScript/JavaScript linting.
 - **Test Runner**: Vitest (`^2.1.8`) with `@vitest/coverage-v8` for unit testing across core modules and services.
@@ -50,46 +52,53 @@ This document describes the technical stack, codebase architecture, build tools,
 
 ## 3. Project Structure & Layering
 
+Four layers, the owner's structure for every front end. `src/layers.test.ts` reads every import and
+fails on one that reaches a layer it may not.
+
+| Layer | What lives there | May import |
+| --- | --- | --- |
+| `helpers/` | functions with no dependencies and no memory, each with its tests | helpers |
+| `components/` | UI components with no memory | helpers, components |
+| `lib/` | services, stores and libraries that support the app (and the npm library entry) | helpers, lib |
+| `views/` | components that put everything together into the app | all of the above |
+
 ```
 rom-manager/
 ├── src/
-│   ├── app.tsx                 # Main application entry component
-│   ├── main.tsx                # DOM mounting & root entrypoint
-│   ├── index.html              # HTML shell & font definitions
-│   ├── components/             # Reusable UI components
-│   │   ├── FileTree/           # File tree component & sub-elements
-│   │   ├── BrandLogo.tsx       # Brand header logo rendering
-│   │   ├── SystemLogos.tsx     # Console system logo rendering
-│   │   ├── Tabs.tsx            # Navigation tab bar
-│   │   ├── WelcomeCardIllustrations.tsx # Custom Landing SVG illustrations
-│   │   └── icons.tsx           # SVG icon registry
-│   ├── views/                  # Primary screen layouts
-│   │   └── ROMExplorer/        # Main ROM explorer workspace view & panels
-│   ├── core/                   # Pure, side-effect-free domain logic
-│   │   ├── rom-grouping.ts     # Title grouping & name parsing logic
-│   │   ├── rom-matching.ts     # DAT checksum matching engine
-│   │   ├── rom-regions.ts      # Region parsing & fallback preferences
-│   │   ├── rom-organize.ts     # File rename/move plan generation
-│   │   ├── rom-covers.ts       # Cover matching & thumbnail resolution
-│   │   ├── rom-media.ts        # Cartridge vs Disc medium behavior
-│   │   ├── system-info.ts      # 24 MiSTer console definitions & DAT keys
-│   │   ├── wizard-tree.ts      # Wizard tree state transform
-│   │   └── zip-directory.ts    # Romset member hash verification
-│   └── services/               # Stateful services & async operations
-│       ├── RomLibraryService.ts # Local filesystem scanner & organizer
-│       ├── ROMDatasetService.ts # DAT JSON dataset loader & indexer
-│       ├── RomIntakeService.ts  # File drop intake processing
-│       ├── HandleStoreService.ts# IndexedDB persistent handle storage
-│       ├── CoverService.ts     # Cover downloading & caching
-│       └── ArchiveService.ts   # Zip/Archive reading and member hashing
-├── scripts/                    # Dataset compilation & maintenance scripts
-│   ├── download-dats.mjs       # Downloads reference No-Intro/Redump DATs
-│   ├── fetch-covers.mjs        # Lists libretro-thumbnails repositories
-│   ├── build-datasets.mjs      # Converts XML DATs to static JSON datasets
-│   ├── json-to-sqlite.mjs      # Exports catalog datasets to SQLite
-│   └── verify-romsets.mjs      # Verification CLI for physical romsets
-├── static/datasets/            # Pre-compiled JSON datasets for retro systems
-└── SESSIONS/                   # Chronological session specifications & audit trail
+│   ├── index.html              # HTML shell
+│   ├── main.ts                 # mounts views/App.html
+│   ├── layers.test.ts          # the layering rule above
+│   ├── helpers/                # pure logic + tests
+│   │   ├── rom-grouping.ts     # title grouping & name parsing
+│   │   ├── rom-matching.ts     # DAT checksum matching
+│   │   ├── rom-regions.ts      # region parsing & preferences
+│   │   ├── rom-organize.ts     # rename/move plan generation
+│   │   ├── rom-covers.ts       # cover matching
+│   │   ├── rom-media.ts        # cartridge vs disc rules
+│   │   ├── rom-intake.ts       # dropped-file classification
+│   │   ├── system-info.ts      # the 24 MiSTer systems & DAT keys
+│   │   ├── tree.ts, tree-types.ts # tree paths & node types
+│   │   ├── file-icons.ts, file-types.ts, format.ts, i18n.ts, theme.ts, mobile-panels.ts
+│   │   └── wizard-tree.ts, zip-directory.ts, neogeo-validator.ts
+│   ├── components/             # BrandLogo, ConfirmModal, PromptModal, FileTreeHeader, Icon,
+│   │                           # SystemFolderIcon, SystemLogo, Tabs, WelcomeIllustration (.html)
+│   ├── lib/                    # stateful services & stores
+│   │   ├── index.ts            # tsup entry (the npm library)
+│   │   ├── ui-state.ts         # UiState getters, `ui`, `t`
+│   │   ├── StoreService, I18nService, ThemeService, StorageService, LibraryStorageService
+│   │   ├── RomLibraryService, LibraryScanService, OrganizeService, RomIntakeService
+│   │   ├── ROMDatasetService, ROMMetadataService, GameCatalogService, ChecksumService
+│   │   ├── CoverService, ArchiveService, HandleStoreService, WizardConfigService
+│   │   ├── drop.ts             # media-drop types
+│   │   └── messages/           # en.yaml, es.yaml
+│   ├── views/                  # App, Header, ROMExplorer, FileTree, RomDetails, SystemDetails,
+│   │                           # MetadataEditor, OrganizePanel, WelcomePanel, MobilePanels,
+│   │                           # PreferencesModal, MediaDropModal, RomIntakeModal (.html)
+│   ├── styles/index.css
+│   └── types/
+├── scripts/                    # dataset compilation & maintenance (import src/helpers/)
+├── static/datasets/            # pre-compiled JSON datasets
+└── SESSIONS/                   # session specifications & audit trail
 ```
 
 ---

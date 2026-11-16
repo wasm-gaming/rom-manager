@@ -1,0 +1,1058 @@
+<!--
+  The explorer: the open origins (the library and any folders), the tree and the
+  details pane — or, on a phone, the swiped panels — and every dialog they open.
+
+  State that outlives a tab (origins, the active one, its selection, errors, the
+  known systems, the grouping settings) is the services' (`ui` in ../state);
+  what is on screen for the open tab is kept here.
+-->
+<script :setup lang="ts">
+  import type { RomRecord } from '../lib/RomLibraryService'
+  import type { StorageNode, StorageStat } from '../lib/StorageService'
+  import type { WizardGame, WizardNode } from '../helpers/wizard-tree'
+  import type { IntakeItem, IntakeProgress } from '../lib/RomIntakeService'
+  import type { DropDecision, DropTarget } from '../lib/drop'
+
+  const [
+    Header, WelcomePanel, FileTree, RomDetails, MobilePanels, PreferencesModal, MediaDropModal, RomIntakeModal, OrganizePanel, ConfirmModal,
+    { storageService, LIBRARY_ORIGIN_ID, canOpenFolders, isLibraryAvailable }, { LibraryStorageService }, { RomLibrary, gameNameOf, systemOf }, { GameCatalogService }, { CoverService }, { OrganizeService }, { RomIntakeService, isPlaced },
+    { ROMDatasetService }, { isWizardFolder, WizardConfigService }, { setThemeMode }, { setLocalePreference }, { HandleStoreService },
+    { buildWizardTree }, { isSharedCover, pickCover }, { imageExtensionOf, isImageName, regionOfScope }, { filterPlanForPath }, { storeService }, { ui, t },
+  ] = await $importAll([
+    './Header.html', './WelcomePanel.html', './FileTree.html', './RomDetails.html', './MobilePanels.html',
+    './PreferencesModal.html', './MediaDropModal.html', './RomIntakeModal.html', './OrganizePanel.html', '../components/ConfirmModal.html',
+    '../lib/StorageService', '../lib/LibraryStorageService', '../lib/RomLibraryService',
+    '../lib/GameCatalogService', '../lib/CoverService', '../lib/OrganizeService', '../lib/RomIntakeService',
+    '../lib/ROMDatasetService', '../lib/WizardConfigService', '../lib/ThemeService', '../lib/I18nService',
+    '../lib/HandleStoreService', '../helpers/wizard-tree', '../helpers/rom-covers', '../helpers/rom-media', '../helpers/rom-organize',
+    '../lib/StoreService', '../lib/ui-state',
+  ])
+
+  /** Key behind the tree badges: a record is named after the game, not the file. */
+  const gameKey = (romPath: string) => `${systemOf(romPath)}/${gameNameOf(romPath)}`
+
+  /** The system a folder belongs to: the first segment of its path. */
+  const systemFolderOf = (path: string) => {
+    const separator = path.indexOf('/')
+    return separator === -1 ? path : path.slice(0, separator)
+  }
+
+  /** The folder a file is in, `''` being the root of the opened folder. */
+  const parentOf = (path: string) => {
+    const separator = path.lastIndexOf('/')
+    return separator === -1 ? '' : path.slice(0, separator)
+  }
+
+  /** The regions of the release one of whose files is open (a release carries a region). */
+  const regionsOfFile = (game: WizardGame, path?: string) =>
+    path ? game.variants.find((variant) => variant.files.some((file) => file.path === path))?.regions : undefined
+
+  const isFileDrag = (event: DragEvent) => Array.from(event.dataTransfer?.types ?? []).includes('Files')
+
+  /** What identifying a drop is doing, as a line for the tree (a disc image is a wait inside the file). */
+  const intakeNotice = ({ file, read, size, done, total }: IntakeProgress) => {
+    const percent = size > 0 ? Math.min(100, Math.round((read / size) * 100)) : 100
+    return total > 1
+      ? t('progress.identifyingFileOf', { file, percent, done: done + 1, total })
+      : t('progress.identifyingFile', { file, percent })
+  }
+  const identifyingNotice = (files: File[]) =>
+    files.length > 1 ? t('progress.identifyingMany', { count: files.length }) : t('progress.identifying', { file: files[0].name })
+
+  // Bookkeeping that is not state: a class instance passes through the store
+  // untouched, so mutating these wakes nothing.
+  class Book {
+    /** Systems whose library folder has already been listed. */
+    indexedSystems = new Set<string>()
+    /** Folders whose grouped rows are already being worked out. */
+    grouping = new Set<string>()
+    /** Object URLs minted for local covers, revoked when they are replaced. */
+    objectUrls: string[] = []
+    /** Persisted handles restored from IndexedDB on startup. */
+    restoredHandles = new Map<string, FileSystemDirectoryHandle>()
+    /** Where the next pick goes: the library from the welcome panel, else the open tab. */
+    pickTarget: 'library' | 'active' = 'active'
+  }
+  const book = new Book()
+
+  let storageNodes: Map<string, StorageNode> = new Map()
+  let records: Map<string, RomRecord | null> = new Map()
+  let stats: Map<string, StorageStat | null> = new Map()
+  let coverUrls: Map<string, string> = new Map()
+  let initialised: Set<string> = new Set()
+  let groupedRows: Map<string, WizardNode[]> = new Map()
+  let notice: string | undefined = undefined
+  let editing = false
+  /** The game picked in the tree, shown instead of the files it holds. */
+  let game: WizardGame | undefined = undefined
+  /** One file of that game, opened from its details. */
+  let gameFile: string | undefined = undefined
+  /** The folder picked in the tree, which is where a dropped file would go. */
+  let folder: string | undefined = undefined
+  /** The boxart on screen for that game, and the region it is the box of. */
+  let gameCover: { url: string; publishedUrl?: string; region?: string } | undefined = undefined
+  /** A drop waiting to be confirmed, and what is being written once it is. */
+  let drop: { files: File[]; target: DropTarget; game?: { id: string; system: string }; intake?: IntakeItem[] } | undefined = undefined
+  let dropBusy: string | undefined = undefined
+  let dropError: string | undefined = undefined
+  /** True while files are over the details pane, so it can say it takes them. */
+  let dropping = false
+  /** Games dropped with nothing picked, once identified and awaiting a yes. */
+  let intake: IntakeItem[] | undefined = undefined
+  let intakeBusy: string | undefined = undefined
+  let intakeError: string | undefined = undefined
+  /** Bumped when an image is written, so the pane picks the new boxart up. */
+  let mediaVersion = 0
+  /** Bumped when a file is written, so the tree lists it without remounting. */
+  let refreshToken = 0
+  /** The organize preview, once one has been worked out and not yet dismissed. */
+  let organize: { system: string; plan: any; applied?: any } | undefined = undefined
+  let organizeBusy: string | undefined = undefined
+  let preferences = false
+  /** Whether the initial landing view is being shown. */
+  let showLanding = true
+  /** The sync of a folder with the library, while it is asked and while it runs. */
+  let syncAsk = false
+  let syncBusy = false
+
+  /** Whether this browser has a library (OPFS) at all; phones without one only get folders. */
+  const libraryAvailable = isLibraryAvailable()
+  const foldersAvailable = canOpenFolders()
+
+  /** Below 768px (or a phone held sideways) the explorer is swiped panels instead of a tree and a pane. */
+  const PHONE_QUERY = '(max-width: 768px), (max-height: 500px) and (pointer: coarse)'
+  let phone = globalThis.matchMedia?.(PHONE_QUERY).matches ?? false
+  const phoneList = globalThis.matchMedia?.(PHONE_QUERY)
+  const onPhoneChange = () => {
+    phone = phoneList?.matches ?? false
+  }
+  phoneList?.addEventListener('change', onPhoneChange)
+  $destroyed(() => phoneList?.removeEventListener('change', onPhoneChange))
+
+  $: activeOrigin = ui.activeOriginId ? ui.origins.find((origin: any) => origin.id === ui.activeOriginId) : undefined
+  $: activeNode = ui.activeOriginId ? storageNodes.get(ui.activeOriginId) : undefined
+  $: selection = activeOrigin?.selection || []
+  $: knownSet = new Set<string>(ui.knownSystems)
+  $: regionOrder = ui.wizardSettings.regionOrder
+  $: hasLibrary = storageNodes.has(LIBRARY_ORIGIN_ID)
+
+  $destroyed(() => {
+    for (const url of book.objectUrls) URL.revokeObjectURL(url)
+  })
+
+  // Grouping settings belong to the folder on disk, so every tab has its own.
+  const readWizardSettings = (node: StorageNode | undefined) => {
+    if (!node) return
+    queueMicrotask(() => {
+      WizardConfigService.read(node)
+        .then((settings: any) => storeService.setWizardSettings(settings))
+        .catch(() => undefined)
+    })
+  }
+  $: readWizardSettings(activeNode)
+
+  /**
+   * The boxart of the game on screen, chosen by the region preference over what
+   * the catalogue publishes and what is already in `.meta`. With one file of the
+   * game open, it is that release's regions the preference chooses among.
+   */
+  const showCover = (() => {
+    let token = 0
+    let shown: string | undefined
+    const revoke = (url?: string) => {
+      if (url?.startsWith('blob:')) URL.revokeObjectURL(url)
+    }
+    return (node: StorageNode | undefined, picked: WizardGame | undefined, file: string | undefined, order: readonly string[], _version: number) => {
+      const mine = ++token
+      // The cover of the game left behind is about to be revoked: stop showing it now.
+      revoke(shown)
+      shown = undefined
+      gameCover = undefined
+      if (!node || !picked) return
+      queueMicrotask(async () => {
+        try {
+          const system = systemOf(picked.paths[0])
+          const stored = await CoverService.storedCovers(node, system, picked.id).catch(() => undefined)
+          const selectedVariant = file ? picked.variants.find((v) => v.files.some((f) => f.path === file)) : undefined
+          const cover = pickCover(picked.covers, {
+            present: regionsOfFile(picked, file) ?? picked.presentRegions,
+            order,
+            stored,
+            variantUrl: selectedVariant?.cover,
+            variantRegion: selectedVariant?.regions[0],
+          })
+          const resolved = await CoverService.resolve(node, system, picked.id, cover)
+          if (mine !== token) {
+            revoke(resolved?.url)
+            return
+          }
+          shown = resolved?.url
+          // Which box it is only gets said when the image is that region's own.
+          const region = cover && !isSharedCover(picked.covers, cover) ? cover.region : undefined
+          gameCover = resolved ? { url: resolved.url, publishedUrl: cover?.url, region } : undefined
+        } catch {
+          if (mine === token) gameCover = undefined
+        }
+      })
+    }
+  })()
+  $: showCover(activeNode, game, gameFile, regionOrder, mediaVersion)
+
+  /** Every boxart of a game already in the library is kept on disk (offline, or with the provider gone). */
+  const cacheCovers = (node: StorageNode | undefined, picked: WizardGame | undefined, known: Map<string, RomRecord | null>) => {
+    if (!node || !picked) return
+    if (!picked.paths.some((path) => known.get(path))) return
+    queueMicrotask(() => void CoverService.cacheAll(node, systemOf(picked.paths[0]), picked.id, picked.covers))
+  }
+  $: cacheCovers(activeNode, game, records)
+
+  const releaseCovers = () => {
+    for (const url of book.objectUrls) URL.revokeObjectURL(url)
+    book.objectUrls = []
+  }
+
+  /** Records, file facts and covers for a selection — never the ROM bytes. */
+  const loadSelection = async (node: StorageNode, paths: string[]) => {
+    const lib = new RomLibrary(node)
+    const loaded = await lib.readMany(paths)
+    const statEntries = await Promise.all(paths.map(async (path) => [path, await node.stat(path)] as const))
+    releaseCovers()
+    const coverEntries = await Promise.all(
+      paths.map(async (path) => {
+        const url = await lib.coverUrl(path, loaded.get(path)?.cover)
+        if (url?.startsWith('blob:')) book.objectUrls.push(url)
+        return [path, url] as const
+      }),
+    )
+    $batch(() => {
+      records = loaded
+      stats = new Map(statEntries)
+      coverUrls = new Map(coverEntries.filter((entry): entry is readonly [string, string] => Boolean(entry[1])))
+    })
+  }
+
+  const openFolder = async () => {
+    try {
+      storeService.setLoading(true)
+      storeService.setError(undefined)
+      const node = storageService.createNodeInstance()
+      const opened = await node.initialize()
+      if (!opened) return
+      showLanding = false
+      const path = node.getPath()
+      const name = path?.split('/').pop() || 'Folder'
+      const originId = `origin-${Date.now()}`
+      storageNodes = new Map(storageNodes).set(originId, node)
+      storeService.addOrigin({ id: originId, name, path, selection: [], kind: 'folder' })
+      const handle = node.getHandle()
+      if (handle) HandleStoreService.save({ id: originId, name, handle }).catch(() => undefined)
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.openFolder'))
+    } finally {
+      storeService.setLoading(false)
+    }
+  }
+
+  const selectOrigin = async (originId: string) => {
+    showLanding = false
+    const origin = ui.origins.find((candidate: any) => candidate.id === originId)
+    if (origin?.locked) {
+      const savedHandle = book.restoredHandles.get(originId)
+      if (savedHandle) {
+        try {
+          storeService.setLoading(true)
+          storeService.setError(undefined)
+          const node = storageService.createNodeInstance()
+          const authorized = await node.initializeFromHandle(savedHandle)
+          if (!authorized) {
+            storeService.setError(t('errors.deniedFolder'))
+            return
+          }
+          storageNodes = new Map(storageNodes).set(originId, node)
+          storeService.addOrigin({ ...origin, locked: false })
+        } catch (err) {
+          storeService.setError(err instanceof Error ? err.message : t('errors.savedFolder'))
+          return
+        } finally {
+          storeService.setLoading(false)
+        }
+      }
+    }
+    book.indexedSystems = new Set()
+    book.grouping = new Set()
+    $batch(() => {
+      initialised = new Set()
+      groupedRows = new Map()
+      editing = false
+      game = undefined
+      gameFile = undefined
+      storeService.setActiveOrigin(originId)
+    })
+  }
+
+  /** Only a folder of a system the dataset covers can be grouped by game. */
+  const canGroup = (path: string) => knownSet.has(systemFolderOf(path))
+  const isGrouped = (path: string) => isWizardFolder(path, ui.wizardSettings, knownSet)
+
+  /**
+   * Works out the rows of a grouped folder: what the system holds, hashed and
+   * matched against its catalogue. Only ever once per folder (the tree asks on
+   * every paint); toggling the folder is what clears the slate.
+   */
+  const groupingNeeded = async (path: string) => {
+    const node = activeNode
+    if (!node || book.grouping.has(path)) return
+    book.grouping.add(path)
+    try {
+      storeService.setError(undefined)
+      const system = systemFolderOf(path)
+      const [match, systemCovers, entries, medium] = await Promise.all([
+        GameCatalogService.load(node, system, (progress: { done: number; total: number }) => {
+          notice = t('progress.reading', { path, done: progress.done, total: progress.total })
+        }),
+        GameCatalogService.coversOf(system),
+        node.list(path),
+        ROMDatasetService.mediaOf(system).catch(() => 'cartridge'),
+      ])
+      groupedRows = new Map(groupedRows).set(path, buildWizardTree(path, entries, match, systemCovers, medium ?? 'cartridge'))
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.group', { path }))
+    } finally {
+      notice = undefined
+    }
+  }
+
+  const toggleGrouping = async (path: string) => {
+    const node = activeNode
+    if (!node) return
+    const systems = storeService.getKnownSystems()
+    const grouped = isWizardFolder(path, storeService.getWizardSettings(), systems)
+    try {
+      storeService.setWizardSettings(await WizardConfigService.setWizard(node, path, !grouped, systems))
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.viewMode'))
+      return
+    }
+    book.grouping.delete(path)
+    const next = new Map(groupedRows)
+    next.delete(path)
+    groupedRows = next
+  }
+
+  /** Records the order boxarts are preferred in; the rows carry every region's boxart already. */
+  const changeRegionOrder = async (order: readonly string[]) => {
+    const node = activeNode
+    if (!node) return
+    try {
+      storeService.setWizardSettings(await WizardConfigService.setRegionOrder(node, order))
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.regionOrder'))
+    }
+  }
+
+  /** Forget what was read from a folder whose files have just moved. */
+  const invalidateTree = () => {
+    book.grouping.clear()
+    $batch(() => {
+      groupedRows = new Map()
+      records = new Map()
+      stats = new Map()
+      refreshToken += 1
+    })
+  }
+
+  /** Works out what organizing a folder would do, and shows it. Nothing moves until the user says so. */
+  const planOrganize = async (path: string) => {
+    const node = activeNode
+    if (!node) return
+    const system = systemFolderOf(path)
+    try {
+      storeService.setError(undefined)
+      organizeBusy = t('organize.busy.reading', { system })
+      let plan = await OrganizeService.plan(node, system, (done: number, total: number) => {
+        organizeBusy = t('organize.busy.readingProgress', { system, done, total })
+      })
+      if (path !== system) plan = filterPlanForPath(plan, path)
+      organize = { system, plan }
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.plan', { system }))
+    } finally {
+      organizeBusy = undefined
+    }
+  }
+
+  const confirmOrganize = async () => {
+    const node = activeNode
+    const current = organize
+    if (!node || !current) return
+    try {
+      storeService.setError(undefined)
+      organizeBusy = t('organize.busy.moving')
+      const applied = await OrganizeService.apply(node, current.system, current.plan, (done: number, total: number) => {
+        organizeBusy = t('organize.busy.movingProgress', { done, total })
+      })
+      organize = { ...current, applied }
+      invalidateTree()
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.organize'))
+    } finally {
+      organizeBusy = undefined
+    }
+  }
+
+  const undoOrganize = async () => {
+    const node = activeNode
+    const current = organize
+    if (!node || !current?.applied) return
+    try {
+      storeService.setError(undefined)
+      organizeBusy = t('organize.busy.undoing')
+      await OrganizeService.undo(node, current.applied)
+      organize = undefined
+      invalidateTree()
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.undo'))
+    } finally {
+      organizeBusy = undefined
+    }
+  }
+
+  /** Asks the browser to keep the library, the first time something goes into it. */
+  const askPersistenceOnce = async () => {
+    try {
+      if (localStorage.getItem('rom-manager:persist-asked')) return
+      localStorage.setItem('rom-manager:persist-asked', '1')
+    } catch {
+      // Without localStorage it is asked each time, which is harmless.
+    }
+    await LibraryStorageService.persist()
+  }
+
+  /** "Añadir ROMs": a file picker, so phones (no drag and drop, no folders) can add too. */
+  const addRoms = (target: 'library' | 'active' = 'active') => {
+    book.pickTarget = target
+    ;($self('.rom-picker') as HTMLInputElement | null)?.click()
+  }
+
+  const onRomsPicked = async (event: Event) => {
+    const input = event.currentTarget as HTMLInputElement
+    const files = Array.from(input.files ?? [])
+    input.value = '' // the same file can be picked again
+    if (files.length === 0) return
+    const libraryNode = storageNodes.get(LIBRARY_ORIGIN_ID)
+    const toLibrary = book.pickTarget === 'library' || showLanding || !activeNode || activeOrigin?.locked
+    const node = toLibrary ? libraryNode : activeNode
+    if (!node) return
+    if (toLibrary && ui.activeOriginId !== LIBRARY_ORIGIN_ID) await selectOrigin(LIBRARY_ORIGIN_ID)
+    showLanding = false
+    await identifyIntake(files, node)
+  }
+
+  /** Two-way sync of the open folder with the library (the first one is how a folder moves in). */
+  const confirmSync = async () => {
+    const libraryNode = storageNodes.get(LIBRARY_ORIGIN_ID)
+    const node = activeNode
+    if (!libraryNode || !node || node === libraryNode) return
+    try {
+      syncBusy = true
+      storeService.setError(undefined)
+      notice = t('library.sync.running')
+      const result = await libraryNode.syncWith(node)
+      void askPersistenceOnce()
+      notice = result.changed
+        ? t('library.sync.done', { toLibrary: result.transferred.toA, toFolder: result.transferred.toB, conflicts: result.conflicts.length })
+        : t('library.sync.same')
+      book.grouping.clear()
+      groupedRows = new Map()
+      refreshToken += 1
+    } catch (err) {
+      notice = undefined
+      storeService.setError(err instanceof Error ? err.message : t('errors.sync'))
+    } finally {
+      syncBusy = false
+      syncAsk = false
+    }
+  }
+
+  const closeOrigin = (originId: string) => {
+    // The library is the app's own storage: it is never closed.
+    if (originId === LIBRARY_ORIGIN_ID) return
+    book.restoredHandles.delete(originId)
+    HandleStoreService.remove(originId).catch(() => undefined)
+    storeService.removeOrigin(originId)
+    const next = new Map(storageNodes)
+    next.delete(originId)
+    storageNodes = next
+  }
+
+  /** A game picked in the tree; its files arrive through the selection. */
+  const gameChange = (selected?: WizardGame) =>
+    $batch(() => {
+      editing = false
+      gameFile = undefined
+      game = selected ?? undefined
+    })
+
+  /** Opens one file of the game on screen, which the tree no longer lists. */
+  const selectFile = (path: string) =>
+    $batch(() => {
+      editing = false
+      gameFile = path
+    })
+
+  /** Where a file dropped on the details pane would go: the game on screen, or the folder picked. */
+  const dropDestination = (): { target: DropTarget; game?: { id: string; system: string } } | undefined => {
+    if (game) {
+      return {
+        target: { kind: 'game', title: game.title, folder: parentOf(game.paths[0]) },
+        game: { id: game.id, system: systemOf(game.paths[0]) },
+      }
+    }
+    if (selection.length === 1) {
+      const path = selection[0]
+      const record = records.get(path)
+      return {
+        target: { kind: 'game', title: record?.title || gameNameOf(path), folder: parentOf(path) },
+        game: { id: record?.id || gameNameOf(path), system: systemOf(path) },
+      }
+    }
+    return folder === undefined ? undefined : { target: { kind: 'folder', path: folder } }
+  }
+
+  const onPaneDragOver = (event: DragEvent) => {
+    if (!isFileDrag(event)) return
+    event.preventDefault()
+    if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy'
+    dropping = true
+  }
+  const onPaneDragLeave = (event: DragEvent) => {
+    const leaving = event.relatedTarget as Node | null
+    if (!leaving || !(event.currentTarget as HTMLElement).contains(leaving)) dropping = false
+  }
+  const onPaneDrop = (event: DragEvent) => {
+    if (!isFileDrag(event)) return
+    event.preventDefault()
+    dropping = false
+    const files = Array.from(event.dataTransfer?.files ?? [])
+    if (files.length === 0 || !activeNode) return
+    const destination = dropDestination()
+    // With nothing picked there is nowhere the files were said to go: ask what they are.
+    if (!destination) {
+      void identifyIntake(files)
+      return
+    }
+    storeService.setError(undefined)
+    dropError = undefined
+    void openDrop(files, destination)
+  }
+
+  /** Opens the drop, asking the catalogue first what a folder is being given (a second destination). */
+  const openDrop = async (files: File[], destination: { target: DropTarget; game?: { id: string; system: string } }) => {
+    const node = activeNode
+    const askable = files.some((file) => !isImageName(file.name))
+    if (!node || !askable) {
+      drop = { files, ...destination }
+      return
+    }
+    try {
+      notice = identifyingNotice(files)
+      const items = await RomIntakeService.identify(node, files, (progress: IntakeProgress) => {
+        notice = intakeNotice(progress)
+      })
+      drop = { files, ...destination, intake: items }
+    } catch (err) {
+      // The copy still works without an answer: open anyway, and say why.
+      drop = { files, ...destination }
+      dropError = t('errors.catalogue', { reason: err instanceof Error ? err.message : t('errors.unknown') })
+    } finally {
+      notice = undefined
+    }
+  }
+
+  /** Works out which games were dropped and offers to take them in; nothing is written here. */
+  const identifyIntake = async (files: File[], node: StorageNode | undefined = activeNode) => {
+    if (!node) return
+    try {
+      storeService.setError(undefined)
+      intakeError = undefined
+      notice = identifyingNotice(files)
+      const items = await RomIntakeService.identify(node, files, (progress: IntakeProgress) => {
+        notice = intakeNotice(progress)
+      })
+      // A refused archive opens the panel too: why nothing can be done is worth knowing.
+      if (!items.some((item: IntakeItem) => item.path || item.refused)) {
+        storeService.setError(t('errors.noGame'))
+        return
+      }
+      intake = items
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.identify'))
+    } finally {
+      notice = undefined
+    }
+  }
+
+  /** Copies in the games the user has just confirmed, folders and all. */
+  const confirmIntake = async () => {
+    const node = activeNode
+    const items = intake
+    if (!node || !items) return
+    try {
+      intakeError = undefined
+      const addedPaths = items.filter(isPlaced).map((item: IntakeItem) => item.path!).filter(Boolean)
+      await RomIntakeService.apply(node, items, ({ file, done, total }: { file: string; done: number; total: number }) => {
+        intakeBusy = total > 1 ? t('progress.copyingOf', { file, done: done + 1, total }) : t('progress.copying', { file })
+      })
+      intake = undefined
+      // The first ROMs into the library are when persistence starts to matter.
+      if (activeOrigin?.kind === 'library') void askPersistenceOnce()
+      // The new ROMs are files nothing has hashed, maybe in a folder that was not there.
+      book.grouping.clear()
+      groupedRows = new Map()
+      refreshToken += 1
+      if (addedPaths.length > 0) {
+        gameFile = undefined
+        await selectionChange(addedPaths)
+      }
+    } catch (err) {
+      intakeError = err instanceof Error ? err.message : t('errors.copyFiles')
+    } finally {
+      intakeBusy = undefined
+    }
+  }
+
+  /** Writes what the drop said: images into the game's metadata, files as they are, games where the catalogue puts them. */
+  const confirmDrop = async ({ images, files, intake: taken }: DropDecision) => {
+    const node = activeNode
+    const current = drop
+    if (!node || !current) return
+    const { target } = current
+    const directory = target.kind === 'game' ? target.folder : target.path
+    try {
+      dropError = undefined
+      for (const image of images) {
+        if (!current.game) break
+        dropBusy = t('progress.saving', { file: image.file.name })
+        await CoverService.save(
+          node,
+          current.game.system,
+          current.game.id,
+          { kind: image.kind, region: regionOfScope(image.scope), extension: imageExtensionOf(image.file.name) },
+          new Uint8Array(await image.file.arrayBuffer()),
+        )
+      }
+      const copiedPaths: string[] = []
+      for (const file of files) {
+        dropBusy = t('progress.copying', { file: file.name })
+        const path = directory ? `${directory}/${file.name}` : file.name
+        await node.writeFile(path, new Uint8Array(await file.arrayBuffer()))
+        copiedPaths.push(path)
+      }
+      const takenPaths: string[] = []
+      if (taken.length > 0) {
+        await RomIntakeService.apply(node, taken, ({ file, done, total }: { file: string; done: number; total: number }) => {
+          dropBusy = total > 1 ? t('progress.addingOf', { file, done: done + 1, total }) : t('progress.adding', { file })
+        })
+        takenPaths.push(...taken.filter(isPlaced).map((item: IntakeItem) => item.path!).filter(Boolean))
+      }
+      drop = undefined
+      if (images.length > 0) mediaVersion += 1
+      const addedPaths = takenPaths.length > 0 ? takenPaths : copiedPaths
+      if (files.length > 0 || taken.length > 0) {
+        // A ROM that has just landed is a file nothing has hashed: work its rows out again.
+        book.grouping.clear()
+        groupedRows = new Map()
+        refreshToken += 1
+      }
+      if (addedPaths.length > 0) {
+        gameFile = undefined
+        await selectionChange(addedPaths)
+      }
+    } catch (err) {
+      dropError = err instanceof Error ? err.message : t('errors.writeFiles')
+    } finally {
+      dropBusy = undefined
+    }
+  }
+
+  const cancelDrop = () => {
+    if (dropBusy) return
+    drop = undefined
+    dropError = undefined
+  }
+
+  const cancelIntake = () => {
+    if (intakeBusy) return
+    intake = undefined
+    intakeError = undefined
+  }
+
+  const selectionChange = async (paths: string[]) => {
+    $batch(() => {
+      editing = false
+      storeService.setSelection(paths)
+    })
+    const node = activeNode
+    if (!node) return
+    try {
+      storeService.setError(undefined)
+      await loadSelection(node, paths)
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.readSelection'))
+    }
+  }
+
+  /** Lists `.meta/<System>` once per system: all the tree needs to tell a recorded ROM from a plain file. */
+  const visibleChange = async (paths: string[]) => {
+    const node = activeNode
+    if (!node) return
+    const systems = new Set(paths.map(systemOf).filter(Boolean))
+    const pending = Array.from(systems).filter((system) => !book.indexedSystems.has(system as string)) as string[]
+    if (pending.length === 0) return
+    const lib = new RomLibrary(node)
+    const found = await Promise.all(pending.map(async (system) => [system, await lib.initializedGames(system)] as const))
+    for (const system of pending) book.indexedSystems.add(system)
+    const next = new Set(initialised)
+    for (const [system, games] of found) for (const id of games) next.add(`${system}/${id}`)
+    initialised = next
+  }
+
+  const loadContent = async (path: string): Promise<ArrayBuffer> => {
+    const node = activeNode
+    if (!node) throw new Error('No folder is open')
+    const bytes = await node.readFile(path)
+    // Checksums want a plain ArrayBuffer, so detach the view from the pool.
+    const content = new ArrayBuffer(bytes.byteLength)
+    new Uint8Array(content).set(bytes)
+    return content
+  }
+
+  /** Writes a record, downloading a cover only known as a URL so the library works offline. */
+  const persist = async (lib: any, path: string, record: RomRecord) => {
+    let stored = record
+    if (record.cover?.startsWith('https://')) {
+      try {
+        stored = { ...record, cover: await lib.saveCover(path, record.cover) }
+      } catch {
+        stored = record
+      }
+    }
+    await lib.write(path, stored)
+  }
+
+  const save = async (path: string, record: RomRecord, coverFile?: File, coverRemoved?: boolean) => {
+    const node = activeNode
+    if (!node) return
+    const updated = { ...record }
+    if (coverRemoved) {
+      updated.cover = undefined
+    } else if (coverFile) {
+      const bytes = new Uint8Array(await coverFile.arrayBuffer())
+      const ext = coverFile.name.split('.').pop()?.toLowerCase() || 'png'
+      updated.cover = await CoverService.save(node, systemOf(path), record.id || gameNameOf(path), { kind: 'case', extension: ext }, bytes)
+      mediaVersion += 1
+    }
+    await persist(new RomLibrary(node), path, updated)
+    initialised = new Set(initialised).add(gameKey(path))
+    editing = false
+    await loadSelection(node, selection)
+  }
+
+  const saveMany = async (changes: Partial<RomRecord>) => {
+    const node = activeNode
+    if (!node) return
+    const lib = new RomLibrary(node)
+    for (const path of selection) {
+      const record = records.get(path)
+      if (!record) continue
+      await persist(lib, path, { ...record, ...changes })
+    }
+    editing = false
+    await loadSelection(node, selection)
+  }
+
+  const removed = (paths: string[]) => {
+    // The grouped rows were worked out with those files there: read the folders again (a listing, not a rehash).
+    book.grouping.clear()
+    groupedRows = new Map()
+    const affected = selection.some((selected: string) => paths.some((path) => selected === path || selected.startsWith(`${path}/`)))
+    if (!affected) return
+    releaseCovers()
+    $batch(() => {
+      editing = false
+      game = undefined
+      gameFile = undefined
+      storeService.setSelection([])
+      records = new Map()
+      stats = new Map()
+      coverUrls = new Map()
+    })
+  }
+
+  const deleteFiles = async (paths: string[]) => {
+    const node = activeNode
+    if (!node || paths.length === 0) return
+    const lib = new RomLibrary(node)
+    for (const path of paths) {
+      try {
+        await node.remove(path)
+      } catch {
+        // Ignored if already removed
+      }
+      await lib.remove(path).catch(() => {})
+    }
+    removed(paths)
+    refreshToken += 1
+  }
+
+  const goHome = () =>
+    $batch(() => {
+      storeService.setSelection([])
+      game = undefined
+      gameFile = undefined
+      folder = undefined
+      editing = false
+      notice = undefined
+      organize = undefined
+      showLanding = true
+    })
+
+  /** A game picked in the phone panels: loaded the way the tree loads one. */
+  const panelGame = (picked?: WizardGame) => {
+    gameChange(picked ?? undefined)
+    void selectionChange(picked ? picked.paths : [])
+  }
+
+  $: welcome = ui.origins.length === 0 || showLanding || activeOrigin?.locked || !activeNode
+  $: canSync = !showLanding && Boolean(activeNode) && activeOrigin?.kind !== 'library' && hasLibrary
+  $: detailsPaths = gameFile ? [gameFile] : selection
+  $: detailsGame = gameFile ? undefined : game
+  $: wizardFolder = folder !== undefined && isGrouped(folder)
+  $: back = game && gameFile ? { label: game.title } : undefined
+
+  await $mounted()
+
+  /**
+   * The library first: the app's own folder in OPFS, there on every start without
+   * a prompt — on phones, the only storage there is. Then the folders saved from
+   * earlier sessions, locked until the user gives access again.
+   */
+  const openLibrary = async () => {
+    if (!libraryAvailable) return
+    try {
+      const node = storageService.createNodeInstance()
+      await node.initializeLibrary()
+      storageNodes = new Map(storageNodes).set(LIBRARY_ORIGIN_ID, node)
+      storeService.addOrigin({ id: LIBRARY_ORIGIN_ID, name: t('library.name'), path: 'OPFS', selection: [], kind: 'library' })
+    } catch (err) {
+      storeService.setError(err instanceof Error ? err.message : t('errors.library'))
+    }
+  }
+  openLibrary()
+    .then(() => HandleStoreService.loadAll())
+    .then((stored: Array<{ id: string; name: string; handle: FileSystemDirectoryHandle }>) => {
+      for (const entry of stored) {
+        book.restoredHandles.set(entry.id, entry.handle)
+        storeService.addOrigin({ id: entry.id, name: entry.name, path: entry.name, selection: [], locked: true, kind: 'folder' })
+      }
+      try {
+        const lastActiveId = localStorage.getItem('rom-manager:active-origin-id')
+        if (lastActiveId && (lastActiveId === LIBRARY_ORIGIN_ID || stored.some((entry) => entry.id === lastActiveId))) {
+          storeService.setActiveOrigin(lastActiveId)
+        }
+      } catch {
+        // Ignore storage errors
+      }
+    })
+    .catch(() => undefined)
+
+  /** The systems the dataset covers, which is what a folder is grouped against. */
+  ROMDatasetService.listSystems()
+    .then((systems: Array<{ system: string }>) => storeService.setKnownSystems(new Set(systems.map((it) => it.system))))
+    .catch(() => storeService.setKnownSystems(new Set()))
+</script>
+
+<div class="rom-explorer">
+  <Header
+    :origins="ui.origins"
+    :active-origin-id="ui.activeOriginId"
+    :show-landing="showLanding"
+    :region-order="regionOrder"
+    :has-node="Boolean(activeNode)"
+    :can-open-folder="foldersAvailable"
+    :can-add-roms="storageNodes.size > 0"
+    :can-sync="canSync"
+    @go-home="goHome()"
+    @open-folder="openFolder()"
+    @add-roms="addRoms('active')"
+    @sync="syncAsk = true"
+    @select-origin="selectOrigin($event.detail)"
+    @close-origin="closeOrigin($event.detail)"
+    @region-order-change="changeRegionOrder($event.detail)"
+    @open-preferences="preferences = true"
+  />
+
+  <div :if="ui.error" class="error-message">{{ ui.error }}</div>
+
+  <!-- Initial view: before any folder is opened, on reload, or when the title is clicked. -->
+  <WelcomePanel
+    :if="welcome"
+    :can-open-folder="foldersAvailable"
+    :can-open-library="hasLibrary"
+    :can-add-roms="hasLibrary"
+    :loading="ui.loading"
+    @open-folder="openFolder()"
+    @open-library="selectOrigin(LIBRARY_ORIGIN_ID)"
+    @add-roms="addRoms('library')"
+  />
+  <div :elseif="phone" class="mobile-host" style="display: contents">
+    <MobilePanels
+      :each="originKey in [ui.activeOriginId]"
+      :key="originKey"
+      :node="activeNode"
+      :refresh-token="refreshToken"
+      :known-systems="ui.knownSystems"
+      :grouped-rows="groupedRows"
+      :region-order="regionOrder"
+      @grouping-needed="groupingNeeded($event.detail)"
+      @pick-game="panelGame($event.detail)"
+    >
+      <RomDetails
+        :paths="detailsPaths"
+        :game="detailsGame"
+        :folder="folder"
+        :wizard-folder="wizardFolder"
+        :game-cover="gameCover"
+        :records="records"
+        :stats="stats"
+        :covers="coverUrls"
+        :editing="editing"
+        :on-save="save"
+        :on-save-many="saveMany"
+        :load-content="loadContent"
+        :can-organize="true"
+        :can-remove="true"
+        :back="back"
+        @edit="editing = true"
+        @cancel-edit="editing = false"
+        @select-file="selectFile($event.detail)"
+        @organize="planOrganize($event.detail)"
+        @remove="deleteFiles($event.detail)"
+        @back="gameFile = undefined"
+      />
+    </MobilePanels>
+  </div>
+  <div :else class="explorer-container">
+    <FileTree
+      :each="treeKey in [`${ui.activeOriginId}:0`]"
+      :key="treeKey"
+      :node="activeNode"
+      :selected-files="selection"
+      :is-initialized="(path) => initialised.has(gameKey(path))"
+      :can-group="canGroup"
+      :is-grouped="isGrouped"
+      :grouped-rows="groupedRows"
+      :can-organize="true"
+      :notice="notice ?? (organize ? undefined : organizeBusy)"
+      :refresh-token="refreshToken"
+      @selection-change="selectionChange($event.detail)"
+      @game-change="gameChange($event.detail)"
+      @folder-change="folder = $event.detail ?? undefined"
+      @visible-change="visibleChange($event.detail)"
+      @removed="removed($event.detail)"
+      @grouping-needed="groupingNeeded($event.detail)"
+      @toggle-grouping="toggleGrouping($event.detail)"
+      @organize="planOrganize($event.detail)"
+    />
+
+    <!-- The pane takes files from outside: an image for the game on screen, or anything for the folder picked. -->
+    <div :class="`details-pane ${dropping ? 'drop-target' : ''}`" @dragover="onPaneDragOver" @dragleave="onPaneDragLeave" @drop="onPaneDrop">
+      <RomDetails
+        :paths="detailsPaths"
+        :game="detailsGame"
+        :folder="folder"
+        :wizard-folder="wizardFolder"
+        :game-cover="gameCover"
+        :records="records"
+        :stats="stats"
+        :covers="coverUrls"
+        :editing="editing"
+        :on-save="save"
+        :on-save-many="saveMany"
+        :load-content="loadContent"
+        :can-organize="true"
+        :can-remove="true"
+        :back="back"
+        @edit="editing = true"
+        @cancel-edit="editing = false"
+        @select-file="selectFile($event.detail)"
+        @organize="planOrganize($event.detail)"
+        @remove="deleteFiles($event.detail)"
+        @back="gameFile = undefined"
+      />
+    </div>
+  </div>
+
+  <!-- Mounted whether or not it is open: the dialog closes itself, and being still there is what lets it be seen doing so. -->
+  <PreferencesModal
+    :open="preferences"
+    :theme-mode="ui.themeMode"
+    :locale="ui.localePreference"
+    :region-order="regionOrder"
+    :can-change-regions="Boolean(activeNode)"
+    :library="hasLibrary"
+    @theme-mode-change="setThemeMode($event.detail)"
+    @locale-change="setLocalePreference($event.detail)"
+    @region-order-change="changeRegionOrder($event.detail)"
+    @close="preferences = false"
+  />
+
+  <!-- Behind "Añadir ROMs". No `accept`: iOS greys out extensions it has no type for. -->
+  <input type="file" multiple hidden class="rom-picker" @change="onRomsPicked" />
+
+  <ConfirmModal
+    :close-label="t('prefs.close')"
+    :cancel-label="t('drop.cancel')"
+    :open="syncAsk"
+    :title="t('library.sync.title', { folder: activeOrigin?.name ?? '' })"
+    :message="t('library.sync.message')"
+    :confirm-label="t('library.sync.confirm')"
+    :danger="false"
+    :busy="syncBusy"
+    @confirm="confirmSync()"
+    @close="syncBusy ? undefined : (syncAsk = false)"
+  />
+
+  <!-- Only while there is a drop to read: what it says depends on the files and where they were dropped. -->
+  <MediaDropModal
+    :if="drop"
+    :files="drop.files"
+    :target="drop.target"
+    :intake="drop.intake"
+    :busy="dropBusy"
+    :error="dropError"
+    @confirm="confirmDrop($event.detail)"
+    @cancel="cancelDrop()"
+  />
+
+  <!-- Only once the drop has been identified: what it says is the answer. -->
+  <RomIntakeModal
+    :if="intake"
+    :items="intake"
+    :busy="intakeBusy"
+    :error="intakeError"
+    @confirm="confirmIntake()"
+    @cancel="cancelIntake()"
+  />
+
+  <OrganizePanel
+    :if="organize"
+    :system="organize.system"
+    :plan="organize.plan"
+    :applied="organize.applied"
+    :busy="organizeBusy"
+    @confirm="confirmOrganize()"
+    @undo="undoOrganize()"
+    @close="organize = undefined"
+  />
+</div>

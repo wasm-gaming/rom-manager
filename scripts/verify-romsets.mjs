@@ -28,7 +28,7 @@ import {
   ZIP_TAIL_LIMIT,
   findCentralDirectory,
   readCentralDirectory,
-} from '../src/core/zip-directory.ts';
+} from '../src/helpers/zip-directory.ts';
 import { DATASETS_DIR, DATASET_FILE, systemDir } from './systems.mjs';
 
 /**

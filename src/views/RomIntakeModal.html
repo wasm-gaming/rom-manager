@@ -1,0 +1,94 @@
+<!--
+  What a batch of dropped or picked files is about to become: the games the
+  catalogue named, their companions, the files nothing claimed, and what could
+  not be read. Opens as it mounts. Events: confirm, cancel (closed by any means).
+-->
+<script :setup="{ items = [], busy = undefined, error = undefined }" lang="ts">
+  const [Icon, { isPlaced }, { t }] = await $importAll([
+    '../components/Icon.html',
+    '../lib/RomIntakeService',
+    '../lib/ui-state',
+  ])
+
+  /** Why something that was dropped is not on the table, in so many words. */
+  const REFUSAL_KEYS: Record<string, string> = {
+    zip64: 'intake.refused.zip64',
+    encrypted: 'intake.refused.encrypted',
+    method: 'intake.refused.method',
+    damaged: 'intake.refused.damaged',
+  }
+
+  $: games = items.filter((item: any) => item.match && !item.refused)
+  $: companions = items.filter((item: any) => !item.match && item.path && !item.refused)
+  $: strays = items.filter((item: any) => !item.path && !item.refused)
+  $: refused = items.filter((item: any) => item.refused)
+  $: adding = items.filter(isPlaced).length
+  $: systems = [...new Set(games.map((item: any) => item.match.system))]
+
+  const dialog = (): HTMLDialogElement | null => $self('dialog')
+  const dismiss = () => dialog()?.close()
+  const onBackdrop = (event: MouseEvent) => {
+    if (event.target === dialog() && !busy) dismiss()
+  }
+
+  await $mounted()
+
+  if (!dialog()?.open) dialog()?.showModal()
+</script>
+
+<dialog class="modal-dialog drop-dialog" :aria-label="t('intake.label')" @close="$emit('cancel')" @click="onBackdrop">
+  <header class="modal-header">
+    <h3>{{ systems.length === 1 ? t('intake.toSystem', { system: systems[0] }) : t('intake.toLibrary') }}</h3>
+    <button class="modal-close" @click="dismiss" :disabled="Boolean(busy)">
+      <Icon name="close" />
+    </button>
+  </header>
+
+  <div class="modal-content">
+    <div :if="error" class="lookup-error">{{ error }}</div>
+
+    <section :if="games.length > 0" class="prefs-group">
+      <h4>{{ games.length > 1 ? t('intake.games.many', { count: games.length }) : t('intake.games.one') }}</h4>
+      <ul class="intake-list">
+        <li :each="item, at in games" :key="`${at}:${item.name}`" :class="`intake-item ${item.taken ? 'taken' : ''}`">
+          <span class="intake-title">{{ item.match.title }}</span>
+          <span class="intake-where">{{ item.match.system }} · {{ item.match.variant }}<span :if="item.archive" class="intake-archive">{{ t('intake.from', { archive: item.archive }) }}</span></span>
+          <span class="intake-path" :title="item.path">{{ item.taken ? t('intake.taken', { path: item.path ?? '' }) : item.path }}</span>
+        </li>
+      </ul>
+      <p class="prefs-hint">{{ t('intake.games.hint') }}</p>
+    </section>
+
+    <section :if="companions.length > 0" class="prefs-group">
+      <h4>{{ companions.length > 1 ? t('intake.companions.many') : t('intake.companions.one') }}</h4>
+      <ul class="drop-files">
+        <li :each="item, at in companions" :key="`${at}:${item.name}`" :class="item.taken ? 'taken' : ''">
+          {{ item.taken ? t('intake.companions.already', { name: item.name }) : item.name }}
+        </li>
+      </ul>
+      <p class="prefs-hint">{{ t('intake.companions.hint') }}</p>
+    </section>
+
+    <section :if="strays.length > 0" class="prefs-group">
+      <h4>{{ t('intake.strays.title') }}</h4>
+      <ul class="drop-files">
+        <li :each="item, at in strays" :key="`${at}:${item.name}`">{{ item.name }}<small :if="item.archive" class="intake-archive">{{ t('intake.from', { archive: item.archive }) }}</small></li>
+      </ul>
+      <p class="prefs-hint">{{ t('intake.strays.hint') }}</p>
+    </section>
+
+    <section :if="refused.length > 0" class="prefs-group">
+      <h4>{{ t('intake.refused.title') }}</h4>
+      <ul class="drop-files">
+        <li :each="item, at in refused" :key="`${at}:${item.name}`">{{ item.name }} — {{ t(REFUSAL_KEYS[item.refused]) }}</li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn-cancel" @click="dismiss" :disabled="Boolean(busy)">{{ t('intake.cancel') }}</button>
+    <button class="btn-apply" @click="$emit('confirm')" :disabled="Boolean(busy) || adding === 0">
+      {{ busy ?? (adding > 1 ? t('intake.confirmMany', { count: adding }) : t('intake.confirm')) }}
+    </button>
+  </div>
+</dialog>

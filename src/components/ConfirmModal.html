@@ -1,0 +1,49 @@
+<!--
+  Every text comes from the parent (a component depends on helpers only); the
+  defaults are English.
+  A yes / no question in a modal dialog. Emits `confirm` and `close` (the dialog
+  closed by any means: the ×, Cancel, Escape, a click on the backdrop).
+-->
+<script :setup="{ open = false, title = '', message = '', confirmLabel = 'Delete', cancelLabel = 'Cancel', closeLabel = 'Close', danger = true, busy = false }" lang="ts">
+  const Icon = await import('./Icon.html')
+
+  const dialog = (): HTMLDialogElement | null => $self('dialog')
+  const sync = (isOpen: boolean) => {
+    const element = dialog()
+    if (!element) return
+    if (isOpen && !element.open) element.showModal()
+    else if (!isOpen && element.open) element.close()
+  }
+  const dismiss = () => dialog()?.close()
+  const onBackdrop = (event: MouseEvent) => {
+    if (event.target === dialog() && !busy) dismiss()
+  }
+
+  $: sync(open)
+
+  await $mounted()
+
+  sync(open)
+</script>
+
+<dialog class="modal-dialog confirm-dialog" :aria-label="title" @close="$emit('close')" @click="onBackdrop">
+  <header class="modal-header">
+    <h3>{{ title }}</h3>
+    <button type="button" class="modal-close" @click="dismiss" :disabled="busy" :title="closeLabel">
+      <Icon name="close" />
+    </button>
+  </header>
+
+  <div class="modal-content">
+    <p class="modal-message">{{ message }}</p>
+  </div>
+
+  <div class="modal-actions">
+    <button type="button" class="btn-cancel" @click="dismiss" :disabled="busy">
+      {{ cancelLabel }}
+    </button>
+    <button type="button" :class="danger ? 'btn-danger' : 'btn-apply'" @click="$emit('confirm')" :disabled="busy">
+      {{ confirmLabel }}
+    </button>
+  </div>
+</dialog>
