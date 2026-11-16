@@ -243,7 +243,10 @@ code {
   gap: 0.4em;
 }
 
-.icon-label > .icon {
+/* jq79 renders a component in a box of its own (`display: contents`): the icon is
+   the box's child, so each rule names both paths, at the same specificity. */
+.icon-label > .icon,
+.icon-label > :where([data-c79-box]) > .icon {
   vertical-align: initial;
 }
 
@@ -1224,7 +1227,8 @@ code {
 
 /* The icons carry their own colours — see `icons.tsx` — so the row only sizes
    them. What tells the kinds apart is the amber against the grey. */
-.tree-icon > svg {
+.tree-icon > svg,
+.tree-icon > :where([data-c79-box]) > svg {
   display: block;
   width: 1.6rem;
   height: 1.6rem;
@@ -1239,7 +1243,8 @@ code {
   justify-content: center;
 }
 
-.system-folder-icon > svg {
+.system-folder-icon > svg,
+.system-folder-icon > :where([data-c79-box]) > svg {
   display: block;
   width: 1.6rem;
   height: 1.6rem;
@@ -1258,7 +1263,8 @@ code {
   filter: drop-shadow(0 1px 0.125rem rgba(0, 0, 0, 0.5));
 }
 
-.system-folder-badge > svg {
+.system-folder-badge > svg,
+.system-folder-badge > :where([data-c79-box]) > svg {
   width: 100%;
   height: 100%;
 }

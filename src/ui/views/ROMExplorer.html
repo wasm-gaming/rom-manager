@@ -17,7 +17,7 @@
     Header, WelcomePanel, FileTree, RomDetails, MobilePanels, PreferencesModal, MediaDropModal, RomIntakeModal, OrganizePanel, ConfirmModal,
     { storageService, LIBRARY_ORIGIN_ID, canOpenFolders, isLibraryAvailable }, { LibraryStorageService }, { RomLibrary, gameNameOf, systemOf }, { GameCatalogService }, { CoverService }, { OrganizeService }, { RomIntakeService, isPlaced },
     { ROMDatasetService }, { isWizardFolder, WizardConfigService }, { setThemeMode }, { setLocalePreference }, { HandleStoreService },
-    { buildWizardTree }, { isSharedCover, pickCover }, { imageExtensionOf, isImageName, regionOfScope }, { filterPlanForPath }, { storeService, knownSystemsSignal, wizardSettingsSignal }, { ui, t },
+    { buildWizardTree }, { isSharedCover, pickCover }, { imageExtensionOf, isImageName, regionOfScope }, { filterPlanForPath }, { storeService }, { ui, t },
   ] = await $importAll([
     './Header.html', './WelcomePanel.html', '../components/FileTree.html', './RomDetails.html', './MobilePanels.html',
     './PreferencesModal.html', './MediaDropModal.html', './RomIntakeModal.html', './OrganizePanel.html', '../components/ConfirmModal.html',
@@ -321,8 +321,8 @@
   const toggleGrouping = async (path: string) => {
     const node = activeNode
     if (!node) return
-    const systems = knownSystemsSignal.peek()
-    const grouped = isWizardFolder(path, wizardSettingsSignal.peek(), systems)
+    const systems = storeService.getKnownSystems()
+    const grouped = isWizardFolder(path, storeService.getWizardSettings(), systems)
     try {
       storeService.setWizardSettings(await WizardConfigService.setWizard(node, path, !grouped, systems))
     } catch (err) {

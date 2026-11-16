@@ -1,4 +1,4 @@
-import { signal } from '@preact/signals';
+import { $reactive, $toRaw } from 'jq79';
 import { emptySettings, type WizardSettings } from './WizardConfigService';
 
 /**
@@ -16,33 +16,48 @@ export interface Origin {
   kind?: 'library' | 'folder';
 }
 
-/**
- * Global store service using Preact signals for reactive state
- */
+/** The app-wide state, as one jq79 store: a template that reads it follows it. */
+export interface AppState {
+  /** The open origins (the library and any folders), in the order they were opened. */
+  origins: Origin[];
+  activeOriginId: string | undefined;
+  loading: boolean;
+  error: string | undefined;
+  /**
+   * Which folders of the open library are browsed grouped by game, mirroring its
+   * `wizard.json`. Only the active library is held: the settings belong to the
+   * folder on disk, so switching tabs reloads them from there.
+   */
+  wizardSettings: WizardSettings;
+  /** Systems the dataset knows about, which is what makes a folder wizard by default. */
+  knownSystems: string[];
+}
 
-export const originsSignal = signal<Map<string, Origin>>(new Map());
-export const activeOriginIdSignal = signal<string | undefined>();
-export const loadingSignal = signal(false);
-export const errorSignal = signal<string | undefined>();
+export const appState = $reactive<AppState>({
+  origins: [],
+  activeOriginId: undefined,
+  loading: false,
+  error: undefined,
+  wizardSettings: emptySettings(),
+  knownSystems: [],
+});
 
-/**
- * Which folders of the open library are browsed grouped by game, mirroring its
- * `wizard.json`. Only the active library is held: the settings belong to the
- * folder on disk, so switching tabs reloads them from there.
- */
-export const wizardSettingsSignal = signal<WizardSettings>(emptySettings());
+const ACTIVE_ORIGIN_KEY = 'rom-manager:active-origin-id';
 
-/** Systems the dataset knows about, which is what makes a folder wizard by default. */
-export const knownSystemsSignal = signal<Set<string>>(new Set());
+/** The active origin is remembered between visits; storage may refuse, which is harmless. */
+function remember(id: string | undefined): void {
+  try {
+    if (id) localStorage.setItem(ACTIVE_ORIGIN_KEY, id);
+    else localStorage.removeItem(ACTIVE_ORIGIN_KEY);
+  } catch {
+    // Ignore storage errors
+  }
+}
 
 export class StoreService {
   private static instance: StoreService;
 
   private constructor() {}
-
-  private getOriginsMap(): Map<string, Origin> {
-    return originsSignal.value instanceof Map ? originsSignal.value : new Map<string, Origin>();
-  }
 
   static getInstance(): StoreService {
     if (!StoreService.instance) {
@@ -52,77 +67,56 @@ export class StoreService {
   }
 
   // Origin management
+
+  /** Adds an origin, or replaces the one with its id where it stands. */
   addOrigin(origin: Origin): void {
-    const origins = new Map(this.getOriginsMap());
-    origins.set(origin.id, origin);
-    originsSignal.value = origins;
-    if (!activeOriginIdSignal.value) {
-      activeOriginIdSignal.value = origin.id;
-      try {
-        localStorage.setItem('rom-manager:active-origin-id', origin.id);
-      } catch {
-        // Ignore storage errors
-      }
+    const at = appState.origins.findIndex((candidate) => candidate.id === origin.id);
+    appState.origins =
+      at === -1
+        ? [...appState.origins, origin]
+        : appState.origins.map((candidate, index) => (index === at ? origin : candidate));
+    if (!appState.activeOriginId) {
+      appState.activeOriginId = origin.id;
+      remember(origin.id);
     }
   }
 
   getOrigin(id: string): Origin | undefined {
-    return this.getOriginsMap().get(id);
+    return appState.origins.find((origin) => origin.id === id);
   }
 
   getOrigins(): Origin[] {
-    return Array.from(this.getOriginsMap().values());
+    return [...appState.origins];
   }
 
   removeOrigin(id: string): void {
-    const origins = new Map(this.getOriginsMap());
-    origins.delete(id);
-    originsSignal.value = origins;
+    appState.origins = appState.origins.filter((origin) => origin.id !== id);
 
     // If removed origin was active, switch to another
-    if (activeOriginIdSignal.value === id) {
-      const remaining = Array.from(origins.keys());
-      const nextActive = remaining.length > 0 ? remaining[0] : undefined;
-      activeOriginIdSignal.value = nextActive;
-      try {
-        if (nextActive) {
-          localStorage.setItem('rom-manager:active-origin-id', nextActive);
-        } else {
-          localStorage.removeItem('rom-manager:active-origin-id');
-        }
-      } catch {
-        // Ignore storage errors
-      }
+    if (appState.activeOriginId === id) {
+      const nextActive = appState.origins[0]?.id;
+      appState.activeOriginId = nextActive;
+      remember(nextActive);
     }
   }
 
   setActiveOrigin(id: string): void {
-    if (this.getOriginsMap().has(id)) {
-      activeOriginIdSignal.value = id;
-      try {
-        localStorage.setItem('rom-manager:active-origin-id', id);
-      } catch {
-        // Ignore storage errors
-      }
+    if (this.getOrigin(id)) {
+      appState.activeOriginId = id;
+      remember(id);
     }
   }
 
   getActiveOrigin(): Origin | undefined {
-    const id = activeOriginIdSignal.value;
-    return id ? this.getOriginsMap().get(id) : undefined;
+    const id = appState.activeOriginId;
+    return id ? this.getOrigin(id) : undefined;
   }
 
   // File management for active origin
   setSelection(paths: string[]): void {
-    const originId = activeOriginIdSignal.value;
+    const originId = appState.activeOriginId;
     if (!originId) return;
-
-    const origins = new Map(this.getOriginsMap());
-    const origin = origins.get(originId);
-    if (origin) {
-      origins.set(originId, { ...origin, selection: paths });
-      originsSignal.value = origins;
-    }
+    appState.origins = appState.origins.map((origin) => (origin.id === originId ? { ...origin, selection: paths } : origin));
   }
 
   getSelection(): string[] {
@@ -131,36 +125,45 @@ export class StoreService {
 
   // Loading state
   setLoading(loading: boolean): void {
-    loadingSignal.value = loading;
+    appState.loading = loading;
   }
 
   isLoading(): boolean {
-    return loadingSignal.value;
+    return appState.loading;
   }
 
   // Error state
   setError(error: string | undefined): void {
-    errorSignal.value = error;
+    appState.error = error;
   }
 
   getError(): string | undefined {
-    return errorSignal.value;
+    return appState.error;
   }
 
   setWizardSettings(settings: WizardSettings): void {
-    wizardSettingsSignal.value = settings;
+    appState.wizardSettings = settings;
+  }
+
+  /** The settings as plain data, for the services that read and write `wizard.json`. */
+  getWizardSettings(): WizardSettings {
+    return $toRaw(appState).wizardSettings;
   }
 
   setKnownSystems(systems: Set<string>): void {
-    knownSystemsSignal.value = systems;
+    appState.knownSystems = Array.from(systems);
+  }
+
+  getKnownSystems(): Set<string> {
+    return new Set($toRaw(appState).knownSystems);
   }
 
   clear(): void {
-    originsSignal.value = new Map();
-    activeOriginIdSignal.value = undefined;
-    loadingSignal.value = false;
-    errorSignal.value = undefined;
-    wizardSettingsSignal.value = emptySettings();
+    appState.origins = [];
+    appState.activeOriginId = undefined;
+    appState.loading = false;
+    appState.error = undefined;
+    appState.wizardSettings = emptySettings();
   }
 }
 

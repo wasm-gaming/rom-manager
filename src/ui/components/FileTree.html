@@ -15,14 +15,14 @@
   :setup="{ node, selectedFiles = [], isInitialized = undefined, canGroup = undefined, isGrouped = undefined, groupedRows = undefined, canOrganize = false, notice = undefined, refreshToken = 0, labels = {} }"
   lang="ts"
 >
-  import type { StorageEntryData, VisibleRow, WizardGameData } from '../../components/FileTree/types'
+  import type { StorageEntryData, VisibleRow, WizardGameData } from '../tree/types'
 
   const [Icon, FileTreeHeader, ConfirmModal, PromptModal, { contains, DRAG_MIME, isHiddenName, join, nameOf, parentOf, parseDraggedPaths, ROOT, systemOfPath }, { iconNameOf }, { t }] = await $importAll([
     './Icon.html',
     './FileTree/FileTreeHeader.html',
     './ConfirmModal.html',
     './PromptModal.html',
-    '../../components/FileTree/utils',
+    '../tree/utils',
     '../icons',
     '../state',
   ])

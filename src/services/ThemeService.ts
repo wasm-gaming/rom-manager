@@ -13,7 +13,7 @@
  * the app with it.
  */
 
-import { signal } from '@preact/signals';
+import { $reactive } from 'jq79';
 import {
   DEFAULT_THEME_MODE,
   parseThemeMode,
@@ -25,7 +25,8 @@ const STORAGE_KEY = 'rom-manager.theme';
 
 const DARK_QUERY = '(prefers-color-scheme: dark)';
 
-export const themeModeSignal = signal<ThemeMode>(DEFAULT_THEME_MODE);
+/** The chosen mode, as a jq79 store: a template that reads `themeState.mode` follows it. */
+export const themeState = $reactive<{ mode: ThemeMode }>({ mode: DEFAULT_THEME_MODE });
 
 /**
  * Storage is allowed to fail — a private window or an embedder's sandbox can
@@ -59,7 +60,7 @@ function apply(mode: ThemeMode): void {
 }
 
 export function setThemeMode(mode: ThemeMode): void {
-  themeModeSignal.value = mode;
+  themeState.mode = mode;
   writeStored(mode);
   apply(mode);
 }
@@ -72,13 +73,13 @@ export function setThemeMode(mode: ThemeMode): void {
  */
 export function initTheme(): () => void {
   const mode = readStored();
-  themeModeSignal.value = mode;
+  themeState.mode = mode;
   apply(mode);
 
   const query = darkQuery();
   if (!query) return () => undefined;
 
-  const onSystemChange = () => apply(themeModeSignal.peek());
+  const onSystemChange = () => apply(themeState.mode);
   query.addEventListener('change', onSystemChange);
 
   return () => query.removeEventListener('change', onSystemChange);

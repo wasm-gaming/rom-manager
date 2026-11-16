@@ -10,5 +10,5 @@ export default defineConfig({
   clean: true,
   target: 'es2022',
   splitting: false,
-  external: ['preact', '@cloudauthn/vfs-sync'],
+  external: ['jq79', '@cloudauthn/vfs-sync'],
 });

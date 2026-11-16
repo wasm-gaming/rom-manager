@@ -11,12 +11,12 @@
  * weigh a few kilobytes, and a manager that reads a local folder has no business
  * needing the network to name its own buttons.
  *
- * `t()` reads a signal, so a component that calls it re-renders when the
- * language changes. That is the whole mechanism: no provider, no context, and
- * nothing to thread through a tree that is already deep.
+ * `t()` reads a jq79 store (`i18nState.locale`), so a template or a `$:` that
+ * calls it re-runs when the language changes. That is the whole mechanism: no
+ * provider, no context, and nothing to thread through a tree that is already deep.
  */
 
-import { computed, signal } from '@preact/signals';
+import { $reactive } from 'jq79';
 import en from '../messages/en.yaml';
 import es from '../messages/es.yaml';
 import {
@@ -36,13 +36,11 @@ const STORAGE_KEY = 'rom-manager.locale';
 /** The catalogues, by the language each one is written in. */
 const CATALOGUES: Record<Locale, Messages> = { en, es };
 
-export const localePreferenceSignal = signal<LocalePreference>(DEFAULT_LOCALE_PREFERENCE);
-
-/** What the preference currently resolves to, which is what is on screen. */
-export const localeSignal = signal<Locale>(DEFAULT_LOCALE);
-
-/** The catalogue in use, recomputed only when the language actually changes. */
-const catalogue = computed<Messages>(() => CATALOGUES[localeSignal.value] ?? CATALOGUES[DEFAULT_LOCALE]);
+/** The preference (auto, or a language) and what it resolves to, which is what is on screen. */
+export const i18nState = $reactive<{ preference: LocalePreference; locale: Locale }>({
+  preference: DEFAULT_LOCALE_PREFERENCE,
+  locale: DEFAULT_LOCALE,
+});
 
 /** The languages the browser accepts, in the user's own order of preference. */
 function accepted(): readonly string[] | undefined {
@@ -83,12 +81,12 @@ function apply(locale: Locale): void {
 function resolve(preference: LocalePreference): void {
   const locale = resolveLocale(preference, accepted());
 
-  localeSignal.value = locale;
+  i18nState.locale = locale;
   apply(locale);
 }
 
 export function setLocalePreference(preference: LocalePreference): void {
-  localePreferenceSignal.value = preference;
+  i18nState.preference = preference;
   writeStored(preference);
   resolve(preference);
 }
@@ -100,7 +98,7 @@ export function setLocalePreference(preference: LocalePreference): void {
  * half-finished translation reads as English in places rather than as holes.
  */
 export function t(key: string, params?: MessageParams): string {
-  return translate(catalogue.value, CATALOGUES[DEFAULT_LOCALE], key, params);
+  return translate(CATALOGUES[i18nState.locale] ?? CATALOGUES[DEFAULT_LOCALE], CATALOGUES[DEFAULT_LOCALE], key, params);
 }
 
 /**
@@ -113,13 +111,13 @@ export function t(key: string, params?: MessageParams): string {
 export function initLocale(): () => void {
   const preference = readStored();
 
-  localePreferenceSignal.value = preference;
+  i18nState.preference = preference;
   resolve(preference);
 
   if (typeof window === 'undefined') return () => undefined;
 
   const onLanguageChange = () => {
-    const current = localePreferenceSignal.peek();
+    const current = i18nState.preference;
     if (current === 'auto') resolve(current);
   };
 
