@@ -1,0 +1,22 @@
+<!-- Temporary: a gallery of the converted drawing components, until the app is wired. -->
+<script :setup lang="ts">
+  const Icon = await import('./components/Icon.html')
+  const SystemLogo = await import('./components/SystemLogo.html')
+  const names = ['folder', 'game', 'bundle', 'archive', 'disc', 'image', 'memory-card', 'document', 'file', 'chevron', 'plus', 'close', 'check', 'double-check', 'cross', 'arrow-left', 'arrow-right', 'folder-plus', 'trash', 'group', 'organize', 'pencil', 'save', 'search', 'hourglass', 'gear', 'status', 'dot', 'lock', 'refresh', 'github', 'upload', 'sync', 'library']
+  const systems = ['MegaDrive', 'NES', 'N64', 'PSX', 'SATURN', 'SMS', 'TGFX16', 'NEOGEO', 'ATARI2600', 'GBA', 'GAMEBOY', 'SNES']
+</script>
+<div style="padding: 1rem; display: grid; gap: 1rem">
+  <div class="gallery-row" style="display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 24px">
+    <span :each="n in names" :key="n" class="tree-icon" :title="n" style="width: 24px; height: 24px; display: inline-block"><Icon :name="n" /></span>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+    <span :each="s in systems" :key="s" style="width: 32px; height: 32px; display: inline-block"><Icon name="game" :system-id="s" /></span>
+    <span :each="s in systems" :key="'b' + s" style="width: 32px; height: 32px; display: inline-block"><Icon name="bundle" :system-id="s" /></span>
+    <span style="width: 32px; height: 32px; display: inline-block" class="tree-icon"><Icon name="status" status="partial" /></span>
+    <span style="width: 32px; height: 32px; display: inline-block"><Icon name="chevron" :open="true" /></span>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+    <span :each="s in systems" :key="s" style="width: 96px; height: 96px; display: inline-block"><SystemLogo :system-id="s" /></span>
+    <span class="tree-icon" style="width: 24px; height: 24px; display: inline-block"><Icon name="system-folder" system-id="GBA" /></span>
+  </div>
+</div>
