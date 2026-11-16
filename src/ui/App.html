@@ -1,36 +1,16 @@
-<!-- Temporary: a test bench for the converted components, until the app is wired. -->
+<!--
+  The app: the remembered theme and language first (the system's / the browser's
+  until chosen, and followed while they are "auto"), then the explorer.
+-->
 <script :setup lang="ts">
-  const [Icon, FileTree, Tabs, { StorageNode }, { MemoryAdapter }] = await $importAll([
-    './components/Icon.html',
-    './components/FileTree.html',
-    './components/Tabs.html',
-    '../services/StorageService',
-    '@cloudauthn/vfs-sync',
+  const [ROMExplorer, { initTheme }, { initLocale }] = await $importAll([
+    './views/ROMExplorer.html',
+    '../services/ThemeService',
+    '../services/I18nService',
   ])
-  const node = new StorageNode()
-  await node.attach(new MemoryAdapter('bench'), 'folder', 'bench')
-  const enc = new TextEncoder()
-  await node.createDirectory('GAMEBOY')
-  await node.createDirectory('MegaDrive')
-  await node.writeFile('GAMEBOY/Tetris (JUE) (V1.1) [!].gb', enc.encode('tetris'))
-  await node.writeFile('GAMEBOY/Kirby.zip', enc.encode('kirby'))
-  await node.writeFile('MegaDrive/Sonic.md', enc.encode('sonic'))
-  await node.writeFile('readme.txt', enc.encode('hi'))
-  let log: string[] = []
-  const note = (what: string) => (event: CustomEvent) => { log = [...log.slice(-6), `${what}: ${JSON.stringify(event.detail)}`] }
-  const origins = [{ id: 'library', name: 'Biblioteca', path: 'library', kind: 'library' }, { id: 'f1', name: 'roms', path: 'roms', kind: 'folder' }]
-  let active = 'library'
+
+  $destroyed(initTheme())
+  $destroyed(initLocale())
 </script>
-<div style="display: grid; grid-template-columns: 24rem 1fr; height: 100vh">
-  <aside class="tree-pane" style="border-right: 1px solid var(--border); overflow: auto">
-    <Tabs :origins="origins" :active-origin-id="active" @select="active = $event.detail" />
-    <FileTree
-      :node="node"
-      :labels="{ reading: 'Leyendo…' }"
-      @selection-change="note('selection')($event)"
-      @folder-change="note('folder')($event)"
-      @visible-change="note('visible')($event)"
-    />
-  </aside>
-  <pre style="padding: 1rem; font-size: 12px">{{ log.join('\n') }}</pre>
-</div>
+
+<ROMExplorer />

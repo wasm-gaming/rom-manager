@@ -17,7 +17,7 @@
 >
   import type { StorageEntryData, VisibleRow, WizardGameData } from '../../components/FileTree/types'
 
-  const [Icon, FileTreeHeader, ConfirmModal, PromptModal, utils, { iconNameOf }, { t }] = await $importAll([
+  const [Icon, FileTreeHeader, ConfirmModal, PromptModal, { contains, DRAG_MIME, isHiddenName, join, nameOf, parentOf, parseDraggedPaths, ROOT, systemOfPath }, { iconNameOf }, { t }] = await $importAll([
     './Icon.html',
     './FileTree/FileTreeHeader.html',
     './ConfirmModal.html',
@@ -26,7 +26,6 @@
     '../icons',
     '../state',
   ])
-  const { contains, DRAG_MIME, join, nameOf, parentOf, parseDraggedPaths, ROOT, systemOfPath } = utils
 
   // Maps and Sets are replaced, never mutated: the store notices a new value.
   let children: Map<string, StorageEntryData[]> = new Map()
@@ -420,7 +419,7 @@
     [
       'tree-item',
       row.kind,
-      utils.isHiddenName(row.label) ? 'hidden-file' : '',
+      isHiddenName(row.label) ? 'hidden-file' : '',
       row.status ? `status-${row.status}` : '',
       (row.path ? selection.has(row.path) : selectedGame === row.key) ? 'selected' : '',
       row.path && selectedFiles?.includes(row.path) ? 'active' : '',

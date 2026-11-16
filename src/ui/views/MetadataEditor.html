@@ -1,0 +1,359 @@
+<!--
+  One file's record, edited: the cover (dropped, picked or removed), the text
+  fields, and a lookup in the catalogue by checksum (CRC32, then MD5, then SHA-1)
+  whose results are offered field by field.
+
+  `onSave(record, coverFile?, coverRemoved?)` is awaited (it may fail with a
+  message to show); `loadContent()` reads the ROM, only when a checksum needs it.
+  Events: cancel.
+-->
+<script :setup="{ romPath = '', record, coverUrl = undefined, loadContent, canChecksum = true, onSave }" lang="ts">
+  const [Icon, { ROM_REGIONS, VIDEO_STANDARDS }, { gameNameOf, systemOf }, { ROMDatasetService }, { calculateCRC32, calculateMD5, calculateSHA1 }, { isImageName }, { t }] = await $importAll([
+    '../components/Icon.html',
+    '../../services/ROMMetadataService',
+    '../../services/RomLibraryService',
+    '../../services/ROMDatasetService',
+    '../../services/ChecksumService',
+    '../../core/rom-media',
+    '../state',
+  ])
+
+  interface DatasetResult {
+    name: string
+    description?: string
+    fileName?: string
+    region?: string
+    videoStandard?: string
+    cover?: string
+  }
+
+  const LOOKUP_FIELDS = ['title', 'description', 'region', 'videoStandard', 'cover']
+
+  let draft = { ...record }
+  let saving = false
+  let busy = false
+  let lookupPhase: 'idle' | 'crc32' | 'md5' | 'sha1' | 'complete' = 'idle'
+  let lookupResult: DatasetResult | null = null
+  let selectedFields: Set<string> = new Set()
+  let error: string | null = null
+  let pendingCoverFile: File | undefined = undefined
+  let pendingCoverUrl: string | undefined = undefined
+  let coverRemoved = false
+  let isCoverDragging = false
+
+  $destroyed(() => {
+    if (pendingCoverUrl) URL.revokeObjectURL(pendingCoverUrl)
+  })
+
+  $: activeCoverUrl = coverRemoved ? undefined : pendingCoverUrl || (draft.cover?.startsWith('https://') ? draft.cover : coverUrl)
+
+  const update = (field: string, value: unknown) => {
+    draft = { ...draft, [field]: value }
+  }
+
+  const onCoverFile = (file: File) => {
+    if (!file.type.startsWith('image/') && !isImageName(file.name)) return
+    if (pendingCoverUrl) URL.revokeObjectURL(pendingCoverUrl)
+    pendingCoverFile = file
+    pendingCoverUrl = URL.createObjectURL(file)
+    coverRemoved = false
+  }
+
+  const removeCover = () => {
+    if (pendingCoverUrl) URL.revokeObjectURL(pendingCoverUrl)
+    pendingCoverFile = undefined
+    pendingCoverUrl = undefined
+    coverRemoved = true
+    draft = { ...draft, cover: undefined }
+  }
+
+  const onCoverDragOver = (event: DragEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    isCoverDragging = true
+  }
+  const onCoverDragLeave = (event: DragEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    isCoverDragging = false
+  }
+  const onCoverDrop = (event: DragEvent) => {
+    event.preventDefault()
+    event.stopPropagation()
+    isCoverDragging = false
+    const files = Array.from(event.dataTransfer?.files ?? [])
+    const image = files.find((f) => f.type.startsWith('image/') || isImageName(f.name))
+    if (image) onCoverFile(image)
+  }
+  const onFilePicked = (event: Event) => {
+    const files = (event.currentTarget as HTMLInputElement).files
+    if (files && files.length > 0) onCoverFile(files[0])
+  }
+  const pickCover = () => ($self('.cover-file-input') as HTMLInputElement | null)?.click()
+
+  const computeChecksum = async () => {
+    try {
+      busy = true
+      error = null
+      if (!draft.crc32) update('crc32', await calculateCRC32(await loadContent()))
+    } catch (err) {
+      error = err instanceof Error ? err.message : t('editor.error.checksum')
+    } finally {
+      busy = false
+    }
+  }
+
+  const showLookupResult = (result: DatasetResult) => {
+    lookupResult = result
+    const fields = new Set<string>()
+    if (result.name) fields.add('title')
+    if (result.description) fields.add('description')
+    if (result.region) fields.add('region')
+    if (result.videoStandard) fields.add('videoStandard')
+    if (result.cover) fields.add('cover')
+    selectedFields = fields
+    lookupPhase = 'complete'
+  }
+
+  const lookup = async () => {
+    try {
+      busy = true
+      error = null
+      lookupResult = null
+      selectedFields = new Set()
+      lookupPhase = 'crc32'
+
+      const content = await loadContent()
+      const crc32 = draft.crc32 || (await calculateCRC32(content))
+      if (!draft.crc32) update('crc32', crc32)
+
+      const system = systemOf(romPath)
+      try {
+        await ROMDatasetService.ensureSystem(system)
+      } catch {
+        error = `No dataset available for ${system}`
+        lookupPhase = 'complete'
+        return
+      }
+
+      let result = await ROMDatasetService.lookupByCrc(crc32)
+      if (result) return showLookupResult(result)
+
+      lookupPhase = 'md5'
+      result = await ROMDatasetService.lookupByMd5(await calculateMD5(content))
+      if (result) return showLookupResult(result)
+
+      lookupPhase = 'sha1'
+      result = await ROMDatasetService.lookupBySha1(await calculateSHA1(content))
+      if (result) return showLookupResult(result)
+
+      error = t('editor.lookup.notFound')
+      lookupPhase = 'complete'
+    } catch (err) {
+      error = err instanceof Error ? err.message : t('editor.lookup.failed')
+      lookupPhase = 'complete'
+    } finally {
+      busy = false
+    }
+  }
+
+  const toggleField = (field: string) => {
+    const next = new Set(selectedFields)
+    if (next.has(field)) next.delete(field)
+    else next.add(field)
+    selectedFields = next
+  }
+
+  const applySelected = () => {
+    const result = lookupResult
+    if (!result) return
+    const take = (field: string, incoming: string | undefined, current: unknown) => (selectedFields.has(field) && incoming ? incoming : current)
+    draft = {
+      ...draft,
+      title: take('title', result.name, draft.title),
+      description: take('description', result.description, draft.description),
+      region: take('region', result.region, draft.region),
+      videoStandard: take('videoStandard', result.videoStandard, draft.videoStandard),
+      cover: take('cover', result.cover, draft.cover),
+    }
+    lookupResult = null
+    selectedFields = new Set()
+  }
+
+  const save = async () => {
+    try {
+      saving = true
+      error = null
+      await onSave(draft, pendingCoverFile, coverRemoved)
+    } catch (err) {
+      error = err instanceof Error ? err.message : t('editor.error.save')
+      saving = false
+    }
+  }
+
+  // The lookup dialog is in the page only while there is a result: open it as it arrives.
+  const syncLookupDialog = (result: DatasetResult | null) => {
+    requestAnimationFrame(() => {
+      const element = $self('.lookup-dialog') as HTMLDialogElement | null
+      if (!element) return
+      if (result && !element.open) element.showModal()
+      else if (!result && element.open) element.close()
+    })
+  }
+  $: syncLookupDialog(lookupResult)
+
+  $: lookupIcon = busy && (lookupPhase === 'md5' || lookupPhase === 'sha1') ? 'hourglass' : 'search'
+  $: lookupText =
+    busy && lookupPhase === 'crc32'
+      ? t('editor.lookup.crc32')
+      : busy && lookupPhase === 'md5'
+        ? t('editor.lookup.md5')
+        : busy && lookupPhase === 'sha1'
+          ? t('editor.lookup.sha1')
+          : t('editor.lookup.idle')
+
+  // A field the catalogue has a value for, with what it would replace.
+  const incomingOf = (field: string) => (field === 'title' ? lookupResult?.name : (lookupResult as any)?.[field])
+  const currentOf = (field: string) => (draft as any)[field] || t('editor.lookup.empty')
+</script>
+
+<div class="metadata-editor">
+  <div class="metadata-header">
+    <div>
+      <h3>{{ draft.title || gameNameOf(romPath) }}</h3>
+      <p class="metadata-subtitle">{{ romPath }}</p>
+    </div>
+    <button
+      @click="lookup"
+      :disabled="busy || saving || !canChecksum"
+      class="btn-lookup icon-label"
+      :title="canChecksum ? t('editor.lookup.hint') : t('editor.lookup.tooLarge')"
+    ><Icon :name="lookupIcon" /> {{ lookupText }}</button>
+  </div>
+
+  <div :if="error" class="lookup-error">{{ error }}</div>
+
+  <dialog
+    :if="lookupResult"
+    class="modal-dialog lookup-dialog"
+    :aria-label="t('editor.lookup.title')"
+    @close="lookupResult = null"
+    @click.self="lookupResult = null"
+  >
+    <header class="modal-header">
+      <h3>{{ t('editor.lookup.title') }}</h3>
+      <button class="modal-close" @click="lookupResult = null"><Icon name="close" /></button>
+    </header>
+
+    <div class="modal-content">
+      <p class="match-name"><strong>{{ t('editor.lookup.match') }}</strong> {{ lookupResult.name }}</p>
+
+      <div class="update-fields">
+        <h4>{{ t('editor.lookup.select') }}</h4>
+        <div :each="field in LOOKUP_FIELDS.filter((name) => incomingOf(name))" :key="field" class="field-option">
+          <label class="checkbox-label">
+            <input type="checkbox" :checked="selectedFields.has(field)" @change="toggleField(field)" />
+            <span class="checkbox-text">
+              <strong>{{ t(`editor.fields.${field}`) }}</strong>
+              <img
+                :if="field === 'cover'"
+                class="cover-preview"
+                :src="incomingOf(field)"
+                :alt="t('details.cover.alt', { title: lookupResult.name })"
+                loading="lazy"
+              />
+              <span :else class="field-preview">
+                <span class="current">{{ t('editor.lookup.current') }} <span class="value">{{ currentOf(field) }}</span></span>
+                <span class="new">{{ t('editor.lookup.incoming') }} <span class="value">{{ incomingOf(field) }}</span></span>
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button @click="lookupResult = null" class="btn-cancel icon-label"><Icon name="close" /> {{ t('editor.cancel') }}</button>
+      <button @click="applySelected" class="btn-apply icon-label" :disabled="selectedFields.size === 0">
+        <Icon name="check" /> {{ t('editor.lookup.apply') }}
+      </button>
+    </div>
+  </dialog>
+
+  <div
+    :class="`form-group cover-editor-group ${isCoverDragging ? 'dragging' : ''}`"
+    @dragover="onCoverDragOver"
+    @dragleave="onCoverDragLeave"
+    @drop="onCoverDrop"
+  >
+    <label>{{ t('editor.fields.cover') }}</label>
+    <div :if="activeCoverUrl" class="cover-preview-wrapper">
+      <img class="cover-image" :src="activeCoverUrl" :alt="t('details.cover.alt', { title: draft.title || gameNameOf(romPath) })" loading="lazy" />
+      <div class="cover-actions">
+        <button type="button" class="btn-inline" @click="pickCover">{{ t('editor.changeCover') }}</button>
+        <button type="button" class="btn-inline btn-danger" @click="removeCover">{{ t('editor.removeCover') }}</button>
+      </div>
+    </div>
+    <div :else class="cover-drop-zone" @click="pickCover">
+      <span class="cover-drop-prompt">{{ t('editor.dropCoverOrClick') }}</span>
+    </div>
+    <input type="file" accept="image/*" style="display: none" class="cover-file-input" @change="onFilePicked" />
+  </div>
+
+  <div class="form-group">
+    <label>{{ t('editor.fields.title') }}</label>
+    <input type="text" :value="draft.title || ''" @input="update('title', $event.target.value)" />
+  </div>
+
+  <div class="form-group">
+    <label>{{ t('editor.fields.description') }}</label>
+    <textarea rows="4" :value="draft.description || ''" @input="update('description', $event.target.value)"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>{{ t('editor.fields.releaseDate') }}</label>
+    <input type="date" :value="draft.releaseDate || ''" @input="update('releaseDate', $event.target.value)" />
+  </div>
+
+  <div class="form-group">
+    <label>{{ t('editor.fields.publisher') }}</label>
+    <input type="text" :value="draft.publisher || ''" @input="update('publisher', $event.target.value)" />
+  </div>
+
+  <div class="form-group">
+    <label>{{ t('editor.fields.region') }}</label>
+    <select :value="draft.region || ''" @change="update('region', $event.target.value)">
+      <option value="">{{ t('editor.select') }}</option>
+      <option :each="value in (draft.region && !ROM_REGIONS.includes(draft.region) ? [draft.region, ...ROM_REGIONS] : ROM_REGIONS)" :key="value" :value="value">{{ value }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>{{ t('editor.fields.videoStandard') }}</label>
+    <select :value="draft.videoStandard || ''" @change="update('videoStandard', $event.target.value)">
+      <option value="">{{ t('editor.select') }}</option>
+      <option :each="value in (draft.videoStandard && !VIDEO_STANDARDS.includes(draft.videoStandard) ? [draft.videoStandard, ...VIDEO_STANDARDS] : VIDEO_STANDARDS)" :key="value" :value="value">{{ value }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>{{ t('editor.fields.crc32') }}</label>
+    <div class="field-with-action">
+      <input
+        type="text"
+        :value="draft.crc32 || ''"
+        :placeholder="canChecksum ? t('editor.notCalculated') : t('editor.tooLarge')"
+        disabled
+        class="checksum-field"
+      />
+      <button :if="canChecksum && !draft.crc32" class="btn-inline" @click="computeChecksum" :disabled="busy">{{ t('editor.calculate') }}</button>
+    </div>
+  </div>
+
+  <div class="editor-actions">
+    <button class="btn-primary icon-label" @click="save" :disabled="saving">
+      <Icon :if="!saving" name="save" /> {{ saving ? t('editor.saving') : t('editor.save') }}
+    </button>
+    <button class="btn-cancel" @click="$emit('cancel')" :disabled="saving">{{ t('editor.cancel') }}</button>
+  </div>
+</div>
