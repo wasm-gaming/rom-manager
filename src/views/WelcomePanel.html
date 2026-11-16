@@ -1,0 +1,134 @@
+<!--
+  The first screen, when no folder has ever been opened: what the app is, how it
+  is used, the systems it knows, and the way in.
+
+  Events: open-library, add-roms, open-folder. `canOpenLibrary` / `canAddRoms` /
+  `canOpenFolder` say which ways in exist here (no folders on phones).
+-->
+<script :setup="{ canOpenLibrary = false, canAddRoms = false, canOpenFolder = false, loading = false }" lang="ts">
+  const [BrandLogo, Icon, SystemLogo, WelcomeIllustration, { getAllSystemsInfo }, { t }] = await $importAll([
+    '../components/BrandLogo.html',
+    '../components/Icon.html',
+    '../components/SystemLogo.html',
+    '../components/WelcomeIllustration.html',
+    '../helpers/system-info',
+    '../lib/ui-state',
+  ])
+
+  /** What the app is, said once, for the one screen where nothing else is. */
+  const CAPABILITIES = ['hash', 'grouping', 'covers', 'consolidate']
+  const STEPS = ['step1', 'step2', 'step3']
+
+  const TOP_ROW_IDS = ['GAMEBOY', 'GBC', 'GameGear', 'SMS', 'TGFX16', 'Atari2600', 'WonderSwan', 'PokemonMini']
+  const MIDDLE_ROW_IDS = ['NES', 'SNES', 'N64', 'GBA', 'MegaDrive', 'PSX', 'Saturn', 'NEOGEO']
+  const BOTTOM_ROW_IDS = ['MegaCD', 'S32X', 'TGFX16-CD', 'NeoGeo-CD', 'ATARI5200', 'ATARI7800', 'AtariLynx', 'WonderSwanColor']
+
+  const systems = getAllSystemsInfo()
+  const byId = new Map(systems.map((system: { id: string }) => [system.id, system]))
+  const pick = (ids: string[]) => ids.map((id) => byId.get(id)).filter(Boolean)
+  const assigned = new Set([...TOP_ROW_IDS, ...MIDDLE_ROW_IDS, ...BOTTOM_ROW_IDS])
+
+  // Every system in the catalogue shows somewhere: the ones no row names join the top.
+  const top = [...pick(TOP_ROW_IDS), ...systems.filter((system: { id: string }) => !assigned.has(system.id))]
+  const middle = pick(MIDDLE_ROW_IDS)
+  const bottom = pick(BOTTOM_ROW_IDS)
+
+  // Each track is its row four times over, so the marquee never shows its end.
+  const rows = [
+    { name: 'top', track: [...top, ...top, ...top, ...top] },
+    { name: 'middle', track: [...middle, ...middle, ...middle, ...middle] },
+    { name: 'bottom', track: [...bottom, ...bottom, ...bottom, ...bottom] },
+  ]
+</script>
+
+<div class="welcome">
+  <section class="welcome-hero">
+    <BrandLogo class-name="welcome-mark" />
+
+    <div class="welcome-heading">
+      <h2>{{ t('app.name') }}</h2>
+      <p class="welcome-tagline">{{ t('welcome.tagline') }}</p>
+    </div>
+
+    <p class="welcome-pitch">{{ t('welcome.pitch') }}</p>
+
+    <div :if="canOpenLibrary" class="welcome-actions">
+      <button class="welcome-cta icon-label" @click="$emit('open-library')" :disabled="loading">
+        <Icon name="library" />
+        {{ t('welcome.library') }}
+      </button>
+      <button :if="canAddRoms" class="welcome-secondary icon-label" @click="$emit('add-roms')" :disabled="loading">
+        <Icon name="upload" />
+        {{ t('library.add') }}
+      </button>
+    </div>
+
+    <button
+      :if="canOpenFolder"
+      :class="`${canOpenLibrary ? 'welcome-secondary' : 'welcome-cta'} icon-label`"
+      @click="$emit('open-folder')"
+      :disabled="loading"
+    >
+      <Icon name="folder-plus" />
+      {{ loading ? t('welcome.opening') : canOpenLibrary ? t('welcome.openFolder') : t('welcome.open') }}
+    </button>
+
+    <p class="welcome-hint">{{ canOpenLibrary ? t('welcome.libraryHint') : t('welcome.hint') }}</p>
+  </section>
+
+  <section class="welcome-section">
+    <h3>{{ t('welcome.what.title') }}</h3>
+    <ul class="welcome-cards">
+      <li :each="capability in CAPABILITIES" :key="capability" class="welcome-card">
+        <div class="welcome-card-illustration">
+          <WelcomeIllustration :kind="capability" />
+        </div>
+        <h4>{{ t(`welcome.what.${capability}.title`) }}</h4>
+        <p>{{ t(`welcome.what.${capability}.body`) }}</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="welcome-section">
+    <h3>{{ t('welcome.how.title') }}</h3>
+    <ol class="welcome-steps">
+      <li :each="step, at in STEPS" :key="step" class="welcome-step">
+        <span class="welcome-step-number" aria-hidden="true">{{ at + 1 }}</span>
+        <div>
+          <h4>{{ t(`welcome.how.${step}.title`) }}</h4>
+          <p>{{ t(`welcome.how.${step}.body`) }}</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="welcome-section welcome-systems-section">
+    <h3>{{ t('welcome.systems.title') }}</h3>
+    <p class="welcome-hint">{{ t('welcome.systems.hint', { count: systems.length }) }}</p>
+    <div class="welcome-systems">
+      <div :each="row in rows" :key="row.name" :class="`welcome-systems-row welcome-systems-row--${row.name}`">
+        <ul class="welcome-systems-track">
+          <li :each="system, idx in row.track" :key="`${row.name}-${system.id}-${idx}`" class="welcome-system" :title="system.fullName">
+            <span class="welcome-system-logo">
+              <SystemLogo :system-id="system.id" />
+            </span>
+            <span class="welcome-system-name">{{ system.name }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="welcome-note">
+    <h3>{{ t('welcome.privacy.title') }}</h3>
+    <p>{{ t('welcome.privacy.body') }}</p>
+  </section>
+
+  <footer class="welcome-footer">
+    <p class="welcome-footer-legal">{{ t('welcome.footer.legal') }}</p>
+    <a class="welcome-footer-github" href="https://github.com/wasm-gaming/rom-manager" target="_blank" rel="noopener noreferrer">
+      <Icon name="github" />
+      <span>{{ t('welcome.footer.github') }}</span>
+    </a>
+  </footer>
+</div>

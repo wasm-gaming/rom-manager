@@ -1,0 +1,140 @@
+<!--
+  Files dropped on the details pane: images for the game on screen (what each
+  is a picture of, and for which region), files the catalogue knows (taken as
+  games, or copied as they are) and the rest, copied. Opens as it mounts.
+  Events: confirm (DropDecision), cancel (closed by any means).
+-->
+<script :setup="{ files = [], target, intake = undefined, busy = undefined, error = undefined }" lang="ts">
+  const [Icon, { GLOBAL_SCOPE, isImageName, MEDIA_KINDS, MEDIA_SCOPES }, { itemsOf, offerOf, splitDrop }, { parentOf: folderOf }, { t }] = await $importAll([
+    '../components/Icon.html',
+    '../helpers/rom-media',
+    '../lib/RomIntakeService',
+    '../helpers/tree',
+    '../lib/ui-state',
+  ])
+
+  /** Images only get asked about on a game: a folder takes them as they are. */
+  const images: File[] = target.kind === 'game' ? files.filter((file: File) => isImageName(file.name)) : []
+  const rest: File[] = files.filter((file: File) => !images.includes(file))
+  const folder: string = target.kind === 'game' ? target.folder : target.path
+
+  /** What each dropped file turned out to be, for the ones a catalogue claimed. */
+  const offers = new Map(
+    rest.flatMap((file) => {
+      const offer = intake && offerOf(file, intake)
+      return offer ? [[file, offer]] : []
+    }),
+  )
+
+  let choices: Record<string, { kind: string; scope: string }> = Object.fromEntries(
+    images.map((file) => [file.name, { kind: 'case', scope: GLOBAL_SCOPE }]),
+  )
+  let taking: Set<File> = new Set([...offers].filter(([, offer]: any) => offer.pending.length > 0).map(([file]) => file))
+
+  const choiceOf = (file: File) => choices[file.name] ?? { kind: 'case', scope: GLOBAL_SCOPE }
+  const update = (file: File, change: Partial<{ kind: string; scope: string }>) => {
+    choices = { ...choices, [file.name]: { ...choiceOf(file), ...change } }
+  }
+  const take = (file: File, asGame: boolean) => {
+    const next = new Set(taking)
+    if (asGame) next.add(file)
+    else next.delete(file)
+    taking = next
+  }
+
+  $: split = splitDrop(rest, taking, intake ?? [])
+
+  const confirm = () =>
+    $emit('confirm', {
+      images: images.map((file) => ({ file, ...choiceOf(file) })),
+      files: split.copied,
+      intake: split.intake,
+    })
+
+  $: destination = (target.kind === 'game' ? target.folder : target.path) || t('drop.root')
+  const copiedTo = (file: File) => (folder ? `${folder}/${file.name}` : file.name)
+  const whereOf = (file: File, offer: any): string => {
+    if (!taking.has(file)) return copiedTo(file)
+    const along = offer.pending.length - 1
+    return along > 0 ? t('drop.andMore', { path: offer.path, count: along }) : offer.path
+  }
+  $: hint = offers.size > 0 ? t('drop.hint.intake', { folder: destination }) : t('drop.hint.plain', { folder: destination })
+
+  // A file nothing claimed may still be going along with a game (a .cue's .bin).
+  const alongOf = (file: File) => itemsOf(file, split.along)[0]
+
+  const dialog = (): HTMLDialogElement | null => $self('dialog')
+  const dismiss = () => dialog()?.close()
+  const onBackdrop = (event: MouseEvent) => {
+    if (event.target === dialog() && !busy) dismiss()
+  }
+
+  await $mounted()
+
+  if (!dialog()?.open) dialog()?.showModal()
+</script>
+
+<dialog class="modal-dialog drop-dialog" :aria-label="t('drop.label')" @close="$emit('cancel')" @click="onBackdrop">
+  <header class="modal-header">
+    <h3>{{ target.kind === 'game' ? t('drop.toGame', { title: target.title }) : t('drop.toFolder', { folder: target.path || t('drop.root') }) }}</h3>
+    <button class="modal-close" @click="dismiss" :disabled="Boolean(busy)">
+      <Icon name="close" />
+    </button>
+  </header>
+
+  <div class="modal-content">
+    <div :if="error" class="lookup-error">{{ error }}</div>
+
+    <section :if="images.length > 0" class="prefs-group">
+      <h4>{{ images.length > 1 ? t('drop.images.many') : t('drop.images.one') }}</h4>
+      <ul class="drop-images">
+        <li :each="file in images" :key="file.name" class="drop-image">
+          <span class="drop-image-name" :title="file.name">{{ file.name }}</span>
+          <select class="prefs-select" :value="choiceOf(file).kind" :disabled="Boolean(busy)" @change="update(file, { kind: $event.target.value })">
+            <option :each="kind in MEDIA_KINDS" :key="kind" :value="kind">{{ t(`media.kind.${kind}`) }}</option>
+          </select>
+          <select class="prefs-select" :value="choiceOf(file).scope" :disabled="Boolean(busy)" @change="update(file, { scope: $event.target.value })">
+            <option :each="scope in MEDIA_SCOPES" :key="scope" :value="scope">{{ scope === GLOBAL_SCOPE ? t('media.scope.global') : scope }}</option>
+          </select>
+        </li>
+      </ul>
+      <p class="prefs-hint">{{ t('drop.images.hint') }}</p>
+    </section>
+
+    <section :if="rest.length > 0" class="prefs-group">
+      <h4>{{ rest.length > 1 ? t('drop.files.many') : t('drop.files.one') }}</h4>
+      <ul class="drop-files">
+        <li :each="file, at in rest" :key="`${at}:${file.name}`" :class="offers.get(file) || alongOf(file) ? 'drop-file' : undefined">
+          <span :if="!offers.get(file) && !alongOf(file)">{{ file.name }}</span>
+          <span :else class="drop-file-name" :title="file.name">{{ file.name }}</span>
+
+          <span :if="!offers.get(file) && alongOf(file)" class="drop-file-note">{{ t('drop.alongGame') }}</span>
+          <span :if="!offers.get(file) && alongOf(file)" class="drop-file-where" :title="alongOf(file).path">{{ alongOf(file).path }}</span>
+
+          <select
+            :if="offers.get(file) && offers.get(file).pending.length > 0"
+            class="prefs-select"
+            :value="taking.has(file) ? 'game' : 'copy'"
+            :disabled="Boolean(busy)"
+            @change="take(file, $event.target.value === 'game')"
+          >
+            <option value="game">{{ t('drop.asGame', { title: offers.get(file).match.title }) }}</option>
+            <option value="copy">{{ t('drop.asIs') }}</option>
+          </select>
+          <span :elseif="offers.get(file)" class="drop-file-note">
+            {{ t('drop.already', { title: offers.get(file).match.title, folder: folderOf(offers.get(file).path) || t('drop.root') }) }}
+          </span>
+          <span :if="offers.get(file)" class="drop-file-where" :title="whereOf(file, offers.get(file))">{{ whereOf(file, offers.get(file)) }}</span>
+        </li>
+      </ul>
+      <p class="prefs-hint">{{ hint }}</p>
+    </section>
+  </div>
+
+  <div class="modal-actions">
+    <button class="btn-cancel" @click="dismiss" :disabled="Boolean(busy)">{{ t('drop.cancel') }}</button>
+    <button class="btn-apply" @click="confirm" :disabled="Boolean(busy)">
+      {{ busy ?? (files.length > 1 ? t('drop.confirmMany', { count: files.length }) : t('drop.confirm')) }}
+    </button>
+  </div>
+</dialog>

@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
   entry: {
-    index: 'src/services/index.ts',
+    index: 'src/lib/index.ts',
   },
   format: ['esm'],
   dts: true,
@@ -10,5 +10,5 @@ export default defineConfig({
   clean: true,
   target: 'es2022',
   splitting: false,
-  external: ['preact', '@cloudauthn/vfs-sync'],
+  external: ['jq79', '@cloudauthn/vfs-sync'],
 });

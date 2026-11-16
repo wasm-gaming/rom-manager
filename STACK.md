@@ -18,10 +18,22 @@ This document describes the technical stack, codebase architecture, build tools,
 
 ### Frontend & UI
 - **Language**: TypeScript (`^5.6.2`), targeting ESNext / modern web platforms.
-- **UI Library**: Preact (`^10.24.2`) for lightweight component rendering.
-- **Routing**: `preact-router` (`^4.1.2`).
-- **State Management**: `@preact/signals` (`^1.3.0`) for reactive local and global state.
+- **UI Library**: jq79 (`0.7.14`, pinned) — single-file `.html` components
+  (`<script :setup lang="ts">`, `$:` reactive declarations, `:if` / `:each`, `$batch`), compiled by
+  the `jq79/vite` plugin. The same library as the engine apps and play.germade.
+- **State Management**: plain stores read through jq79's reactivity — `appState` (`StoreService`),
+  `i18nState`, `themeState`, and the `UiState` getters in `src/lib/ui-state.ts`.
 - **Styling**: Vanilla CSS with modern CSS variables, CSS grid/flexbox layouts, responsive design, dark theme styling, glassmorphism, and hardware-accelerated animations.
+- **Responsive rules** (`src/styles/index.css`):
+  - **One layout switch, at 768px**: at 768px and below (or a phone held sideways:
+    `max-height: 500px` + `pointer: coarse`) the explorer becomes the swiped panels (`PHONE_QUERY`
+    in `src/views/ROMExplorer.html` and the CSS `@media` match).
+  - The design is checked at 460px.
+  - **Below 460px the root font size is `100vw / 28.75`** (16px at 460px): the 460px layout
+    shrinks linearly instead of reflowing.
+  - That only works because **every measure is in `rem`**. Write new CSS in `rem`: `px` only for
+    1px hairlines and inside media queries, which are read against the browser's default font
+    size.
 
 ### Web APIs & Hashing
 - **File System Access API**: Native Chromium directory handle management, file streaming, and in-place file system operations.
@@ -30,8 +42,8 @@ This document describes the technical stack, codebase architecture, build tools,
 - **VFS Sync**: `@cloudauthn/vfs-sync` (`^0.1.24`) — the storage layer for both the library (`OPFSAdapter`) and opened folders (`FSAAdapter`), and the two-way `sync()` between them (conflicting edits kept as copies).
 
 ### Build Tools & Tooling
-- **Application Bundler & Dev Server**: Vite (`^5.4.8`) via `@preact/preset-vite` (`^2.8.2`).
-- **Embeddable Library Bundler**: `tsup` (`^8.3.5`) compiling `src/index.ts` to `dist/index.js` and `dist/index.d.ts`.
+- **Application Bundler & Dev Server**: Vite (`^5.4.8`) with the `jq79/vite` plugin.
+- **Embeddable Library Bundler**: `tsup` (`^8.3.5`) compiling `src/lib/index.ts` to `dist/index.js` and `dist/index.d.ts`.
 - **Scripts Runtime**: Node.js (`>=24.0.0`) using ES modules (`"type": "module"`).
 - **Linter**: `oxlint` (`^1.0.0`) for ultra-fast TypeScript/JavaScript linting.
 - **Test Runner**: Vitest (`^2.1.8`) with `@vitest/coverage-v8` for unit testing across core modules and services.
@@ -40,46 +52,53 @@ This document describes the technical stack, codebase architecture, build tools,
 
 ## 3. Project Structure & Layering
 
+Four layers, the owner's structure for every front end. `src/layers.test.ts` reads every import and
+fails on one that reaches a layer it may not.
+
+| Layer | What lives there | May import |
+| --- | --- | --- |
+| `helpers/` | functions with no dependencies and no memory, each with its tests | helpers |
+| `components/` | UI components with no memory | helpers, components |
+| `lib/` | services, stores and libraries that support the app (and the npm library entry) | helpers, lib |
+| `views/` | components that put everything together into the app | all of the above |
+
 ```
 rom-manager/
 ├── src/
-│   ├── app.tsx                 # Main application entry component
-│   ├── main.tsx                # DOM mounting & root entrypoint
-│   ├── index.html              # HTML shell & font definitions
-│   ├── components/             # Reusable UI components
-│   │   ├── FileTree/           # File tree component & sub-elements
-│   │   ├── BrandLogo.tsx       # Brand header logo rendering
-│   │   ├── SystemLogos.tsx     # Console system logo rendering
-│   │   ├── Tabs.tsx            # Navigation tab bar
-│   │   ├── WelcomeCardIllustrations.tsx # Custom Landing SVG illustrations
-│   │   └── icons.tsx           # SVG icon registry
-│   ├── views/                  # Primary screen layouts
-│   │   └── ROMExplorer/        # Main ROM explorer workspace view & panels
-│   ├── core/                   # Pure, side-effect-free domain logic
-│   │   ├── rom-grouping.ts     # Title grouping & name parsing logic
-│   │   ├── rom-matching.ts     # DAT checksum matching engine
-│   │   ├── rom-regions.ts      # Region parsing & fallback preferences
-│   │   ├── rom-organize.ts     # File rename/move plan generation
-│   │   ├── rom-covers.ts       # Cover matching & thumbnail resolution
-│   │   ├── rom-media.ts        # Cartridge vs Disc medium behavior
-│   │   ├── system-info.ts      # 24 MiSTer console definitions & DAT keys
-│   │   ├── wizard-tree.ts      # Wizard tree state transform
-│   │   └── zip-directory.ts    # Romset member hash verification
-│   └── services/               # Stateful services & async operations
-│       ├── RomLibraryService.ts # Local filesystem scanner & organizer
-│       ├── ROMDatasetService.ts # DAT JSON dataset loader & indexer
-│       ├── RomIntakeService.ts  # File drop intake processing
-│       ├── HandleStoreService.ts# IndexedDB persistent handle storage
-│       ├── CoverService.ts     # Cover downloading & caching
-│       └── ArchiveService.ts   # Zip/Archive reading and member hashing
-├── scripts/                    # Dataset compilation & maintenance scripts
-│   ├── download-dats.mjs       # Downloads reference No-Intro/Redump DATs
-│   ├── fetch-covers.mjs        # Lists libretro-thumbnails repositories
-│   ├── build-datasets.mjs      # Converts XML DATs to static JSON datasets
-│   ├── json-to-sqlite.mjs      # Exports catalog datasets to SQLite
-│   └── verify-romsets.mjs      # Verification CLI for physical romsets
-├── static/datasets/            # Pre-compiled JSON datasets for retro systems
-└── SESSIONS/                   # Chronological session specifications & audit trail
+│   ├── index.html              # HTML shell
+│   ├── main.ts                 # mounts views/App.html
+│   ├── layers.test.ts          # the layering rule above
+│   ├── helpers/                # pure logic + tests
+│   │   ├── rom-grouping.ts     # title grouping & name parsing
+│   │   ├── rom-matching.ts     # DAT checksum matching
+│   │   ├── rom-regions.ts      # region parsing & preferences
+│   │   ├── rom-organize.ts     # rename/move plan generation
+│   │   ├── rom-covers.ts       # cover matching
+│   │   ├── rom-media.ts        # cartridge vs disc rules
+│   │   ├── rom-intake.ts       # dropped-file classification
+│   │   ├── system-info.ts      # the 24 MiSTer systems & DAT keys
+│   │   ├── tree.ts, tree-types.ts # tree paths & node types
+│   │   ├── file-icons.ts, file-types.ts, format.ts, i18n.ts, theme.ts, mobile-panels.ts
+│   │   └── wizard-tree.ts, zip-directory.ts, neogeo-validator.ts
+│   ├── components/             # BrandLogo, ConfirmModal, PromptModal, FileTreeHeader, Icon,
+│   │                           # SystemFolderIcon, SystemLogo, Tabs, WelcomeIllustration (.html)
+│   ├── lib/                    # stateful services & stores
+│   │   ├── index.ts            # tsup entry (the npm library)
+│   │   ├── ui-state.ts         # UiState getters, `ui`, `t`
+│   │   ├── StoreService, I18nService, ThemeService, StorageService, LibraryStorageService
+│   │   ├── RomLibraryService, LibraryScanService, OrganizeService, RomIntakeService
+│   │   ├── ROMDatasetService, ROMMetadataService, GameCatalogService, ChecksumService
+│   │   ├── CoverService, ArchiveService, HandleStoreService, WizardConfigService
+│   │   ├── drop.ts             # media-drop types
+│   │   └── messages/           # en.yaml, es.yaml
+│   ├── views/                  # App, Header, ROMExplorer, FileTree, RomDetails, SystemDetails,
+│   │                           # MetadataEditor, OrganizePanel, WelcomePanel, MobilePanels,
+│   │                           # PreferencesModal, MediaDropModal, RomIntakeModal (.html)
+│   ├── styles/index.css
+│   └── types/
+├── scripts/                    # dataset compilation & maintenance (import src/helpers/)
+├── static/datasets/            # pre-compiled JSON datasets
+└── SESSIONS/                   # session specifications & audit trail
 ```
 
 ---
@@ -102,7 +121,33 @@ rom-manager/
   - `.meta/<system>/<Game>.json`: Editable per-game metadata.
   - `.meta/<system>/<Game>.<region>.case.png`: Cached cover art images per region.
   - `.meta/<system>/scan.json`: Local hash calculation cache to avoid re-hashing unchanged files.
+  - `.meta/<system>/index.json`: **the library index** (below).
+  - `.meta/<system>/mods.json` + `.meta/<system>/mods/<sha1>.<ips|bps|ups>`: the mods (below).
   - `.meta/wizard.json`: Per-folder explorer settings and configuration.
+
+### The library index (`.meta/<System>/index.json`, a contract)
+- Written by `lib/LibraryIndexService` whenever a system's games are worked out, and after every
+  change: intake, drop, delete, tree add / move, organize / undo, sync, any change to the mods. Built by
+  `helpers/library-index.ts` (pure); the shape is pinned by `library-index.test.ts`.
+- `{ version: 1, system, generatedAt, games: { <gameId>: { title, versions: [...], mods: [...] } } }`
+  - **`gameId`** = play.germade's `slug()` of the normalized title (`gameIdOf`), so the saves engines
+    keep in `<engine>/<gameId>/` stay where they are.
+  - **version**: `{ path, files?, crc, size, variant?, regions, revision?, verified }`. `crc` (CRC32,
+    8 upper-case hex digits) is the version's key: the scan cache already has it, a SHA-1 would mean
+    reading the library again. Files no DAT knows are games named after their file, `verified: false`.
+  - **mod**: `{ sha1, name, format, path, sourceCrc?, targetCrc?, fits? }`; `fits` is the CRC of the
+    version a BPS / UPS applies to, when that version is here.
+- Exported by the npm library: `LibraryIndex` types, `gameIdOf`, `slugOf`, `parseLibraryIndex`,
+  `ownerOfCrc`, `modFit`.
+
+### Mods (`lib/ModService`, `helpers/patch.ts`)
+- IPS / BPS / UPS, read and applied in memory (`applyPatch`); a mod never changes the stored ROM.
+- Added with "Add ROMs" or by a drop, together with ROMs or alone (taken after the ROMs):
+  - a BPS / UPS goes to the game whose version has its source CRC (looked up in the indexes);
+  - otherwise to the game on screen, or unassigned in the system on screen;
+  - with neither, it is refused with a reason.
+- Shown in the game's details (desktop and the phone's game panel). For each mod: whether it fits a
+  version that is here; rename, unassign, remove. The system's unassigned mods can be assigned.
 
 ### Title Grouping & Normalization
 - **Base Title Parsing**: Parses DAT titles to extract base game titles, stripping flags, revisions, languages, and regional tags.

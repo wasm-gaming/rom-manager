@@ -28,8 +28,8 @@
 import fs from 'fs';
 import path from 'path';
 import { boxartUrl } from './systems.mjs';
-import { normalizeGameName, parseGameName, sanitizeName } from '../src/core/rom-grouping.ts';
-import { ANY_REGION, REGIONS, regionsOf, videoStandardsOf } from '../src/core/rom-regions.ts';
+import { normalizeGameName, parseGameName, sanitizeName } from '../src/helpers/rom-grouping.ts';
+import { ANY_REGION, REGIONS, regionsOf, videoStandardsOf } from '../src/helpers/rom-regions.ts';
 
 /**
  * Iterate the contents of every `<tag> ( … )` block of a DAT.

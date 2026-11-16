@@ -16,10 +16,6 @@
     "isolatedModules": true,
     "noEmit": true,
 
-    /* Preact JSX */
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
-
     /* Strict type checking */
     "strict": true,
     "noUnusedLocals": true,

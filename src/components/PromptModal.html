@@ -1,0 +1,77 @@
+<!--
+  Every text comes from the parent (a component depends on helpers only); the
+  defaults are English.
+  Asks for one line of text in a modal dialog. Emits `submit` with the trimmed
+  value, and `close` when the dialog closes by any means.
+-->
+<script :setup="{ open = false, title = '', message = '', defaultValue = '', placeholder = '', submitLabel = 'Confirm', cancelLabel = 'Cancel', closeLabel = 'Close', busy = false }" lang="ts">
+  const Icon = await import('./Icon.html')
+
+  let value = defaultValue
+
+  const dialog = (): HTMLDialogElement | null => $self('dialog')
+  const sync = (isOpen: boolean) => {
+    const element = dialog()
+    if (!element) return
+    if (isOpen && !element.open) {
+      value = defaultValue
+      element.showModal()
+      setTimeout(() => {
+        const input = $self('.prompt-input') as HTMLInputElement | null
+        input?.focus()
+        input?.select()
+      }, 50)
+    } else if (!isOpen && element.open) {
+      element.close()
+    }
+  }
+  const dismiss = () => dialog()?.close()
+  const onBackdrop = (event: MouseEvent) => {
+    if (event.target === dialog() && !busy) dismiss()
+  }
+  const submit = () => {
+    if (!value.trim() || busy) return
+    $emit('submit', value.trim())
+  }
+
+  // A new default while open (another item to rename) starts over from it.
+  $: if (open) value = defaultValue
+
+  $: sync(open)
+
+  await $mounted()
+
+  sync(open)
+</script>
+
+<dialog class="modal-dialog prompt-dialog" :aria-label="title" @close="$emit('close')" @click="onBackdrop">
+  <header class="modal-header">
+    <h3>{{ title }}</h3>
+    <button type="button" class="modal-close" @click="dismiss" :disabled="busy" :title="closeLabel">
+      <Icon name="close" />
+    </button>
+  </header>
+
+  <form class="modal-form" @submit.prevent="submit">
+    <div class="modal-content">
+      <p :if="message" class="modal-message">{{ message }}</p>
+      <input
+        type="text"
+        class="prompt-input"
+        :value="value"
+        :placeholder="placeholder"
+        @input="value = $event.target.value"
+        :disabled="busy"
+      />
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" @click="dismiss" :disabled="busy">
+        {{ cancelLabel }}
+      </button>
+      <button type="submit" class="btn-apply" :disabled="!value.trim() || busy">
+        {{ submitLabel }}
+      </button>
+    </div>
+  </form>
+</dialog>

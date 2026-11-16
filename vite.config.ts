@@ -1,12 +1,12 @@
 import { defineConfig } from 'vite';
-import preact from '@preact/preset-vite';
 import yaml from '@rollup/plugin-yaml';
+import { jq79 } from 'jq79/vite';
 import path from 'path';
 
 export default defineConfig({
   // The message catalogues are YAML, so they read as text and diff as text; the
   // plugin is what turns them into the modules `I18nService` imports.
-  plugins: [preact(), yaml()],
+  plugins: [yaml(), jq79()],
   root: 'src',
   publicDir: path.resolve(__dirname, 'static'),
   build: {

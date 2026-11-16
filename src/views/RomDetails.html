@@ -1,0 +1,567 @@
+<!--
+  The details pane: what is picked in the tree, shown as it is.
+
+  - a game (grouped folder): its cover and its variants, each with its files;
+  - a folder: the system it is (SystemDetails);
+  - one file: its record (or what is known before it has one), or the editor;
+  - several files: the list, or the batch editor.
+
+  Events: edit, cancel-edit, select-file (path), organize (path),
+  remove (paths), back. The async ones are functions, because the editor waits
+  on them: `onSave(path, record, coverFile?, coverRemoved?)`,
+  `onSaveMany(changes)`, `loadContent(path)`, and the game's mods (`mods`, the
+  system's) through `modActions` (see GameMods).
+-->
+<script
+  :setup="{ paths = [], game = undefined, folder = undefined, wizardFolder = false, gameCover = undefined, records, stats, covers, editing = false, onSave, onSaveMany, loadContent, canOrganize = false, canRemove = false, back = undefined, mods = [], modActions = undefined }"
+  lang="ts"
+>
+  const [Icon, SystemDetails, MetadataEditor, { CRC32_SIZE_LIMIT, emptyRecord, gameNameOf }, { t }] = await $importAll([
+    '../components/Icon.html',
+    './SystemDetails.html',
+    './MetadataEditor.html',
+    '../lib/RomLibraryService',
+    '../lib/ui-state',
+  ])
+
+  $: single = paths.length === 1 ? paths[0] : undefined
+  $: record = single ? records.get(single) ?? null : null
+  $: stat = single ? stats.get(single) : undefined
+  $: size = stat?.size ?? 0
+  $: own = single ? covers.get(single) : undefined
+  $: cover = own ? { url: own } : gameCover
+  $: selectedRecords = paths.map((path: string) => records.get(path)).filter(Boolean)
+  $: showsFolder = Boolean(folder && (paths.length === 0 || (paths.length === 1 && paths[0] === folder)))
+</script>
+
+<GameView
+  :if="game"
+  :game="game"
+  :cover="gameCover"
+  :stats="stats"
+  :can-organize="canOrganize"
+  :mods="mods"
+  :mod-actions="modActions"
+  @select-file="$emit('select-file', $event.detail)"
+  @organize="$emit('organize', $event.detail)"
+/>
+<SystemDetails :elseif="showsFolder" :folder="folder" :wizard="wizardFolder" />
+<div :elseif="paths.length === 0" class="empty-state">{{ t('details.empty') }}</div>
+<RomBatchEditor
+  :elseif="paths.length > 1 && editing && selectedRecords.length === paths.length"
+  :records="selectedRecords"
+  :count="paths.length"
+  :on-save="onSaveMany"
+  @cancel="$emit('cancel-edit')"
+/>
+<RomSelectionView :elseif="paths.length > 1" :paths="paths" :records="records" @edit="$emit('edit')" />
+<div :elseif="editing" class="details-editing" style="display: contents">
+  <!-- One editor per file: another file starts a fresh one. -->
+  <MetadataEditor
+    :each="key in [single]"
+    :key="key"
+    :rom-path="single"
+    :record="record ?? { ...emptyRecord(), title: gameNameOf(single) }"
+    :cover-url="covers.get(single)"
+    :can-checksum="size <= CRC32_SIZE_LIMIT"
+    :load-content="() => loadContent(single)"
+    :on-save="(updated, coverFile, coverRemoved) => onSave(single, updated, coverFile, coverRemoved)"
+    @cancel="$emit('cancel-edit')"
+  />
+</div>
+<div :else class="details-single" style="display: contents">
+  <button :if="back" class="btn-back icon-label" @click="$emit('back')" :title="t('details.back')">
+    <Icon name="arrow-left" /> {{ back.label }}
+  </button>
+  <RomFileView
+    :if="!record"
+    :path="single"
+    :stat="stat"
+    :cover="cover"
+    :load-content="loadContent"
+    :can-remove="canRemove"
+    @edit="$emit('edit')"
+    @remove="$emit('remove', $event.detail)"
+  />
+  <RomInfoView
+    :else
+    :path="single"
+    :record="record"
+    :stat="stat"
+    :cover="cover"
+    :can-remove="canRemove"
+    @edit="$emit('edit')"
+    @remove="$emit('remove', $event.detail)"
+  />
+</div>
+
+<!-- The box art (or a placeholder in the system's own box shape) and whose box it is. -->
+<template name="CoverFigure">
+  <script :setup="{ cover = undefined, alt = '', system = undefined }" lang="ts">
+    const [{ systemAspectRatio }, { t }] = await $importAll(['../helpers/rom-covers', '../lib/ui-state'])
+
+    let naturalRatio: string | undefined = undefined
+    // Another system's box has another shape: start again from its default.
+    const resetFor = (_system: string | undefined) => { naturalRatio = undefined }
+    $: resetFor(system)
+    $: currentRatio = naturalRatio || systemAspectRatio(system)
+    $: isLandscape = (() => {
+      const parts = currentRatio.split('/').map((s: string) => parseFloat(s.trim()))
+      return parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1]) && parts[0] > parts[1]
+    })()
+    $: regionLabel = cover?.region ? t('details.cover.region', { region: cover.region }) : cover ? t('details.cover.game') : ' '
+
+    const onLoad = (event: Event) => {
+      const img = event.currentTarget as HTMLImageElement
+      if (img.naturalWidth && img.naturalHeight) naturalRatio = `${img.naturalWidth} / ${img.naturalHeight}`
+    }
+  </script>
+  <figure class="rom-info-cover-figure">
+    <div :class="`rom-info-cover-wrapper ${isLandscape ? 'landscape' : ''}`" :style="`aspect-ratio: ${currentRatio}`">
+      <!-- Keyed by its url: a new image starts as a new element (the ratio is read on load). -->
+      <img :each="url in (cover ? [cover.url] : [])" :key="url" class="rom-info-cover" :src="url" :alt="t('details.cover.alt', { title: alt })" @load="onLoad" />
+      <div :if="!cover" class="rom-info-cover placeholder">{{ t('details.cover.none') }}</div>
+    </div>
+    <figcaption class="rom-info-cover-region">{{ regionLabel }}</figcaption>
+  </figure>
+</template>
+
+<!-- A file's CRC32, taken on demand (it reads the whole file). -->
+<template name="ChecksumRow">
+  <script :setup="{ path, size = 0, loadContent }" lang="ts">
+    const [{ CRC32_SIZE_LIMIT }, { calculateCRC32 }, { formatSize }, { t }] = await $importAll([
+      '../lib/RomLibraryService',
+      '../lib/ChecksumService',
+      '../helpers/format',
+      '../lib/ui-state',
+    ])
+
+    let value: string | undefined = undefined
+    let busy = false
+    let error: string | undefined = undefined
+
+    const compute = async () => {
+      try {
+        busy = true
+        error = undefined
+        value = await calculateCRC32(await loadContent(path))
+      } catch (err) {
+        error = err instanceof Error ? err.message : t('details.checksum.failed')
+      } finally {
+        busy = false
+      }
+    }
+  </script>
+  <div :if="size > CRC32_SIZE_LIMIT" class="fact">
+    <span class="fact-label">CRC32</span>
+    <span class="fact-value muted">{{ t('details.checksum.skipped', { limit: formatSize(CRC32_SIZE_LIMIT) }) }}</span>
+  </div>
+  <div :else class="fact">
+    <span class="fact-label">{{ t('details.facts.crc32') }}</span>
+    <span class="fact-value">
+      <code :if="value">{{ value }}</code>
+      <button :else class="btn-inline" @click="compute" :disabled="busy">
+        {{ busy ? t('details.checksum.calculating') : t('details.checksum.calculate') }}
+      </button>
+      <span :if="error" class="fact-error">{{ error }}</span>
+    </span>
+  </div>
+</template>
+
+<!-- A file with no record yet: what the disk says about it. Events: edit, remove (paths). -->
+<template name="RomFileView">
+  <script :setup="{ path, stat = undefined, cover = undefined, loadContent, canRemove = false }" lang="ts">
+    const [Icon, ConfirmModal, { romMetadataService }, { extensionOf, fileNameOf, systemOf }, { formatDate, formatSize }, { t }] = await $importAll([
+      '../components/Icon.html',
+      '../components/ConfirmModal.html',
+      '../lib/ROMMetadataService',
+      '../lib/RomLibraryService',
+      '../helpers/format',
+      '../lib/ui-state',
+    ])
+
+    let confirmDelete = false
+    $: size = stat?.size ?? 0
+    const confirmRemove = () => {
+      confirmDelete = false
+      $emit('remove', [path])
+    }
+  </script>
+  <div class="rom-file-view">
+    <button :if="canRemove" class="btn-delete-topright" @click="confirmDelete = true" :title="t('details.delete')">
+      <Icon name="trash" />
+    </button>
+    <div :if="cover" class="rom-info-hero">
+      <CoverFigure :cover="cover" :alt="fileNameOf(path)" :system="systemOf(path)" />
+      <div class="rom-info-heading">
+        <h3>{{ fileNameOf(path) }}</h3>
+        <p class="metadata-subtitle">{{ t('details.file.pending') }}</p>
+        <button class="btn-primary icon-label" @click="$emit('edit')"><Icon name="pencil" /> {{ t('details.file.add') }}</button>
+      </div>
+    </div>
+    <div :else class="rom-file-header">
+      <div>
+        <h3>{{ fileNameOf(path) }}</h3>
+        <p class="metadata-subtitle">{{ t('details.file.pending') }}</p>
+      </div>
+      <button class="btn-primary icon-label" @click="$emit('edit')"><Icon name="pencil" /> {{ t('details.file.add') }}</button>
+    </div>
+
+    <div class="facts">
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.system') }}</span>
+        <span class="fact-value">{{ systemOf(path) || '—' }}</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.format') }}</span>
+        <span class="fact-value">{{ romMetadataService.getROMFormat(path) }} ({{ extensionOf(path) || t('details.facts.noExtension') }})</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.size') }}</span>
+        <span class="fact-value">{{ formatSize(size) }}</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.modified') }}</span>
+        <span class="fact-value">{{ formatDate(stat?.mtime) }}</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.added') }}</span>
+        <span class="fact-value muted">{{ t('details.facts.notInitialized') }}</span>
+      </div>
+      <ChecksumRow :path="path" :size="size" :load-content="loadContent" />
+    </div>
+
+    <ConfirmModal
+      :close-label="t('prefs.close')"
+      :cancel-label="t('drop.cancel')"
+      :confirm-label="t('modal.delete')"
+      :if="confirmDelete"
+      :open="true"
+      :title="t('details.variants.deleteFileTitle')"
+      :message="t('details.variants.deleteFileMessage', { name: fileNameOf(path) })"
+      :danger="true"
+      @confirm="confirmRemove()"
+      @close="confirmDelete = false"
+    />
+  </div>
+</template>
+
+<!-- A file with a record: the game it is, as written in its `.meta`. Events: edit, remove (paths). -->
+<template name="RomInfoView">
+  <script :setup="{ path, record, stat = undefined, cover = undefined, canRemove = false }" lang="ts">
+    const [Icon, ConfirmModal, { fileNameOf, gameNameOf, systemOf }, { formatDate, formatSize }, { t }] = await $importAll([
+      '../components/Icon.html',
+      '../components/ConfirmModal.html',
+      '../lib/RomLibraryService',
+      '../helpers/format',
+      '../lib/ui-state',
+    ])
+
+    let confirmDelete = false
+    const confirmRemove = () => {
+      confirmDelete = false
+      $emit('remove', [path])
+    }
+  </script>
+  <div class="rom-info">
+    <button :if="canRemove" class="btn-delete-topright" @click="confirmDelete = true" :title="t('details.delete')">
+      <Icon name="trash" />
+    </button>
+    <div class="rom-info-hero">
+      <CoverFigure :cover="cover" :alt="record.title || path" :system="systemOf(path)" />
+      <div class="rom-info-heading">
+        <h2>{{ record.title || gameNameOf(path) }}</h2>
+        <p class="rom-info-system">{{ systemOf(path) }}</p>
+        <div class="rom-info-tags">
+          <span :if="record.region" class="tag">{{ record.region }}</span>
+          <span :if="record.videoStandard" class="tag">{{ record.videoStandard }}</span>
+          <span :if="record.releaseDate" class="tag">{{ record.releaseDate }}</span>
+        </div>
+        <button class="btn-primary icon-label" @click="$emit('edit')"><Icon name="pencil" /> {{ t('details.edit') }}</button>
+      </div>
+    </div>
+
+    <p :if="record.description" class="rom-info-description">{{ record.description }}</p>
+
+    <div class="facts">
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.file') }}</span>
+        <span class="fact-value">{{ fileNameOf(path) }}</span>
+      </div>
+      <div :if="record.publisher" class="fact">
+        <span class="fact-label">{{ t('details.facts.publisher') }}</span>
+        <span class="fact-value">{{ record.publisher }}</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.size') }}</span>
+        <span class="fact-value">{{ formatSize(stat?.size ?? 0) }}</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.crc32') }}</span>
+        <span class="fact-value"><code :if="record.crc32">{{ record.crc32 }}</code><span :else>—</span></span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.added') }}</span>
+        <span class="fact-value">{{ formatDate(record.addedAt) }}</span>
+      </div>
+      <div class="fact">
+        <span class="fact-label">{{ t('details.facts.updated') }}</span>
+        <span class="fact-value">{{ formatDate(record.updatedAt) }}</span>
+      </div>
+    </div>
+
+    <ConfirmModal
+      :close-label="t('prefs.close')"
+      :cancel-label="t('drop.cancel')"
+      :confirm-label="t('modal.delete')"
+      :if="confirmDelete"
+      :open="true"
+      :title="t('details.variants.deleteFileTitle')"
+      :message="t('details.variants.deleteFileMessage', { name: fileNameOf(path) })"
+      :danger="true"
+      @confirm="confirmRemove()"
+      @close="confirmDelete = false"
+    />
+  </div>
+</template>
+
+<!-- One variant of a game: its status, regions, video standards and files. Events: select-file, organize. -->
+<template name="VariantRow">
+  <script :setup="{ variant, stats, cover = undefined, canOrganize = false }" lang="ts">
+    const [Icon, { fileNameOf, systemOf }, { validateNeoGeoVariant }, { formatSize }, { t }] = await $importAll([
+      '../components/Icon.html',
+      '../lib/RomLibraryService',
+      '../helpers/neogeo-validator',
+      '../helpers/format',
+      '../lib/ui-state',
+    ])
+
+    const STATUS_KEYS: Record<string, string> = {
+      complete: 'details.status.complete',
+      partial: 'details.status.partial',
+      missing: 'details.status.missing',
+    }
+
+    $: activeUrl = cover?.publishedUrl || cover?.url
+    $: isCoverActive =
+      variant.status !== 'missing' &&
+      (Boolean(activeUrl && variant.cover === activeUrl) ||
+        Boolean(cover?.region && !variant.cover && variant.regions.includes(cover.region)))
+    $: displayKey = variant.key === 'Unknown' ? 'World / Arcade' : variant.key
+
+    const validationOf = (file: { path: string; crc?: string }) => {
+      const isNeoGeo = systemOf(file.path) === 'NEOGEO' || file.path.toLowerCase().endsWith('.neo')
+      return isNeoGeo
+        ? validateNeoGeoVariant({ fileName: fileNameOf(file.path), fileSize: stats.get(file.path)?.size, datMatch: Boolean(file.crc) })
+        : null
+    }
+  </script>
+  <li :class="`variant status-${variant.status}${isCoverActive ? ' active-cover' : ''}`">
+    <div class="variant-heading">
+      <span class="variant-mark" :title="t(STATUS_KEYS[variant.status])"><Icon name="status" :status="variant.status" /></span>
+      <span class="variant-key">{{ displayKey }}</span>
+      <span class="variant-support">
+        <span :each="region in variant.regions" :key="region" class="tag region" :title="t('details.variants.shipsTo', { region })">{{ region }}</span>
+        <span :each="standard in variant.videoStandards" :key="standard" class="tag video" :title="t('details.variants.runsAt', { standard })">{{ standard }}</span>
+      </span>
+      <span class="variant-count">{{ variant.files.length > 1 ? t('details.variants.files', { count: variant.files.length }) : '' }}</span>
+    </div>
+    <ul class="variant-files">
+      <li :each="file, index in variant.files" :key="file.path || `missing:${index}`" :class="file.path ? 'variant-file' : 'variant-file missing'">
+        <span :if="!file.path">{{ file.label }}</span>
+        <button :else class="btn-inline" @click="$emit('select-file', file.path)">{{ file.label }}</button>
+        <span
+          :if="file.path && validationOf(file)"
+          :class="`variant-validation-icon status-${validationOf(file).status}`"
+          :title="`${validationOf(file).statusLabel} (${validationOf(file).details})`"
+        >
+          <Icon :if="validationOf(file).status === 'verified'" name="double-check" />
+          <Icon :elseif="validationOf(file).status === 'structurally_valid'" name="check" />
+          <Icon :elseif="validationOf(file).status === 'incomplete'" name="cross" />
+        </span>
+        <button
+          :if="file.path && file.isConsolidated === false && canOrganize"
+          class="tree-organize"
+          @click.stop="$emit('organize', file.path)"
+          :title="t('details.variants.consolidate')"
+        >
+          <Icon name="organize" />
+        </button>
+        <code class="variant-file-crc" title="CRC32">{{ file.crc }}</code>
+        <span class="variant-file-size">{{ file.path ? formatSize(stats.get(file.path)?.size ?? 0) : t('details.variants.missingFile') }}</span>
+      </li>
+    </ul>
+  </li>
+</template>
+
+<!-- A game: its cover, status, the variants on disk, and the others the catalogue knows. -->
+<template name="GameView">
+  <script :setup="{ game, cover = undefined, stats, canOrganize = false, mods = [], modActions = undefined }" lang="ts">
+    const [Icon, GameMods, { systemOf }, { t }] = await $importAll(['../components/Icon.html', './GameMods.html', '../lib/RomLibraryService', '../lib/ui-state'])
+
+    const STATUS_KEYS: Record<string, string> = {
+      complete: 'details.status.complete',
+      partial: 'details.status.partial',
+      missing: 'details.status.missing',
+    }
+    const hasFiles = (variant: { files: Array<{ path?: string }> }) => variant.files.some((file) => file.path)
+
+    $: present = game.variants.filter(hasFiles)
+    $: missing = game.variants.filter((variant: any) => !hasFiles(variant))
+    /** The CRC32 of every file here, which is what a BPS / UPS says it is made for. */
+    $: versionCrcs = present.flatMap((variant: any) => variant.files.filter((file: any) => file.path).map((file: any) => ({ crc: file.crc })))
+
+    const organizeAll = () => $emit('organize', present[0].files.find((f: { path?: string }) => f.path)?.path || game.paths[0])
+  </script>
+  <div class="rom-info game-info">
+    <div class="rom-info-hero">
+      <CoverFigure :cover="cover" :alt="game.title" :system="systemOf(game.paths[0])" />
+      <div class="rom-info-heading">
+        <h2>{{ game.title }}</h2>
+        <p class="rom-info-system">{{ systemOf(game.paths[0]) || '—' }}</p>
+        <div class="rom-info-tags">
+          <span :class="`tag status-${game.status}`">{{ t(STATUS_KEYS[game.status]) }}</span>
+          <span :each="variant in present" :key="variant.key" class="tag">{{ variant.key }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="variants-heading">
+      <h3>{{ t('details.variants.title') }}</h3>
+      <button :if="present.length > 0 && canOrganize" class="tree-organize" @click="organizeAll" :title="t('details.variants.consolidateAll')">
+        <Icon name="organize" />
+      </button>
+    </div>
+
+    <ul class="variants">
+      <VariantRow
+        :each="variant in present"
+        :key="variant.key"
+        :variant="variant"
+        :stats="stats"
+        :cover="cover"
+        :can-organize="canOrganize"
+        @select-file="$emit('select-file', $event.detail)"
+        @organize="$emit('organize', $event.detail)"
+      />
+    </ul>
+
+    <details :if="missing.length > 0" class="variants-missing">
+      <summary>{{ t('details.variants.more', { count: missing.length }) }}</summary>
+      <ul class="variants">
+        <VariantRow
+          :each="variant in missing"
+          :key="variant.key"
+          :variant="variant"
+          :stats="stats"
+          :cover="cover"
+          :can-organize="canOrganize"
+          @select-file="$emit('select-file', $event.detail)"
+          @organize="$emit('organize', $event.detail)"
+        />
+      </ul>
+    </details>
+
+    <GameMods :if="modActions" :game="game" :mods="mods" :versions="versionCrcs" :actions="modActions" />
+  </div>
+</template>
+
+<!-- Region and video standard for several records at once. Events: cancel. -->
+<template name="RomBatchEditor">
+  <script :setup="{ records = [], count = 0, onSave }" lang="ts">
+    const [Icon, { ROM_REGIONS, VIDEO_STANDARDS }, { t }] = await $importAll([
+      '../components/Icon.html',
+      '../lib/ROMMetadataService',
+      '../lib/ui-state',
+    ])
+
+    let region = ''
+    let videoStandard = ''
+    let saving = false
+    let error: string | undefined = undefined
+
+    const sharedValue = (field: string): string | undefined => {
+      const first = records[0]?.[field]
+      if (typeof first !== 'string') return undefined
+      return records.every((record: any) => record[field] === first) ? first : undefined
+    }
+    $: currentRegion = sharedValue('region')
+    $: currentVideo = sharedValue('videoStandard')
+
+    const save = async () => {
+      const changes: Record<string, string> = {}
+      if (region) changes.region = region
+      if (videoStandard) changes.videoStandard = videoStandard
+      try {
+        saving = true
+        error = undefined
+        await onSave(changes)
+      } catch (err) {
+        error = err instanceof Error ? err.message : t('details.batch.error')
+        saving = false
+      }
+    }
+  </script>
+  <div class="metadata-editor">
+    <div class="metadata-header">
+      <div>
+        <h3>{{ t('details.batch.title', { count }) }}</h3>
+        <p class="metadata-subtitle">{{ t('details.batch.subtitle') }}</p>
+      </div>
+    </div>
+
+    <div :if="error" class="lookup-error">{{ error }}</div>
+
+    <div class="form-group">
+      <label>{{ t('editor.fields.region') }}</label>
+      <select :value="region" @change="region = $event.target.value">
+        <option value="">{{ t('details.batch.keep', { value: currentRegion || t('details.batch.mixed') }) }}</option>
+        <option :each="value in ROM_REGIONS" :key="value" :value="value">{{ value }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>{{ t('editor.fields.videoStandard') }}</label>
+      <select :value="videoStandard" @change="videoStandard = $event.target.value">
+        <option value="">{{ t('details.batch.keep', { value: currentVideo || t('details.batch.mixed') }) }}</option>
+        <option :each="value in VIDEO_STANDARDS" :key="value" :value="value">{{ value }}</option>
+      </select>
+    </div>
+
+    <div class="editor-actions">
+      <button class="btn-primary icon-label" @click="save" :disabled="saving || (!region && !videoStandard)">
+        <Icon :if="!saving" name="save" /> {{ saving ? t('details.batch.saving') : t('details.batch.apply', { count }) }}
+      </button>
+      <button class="btn-cancel" @click="$emit('cancel')" :disabled="saving">{{ t('editor.cancel') }}</button>
+    </div>
+  </div>
+</template>
+
+<!-- Several files picked: which have records, and the way to edit them together. Events: edit. -->
+<template name="RomSelectionView">
+  <script :setup="{ paths = [], records }" lang="ts">
+    const [Icon, { fileNameOf, systemOf }, { t }] = await $importAll(['../components/Icon.html', '../lib/RomLibraryService', '../lib/ui-state'])
+
+    $: pending = paths.length - paths.filter((path: string) => records.get(path)).length
+  </script>
+  <div class="rom-selection">
+    <div class="rom-file-header">
+      <div>
+        <h3>{{ t('details.selection.title', { count: paths.length }) }}</h3>
+        <p class="metadata-subtitle">{{ pending === 0 ? t('details.selection.ready') : t('details.selection.pending', { count: pending }) }}</p>
+      </div>
+      <button
+        class="btn-primary icon-label"
+        @click="$emit('edit')"
+        :disabled="pending > 0"
+        :title="pending > 0 ? t('details.selection.gate') : t('details.selection.hint')"
+      ><Icon name="pencil" /> {{ t('details.selection.edit', { count: paths.length }) }}</button>
+    </div>
+    <ul class="rom-selection-list">
+      <li :each="path in paths" :key="path" :class="records.get(path) ? 'initialised' : 'pending'">
+        <span class="rom-selection-name">{{ records.get(path)?.title || fileNameOf(path) }}</span>
+        <span class="rom-selection-system">{{ systemOf(path) }}</span>
+      </li>
+    </ul>
+  </div>
+</template>

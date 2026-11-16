@@ -1,0 +1,33 @@
+<!--
+  The open origins as tabs: the library (never closed) and any folders. Emits
+  `select` and `close` with the origin's id.
+-->
+<script :setup="{ origins = [], activeOriginId = undefined, labels = {} }" lang="ts">
+  const Icon = await import('./Icon.html')
+
+  $: reconnectTitle = labels.reconnect ?? 'Reconnect folder'
+  $: closeTitle = labels.close ?? 'Close tab'
+
+  const close = (event: Event, id: string) => {
+    event.stopPropagation()
+    $emit('close', id)
+  }
+</script>
+
+<div class="tabs">
+  <div
+    :each="origin in origins"
+    :key="origin.id"
+    :class="`tab ${activeOriginId === origin.id ? 'active' : ''} ${origin.locked ? 'locked' : ''}`"
+    @click="$emit('select', origin.id)"
+    :title="origin.locked ? reconnectTitle : undefined"
+  >
+    <span :if="origin.locked" class="tab-lock"><Icon name="refresh" /></span>
+    <span :if="origin.kind === 'library'" class="tab-lock"><Icon name="library" /></span>
+    <span class="tab-name">{{ origin.name }}</span>
+    <!-- The library is the app's own storage: there is nothing to close. -->
+    <button :if="origin.kind !== 'library'" class="tab-close" @click="close($event, origin.id)" :title="closeTitle">
+      <Icon name="close" />
+    </button>
+  </div>
+</div>

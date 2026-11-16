@@ -1,0 +1,637 @@
+<!--
+  The tree of an origin: folders and files, or — in a folder browsed grouped —
+  one row per game, its files folded into it. Selection (click, shift, ctrl/cmd,
+  the arrow keys), new folders, adding files, deleting, and moving by drag.
+
+  Events:
+    selection-change (paths)   game-change (game | undefined)
+    folder-change (path | undefined)   visible-change (paths)
+    removed (paths)   changed (paths written or moved, both ends)
+    grouping-needed (path)   toggle-grouping (path)   organize (path)
+
+  `isInitialized`, `canGroup` and `isGrouped` are questions the parent answers;
+  `groupedRows` (a Map, folder → rows) is what grouping has produced so far.
+
+  Thousands of rows: each row's marks (`selected`, `active`, `drop`) are in
+  `rowMarks`, by the row's position, beside `rows` rather than in it — so a
+  change of selection flips only the rows it changes, and what reads the list as
+  a whole (the loop, `visible-change`) is not woken by it. What is marked lives
+  in `marks` (a class instance: the store leaves it alone).
+-->
+<script
+  :setup="{ node, selectedFiles = [], isInitialized = undefined, canGroup = undefined, isGrouped = undefined, groupedRows = undefined, canOrganize = false, notice = undefined, refreshToken = 0, labels = {} }"
+  lang="ts"
+>
+  import type { StorageEntryData, VisibleRow, WizardGameData } from '../helpers/tree-types'
+
+  const [
+    Icon,
+    SystemFolderIcon,
+    FileTreeHeader,
+    ConfirmModal,
+    PromptModal,
+    { contains, DRAG_MIME, isHiddenName, join, nameOf, parentOf, parseDraggedPaths, ROOT, systemOfPath },
+    { iconNameOf },
+    { t },
+  ] = await $importAll([
+    '../components/Icon.html',
+    '../components/SystemFolderIcon.html',
+    '../components/FileTreeHeader.html',
+    '../components/ConfirmModal.html',
+    '../components/PromptModal.html',
+    '../helpers/tree',
+    '../helpers/file-icons',
+    '../lib/ui-state',
+  ])
+
+  type Row = VisibleRow & { open: boolean }
+  type RowMark = { selected: boolean; active: boolean; drop: boolean }
+
+  /** What is marked now. Read by the handlers and by the rows as they are built; never tracked. */
+  class Marks {
+    selection = new Set<string>()
+    game: string | undefined = undefined
+    active = new Set<string>()
+    drop: string | undefined = undefined
+    anchor: string | undefined = undefined
+    /** The last game reported to the parent, so it hears each change once. */
+    reported: WizardGameData | undefined = undefined
+  }
+  const marks = new Marks()
+
+  // Maps and Sets are replaced, never mutated: the store notices a new value.
+  let children: Map<string, StorageEntryData[]> = new Map()
+  let expanded: Set<string> = new Set()
+  let rowMarks: RowMark[] = []
+  let selectionCount = 0
+  let rootDrop = false
+  let error: string | undefined = undefined
+  let busy = false
+  let createFolder: { suggested: string } | null = null
+  let deleteConfirm: { paths: string[] } | null = null
+
+  const flagsOf = (row: VisibleRow) => ({
+    selected: row.path ? marks.selection.has(row.path) : marks.game === row.key,
+    active: Boolean(row.path && marks.active.has(row.path)),
+    drop: row.path !== undefined && marks.drop === row.path,
+  })
+
+  // Thousands of rows are read raw (`$toRaw`): going through the store's proxy
+  // row by row is what made a keystroke slow. Only what changes is written back
+  // through it.
+  const rawRows = () => $toRaw(rows) as Row[]
+
+  /** After the marks changed: flips the rows whose marks did, one write each. */
+  const remark = () =>
+    $batch(() => {
+      const list = rawRows()
+      const current = $toRaw(rowMarks) as RowMark[]
+      if (current.length !== list.length) {
+        rowMarks = list.map(flagsOf)
+      } else {
+        list.forEach((row, index) => {
+          const flags = flagsOf(row)
+          const mark = current[index]
+          if (mark.selected !== flags.selected) rowMarks[index].selected = flags.selected
+          if (mark.active !== flags.active) rowMarks[index].active = flags.active
+          if (mark.drop !== flags.drop) rowMarks[index].drop = flags.drop
+        })
+      }
+      selectionCount = marks.selection.size
+      rootDrop = marks.drop === ROOT
+    })
+
+  const loadDirectory = async (path: string) => {
+    const entries = await node.list(path)
+    children = new Map(children).set(path, entries)
+  }
+
+  const refresh = async () => {
+    const paths = Array.from(children.keys())
+    const listings = await Promise.all(paths.map(async (path) => [path, await node.list(path)] as const))
+    children = new Map(listings)
+  }
+
+  const run = async (operation: () => Promise<void>) => {
+    try {
+      busy = true
+      error = undefined
+      await operation()
+    } catch (err) {
+      error = err instanceof Error ? err.message : 'Operation failed'
+    } finally {
+      busy = false
+    }
+  }
+
+  $: entriesByPath = (() => {
+    const map = new Map<string, StorageEntryData>()
+    for (const entries of children.values()) for (const entry of entries) map.set(entry.path, entry)
+    return map
+  })()
+
+  $: rows = (() => {
+    const result: Row[] = []
+    const reading = labels.reading ?? 'Reading games…'
+    const push = (row: VisibleRow) => result.push({ ...row, open: expanded.has(row.key) })
+
+    const pushEntry = (entry: StorageEntryData, depth: number) => {
+      push({
+        key: entry.path,
+        depth,
+        label: entry.name,
+        kind: entry.kind,
+        path: entry.path,
+        paths: [entry.path],
+        entry,
+        expandable: entry.kind === 'directory',
+      })
+      if (entry.kind === 'directory' && expanded.has(entry.path)) walk(entry.path, depth + 1)
+    }
+
+    const walk = (path: string, depth: number) => {
+      const grouped = groupedRows?.get(path)
+      if (!grouped) {
+        if (isGrouped?.(path)) {
+          push({ key: `${path}/…`, depth, label: reading, kind: 'pending', paths: [], expandable: false })
+          return
+        }
+        for (const entry of children.get(path) || []) pushEntry(entry, depth)
+        return
+      }
+      for (const wizard of grouped as any[]) {
+        if (wizard.kind === 'entry') {
+          pushEntry(wizard.entry, depth)
+        } else {
+          const game = wizard.kind === 'game' ? wizard.game : wizard
+          if (game) {
+            push({
+              key: `${path}:${game.id || game.key}`,
+              depth,
+              label: game.title,
+              kind: 'group',
+              paths: game.paths,
+              status: game.status,
+              game,
+              expandable: false,
+            })
+          }
+        }
+      }
+    }
+
+    walk(ROOT, 0)
+    return result
+  })()
+
+  // A grouped folder that has nothing to show yet asks to be read.
+  $: if (groupedRows) {
+    for (const row of rows) {
+      if (row.kind === 'pending' && row.key.endsWith('/…')) $emit('grouping-needed', row.key.slice(0, -2))
+    }
+  }
+
+  $: $emit('visible-change', rows.flatMap((row) => row.paths))
+
+  /** A selection inside a game's files selects the game's row (and reports the game once). */
+  const markGameOfSelection = () => {
+    if (marks.selection.size === 0) return
+    const row = rawRows().find((candidate) => candidate.kind === 'group' && candidate.paths.some((p) => marks.selection.has(p)))
+    if (row && row.game) {
+      marks.game = row.key
+      if (row.game !== marks.reported) {
+        marks.reported = row.game
+        $emit('game-change', row.game)
+      }
+    }
+  }
+
+  // Rows built again (a folder opened, games read): their marks are built again, in one
+  // write, and the game a selection belongs to may now be there.
+  $: {
+    void rows
+    queueMicrotask(() => {
+      markGameOfSelection()
+      rowMarks = rawRows().map(flagsOf)
+      selectionCount = marks.selection.size
+    })
+  }
+
+  // One update for the tree and whatever the parent writes on hearing of it.
+  const selectPaths = (paths: Set<string>, game?: WizardGameData) =>
+    $batch(() => {
+      marks.selection = paths
+      $emit('selection-change', Array.from(paths))
+      if (game !== marks.reported) {
+        marks.reported = game
+        $emit('game-change', game)
+      }
+      const folder = paths.size === 1 ? Array.from(paths)[0] : undefined
+      const directory = folder && entriesByPath.get(folder)?.kind === 'directory' ? folder : undefined
+      $emit('folder-change', directory)
+      markGameOfSelection()
+      remark()
+    })
+
+  const revealDirectory = async (path: string) => {
+    const parts = path.split('/')
+    let current = ''
+    for (const part of parts) {
+      current = current ? `${current}/${part}` : part
+      if (!children.has(current)) await loadDirectory(current)
+      if (!expanded.has(current)) expanded = new Set(expanded).add(current)
+    }
+  }
+
+  // The parent's selection (a file picked in the details) is shown, marked and
+  // revealed. Deferred, so the effect depends on `selectedFiles` alone: it must
+  // not wake for the tree's own clicks (the parent hears of those through
+  // `selection-change` and hands the same paths back).
+  const followSelectedFiles = (files: string[]) => {
+    marks.active = new Set(files)
+    const current = Array.from(marks.selection)
+    const same = current.length === files.length && current.every((path, i) => path === files[i])
+    if (files.length > 0 && !same) {
+      marks.selection = new Set(files)
+      markGameOfSelection()
+      for (const path of files) {
+        const parent = parentOf(path)
+        if (parent && parent !== ROOT) void revealDirectory(parent)
+      }
+    }
+    remark()
+  }
+  $: {
+    const files: string[] = selectedFiles ? Array.from(selectedFiles) : []
+    queueMicrotask(() => followSelectedFiles(files))
+  }
+
+  const toggleDirectory = async (path: string) => {
+    if (expanded.has(path)) {
+      const next = new Set(expanded)
+      next.delete(path)
+      expanded = next
+      return
+    }
+    if (!children.has(path)) await loadDirectory(path)
+    expanded = new Set(expanded).add(path)
+  }
+
+  const isSelected = (row: Row) => (row.path ? marks.selection.has(row.path) : marks.game === row.key)
+
+  const selectRow = (row: Row) => {
+    $batch(() => {
+      marks.game = row.kind === 'group' ? row.key : undefined
+      if (row.kind === 'group') {
+        marks.anchor = row.paths[0]
+        selectPaths(new Set(row.paths), row.game)
+      } else if (row.path) {
+        marks.anchor = row.path
+        selectPaths(new Set([row.path]))
+      }
+    })
+    requestAnimationFrame(() => $self('.tree-item.selected')?.scrollIntoView({ block: 'nearest' }))
+  }
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return
+    const active = document.activeElement as HTMLElement | null
+    if (active) {
+      const tag = active.tagName.toLowerCase()
+      if (tag === 'input' || tag === 'textarea' || tag === 'select' || active.isContentEditable) return
+    }
+    if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return
+    const list = rawRows()
+    if (list.length === 0) return
+
+    const index = list.findIndex(isSelected)
+    event.preventDefault()
+    if (index === -1) {
+      selectRow(list[0])
+      return
+    }
+    const row = list[index]
+    if (event.key === 'ArrowUp') {
+      if (index > 0) selectRow(list[index - 1])
+    } else if (event.key === 'ArrowDown') {
+      if (index < list.length - 1) selectRow(list[index + 1])
+    } else if (event.key === 'ArrowLeft') {
+      if (row.kind === 'directory' && row.path) {
+        if (expanded.has(row.path)) void toggleDirectory(row.path)
+      } else {
+        for (let i = index - 1; i >= 0; i--) {
+          if (list[i].kind === 'directory' && list[i].depth < row.depth) {
+            selectRow(list[i])
+            break
+          }
+        }
+      }
+    } else if (event.key === 'ArrowRight') {
+      if (row.kind === 'directory' && row.path && !expanded.has(row.path)) void revealDirectory(row.path)
+    }
+  }
+  window.addEventListener('keydown', onKeyDown)
+  $destroyed(() => window.removeEventListener('keydown', onKeyDown))
+
+  const targetDirectory = (): string => {
+    const [path] = Array.from(marks.selection)
+    if (!path) return ROOT
+    return entriesByPath.get(path)?.kind === 'directory' ? path : parentOf(path)
+  }
+
+  const onRowClick = (event: MouseEvent, row: Row) =>
+    $batch(() => {
+      marks.game = row.kind === 'group' ? row.key : undefined
+      if (row.kind === 'group') {
+        marks.anchor = row.paths[0]
+        selectPaths(new Set(row.paths), row.game)
+        return
+      }
+      if (!row.path) return
+
+      const paths = rawRows().flatMap((candidate) => (candidate.path ? [candidate.path] : []))
+      const anchor = marks.anchor
+      if (event.shiftKey && anchor && paths.includes(anchor) && paths.includes(row.path)) {
+        const from = paths.indexOf(anchor)
+        const to = paths.indexOf(row.path)
+        selectPaths(new Set(paths.slice(Math.min(from, to), Math.max(from, to) + 1)))
+        return
+      }
+      if (event.metaKey || event.ctrlKey) {
+        const next = new Set(marks.selection)
+        if (next.has(row.path)) next.delete(row.path)
+        else next.add(row.path)
+        marks.anchor = row.path
+        selectPaths(next)
+        return
+      }
+      marks.anchor = row.path
+      selectPaths(new Set([row.path]))
+    })
+
+  const onCaretClick = (row: Row) => {
+    if (row.expandable && row.path) void toggleDirectory(row.path)
+  }
+
+  const onCreateFolder = () => {
+    if (!node.createDirectory) return
+    createFolder = { suggested: join(targetDirectory(), 'new-folder') }
+  }
+
+  const confirmCreateFolder = (name: string) => {
+    createFolder = null
+    void run(async () => {
+      await node.createDirectory?.(name)
+      await revealDirectory(name)
+      await refresh()
+      selectPaths(new Set([name]))
+    })
+  }
+
+  const addFiles = async (files: FileList | File[], destination: string) => {
+    if (!node.writeFile && !node.write) return
+    await run(async () => {
+      const written: string[] = []
+      for (const file of Array.from(files)) {
+        const path = join(destination, file.name)
+        const bytes = new Uint8Array(await file.arrayBuffer())
+        if (node.writeFile) await node.writeFile(path, bytes)
+        else if (node.write) await node.write(path, bytes.buffer)
+        written.push(path)
+      }
+      await revealDirectory(destination)
+      await refresh()
+      if (written.length > 0) selectPaths(new Set(written))
+      $emit('changed', written)
+    })
+  }
+
+  const onFilesPicked = (event: Event) => {
+    const input = event.currentTarget as HTMLInputElement
+    if (input.files && input.files.length > 0) void addFiles(input.files, targetDirectory())
+    input.value = ''
+  }
+
+  const onDeleteSelected = () => {
+    if (marks.selection.size === 0 || (!node.remove && !node.delete)) return
+    deleteConfirm = { paths: Array.from(marks.selection) }
+  }
+
+  const confirmDelete = () => {
+    if (!deleteConfirm) return
+    const paths = deleteConfirm.paths
+    deleteConfirm = null
+    void run(async () => {
+      for (const path of paths) {
+        if (node.remove) await node.remove(path)
+        else if (node.delete) await node.delete(path)
+      }
+      $emit('removed', paths)
+      selectPaths(new Set())
+      await refresh()
+    })
+  }
+
+  const moveInto = async (directory: string, paths: string[]) => {
+    if (!node.move) return
+    const valid = paths.filter((path) => !contains(path, directory))
+    if (valid.length === 0) return
+    await run(async () => {
+      const moved: string[] = []
+      for (const path of valid) {
+        const destination = join(directory, nameOf(path))
+        await node.move?.(path, destination)
+        moved.push(destination)
+      }
+      $emit('changed', [...valid, ...moved])
+      await revealDirectory(directory)
+      await refresh()
+      selectPaths(new Set(moved))
+    })
+  }
+
+  const onDragStart = (event: DragEvent, row: Row) => {
+    if (!event.dataTransfer) return
+    const held = row.paths.every((path) => marks.selection.has(path))
+    const dragged = held ? Array.from(marks.selection) : row.paths
+    if (!held) selectPaths(new Set(row.paths), row.game)
+    event.dataTransfer.setData(DRAG_MIME, JSON.stringify(dragged))
+    event.dataTransfer.effectAllowed = 'move'
+  }
+
+  const setDropTarget = (directory: string | undefined) => {
+    if (marks.drop === directory) return
+    marks.drop = directory
+    remark()
+  }
+
+  const onDragOver = (event: DragEvent, directory: string) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if (event.dataTransfer) event.dataTransfer.dropEffect = 'move'
+    setDropTarget(directory)
+  }
+
+  const onDrop = (event: DragEvent, directory: string) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setDropTarget(undefined)
+    const dropped = event.dataTransfer?.files
+    if (dropped && dropped.length > 0) {
+      void addFiles(dropped, directory)
+      return
+    }
+    const payload = event.dataTransfer?.getData(DRAG_MIME)
+    if (!payload) return
+    try {
+      void moveInto(directory, parseDraggedPaths(payload))
+    } catch {
+      error = 'Invalid drag operation'
+    }
+  }
+
+  $: statusLabels = {
+    complete: labels.statusComplete ?? 'Complete',
+    partial: labels.statusPartial ?? 'Partial',
+    missing: labels.statusMissing ?? 'Missing',
+  } as Record<string, string>
+
+  // What a row's icon is: a spinner, a folder (a system's, when grouped), a game.
+  const rowIcon = (row: Row) => {
+    if (row.kind === 'directory') {
+      const systemId = row.path && isGrouped?.(row.path) ? systemOfPath(row.path || row.label) : undefined
+      return systemId ? { name: 'system-folder', systemId } : { name: 'folder', systemId: '' }
+    }
+    const systemId = row.paths[0] ? systemOfPath(row.paths[0]) : row.path ? systemOfPath(row.path) : undefined
+    if (row.kind === 'group') return { name: 'bundle', systemId }
+    return { name: iconNameOf(row.label), systemId }
+  }
+
+  const rowClass = (row: Row, index: number) =>
+    [
+      'tree-item',
+      row.kind,
+      isHiddenName(row.label) ? 'hidden-file' : '',
+      row.status ? `status-${row.status}` : '',
+      rowMarks[index]?.selected ? 'selected' : '',
+      rowMarks[index]?.active ? 'active' : '',
+      rowMarks[index]?.drop ? 'drop-target' : '',
+    ]
+      .filter(Boolean)
+      .join(' ')
+
+  await $mounted()
+
+  loadDirectory(ROOT).catch((err) => {
+    error = err instanceof Error ? err.message : 'Failed to read directory'
+  })
+
+  // A new token from the parent re-reads what is open (deferred: `refresh` reads
+  // and writes `children`, which must not become this effect's dependency).
+  $: if (refreshToken) queueMicrotask(() => refresh().catch(() => undefined))
+</script>
+
+<div class="file-tree">
+  <FileTreeHeader
+    :busy="busy"
+    :has-selection="selectionCount > 0"
+    :labels="{ newFolder: labels.collapseAll, addFiles: labels.expandAll, delete: labels.delete }"
+    @create-folder="onCreateFolder()"
+    @add-files="$self('.file-tree-input')?.click()"
+    @delete-selected="onDeleteSelected()"
+  />
+
+  <input type="file" multiple class="file-tree-input" @change="onFilesPicked" />
+
+  <div :if="error" class="file-tree-error">{{ error }}</div>
+  <div :if="notice" class="file-tree-notice">{{ notice }}</div>
+
+  <ul
+    :class="`file-tree-body ${rootDrop ? 'drop-target' : ''}`"
+    @dragover="onDragOver($event, ROOT)"
+    @dragleave="setDropTarget(undefined)"
+    @drop="onDrop($event, ROOT)"
+  >
+    <li
+      :each="row in rows"
+      :key="row.key"
+      :class="rowClass(row, $index)"
+      :style="`padding-left: ${0.5 + row.depth * 0.6}rem`"
+      :draggable="row.paths.length > 0 ? 'true' : 'false'"
+      @click="onRowClick($event, row)"
+      @dragstart="onDragStart($event, row)"
+      @dragover="row.kind === 'directory' ? onDragOver($event, row.path) : undefined"
+      @drop="row.kind === 'directory' ? onDrop($event, row.path) : undefined"
+    >
+      <div class="tree-item-left" @click="onCaretClick(row)">
+        <span :if="row.expandable" class="tree-caret" :title="row.open ? 'Collapse' : 'Expand'">
+          <Icon name="chevron" :open="row.open" />
+        </span>
+        <span :else class="tree-caret"></span>
+
+        <span class="tree-icon">
+          <span :if="row.kind === 'pending'" class="tree-spinner"></span>
+          <SystemFolderIcon :elseif="rowIcon(row).name === 'system-folder'" :system-id="rowIcon(row).systemId" />
+          <Icon :else :name="rowIcon(row).name" :system-id="rowIcon(row).systemId" />
+        </span>
+        <span class="tree-name">{{ row.label }}</span>
+      </div>
+
+      <div class="tree-item-actions">
+        <span :if="row.status && row.status !== 'complete'" class="tree-status" :title="statusLabels[row.status] ?? row.status">
+          <Icon name="status" :status="row.status" />
+        </span>
+
+        <span :if="row.kind !== 'directory' && row.paths.some((path) => isInitialized?.(path))" class="tree-badge" title="Has library record">
+          <Icon name="dot" />
+        </span>
+
+        <button
+          :if="row.kind === 'directory' && canGroup?.(row.path)"
+          :class="`tree-group-toggle ${isGrouped?.(row.path) ? 'on' : ''}`"
+          @click.stop="$emit('toggle-grouping', row.path)"
+          :title="isGrouped?.(row.path) ? 'Browsing grouped by game' : 'Browse grouped by game'"
+        >
+          <Icon name="group" />
+        </button>
+
+        <button
+          :if="row.kind === 'directory' && canOrganize && canGroup?.(row.path)"
+          class="tree-organize"
+          @click.stop="$emit('organize', row.path)"
+          title="Consolidate folder"
+        >
+          <Icon name="organize" />
+        </button>
+      </div>
+    </li>
+
+    <li :if="rows.length === 0 && children.has(ROOT)" class="tree-empty">Empty directory</li>
+  </ul>
+
+  <PromptModal
+    :close-label="t('prefs.close')"
+    :cancel-label="t('drop.cancel')"
+    :submit-label="t('modal.confirm')"
+    :if="createFolder"
+    :open="true"
+    :title="t('modal.createFolderTitle')"
+    :message="t('tree.prompt.folderName')"
+    :default-value="createFolder.suggested"
+    @submit="confirmCreateFolder($event.detail)"
+    @close="createFolder = null"
+  />
+
+  <ConfirmModal
+    :close-label="t('prefs.close')"
+    :cancel-label="t('drop.cancel')"
+    :confirm-label="t('modal.delete')"
+    :if="deleteConfirm"
+    :open="true"
+    :title="t('modal.deleteTitle')"
+    :message="t('tree.confirm.delete', { count: deleteConfirm.paths.length })"
+    :danger="true"
+    @confirm="confirmDelete()"
+    @close="deleteConfirm = null"
+  />
+</div>

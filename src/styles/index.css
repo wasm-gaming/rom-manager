@@ -97,10 +97,20 @@
   --veil: rgba(0, 0, 0, 0.1);
   --veil-soft: rgba(0, 0, 0, 0.05);
   --scrim: rgba(0, 0, 0, 0.45);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --shadow-cover: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 0.1875rem rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
+  --shadow-cover: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+/* Below 460px the whole UI scales with the screen: the root font size follows the
+   width (16px at 460px) and every measure is in rem, so the 460px layout shrinks
+   linearly instead of reflowing. Media queries stay in px: they are read against the
+   browser's default font size, not this one. */
+@media (max-width: 460px) {
+  :root {
+    font-size: calc(100vw / 28.75);
+  }
 }
 
 /*
@@ -186,10 +196,10 @@
   --veil: rgba(255, 255, 255, 0.12);
   --veil-soft: rgba(255, 255, 255, 0.07);
   --scrim: rgba(0, 0, 0, 0.6);
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --shadow-cover: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 1px 0.1875rem rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 0.5rem 2rem rgba(0, 0, 0, 0.6);
+  --shadow-cover: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -233,7 +243,10 @@ code {
   gap: 0.4em;
 }
 
-.icon-label > .icon {
+/* jq79 renders a component in a box of its own (`display: contents`): the icon is
+   the box's child, so each rule names both paths, at the same specificity. */
+.icon-label > .icon,
+.icon-label > :where([data-c79-box]) > .icon {
   vertical-align: initial;
 }
 
@@ -258,8 +271,8 @@ code {
 }
 
 .header-left {
-  flex: 0 0 380px;
-  width: 380px;
+  flex: 0 0 23.75rem;
+  width: 23.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -333,8 +346,8 @@ code {
   padding: 0.5rem 1rem;
   background-color: var(--surface-2);
   border: 1px solid var(--border);
-  border-bottom: 2px solid var(--border);
-  border-radius: 4px 4px 0 0;
+  border-bottom: 0.125rem solid var(--border);
+  border-radius: 0.25rem 0.25rem 0 0;
   cursor: pointer;
   white-space: nowrap;
   transition: background-color 0.2s, border-color 0.2s;
@@ -354,7 +367,7 @@ code {
 
 .tab-name {
   font-size: 0.875rem;
-  max-width: 150px;
+  max-width: 9.375rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -377,12 +390,12 @@ code {
   cursor: pointer;
   font-size: 0.75rem;
   padding: 0;
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   transition: background-color 0.2s, color 0.2s;
 }
 
@@ -400,7 +413,7 @@ code {
   padding: 0;
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 1rem;
   color: var(--text-dim);
@@ -421,7 +434,7 @@ code {
   flex-shrink: 0;
   display: flex;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   overflow: hidden;
   height: 2rem;
 }
@@ -468,7 +481,7 @@ code {
   justify-content: center;
   padding: 0;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--surface);
   color: var(--text-dim);
   font-size: 1rem;
@@ -487,7 +500,7 @@ code {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 12.5rem);
   color: var(--text-faint);
   font-size: 1rem;
   gap: 1.5rem;
@@ -498,7 +511,7 @@ code {
   background-color: var(--accent);
   color: var(--accent-on);
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
@@ -572,7 +585,7 @@ code {
   background-color: var(--accent);
   color: var(--accent-on);
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   cursor: pointer;
   font-size: 1.05rem;
   font-weight: 550;
@@ -602,7 +615,7 @@ code {
   background-color: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
@@ -619,8 +632,8 @@ code {
 }
 
 .prefs-storage-meter {
-  height: 6px;
-  border-radius: 3px;
+  height: 0.375rem;
+  border-radius: 0.1875rem;
   background-color: var(--border);
   overflow: hidden;
 }
@@ -658,7 +671,7 @@ code {
   list-style: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .welcome-cards {
     grid-template-columns: 1fr;
   }
@@ -670,25 +683,25 @@ code {
   padding: 1.2rem 1.3rem;
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 0.625rem;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .welcome-card:hover {
   border-color: var(--accent);
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
   box-shadow: var(--shadow-md);
 }
 
 .welcome-card-illustration {
   width: 100%;
-  height: 160px;
+  height: 10rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
   background-color: var(--surface-2);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   overflow: hidden;
   padding: 0.5rem;
 }
@@ -696,7 +709,7 @@ code {
 .welcome-card-illustration svg {
   width: 100%;
   height: 100%;
-  max-height: 150px;
+  max-height: 9.375rem;
 }
 
 .welcome-card h4 {
@@ -730,13 +743,13 @@ code {
   padding: 1.25rem 1.4rem;
   background-color: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 0.75rem;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .welcome-step:hover {
   border-color: var(--accent);
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
   box-shadow: var(--shadow-md);
 }
 
@@ -746,7 +759,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 0.625rem;
   background: var(--accent-soft);
   color: var(--accent-ink);
   font-weight: 700;
@@ -914,7 +927,7 @@ code {
   padding: 1.1rem 1.2rem;
   background-color: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 .welcome-note h3 {
@@ -961,7 +974,7 @@ code {
   text-decoration: none;
   padding: 0.4rem 0.75rem;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   background-color: var(--surface-2);
   transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
   white-space: nowrap;
@@ -977,7 +990,7 @@ code {
   background-color: var(--surface-3);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .welcome-footer {
     flex-direction: column-reverse;
     align-items: flex-start;
@@ -986,7 +999,7 @@ code {
 }
 
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .welcome {
     padding: 1.5rem 1rem 3rem;
     gap: 2rem;
@@ -1017,8 +1030,8 @@ code {
 
 .file-tree {
   position: relative;
-  flex: 0 0 380px;
-  width: 380px;
+  flex: 0 0 23.75rem;
+  width: 23.75rem;
   border-right: 1px solid var(--border);
   background-color: var(--surface);
   display: flex;
@@ -1051,7 +1064,7 @@ code {
   font-size: 0.85rem;
   line-height: 1;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--surface);
   cursor: pointer;
 }
@@ -1072,7 +1085,7 @@ code {
 .file-tree-error {
   margin: 0 0.75rem 0.5rem;
   padding: 0.4rem 0.6rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--danger-soft);
   color: var(--danger-ink);
   font-size: 0.8rem;
@@ -1095,7 +1108,7 @@ code {
   z-index: 1;
   padding: 0.4rem 0.6rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--surface);
   box-shadow: var(--shadow-md);
   color: var(--accent-ink);
@@ -1134,7 +1147,7 @@ code {
   padding-bottom: 0.35rem;
   padding-right: 0.75rem;
   cursor: pointer;
-  border-left: 3px solid transparent;
+  border-left: 0.1875rem solid transparent;
   user-select: none;
   transition: background-color 0.15s, border-color 0.15s;
 }
@@ -1214,7 +1227,8 @@ code {
 
 /* The icons carry their own colours — see `icons.tsx` — so the row only sizes
    them. What tells the kinds apart is the amber against the grey. */
-.tree-icon > svg {
+.tree-icon > svg,
+.tree-icon > :where([data-c79-box]) > svg {
   display: block;
   width: 1.6rem;
   height: 1.6rem;
@@ -1229,7 +1243,8 @@ code {
   justify-content: center;
 }
 
-.system-folder-icon > svg {
+.system-folder-icon > svg,
+.system-folder-icon > :where([data-c79-box]) > svg {
   display: block;
   width: 1.6rem;
   height: 1.6rem;
@@ -1237,18 +1252,19 @@ code {
 
 .system-folder-badge {
   position: absolute;
-  right: -3px;
-  bottom: -3px;
+  right: -0.1875rem;
+  bottom: -0.1875rem;
   width: 1.05rem;
   height: 1.05rem;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 1px 0.125rem rgba(0, 0, 0, 0.5));
 }
 
-.system-folder-badge > svg {
+.system-folder-badge > svg,
+.system-folder-badge > :where([data-c79-box]) > svg {
   width: 100%;
   height: 100%;
 }
@@ -1286,7 +1302,7 @@ code {
   flex: 0 0 auto;
   width: 1rem;
   height: 1rem;
-  border: 2px solid var(--border);
+  border: 0.125rem solid var(--border);
   border-top-color: var(--accent);
   border-radius: 50%;
   animation: tree-spin 0.7s linear infinite;
@@ -1364,7 +1380,7 @@ code {
   flex-direction: column;
   width: min(46rem, 92vw);
   max-height: 84vh;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   background: var(--surface);
   box-shadow: var(--shadow-lg);
 }
@@ -1510,7 +1526,7 @@ code {
    because it is the same gesture. */
 .details-pane.drop-target {
   background-color: var(--ok-soft);
-  outline: 2px dashed var(--ok);
+  outline: 0.125rem dashed var(--ok);
   outline-offset: -0.5rem;
 }
 
@@ -1528,7 +1544,7 @@ code {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
 }
 
@@ -1548,24 +1564,24 @@ code {
 }
 
 .system-logo-wrapper {
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 1.25rem;
   background-color: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.75rem;
   box-shadow: var(--shadow);
-  border: 2px solid var(--border);
+  border: 0.125rem solid var(--border);
   flex-shrink: 0;
   transition: transform 0.2s ease;
 }
 
 .system-logo-wrapper.large {
-  width: 128px;
-  height: 128px;
-  border-radius: 28px;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 1.75rem;
   padding: 1.25rem;
   background: linear-gradient(135deg, var(--surface), var(--surface-2));
 }
@@ -1613,7 +1629,7 @@ code {
   font-size: 0.75rem;
   font-weight: 600;
   padding: 0.25rem 0.6rem;
-  border-radius: 6px;
+  border-radius: 0.375rem;
 }
 
 .system-meta-tags .tag.manufacturer {
@@ -1635,7 +1651,7 @@ code {
 .system-description-box,
 .system-extensions-box {
   background-color: var(--surface);
-  border-radius: 8px;
+  border-radius: 0.5rem;
   padding: 1rem;
   border: 1px solid var(--border-soft);
 }
@@ -1669,7 +1685,7 @@ code {
   background-color: var(--surface-2);
   border: 1px solid var(--border);
   padding: 0.25rem 0.6rem;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   font-size: 0.85rem;
   color: var(--text);
   transition: transform 0.15s ease, border-color 0.15s ease;
@@ -1688,7 +1704,7 @@ code {
 .metadata-editor {
   background-color: var(--surface);
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   box-shadow: var(--shadow-sm);
 }
 
@@ -1715,7 +1731,7 @@ code {
 .form-group select {
   padding: 0.5rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-size: 0.95rem;
   font-family: inherit;
   transition: border-color 0.2s;
@@ -1725,7 +1741,7 @@ code {
 .form-group select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--focus-ring);
+  box-shadow: 0 0 0 0.1875rem var(--focus-ring);
 }
 
 .form-group input:disabled {
@@ -1736,20 +1752,20 @@ code {
 
 .cover-image {
   align-self: flex-start;
-  max-width: 180px;
-  max-height: 240px;
+  max-width: 11.25rem;
+  max-height: 15rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--app-bg);
 }
 
 .cover-preview {
   display: block;
   margin-top: 0.5rem;
-  max-width: 120px;
-  max-height: 160px;
+  max-width: 7.5rem;
+  max-height: 10rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--surface);
 }
 
@@ -1760,7 +1776,7 @@ code {
 
 .cover-editor-group.dragging {
   background-color: rgba(59, 130, 246, 0.08);
-  border-radius: 6px;
+  border-radius: 0.375rem;
 }
 
 .cover-preview-wrapper {
@@ -1789,8 +1805,8 @@ code {
   align-items: center;
   justify-content: center;
   padding: 1.5rem 1rem;
-  border: 2px dashed var(--border);
-  border-radius: 8px;
+  border: 0.125rem dashed var(--border);
+  border-radius: 0.5rem;
   background-color: var(--surface-2);
   cursor: pointer;
   text-align: center;
@@ -1859,7 +1875,7 @@ code {
   background-color: var(--accent);
   color: var(--accent-on);
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
@@ -1881,8 +1897,8 @@ code {
   padding: 0.75rem 1rem;
   background-color: var(--danger-soft);
   color: var(--danger-ink);
-  border-radius: 4px;
-  border-left: 4px solid var(--danger-line);
+  border-radius: 0.25rem;
+  border-left: 0.25rem solid var(--danger-line);
   margin-bottom: 1rem;
   font-size: 0.875rem;
 }
@@ -1907,7 +1923,7 @@ code {
   max-height: 80vh;
   padding: 0;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   overflow: hidden;
   flex-direction: column;
   background-color: var(--surface);
@@ -1943,7 +1959,7 @@ code {
 
 /* Lookup & Specific Modal Sizes */
 .modal-dialog.lookup-dialog {
-  width: min(500px, 90vw);
+  width: min(31.25rem, 90vw);
 }
 
 .modal-dialog.confirm-dialog,
@@ -1974,12 +1990,12 @@ code {
   cursor: pointer;
   font-size: 1.25rem;
   padding: 0;
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   transition: background-color 0.2s, color 0.2s;
 }
 
@@ -2017,7 +2033,7 @@ code {
   width: 100%;
   padding: 0.6rem 0.75rem;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   background-color: var(--surface-2);
   color: var(--text);
   font-size: 0.9rem;
@@ -2030,7 +2046,7 @@ code {
 .prompt-input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent-veil);
+  box-shadow: 0 0 0 0.125rem var(--accent-veil);
 }
 
 /* --- Preferences --- */
@@ -2052,7 +2068,7 @@ code {
 .prefs-segmented {
   display: flex;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   overflow: hidden;
 }
 
@@ -2087,7 +2103,7 @@ code {
   width: 100%;
   padding: 0.45rem 0.5rem;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   background-color: var(--surface);
   color: var(--text);
   font-size: 0.9rem;
@@ -2157,7 +2173,7 @@ code {
   padding: 0.5rem 0.65rem;
   background-color: var(--app-bg);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 
 .drop-file-name {
@@ -2203,7 +2219,7 @@ code {
   padding: 0.5rem 0.65rem;
   background-color: var(--app-bg);
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
 }
 
 .intake-title {
@@ -2273,7 +2289,7 @@ code {
   margin-bottom: 1.25rem;
   padding: 1rem;
   background-color: var(--app-bg);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   border: 1px solid var(--border);
   transition: background-color 0.2s, border-color 0.2s;
 }
@@ -2292,8 +2308,8 @@ code {
 .checkbox-label input[type='checkbox'] {
   margin-top: 0.25rem;
   cursor: pointer;
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
   flex-shrink: 0;
 }
 
@@ -2329,7 +2345,7 @@ code {
   display: inline;
   background-color: var(--veil-soft);
   padding: 0.125rem 0.35rem;
-  border-radius: 2px;
+  border-radius: 0.125rem;
   word-break: break-word;
   font-family: monospace;
 }
@@ -2349,7 +2365,7 @@ code {
 .modal-actions .btn-danger {
   padding: 0.5rem 1.25rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
@@ -2425,7 +2441,7 @@ code {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   font-family: inherit;
   font-size: 0.875rem;
   resize: vertical;
@@ -2446,7 +2462,7 @@ code {
   padding: 0.25rem 0.625rem;
   background-color: var(--surface);
   border: 1px solid var(--border-strong);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 0.8125rem;
   white-space: nowrap;
@@ -2466,7 +2482,7 @@ code {
   background-color: var(--accent);
   color: var(--accent-on);
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 0.875rem;
   font-weight: 500;
@@ -2494,7 +2510,7 @@ code {
   padding: 0.5rem 1rem;
   background-color: var(--surface);
   border: 1px solid var(--border-strong);
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
   font-size: 0.875rem;
 }
@@ -2505,7 +2521,7 @@ code {
 .rom-selection {
   background-color: var(--surface);
   padding: 1.25rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   box-shadow: var(--shadow-sm);
 }
 
@@ -2568,9 +2584,9 @@ code {
   position: relative;
   background-color: var(--surface);
   padding: 1.25rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   box-shadow: var(--shadow-sm);
-  max-width: 800px;
+  max-width: 50rem;
   margin: 0 auto;
 }
 
@@ -2584,7 +2600,7 @@ code {
   font-size: 1.15rem;
   cursor: pointer;
   padding: 0.35rem;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2612,15 +2628,15 @@ code {
 }
 
 .rom-info-cover-wrapper {
-  width: 180px;
+  width: 11.25rem;
   aspect-ratio: 3 / 4;
   flex-shrink: 0;
-  border-radius: 3px;
+  border-radius: 0.1875rem;
   overflow: hidden;
 }
 
 .rom-info-cover-wrapper.landscape {
-  width: 240px;
+  width: 15rem;
 }
 
 .rom-info-cover {
@@ -2730,7 +2746,7 @@ code {
 .tag.video {
   padding: 0 0.3rem;
   font-size: 0.6875rem;
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 
 .tag.region {
@@ -2877,6 +2893,91 @@ code {
   color: var(--danger, #ef5350);
 }
 
+/* A game's mods: one line each, its actions at the end. */
+.game-mods {
+  margin-top: 1rem;
+}
+
+.mods {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mod-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 0.8125rem;
+}
+
+.mod-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mod-row .tag {
+  flex: 0 0 auto;
+}
+
+.mod-fit-other {
+  color: var(--text-faint);
+}
+
+.mod-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mod-actions .tree-organize {
+  font-size: 0.85rem;
+  line-height: 1;
+  padding: 0.2rem;
+  opacity: 0.75;
+}
+
+.mod-actions .tree-organize:hover {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.mod-assign {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.375rem;
+  background: none;
+  color: var(--text-2);
+  font: inherit;
+  cursor: pointer;
+}
+
+.mod-assign:hover {
+  color: var(--accent);
+}
+
+.mods-empty,
+.mods-hint {
+  margin: 0.375rem 0 0;
+  color: var(--text-faint);
+  font-size: 0.75rem;
+}
+
+.mods-error {
+  margin: 0.375rem 0 0;
+  color: var(--danger, #e5484d);
+  font-size: 0.8125rem;
+}
+
 .variant-file.missing {
   color: var(--text-disabled);
 }
@@ -2934,7 +3035,7 @@ code {
   margin-bottom: 0.75rem;
   padding: 0.25rem 0.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   background-color: var(--slab);
   color: var(--slab-ink);
   font-size: 0.8125rem;
@@ -3133,7 +3234,7 @@ code {
 .mobile-row-cover {
   flex: 0 0 2.75rem;
   height: 2.75rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   overflow: hidden;
   background-color: var(--surface-2);
 }
@@ -3188,7 +3289,7 @@ code {
   white-space: nowrap;
 }
 
-@media (max-width: 760px), (max-height: 500px) and (pointer: coarse) {
+@media (max-width: 768px), (max-height: 500px) and (pointer: coarse) {
   /* The header: title and its buttons on one row, tabs and actions on the next. */
   .explorer-header {
     flex-wrap: wrap;
