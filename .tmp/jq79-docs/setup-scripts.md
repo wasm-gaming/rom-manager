@@ -1,0 +1,504 @@
+# Setup scripts
+
+> **No compiler, no bundler.** The setup script is transformed at runtime by a
+> lightweight scanner — not a full JS parser. It only touches top-level
+> declarations and `$:` labels; everything else (callbacks, nested functions,
+> closures) passes through unchanged. The same `.html` file works bundled or
+> fetched at runtime, with no intermediate build step. The one exception is
+> [TypeScript](#typescript), which needs the bundler.
+
+`<script :setup>` blocks run against the component's reactive scope, Svelte-style:
+
+```html
+<script :setup="{ fname, lname }">
+  let count = 0                    // top-level let/var/const become reactive scope vars
+  const greeting = `Hi ${fname}`   // initialized once, visible to the template
+
+  $: doubled = count * 2           // re-runs whenever `count` changes
+
+  setInterval(() => { count++ }, 1000)   // assignments from callbacks work too
+</script>
+```
+
+- The `:setup` attribute's value is the component's **prop signature**: `:setup="{ fname, lname = 'Lovelace' }"` declares the props the parent passes, with optional defaults, and the defaults are on the store before the first render. It's a declaration, not a comment — a prop it doesn't name is dropped, and the usage site that wrote it is warned. A bare `:setup` is a *closed* signature (no props); write `:setup="_"` for a component that takes whatever it's handed. A value that isn't an object pattern — a typo like `:setup="{ a, b"`, or a factory's `(props, ctx)` signature written here by mistake — reads as *no* signature and warns, because quietly accepting anything is the one thing it must not mean. See [props](components.md#props).
+- It's a **props** signature, not an injection list. The library's own helpers (`$emit`, `$reactive`, `Component79`, …) are always in scope and are never declared: what carries a `$` comes from the library, what doesn't comes from the parent — the same rule everywhere in jq79, with `Component79` (and its short name, `C79`) the one exception that predates it.
+- Top-level `let` / `var` / `const` declarations become properties of the reactive store (also reachable from outside via `jq79.data`). **`function` declarations do not** — a `function save() {}` stays an ordinary local binding the template can't see, so write handlers as `const save = () => …`. Bind one anyway and the console says so.
+- `$: x = expr` is a reactive declaration: it re-runs whenever anything it reads changes.
+- Assignments — including from `.then()` callbacks, timers, and event handlers — go through the reactive proxy and update the DOM.
+- Globals (`fetch`, `console`, `Promise`, …) resolve normally; assignments to names you never declared stay on the component scope instead of leaking to `globalThis`.
+- The [DOM helpers](dom-helpers.md) `$`, `$$` and `$create`, plus [`$reactive`](reactive-data.md), [`$computed`](reactive-data.md#derived-values-computed), [`$toRaw`](reactive-data.md#getting-the-plain-object-back) and [`$batch`](reactive-data.md#several-writes-one-update-batch), and `Component79` / `C79`, are automatically available in every setup script — no import or declaration needed, same as `$emit` and `$mounted`. Like globals, they are shadowed by same-named scope properties.
+- `$emit(eventName, payload)` dispatches a native bubbling, cancelable `CustomEvent` (with `payload` as `event.detail`) from the component's position in the DOM, and returns `false` when any listener called `preventDefault()` — the "parent vetoed" signal (e.g. `@saved.prevent` on the component's tag). It's also visible to template expressions (`@click="$emit('saved', id)"` needs no setup function), shadowed by a same-named scope property like any global. Listen from a parent component with [`@event-name` on the component's own tag](template-syntax.md#event-on-a-component-tag), on any wrapping element, or with plain `addEventListener` on the mount target:
+
+```html
+<!-- child -->
+<script :setup>
+  const save = () => $emit("saved", { id: 42 })
+</script>
+<button @click="save">Save</button>
+
+<!-- parent -->
+<div @saved="lastSaved = $event.detail.id">
+  <ChildForm />
+</div>
+```
+
+  From JS, subscribe on the instance itself with `on(eventName, (event, payload) => …)` — `payload` is the same value as `event.detail`. `on`/`off` are chainable, can be called before mounting, and survive re-renders:
+
+```js
+new Component79(src)
+  .on("saved", (e, payload) => console.log(payload.id))
+  .on("cancelled", () => console.log("cancelled"))
+  .mount("#app")
+```
+
+  Events emitted before the component is mounted have no ancestors to bubble to, so no DOM listener hears them (`$emit` is meant for handlers and async code, not synchronous top-level setup) — but instance `on()` listeners are notified even while detached. `on()` listeners (which is what `@event` on the component's tag uses) run *before* the DOM dispatch — one of them calling `stopPropagation()` keeps the event off the DOM entirely.
+
+- `$updateModel(value)` / `$updateModel(name, value)` writes back through the [`:model` binding](template-syntax.md#model--two-way-component-binding) the parent's tag declared — one argument for the default model (the bare `:model`), two for a named one. **Arity is what tells them apart**, so the value is never inspected: `$updateModel({ name: "a", value: 1 })` sets the default model to that object, no ambiguity. It's not an event — the parent's tag handed the child this writeback, so nothing bubbles — and like `$emit` it works from template expressions (`@input="$updateModel($event.target.value)"`). Returns `true` when a bound model took the update, `false` when the name binds nothing on the tag (which also warns), when the bound expression isn't assignable, or when the usage site declared no `:model` at all — a child can be used bound or unbound, and unbound is silent.
+
+```html
+<!-- EmailField.html -->
+<input :value="model" @input="$updateModel($event.target.value)">
+
+<!-- LoginForm.html -->
+<input :value="uname" @input="$updateModel('uname', $event.target.value)">
+```
+
+- **The template waits for the script.** The first render happens once every setup script has either returned or called `$mounted()` — whichever comes first. So a value the script awaits is *there* for the first render, and the component paints once, complete, instead of painting empty and filling in:
+
+```html
+<script :setup>
+  let items = await fetchItems()   // the template waits for this
+</script>
+<ul class="list">
+  <li :each="item in items">{{ item }}</li>
+</ul>
+```
+
+- `await $mounted()` is the other half of that rule. It suspends the script until the component is rendered and attached, so everything below it can use `querySelector` (or `$`/`$$`) directly — and calling it is also how the script says *"render me now, don't wait for the rest"*:
+
+```html
+<script :setup>
+  let items = await fetchItems()   // still holds the render
+
+  await $mounted()
+
+  let height = $(".list").offsetHeight   // real DOM access — still reactive
+</script>
+```
+
+  "Rendered" includes the components the template renders. A child whose own script holds its template back — `const Row = await import("./row.html")`, a fetch — paints after its parent does, and the parent's `await $mounted()` waits for it, so `$(".row")` below the line finds the row. Only the first render counts: a component an `:if` adds later doesn't hold anything. A child that never settles holds its parent's `$mounted()` too (the child's "has been waiting" warning names it).
+
+  Reactivity is unaffected by where a declaration sits: variables declared after the `await` are pre-declared on the store before the first render (as `undefined`), so the template can bind to them from the start and updates when the assignment runs. If the component is never mounted, the code after `await $mounted()` never runs.
+
+  Put the yield *above* the slow part when you want chrome or a skeleton on screen straight away — the whole template is what waits, static markup included:
+
+```html
+<script :setup>
+  let items = []
+  await $mounted()                 // the <ul> and its heading go up now
+  items = await fetchItems()       // fills in when it lands
+</script>
+```
+
+  A script that neither returns nor yields holds the template indefinitely. After three seconds the console says so, naming the fix; the render still waits, because painting on a timer would make the first render depend on the machine it runs on.
+
+  To defer a whole script until mount, add `:mounted` to the tag — it behaves as if `await $mounted()` were its first line, which is also to say it yields immediately and holds nothing back:
+
+```html
+<script :setup :mounted>
+  $self(".list").focus()   // the component is already in the DOM
+</script>
+```
+
+- `$self(selector)` and `$$self(selector)` are component-scoped versions of [`$` / `$$`](dom-helpers.md): they only search this component instance's own rendered nodes, so they can't accidentally match another component (or anything else in the page). They work even while the component is rendered but not yet mounted — but remember the template renders *after* the script, so call them from post-`await $mounted()` code or from handlers/callbacks.
+
+- `$destroyed(fn)` runs `fn` when the component is destroyed. Use it to stop what the script started outside the store: timers, listeners on `window`, sockets, third-party widgets. It returns a function that unregisters `fn`.
+
+```html
+<script :setup>
+  let now = new Date()
+  const timer = setInterval(() => { now = new Date() }, 1000)
+
+  $destroyed(() => clearInterval(timer))
+</script>
+<time>{{ now.toLocaleTimeString() }}</time>
+```
+
+  "Destroyed" means `destroy()`, a re-render (`mount(el, data)`, a hot reload), or a parent's `:if` / `:each` removing the component. **Not `detach()`**: that keeps state, and a later `mount()` resumes the component as it was, with the script not run again. The hooks run first, before anything is taken apart (only a `$detached` goes before them), so the DOM is still on the page and the store still answers. A parent's hooks run before its children's. One that throws is logged, and the rest still run. A hook registered after the component is gone (the script awaited something and was destroyed in the meantime) runs at once.
+
+- `$attached(fn)` runs `fn` every time the component goes onto the page, the first mount included, and `$detached(fn)` every time it leaves. Use them for what should only run while the component can be seen: polling, an animation loop, an observer. A component kept with `detach()` (a tab, a cached view) then stops it while it's off the page and picks it up when it's back. Both return a function that unregisters `fn`.
+
+```html
+<script :setup>
+  let data = []
+  let timer
+  const poll = () => fetch("/api").then(r => r.json()).then(d => { data = d })
+
+  $attached(() => { poll(); timer = setInterval(poll, 5000) })
+  $detached(() => clearInterval(timer))
+</script>
+```
+
+  "On the page" means in the document, with the template rendered. A render held back by the script fires `$attached` when it paints. A root mounted into an element outside the document fires nothing until it's mounted into one. A nested component hears its root: when the root detaches, everything inside it detaches with it, slot content included, in document order (a parent before what it rendered).
+
+  `$attached` takes `{ immediate }`, on by default: if the component is already on the page when the hook is registered (below `await $mounted()`, in a handler), `fn` also runs right away, so the line means the same wherever it sits. `{ immediate: false }` waits for the next attach.
+
+  `$detached` only runs after an `$attached` it balances. `destroy()` on the page runs `$detached` first, then `$destroyed`, both with the DOM still in place. So what an `$attached` started is released by its own `$detached`, and doesn't need repeating in `$destroyed`.
+
+Only top-level code is rewritten; declarations inside callbacks/blocks behave as plain JS. Multi-declarator statements (`let a = 1, b = 2`) and destructuring declarations work like any other declaration — every binding becomes a reactive store variable:
+
+```js
+let { name, email } = draft         // both reactive
+const [first, ...rest] = items      // so are these
+let { user: { id: userId } = {} } = session   // nested/renamed bind the *variable* (userId)
+```
+
+A `$:` declaration may span several lines: a line break only ends it if the next line can't continue the expression, the same call JavaScript's semicolon insertion makes. So method chains and operator chains work as written:
+
+```js
+$: activeNames = users
+  .filter(user => user.active)
+  .map(user => user.name)
+
+$: total = subtotal
+  + shipping
+  - discount
+```
+
+## Keeping something out of the store
+
+An effect tracks every scope variable it *reads*, and re-runs when one of them
+changes — so an effect that both reads and writes the same variable wakes itself
+up, forever:
+
+```js
+let timer = null                       // top-level → a reactive scope var
+
+const schedule = () => {
+  clearTimeout(timer)                  // reads `timer`…
+  timer = setTimeout(save, 250)        // …and writes it: the effect below loops
+}
+
+$: schedule(draft)
+```
+
+Worth knowing how this one fails, because it doesn't fail where you'd look: an
+effect's dependencies are recorded *after* its first run, so that first pass —
+the one during render — writes `timer` while the effect is still tracking
+nothing, and everything looks fine. It's the **next** change to `draft` that
+finds `timer` in the dependency list and re-runs the effect on repeat. The
+runtime cuts the loop after 100 rounds and says so in the console (`an effect
+re-woke itself 100 times in a row`) — but by then the side effects have run
+100 times. A component that renders perfectly can still be carrying this.
+(Re-writing the *same* primitive value doesn't count as a change, so a plain
+normalizing assignment settles on its own.)
+
+Bookkeeping like a timer handle, a cached instance or a "did I already run this"
+flag isn't state the template renders — it has no business in the store. Since
+only *top-level* declarations are rewritten, a closure keeps it plain JS:
+
+```js
+const schedule = (() => {
+  let timer = null                     // inside a function → not reactive
+
+  return () => {
+    clearTimeout(timer)
+    timer = setTimeout(save, 250)
+  }
+})()
+
+$: schedule(draft)                     // re-runs when `draft` changes. Only `draft`
+```
+
+## Effects run before the template exists
+
+`$:` declarations run where they sit, during the script — which is *before* the
+component has rendered any DOM. An effect that reaches for an element gets
+nothing on that first pass, and if none of its dependencies change afterwards it
+never runs again:
+
+```html
+<script :setup>
+  let query = ""
+
+  // runs once, immediately, with no DOM to find - and `query` never changes on
+  // its own, so this is the only time it ever runs
+  $: $self(".search")?.focus()
+</script>
+```
+
+The fix is to do the first pass yourself, after the DOM is there:
+
+```html
+<script :setup>
+  let query = ""
+
+  const highlight = () => {
+    const box = $self(".search")
+    if (!box) return                 // the setup-time pass, before there's any DOM
+    box.classList.toggle("filled", query.length > 0)
+  }
+
+  $: highlight(query)                // keeps it in sync from here on
+
+  await $mounted()
+
+  highlight()                        // the first pass that can actually see the DOM
+</script>
+```
+
+`:mounted` on the tag does the same for a whole script (it behaves as if
+`await $mounted()` were its first line), which is simpler when *nothing* in the
+script needs to run before render.
+
+## Imports
+
+`await import(...)` works in a setup script. A `.html` specifier resolves to a
+component (fetched and parsed); anything else goes to the native `import()`:
+
+```html
+<!-- /components/panel.html -->
+<script :setup>
+  const Badge = await import("./badge.html")              // /components/badge.html
+  const { format } = await import("./format.js")          // /components/format.js
+  const { debounce } = await import("lodash-es")          // the import map
+</script>
+```
+
+Several at once? `$importAll` takes an array and resolves to what each
+`import()` would, in order — one `await`, every request in flight together:
+
+```html
+<script :setup>
+  const [Badge, { format }, { debounce }] = await $importAll([
+    "./badge.html",
+    "./format.js",
+    "lodash-es",
+  ])
+</script>
+```
+
+It's `Promise.all` of the script's own `import()`s — relative to the component,
+bundled by the [Vite plugin](vite-plugin.md#imports-inside-component-scripts)
+— so it's the one to reach for in a component. `Component79.importAll` is its
+counterpart for a page, which has no component file to be relative to. The same
+goes for `C79.fetch()` and `fetchAll()` in a script: they resolve against the
+page, as they do on one, so a component that wants a file next to itself
+imports it.
+
+**Downloads start early.** Before a script's first line runs, every download
+its top level is sure to make has already started — a line of `await
+import(...)`s is one round trip, not one per line, and still runs in the order
+it's written:
+
+```html
+<script :setup>
+  const Toc = await import("./Toc.html")         // all three are on their way
+  const Lesson = await import("./Lesson.html")   // before this line runs, and
+  const Header = await C79.fetch("./header.html") // each await takes its own
+</script>
+```
+
+A component lands in the [cache](components.md#the-component-cache) the import
+will read; a module gets a `<link rel="modulepreload">`, which downloads and
+parses it without running it, so modules still evaluate in import order. What
+counts is a top-level statement that starts with the call and a literal —
+`import()`, `$importAll([...])`, `C79.fetch()`, `fetchAll([...])`,
+`importAll([...])`, or a factory script's static `import`. Anything that might
+not run is left alone: an import inside a function, a handler, an `if` or a
+loop still downloads when its line does, so loading on demand stays on demand.
+A component that arrives this way has its own scripts read as it lands, so
+its imports start before it renders, and theirs before them, all the way down.
+With `Component79.cache(false)` nothing is preloaded, because there would be
+nowhere to keep it. The difference from `$importAll` is when the script moves
+on: with one `await` per line, each pane appears as soon as its own file is in.
+
+**A relative specifier resolves against the component's own file**, the same as
+in any module — `./` means "next to this `.html`", not next to the page and not
+next to the library. It works out of a subdirectory, off a CDN, and with no
+build step. A component built from an inline string has no location of its own,
+so its relative imports fall back to the page.
+
+**A root-absolute one (`/x.js`) resolves against the page**, and both come back
+as fully absolute URLs. That matters when the library is served from somewhere
+else — a CDN, most often:
+
+```
+page   http://localhost:8024/craft/app.html
+jq79   https://jgermade.github.io/jq79/jq79.js
+```
+
+The non-`.html` branch is a native `import()`, and a native `import()` inside
+the library resolves anything short of an absolute URL against **the library's**
+URL. Left as a path, `/craft/services/opfs.service.js` would be requested from
+`jgermade.github.io` and come back a CORS error naming a host the app never
+mentioned. Resolving to an absolute URL up front is what keeps `fetch` and
+`import()` pointing at the same file.
+
+A **bare** specifier (`lodash-es`) is the exception, left untouched for the
+import map or the bundler to answer — that is who owns it, and resolving it
+would quietly turn it into a path.
+
+That holds for a bare `.html` too, though `fetch()` knows nothing of import
+maps: jq79 asks the map itself (`import.meta.resolve`) before fetching. The same
+goes for `Component79.fetch()`, `fetchAll()` and `importAll()`:
+
+```html
+<script type="importmap">{ "imports": { "@app/": "/components/" } }</script>
+```
+
+```js
+const Panel = await import("@app/panel.html")   // /components/panel.html
+```
+
+The component keeps the resolved URL, so its own `./` imports land next to it.
+A specifier the map doesn't name is fetched as written. Two limits: the map is
+read as the library's module sees it, so a `scopes` entry counts only if it
+covers `jq79.js`; and the classic-script and CommonJS builds (`jq79.global.js`,
+`jq79.cjs`) have no `import.meta`, so there a bare `.html` is never mapped.
+
+Under the [Vite plugin](vite-plugin.md), literal specifiers are hoisted into
+real module imports at build time and never reach any of this — the bundler
+resolves them, so an npm package works whether or not the page has an import map.
+
+## TypeScript
+
+A script block written in TypeScript is marked with `lang="ts"` or with
+`type="text/typescript"` (the same mark; [which one your editor reads
+better](vite-plugin.md#which-mark-in-vs-code) is the only difference). It is
+compiled by the [Vite plugin](vite-plugin.md#script-langts--typescript), the same
+deal `<style lang="scss">` gets. Both kinds of script take it, and the prop
+signature in `:setup` is compiled with the body:
+
+```html
+<script :setup="{ step = 1 }: Props" lang="ts">
+  import type { User, Props } from "./types"
+
+  let count: number = 0
+
+  $: doubled = count * step
+</script>
+```
+
+The [prop signature](components.md#props) is compiled along with the body, even
+though it sits in the attribute: `:setup="{ step = 1 }: Props"` reaches the
+runtime as `:setup="{ step = 1 }"`, and the permissive `:setup="_: Props"` as
+`:setup="_"`.
+
+**TypeScript is bundler-only.** The runtime has no type-stripper — that would
+mean shipping a parser to the browser, which is the thing this library doesn't
+do — so a component fetched from `public/`, served off a CDN or built from an
+inline string reaches the runtime with its types intact. It won't work, and the
+way it fails is worth knowing: `interface`, `as` and generics throw when the
+script is compiled, but `let count: number = 0` is a valid *labeled statement*,
+so it runs, assigns to `number` and leaves `count` undeclared and non-reactive
+in silence. That's why the runtime warns about any `<script>` still carrying
+either mark when it parses one. If a component must work unbundled, write plain JS.
+
+Stripping is not checking: the plugin removes the types and never looks at
+them. What checks them is [the extension in this repo](../editors/vscode/), in
+VS Code, and its `jq79-check` in a terminal: a language server that reads a
+setup script as the runtime compiles it, so props, `$:` targets, the other
+scripts' names and the helpers are all known to it. It checks the template
+against the same store, so a typo in `{{ usr.name }}` is found before anything
+renders.
+
+## Debugging a script
+
+Setup scripts are compiled with `new Function` — they need `with`, which is a `SyntaxError` inside an ES module — so they aren't part of any bundle and no bundler source map reaches them. To keep them debuggable, each compiled script is named after the component it came from:
+
+```
+UserCard.html?jq79-script=0
+```
+
+It shows up under that name in the devtools sources tree and in stack traces, breakpoints set in it survive a reload, and a component with two `<script>` blocks gets one entry per block (`…=0`, `…=1`). The name comes from where the component was loaded: the URL for `Component79.fetch(url)`, the path relative to the project root for the [Vite plugin](vite-plugin.md). A component built from an inline string has no origin to name, so its scripts stay anonymous.
+
+Template expressions don't reach devtools on their own — they render empty instead of throwing — so the runtime reports them itself, in two flavours:
+
+- **A name declared nowhere** — a typo, a dropped prop, a `function` declaration that never reached the store — warns once per name, after the scripts have settled (so an async factory whose bindings are still on the way stays quiet).
+- **Anything else the expression throws**, in practice a member access on an undefined value (`{{ game.is.loaded }}` where `game` has no `is`), is a `console.error` — once per expression, where it throws. There's nothing to wait for: the engine already caught a real exception and wrote the message. A value still on its way is reported too, because at the moment it throws the two are the same thing; guard it with `a?.b` or `:if` on the element, which is what the message says.
+
+Everything a handler throws is left to the browser, with its stack intact.
+
+What devtools shows under that name is the *compiled* script — the rewritten code (`$__effect(…)` instead of `$:`), wrapped in the function the engine built. Its line numbers are the compiled script's own, not the `.html` file's; the engine's function header shifts everything down and a `<script>` on line 1 can't be shifted back up. Reporting the component's own lines would need the runtime to emit a source map, which it doesn't do today.
+
+## Factory scripts (`export default`)
+
+A `<script>` whose top level has an `export default` runs as a **plain
+lexical module** instead of a setup script — for when you want standard JS
+that editors, linters and type-checkers understand with no configuration:
+
+```html
+<script>
+import UserCard from "./UserCard.html"
+
+export default ({ step = 1 }, { $data, $effect, $emit }) => {
+  $data.count = 0
+  $effect(() => { $data.double = $data.count * 2 })
+
+  const inc = () => { $data.count += step }
+
+  return { UserCard, inc }
+}
+</script>
+
+<button @click="inc">{{ count }} / {{ double }}</button>
+<UserCard></UserCard>
+```
+
+The default export is called with **the props first and the instance context second**, and may be `async`. The first parameter is the component's [prop signature](components.md#props) — the runtime reads it from the source, so its defaults reach the template even before an async factory has run. A factory that takes no props writes `_` (permissive) or `{}` (a closed signature) in its place; the slot is where the tooling looks.
+
+The context is everything the library provides — the `$` is what says so:
+
+- `$data` — the reactive store (props included). **Reactivity is explicit
+  here**: there's no `with` magic and no `$:` labels, so a local `count++`
+  changes nothing — write `$data.count++`.
+- `$props` — the same store, under the name that says what you're reading.
+  Destructuring copies, so a **primitive the parent reassigns** goes stale in
+  your local binding; read it through `$props` when you need the live value.
+- `$effect(fn)` — re-runs `fn` when anything it reads from `$data` changes;
+  disposed with the component.
+- `$emit`, `$updateModel`, `$mounted`, `$destroyed`, `$attached`, `$detached`, `$computed`, `$self`, `$$self`, `$importAll` — same as in setup scripts. `$`,
+  `$$`, `$create`, `$reactive`, `$toRaw`, `$batch`, `Component79` and `C79` are available lexically in the module body.
+- `$slots` — a static map of the slot names the usage site filled, so a wrapper
+  can be dropped when nothing filled it (`<footer :if="$slots.footer">`).
+- The **returned object is merged into the store**, making its entries
+  visible to the template — that's how imported components and methods are
+  exposed (`return { UserCard, inc }`).
+
+Details worth knowing:
+
+- **Imports are real**: static `import` statements work, rewritten at runtime to
+  awaited dynamic imports and resolved exactly as [above](#imports) — relative
+  to the component's own file. Only `export default` is supported — no named
+  exports.
+- Import bindings are lexical, not scope vars: to use an imported component
+  in the template, expose it via the return value or `$data`.
+- A fully synchronous module body runs before the first render, like a setup
+  script. Static imports and top-level `await` make it async — and, like a setup
+  script, the template waits: the factory's bindings are on the store before
+  anything reads them.
+- `:mounted` on a factory script is a mistake and warns. A factory publishes its
+  names by *returning* them, so yielding before it returns renders the template
+  against a store where none of them exist — and unlike a setup script there is
+  no way to put the useful half above the yield. Await `$mounted()` inside the
+  factory instead, which does what the tag was reaching for:
+
+```html
+<script :setup>
+  export default async () => {
+    await $mounted()          // renders now, binds when this resolves
+    return { count: 0 }
+  }
+</script>
+```
+- Mode detection is backwards-safe: `export default` was a syntax error in setup
+  scripts, so no setup script can turn into a factory. `:setup` isn't going
+  anywhere — the two styles coexist, even within one component.
+- **Breaking change (0.4):** the ctx used to be the factory's *first* parameter.
+  It's now the second, and props are the first. Arity can't tell the two apart
+  (`({ user })` is a valid signature under either), so the runtime looks at the
+  pattern instead: a `$`-prefixed name destructured from the first parameter
+  throws an explicit migration error rather than handing you an `undefined`
+  `$data`. Rewrite `({ $data }) => …` as `(_, { $data }) => …`, or name the props
+  the component actually takes.

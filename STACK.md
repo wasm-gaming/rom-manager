@@ -149,6 +149,24 @@ rom-manager/
 - Shown in the game's details (desktop and the phone's game panel). For each mod: whether it fits a
   version that is here; rename, unassign, remove. The system's unassigned mods can be assigned.
 
+### Hosted at play.germade's `/roms/` (host mode)
+- `npm run build:roms` (`VITE_HOST=play.germade`, base `/roms/`, out `dist-roms/`). The release
+  attaches it as `rom-manager-roms.tar.gz` / `.zip` (`roms/` inside). The Pages build at
+  `/rom-manager/` has no host mode (`lib/host.ts`).
+- In host mode:
+  - **"Play"** on each version here, and on each mod. The link is
+    `/<route>/?system=<System>&game=<gameId>&version=<crc32>[&patch=<sha1:8>]`.
+  - **Routes** (`helpers/launcher.ts`): MegaDrive → `megadrive`, SNES → `snes`,
+    GBA / GAMEBOY / GBC → `gba`, NEOGEO → `neogeo`. Other systems have no "Play".
+  - **"← Launcher"** in the header.
+- **One-time migration** (`lib/PlayGermadeMigration.ts`, `helpers/play-germade-library.ts`):
+  - play.germade's old OPFS `library/<system>/` is read on the first open of the library.
+  - ROMs go through the intake. What no DAT knows is copied to its system folder.
+  - The indexes are written next, then the mods: by CRC, or by the game they were assigned to.
+  - Renamed titles go into the file's record.
+  - Marked done by `.meta/migrated-from-play-germade.json` (the report). The old folder is left
+    for play.germade to remove.
+
 ### Title Grouping & Normalization
 - **Base Title Parsing**: Parses DAT titles to extract base game titles, stripping flags, revisions, languages, and regional tags.
 - **Roman Numeral Normalization**: Normalizes Roman numerals (e.g., *Final Fantasy III* vs *Final Fantasy 3*) for accurate game group key resolution.

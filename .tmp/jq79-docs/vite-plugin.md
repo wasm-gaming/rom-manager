@@ -1,0 +1,337 @@
+# Vite plugin
+
+> **The plugin is optional.** jq79 works without any build tool — components are
+> `.html` files the browser already knows how to fetch. The plugin is only needed
+> when you want bundled imports, HMR through Vite's dev server, CSS
+> preprocessing (`<style lang="scss">`) or TypeScript (`<script lang="ts">`). A
+> file with neither works unchanged in all three delivery modes: bundled,
+> fetched at runtime, or served by the dev server.
+
+`jq79/vite` lets you import `.html` single-file components as modules, so they
+travel inside your bundle instead of being fetched at runtime.
+
+```js
+// vite.config.js
+import { defineConfig } from "vite"
+import { jq79 } from "jq79/vite"
+
+export default defineConfig({
+  plugins: [jq79()],
+})
+```
+
+```js
+// app code
+import UserCard from "./UserCard.html"
+
+UserCard.mount("#app", { userId: 42 })
+```
+
+The imported value is a `Component79` built from the file's source — exactly
+what `await Component79.fetch("/UserCard.html")` would resolve to, minus the
+network request.
+
+## A loader, not a compiler
+
+The plugin inlines the file's source verbatim; nothing inside the component is
+transformed — with the single exception of a block that says it is written in
+something else (`<style lang="scss">`, `<script lang="ts">`). Without one, the
+same `.html` file works unchanged in all three delivery modes:
+
+- **Bundled** — placed in `src/`, imported as a module (this plugin).
+- **Fetched** — placed in `public/`, loaded with `Component79.fetch(url)` or
+  `import("./card.html")` from a setup script, no build required.
+- **No project at all** — served from any static host and used with the CDN
+  build of jq79. [`npx jq79 dev`](dev-server.md) serves and hot-reloads those
+  files without a bundler in sight.
+
+The one thing the plugin can add is [`safeEval`](#safeeval--a-csp-without-unsafe-eval):
+every component's functions, precompiled into one script beside the bundle. The
+source still travels verbatim; the precompiled script sits next to it.
+
+## `<style lang>` — CSS preprocessors
+
+A style block with a `lang` is compiled to plain CSS by the plugin, through
+Vite's own preprocessing. Install the preprocessor you use (`sass`, `less`,
+`stylus`) and write what you'd write in any Vite project — nesting, `@use`,
+variables, partials:
+
+```html
+<style lang="scss" scoped>
+  @use "./vars" as vars;
+
+  .card {
+    color: vars.$brand;
+    .title { font-weight: bold; }
+  }
+</style>
+```
+
+The runtime only ever sees the compiled CSS, so `lang` composes with
+[`scoped`](components.md#styles) — selectors are scoped after the preprocessor
+has flattened them. Files pulled in by `@use`/`@import` are registered as watch
+dependencies, so editing a partial triggers HMR in every component using it.
+
+**`lang` is the one thing that ties a component to the bundler.** A `.html`
+that never goes through the plugin — one in `public/` loaded with
+`Component79.fetch()`, one served from a CDN, one written inline as a template
+string — reaches the runtime uncompiled, and a browser silently drops a
+stylesheet it can't parse. So the runtime doesn't stay quiet: parsing a
+component whose `<style>` still carries a `lang` logs a warning saying the
+plugin never compiled it. If a component must work in both delivery modes,
+write plain CSS.
+
+## `<script lang="ts">` — TypeScript
+
+A script block with `lang="ts"` is compiled to plain JS by the plugin, through
+Vite's own transform. It works on both kinds of script — setup and
+[factory](setup-scripts.md#factory-scripts-export-default) — and the mark is the
+only attribute that changes; `:setup`, `:mounted` and the rest are left as
+written (the prop signature has its own section below):
+
+```html
+<script :setup="{ step = 1 }" lang="ts">
+  import type { User } from "./types"
+
+  interface Row { id: number; label: string }
+
+  const rows: Row[] = []
+  let count: number = 0
+
+  $: doubled = twice(count)
+
+  const twice = (n: number): number => n * step
+</script>
+```
+
+**`type="text/typescript"` is the same mark.** The plugin compiles either one,
+and drops whichever attribute carried it. Which one to write is a question of
+[what your editor does with it](#which-mark-in-vs-code), not of what the plugin
+does:
+
+```html
+<script :setup="{ step = 1 }: Props" type="text/typescript">
+  let count: number = 0
+</script>
+```
+
+`text/typescript`, `application/typescript` and their `x-` spellings all count.
+Any other `type` is somebody else's attribute and is left alone — `module`
+included, which is real HTML the plugin has no business rewriting.
+
+The types are erased, nothing else moves: top-level `let`/`const` still become
+reactive store variables, `$:` is still a reactive declaration, and
+`import(…)` specifiers are still hoisted into the bundle. `import type` is
+erased with the rest, so a types-only module never reaches the bundle.
+
+**The prop signature is compiled too.** It lives in the `:setup` *attribute*,
+which the body's transform never sees, so `lang` reaches it separately — a
+typed signature is stripped back to the pattern the runtime reads:
+
+```html
+<script :setup="{ label = 'Total', step = 1 }: Props" lang="ts">   →   :setup="{ label = &quot;Total&quot;, step = 1 }"
+<script :setup="_: Props" lang="ts">                               →   :setup="_"
+```
+
+Without that, `{ … }: Props` would leave TypeScript inside a component the
+plugin just called JS, and `_: Props` would stop reading as the permissive
+signature at all and warn. A [factory script](setup-scripts.md#factory-scripts-export-default)
+declares its props in its first parameter, which is in the body, so it is
+already covered by the body's own transform.
+
+**It strips types; it does not check them.** There is no `.html`-aware
+type-checker yet. What you get is annotations that survive the runtime, not a
+checked component.
+
+**`lang="ts"` ties a component to the bundler**, exactly as `lang="scss"` does —
+and the runtime says so, for a sharper reason than it does with styles. A
+missing type-strip is not always a loud failure: `interface`, `as` and generics
+throw when the script is compiled, but `let count: number = 0` is a valid
+labeled statement, so it *runs*, assigns to `number`, and leaves `count`
+undeclared and non-reactive without a word. So parsing a component whose
+`<script>` still carries either mark logs a warning naming the plugin. If a
+component must work unbundled too, write plain JS.
+
+One known limitation: the script devtools shows is the compiled one, so for a
+typed block the [line numbers](setup-scripts.md#debugging-a-script) drift from
+the `.html`'s — a multi-line annotation collapses. The plugin doesn't emit a
+source map for the inlined source today.
+
+### Which mark, in VS Code
+
+A component is a plain `.html` file, not a `.vue` or `.svelte` SFC, so nothing
+in VS Code knows what `lang` means in one. It reads an inline script twice, and
+each pass looks at something different. Its coloring only knows the JavaScript
+`type`s. Its checking takes the language from `type`, and treats no `type` as
+JavaScript. So each mark gets half:
+
+| in VS Code | `lang="ts"` | `type="text/typescript"` |
+|---|---|---|
+| coloring | as JavaScript, which reads TypeScript well enough | none |
+| errors, completion | as JavaScript: a red line under every annotation | as TypeScript, each script on its own: props, `$:` targets and `$mounted` are "Cannot find name" |
+
+Neither gets checking that understands a setup script: VS Code's own
+service doesn't know jq79's implicit names.
+
+[The extension in this repo](../editors/vscode/) (not on the Marketplace yet)
+does. It colors both marks as TypeScript, and `<style lang>` in the language
+it names, and it runs a language server that checks, completes and hovers a
+component's scripts the way the runtime compiles them: the `:setup` pattern
+types the props, `$:` declares its target, the scripts of a component share
+their names, and the helpers (`$mounted`, `$emit`, …) are in scope, typed.
+A `lang="ts"` script is type-checked; a JavaScript one is when `checkJs` is on,
+as any JS file. The template's expressions are checked against that store in
+every component, JavaScript ones included.
+
+It also turns VS Code's own script checks off (`html.validate.scripts`), which
+would otherwise report the same scripts again, wrongly. That goes for every
+inline script in `.html` files, pages included; set it back to `true` if you
+want it there. The same checks run from a terminal, for CI, with
+[`jq79-check`](../editors/vscode/README.md#checking-from-a-terminal).
+
+## Using an imported component
+
+The import is a component *definition* as much as an instance:
+
+```js
+import UserCard from "./UserCard.html"
+
+// mount it directly (one live render per instance)
+UserCard.mount("#app")
+
+// use it as a nested component: each usage site gets its own instance,
+// cloned from the shared parsed definition
+new Component79(`
+  <ul>
+    <li :each="user of users">
+      <UserCard :user></UserCard>
+    </li>
+  </ul>
+`).mount("#list", { UserCard, users })
+
+// need several independent directly-mounted copies? clone the definition
+const another = new Component79(UserCard)
+```
+
+Note that ES modules are cached: every `import` of the same file yields the
+same instance. Mounting that one instance in two places *moves* it — clone
+with `new Component79(imported)` when you want independent copies.
+
+A file that declares [several components](components.md#several-components-in-one-file)
+exports them by name, next to its own as the default:
+
+```js
+import List, { Row } from "./list.html"
+```
+
+Only top-level `<template name="…">` blocks are exported, and only
+PascalCase names — the same ones the runtime accepts.
+
+## Which imports are claimed
+
+Only imports that could not mean anything else:
+
+- The specifier must match `include` (default: anything ending in `.html`).
+- There must be an importer — entry points like `index.html` are untouched.
+- Imports with an explicit query keep their built-in Vite meaning
+  (`./card.html?raw`, `./card.html?url`).
+
+### Options
+
+```js
+jq79({
+  // which import specifiers are treated as components (default: /\.html$/)
+  include: /\.c79\.html$/,
+  // resolved absolute paths to skip even when include matches
+  exclude: /\/email-templates\//,
+  // run without 'unsafe-eval': true, or { nonce: true } (default: off)
+  safeEval: true,
+})
+```
+
+## `safeEval` — a CSP without `'unsafe-eval'`
+
+```js
+jq79({ safeEval: true })              // Content-Security-Policy: script-src 'self'
+jq79({ safeEval: { nonce: true } })   // Content-Security-Policy: script-src 'nonce-…'
+```
+
+Every imported component is precompiled at build time, and the functions of all
+of them ship as one script beside the bundle — `jq79-precompiled-[hash].js` —
+which each component's module waits for before it exports the component. They
+all wait for the same file, so it is downloaded once, and every page whose entry
+imports a component preloads it (`<link rel="preload" as="script">`), so it
+downloads alongside your entry module. The runtime then never calls
+`new Function`: with `true`, anything that wasn't precompiled is reported in the
+console instead; with `{ nonce: true }`, it is built as a `<script>` carrying
+the page's nonce. The build reports an expression that doesn't compile, with
+its file.
+
+In `vite dev` each component has a script of its own, so an edit reloads only
+that component's functions.
+
+The wait is a top-level `await` — Vite 7 and later target it by default; on
+Vite 5 or 6, set `build.target: "es2022"`. The whole story, the no-bundler
+route included, is in [Content Security Policy](csp.md).
+
+## Imports inside component scripts
+
+Imports with a **literal specifier** — dynamic `import(...)` and the string
+entries of [`$importAll([...])`](setup-scripts.md#imports) in setup scripts,
+and static `import` statements in [factory scripts](setup-scripts.md#factory-scripts-export-default) —
+are hoisted into real module imports and bundled along with the component:
+
+```html
+<script :setup>
+  const [UserCard, { format }] = await $importAll([
+    "./UserCard.html",  // bundled component
+    "date-fns",         // bundled npm package
+  ])
+</script>
+
+<!-- or, factory style -->
+<script>
+import UserCard from "./UserCard.html"
+import { format } from "date-fns"
+
+export default () => ({ UserCard, today: format(new Date(), "PPP") })
+</script>
+```
+
+The setup script itself is untouched (the plugin stays a loader): the hoisted
+modules are handed to `Component79` as a resolution map, which the runtime
+checks before falling back to its normal behavior. The same file therefore
+still works unbundled — the map simply isn't there, and the imports fetch at
+runtime as always.
+
+Left to runtime resolution on purpose:
+
+- **Absolute paths and full URLs** (`import("/cards/promo.html")`,
+  `import("https://esm.sh/x")`) — they point at served files, e.g. `public/`.
+- **Dynamic specifiers** (`` import(`./cards/${name}.html`) ``) — not
+  statically analyzable; keep runtime-loaded components in `public/`.
+
+## Hot module replacement
+
+Editing a component file updates it in place during `vite dev`:
+
+- A component mounted directly is re-rendered where it stands — between the
+  markers it already occupies, so its position among unrelated siblings is
+  kept — seeded with a snapshot of its current data (props and store values
+  survive; the setup script runs again, so anything it initializes is reset).
+- A component used only as a nested definition falls back to a full page
+  reload — already-rendered clones can't be reached from the module that
+  imported the definition.
+
+One caveat: an instance that is both directly mounted *and* used as a nested
+definition only refreshes the direct mount.
+
+For a file that declares several components, the edit re-renders the file's own
+component, and its children come back from the same reparse. A component
+imported **by name** from another module is the nested-definition case above:
+that module keeps the pre-edit definition until the page reloads.
+
+The swap itself is the runtime's, not the plugin's — the same one the
+[dev server](dev-server.md) drives for components fetched at runtime. There it
+can reach the nested clones too, because the runtime tracks instances by
+filename rather than reaching them through a module.

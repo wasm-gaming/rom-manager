@@ -68,6 +68,10 @@ jobs:
       - name: Build library (tsup)
         run: npm run build:lib
 
+      # play.germade serves this build at /roms/ (host mode: Play links, the launcher's old library moved in).
+      - name: Build for play.germade's /roms/
+        run: npm run build:roms
+
       - name: Configure Git
         run: |
           git config user.name github-actions[bot]
@@ -97,6 +101,11 @@ jobs:
           cp -r dist/* rom-manager/
           tar -czf rom-manager.tar.gz rom-manager
           zip -qr rom-manager.zip rom-manager
+          mkdir roms
+          cp -r dist-roms/* roms/
+          test -f roms/index.html
+          tar -czf rom-manager-roms.tar.gz roms
+          zip -qr rom-manager-roms.zip roms
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
@@ -107,6 +116,8 @@ jobs:
           files: |
             rom-manager.tar.gz
             rom-manager.zip
+            rom-manager-roms.tar.gz
+            rom-manager-roms.zip
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

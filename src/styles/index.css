@@ -2846,6 +2846,45 @@ code {
   font-size: 0.75rem;
 }
 
+/* Hosted by a launcher: the links that play a version, or a mod on it. */
+.variant-play,
+.mod-play {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  background: var(--accent);
+  color: var(--accent-on, #fff);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.variant-play:hover,
+.mod-play:hover {
+  filter: brightness(1.1);
+}
+
+/* The way back to the launcher, beside the mark. */
+.header-launcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 0.375rem;
+  color: var(--text-2);
+  font-size: 0.8125rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.header-launcher:hover {
+  color: var(--accent);
+}
+
 .variant-files {
   list-style: none;
   margin: 0.25rem 0 0;

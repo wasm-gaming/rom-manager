@@ -20,7 +20,7 @@
     { storageService, LIBRARY_ORIGIN_ID, canOpenFolders, isLibraryAvailable }, { LibraryStorageService }, { RomLibrary, gameNameOf, systemOf }, { GameCatalogService }, { CoverService }, { OrganizeService }, { RomIntakeService, isPlaced },
     { ROMDatasetService }, { isWizardFolder, WizardConfigService }, { setThemeMode }, { setLocalePreference }, { HandleStoreService },
     { buildWizardTree }, { isSharedCover, pickCover }, { imageExtensionOf, isImageName, regionOfScope }, { filterPlanForPath }, { storeService }, { ui, t },
-    { LibraryIndexService }, { ModService }, { gameIdOf }, { isPatchName },
+    { LibraryIndexService }, { ModService }, { gameIdOf }, { isPatchName }, { isPlayGermade, LAUNCHER_BASE }, { PlayGermadeMigration },
   ] = await $importAll([
     './Header.html', './WelcomePanel.html', './FileTree.html', './RomDetails.html', './MobilePanels.html',
     './PreferencesModal.html', './MediaDropModal.html', './RomIntakeModal.html', './OrganizePanel.html', '../components/ConfirmModal.html',
@@ -29,7 +29,7 @@
     '../lib/ROMDatasetService', '../lib/WizardConfigService', '../lib/ThemeService', '../lib/I18nService',
     '../lib/HandleStoreService', '../helpers/wizard-tree', '../helpers/rom-covers', '../helpers/rom-media', '../helpers/rom-organize',
     '../lib/StoreService', '../lib/ui-state',
-    '../lib/LibraryIndexService', '../lib/ModService', '../helpers/library-index', '../helpers/patch',
+    '../lib/LibraryIndexService', '../lib/ModService', '../helpers/library-index', '../helpers/patch', '../lib/host', '../lib/PlayGermadeMigration',
   ])
 
   /** Key behind the tree badges: a record is named after the game, not the file. */
@@ -989,6 +989,33 @@
    * a prompt — on phones, the only storage there is. Then the folders saved from
    * earlier sessions, locked until the user gives access again.
    */
+  /** Hosted by play.germade: its old library moves in, once, on the first open. */
+  const migrateFromLauncher = async (node: StorageNode) => {
+    try {
+      if (await PlayGermadeMigration.done(node)) return
+      notice = t('host.migration.running')
+      const report = await PlayGermadeMigration.run(node, undefined, ({ done, total }: { done: number; total: number }) => {
+        notice = t('host.migration.progress', { done, total })
+      })
+      if (!report) {
+        notice = undefined
+        return
+      }
+      book.grouping.clear()
+      groupedRows = new Map()
+      refreshToken += 1
+      modsVersion += 1
+      void askPersistenceOnce()
+      // What moved in is what the player came for: show the library, with the line that says so.
+      if (ui.activeOriginId !== LIBRARY_ORIGIN_ID) await selectOrigin(LIBRARY_ORIGIN_ID)
+      showLanding = false
+      notice = t('host.migration.done', { roms: report.placed + report.copied + report.already, mods: report.mods.added.length })
+    } catch (err) {
+      notice = undefined
+      storeService.setError(t('host.migration.failed', { reason: err instanceof Error ? err.message : t('errors.unknown') }))
+    }
+  }
+
   const openLibrary = async () => {
     if (!libraryAvailable) return
     try {
@@ -996,6 +1023,7 @@
       await node.initializeLibrary()
       storageNodes = new Map(storageNodes).set(LIBRARY_ORIGIN_ID, node)
       storeService.addOrigin({ id: LIBRARY_ORIGIN_ID, name: t('library.name'), path: 'OPFS', selection: [], kind: 'library' })
+      if (isPlayGermade) void migrateFromLauncher(node)
     } catch (err) {
       storeService.setError(err instanceof Error ? err.message : t('errors.library'))
     }
@@ -1034,6 +1062,7 @@
     :can-open-folder="foldersAvailable"
     :can-add-roms="storageNodes.size > 0"
     :can-sync="canSync"
+    :launcher-url="isPlayGermade ? LAUNCHER_BASE : undefined"
     @go-home="goHome()"
     @open-folder="openFolder()"
     @add-roms="addRoms('active')"

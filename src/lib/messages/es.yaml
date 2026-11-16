@@ -471,3 +471,14 @@ mods:
   errors:
     import: 'No se pudieron añadir los mods.'
     change: 'No se pudo cambiar el mod.'
+
+host:
+  launcher: 'Lanzador'
+  launcherTitle: 'Volver al lanzador'
+  play: 'Jugar'
+  playWithMod: 'Jugar con este mod'
+  migration:
+    running: 'Trayendo la biblioteca del lanzador…'
+    progress: 'Trayendo la biblioteca del lanzador ({done} de {total})…'
+    done: 'Tu biblioteca del lanzador ya está aquí: {roms} ROM(s), {mods} mod(s).'
+    failed: 'No se pudo traer la biblioteca del lanzador: {reason}'
