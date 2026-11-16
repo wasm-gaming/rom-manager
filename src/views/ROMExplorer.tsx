@@ -95,7 +95,7 @@ interface DropRequest {
  */
 /** Below this width the explorer is a row of swiped panels instead of a tree and a pane. */
 // A phone held sideways (844 × 390) is still a phone: low and touch-driven.
-const PHONE_QUERY = '(max-width: 760px), (max-height: 500px) and (pointer: coarse)';
+const PHONE_QUERY = '(max-width: 768px), (max-height: 500px) and (pointer: coarse)';
 
 /** Whether a media query matches, kept up to date. */
 function useMediaQuery(query: string): boolean {

@@ -22,6 +22,16 @@ This document describes the technical stack, codebase architecture, build tools,
 - **Routing**: `preact-router` (`^4.1.2`).
 - **State Management**: `@preact/signals` (`^1.3.0`) for reactive local and global state.
 - **Styling**: Vanilla CSS with modern CSS variables, CSS grid/flexbox layouts, responsive design, dark theme styling, glassmorphism, and hardware-accelerated animations.
+- **Responsive rules** (`src/styles/index.css`):
+  - **One layout switch, at 768px**: at 768px and below (or a phone held sideways:
+    `max-height: 500px` + `pointer: coarse`) the explorer becomes the swiped panels (`PHONE_QUERY`
+    in `ROMExplorer.tsx` and the CSS `@media` match).
+  - The design is checked at 460px.
+  - **Below 460px the root font size is `100vw / 28.75`** (16px at 460px): the 460px layout
+    shrinks linearly instead of reflowing.
+  - That only works because **every measure is in `rem`**. Write new CSS in `rem`: `px` only for
+    1px hairlines and inside media queries, which are read against the browser's default font
+    size.
 
 ### Web APIs & Hashing
 - **File System Access API**: Native Chromium directory handle management, file streaming, and in-place file system operations.
