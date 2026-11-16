@@ -22,6 +22,7 @@ import es from './messages/es.yaml';
 import {
   DEFAULT_LOCALE,
   DEFAULT_LOCALE_PREFERENCE,
+  negotiateLocale,
   parseLocalePreference,
   resolveLocale,
   translate,
@@ -99,6 +100,15 @@ export function setLocalePreference(preference: LocalePreference): void {
  */
 export function t(key: string, params?: MessageParams): string {
   return translate(CATALOGUES[i18nState.locale] ?? CATALOGUES[DEFAULT_LOCALE], CATALOGUES[DEFAULT_LOCALE], key, params);
+}
+
+/**
+ * A `t` for one language, apart from the one on screen: the add dialog that `roms-sdk.js`
+ * opens speaks the language its host asks for. Without one, the browser's.
+ */
+export function translatorOf(locale?: Locale): (key: string, params?: MessageParams) => string {
+  const messages = CATALOGUES[locale ?? negotiateLocale(accepted())] ?? CATALOGUES[DEFAULT_LOCALE];
+  return (key, params) => translate(messages, CATALOGUES[DEFAULT_LOCALE], key, params);
 }
 
 /**

@@ -14,17 +14,17 @@
  */
 
 import type { LibraryIndex } from '../helpers/library-index';
-import { applyPatch, crc32, crcHex, isPatchName } from '../helpers/patch';
+import { applyPatch, crc32, crcHex } from '../helpers/patch';
+import { AddService, systemOfPath, type AddOptions, type AddRefusal, type AddResult } from './AddService';
 import { LibraryIndexService } from './LibraryIndexService';
 import { ModService, type ModImportResult } from './ModService';
 import { PlayGermadeMigration, type MigrationReport } from './PlayGermadeMigration';
-import { RomIntakeService, isPlaced, itemsOf } from './RomIntakeService';
 import { RomLibrary } from './RomLibraryService';
 import { storageService, type StorageNode } from './StorageService';
 
 export const API_VERSION = 1;
 
-export type { LibraryIndex, MigrationReport, ModImportResult };
+export type { AddOptions, AddRefusal, AddResult, LibraryIndex, MigrationReport, ModImportResult };
 export { PatchError } from '../helpers/patch';
 
 let library: Promise<StorageNode> | undefined;
@@ -40,7 +40,6 @@ export function openLibrary(): Promise<StorageNode> {
   return library;
 }
 
-const systemOfPath = (path: string): string => path.slice(0, Math.max(0, path.indexOf('/')));
 
 /** One system's index, or undefined when it has none yet. */
 export async function readIndex(system: string): Promise<LibraryIndex | undefined> {
@@ -68,87 +67,14 @@ export async function readRomWithMod(path: string, modPath?: string): Promise<{ 
   return { rom, crc: crcHex(crc32(rom)) };
 }
 
-export interface AddOptions {
-  /**
-   * Where a ROM no DAT knows goes (a rom-manager system folder, `MegaDrive`), or a
-   * function that says so per file name. Without it, such ROMs are refused.
-   */
-  system?: string | ((fileName: string) => string | undefined);
-  /** The game mods without a source CRC (IPS) belong to, by `gameId`. */
-  gameId?: string;
-}
-
-export type AddRefusal = 'unknown' | 'archive' | 'not-a-rom';
-
-export interface AddResult {
-  /** Library paths written. */
-  added: string[];
-  /** Files that were in the library already (by checksum). */
-  already: string[];
-  refused: Array<{ name: string; reason: AddRefusal }>;
-  mods: ModImportResult;
-  /** Systems whose index was rewritten. */
-  systems: string[];
-}
-
 /**
  * The app's intake, without its confirmation step: zips opened, ROMs identified by DAT
  * and placed, patches taken as mods after the ROMs, the indexes rewritten.
  */
 export async function addFiles(files: readonly File[], options: AddOptions = {}): Promise<AddResult> {
   const node = await openLibrary();
-  const patches = files.filter((file) => isPatchName(file.name));
-  const roms = files.filter((file) => !isPatchName(file.name));
-  const result: AddResult = { added: [], already: [], refused: [], mods: { added: [], duplicates: [], rejected: [] }, systems: [] };
-  const touched = new Set<string>();
-
-  if (roms.length > 0) {
-    const items = await RomIntakeService.identify(node, [...roms]);
-    const written = await RomIntakeService.apply(node, items);
-    result.added.push(...written);
-    for (const path of written) touched.add(systemOfPath(path));
-    for (const file of roms) {
-      const mine = itemsOf(file, items);
-      if (mine.some(isPlaced)) continue;
-      if (mine.some((item) => item.match && item.taken)) {
-        result.already.push(file.name);
-        continue;
-      }
-      if (mine.length > 0 && mine.every((item) => item.refused)) {
-        result.refused.push({ name: file.name, reason: 'archive' });
-        continue;
-      }
-      const system = typeof options.system === 'function' ? options.system(file.name) : options.system;
-      if (!system) {
-        result.refused.push({ name: file.name, reason: 'unknown' });
-        continue;
-      }
-      const path = `${system}/${file.name}`;
-      if (await node.exists(path)) {
-        result.already.push(file.name);
-        continue;
-      }
-      try {
-        await node.createDirectory(system);
-      } catch {
-        // Already there.
-      }
-      await node.writeFile(path, new Uint8Array(await file.arrayBuffer()));
-      result.added.push(path);
-      touched.add(system);
-    }
-    // The indexes before the mods: a BPS / UPS finds its game there.
-    await LibraryIndexService.refreshMany(node, touched);
-  }
-
-  if (patches.length > 0) {
-    const system = typeof options.system === 'string' ? options.system : undefined;
-    result.mods = await ModService.import(node, patches, { system, gameId: options.gameId });
-    for (const added of result.mods.added) touched.add(added.system);
-  }
-
-  result.systems = [...touched].filter(Boolean).sort();
-  return result;
+  const preview = await AddService.preview(node, files);
+  return AddService.apply(node, files, preview.items, options);
 }
 
 /** Removes a version's file, its record, and rewrites its system's index. */

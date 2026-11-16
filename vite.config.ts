@@ -22,7 +22,7 @@ export default defineConfig({
           rollupOptions: {
             input: {
               index: path.resolve(__dirname, 'src/index.html'),
-              'roms-sdk': path.resolve(__dirname, 'src/lib/roms-sdk.ts'),
+              'roms-sdk': path.resolve(__dirname, 'src/roms-sdk.ts'),
             },
             preserveEntrySignatures: 'exports-only' as const,
             output: {

@@ -23,6 +23,7 @@
 
 import { normalizeGameName, type GameGroup, type GameVariant } from './rom-grouping';
 import { COVER_KIND, imageExtensionOf, mediaFileNameOf } from './rom-media';
+import { getSystemInfo } from './system-info';
 import { DEFAULT_REGION_ORDER, isRegion, type Region } from './rom-regions';
 
 /** A boxart to show, and the region it speaks for. */
@@ -299,44 +300,48 @@ export function storableCoversOf(covers: GameCovers): PublishedCover[] {
   return stored;
 }
 
+/** The largest body that can be a symlink's target name rather than an image. */
+export const SYMLINK_MAX_BYTES = 512;
+
 /**
- * Expected boxart aspect-ratio (width / height) for a given console system name.
- * Used to reserve appropriate space and prevent layout shifts before cover loads.
+ * Where a boxart that is a git symlink points.
+ *
+ * libretro-thumbnails stores boxes shared between releases as git symlinks, and
+ * raw.githubusercontent.com serves those as a short text body naming the target
+ * ("Super Mario Land (World).png"). The target is resolved next to `url`. Anything else (a path
+ * that leaves the folder, HTML, a long body) is not a symlink: undefined.
+ */
+export function symlinkTargetOf(body: string, url: string): string | undefined {
+  const name = body.trim();
+  if (!name || name.length > 255 || /[/\\\n\r<>]/.test(name) || name.startsWith('.')) return undefined;
+  if (!/\.(png|jpe?g|webp)$/i.test(name)) return undefined;
+  try {
+    return new URL(encodeURIComponent(name), url).href;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * The placeholder shape (width / height) of a system's boxart, before the image loads and the
+ * frame takes the image's own proportions. Takes a library folder (`GBA`, `MegaDrive`) or a
+ * display name (`Game Boy Advance`).
+ *
+ * The values are the medians measured on libretro-thumbnails: real boxes vary by region and
+ * release (a Super Famicom box is 0.55, a US / EU SNES box ~1.4), so this only sizes the space.
  */
 export function systemAspectRatio(system?: string): string {
   if (!system) return '3 / 4';
 
-  const sys = system.toLowerCase();
+  const sys = (getSystemInfo(system)?.name ?? system).toLowerCase();
+  const has = (...names: string[]) => names.some((name) => sys.includes(name));
 
-  // Wide / Horizontal boxarts (~4:3)
-  if (
-    sys.includes('advance') ||
-    sys.includes('gba') ||
-    sys.includes('nintendo 64') ||
-    sys.includes('n64') ||
-    sys.includes('super nintendo') ||
-    sys.includes('snes') ||
-    sys.includes('super famicom')
-  ) {
-    return '4 / 3';
-  }
-
-  // Square boxarts (~1:1)
-  if (
-    sys.includes('game boy color') ||
-    sys.includes('gbc') ||
-    sys.includes('game boy') ||
-    sys.includes('gamegear') ||
-    sys.includes('game gear') ||
-    sys.includes('playstation') ||
-    sys.includes('ps1') ||
-    sys.includes('psx') ||
-    sys.includes('nintendo ds') ||
-    sys.includes('3ds')
-  ) {
+  if (has('advance', 'gba')) return '9 / 8';
+  if (has('nintendo 64', 'n64', 'super nintendo', 'snes', 'super famicom')) return '7 / 5';
+  if (has('mega drive', 'megadrive', 'genesis')) return '7 / 10';
+  if (has('game boy', 'gameboy', 'gbc', 'game gear', 'gamegear', 'playstation', 'ps1', 'psx', 'nintendo ds', '3ds')) {
     return '1 / 1';
   }
 
-  // Portrait / Vertical boxarts (~3:4)
   return '3 / 4';
 }
