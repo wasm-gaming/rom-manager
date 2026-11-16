@@ -167,6 +167,19 @@ rom-manager/
   - Marked done by `.meta/migrated-from-play-germade.json` (the report). The old folder is left
     for play.germade to remove.
 
+### `/roms/roms-sdk.js` (the library as a module for the host)
+- Emitted by `build:roms` alongside the app, at a fixed name (`src/lib/roms-sdk.ts`). play.germade
+  imports it at run time (`import('/roms/roms-sdk.js')`) instead of re-implementing the library.
+- API v1:
+  - `openLibrary`;
+  - reading: `readIndex` / `readIndexes`, `readFile`, `readRomWithMod` (throws `PatchError` with a
+    `code`);
+  - `addFiles(files, { system?, gameId? })`: the app's intake without confirmation; ROMs no DAT
+    knows go to `system` or are refused; patches become mods after the ROMs;
+  - removing and changing: `removeVersion`, `removeMod`, `updateMod`;
+  - migration: `migrated`, `migrateFromPlayGermade`.
+- Services and helpers only: no UI, no store. `API_VERSION` changes with any signature.
+
 ### Title Grouping & Normalization
 - **Base Title Parsing**: Parses DAT titles to extract base game titles, stripping flags, revisions, languages, and regional tags.
 - **Roman Numeral Normalization**: Normalizes Roman numerals (e.g., *Final Fantasy III* vs *Final Fantasy 3*) for accurate game group key resolution.

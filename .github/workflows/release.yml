@@ -104,6 +104,7 @@ jobs:
           mkdir roms
           cp -r dist-roms/* roms/
           test -f roms/index.html
+          test -f roms/roms-sdk.js
           tar -czf rom-manager-roms.tar.gz roms
           zip -qr rom-manager-roms.zip roms
 
