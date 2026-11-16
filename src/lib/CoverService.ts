@@ -17,6 +17,8 @@ import {
   coverFileNameOf,
   storableCoversOf,
   storedCoverNamesOf,
+  symlinkTargetOf,
+  SYMLINK_MAX_BYTES,
   type Cover,
   type GameCovers,
   type PublishedCover,
@@ -146,14 +148,24 @@ export class CoverService {
     return name;
   }
 
-  /** The bytes of a published image, or nothing when they cannot be had. */
-  private static async download(url: string): Promise<Uint8Array | undefined> {
+  /**
+   * The bytes of a published image, or nothing when they cannot be had.
+   *
+   * A short body that is not an image may be a git symlink (libretro-thumbnails shares a box
+   * between releases that way): its target is followed, `hops` times at most.
+   */
+  private static async download(url: string, hops = 1): Promise<Uint8Array | undefined> {
     try {
       const response = await fetch(url);
       if (!response.ok) return undefined;
 
       const blob = await response.blob();
       if (blob.size === 0 || blob.size > MAX_COVER_BYTES) return undefined;
+
+      if (blob.size <= SYMLINK_MAX_BYTES && !blob.type.startsWith('image/')) {
+        const target = symlinkTargetOf(await blob.text(), url);
+        if (target) return hops > 0 ? this.download(target, hops - 1) : undefined;
+      }
 
       return new Uint8Array(await blob.arrayBuffer());
     } catch {
@@ -250,11 +262,12 @@ export class CoverService {
   }
 
   /**
-   * A boxart to show, preferring the stored copy and falling back to the remote
-   * one while a copy is being made.
+   * A boxart to show: the stored copy, made now when there is none yet, else the remote one.
    *
    * Browsing is what populates `.meta`: no separate download step, and no
-   * thousands of images fetched for games the user never opens.
+   * thousands of images fetched for games the user never opens. The copy is
+   * awaited because a symlinked boxart only becomes an image once followed; the
+   * remote URL is the fallback for a host that blocks the read.
    */
   static async resolve(
     node: StorageNode,
@@ -268,7 +281,10 @@ export class CoverService {
     if (local) return { url: local, stored: true };
     if (!cover.url) return undefined;
 
-    void this.cache(node, system, gameId, cover);
+    if (await this.cache(node, system, gameId, cover)) {
+      const copy = await this.stored(node, system, gameId, cover);
+      if (copy) return { url: copy, stored: true };
+    }
     return { url: cover.url, stored: false };
   }
 }

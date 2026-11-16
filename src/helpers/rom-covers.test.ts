@@ -8,6 +8,7 @@ import {
   pickCover,
   storableCoversOf,
   storedCoverNamesOf,
+  symlinkTargetOf,
   systemAspectRatio,
   variantCoverUrl,
 } from './rom-covers';
@@ -412,17 +413,49 @@ describe('systemAspectRatio', () => {
     expect(systemAspectRatio('Nintendo DS')).toBe('1 / 1');
   });
 
-  it('returns 4 / 3 for horizontal boxart systems like GBA, N64 and SNES', () => {
-    expect(systemAspectRatio('Game Boy Advance')).toBe('4 / 3');
-    expect(systemAspectRatio('Nintendo 64')).toBe('4 / 3');
-    expect(systemAspectRatio('Super Nintendo')).toBe('4 / 3');
-    expect(systemAspectRatio('SNES')).toBe('4 / 3');
+  it('returns the measured medians for GBA (9 / 8), N64 and SNES (7 / 5)', () => {
+    expect(systemAspectRatio('Game Boy Advance')).toBe('9 / 8');
+    expect(systemAspectRatio('Nintendo 64')).toBe('7 / 5');
+    expect(systemAspectRatio('Super Nintendo')).toBe('7 / 5');
+    expect(systemAspectRatio('SNES')).toBe('7 / 5');
+  });
+
+  it('returns 7 / 10 for Mega Drive / Genesis', () => {
+    expect(systemAspectRatio('Sega Genesis')).toBe('7 / 10');
+    expect(systemAspectRatio('Mega Drive')).toBe('7 / 10');
+  });
+
+  it('resolves library folders, as the details panel passes them', () => {
+    expect(systemAspectRatio('GAMEBOY')).toBe('1 / 1');
+    expect(systemAspectRatio('GBC')).toBe('1 / 1');
+    expect(systemAspectRatio('GBA')).toBe('9 / 8');
+    expect(systemAspectRatio('MegaDrive')).toBe('7 / 10');
+    expect(systemAspectRatio('MegaCD')).toBe('3 / 4');
   });
 
   it('returns 3 / 4 for vertical boxart systems and unknown systems', () => {
     expect(systemAspectRatio('Nintendo Entertainment System')).toBe('3 / 4');
-    expect(systemAspectRatio('Sega Genesis')).toBe('3 / 4');
-    expect(systemAspectRatio('Mega Drive')).toBe('3 / 4');
+    expect(systemAspectRatio('NES')).toBe('3 / 4');
     expect(systemAspectRatio(undefined)).toBe('3 / 4');
+  });
+});
+
+describe('symlinkTargetOf', () => {
+  const BASE = 'https://raw.githubusercontent.com/libretro-thumbnails/Nintendo_-_Game_Boy/master/Named_Boxarts/';
+
+  it('resolves a bare image name next to the URL', () => {
+    expect(
+      symlinkTargetOf('Super Mario Land (World).png\n', `${BASE}Super%20Mario%20Land%20(World)%20(Rev%201).png`),
+    ).toBe(`${BASE}Super%20Mario%20Land%20(World).png`);
+  });
+
+  it('refuses a path that leaves the folder', () => {
+    expect(symlinkTargetOf('../../Other/Box.png', `${BASE}A.png`)).toBeUndefined();
+    expect(symlinkTargetOf('..png', `${BASE}A.png`)).toBeUndefined();
+  });
+
+  it('refuses a body that is not an image name', () => {
+    expect(symlinkTargetOf('<!DOCTYPE html><html>.png', `${BASE}A.png`)).toBeUndefined();
+    expect(symlinkTargetOf('404: Not Found', `${BASE}A.png`)).toBeUndefined();
   });
 });

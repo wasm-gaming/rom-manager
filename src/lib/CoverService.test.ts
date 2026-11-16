@@ -52,7 +52,14 @@ let storage: FakeStorage;
 
 beforeEach(() => {
   storage = new FakeStorage();
-  vi.stubGlobal('URL', { createObjectURL: () => 'blob:cover', revokeObjectURL: () => undefined });
+  const RealURL = URL;
+  vi.stubGlobal(
+    'URL',
+    class extends RealURL {
+      static createObjectURL = () => 'blob:cover';
+      static revokeObjectURL = () => undefined;
+    },
+  );
 });
 
 afterEach(() => {
@@ -294,16 +301,44 @@ describe('CoverService.resolve', () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
-  it('shows the remote boxart right away and stores a copy behind it', async () => {
+  it('stores a copy first and shows it', async () => {
     respondWith(1024);
+
+    expect(await CoverService.resolve(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toEqual({
+      url: 'blob:cover',
+      stored: true,
+    });
+    expect(storage.files.size).toBe(1);
+  });
+
+  it('shows the remote boxart when no copy can be made', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => { throw new TypeError('CORS'); }));
 
     expect(await CoverService.resolve(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toEqual({
       url: COVER.url,
       stored: false,
     });
+  });
 
-    // The copy is made without the browsing waiting for it.
-    await vi.waitFor(() => expect(storage.files.size).toBe(1));
+  it('follows a symlinked boxart once', async () => {
+    const image = new Blob([new Uint8Array(2048)], { type: 'image/png' });
+    const fetch = vi.fn(async (url: string) =>
+      url.endsWith('Sonic%20(USA).png')
+        ? { ok: true, blob: async () => new Blob(['Sonic (World).png'], { type: 'text/plain' }) }
+        : { ok: true, blob: async () => image },
+    );
+    vi.stubGlobal('fetch', fetch);
+
+    expect(await CoverService.cache(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toBe(true);
+    expect(fetch).toHaveBeenLastCalledWith('https://example.test/Sonic%20(World).png');
+    expect(storage.files.get('.meta/MegaDrive/Sonic.US.case.png')?.length).toBe(2048);
+  });
+
+  it('does not follow a symlink to another symlink', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => ({ ok: true, blob: async () => new Blob(['Loop.png']) })));
+
+    expect(await CoverService.cache(storage.asNode(), 'MegaDrive', 'Sonic', COVER)).toBe(false);
+    expect(storage.files.size).toBe(0);
   });
 
   it('has nothing to show for a game with no boxart anywhere', async () => {

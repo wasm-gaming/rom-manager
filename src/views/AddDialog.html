@@ -1,0 +1,420 @@
+<!--
+  The add dialog `roms-sdk.js` opens for its host (`openAddDialog`), in a shadow root of its
+  own: drop or pick ROMs, zips and mods, see what each one is before anything is written, take
+  rows off, and "Añadir". Opens as it mounts. Event: done (the AddResult, or undefined when
+  closed without adding).
+-->
+<script :setup="{ system = undefined, gameId = undefined, locale = undefined }" lang="ts">
+  const [{ addRowsOf, anyAdds }, { AddService }, { translatorOf }, { openLibrary }, { itemsOf }] = await $importAll([
+    '../helpers/add-rows',
+    '../lib/AddService',
+    '../lib/I18nService',
+    '../lib/roms-sdk',
+    '../lib/RomIntakeService',
+  ])
+
+  const t = translatorOf(locale)
+
+  /** One file on the list: the file, what the intake found in it, or what it says as a patch. */
+  type Entry = { file: File; items: any[]; patch?: any }
+
+  let entries: Entry[] = []
+  let indexes: any[] = []
+  let busy: string | undefined = undefined
+  let error: string | undefined = undefined
+  let result: any = undefined
+  let dragging = false
+
+  const raw = (): Entry[] => $toRaw(entries) as Entry[]
+
+  $: rows = addRowsOf(
+    entries.map((entry: Entry) => ({ name: entry.file.name, items: entry.items, patch: entry.patch })),
+    { system, gameId, indexes },
+  )
+  $: adding = rows.filter((row: any) => row.adds).length
+
+  const dialog = (): HTMLDialogElement | null => $self('dialog')
+  const input = (): HTMLInputElement | null => $self('input[type=file]')
+
+  const reasonOf = (err: unknown) => (err instanceof Error ? err.message : String(err))
+
+  /** What a row says, in a sentence. */
+  const lineOf = (row: any): string => {
+    switch (row.state) {
+      case 'recognized':
+        return t('addDialog.recognized', { title: row.title, variant: row.variant || '—', system: row.system }) + (row.more ? ` ${t('addDialog.more', { count: row.more })}` : '')
+      case 'already':
+        return `${t('addDialog.already')} · ${row.title}`
+      case 'unknown':
+        return row.system ? t('addDialog.unknownTo', { system: row.system }) : t('addDialog.unknownNowhere')
+      case 'refused':
+        return t(`addDialog.refused.${row.reason}`)
+      case 'mod':
+        if (row.fits) return t('addDialog.mod.fits', { title: row.title })
+        if (row.title) return t('addDialog.mod.assigned', { title: row.title })
+        return t('addDialog.mod.unassigned', { system: row.system })
+      default:
+        return t(`addDialog.mod.${row.reason}`)
+    }
+  }
+  const markOf = (row: any): string => (row.adds ? '✓' : row.state === 'already' ? '=' : '!')
+
+  /** Reads what the new files are, and puts them on the list. Writes nothing. */
+  const take = async (files: File[]) => {
+    if (files.length === 0 || busy) return
+    error = undefined
+    result = undefined
+    try {
+      busy = t('addDialog.reading', { file: files[0].name })
+      const node = await openLibrary()
+      const preview = await AddService.preview(node, files, (progress: { file: string }) => {
+        busy = t('addDialog.reading', { file: progress.file })
+      })
+      const added: Entry[] = files.map((file) => ({ file, items: itemsOf(file, preview.items), patch: preview.patches.get(file) }))
+      entries = [...raw(), ...added]
+    } catch (err) {
+      error = t('addDialog.failed', { reason: reasonOf(err) })
+    } finally {
+      busy = undefined
+    }
+  }
+
+  const removeAt = (at: number) => {
+    entries = raw().filter((_, i) => i !== at)
+  }
+
+  const apply = async () => {
+    if (busy || !anyAdds(rows)) return
+    error = undefined
+    try {
+      busy = t('addDialog.adding')
+      const node = await openLibrary()
+      const list = raw()
+      result = await AddService.apply(node, list.map((entry) => entry.file), list.flatMap((entry) => entry.items), { system, gameId })
+      entries = []
+      indexes = await AddService.indexes(node)
+    } catch (err) {
+      error = t('addDialog.failed', { reason: reasonOf(err) })
+    } finally {
+      busy = undefined
+    }
+  }
+
+  const close = () => dialog()?.close()
+  const onClose = () => $emit('done', $toRaw(result))
+  const onCancel = (event: Event) => {
+    if (busy) event.preventDefault()
+  }
+  const onBackdrop = (event: MouseEvent) => {
+    if (event.target === dialog() && !busy) close()
+  }
+
+  const onPick = (event: Event) => {
+    const target = event.currentTarget as HTMLInputElement
+    const files = Array.from(target.files ?? [])
+    target.value = ''
+    void take(files)
+  }
+  const onDragOver = (event: DragEvent) => {
+    event.preventDefault()
+    dragging = true
+  }
+  const onDragLeave = (event: DragEvent) => {
+    if (event.target === event.currentTarget) dragging = false
+  }
+  const onDrop = (event: DragEvent) => {
+    event.preventDefault()
+    dragging = false
+    void take(Array.from(event.dataTransfer?.files ?? []))
+  }
+
+  await $mounted()
+
+  if (!dialog()?.open) dialog()?.showModal()
+  try {
+    indexes = await AddService.indexes(await openLibrary())
+  } catch {
+    // An empty library has no index: a BPS / UPS then fits only a ROM on the list.
+  }
+</script>
+
+<dialog
+  class="add"
+  :aria-label="t('addDialog.title')"
+  @close="onClose"
+  @cancel="onCancel"
+  @click="onBackdrop"
+  @dragover="onDragOver"
+  @drop="onDrop"
+>
+  <header>
+    <h2>{{ t('addDialog.title') }}</h2>
+    <button class="icon" :aria-label="t('addDialog.close')" :title="t('addDialog.close')" @click="close" :disabled="Boolean(busy)">×</button>
+  </header>
+
+  <label :class="`zone ${dragging ? 'over' : ''}`" @dragleave="onDragLeave">
+    <span>{{ t('addDialog.drop') }}</span>
+    <span class="pick">{{ t('addDialog.pick') }}</span>
+    <input type="file" multiple @change="onPick" :disabled="Boolean(busy)" />
+  </label>
+
+  <ul :if="rows.length > 0" class="rows">
+    <li :each="row, at in rows" :key="`${at}:${row.name}`" :class="`row ${row.state} ${row.adds ? 'adds' : 'skips'}`">
+      <span class="mark" aria-hidden="true">{{ markOf(row) }}</span>
+      <span class="text">
+        <span class="name" :title="row.name">{{ row.name }}</span>
+        <span class="what">{{ lineOf(row) }}</span>
+      </span>
+      <button class="icon" :aria-label="t('addDialog.remove', { name: row.name })" :title="t('addDialog.remove', { name: row.name })" @click="removeAt(at)" :disabled="Boolean(busy)">×</button>
+    </li>
+  </ul>
+
+  <p :if="busy" class="status" role="status">{{ busy }}</p>
+  <p :if="error" class="error" role="alert">{{ error }}</p>
+  <p :if="result && !busy" class="summary" role="status">
+    {{ t('addDialog.summary', { added: result.added.length, already: result.already.length, mods: result.mods.added.length }) }}
+  </p>
+
+  <footer>
+    <button :if="!result" class="secondary" @click="close" :disabled="Boolean(busy)">{{ t('addDialog.cancel') }}</button>
+    <button :if="!result || rows.length > 0" class="primary" @click="apply" :disabled="Boolean(busy) || adding === 0">
+      {{ adding > 1 ? t('addDialog.addMany', { count: adding }) : t('addDialog.add') }}
+    </button>
+    <button :if="result && rows.length === 0" class="primary" @click="close" :disabled="Boolean(busy)">{{ t('addDialog.done') }}</button>
+  </footer>
+</dialog>
+
+<style>
+  /* The app's palette (src/styles/index.css), the few tokens this dialog uses: the host's CSS
+     cannot reach a shadow root, and the app's stylesheet stays out of the host's page. */
+  :host {
+    --surface: #fff;
+    --surface-2: #f5f5f5;
+    --border: #e0e0e0;
+    --text: #212121;
+    --text-muted: #616161;
+    --accent: #1976d2;
+    --accent-hover: #1565c0;
+    --accent-on: #fff;
+    --accent-soft: #e3f2fd;
+    --danger-ink: #c62828;
+    --ok-ink: #2e7d32;
+    --warn-ink: #b26a00;
+    --focus-ring: rgba(25, 118, 210, 0.25);
+    color-scheme: light;
+  }
+  :host([data-theme='dark']) {
+    --surface: #1a1f26;
+    --surface-2: #222831;
+    --border: #333b47;
+    --text: #e8ecf2;
+    --text-muted: #aab3c0;
+    --accent: #64b5f6;
+    --accent-hover: #90caf9;
+    --accent-on: #0f151c;
+    --accent-soft: rgba(100, 181, 246, 0.16);
+    --danger-ink: #ff9d95;
+    --ok-ink: #a5d6a7;
+    --warn-ink: #ffbe5c;
+    --focus-ring: rgba(100, 181, 246, 0.35);
+    color-scheme: dark;
+  }
+
+  .add {
+    box-sizing: border-box;
+    width: min(36rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    color: var(--text);
+    font: 0.9375rem/1.4 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.35);
+  }
+  .add[open] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+  .add::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+  }
+  * {
+    box-sizing: border-box;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 0.5rem;
+  }
+  button:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+  button:focus-visible,
+  .zone:focus-within {
+    outline: none;
+    box-shadow: 0 0 0 0.1875rem var(--focus-ring);
+  }
+  .icon {
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  .icon:hover:not(:disabled) {
+    background: var(--surface-2);
+    color: var(--text);
+  }
+
+  .zone {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1.5rem 1rem;
+    border: 2px dashed var(--border);
+    border-radius: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    cursor: pointer;
+  }
+  .zone.over {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .zone input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .pick {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: var(--accent);
+    color: var(--accent-on);
+    font-weight: 600;
+  }
+  .zone:hover .pick {
+    background: var(--accent-hover);
+  }
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    list-style: none;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 0.25rem 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    background: var(--surface-2);
+  }
+  .mark {
+    flex: none;
+    width: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  .adds .mark {
+    color: var(--ok-ink);
+  }
+  .skips .mark {
+    color: var(--warn-ink);
+  }
+  .refused .mark,
+  .mod-refused .mark {
+    color: var(--danger-ink);
+  }
+  .text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .name {
+    overflow: hidden;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .what {
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+  }
+
+  .status,
+  .summary,
+  .error {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+  .status {
+    color: var(--text-muted);
+  }
+  .summary {
+    color: var(--ok-ink);
+  }
+  .error {
+    color: var(--danger-ink);
+  }
+
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  footer button {
+    padding: 0.5rem 1.125rem;
+    border: 1px solid var(--border);
+  }
+  .secondary {
+    background: transparent;
+    color: var(--text);
+  }
+  .primary {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-on);
+    font-weight: 600;
+  }
+  .primary:hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
+
+  /* One column under 460px, as the app: the buttons take the width. */
+  @media (max-width: 460px) {
+    .add {
+      width: calc(100vw - 1rem);
+      padding: 1rem;
+    }
+    footer button {
+      flex: 1;
+    }
+  }
+</style>
