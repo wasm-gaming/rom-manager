@@ -5,8 +5,10 @@
 
   `mods` are the system's (ModRecord[]); `versions` the CRCs of the versions on disk;
   `actions` = { rename(sha1, name), assign(sha1, assign: boolean), remove(sha1) }, all async.
+  `play(crc, patch)`, when a launcher hosts rom-manager, is the link that plays a version with a
+  mod: the version a BPS / UPS fits, else the first one here.
 -->
-<script :setup="{ game, mods = [], versions = [], actions }" lang="ts">
+<script :setup="{ game, mods = [], versions = [], actions, play = undefined }" lang="ts">
   const [Icon, PromptModal, ConfirmModal, { gameIdOf, modFit }, { t }] = await $importAll([
     '../components/Icon.html',
     '../components/PromptModal.html',
@@ -24,6 +26,12 @@
   $: assigned = mods.filter((mod: any) => mod.gameId === gameId)
   $: unassigned = mods.filter((mod: any) => !mod.gameId)
   const fitOf = (mod: { sourceCrc?: string }) => modFit(mod, versions)
+  const playOf = (mod: { sha1: string; sourceCrc?: string }) => {
+    if (!play) return undefined
+    const fit = fitOf(mod)
+    if (fit === 'other') return undefined
+    return play(fit === 'fits' ? mod.sourceCrc : versions[0]?.crc, mod.sha1)
+  }
 
   const act = async (run: () => Promise<unknown>) => {
     try {
@@ -58,6 +66,7 @@
       <span class="tag">{{ mod.format.toUpperCase() }}</span>
       <span :class="`tag mod-fit mod-fit-${fitOf(mod)} ${fitOf(mod) === 'fits' ? 'status-complete' : ''}`" :title="mod.sourceCrc ? `CRC32 ${mod.sourceCrc}` : ''">{{ t(`mods.fit.${fitOf(mod)}`) }}</span>
       <span class="mod-actions">
+        <a :if="playOf(mod)" class="mod-play icon-label" :href="playOf(mod)" :title="t('host.playWithMod')"><Icon name="play" /> {{ t('host.play') }}</a>
         <button class="tree-organize" :disabled="busy" @click="renaming = { sha1: mod.sha1, name: mod.name }" :title="t('mods.rename')">
           <Icon name="pencil" />
         </button>

@@ -1,0 +1,5563 @@
+
+import { $, $$, $create, sanitizeHTML, allowedHosts } from "./dom"
+import type { AllowUrl, QueryAll, QueryOne } from "./dom"
+import { $reactive, $toRaw, $computed, $batch, untracked, createEffectScope, ALSO_WAKEN_BY, OWNER } from "./reactive"
+import type { ReactiveDeepData, EffectScope } from "./reactive"
+import { transformSetupScript, transformFactoryScript, parsePropsPattern, parseFactoryProps, preloadSpecifiers, type PropDecl } from "./transform"
+import {
+  COMPONENT_NAME_RE, COMPONENT_TAG_ATTR, CONTROL_ATTRS, EACH_PATTERN, EXPR_PARAMS, PRECOMPILED_PARAM, PRECOMPILED_QUEUE,
+  componentTagName, functionText,
+  assignment, declaredPropNames, defer, factoryBody, factoryParams, functionKey, isControlAttr, isSlotTag,
+  kebabToCamel, prepareSource, readSetupSignature, scopedBody, setupBody, setupParams, slotName, splitText, withBody,
+  type TagBlock, type TemplateNode, type TextPart,
+} from "./source"
+
+export { $, $$, $create } from "./dom"
+export type { QueryOne, QueryAll } from "./dom"
+export { $reactive, $toRaw, $computed, $batch } from "./reactive"
+export type { Computed } from "./reactive"
+
+// the package version, substituted at build time (tsup/vitest `define`, read
+// from package.json - releases bump it there and nowhere else). The typeof
+// guard is what keeps the raw source runnable: tests and any bundler that
+// doesn't define it see a bare identifier, not a ReferenceError
+declare const __JQ79_VERSION__: string
+const VERSION = typeof __JQ79_VERSION__ === "string" ? __JQ79_VERSION__ : "0.0.0-dev"
+
+const elementAttrs = (el: Element): Record<string, string> =>
+  Object.fromEntries(Array.from(el.attributes).map(attr => [attr.name, attr.value]))
+
+// text is kept verbatim - not trimmed, not dropped when it's only whitespace.
+// A template is HTML, so the space in `<span>a</span>\n<span>b</span>` is the
+// same space the browser would collapse-and-render between them, and CSS gets
+// to decide what it's worth (nothing in a block or flex container, one space
+// between inline elements). Trimming it here, as this used to, silently glued
+// siblings together and ate the spaces in `hola <b>mundo</b> adios`
+//
+// A <template>'s children are read from its .content fragment: that is where
+// the HTML parser puts them, and its childNodes are empty. Without the descent
+// they are not in the AST at all - which is where slot content is written
+// (<template :slot.name>), and why a nested <template> used to render as an
+// empty element whatever was inside it
+const HTML_NS = "http://www.w3.org/1999/xhtml"
+
+const elementToAST = (el: Element): TemplateNode => {
+  const attrs = elementAttrs(el)
+  // `tagName` is uppercase for HTML and as-authored for everything else, so the
+  // lowercasing that normalizes <DIV> would destroy <clipPath>, <linearGradient>
+  // and <feGaussianBlur>, whose names are case-sensitive
+  const ns = el.namespaceURI
+  // the pre-parse stamp becomes a field and leaves attrs entirely: it is not a
+  // prop, not a directive and not an attribute, and every loop that walks attrs
+  // would otherwise need to know its name
+  const component = attrs[COMPONENT_TAG_ATTR]
+  delete attrs[COMPONENT_TAG_ATTR]
+  const foreign = ns !== null && ns !== HTML_NS
+  return {
+    tag: foreign ? el.tagName : el.tagName.toLowerCase(),
+    attrs,
+    ...(component === undefined ? {} : { component }),
+    ...(foreign ? { ns } : {}),
+    children: Array.from((el instanceof HTMLTemplateElement ? el.content : el).childNodes).flatMap((node): (TemplateNode | string)[] => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent ?? ""
+        return text ? [text] : []
+      }
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        return [elementToAST(node as Element)]
+      }
+      return []
+    })
+  }
+}
+
+// evaluated with `with` (rather than passing scope keys as positional params)
+// so only the identifiers an expression actually references are read from
+// `scope` - which is what makes dependency tracking in $reactive
+// precise instead of "read everything up front". `extras` are passed as
+// function parameters (outside the `with`), so scope keys still win but names
+// like $event resolve when the scope doesn't shadow them
+//
+// Compiled functions are cached: an expression is re-evaluated on every effect
+// run - once per interpolation, once per :each item - while the set of distinct
+// expressions is fixed by the source. The `extras` names are part of the key,
+// not just the expression: they become the function's parameters, so the same
+// expression compiled with and without $event is two different functions. A
+// syntactically invalid expression caches its failure (null) so it isn't
+// recompiled, and rethrown as undefined, exactly as before
+// One entry per (extras, expression). `scoped` says which form `fn` is, so the
+// evaluation path never rebuilds the key to ask - it is a string concatenation
+// per evaluation, and this is the hottest loop in the library
+type CompiledExpr = { fn: Function | null; scoped: boolean }
+
+const compiled = new Map<string, CompiledExpr>()
+
+// ---------------------------------------------------------------------------
+// safe eval
+//
+// Every function the runtime builds out of a component's text - an expression,
+// a setup script, a factory script - is built by makeFunction. By default that
+// is `new Function`, exactly as it always was. Two things stand in front of it:
+//
+// - precompiled functions, which scripts the browser loaded *as code* push onto
+//   a global queue, keyed by the very (params, body) the runtime would have
+//   handed `new Function` - so a hit is the same function by construction. A
+//   global rather than a call, so such a script can load before the library or
+//   after it, and serve either build of it (the module, or the CDN global)
+// - safe mode (Component79.safeEval()), in which the runtime never calls
+//   `new Function`. That is what a CSP without 'unsafe-eval' demands, and
+//   where one throws EvalError that compileWith would swallow as a syntax
+//   error, safe mode says what is missing instead of rendering empty in silence.
+//   With `{ nonce: true }` a miss is built anyway - as a <script> carrying the
+//   page's nonce, which the CSP admits where it refuses eval (buildWithNonce)
+//
+// See RECORD/2026-09-23.no-unsafe-eval.md
+// ---------------------------------------------------------------------------
+
+// `fn: null` is a body that did not compile, cached as the syntax error it is
+type PrecompiledEntry = [params: string[], body: string, fn: Function | null]
+
+
+const precompiled = new Map<string, Function | null>()
+let safeEvalOn = false
+// set by safeEval({ nonce: true }), and then never unset: safe mode is one-way
+let safeEvalNonce: string | undefined
+
+// what safe mode could not provide. `reason` completes "<the code> ..." and
+// `hint` says why, so an expression and a script report it the same way
+class SafeEvalMiss extends Error {
+  constructor(readonly reason: string, readonly hint: string) {
+    super(`${reason}. ${hint}`)
+  }
+}
+
+const notPrecompiled = () => new SafeEvalMiss(
+  "was not precompiled",
+  "Safe mode never builds code at runtime: the component's precompiled functions did not reach the page."
+)
+
+// drains the queue first: a precompiled script may have loaded since the last
+// lookup. With nothing registered - every page that never precompiled anything
+// - the answer is known without building a key
+const lookupPrecompiled = (params: string[], body: string): Function | null | undefined => {
+  const queue = (globalThis as any)[PRECOMPILED_QUEUE]
+  if (Array.isArray(queue) && queue.length > 0) {
+    for (const [entryParams, entryBody, fn] of queue.splice(0) as PrecompiledEntry[]) {
+      precompiled.set(functionKey(entryParams, entryBody), fn)
+    }
+  }
+  return precompiled.size === 0 ? undefined : precompiled.get(functionKey(params, body))
+}
+
+// `suffix` goes to `new Function` only and is not part of the key: it is the
+// //# sourceURL that names a script for devtools, which a precompiled script
+// has no use for (it has a URL of its own) and a generator couldn't spell the
+// way the runtime does - it depends on how the component was loaded
+const makeFunction = (params: string[], body: string, suffix = ""): Function => {
+  const hit = lookupPrecompiled(params, body)
+  if (hit === null) throw new SyntaxError("jq79: this code did not compile when it was precompiled")
+  if (hit !== undefined) return hit
+  if (safeEvalNonce !== undefined) return buildWithNonce(params, body, suffix, safeEvalNonce)
+  if (safeEvalOn) throw notPrecompiled()
+  return new Function(...params, body + suffix)
+}
+
+// the page's nonce, read off a script that carries one. The `.nonce` property
+// and not the attribute: once the element is in a document under a CSP header,
+// the browser blanks the attribute (so a stylesheet's attribute selector can't
+// leak it) and keeps the value on the property - checked in Chromium, where
+// getAttribute("nonce") read "" and .nonce the real value. The attribute is
+// the fallback for an environment with no such property (jsdom).
+//
+// Searched for, because the library may have no script of its own to read: a
+// module has no document.currentScript. A CSP that works by nonce always has
+// one - the script that loaded the page
+const pageNonce = (): string | undefined => {
+  if (typeof document === "undefined") return undefined
+  for (const script of Array.from(document.querySelectorAll<HTMLScriptElement>("script[nonce]"))) {
+    const nonce = script.nonce || script.getAttribute("nonce")
+    if (nonce) return nonce
+  }
+  return undefined
+}
+
+// builds what `new Function` would, as a classic <script> the CSP admits
+// because it carries the page's nonce. Classic scripts are sloppy, so `with`
+// compiles exactly as it does under `new Function`; the text is laid out as
+// `new Function` lays it out ("function anonymous(params\n) {\nbody\n}"), so
+// the function is named the same and devtools reports the same line numbers,
+// and the //# sourceURL suffix names the script as it names the function today.
+//
+// An inline script runs synchronously when it is inserted, so this is a
+// drop-in for the synchronous `new Function`. The function comes back on the
+// element itself (document.currentScript) rather than through a global: nothing
+// for the page to collide with, and nothing to clean up.
+//
+// Two ways it can fail, told apart by what the insertion left behind:
+// - a syntax error is reported to window's `error` event rather than thrown to
+//   the inserter. The listener takes it and cancels the report, and it is
+//   rethrown here - where `new Function` threw it, and where compileWith
+//   caches it as the syntax error it always has been;
+// - a nonce the CSP refuses leaves nothing at all: no function, no error
+//   event, only a violation the browser logs. That one says so.
+//
+// A body that closes the function's brace early (`a) } alert(1); { (`) is one
+// place this differs: `new Function` refuses it, and a script runs what comes
+// after the brace. The text is the component's own, which can hold a <script>
+// anyway, so this admits nothing a component couldn't already do.
+//
+// Built functions go into the precompiled map: they hold no state, and a
+// setup script - built once per *instance* - would otherwise insert a script
+// per instance
+const NONCE_BUILT = "__jq79built"
+
+const buildWithNonce = (params: string[], body: string, suffix: string, nonce: string): Function => {
+  const script = document.createElement("script")
+  script.setAttribute("nonce", nonce)
+  script.textContent = `document.currentScript.${NONCE_BUILT} = ${functionText(params, body)}${suffix}`
+  let syntaxError: unknown
+  const onError = (event: ErrorEvent) => {
+    syntaxError = event.error ?? new SyntaxError(event.message)
+    event.preventDefault()
+  }
+  window.addEventListener("error", onError)
+  try {
+    (document.head ?? document.documentElement).append(script)
+  } finally {
+    window.removeEventListener("error", onError)
+    script.remove()
+  }
+  const fn = (script as any)[NONCE_BUILT]
+  if (typeof fn === "function") {
+    precompiled.set(functionKey(params, body), fn)
+    return fn
+  }
+  if (syntaxError !== undefined) throw syntaxError
+  throw new SafeEvalMiss(
+    "could not be built",
+    // the value stays out of the message: a nonce has no business in a log
+    "The page's CSP refused a <script> carrying the nonce jq79 read from the page."
+  )
+}
+
+// once per expression, like reportFailedExpr: a :each over 1000 rows misses
+// 1000 times per render
+const reportedSafeEvalMisses = new Set<string>()
+
+const reportSafeEvalMiss = (expr: string, miss: SafeEvalMiss) => {
+  if (reportedSafeEvalMisses.has(expr)) return
+  reportedSafeEvalMisses.add(expr)
+  console.error(`jq79: safeEval() is on, and "${expr}" ${miss.reason}, so it rendered as nothing. ${miss.hint}`)
+}
+
+// Resolves a name the `const` prologue could not: its fast read came back
+// undefined, which means one of three different things. `with` told them apart
+// by consulting [[HasProperty]] on every read of every name; this consults it
+// only here, which is why the fast path has no `has` trap in it at all
+//
+// The `in scope` branch is load-bearing beyond "declared but undefined": a
+// deleted key leaves a tombstone the store still claims, so `user ? user.name :
+// "none"` takes its else branch instead of dying against globalThis (see
+// RECORD/2026-08-23.narrow-the-wake-rule.md)
+const resolveName = (scope: Record<string, any>, name: string): any => {
+  if (name in scope) return undefined
+  if (name in globalThis) return (globalThis as any)[name]
+  // the same error `with` threw, with the same wording, so reportExprError's
+  // MISSING_NAME_RE reads it exactly as it always has
+  throw new ReferenceError(`${name} is not defined`)
+}
+
+const compileWith = (expr: string, params: string[]): Function | null => {
+  try {
+    return makeFunction([...EXPR_PARAMS, ...params], withBody(expr))
+  } catch (error) {
+    // nothing precompiled, in a mode that won't compile: not a syntax error,
+    // though it is cached like one - it will not start compiling later either
+    if (error instanceof SafeEvalMiss) reportSafeEvalMiss(expr, error)
+    return null // a syntax error: it will never compile, so don't try again
+  }
+}
+
+// The same evaluation with the names resolved by hand: each free identifier
+// becomes a `const` read straight off the scope, and the expression's own text
+// is left exactly as authored inside the return. One proxy `get` per name -
+// the same read `with` would have made, so the deps tracked are the same ones.
+// Worth 63% of a one-name evaluation and 72% of a two-name one, measured in
+// RECORD/2026-08-27.name-resolution-without-with.md
+//
+// Returns null for anything freeIdentifiers refuses (an assignment, an arrow,
+// a declaration, a called name - handlers, mostly, where an evaluation's cost
+// does not matter), and for a prologue that will not compile: the caller falls
+// back to `with`.
+//
+// A name the extractor MISSES is not that benign, and a sabotage measured it:
+// the prologue does not declare it, so the expression reads it off globalThis.
+// Where nothing is there it throws and runExpr demotes the whole expression to
+// `with` - slower, same answer - but where the page has a global of that name
+// (`name`, `status`, `length`, `top`, `event` ... window has hundreds) it reads
+// the global instead of the store, and nothing throws. So the extractor's
+// misses are a correctness surface, not only a performance one, and the
+// differential in tests/expressions.test.ts is what stands behind it
+const compileScoped = (expr: string, params: string[]): Function | null => {
+  if (!debugFlags.scopedNames) return null
+  const body = scopedBody(expr, params)
+  if (body === null) return null
+  // a safe-mode miss lands here too, and stays quiet: the caller falls back to
+  // the `with` form, which may well be the one that was precompiled - and
+  // reports if it wasn't
+  try {
+    return makeFunction([...EXPR_PARAMS, ...params], body)
+  } catch {
+    return null
+  }
+}
+
+const entryFor = (key: string, expr: string, params: string[]): CompiledExpr => {
+  let entry = compiled.get(key)
+  if (entry === undefined) {
+    const scoped = compileScoped(expr, params)
+    entry = scoped ? { fn: scoped, scoped: true } : { fn: compileWith(expr, params), scoped: false }
+    compiled.set(key, entry)
+  }
+  return entry
+}
+
+const exprKey = (expr: string, params: string[]): string => `${params.join(",")}|${expr}`
+
+const compileExpr = (expr: string, params: string[]): Function | null =>
+  entryFor(exprKey(expr, params), expr, params).fn
+
+// The safety net under the extractor. A free name it fails to collect is not
+// declared by the prologue, so the expression reaches for it against globalThis
+// and throws - and that is indistinguishable, from here, from the name being
+// genuinely undeclared. So the first ReferenceError out of a scoped function
+// demotes that expression to `with` permanently and evaluates it again: a name
+// the scanner missed costs one wasted evaluation, and a name that really is
+// missing throws again from `with`, reported exactly as before.
+//
+// The retry can run a call in the expression twice, which is why it happens
+// once per expression and never for the `with` form
+const demoteToWith = (key: string, expr: string, params: string[]): Function | null => {
+  const fallback = compileWith(expr, params)
+  compiled.set(key, { fn: fallback, scoped: false })
+  return fallback
+}
+
+// a template expression is re-evaluated constantly - once per effect run, once
+// per interpolation, once per :each item - so a value that is briefly undefined
+// mid-render has to fail quietly, and the catch below stays. A ReferenceError
+// is the one failure worth a word: `with` resolves a name against the store and
+// then globalThis, so a name that resolves nowhere is declared nowhere - a
+// typo, a dropped prop, or the trap this was written for, a top-level
+// `function` declaration, which transformSetupScript leaves as an ordinary
+// lexical binding instead of a store property
+//
+// It is reported late rather than where it throws, because "declared nowhere"
+// is not yet decidable at that moment: a factory script assigns its bindings to
+// the store when it returns, so an async factory renders its whole template
+// before any of its names exist. Reporting waits until no script is still
+// running (pendingScripts), and then asks whether the name resolves *now*.
+//
+// The re-check is `name in scope` rather than a re-evaluation, because
+// re-evaluating is not pure: `@click="count++ + missing"` increments before it
+// throws, and running it again to see if it still throws would increment twice
+// and notify. `in` walks the same scope chain (:each scopes are
+// Object.create(scope), :with is a proxy over it) and evaluates nothing
+const MISSING_NAME_RE = /^(?:([\w$]+) is not defined|Can't find variable: ([\w$]+))/
+
+// the queue holds live scopes, so it is capped: a script that never settles
+// would otherwise let it grow for the life of the page
+const MAX_PENDING_REPORTS = 100
+
+type PendingReport = { name: string; expr: string; scope: Record<string, any> }
+
+const pendingReports = new Map<string, PendingReport>()
+const reportedExprErrors = new Set<string>()
+let pendingScripts = 0
+let flushScheduled = false
+
+// everything else an expression can throw - overwhelmingly a member access on
+// an undefined value, `{{ game.is.loaded }}` over a game with no `is`. Unlike a
+// missing name it needs no deferral and gets none: the engine already caught a
+// real exception and wrote the message, so there is nothing left to decide and
+// it is reported where it throws, as an error rather than a warning.
+//
+// That means a value still on its way is reported too - `{{ user.name }}` over
+// a user that a fetch will fill renders empty and says so, once. It is a
+// deliberate trade against the silence it replaces, which hid a render that was
+// actively wrong (a thrown `:disabled` is falsy, so the button rendered
+// *enabled*). The fix is the one the message names: `user?.name`, or `:if`.
+//
+// Deduped by expression text alone. A `:each` over 1000 rows throws 1000 times
+// per render and the Set is what keeps that to one line; keying finer - by
+// message too, as the missing-name queue does - would let one broken path
+// report once per distinct message. There is no queue behind it because there
+// is nothing to re-check, and so nothing that could retain a live scope
+const reportedFailedExprs = new Set<string>()
+
+const flushExprReports = () => {
+  flushScheduled = false
+  if (pendingScripts > 0) return // a script started meanwhile; its release re-schedules
+  pendingReports.forEach(({ name, expr, scope }, key) => {
+    if (name in scope) return // it arrived late - a factory's bindings, a prop
+    reportedExprErrors.add(key)
+    console.warn(
+      `jq79: ${name} is not defined - evaluating "${expr}". Template expressions ` +
+      `resolve against the component store: a top-level let/var/const in a :setup ` +
+      `script, a declared prop, or a global. Note a "function name() {}" declaration ` +
+      `is not on the store - write "const name = () => {}".`
+    )
+  })
+  pendingReports.clear()
+}
+
+const scheduleExprReportFlush = () => {
+  if (flushScheduled || pendingScripts > 0 || !pendingReports.size) return
+  flushScheduled = true
+  queueMicrotask(flushExprReports)
+}
+
+// scripts run before the template renders, so the counter is already up when
+// the first evaluation fails. Both script modes settle through a promise;
+// the factory's has to cover the merge, not just the module body
+const trackScript = (settled: Promise<unknown>) => {
+  pendingScripts++
+  const release = () => {
+    pendingScripts--
+    scheduleExprReportFlush()
+  }
+  settled.then(release, release)
+}
+
+// console.error, not warn: a name that resolves nowhere is a warning because
+// the runtime can only say the name is absent, while this one caught a real
+// exception - it has a message the engine wrote, and the expression rendered as
+// nothing instead of doing what it says
+const reportFailedExpr = (expr: string, error: unknown) => {
+  if (reportedFailedExprs.has(expr)) return
+  reportedFailedExprs.add(expr)
+  const message = (error as Error)?.message || String(error)
+  console.error(
+    `jq79: ${message} - evaluating "${expr}". The expression rendered as nothing. ` +
+    `If the value arrives later, guard it - "a?.b", or :if on the element.`
+  )
+}
+
+const reportExprError = (expr: string, scope: Record<string, any>, error: unknown) => {
+  if (!(error instanceof ReferenceError)) return reportFailedExpr(expr, error)
+  const match = MISSING_NAME_RE.exec(error.message)
+  const name = match?.[1] ?? match?.[2]
+  if (!name) return // an engine whose wording we don't know: stay quiet, as before
+  // keyed on name and expression, not on the expression alone, so two missing
+  // names in one expression stay distinguishable - and so a :each of 1000 items
+  // enqueues one entry rather than 1000
+  const key = `${name}|${expr}`
+  if (reportedExprErrors.has(key) || pendingReports.has(key)) return
+  if (pendingReports.size >= MAX_PENDING_REPORTS) return
+  pendingReports.set(key, { name, expr, scope })
+  scheduleExprReportFlush()
+}
+
+const runExpr = (expr: string, scope: Record<string, any>, extras?: Record<string, any>): any => {
+  const params = extras ? Object.keys(extras) : []
+  const key = exprKey(expr, params)
+  const { fn, scoped } = entryFor(key, expr, params)
+  if (!fn) return undefined // a syntax error: the failure is cached, and it stays undefined
+  const args = extras ? Object.values(extras) : []
+  if (!scoped) return fn(scope, resolveName, ...args)
+  try {
+    return fn(scope, resolveName, ...args)
+  } catch (error) {
+    if (!(error instanceof ReferenceError)) throw error
+    const fallback = demoteToWith(key, expr, params)
+    if (!fallback) throw error
+    return fallback(scope, resolveName, ...args)
+  }
+}
+
+const evalExpr = (expr: string, scope: Record<string, any>, extras?: Record<string, any>): any => {
+  try {
+    return runExpr(expr, scope, extras)
+  } catch (error) {
+    reportExprError(expr, scope, error)
+    return undefined
+  }
+}
+
+// the same evaluation for an @event attribute, which swallows far less. Every
+// word of the reason evalExpr catches is about rendering: an expression is
+// re-evaluated per effect run, per interpolation, per :each item, so a value
+// that is briefly undefined mid-render has to render empty rather than tear the
+// render down. A handler runs in an event listener - not in an effect, once,
+// when the user clicked - so there is no transient failure to absorb, only a
+// bug to report, and an exception belongs in the console with its stack. That
+// is what `@click="save"` has always done (the call happens outside the try,
+// on the returned function); this is what makes `@click="save()"` and
+// `@click="count++"` behave the same rather than the other way round.
+//
+// ReferenceError is the exception, for the reason it always is: it is not yet
+// decidable at throw time. A factory assigns its names to the store when it
+// returns, so a click while one is still in flight throws for a name that is
+// about to exist - reportExprError re-checks after the scripts settle and stays
+// quiet if it arrived, which throwing here would replace with a false alarm
+const evalHandler = (expr: string, scope: Record<string, any>, extras: Record<string, any>): any => {
+  try {
+    return runExpr(expr, scope, extras)
+  } catch (error) {
+    if (!(error instanceof ReferenceError)) throw error
+    reportExprError(expr, scope, error)
+    return undefined
+  }
+}
+
+// what an interpolated text node renders to, from the parts. `?? ""` on each
+// expression, and String() over the join, is what template.replace did: a
+// nullish value contributes nothing and everything else is coerced
+const renderText = (parts: TextPart[], scope: Record<string, any>): string => {
+  if (parts.length === 1) {
+    const only = parts[0]
+    return typeof only === "string" ? only : String(evalExpr(only.expr, scope) ?? "")
+  }
+  let out = ""
+  for (const part of parts) out += typeof part === "string" ? part : String(evalExpr(part.expr, scope) ?? "")
+  return out
+}
+
+
+type ConditionalBranch = { expr?: string; node: TemplateNode }
+
+
+// @event attributes: @click="onClick", @submit.prevent="$event => onSubmit($event)",
+// or an inline statement like @click="count = count + 1". The expression is
+// evaluated (with `$event` in scope) on every event; if it yields a function,
+// that function is then invoked with the event - so both a handler reference
+// and an inline arrow/statement work. Modifiers after dots: .prevent .stop
+// .self (runtime guards) and .once .capture (addEventListener options)
+const bindEvent = (el: Element, attr: string, expr: string, scope: Record<string, any>) => {
+  const [name, ...modifiers] = attr.slice(1).split(".")
+  const mods = new Set(modifiers)
+
+  el.addEventListener(name, event => {
+    if (mods.has("self") && event.target !== el) return
+    if (mods.has("prevent")) event.preventDefault()
+    if (mods.has("stop")) event.stopPropagation()
+
+    const handler = evalHandler(expr, scope, { $event: event })
+    if (typeof handler === "function") handler.call(el, event)
+  }, { once: mods.has("once"), capture: mods.has("capture") })
+}
+
+// @event on a component tag: the tag renders as comment anchors, so there is
+// no element to listen on - the attribute subscribes to the child instance's
+// $emit channel (instance.on) instead, which survives the child's re-renders
+// and works detached. Native DOM events from the child's inner DOM never
+// arrive here: they bubble past the anchors to shared ancestors (a listener
+// on a wrapping element hears those); a child that wants its native event
+// heard on its tag re-emits it. .prevent flips the child's $emit() return to
+// false, .stop keeps the emit off the DOM dispatch, .once unsubscribes after
+// one call; .self and .capture have no meaning on this channel and are ignored
+const wireTagEvent = (instance: Component79, attr: string, expr: string, scope: Record<string, any>) => {
+  const [name, ...modifiers] = attr.slice(1).split(".")
+  const mods = new Set(modifiers)
+
+  const listener = (event: CustomEvent) => {
+    if (mods.has("prevent")) event.preventDefault()
+    if (mods.has("stop")) event.stopPropagation()
+    if (mods.has("once")) instance.off(name, listener)
+
+    // untracked, so a tag handler behaves like an element handler no matter
+    // when the emit fires: an element handler never runs inside an effect,
+    // but $emit can (a $: that emits, a setup-script emit inside the parent's
+    // creation effect), and the handler's reads would land in that effect's
+    // deps. Today that is contained - cross-store deps are never notified,
+    // and the creation effect's definition guard no-ops a spurious wake - but
+    // "what a handler reads is nobody's dependency" shouldn't hinge on either
+    untracked(() => {
+      const handler = evalHandler(expr, scope, { $event: event })
+      if (typeof handler === "function") handler(event)
+    })
+  }
+  instance.on(name, listener)
+}
+
+// the stable boundaries of a rendered chunk. An element is its own handle, but
+// a fragment (a nested component: two anchors with the instance's DOM between
+// them) empties itself into the parent on insertion - after that its identity
+// answers nothing, and what stays put are its first and last children. Callers
+// that reposition or remove a chunk later (:each entries, :if branches) must
+// capture its bounds *before* inserting it and work on the range
+type NodeRange = { first: Node; last: Node }
+
+const boundsOf = (node: Node): NodeRange =>
+  node instanceof DocumentFragment
+    ? { first: node.firstChild!, last: node.lastChild! }
+    : { first: node, last: node }
+
+// removes [first..last] inclusive - the range's content is dynamic (a nested
+// component's DOM comes and goes between its anchors), so it walks siblings
+// rather than assuming any particular nodes in between
+const removeRange = ({ first, last }: NodeRange) => {
+  for (let node: Node | null = first; node; ) {
+    const next: Node | null = node === last ? null : node.nextSibling
+    node.parentNode?.removeChild(node)
+    node = next
+  }
+}
+
+// removes several ranges that sit next to each other, in one DOM call each run
+// rather than one per node. A list dropping all its rows hands them over as a
+// single span: unlinking 10,000 rows one at a time is 40% of that operation,
+// profiled - see RECORD/2026-08-23.batch-range-removal.md. Runs are built by the
+// caller, which is the only place that knows what else is going
+const removeRuns = (runs: NodeRange[]) => {
+  runs.forEach(run => {
+    if (run.first === run.last) return removeRange(run)
+    const parent = run.first.parentNode
+    if (!parent) return
+    // both ends sit between nodes, so nothing is partially selected and whole
+    // nodes are what gets unlinked
+    const range = document.createRange()
+    range.setStartBefore(run.first)
+    range.setEndAfter(run.last)
+    range.deleteContents()
+  })
+}
+
+// groups the entries `isDead` selects into runs of DOM neighbours, walking
+// `ordered` (which is in DOM order). Adjacency is confirmed rather than assumed:
+// a gap - an entry removed earlier in the same pass - starts a new run, so a
+// live entry can never end up inside one
+const contiguousRuns = <T extends { range: NodeRange }>(ordered: T[], isDead: (entry: T) => boolean): NodeRange[] => {
+  const runs: NodeRange[] = []
+  let run: NodeRange | null = null
+  ordered.forEach(entry => {
+    if (!isDead(entry)) {
+      run = null
+      return
+    }
+    // a run is a span, not the list of ranges inside it: only its two ends are
+    // ever read, and a list dropping 10,000 rows was building an array of
+    // 10,000 entries to hand over two of them
+    if (run && run.last.nextSibling === entry.range.first) run.last = entry.range.last
+    else runs.push((run = { first: entry.range.first, last: entry.range.last }))
+  })
+  return runs
+}
+
+// moves [first..last] inclusive so the range starts right after `prev`
+const moveRangeAfter = ({ first, last }: NodeRange, prev: Node) => {
+  const ref = prev.nextSibling
+  for (let node: Node | null = first; node; ) {
+    const next: Node | null = node === last ? null : node.nextSibling
+    prev.parentNode!.insertBefore(node, ref)
+    node = next
+  }
+}
+
+// finds the scope variable a template tag refers to. HTML parsing lowercases
+// tag names, so <NestedComponent> arrives as "nestedcomponent" and matching is
+// case-insensitive with dashes stripped (<nested-component> works too). Only
+// PascalCase scope keys participate, so ordinary variables named like real
+// elements (title, code, ...) never hijack them
+const scanComponentKey = (scope: Record<string, any>, tag: string): string | null => {
+  const normalized = tag.replace(/-/g, "").toLowerCase()
+  for (let obj: any = scope; obj && obj !== Object.prototype; obj = Object.getPrototypeOf(obj)) {
+    for (const key of Object.keys(obj)) {
+      if (/^[A-Z]/.test(key) && key.replace(/-/g, "").toLowerCase() === normalized) return key
+    }
+  }
+  return null
+}
+
+// The scan above is run for every element rendered, and it walks the whole
+// scope chain calling Object.keys at each level - which profiling puts at 13.7%
+// of the create path, four times the next attributable frame, almost all of it
+// answering "no" for tags like <td>. Within one render pass the answer can't
+// change: it is a *key*, not the value behind it, so every row of a :each
+// resolves a tag identically, and a store write mid-pass restarts the pass
+// rather than continuing it (the reentrancy guard in reactive.ts).
+//
+// So it is memoized for exactly one pass and no longer. It has to be no longer:
+// a template renders before its setup script settles, so `const Row = await
+// $import(...)` arrives as a new store key *after* elements are on the page -
+// and a cached "no component called Row" that outlived the pass would never be
+// revisited. See RECORD/2026-08-23.component-key-scan.md
+// The memo answers for one *base* scope - the one the pass was opened with -
+// and nothing below it. A lookup walks from wherever it starts up to that base,
+// checking own keys as it goes (an :each item scope has two or three, a :with
+// a handful), and only then consults the memo. So a name introduced under the
+// base still shadows correctly, and a scope that never reaches the base at all
+// - a nested component renders against its own store - has simply been fully
+// scanned by the time the walk ends, which is the answer anyway
+let tagMemo: Map<string, string | null> | null = null
+let memoBase: object | null = null
+
+// Scope objects known to declare no PascalCase key of their own, so the walk
+// below can skip them without calling Object.keys - which allocates an array
+// and scans it, per element, per row. An :each item scope holds `item`,
+// `$index` and maybe the `, at` name, and whether any of those can be a
+// component name is decided by the template, once (see EachPlan).
+//
+// Only scopes jq79 creates and never adds a key to go in here. A store must
+// never: a setup script's `const Row = await $import(...)` arrives as a new key
+// after the template has already rendered, which is the whole reason the tag
+// memo lives for exactly one pass
+const plainScopes = new WeakSet<object>()
+
+// opened and closed by hand rather than by a wrapper taking a callback: a
+// component that renders itself through :each stacks one renderEach per level,
+// and a callback would add a frame to each of them. The cyclic-component test
+// cuts off at MAX_NESTING_DEPTH levels, and on a CI runner that frame per level
+// was the difference between cutting off and a RangeError - the same reason
+// $effect keeps its own shape (see reactive.ts)
+type RenderPass = { memo: Map<string, string | null> | null; base: object | null }
+
+const openRenderPass = (base: Record<string, any>): RenderPass => {
+  const outer: RenderPass = { memo: tagMemo, base: memoBase }
+  tagMemo = new Map()
+  memoBase = base
+  return outer
+}
+
+const closeRenderPass = (outer: RenderPass) => {
+  tagMemo = outer.memo
+  memoBase = outer.base
+}
+
+// which scope key a tag resolves to, and the only place that decides it. Two
+// spellings reach a component and nothing else does:
+//
+// - **the name the author capitalized**, read off `component` rather than off
+//   the tag, because the tag no longer holds it: the pre-parse rewrite renames
+//   <Circle /> to <c79-circle> precisely so the parser cannot build a native
+//   element from it (see componentTagName)
+// - **a dashed tag** - <drop-area> resolves DropArea - which is custom-element
+//   shaped and so cannot collide with a native element either
+//
+// An undashed lowercase tag resolves to nothing, whatever is in scope. That is
+// the other half of the capture this closes: a `Td` in scope no longer turns
+// every <td> under it into a component, and <mychip> no longer becomes MyChip
+// when the key arrives. See RECORD/2026-08-25.component-tag-prefix.md
+const componentKeyOf = (node: TemplateNode, scope: Record<string, any>): string | null =>
+  node.component !== undefined
+    ? findComponentKey(scope, node.component)
+    : node.tag.includes("-")
+      ? findComponentKey(scope, node.tag)
+      : null
+
+// what to call a tag in a message: the name the author wrote. A component tag's
+// `tag` is the renamed c79-* one, which nobody typed and nobody should read
+const tagLabel = (node: TemplateNode): string => node.component ?? node.tag
+
+const findComponentKey = (scope: Record<string, any>, tag: string): string | null => {
+  if (!tagMemo) return scanComponentKey(scope, tag)
+  const normalized = tag.replace(/-/g, "").toLowerCase()
+  for (let obj: any = scope; obj && obj !== Object.prototype; obj = Object.getPrototypeOf(obj)) {
+    if (obj === memoBase) {
+      if (tagMemo.has(tag)) return tagMemo.get(tag)!
+      const key = scanComponentKey(obj, tag)
+      tagMemo.set(tag, key)
+      return key
+    }
+    if (plainScopes.has(obj)) continue
+    for (const key of Object.keys(obj)) {
+      if (/^[A-Z]/.test(key) && key.replace(/-/g, "").toLowerCase() === normalized) return key
+    }
+  }
+  return null
+}
+
+// every name a tag *could* have resolved to, walking the same chain
+// findComponentKey does. Deduped and sorted, because the chain can hold one
+// name twice (a prop shadowing a sibling) and the order it comes out in is the
+// prototype's, which means nothing to a reader scanning for their typo
+const componentsInScope = (scope: Record<string, any>): string[] => {
+  const names = new Set<string>()
+  for (let obj: any = scope; obj && obj !== Object.prototype; obj = Object.getPrototypeOf(obj)) {
+    for (const key of Object.keys(obj)) if (/^[A-Z]/.test(key)) names.add(key)
+  }
+  return [...names].sort()
+}
+
+// a tag whose name resolves to no component, once nothing can still supply one.
+// The error names what *is* in scope: the mistake is nearly always a typo or a
+// missing import, and both are one glance from the list. "(none)" is its own
+// answer - it says the component has no components at all, which points at the
+// import rather than at the spelling
+const unresolvedComponent = (tag: string, scope: Record<string, any>): Error => {
+  const names = componentsInScope(scope)
+  return new Error(
+    `jq79: <${tag}> is not defined - no component of that name is in scope, and nothing renders here. ` +
+    `Import it in a :setup script, declare it as a prop, or add a <template name="${tag}"> to this file. ` +
+    `In scope: ${names.length ? names.join(", ") : "(none)"}.`
+  )
+}
+
+// how deep a component may nest inside itself before the runtime calls it a
+// cycle. Deeper than any real tree, shallower than the JS stack: a truncated
+// render with an error on the console beats a stack overflow with none.
+//
+// It was 200, which is roughly where the stack actually gives out - measured at
+// ~196 levels for the cyclic-data test on macOS arm64 - so the guard lost to the
+// stack whenever a frame on the render path grew, and it did, three times. The
+// ceiling is a property of the host (arm64 vs x64, worker vs main thread), so no
+// number near it can be right everywhere; this one is half of the one ceiling
+// that was measured. See RECORD/2026-09-06.the-depth-guard-lost-its-margin.md
+const MAX_NESTING_DEPTH = 100
+let nestingDepth = 0
+
+// ---------------------------------------------------------------------------
+// slots - content projection
+//
+// A component tag's children are content the child renders where it wrote a
+// <slot>. The dot marks the named variant on both sides, like :model.<name>
+// and :class.<name> already do:
+//
+//   <!-- Card.html -->        <!-- the parent -->
+//   <section>                 <Card>
+//     <header>                  <template :slot.header><h2>{{ t }}</h2></template>
+//       <slot.header>?</slot.header>
+//     </header>                 <p>{{ body }}</p>
+//   <slot />                  </Card>
+//   </section>
+//
+// Three rules decide everything below:
+//
+// 1. Content belongs to the parent - its AST, its scope, its effects, its
+//    scoped styles. The child decides *where* it goes and *whether* it goes,
+//    never what the names in it mean.
+// 2. Slot props are declared, not injected: `:slot="{ item }"` on the usage
+//    site, for the same reason :each writes `item in rows`. Every bare name in
+//    the parent's file is introduced by the parent, so a `<slot :item>` the
+//    child adds later can't silently capture one.
+// 3. What isn't projected isn't rendered. No <slot>, or one behind a false
+//    :if, and the content's effects never exist.
+//
+// The content travels as a thunk, not as DOM: an instance is replaced (a
+// definition swap, a hot reload) and one <slot> may render many times, so a
+// pre-rendered fragment would leak effects and could only be inserted once
+// ---------------------------------------------------------------------------
+
+// renders one slot's content at the position the child put the <slot>: it is
+// handed the slot's props (lazy, so each read re-evaluates in the child's
+// scope), that position's scope and effect scope, and the style mode the
+// child renders under
+type SlotRenderer = (
+  props: Record<string, () => any>,
+  slotScope: Record<string, any>,
+  fx: EffectScope,
+  shadow: boolean
+) => Node
+
+type SlotMap = Record<string, SlotRenderer>
+
+// the content an instance was handed, by slot name. Symbol-keyed and
+// non-enumerable on the store's data, like UNFILLED_PROPS: it rides the scope
+// chain (so a <slot> inside an :each or a :with finds it) and never shows up
+// as data - not in Object.keys, not in a snapshot spread, not in the props a
+// nested component is handed
+const SLOTS = Symbol("jq79.slots")
+
+// the content of one slot, as written at the usage site
+type SlotContent = { nodes: (TemplateNode | string)[]; binder?: string }
+
+// the :slot attribute of a <template>, if it carries one
+const slotAttrOf = (node: TemplateNode): string | undefined =>
+  Object.keys(node.attrs).find(attr => attr === ":slot" || attr.startsWith(":slot."))
+
+const slotAttrName = (name: string) => (name === "default" ? ":slot" : `:slot.${name}`)
+
+// whitespace-only text between two <template :slot> blocks is the indentation
+// between them and nothing else - the same call renderNodes makes between the
+// branches of an :if chain. It is what decides whether a tag has default
+// content at all, which is what $slots.default answers
+const isMeaningful = (node: TemplateNode | string): boolean => typeof node !== "string" || node.trim() !== ""
+
+// a component tag's children, partitioned by slot name: a direct
+// <template :slot.<name>> child fills that name, everything else is the
+// default slot's content. The attribute's value is the pattern the content
+// binds the slot's props to - on the tag itself for the default, since the
+// default content has no <template> of its own to carry it
+const partitionSlots = (node: TemplateNode): Record<string, SlotContent> => {
+  const contents: Record<string, SlotContent> = {}
+  const loose: (TemplateNode | string)[] = []
+
+  node.children.forEach(child => {
+    const attr = typeof child === "object" && child.tag === "template" ? slotAttrOf(child) : undefined
+    if (typeof child === "string" || attr === undefined) {
+      loose.push(child)
+      return
+    }
+    const name = slotName(attr.slice(":slot.".length))
+    // first wins, like two <template name="X"> in one file: a duplicate is a
+    // typo, and the fix is to delete one - not to guess which
+    if (name in contents) {
+      console.warn(`jq79: two <template ${slotAttrName(name)}> in <${tagLabel(node)}>; the second was ignored`)
+      return
+    }
+    contents[name] = { nodes: child.children, binder: child.attrs[attr] || undefined }
+  })
+
+  const hasLoose = loose.some(isMeaningful)
+  if (hasLoose && "default" in contents) {
+    console.warn(
+      `jq79: <${tagLabel(node)}> has both a <template :slot> and content outside it - ` +
+      "the <template> is the default slot's content, and the rest was ignored"
+    )
+  } else if (hasLoose) {
+    contents.default = { nodes: loose, binder: node.attrs[":slot"] || undefined }
+  }
+  return contents
+}
+
+// `:slot="{ item, index: i, total = 0 }"` - the names the content binds the
+// slot's props to. The bindings are accessors, not values: each read
+// re-evaluates the child's expression, so an effect that reads `item` tracks
+// exactly what that expression touches, on every run (createWithScope's design)
+const bindSlotProps = (scope: Record<string, any>, binder: string | undefined, props: Record<string, () => any>) => {
+  parsePropsPattern(binder)?.forEach(({ name, as, default: fallback }) => {
+    const local = as ?? name
+    Object.defineProperty(scope, local, {
+      enumerable: true,
+      configurable: true,
+      get: () => {
+        const value = props[name]?.()
+        return value === undefined && fallback !== undefined ? evalExpr(fallback, scope) : value
+      },
+      // a slot prop is the child's value: it arrives on every read and there
+      // is nowhere for a write to go. Silence would be worse - `with` swallows
+      // an assignment to a getter without a word
+      set: () => console.warn(`jq79: "${local}" is a slot prop - it comes from the component, so assigning to it does nothing`),
+    })
+  })
+}
+
+// a <template :slot> only fills a slot as a direct child of a component tag,
+// where the usage site takes it out of the children before they are ever
+// rendered (see partitionSlots). Anywhere else the position is a mistake, and
+// rendering the content in place - in the wrong scope, into a <template>
+// nobody clones - would be a strange way to say so. A comment rather than
+// nothing: an :if branch needs a node to hold on to (see boundsOf)
+const misplacedSlotContent = (node: TemplateNode): Node => {
+  const attr = slotAttrOf(node)
+  console.warn(`jq79: <template ${attr}> fills a slot only as a direct child of a component tag; here it rendered nothing`)
+  return document.createComment(`misplaced ${attr}`)
+}
+
+// what a usage site hands its instance: every slot it filled, as the thunk
+// that renders it. Built once per site, and in one call - a component tag is
+// on the stack while its whole subtree renders below it (a component that
+// renders itself does this 200 deep), so the intermediates stay in here rather
+// than in the frame that waits
+const buildSlots = (node: TemplateNode, scope: Record<string, any>): SlotMap | null => {
+  const contents = Object.entries(partitionSlots(node))
+  if (!contents.length) return null
+  const slots: SlotMap = {}
+  contents.forEach(([name, content]) => { slots[name] = makeSlotRenderer(content, scope) })
+  return slots
+}
+
+// the thunk one slot's content becomes: the usage site closes over its AST and
+// its scope, the child calls it wherever (and however many times) it renders
+// the matching <slot>
+const makeSlotRenderer = (content: SlotContent, parentScope: Record<string, any>): SlotRenderer =>
+  (props, slotScope, fx, shadow) => {
+    // the parent's scope, plus the names the content declared for the slot's
+    // props (rule 1: what the content says is decided where it was written)
+    const scope: Record<string, any> = Object.create(parentScope)
+    bindSlotProps(scope, content.binder, props)
+    // this content reads the parent's store (its own names) and the child's
+    // (through the slot props), so every effect created anywhere inside it is
+    // registered with both - see ALSO_WAKEN_BY. Appended rather than assigned:
+    // content forwarded through a <slot> inside slot content is still woken by
+    // the store it came from
+    const inherited: Record<string, any>[] = (scope as any)[ALSO_WAKEN_BY] ?? []
+    Object.defineProperty(scope, ALSO_WAKEN_BY, { value: [...inherited, slotScope] })
+
+    const contentFx = createEffectScope(scope)
+    // and the row the <slot> sits in, when it is a keyed one: the slot props
+    // read that row's names, so a new item there has to reach this content
+    contentFx.ownedBy(slotScope)
+    // rule 3: the <slot> is the content's lifetime. When the child's subtree at
+    // this position goes - an :if turning false, the instance being replaced,
+    // the whole child being destroyed - the content's effects go with it
+    fx.onDispose(() => contentFx.dispose())
+    return renderNodes(content.nodes, scope, contentFx, shadow)
+  }
+
+// <slot />, <slot.name>fallback</slot.name>: where the parent's content goes.
+// Unfilled, the slot renders its own children instead - in this component's
+// scope, since that content is this component's. Every attribute that isn't a
+// directive is a slot prop: `:item="item"` evaluates here and reaches the
+// content under the name it declared, a plain attribute passes a literal
+// string, and there are no reserved names (the slot's own name is in the tag).
+// Bracketed by anchors like a nested component, so the chunk has stable bounds
+// even when it renders nothing (see boundsOf)
+const renderSlot = (node: TemplateNode, scope: Record<string, any>, fx: EffectScope, shadow: boolean): Node => {
+  const name = slotName(node.tag.slice("slot.".length))
+  const wrapper = document.createDocumentFragment()
+  const anchor = document.createComment(node.tag)
+  const endAnchor = document.createComment(`/${node.tag}`)
+  wrapper.append(anchor, endAnchor)
+
+  const render = (scope as any)[SLOTS]?.[name] as SlotRenderer | undefined
+  if (!render) {
+    wrapper.insertBefore(renderNodes(node.children, scope, fx, shadow), endAnchor)
+    return wrapper
+  }
+
+  const props: Record<string, () => any> = {}
+  Object.entries(node.attrs).forEach(([attr, value]) => {
+    // the scope stamp is the component's, not a prop; @events have no element
+    // to bind here; and a directive means what it means everywhere else -
+    // :if/:each/:with decide whether and how often this slot renders, so they
+    // are the renderer's, not the content's
+    if (attr === SCOPE_ATTR || isControlAttr(attr) || attr.startsWith("@")) return
+    if (attr.startsWith(":")) {
+      const expr = value || attr.slice(1)
+      props[kebabToCamel(attr.slice(1))] = () => evalExpr(expr, scope)
+    } else {
+      props[kebabToCamel(attr)] = () => value
+    }
+  })
+
+  wrapper.insertBefore(render(props, scope, fx, shadow), endAnchor)
+  return wrapper
+}
+
+// the element a component instance renders in - <c79-user-card> - and the
+// reason step 2 of the tag rename exists: a component stops being a pair of
+// comments around loose content and becomes a box that names itself in the
+// inspector and can be addressed by name in CSS.
+//
+// Named after the *component*, not the usage site, so `<UserCard />` and
+// `<user-card>` render the same box and a stylesheet has one name to target.
+//
+// It carries the PARENT's scope stamp, which is not an arbitrary pick: a
+// <style scoped> is rewritten to demand the stamp of whoever wrote it, and
+// `Circle { … }` is written by the parent. The stamp is already on the node -
+// stampScope walks the parent's template and the component tag is part of it -
+// and today it is dropped for want of an element to put it on. The child's own
+// root still carries no stamp from the parent, so a parent gets the box and
+// never what is inside it.
+//
+// EXCEPT inside <svg> or <math>: SVG's rendering model renders neither an
+// unknown element nor its children, and `display: contents` is not the escape
+// hatch there that it is in HTML, so a wrapper could turn a diagram into a
+// blank. A foreign-namespace usage site keeps the anchors alone, as it always
+// had. See RECORD/2026-08-25.the-wrapper-and-the-css-rename.md
+const COMPONENT_BOX_ATTR = "data-c79-box"
+
+const componentBox = (key: string, node: TemplateNode, shadow: boolean): DocumentFragment | HTMLElement => {
+  if (node.ns !== undefined) return document.createDocumentFragment()
+  const box = document.createElement(componentTagName(key))
+  // the marker the default stylesheet selects on. A tag name cannot be
+  // prefix-matched in CSS, and one attribute is one rule for every box on the
+  // page - see wrapperStyle()
+  box.setAttribute(COMPONENT_BOX_ATTR, "")
+  const stamp = node.attrs[SCOPE_ATTR]
+  if (stamp !== undefined) box.setAttribute(SCOPE_ATTR, stamp)
+  // a shadow-rendered tree leaves document.head alone - its copy of the rule
+  // rides with the instance's own styles instead (see renderWith)
+  if (!shadow) ensureWrapperStyle()
+  return box
+}
+
+// <MyComponent :user :title="'str'"></MyComponent> - renders a child
+// component instance at this position. Props: `:name="expr"` evaluates expr
+// in the parent scope (`:name` alone is shorthand for `:name="name"`), plain
+// attributes pass through as literal strings, and kebab-case prop names
+// become camelCase. Props stay live: a parent effect re-evaluates each
+// expression and writes it into the child's store. The component variable is
+// reactive too - while it's undefined (e.g. an `await import(...)` still in
+// flight) nothing renders, and the child appears when it resolves.
+// `shadow` is the parent's style mode, carried down the whole render: a child
+// of a shadow-rendered component renders inside that shadow root, so its
+// <style> has to go in there with it - document.head can't reach into a shadow
+// tree, and a style that never applies to its own component would still be
+// restyling the page around it
+// once per usage site, not per instance: a :each of 1,000 rows shares one AST
+// node, and the message is about the position rather than the row
+const warnedForeignRoots = new WeakSet<TemplateNode>()
+
+// A namespace is a PARSE-time fact and a usage site is a RENDER-time one, and a
+// nested component is the first thing that separates them: a definition's
+// template is parsed on its own, so a template rooted at a bare <circle> comes
+// out of the parser in HTML - it lands inside the <svg> and never draws, in
+// every engine. Nothing about that is visible: no error, no gap, an element in
+// the DOM with nothing on the screen.
+//
+// A component's template decides its own namespace, which is the answer this
+// project chose (RECORD/2026-08-26.the-namespace-of-a-component.md): a component
+// used inside an <svg> roots its template at <svg>. This is what says so when it
+// does not, instead of leaving a blank diagram
+const warnForeignRoot = (node: TemplateNode, definition: Component79) => {
+  if (node.ns === undefined || warnedForeignRoots.has(node)) return
+  const root = definition.template.find(child => typeof child === "object") as TemplateNode | undefined
+  if (root === undefined || root.ns !== undefined) return
+  warnedForeignRoots.add(node)
+  const wrapper = node.ns === "http://www.w3.org/1998/Math/MathML" ? "<math>" : "<svg>"
+  console.warn(
+    `jq79: <${tagLabel(node)}> is used inside ${wrapper} and its template starts with <${root.tag.toLowerCase()}>, ` +
+    `which is parsed as HTML - it renders and never draws. A component's template decides its own namespace, ` +
+    `so root it at ${wrapper}`
+  )
+}
+
+const renderNestedComponent = (key: string, node: TemplateNode, scope: Record<string, any>, fx: EffectScope, shadow: boolean): Node => {
+  // What this usage site ever renders needs stable bounds: the instance's DOM
+  // is dynamic (the definition can resolve late or be swapped), so a caller
+  // that moves or removes the chunk later cannot hold any of it.
+  //
+  // The BOX is those bounds where there is one - it is created once here and
+  // never replaced, and boundsOf resolves an element as { first: el, last: el }.
+  // So a boxed usage site renders no anchors at all: two comment nodes per
+  // instance that nothing read (RECORD/2026-08-25.retire-the-anchors.md).
+  //
+  // In a foreign namespace there is no box (componentBox returns a fragment,
+  // because a wrapper inside <svg> takes the drawing with it - measured in
+  // three engines), and there the anchors are still doing the whole job
+  const wrapper = componentBox(key, node, shadow)
+  const boxed = !(wrapper instanceof DocumentFragment)
+  const endAnchor = boxed ? null : document.createComment(`/${key}`)
+  if (!boxed) wrapper.append(document.createComment(key), endAnchor!)
+
+  // the tag's children, as content for the child's <slot>s. Built once per
+  // usage site (the AST doesn't change) and closed over the parent's scope
+  // here, so every instance this site ever renders is handed the same thunks
+  const slots = buildSlots(node, scope)
+
+  const props: Record<string, string> = {} // prop name -> expression in parent scope
+  const models: Record<string, string> = {} // model name -> assignable expression in parent scope
+  const events: Array<[string, string]> = [] // @attr (modifiers included) -> handler expression
+  // named props AND spreads in source order - what a :props merge folds over so
+  // precedence follows the JS object-spread rule (later wins). `name` absent
+  // marks a spread: the whole object's properties, not one binding
+  const sources: Array<{ name?: string; expr: string }> = []
+  let hasSpread = false
+  // directives written on the tag whose names a prop could have (see
+  // warnDirectiveProps) - allocated only when there is one
+  let directiveNamed: string[] | undefined
+  Object.entries(node.attrs).forEach(([attr, value]) => {
+    // the parent's scope stamp is stamped on every template element, this tag
+    // included - it's not a prop, and the child renders under its own scope
+    if (attr === SCOPE_ATTR) return
+    if (attr === ":props" || attr.startsWith(":props.")) {
+      // :props="obj" spreads obj's own properties as props; :props.<n> is one
+      // spread among several (the `...obj` sugar rewrites to it - see
+      // expandPropsSpread), the suffix only keeping the attribute names distinct
+      hasSpread = true
+      sources.push({ expr: value })
+      return
+    }
+    if (isControlAttr(attr)) {
+      if (DIRECTIVE_PROP_NAMES.has(attr)) (directiveNamed ??= []).push(attr.slice(1))
+      return
+    }
+    if (attr.startsWith("@")) {
+      events.push([attr, value])
+    } else if (attr === ":model" || attr.startsWith(":model.")) {
+      // :model[.name]="expr" - two-way: a prop down plus a writeback listener
+      // (wired below, once the instance exists). The modifier arrives
+      // kebab-case whichever way it was authored (expandNameCase rewrote any
+      // camelCase before parsing); the bare :model binds the name "default"
+      const name = attr === ":model" ? "default" : kebabToCamel(attr.slice(":model.".length))
+      models[name] = value || (attr === ":model" ? "model" : name)
+    } else if (attr.startsWith(":")) {
+      const name = kebabToCamel(attr.slice(1))
+      props[name] = value || name
+      sources.push({ name, expr: value || name })
+    } else {
+      const name = kebabToCamel(attr)
+      const expr = JSON.stringify(value)
+      props[name] = expr
+      sources.push({ name, expr })
+    }
+  })
+
+  // each model is also a prop down: the child reads the value under the
+  // model's name - `model` for the default, because a prop named `default`
+  // could never be read from a child expression (reserved word). Without the
+  // prop this isn't two-way, it's upward collection: a parent reset or an
+  // initial value would never reach the child
+  const modelAttr = (name: string) => (name === "default" ? ":model" : `:model.${name}`)
+  const modelProp = (name: string) => (name === "default" ? "model" : name)
+  // the models whose expression will never take an update, decided here rather
+  // than at update time: an assignment that landed and one that was dropped
+  // both evaluate to the value assigned, so the result can't tell them apart -
+  // which is what $updateModel's return has to report
+  const unassignable = new Set<string>()
+  Object.entries(models).forEach(([name, expr]) => {
+    const prop = modelProp(name)
+    if (props[prop] !== undefined) {
+      console.warn(`jq79: <${tagLabel(node)}> binds prop "${prop}" through both :${prop} and ${modelAttr(name)} - ${modelAttr(name)} wins`)
+    }
+    props[prop] = expr
+    // an expression that can't be an assignment target is a wiring mistake -
+    // say so now, not on the first update that silently goes nowhere
+    if (compileExpr(assignment(expr), ["$value"]) === null) {
+      unassignable.add(name)
+      console.warn(`jq79: ${modelAttr(name)}="${expr}" is not assignable - updates from <${tagLabel(node)}> will be dropped`)
+    }
+  })
+
+  // the full prop set the child gets, resolved in source order: each named prop
+  // sets one key, each spread merges an object's own properties, later sources
+  // overwriting earlier (the JS object-spread rule). :model bindings apply last,
+  // so they win - the same precedence the collision warning above promises. A
+  // spread expression that isn't an object contributes nothing (fail closed,
+  // like :with), so an `await`-pending object spreads once it resolves
+  const resolveProps = (): Record<string, any> => {
+    const out: Record<string, any> = {}
+    sources.forEach(({ name, expr }) => {
+      if (name !== undefined) out[name] = evalExpr(expr, scope)
+      else {
+        const obj = evalExpr(expr, scope)
+        if (obj !== null && typeof obj === "object") Object.assign(out, obj)
+      }
+    })
+    Object.entries(models).forEach(([name, expr]) => { out[modelProp(name)] = evalExpr(expr, scope) })
+    return out
+  }
+
+  let current: Component79 | null = null
+  let currentDef: Component79 | null = null
+  let childFx: EffectScope | null = null
+
+  // a usage site that resolves to no component renders nothing, which is
+  // deliberate - `undefined` while an `await import(...)` is in flight has to
+  // wait quietly, and the child appears when it lands. Two cases can never
+  // resolve, though, and both are wiring mistakes worth naming: a value that
+  // isn't a component (and so will never become one by waiting), and a name
+  // the component declared as a prop that the parent passed nothing for. Once
+  // each, per usage site: an effect re-runs
+  const reported = new Set<string>()
+  const reportUnresolved = (value: any) => {
+    if (value === undefined || value === null) {
+      const unfilled: Set<string> | undefined = (scope as any)[UNFILLED_PROPS]
+      if (!unfilled?.has(key) || reported.has("unfilled")) return
+      reported.add("unfilled")
+      console.error(
+        `jq79: <${tagLabel(node)}> is declared as a prop and the parent passed nothing - nothing renders here. ` +
+        `Pass it (:${key}="…"), or drop it from the signature to use the one declared in this file.`
+      )
+      return
+    }
+    if (reported.has("type")) return
+    reported.add("type")
+    console.error(`jq79: <${tagLabel(node)}> is ${typeof value}, not a component - nothing renders here`)
+  }
+
+  fx.effect(() => {
+    const value = evalExpr(key, scope)
+    const nextDef = value instanceof Component79 ? value : null
+    if (!nextDef) reportUnresolved(value)
+    if (nextDef === currentDef) return
+
+    childFx?.dispose()
+    childFx = null
+    current?.destroy() // detaches its marker range, removing the child's DOM
+    current = null
+    currentDef = nextDef
+    if (!nextDef) return
+
+    warnForeignRoot(node, nextDef)
+
+    // a fresh instance per usage site: the definition's parsed parts (and
+    // pre-resolved modules) are shared, but store/effects/DOM are per instance
+    const instance = new Component79({
+      template: nextDef.template,
+      scripts: nextDef.scripts,
+      styles: nextDef.styles,
+      modules: nextDef.modules,
+      filename: nextDef.filename,
+      // its file's other components, and which of them it is: without the
+      // first a child rendered here loses the siblings its definition could
+      // see, and without the second hot reload can't tell it what it is
+      siblings: nextDef.siblings,
+      name: nextDef.name,
+    })
+    // the content this site wrote inside the tag, before the first render: a
+    // <slot> is resolved while rendering, so the map has to be there by then
+    if (slots) instance.slots = slots
+    // the writeback half of :model - the function the child's $updateModel
+    // calls, handed over before the first render. Not an event: nothing about
+    // a parent-child assignment wants a CustomEvent bubbling through the page
+    // on every keystroke, and a direct call has no payload shape to get wrong.
+    // The name is normalized like the attribute was (kebab->camel; absent
+    // means the default model), and a name nothing binds warns: a typo must
+    // not be an input that types into the void
+    if (Object.keys(models).length) {
+      // each mistake is warned once per instance, not once per keystroke: an
+      // input updating a typo'd name would otherwise flood the console on
+      // every character typed into it
+      const warned = new Set<string>()
+      instance.modelWriteback = (rawName, value) => {
+        const name = rawName == null ? "default" : kebabToCamel(String(rawName))
+        const expr = models[name]
+        if (expr === undefined) {
+          if (!warned.has(name)) {
+            warned.add(name)
+            console.warn(`jq79: <${tagLabel(node)}> has no ${modelAttr(name)} - bound: ${Object.keys(models).map(modelAttr).join(", ")}`)
+          }
+          return false
+        }
+        if (unassignable.has(name)) return false // already warned, at wiring time
+        // untracked, like the tag handlers: a child updating from its setup
+        // script runs inside the parent's *creation* effect, and the reads a
+        // path assignment makes (`user` in `user.name = $value`) would land
+        // in its deps - donating that effect one wasted (guard-stopped) wake
+        // per later write. An imperative writeback is nobody's dependency
+        untracked(() => evalExpr(assignment(expr), scope, { $value: value }))
+        return true
+      }
+    }
+
+    // @event on the tag listens to this instance's $emit channel (and only
+    // this instance's - a grandchild's emit arrives here solely as an
+    // explicit re-emit)
+    events.forEach(([attr, expr]) => wireTagEvent(instance, attr, expr, scope))
+
+    // what this component actually takes, decided by its signature. Applied to
+    // every path that writes a prop - the seed here and both sync paths below -
+    // or an undeclared name would be filtered on the first render and reappear
+    // on the next update
+    const declared = declaredPropSet(instance.scripts)
+    warnUndeclared(node, key, Object.keys(props), declared)
+    if (directiveNamed) warnDirectiveProps(node, key, directiveNamed, declared)
+    const seed = pickDeclared(untracked(resolveProps), declared)
+    // mounting into a fragment attaches no shadow root of its own: a
+    // shadow-rendered child keeps its <style> elements inline, next to the DOM
+    // they style, and the parent's shadow root is what scopes both
+    const holder = document.createDocumentFragment()
+    // rendering a child happens on this same stack, so a component that
+    // renders itself recurses as deep as its data does - and a cycle in that
+    // data would recurse until the JS stack gave out, ~900 identical frames
+    // naming nothing. Cut and named instead, exactly like the effect runner
+    // cuts an effect that wakes itself
+    if (nestingDepth >= MAX_NESTING_DEPTH) {
+      console.error(
+        `jq79: <${tagLabel(node)}> is ${MAX_NESTING_DEPTH} levels deep inside itself; giving up here. ` +
+        "A component that renders itself stops when its data stops - is there a cycle in it?"
+      )
+      return
+    }
+    nestingDepth++
+    try {
+      ;(shadow ? instance.renderShadow(seed) : instance.render(seed)).mount(holder)
+    } finally {
+      nestingDepth--
+    }
+    // a child whose script holds its render paints later than this template:
+    // its owner's $mounted() waits for it. Absent under renderComponent(),
+    // where no instance owns the template
+    const box: PendingScripts | undefined = (scope as any)[PENDING_SCRIPTS]
+    if (box) instance.holdOwner(box.owner)
+
+    // the box holds this instance and nothing else, so appending is the whole
+    // of it; without one, the end anchor is the only fixed point there is - and
+    // its parentNode is the fragment before this site is inserted and the real
+    // parent after, which is why it is read here rather than captured
+    if (endAnchor) endAnchor.parentNode!.insertBefore(holder, endAnchor)
+    else wrapper.appendChild(holder)
+
+    // deep: a prop sync forwards whatever the expression evaluates to, whole,
+    // into the child's store - it reads `user`, never `user.name`, so it can't
+    // track what it passes on. A parent's deep mutation reaches the child
+    // through this effect or not at all (see $effect's `deep`)
+    const syncFx = createEffectScope(scope, true)
+    // without a spread the prop set is fixed and known: one effect per prop, so
+    // a change to one prop re-syncs only that prop. A spread's key set is
+    // dynamic and its precedence is positional, so it can't be resolved a key at
+    // a time across independent effects (whichever re-ran last would win) - one
+    // effect re-merges everything in order and writes the diff, clearing keys a
+    // spread has dropped since last run. Named props are always in the merge, so
+    // they're never cleared; the extra cost is confined to spread-using tags
+    if (hasSpread) {
+      let written: string[] = []
+      syncFx.effect(() => {
+        const next = pickDeclared(resolveProps(), declared)
+        const nextKeys = Object.keys(next)
+        written.forEach(key => { if (!(key in next)) (instance.data as Record<string, any>)[key] = undefined })
+        nextKeys.forEach(key => { (instance.data as Record<string, any>)[key] = next[key] })
+        written = nextKeys
+      })
+    } else {
+      Object.entries(props).forEach(([name, expr]) => {
+        if (declared !== null && !declared.has(name)) return
+        syncFx.effect(() => { (instance.data as Record<string, any>)[name] = evalExpr(expr, scope) })
+      })
+    }
+
+    childFx = syncFx
+    current = instance
+  })
+
+  fx.onDispose(() => {
+    childFx?.dispose()
+    current?.destroy()
+  })
+
+  return wrapper
+}
+
+// :with="expr" narrows the scope for an element and its subtree: names
+// resolve against the expression's value first, then fall back to the outer
+// scope. The value is re-evaluated lazily on every name lookup (never
+// snapshotted), so an effect reading through this proxy tracks both the
+// expression's own dependencies and the property it reads - replacing the
+// object or mutating one of its properties re-renders exactly the dependents,
+// without rebuilding the subtree. Assignments to names the object owns write
+// through to it (reactively, if it came from a store); everything else
+// behaves as if the :with weren't there
+const createWithScope = (expr: string, scope: Record<string, any>): Record<string, any> => {
+  const source = (): Record<string, any> | null => {
+    const value = evalExpr(expr, scope)
+    return value !== null && typeof value === "object" ? value : null
+  }
+  return new Proxy(scope, {
+    has(target, key) {
+      const obj = source()
+      return (obj !== null && Reflect.has(obj, key)) || Reflect.has(target, key)
+    },
+    get(target, key) {
+      const obj = source()
+      if (obj !== null && Reflect.has(obj, key)) return obj[key as string]
+      return Reflect.get(target, key)
+    },
+    set(target, key, value) {
+      const obj = source()
+      if (obj !== null && Reflect.has(obj, key)) {
+        obj[key as string] = value
+        return true
+      }
+      return Reflect.set(target, key, value)
+    },
+  })
+}
+
+// what :class accepts, flattened to single class tokens: a string of
+// space-separated names, an array (entries normalized recursively), or an
+// object whose truthy-valued keys are the names (a key may itself hold
+// several). Everything else - null, false, numbers - contributes nothing, so
+// `cond && 'active'` reads naturally. The object form reads each value, so a
+// store-backed flag is tracked per key
+const classNames = (value: any): string[] => {
+  if (typeof value === "string") return value.split(/\s+/).filter(Boolean)
+  if (Array.isArray(value)) return value.flatMap(classNames)
+  if (value !== null && typeof value === "object")
+    return Object.entries(value).flatMap(([name, on]) => (on ? classNames(name) : []))
+  return []
+}
+
+// what :html.allowed accepts, normalized to an AllowUrl predicate: host
+// patterns (a comma-separated string or an array - see allowedHosts in
+// ./dom) or a function (url: URL, tag, attr) => boolean. Anything else -
+// including a policy expression that evaluates to undefined - denies every
+// destination: the attribute declares the intent to restrict, so a broken
+// policy fails closed, and so does a predicate that throws
+const normalizeAllowUrl = (policy: any): AllowUrl => {
+  if (typeof policy === "function") {
+    return (url, tag, attr) => {
+      try {
+        return !!policy(url, tag, attr)
+      } catch {
+        return false
+      }
+    }
+  }
+  if (typeof policy === "string" || Array.isArray(policy)) return allowedHosts(policy)
+  return () => false
+}
+
+// HTML's boolean attributes, verbatim from the spec's list. Presence is the
+// whole message for these: `disabled="false"` and `disabled="0"` both disable,
+// so the value they carry is noise. This is a table of a fact, not of a jq79
+// convention - nobody in this repo decides what belongs in it, which is what
+// earns it a place in a codebase that otherwise has no name tables
+const BOOLEAN_ATTRS = new Set([
+  "allowfullscreen", "async", "autofocus", "autoplay", "checked", "controls",
+  "default", "defer", "disabled", "formnovalidate", "inert", "ismap",
+  "itemscope", "loop", "multiple", "muted", "nomodule", "novalidate", "open",
+  "playsinline", "readonly", "required", "reversed", "selected",
+])
+
+// the value rule for `:attr="expr"`. It was shared with `:attrs` until that
+// directive was retired (RECORD/2026-08-27.retiring-attrs.md), which is why it
+// reads like a contract rather than an implementation detail:
+//
+// - a boolean attribute is removed by ANY falsy value and set to "" when
+//   truthy, so `:disabled="items.length"` enables the button on an empty list
+//   (with `value !== false` as the only test, 0 set the attribute and disabled
+//   it - the trap renderComponent.test.ts used to pin);
+// - every other attribute is removed only by null/undefined, so `false`, `0`
+//   and `""` are written. `aria-expanded="false"` and a `data-` flag mean
+//   something that absent cannot say.
+//
+// Asking the DOM which family a name belongs to (`typeof el[name] ===
+// "boolean"`) is deliberately not what this does: jsdom and Chrome disagree on
+// `autofocus` and every `aria-*`, so the tests would pin a semantics the
+// browser doesn't have - and `readonly`/`novalidate`/`ismap` reflect under
+// camelCase property names no kebab->camel pass can produce, failing toward
+// `readonly="false"`, which is read-only
+// the one place an element is built, so the interpreted path and the cloner
+// cannot disagree about what a tag means. `ns` is set only for a foreign
+// element (see TemplateNode) - and creating one in its own namespace is what
+// makes `viewBox` keep its case, because setAttribute only lowercases a
+// qualified name on an HTML element
+const createFor = (node: TemplateNode): Element =>
+  node.ns === undefined ? document.createElement(node.tag) : document.createElementNS(node.ns, node.tag)
+
+// A bound camelCase SVG attribute, resolved by asking the parser.
+//
+// expandNameCase rewrites `:viewBox` to `:view-box` before the parse, because
+// the HTML parser lowercases attribute names and `:firstName` has to survive
+// it. For SVG's camelCase attributes that is wrong: `view-box` is not an
+// attribute SVG has, and it was wrong in silence.
+//
+// The HTML parser carries its own table for adjusting foreign attribute names -
+// it is what makes a written-out `viewBox="0 0 10 10"` survive at all. So ask
+// that table rather than shipping a copy of it: write the name into markup in
+// the element's own namespace, and read back what the parser called it. The
+// answer comes from the engine that will render the page, so it cannot disagree
+// with what that same engine does with the attribute written out.
+//
+// This is not the IDL trick RECORD/2026-08-24.svg-namespace.md buried. That one
+// asked "which family does this name belong to", a question with no ground
+// truth, and Chromium answered wrong for stdDeviation, attributeName and
+// repeatCount. This asks the table that decides the static case, and it is
+// right for all three - see RECORD/2026-08-25.svg-attribute-names.md.
+const FOREIGN_PROBES: Record<string, [wrapper: string, tag: string]> = {
+  "http://www.w3.org/2000/svg": ["svg", "feGaussianBlur"],
+  "http://www.w3.org/1998/Math/MathML": ["math", "mi"],
+}
+
+// one parse per namespace per name, ever - measured at 0.027ms, against
+// 0.000019ms for a hit. Only SVG and MathML have an adjustment table, so every
+// other namespace (and every HTML element) skips this entirely
+const adjustedNames = new Map<string, string>()
+
+const adjustedName = (ns: string, flat: string): string => {
+  const key = `${ns} ${flat}`
+  const cached = adjustedNames.get(key)
+  if (cached !== undefined) return cached
+
+  const probe = FOREIGN_PROBES[ns]
+  let adjusted = flat
+  // the name goes into markup, so it is checked rather than trusted - and a
+  // name the table could adjust is plain letters by construction. No DOMParser
+  // (a non-browser host) falls back to the name as written, which is what
+  // shipped before this existed
+  if (probe !== undefined && typeof DOMParser !== "undefined" && /^[a-z][a-z0-9]*$/.test(flat)) {
+    const [wrapper, tag] = probe
+    const doc = new DOMParser().parseFromString(`<${wrapper}><${tag} ${flat}="x"/></${wrapper}>`, "text/html")
+    adjusted = doc.querySelector(tag)?.getAttributeNames().find(name => name.toLowerCase() === flat) ?? flat
+  }
+  adjustedNames.set(key, adjusted)
+  return adjusted
+}
+
+// `name` is what the rewrite left: kebab, whichever way the author spelled it.
+// Both spellings converge on purpose, so this has to be a pure function of the
+// kebab name and the namespace - which makes a collision the only thing that
+// could break it, a real kebab attribute whose de-dashed form the table claims.
+// Measured over 58 dashed SVG names (every presentation attribute, plus data-*
+// and aria-*): none collides
+const foreignAttrName = (el: Element, name: string): string => {
+  const ns = el.namespaceURI
+  if (ns === null || ns === HTML_NS) return name
+  // no shortcut for a name without a dash: `:viewbox` is a spelling somebody
+  // writes, the parser adjusts it written out, and skipping the lookup left the
+  // bound form dead where the static one worked. What it costs is a memoised
+  // Map hit per foreign binding - 83 undashed names measured, none claimed
+  const flat = name.replace(/-/g, "").toLowerCase()
+  const adjusted = adjustedName(ns, flat)
+  // unchanged means the parser does not claim this name, so the author wrote a
+  // real kebab attribute (`stroke-width`) and it stays exactly as written
+  return adjusted === flat ? name : adjusted
+}
+
+const applyAttr = (el: Element, name: string, value: any) => {
+  const boolean = BOOLEAN_ATTRS.has(name)
+  if (boolean ? !value : value == null) el.removeAttribute(name)
+  else el.setAttribute(name, boolean ? "" : String(value))
+}
+
+// renders a single element node: static attrs, @event listeners, `:name`
+// attribute bindings, and its content - :text/:html override the element's own
+// children with a reactive textContent/innerHTML, otherwise children render
+// normally. :if/:elseif/:else/:each are handled by renderNodes, which decides
+// *whether*/*how many times* a node is rendered before calling this. Tags
+// matching a PascalCase scope variable render as nested components instead
+
+// ---------------------------------------------------------------------------
+// Cloning a fixed shape instead of deriving it per instance.
+//
+// renderNode asks the same questions of the same AST node for every instance of
+// it: is this a slot, a component, an unknown tag; which of these attributes is
+// a directive; split this text on `{{`. For a :each of 1,000 rows that is ~25
+// questions per element per row whose answers were fixed by the source text.
+// Where a subtree's *shape* is fixed - the elements, their static attributes and
+// their nesting never vary, only the values bound into them - the shape is built
+// once per definition into a detached skeleton, and each instance is one
+// cloneNode plus a walk to each binding point.
+//
+// Worth -20 to -49% of create1k depending on how much fixed structure a row
+// has, and nothing at all on a row that has none. Measured, with the method and
+// the caveats, in RECORD/2026-08-24.clone-skeletons-measured.md.
+//
+// Two rules keep this from becoming the bug it could be:
+//
+// 1. **The holes are an allowlist, never a denylist.** `plannableAttr` names
+//    what a skeleton knows how to fill; every other attribute makes the subtree
+//    unplannable. So a directive added to renderNode later is *slower* until
+//    somebody teaches it here - never silently mis-rendered, which is the
+//    failure a second render path invites.
+//
+//    The allowlist is where the one divergence found so far came from, and it
+//    came from *widening* rather than from renderNode growing: `:model` is the
+//    single directive renderNode treats specially that CONTROL_ATTRS does not
+//    name, so it slipped through the generic `:<name>` clause. Adding to this
+//    list is the dangerous edit in this file - see
+//    RECORD/2026-08-24.more-holes-in-the-cloner.md.
+// 2. **The interpreted path stays the fallback for everything else**, including
+//    every tag that could still turn into a component. The upgrade watch and
+//    the unresolved-component throw are not reimplemented here; they are never
+//    reached from here.
+//
+// tests/skeleton.test.ts renders a corpus both ways and diffs the DOM *and the
+// order the bindings register in*, which is what makes rule 1 enforceable
+// rather than a promise. The order axis is not decoration: :value on a <select>
+// has to run after its <option>s are bound, and no DOM diff can see that.
+// ---------------------------------------------------------------------------
+
+// Flipping this must never change what renders, only how - which is what
+// tests/skeleton.test.ts exists to keep true. It is on, and switchable through
+// `Component79.debug({ cloneSkeletons: false })`, because a second render path
+// is the kind of change that wants an off switch a user can reach without a
+// rebuild: a page that renders wrong is a bug report either way, but one whose
+// reporter can say "it goes away with cloning off" is a bug report that names
+// the file
+const debugFlags: DebugFlags = { cloneSkeletons: true, scopedNames: true }
+
+// What `Component79.debug()` can switch. One flag today; the shape is an object
+// so the next one does not change the call
+export type DebugFlags = {
+  // build a fixed-shape subtree by cloning a skeleton made once per definition,
+  // instead of walking the AST for every instance of it. Off means every
+  // element goes through renderNode, exactly as before this existed
+  cloneSkeletons: boolean
+
+  // resolve an expression's free names with a `const` prologue instead of
+  // `with ($scope)`. Off means every expression is compiled the way it always
+  // was, which is what makes the two forms comparable on one build - both in
+  // tests/expressions.test.ts and in `npm run benchmark:ab -- --flags`
+  scopedNames: boolean
+}
+
+// the control attributes a skeleton knows how to fill. The rest of
+// CONTROL_ATTRS stays rejected on purpose: :if/:elseif/:else/:each/:key change
+// the shape rather than filling a hole, :with changes the scope its subtree
+// evaluates in, and :props belongs to a component tag.
+//
+// `:html` is here and `:html.allowed` is not, which is the whole of why the
+// warning renderNode emits for an `:html.allowed` with no `:html` is not this
+// list's problem: `:html.allowed` is rejected by the two clauses below (a
+// control attr, and a dotted name), so an element carrying one is never planned
+// and renderNode stays the only place that warning can fire from - once per
+// render, as before. See RECORD/2026-08-25.html-in-the-cloner.md
+const PLANNABLE_CONTROL_ATTRS = new Set([":text", ":html", ":value", ":checked", ":selected"])
+
+// What a hole can be, in the order renderNode registers them.
+// A `:` attribute with a dot in it is rejected wholesale except `:class.`:
+// `:model.`, `:props.`, `:slot.` and `:html.allowed` all live in that shape, and
+// so would the next directive family somebody invents
+const plannableAttr = (name: string): boolean => {
+  if (name.startsWith("@")) return true
+  if (name === ":class") return true
+  if (name.startsWith(":class.")) return true
+  if (PLANNABLE_CONTROL_ATTRS.has(name)) return true
+  if (!name.startsWith(":")) return name !== COMPONENT_TAG_ATTR // a static attribute
+  // `:model` is the one directive renderNode treats specially that CONTROL_ATTRS
+  // does not name, so the clause below would let it through as a generic
+  // `:<name>` binding and the skeleton would write `model="..."` where the
+  // interpreted path warns and writes nothing (`:model` binds component tags
+  // only). `:model.<name>` is caught by the dot; the bare form needs saying
+  if (name === ":model") return false
+  return !isControlAttr(name) && !name.includes(".")
+}
+
+const plannableNode = (node: TemplateNode): boolean => {
+  if (node.component || node.tag.includes("-")) return false
+  if (isSlotTag(node.tag) || node.tag === "template") return false
+  // an unknown tag stays interpreted. It can no longer become a component - the
+  // upgrade watch narrowed to a stamped or dashed tag, both of which are
+  // rejected above - so this is a conservative rule rather than a load-bearing
+  // one: an undashed name the parser does not know is a typo or a custom
+  // element that can never register, and nothing is measured to be gained by
+  // cloning it. A *foreign* element skips the test rather than failing it:
+  // <circle> is an HTMLUnknownElement when built with createElement, which is
+  // exactly the mistake this used to make
+  if (node.ns === undefined && document.createElement(node.tag) instanceof HTMLUnknownElement) return false
+  for (const key in node.attrs) if (!plannableAttr(key)) return false
+  // an element with :text or :html has no children on either path (see
+  // buildSkeleton), so what the source wrote inside it cannot make the subtree
+  // unplannable - a component tag under a :text is markup nobody renders, not
+  // markup the clone path would get wrong
+  if (node.attrs[":text"] !== undefined || node.attrs[":html"] !== undefined) return true
+  return node.children.every(child => typeof child === "string" || plannableNode(child))
+}
+
+// A hole, and the path from the skeleton root to the node it fills: child
+// indices rather than a query, resolved by walking childNodes. The AST keeps
+// whitespace text nodes on purpose, and the skeleton keeps them too, so the
+// indices line up on both sides by construction
+type SkeletonOp =
+  | { kind: "text"; path: number[]; parts: TextPart[] }
+  | { kind: "event"; path: number[]; attr: string; expr: string }
+  | { kind: "attr"; path: number[]; name: string; expr: string }
+  | { kind: "class"; path: number[]; classExpr?: string; toggles: [string, string][] | null; staticClasses: Set<string> }
+  | { kind: "textContent"; path: number[]; expr: string }
+  | { kind: "html"; path: number[]; expr: string }
+  | { kind: "value"; path: number[]; expr: string }
+  | { kind: "checked"; path: number[]; expr: string }
+  | { kind: "selected"; path: number[]; expr: string }
+
+type SkeletonPlan = { skeleton: Element; ops: SkeletonOp[] }
+
+// mirrors renderNode's own order: the attribute walk (events and attribute
+// bindings as they appear), then :class, then the children. Effects run in
+// registration order, so this is not cosmetic
+const buildSkeleton = (node: TemplateNode, path: number[], ops: SkeletonOp[]): Element => {
+  const el = createFor(node)
+
+  let classExpr: string | undefined
+  let toggles: [string, string][] | null = null
+  for (const key in node.attrs) {
+    const value = node.attrs[key]
+    if (key.startsWith("@")) ops.push({ kind: "event", path, attr: key, expr: value })
+    else if (key === ":class") classExpr = value
+    else if (key.startsWith(":class.")) (toggles ??= []).push([key.slice(":class.".length), value])
+    // a directive of its own, bound below - the same skip renderNode's walk
+    // makes, and for the same reason: without it :text would be written out as
+    // an attribute named `text`. :class/:class. are control attrs too and are
+    // already caught above
+    else if (isControlAttr(key)) { /* handled after the walk */ }
+    else if (key.startsWith(":")) {
+      const name = key.slice(1)
+      // resolved here rather than per instance: the skeleton's element already
+      // exists, so its namespace is known once per definition
+      ops.push({ kind: "attr", path, name: foreignAttrName(el, name), expr: value || kebabToCamel(name) })
+    } else el.setAttribute(key, value)
+  }
+  if (classExpr !== undefined || toggles) {
+    ops.push({ kind: "class", path, classExpr, toggles, staticClasses: new Set(classNames(node.attrs.class ?? "")) })
+  }
+
+  // :text and :html replace the element's content, and renderNode never renders
+  // the children of an element carrying either. So the skeleton gives it none
+  // either: both are leaves on both paths, whatever the source wrote inside
+  // them. The else-if order is renderNode's - :text wins when both are written
+  const textExpr = node.attrs[":text"]
+  const htmlExpr = node.attrs[":html"]
+  if (textExpr !== undefined) ops.push({ kind: "textContent", path, expr: textExpr })
+  else if (htmlExpr !== undefined) ops.push({ kind: "html", path, expr: htmlExpr })
+  else node.children.forEach((child, index) => {
+    if (typeof child === "string") {
+      // an interpolated text node is a hole; the skeleton holds the empty node
+      // it will be written into, so the child indices match either way
+      if (child.includes("{{")) {
+        ops.push({ kind: "text", path: [...path, index], parts: splitText(child) })
+        el.appendChild(document.createTextNode(""))
+      } else el.appendChild(document.createTextNode(child))
+      return
+    }
+    el.appendChild(buildSkeleton(child, [...path, index], ops))
+  })
+
+  // after the children, because renderNode registers them there and for its
+  // reason: :value on a <select> can only pick an <option> that already exists.
+  // `ops` is flat and in registration order, and this is the recursive call's
+  // tail, so a parent's form-state ops land after every op of every descendant -
+  // which is exactly what renderNode's own recursion does
+  const valueExpr = node.attrs[":value"]
+  if (valueExpr !== undefined) ops.push({ kind: "value", path, expr: valueExpr })
+  const checkedExpr = node.attrs[":checked"]
+  if (checkedExpr !== undefined) ops.push({ kind: "checked", path, expr: checkedExpr })
+  const selectedExpr = node.attrs[":selected"]
+  if (selectedExpr !== undefined) ops.push({ kind: "selected", path, expr: selectedExpr })
+
+  return el
+}
+
+// how many elements a subtree is worth cloning for. Below this the fixed cost
+// of the plan - the lookup, the tag check, the path walks - is the whole
+// saving: planning fragments of one or two elements measured as a wash at best
+// and a regression on a row whose only fragments are that small
+const MIN_SKELETON_ELEMENTS = 3
+
+// children under a :text or an :html are not built by either path, so they are
+// not elements this threshold should be counting - a <p :text="v"> with two
+// <span>s written inside it is one element's worth of cloning, not three
+const countElements = (node: TemplateNode): number =>
+  node.attrs[":text"] !== undefined || node.attrs[":html"] !== undefined
+    ? 1
+    : 1 + node.children.reduce((total, child) => total + (typeof child === "string" ? 0 : countElements(child)), 0)
+
+const skeletonPlans = new WeakMap<TemplateNode, SkeletonPlan | null>()
+
+// A definition rendered ONCE pays for a plan it never reuses: +23% at
+// MIN_SKELETON_ELEMENTS, +11.5% at six elements, measured in
+// RECORD/2026-08-24.one-shot-render-measured.md. So the plan is built on the
+// SECOND render, not the first - a one-shot definition never builds one at all,
+// and a :each of 1,000 rows interprets row 1 and clones the other 999.
+//
+// The element count could not answer this. It is a proxy for "will this be
+// rendered again", and raising it to protect the one-shot case would take a
+// 9-element list row - which amortizes beautifully - off the clone path. This
+// keys on the thing itself.
+//
+// renderEach calls renderNode per row and renderNode calls planOf, so the list
+// case needs no special handling; it falls out.
+//
+// The third state is a WeakSet rather than a sentinel in the map, so the map's
+// type keeps saying what it means: absent is "never seen", null is "examined,
+// not plannable"
+const seenOnce = new WeakSet<TemplateNode>()
+
+const planOf = (node: TemplateNode): SkeletonPlan | null => {
+  const cached = skeletonPlans.get(node)
+  if (cached !== undefined) return cached
+
+  // first sighting: interpret it, and decide nothing. Examining it here is the
+  // cost the one-shot case was paying
+  if (!seenOnce.has(node)) {
+    seenOnce.add(node)
+    return null
+  }
+
+  let plan: SkeletonPlan | null = null
+  if (plannableNode(node) && countElements(node) >= MIN_SKELETON_ELEMENTS) {
+    const ops: SkeletonOp[] = []
+    const skeleton = buildSkeleton(node, [], ops)
+    plan = { skeleton, ops }
+  }
+  skeletonPlans.set(node, plan)
+  return plan
+}
+
+const atPath = (root: Node, path: number[]): Node => {
+  let at = root
+  for (let i = 0; i < path.length; i++) at = at.childNodes[path[i]]
+  return at
+}
+
+const renderFromSkeleton = (plan: SkeletonPlan, scope: Record<string, any>, fx: EffectScope): Node => {
+  const root = plan.skeleton.cloneNode(true) as Element
+
+  // ordered by how often a row actually carries the kind, not by when it was
+  // added: this chain runs once per op per instance, so the four holes a
+  // benchmark row is made of are matched before the five a form is
+  for (const op of plan.ops) {
+    const target = op.path.length === 0 ? root : atPath(root, op.path)
+
+    if (op.kind === "text") {
+      const textNode = target as Text
+      const parts = op.parts
+      fx.effect(() => {
+        const text = renderText(parts, scope)
+        if (textNode.textContent !== text) textNode.textContent = text
+      })
+    } else if (op.kind === "event") {
+      bindEvent(target as Element, op.attr, op.expr, scope)
+    } else if (op.kind === "attr") {
+      const el = target as Element
+      const { name, expr } = op
+      fx.effect(() => applyAttr(el, name, evalExpr(expr, scope)))
+    } else if (op.kind === "class") {
+      const el = target as Element
+      const { classExpr, toggles, staticClasses } = op
+      let bound: string[] = []
+      fx.effect(() => {
+        const next = classExpr !== undefined ? classNames(evalExpr(classExpr, scope)) : []
+        toggles?.forEach(([name, expr]) => {
+          if (evalExpr(expr, scope)) next.push(...classNames(name))
+        })
+        bound.forEach(name => {
+          if (!next.includes(name) && !staticClasses.has(name)) el.classList.remove(name)
+        })
+        el.classList.add(...next)
+        bound = next
+      })
+    } else if (op.kind === "textContent") {
+      const el = target as Element
+      const { expr } = op
+      // compared before it lands, like the text node above: an unchanged write
+      // still replaces the element's child text node, so a re-run that changed
+      // nothing would hand every observer a new node
+      fx.effect(() => {
+        const text = String(evalExpr(expr, scope) ?? "")
+        if (el.textContent !== text) el.textContent = text
+      })
+    } else if (op.kind === "html") {
+      // renderNode's effect with its `allowUrl` arm removed, because an element
+      // carrying :html.allowed is never planned - the attribute is rejected by
+      // plannableAttr, which is what keeps that directive's warning in exactly
+      // one place. RECORD/2026-08-25.html-in-the-cloner.md
+      const el = target as Element
+      const { expr } = op
+      fx.effect(() => { el.innerHTML = sanitizeHTML(String(evalExpr(expr, scope) ?? "")) })
+    } else if (op.kind === "value") {
+      // the property, not the attribute, and skipping a write that would not
+      // change it - renderNode's reasons apply here unchanged
+      const el = target as HTMLInputElement
+      const { expr } = op
+      fx.effect(() => {
+        const value = String(evalExpr(expr, scope) ?? "")
+        if (el.value !== value) el.value = value
+      })
+    } else if (op.kind === "checked") {
+      const el = target as HTMLInputElement
+      const { expr } = op
+      fx.effect(() => {
+        const checked = !!evalExpr(expr, scope)
+        if (el.checked !== checked) el.checked = checked
+      })
+    } else if (op.kind === "selected") {
+      const el = target as HTMLOptionElement
+      const { expr } = op
+      fx.effect(() => {
+        const selected = !!evalExpr(expr, scope)
+        if (el.selected !== selected) el.selected = selected
+      })
+    } else {
+      // every kind is named above, so this is unreachable - and the assignment
+      // is what makes the compiler say so. A kind added to SkeletonOp and
+      // forgotten here is the exact failure this whole file is arranged to
+      // prevent, and it is cheaper to catch it in tsc than in the corpus
+      const unhandled: never = op
+      void unhandled
+    }
+  }
+
+  return root
+}
+
+const renderNode = (node: TemplateNode, outerScope: Record<string, any>, fx: EffectScope, shadow: boolean): Node => {
+  // :with applies to the element's own bindings (@events, :name) and its
+  // whole subtree. On a :each element the item scope is already in place, so
+  // :with="item" works
+  const withExpr = node.attrs[":with"]
+  const scope = withExpr !== undefined ? createWithScope(withExpr, outerScope) : outerScope
+
+  // before the component-key scan, so <slot> is <slot> even in a file that
+  // happens to have a component named Slot in scope: the tag is the library's
+  // now, and a name that resolved it away would be a very quiet surprise
+  if (isSlotTag(node.tag)) return renderSlot(node, scope, fx, shadow)
+  if (node.tag === "template" && slotAttrOf(node) !== undefined) return misplacedSlotContent(node)
+
+  const componentKey = componentKeyOf(node, scope)
+  if (componentKey) return renderNestedComponent(componentKey, node, scope, fx, shadow)
+
+  // A planned subtree is cloned, and no scope key can take one of its tags away
+  // any more: a plannable tag is undashed, unstamped and a name the HTML parser
+  // knows, which is exactly the set componentKeyOf answers "no" to. This used
+  // to walk plan.tags calling findComponentKey for each, because a variable
+  // named `Td` made every <td> under it a component and `Map`, `Data`, `Table`,
+  // `Form` and `Label` are all HTML tags somebody might name a component after.
+  // The rename is what retires that check - see RECORD/2026-08-25.component-tag-prefix.md
+  if (debugFlags.cloneSkeletons) {
+    const plan = planOf(node)
+    if (plan) return renderFromSkeleton(plan, scope, fx)
+  }
+
+  const el = createFor(node)
+
+  // <UserCrad /> - written as a component (node.component) and resolving to
+  // none. Nothing else on the page can supply the name once every script has
+  // settled, so this renders no markup, no styles, no children and no script,
+  // forever, and says so by throwing rather than leaving a hole where a region
+  // of the page was meant to be.
+  //
+  // Two conditions now, where there were three. The capitalization still
+  // carries the claim - <lable>, <svg> and <my-widget> are not judged - but the
+  // element check is gone with the rename: a stamped tag is a c79-* one, so it
+  // is never the element it was named after, and <DIV> is judged like any other
+  // capitalized tag. It is a component claim that resolves to nothing, and it
+  // says so instead of quietly rendering a div.
+  //
+  // The pending count still carries the rest: without it a factory that awaits
+  // $mounted() before returning its components could never render one, which is
+  // exactly what the watcher below is for. An *absent* count is its own case,
+  // and it is not zero: renderComponent() renders a template against a store
+  // somebody else owns and assembles, so nothing there has finished and nothing
+  // says a key can't still be written in. The claim being tested is a
+  // component's claim about its own scripts, and where none was made the tag
+  // waits for the upgrade, as it always has.
+  //
+  // Written without a local for the count because renderNode is on the stack
+  // for the whole of the subtree below it, so a slot here is a slot per level
+  // of a component nested inside itself - see renderWith
+  if (node.component !== undefined && ((scope as any)[PENDING_SCRIPTS] as PendingScripts | undefined)?.count === 0) {
+    throw unresolvedComponent(node.component, scope)
+  }
+
+  // a tag that may still name a component whose key has not arrived yet (an
+  // async factory script exposing an imported component after `await`). Watch
+  // for the key: the effect tracks no deps, so it only re-runs on the store's
+  // new-key sweep, and swaps the placeholder element for the component exactly
+  // once.
+  //
+  // The two spellings componentKeyOf accepts, and no others - a capitalized tag
+  // (which is a c79-* element here, since it resolved to nothing) and a dashed
+  // one, because <drop-area> resolves DropArea. An unknown *undashed* lowercase
+  // tag no longer waits: <mychip> is a typo or a custom element that never
+  // registered, not a component that has yet to arrive.
+  //
+  // Never for a foreign element, and the dash clause is why that has to be said
+  // out loud: <annotation-xml> is the one MathML or SVG tag with a hyphen in it,
+  // and without this it is a real element treated as a custom one - its
+  // : bindings held verbatim as parameters for a component, and the element
+  // itself replaced the moment something named AnnotationXml enters scope. The
+  // namespace is the parser's answer to "where was this written", so ns !== undefined
+  // means inside a <math> or an <svg>, where no component can live - the same
+  // argument plannableNode makes. See RECORD/2026-08-24.mathml.md
+  const mayUpgrade = node.ns === undefined && (node.component !== undefined || node.tag.includes("-"))
+  if (mayUpgrade) {
+    let upgraded = false
+    fx.effect(() => {
+      if (upgraded) return
+      const key = componentKeyOf(node, scope)
+      if (!key) return
+      upgraded = true
+      const replacement = renderNestedComponent(key, node, scope, fx, shadow)
+      // whoever tears this subtree down holds `el`, which the swap detaches -
+      // so the component's anchors must remove themselves when the scope goes
+      const range = boundsOf(replacement)
+      fx.onDispose(() => removeRange(range))
+      el.replaceWith(replacement)
+    })
+  }
+
+  // walked with `for...in` rather than Object.entries().forEach: a 1,000-row
+  // :each renders every element of its template a thousand times, and the
+  // entries form allocates one array of pairs plus one two-element array per
+  // attribute *per instance*. Nothing here reads the pairs as pairs, so the
+  // allocation buys nothing and the garbage it makes is measurable - see
+  // RECORD/2026-08-23.where-the-create-time-goes.md
+  for (const key in node.attrs) {
+    const value = node.attrs[key]
+    if (key.startsWith("@")) bindEvent(el, key, value, scope)
+    else if (key === ":model" || key.startsWith(":model.")) {
+      // :model binds component tags only (see RECORD/2026-07-15.model-directive.md;
+      // the native-element form is parked there). Warn on a real element, but
+      // not on a tag that may still upgrade into a component - the upgrade
+      // re-renders through renderNestedComponent, models and all
+      if (!mayUpgrade) {
+        console.warn(`jq79: ${key} on <${tagLabel(node)}> does nothing - :model binds component tags only (for now)`)
+      }
+    } else if (isControlAttr(key)) {
+      // a directive of its own, bound further down (or by renderNodes)
+    } else if (key.startsWith(":")) {
+      // :name="expr" binds that one attribute, reactively - the single-key
+      // case :attrs="{ name: expr }" used to carry. `:name` alone is shorthand
+      // for `:name="name"`, like props and :model.<name>, and the shorthand
+      // reads the camelCase variable while the attribute keeps its written
+      // (kebab) name: `:aria-expanded` binds `ariaExpanded`, because
+      // `aria-expanded` as an expression is a subtraction.
+      //
+      // On a tag that may still upgrade this is a *parameter*, not an
+      // attribute: leave it written verbatim, as before, so the upgrade's
+      // renderNestedComponent still finds it. A component tag has no single
+      // root for an attribute to land on anyway (RECORD/2026-07-15.class-directive.md)
+      if (mayUpgrade) el.setAttribute(key, value)
+      else {
+        const written = key.slice(1)
+        const expr = value || kebabToCamel(written)
+        // outside the effect: the name a binding writes is fixed by the source
+        // and the element, and neither moves between runs
+        const name = foreignAttrName(el, written)
+        fx.effect(() => applyAttr(el, name, evalExpr(expr, scope)))
+      }
+    } else el.setAttribute(key, value)
+  }
+
+  // :class="expr" adds classes on top of the static `class` attribute, and
+  // :class.<name>="expr" is the single-flag shorthand for `{ <name>: expr }`
+  // (the name routed through classNames, so an empty `:class.` can't reach
+  // classList.add, which throws on ""). Both feed one effect and one set of
+  // added classes: only classes this binding added are ever removed, so the
+  // static list survives every re-run, even when the expression names one of
+  // its classes and then drops it (class="btn" :class="{ btn: cond }" keeps
+  // btn on false)
+  //
+  // The toggle list stays null until a `:class.` attribute is actually found,
+  // for the reason the attribute walk above is a `for...in`: entries + filter +
+  // map allocated three arrays for every element rendered, and the
+  // overwhelming majority of elements carry no `:class.` at all
+  const classExpr = node.attrs[":class"]
+  let classToggles: [string, string][] | null = null
+  for (const key in node.attrs) {
+    if (key.startsWith(":class.")) (classToggles ??= []).push([key.slice(":class.".length), node.attrs[key]])
+  }
+  if (classExpr !== undefined || classToggles) {
+    const staticClasses = new Set(classNames(node.attrs.class ?? ""))
+    let bound: string[] = []
+
+    fx.effect(() => {
+      const next = classExpr !== undefined ? classNames(evalExpr(classExpr, scope)) : []
+      classToggles?.forEach(([name, expr]) => {
+        if (evalExpr(expr, scope)) next.push(...classNames(name))
+      })
+      bound.forEach(name => {
+        if (!next.includes(name) && !staticClasses.has(name)) el.classList.remove(name)
+      })
+      el.classList.add(...next)
+      bound = next
+    })
+  }
+
+  // :text="expr" sets textContent reactively, replacing any children.
+  // :html="expr" sets innerHTML reactively, sanitizing the value first so
+  // untrusted content can't inject scripts/attributes (see sanitizeHTML in
+  // ./dom). Both skip rendering the element's own children/interpolation.
+  // :html.allowed="expr" adds a destination policy for the content's
+  // href/src URLs - evaluated in the same effect, so a policy held in the
+  // store is as reactive as the content itself
+  const textExpr = node.attrs[":text"]
+  const htmlExpr = node.attrs[":html"]
+  const allowedExpr = node.attrs[":html.allowed"]
+  if (allowedExpr !== undefined && htmlExpr === undefined) {
+    console.warn("jq79: :html.allowed without :html on the same element does nothing")
+  }
+  if (textExpr !== undefined) {
+    fx.effect(() => {
+      const text = String(evalExpr(textExpr, scope) ?? "")
+      if (el.textContent !== text) el.textContent = text
+    })
+  } else if (htmlExpr !== undefined) {
+    fx.effect(() => {
+      const options = allowedExpr !== undefined ? { allowUrl: normalizeAllowUrl(evalExpr(allowedExpr, scope)) } : undefined
+      el.innerHTML = sanitizeHTML(String(evalExpr(htmlExpr, scope) ?? ""), options)
+    })
+  } else if (el instanceof HTMLTemplateElement) {
+    // a plain nested <template> stays what HTML says it is: an inert element
+    // whose children live in .content, which is where whoever clones it looks
+    // for them. They render (bindings and all) and go there - appended as
+    // childNodes they would be in the DOM but in no document fragment, seen by
+    // nothing and rendered by nobody
+    renderNodes(node.children, scope, fx, shadow, el.content)
+  } else {
+    renderNodes(node.children, scope, fx, shadow, el)
+  }
+
+  // :value / :checked / :selected write the DOM *property*, not the
+  // attribute - the attribute is only a form control's default, and detaches
+  // the moment the user interacts (which is why writing the value ATTRIBUTE
+  // stops driving a typed-in input). One-way, store -> DOM: the way back stays an
+  // explicit @input/@change. :value skips the write when the property
+  // already holds the string, so an unrelated re-run can't move the caret of
+  // the input the user is typing into. Registered after the children render:
+  // :value on a <select> can only pick an <option> that already exists
+  const valueExpr = node.attrs[":value"]
+  if (valueExpr !== undefined) {
+    fx.effect(() => {
+      const value = String(evalExpr(valueExpr, scope) ?? "")
+      if ((el as HTMLInputElement).value !== value) (el as HTMLInputElement).value = value
+    })
+  }
+  // written out rather than looped over a literal array: the loop allocated the
+  // array *and* its closure for every element rendered - 8,000 of each per
+  // create1k, almost all of them to find nothing. Same reason the attribute
+  // walk above is a `for...in` (RECORD/2026-08-23.where-the-create-time-goes.md)
+  const checkedExpr = node.attrs[":checked"]
+  if (checkedExpr !== undefined) {
+    fx.effect(() => {
+      const checked = !!evalExpr(checkedExpr, scope)
+      if ((el as HTMLInputElement).checked !== checked) (el as HTMLInputElement).checked = checked
+    })
+  }
+  const selectedExpr = node.attrs[":selected"]
+  if (selectedExpr !== undefined) {
+    fx.effect(() => {
+      const selected = !!evalExpr(selectedExpr, scope)
+      if ((el as HTMLOptionElement).selected !== selected) (el as HTMLOptionElement).selected = selected
+    })
+  }
+
+  return el
+}
+
+// a :if/:elseif*/:else? chain sharing one anchor comment so the active branch
+// can be swapped in place without disturbing sibling positions. Only depends
+// on whatever the branch expressions read (e.g. "score"), and skips
+// rebuilding entirely when the active branch hasn't actually changed
+const renderConditional = (branches: ConditionalBranch[], scope: Record<string, any>, fx: EffectScope, shadow: boolean): Node => {
+  const anchor = document.createComment("if")
+  const wrapper = document.createDocumentFragment()
+  wrapper.appendChild(anchor)
+
+  let current: NodeRange | null = null
+  let activeBranch: ConditionalBranch | null = null
+  let branchFx: EffectScope | null = null
+
+  fx.effect(() => {
+    const next = branches.find(branch => branch.expr === undefined || evalExpr(branch.expr, scope)) ?? null
+    if (next === activeBranch) return
+
+    branchFx?.dispose()
+    if (current) removeRange(current)
+    current = null
+    activeBranch = next
+    if (!next) return
+
+    branchFx = createEffectScope(scope)
+    // bounds captured before inserting: a component branch is a fragment, and
+    // inserting it is what empties it (see boundsOf)
+    const rendered = renderNode(next.node, scope, branchFx, shadow)
+    current = boundsOf(rendered)
+    anchor.parentNode!.insertBefore(rendered, anchor.nextSibling)
+  })
+  // the branch lives inside whatever holds this chain: when that goes - an
+  // outer :if turning false, a :each row removed - the branch's effects go
+  // with it. Left to this chain's own effect, they outlived it, and a write
+  // that tore the outer branch down still woke them against the value that
+  // had just emptied it (`toast = null` evaluating `toast.action.label`)
+  fx.onDispose(() => branchFx?.dispose())
+
+  return wrapper
+}
+
+// defines a loop-local binding directly as `scope`'s own property. Plain
+// assignment (scope[key] = value) would only do this if the key isn't
+// already own on `scope` *or anywhere up its prototype chain* - if it isn't,
+// JS delegates the [[Set]] to whatever's up there, which for us is another
+// reactive proxy's `set` trap: it would wrap `value` as if it were a genuine
+// store mutation and fire a bogus notify() under a name (e.g. "item") shared
+// by every unrelated item in every :each on the page. defineProperty always
+// writes to `scope` itself, never delegating, so this can't happen.
+//
+// Only while the key is *missing*, though: once this has run, the property is
+// own and writable, and a plain assignment finds it there and writes it in
+// place. That is what renderEach's reuse paths do, and why they may - a
+// defineProperty costs several times an assignment, and a list that never
+// reorders would otherwise pay one per row per pass to rewrite the value it
+// already held
+const defineScopeVar = (scope: Record<string, any>, key: string, value: any) => {
+  Object.defineProperty(scope, key, { value, writable: true, enumerable: true, configurable: true })
+}
+
+// `pos` is where the entry sat in the previous pass, refreshed as the buckets
+// are built - the positioning pass needs the old order to work out which rows
+// are already where they belong (see longestIncreasingRun)
+// `dead` is set by the pass that disposes the entry, and read by the run walk
+// right after: a Set membership test per row was the alternative, and a list
+// dropping 10,000 rows does 10,000 of them
+type EachEntry = { key: any; item: any; scope: Record<string, any>; range: NodeRange; fx: EffectScope; pos: number; dead?: boolean }
+
+// the indices of one longest strictly increasing subsequence of `positions`,
+// as a flag per index. Fed the old position of every entry in the new order
+// (-1 for one rendered this pass), it names the rows that are ALREADY in the
+// right order relative to each other: move everything else and the pass issues
+// the fewest insertions it can. The walk this serves used to demand only that
+// each entry follow the one before it, which is minimal for an append and
+// quadratic for a reorder - one row out of place cascaded into a move for
+// every row after it, so swapping rows 1 and 998 of a 1,000-row table issued
+// 997 insertBefore calls where two would do.
+// Patience sorting, O(n log n): `tails[l]` is the index of the smallest value
+// that can end an increasing run of length l+1, and `before` remembers what
+// each index was appended to, which is what makes the run reconstructible
+const longestIncreasingRun = (positions: number[]): Uint8Array => {
+  const inRun = new Uint8Array(positions.length)
+  const tails: number[] = []
+  const before = new Int32Array(positions.length).fill(-1)
+
+  for (let index = 0; index < positions.length; index++) {
+    const position = positions[index]
+    if (position < 0) continue // rendered this pass: it has no old position to be in order with
+    let low = 0
+    let high = tails.length
+    while (low < high) {
+      const mid = (low + high) >> 1
+      if (positions[tails[mid]] < position) low = mid + 1
+      else high = mid
+    }
+    if (low > 0) before[index] = tails[low - 1]
+    tails[low] = index
+  }
+
+  for (let index = tails.length ? tails[tails.length - 1] : -1; index !== -1; index = before[index]) {
+    inRun[index] = 1
+  }
+  return inRun
+}
+
+// what :each iterates besides arrays: dictionaries, as their entries. Class
+// instances, Maps and the rest stay out - the store doesn't wrap them
+// (isPlainData), so their contents wouldn't be tracked and the list would go
+// silently stale
+const isPlainObject = (value: any): value is Record<string, any> => {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) return false
+  const proto = Object.getPrototypeOf(value)
+  return proto === Object.prototype || proto === null
+}
+
+// :each="item in items" (or "item, i in items" / "(value, key) in props"),
+// optionally keyed with :key="expr". Only depends on what the list expression
+// reads, and on each run diffs by key: unchanged items (same key, same item
+// reference) keep their DOM/effects, added ones are rendered, removed ones are
+// disposed. A changed item - a different object under the same key - keeps its
+// row when the key was given with :key, which is what :key says: this is the
+// same row. Its DOM stays, and its bindings re-run against the new item
+// (see EffectScope.rerun). Without :key, an array uses position - fine for
+// append-only lists, wasteful for reordering - and an object uses the
+// property key, which is already the stable identity; there a changed item is
+// rendered again. Each item gets its own
+// scope via Object.create(scope), so the bindings and `$index` shadow
+// same-named outer names without copying the parent scope's keys
+// does anything in this subtree name one of `names` as an identifier? Attribute
+// values and text alike, since either can hold an expression - a prop handing a
+// position to a nested component (`<Row :n="$index">`) is an attribute on a node
+// inside the item, which is why the walk has to cover children's attrs too.
+//
+// Over-approximating is the safe direction and the intended one: a name that
+// appears in a string literal costs a refresh that wasn't needed, which is
+// exactly what happens today for every list. Missing one would leave a binding
+// stale, and the walk cannot - a template expression is source text
+const mentionsAny = (node: TemplateNode | string, names: string[]): boolean => {
+  if (typeof node === "string") return names.some(name => identifierIn(node, name))
+  return Object.values(node.attrs).some(value => names.some(name => identifierIn(value, name))) ||
+    node.children.some(child => mentionsAny(child, names))
+}
+
+// what renders into an effect scope of its own: a conditional chain, a list, a
+// component (a capitalized tag, or a dashed one - nothing else can resolve to
+// one, see componentKeyOf) and a <slot>, whose content does. Over-approximating
+// costs a defineProperty per row; missing one leaves its bindings on the old item
+const rendersScopes = (node: TemplateNode | string): boolean =>
+  typeof node !== "string" && (
+    ":if" in node.attrs || ":elseif" in node.attrs || ":else" in node.attrs || ":each" in node.attrs ||
+    node.component !== undefined || node.tag.includes("-") || isSlotTag(node.tag) ||
+    node.children.some(rendersScopes)
+  )
+
+// `name` as a whole word: `$index` must not match inside `$indexes`, and `i`
+// must not match inside `items`. `$` counts as a word character here, which is
+// why the boundaries are checked by hand rather than with \b - \b treats `$`
+// as a boundary and would find the `i` of `$index` when looking for `i`
+const IDENTIFIER_CHAR = /[A-Za-z0-9_$]/
+
+// `a.b` and nothing else: two plain identifiers, one dot. A deeper path could
+// walk a null halfway down, which is a diagnostic evalExpr owns
+const KEY_MEMBER = /^[A-Za-z_$][\w$]*\.[A-Za-z_$][\w$]*$/
+
+const identifierIn = (text: string, name: string): boolean => {
+  for (let at = text.indexOf(name); at !== -1; at = text.indexOf(name, at + 1)) {
+    const before = at === 0 ? "" : text[at - 1]
+    const after = text[at + name.length] ?? ""
+    if (!IDENTIFIER_CHAR.test(before) && !IDENTIFIER_CHAR.test(after)) return true
+  }
+  return false
+}
+
+// Everything renderEach reads off the template and nothing else: the parsed
+// clause, how the key is read, the item node, and whether anything in the
+// subtree names a position. All of it is fixed by the source, and none of it
+// was cached - renderEach runs once per render of its parent, which for a
+// :each nested inside another is once per row of the outer one. `mentionsAny`
+// walks the whole item subtree, so that was a subtree walk per row per pass
+type EachPlan = {
+  itemName: string
+  atName: string | undefined
+  listExpr: string
+  keyExpr: string | undefined
+  keyIsItem: boolean
+  keyProp: string | undefined
+  itemNode: TemplateNode
+  readsPosition: boolean
+  // can either loop name be mistaken for a component? Decided from the
+  // template, so the item scope can be marked plain without being scanned
+  namesComponent: boolean
+  // can a row render anything into an effect scope of its own? Only then does
+  // a keyed row need the OWNER mark that lets its re-run reach them
+  nestsScopes: boolean
+  // `:window="rowHeight"`: render only the rows in view (see openWindow)
+  windowExpr: string | undefined
+}
+
+const eachPlans = new WeakMap<TemplateNode, EachPlan | null>()
+
+const eachPlanOf = (node: TemplateNode): EachPlan | null => {
+  const cached = eachPlans.get(node)
+  if (cached !== undefined) return cached
+
+  const match = node.attrs[":each"].match(EACH_PATTERN)
+  if (!match) {
+    eachPlans.set(node, null)
+    return null
+  }
+  const [, itemName, atName, listExpr] = match
+  const keyExpr = node.attrs[":key"]
+
+  // `:key="row.id"`, or the loop variable itself, is what a key almost always
+  // is - and reading one needs neither a scope to resolve names against nor a
+  // compiled expression, because the item is already in hand. A pass evaluates
+  // one key per row, so a 1,000-row list paid 1,000 `with`-scoped calls through
+  // the store proxy to discover that nothing had changed: most of the 37% of a
+  // pass that goes on evaluating expressions
+  // (RECORD/2026-08-23.where-the-list-operations-go.md). Anything else - a call,
+  // an index, a deeper path, a name from the outer scope - still goes through
+  // evalExpr, and so does a non-object item, which keeps every diagnostic a
+  // property read of a null row would have raised
+  const keyIsItem = keyExpr === itemName
+  const keyProp = keyExpr !== undefined && !keyIsItem && KEY_MEMBER.test(keyExpr) && keyExpr.startsWith(`${itemName}.`)
+    ? keyExpr.slice(itemName.length + 1)
+    : undefined
+  const { [":each"]: _each, [":key"]: _key, [":window"]: windowExpr, ...itemAttrs } = node.attrs
+  const itemNode: TemplateNode = { ...node, attrs: itemAttrs }
+
+  // An entry that changed position needs its position-only bindings re-run -
+  // `$index` and the `, at` name are plain scope vars, untracked by design, so
+  // nothing can wake them (see EffectScope.refresh). But refresh re-runs *every*
+  // effect on the entry, and in a list whose template names no position at all
+  // - the common one - all of that recomputes strings that cannot have changed:
+  // it was 9ms of removeRow's 25ms. Decided once, from the template, rather
+  // than per row per render. The item name is deliberately not in this list:
+  // nearly every binding reads it, and it is not what goes stale.
+  // See RECORD/2026-08-23.positional-refresh.md
+  const positionalNames = ["$index", ...(atName ? [atName] : [])]
+  const readsPosition = mentionsAny(itemNode, positionalNames)
+
+  const namesComponent = /^[A-Z]/.test(itemName) || (atName !== undefined && /^[A-Z]/.test(atName))
+  const nestsScopes = keyExpr !== undefined && rendersScopes(itemNode)
+  const plan: EachPlan = { itemName, atName, listExpr, keyExpr, keyIsItem, keyProp, itemNode, readsPosition, namesComponent, nestsScopes, windowExpr }
+  eachPlans.set(node, plan)
+  return plan
+}
+
+// :window - a :each that renders only the rows in its scroll container's
+// viewport, plus OVERSCAN on either side, between two spacers whose heights
+// stand in for the rows that are not there. Rows are a fixed height (the
+// attribute's value, in pixels), which is what makes index <-> offset plain
+// arithmetic and $scrollTo exact. See RECORD/2026-11-12.a-windowed-each.md
+//
+// The window lives in a private store the list effect reads, so a scroll is an
+// ordinary wake of that effect - the same keyed diff, over list[start..end)
+const OVERSCAN = 8
+const SCROLLABLE_RE = /^(auto|scroll|overlay)$/
+
+// the nearest ancestor that scrolls vertically, or null for the page. Crosses
+// a shadow root to its host, which is where a mountShadow'd list scrolls
+const scrollParentOf = (from: Node | null): HTMLElement | null => {
+  for (let node = from; node; node = node instanceof ShadowRoot ? node.host : node.parentNode) {
+    if (!(node instanceof HTMLElement) || node === document.body || node === document.documentElement) continue
+    if (SCROLLABLE_RE.test(getComputedStyle(node).overflowY)) return node
+  }
+  return null
+}
+
+type ListWindow = {
+  top: Element
+  bottom: Element
+  // the slice of a list this long to render, spacers sized to match
+  range: (length: number) => [number, number]
+  // the pass is done: connect to the scroll container once the list is in the
+  // document (it is not, on the pass that builds it)
+  settled: () => void
+}
+
+type ScrollToOptions79 = { block?: "nearest" | "start" | "center" | "end" }
+
+const openWindow = (
+  itemNode: TemplateNode,
+  windowExpr: string,
+  scope: Record<string, any>,
+  fx: EffectScope,
+  entries: () => EachEntry[]
+): ListWindow => {
+  // the spacers are the rows' own tag, so they are valid wherever rows are (a
+  // <tr> in a <tbody>, an <li> in a <ul>); a component row gets a <div>
+  const spacer = () => {
+    const el = itemNode.component !== undefined || itemNode.tag.includes("-") ? document.createElement("div") : createFor(itemNode)
+    el.setAttribute("aria-hidden", "true")
+    el.setAttribute("style", "height: 0px; margin: 0; padding: 0; border: 0; list-style: none; visibility: hidden")
+    return el
+  }
+  const top = spacer()
+  const bottom = spacer()
+  // count -1: not measured yet - a screenful of the window's height is assumed
+  const view = $reactive({ start: 0, count: -1 })
+  let rowHeight = 0
+  let length = 0
+  let scroller: HTMLElement | null = null
+  let connected = false
+  let frame = 0
+  let observer: ResizeObserver | null = null
+  let holder: Element | null = null
+
+  const rowsFor = (viewport: number) => Math.ceil(viewport / rowHeight) + 1 + 2 * OVERSCAN
+  const setWindow = (start: number, count: number) => {
+    start = Math.max(0, Math.min(start, Math.max(0, length - count)))
+    if (view.start !== start || view.count !== count) $batch(() => { view.start = start; view.count = count })
+  }
+
+  // where the rows begin and the viewport is, in the container's content
+  // coordinates (the page's, when the page scrolls)
+  const metrics = () => {
+    const at = top.getBoundingClientRect().top
+    if (scroller) {
+      const box = scroller.getBoundingClientRect()
+      const scrollTop = scroller.scrollTop
+      return { listTop: at - box.top - scroller.clientTop + scrollTop, scrollTop, height: scroller.clientHeight || window.innerHeight }
+    }
+    return { listTop: at + window.scrollY, scrollTop: window.scrollY, height: window.innerHeight }
+  }
+
+  const measure = () => {
+    frame = 0
+    if (!(rowHeight > 0) || !top.isConnected) return
+    const { listTop, scrollTop, height } = metrics()
+    setWindow(Math.floor((scrollTop - listTop) / rowHeight) - OVERSCAN, rowsFor(height))
+  }
+  const schedule = () => {
+    if (frame) return
+    frame = typeof requestAnimationFrame === "function" ? requestAnimationFrame(measure) : (setTimeout(measure, 16) as any)
+  }
+
+  // scrolls the container so row `index` is in view and renders it before
+  // returning - an aria-activedescendant has to point at a row that exists
+  const scrollTo = (index: number, { block = "nearest" }: ScrollToOptions79 = {}): Node | null => {
+    connect()
+    if (rowHeight > 0 && top.isConnected) {
+      const { listTop, scrollTop, height } = metrics()
+      const rowTop = listTop + index * rowHeight
+      const rowBottom = rowTop + rowHeight
+      let next = scrollTop
+      if (block === "start") next = rowTop
+      else if (block === "end") next = rowBottom - height
+      else if (block === "center") next = rowTop - (height - rowHeight) / 2
+      else if (rowTop < scrollTop) next = rowTop
+      else if (rowBottom > scrollTop + height) next = rowBottom - height
+      if (next !== scrollTop) {
+        if (scroller) scroller.scrollTop = next
+        else window.scrollTo(window.scrollX, next)
+      }
+      measure()
+    }
+    // whatever layout said (or could not say, before there is one), the row
+    // is in the window when this returns
+    const count = view.count > 0 ? view.count : rowsFor(window.innerHeight || 800)
+    if (index < view.start || index >= view.start + count) setWindow(index - OVERSCAN, count)
+    const entry = entries().find(row => row.scope.$index === index)
+    return entry ? entry.range.first : null
+  }
+
+  const connect = () => {
+    if (connected || !top.isConnected) return
+    connected = true
+    holder = top.parentElement
+    scroller = scrollParentOf(top.parentNode)
+    ;(scroller ?? window).addEventListener("scroll", schedule, { passive: true })
+    window.addEventListener("resize", schedule)
+    if (scroller && typeof ResizeObserver === "function") {
+      observer = new ResizeObserver(schedule)
+      observer.observe(scroller)
+    }
+    if (holder) Object.defineProperty(holder, "$scrollTo", { value: scrollTo, configurable: true, writable: true })
+    measure()
+  }
+
+  fx.onDispose(() => {
+    if (frame) (typeof cancelAnimationFrame === "function" ? cancelAnimationFrame : clearTimeout)(frame)
+    if (!connected) return
+    ;(scroller ?? window).removeEventListener("scroll", schedule)
+    window.removeEventListener("resize", schedule)
+    observer?.disconnect()
+    if (holder && (holder as any).$scrollTo === scrollTo) delete (holder as any).$scrollTo
+  })
+
+  let queued = false
+  return {
+    top,
+    bottom,
+    range: listLength => {
+      length = listLength
+      const height = Number(evalExpr(windowExpr, scope))
+      const previous = rowHeight
+      rowHeight = height > 0 ? height : 0
+      // a new row height (or a window opening again after 0) moves every
+      // offset: the window kept from before names rows for a geometry that is
+      // gone - the old scroll position, or the old height's row count - and
+      // would render them until the next scroll. Measured here, in this pass,
+      // and written past the store: this effect is the one reading it, and a
+      // tracked write would only wake it for a second pass over the same rows
+      if (rowHeight && rowHeight !== previous && connected && top.isConnected) {
+        const { listTop, scrollTop, height: viewport } = metrics()
+        const raw = $toRaw(view)
+        raw.count = rowsFor(viewport)
+        raw.start = Math.max(0, Math.floor((scrollTop - listTop) / rowHeight) - OVERSCAN)
+      }
+      if (!rowHeight) {
+        ;(top as HTMLElement).style.height = (bottom as HTMLElement).style.height = "0px"
+        return [0, listLength]
+      }
+      const count = view.count > 0 ? view.count : rowsFor(window.innerHeight || 800)
+      const start = Math.max(0, Math.min(view.start, listLength - count))
+      const end = Math.min(listLength, start + count)
+      ;(top as HTMLElement).style.height = `${start * rowHeight}px`
+      ;(bottom as HTMLElement).style.height = `${(listLength - end) * rowHeight}px`
+      return [start, end]
+    },
+    settled: () => {
+      if (connected || queued) return
+      queued = true
+      queueMicrotask(() => {
+        queued = false
+        connect()
+      })
+    },
+  }
+}
+
+const renderEach = (node: TemplateNode, scope: Record<string, any>, fx: EffectScope, shadow: boolean): Node => {
+  const plan = eachPlanOf(node)
+  if (!plan) return document.createComment(`invalid :each expression "${node.attrs[":each"]}"`)
+
+  const { itemName, atName, listExpr, keyExpr, keyIsItem, keyProp, itemNode, readsPosition, namesComponent, nestsScopes, windowExpr } = plan
+
+  // `:key="row.id"`, or the loop variable itself, is what a key almost always
+  // is - and reading one needs neither a scope to resolve names against nor a
+  // compiled expression, because the item is already in hand. A pass evaluates
+  // one key per row, so a 1,000-row list paid 1,000 `with`-scoped calls through
+  // the store proxy to discover that nothing had changed: most of the 37% of a
+  // pass that goes on evaluating expressions
+  // (RECORD/2026-08-23.where-the-list-operations-go.md). Anything else - a call,
+  // an index, a deeper path, a name from the outer scope - still goes through
+  // evalExpr, and so does a non-object item, which keeps every diagnostic a
+  // property read of a null row would have raised
+  const anchor = document.createComment("each")
+  const wrapper = document.createDocumentFragment()
+  wrapper.appendChild(anchor)
+  const win = windowExpr === undefined ? null : openWindow(itemNode, windowExpr, scope, fx, () => entries)
+  if (win) wrapper.append(win.top, win.bottom)
+
+  // :if on the same element is not per-item filtering, and rendering
+  // everything in silence reads like a broken filter - say it out loud
+  if (":if" in node.attrs || ":elseif" in node.attrs || ":else" in node.attrs) {
+    console.warn("jq79: :if/:elseif/:else on a :each element is ignored; filter the list expression instead")
+  }
+
+  let entries: EachEntry[] = []
+  let warnedDuplicates = false
+
+  // one memo for the whole diff: every row resolves its tags to the same scope
+  // keys, so the scan that used to run per element per row now runs once per
+  // distinct tag (see findComponentKey)
+  fx.effect(() => {
+    const pass = openRenderPass(scope)
+    try {
+      const list = evalExpr(listExpr, scope)
+      // read the source in place rather than normalizing it to [at, item] pairs
+      // first: a list of 1,000 rows built 1,000 two-element arrays per pass,
+      // every one of them garbage by the end of it. `keys` carries a plain
+      // object's property list (insertion order, which is also its identity)
+      // and is null for an array, where the index is the key. Either way the
+      // items are read off the store proxy one at a time, so each stays tracked
+      // under its own key - adds, deletes and changes all wake this effect
+      const array = Array.isArray(list)
+      const keys: string[] | null = array ? null : isPlainObject(list) ? Object.keys(list) : []
+      const length = array ? list.length : keys!.length
+      // a windowed list walks only the rows in view; the spacers stand in for
+      // the rest, so `index` stays the row's real position
+      const [from, to] = win ? win.range(length) : [0, length]
+      // buckets rather than a key->entry map: duplicate keys (a user error, but
+      // one that must degrade instead of corrupt) consume entries in order of
+      // appearance, so no entry is ever matched twice - matching one twice is
+      // how a reused row got disposed and a removed one resurrected
+      const previous = new Map<any, EachEntry[]>()
+      entries.forEach((entry, index) => {
+        entry.pos = index
+        const bucket = previous.get(entry.key)
+        if (bucket) bucket.push(entry)
+        else previous.set(entry.key, [entry])
+      })
+
+      const seen = new Set<any>()
+      const moved: EachEntry[] = []
+      // keyed rows handed a new item: kept, and re-run once they are in place
+      const swapped: EachEntry[] = []
+      const nextEntries: EachEntry[] = []
+      // each entry's position in the previous pass, in the new order, for the
+      // positioning walk below - -1 for one rendered here, which has none
+      const positions: number[] = []
+      // one scratch scope for the whole pass, not one per item. A :key
+      // expression reads the item by name (`row.id`), so it needs a scope to
+      // read it from - but which entry that key names, and so whether anything
+      // has to be rendered at all, is only known once it has been evaluated.
+      // Building the entry's real scope up front meant every reused row - the
+      // common case, and nearly all of removeRow, selectRow and swapRows - paid
+      // for an object and three defineProperty calls that were then dropped on
+      // the floor. Nothing outlives the evaluation, which is synchronous, so one
+      // scratch serves the whole list; a row that really is rendered gets a
+      // scope of its own, below
+      let scratch: Record<string, any> | undefined
+
+      for (let index = from; index < to; index++) {
+        const at = array ? index : keys![index]
+        const item = array ? list[index] : list[at]
+
+        let key: any = at
+        if (keyIsItem) key = item
+        else if (keyProp !== undefined && item !== null && typeof item === "object") key = item[keyProp]
+        else if (keyExpr !== undefined) {
+          if (scratch === undefined) {
+            scratch = Object.create(scope) as Record<string, any>
+            defineScopeVar(scratch, itemName, item)
+            if (atName) defineScopeVar(scratch, atName, at)
+            defineScopeVar(scratch, "$index", index)
+          } else {
+            // own and writable already, so a plain assignment writes to
+            // `scratch` itself - the delegation defineScopeVar exists to
+            // prevent can only happen while the key is missing from it
+            scratch[itemName] = item
+            if (atName) scratch[atName] = at
+            scratch.$index = index
+          }
+          key = evalExpr(keyExpr, scratch)
+        }
+
+        if (seen.has(key) && !warnedDuplicates) {
+          warnedDuplicates = true
+          console.warn(`jq79: duplicate :key in :each "${node.attrs[":each"]}"; duplicates pair up by position`)
+        }
+        seen.add(key)
+        const existing = previous.get(key)?.shift()
+
+        if (existing && Object.is(existing.item, item)) {
+          // same reason as `scratch`: these are own writable properties of the
+          // entry's scope from the moment it was rendered, and writing only
+          // what moved keeps a list that never reorders from paying anything
+          const entryScope = existing.scope
+          if (entryScope.$index !== index) {
+            if (readsPosition) moved.push(existing)
+            entryScope.$index = index
+          }
+          if (atName && entryScope[atName] !== at) entryScope[atName] = at
+          nextEntries.push(existing)
+          positions.push(existing.pos)
+          continue
+        }
+
+        // the same row with a new item in it: `rows = items.map(i => ({ ...i }))`
+        // hands every row a new object on every pass, and rendering them all
+        // again threw away the DOM - and with it focus, scroll and anything a
+        // user had typed - of a list whose content had not changed. Writing the
+        // loop name is a plain assignment, for the reason the reuse path above
+        // gives; the re-run that brings the bindings over to the new item waits
+        // until the rows are in place
+        if (existing && keyExpr !== undefined) {
+          const entryScope = existing.scope
+          entryScope[itemName] = item
+          if (entryScope.$index !== index) entryScope.$index = index
+          if (atName && entryScope[atName] !== at) entryScope[atName] = at
+          existing.item = item
+          swapped.push(existing)
+          nextEntries.push(existing)
+          positions.push(existing.pos)
+          continue
+        }
+
+        if (existing) {
+          existing.fx.dispose()
+          removeRange(existing.range)
+        }
+
+        const itemScope = Object.create(scope)
+        defineScopeVar(itemScope, itemName, item)
+        if (atName) defineScopeVar(itemScope, atName, at)
+        defineScopeVar(itemScope, "$index", index)
+        // one WeakSet write per row against one Object.keys per element in it
+        if (!namesComponent) plainScopes.add(itemScope)
+        const itemFx = createEffectScope(scope)
+        // a keyed row can be handed a new item later, and then everything
+        // rendered inside it re-runs - including what lives in scopes of its
+        // own, which register with the row through this (see OWNER). A row
+        // with none has nothing to register: a defineProperty per row was
+        // +3.9% on replacing 1,000 of them
+        if (nestsScopes) Object.defineProperty(itemScope, OWNER, { value: itemFx })
+        // bounds captured before the positioning pass inserts the entry: a
+        // component entry is a fragment, which empties on insertion (see boundsOf)
+        const range = boundsOf(renderNode(itemNode, itemScope, itemFx, shadow))
+        nextEntries.push({ key, item, scope: itemScope, fx: itemFx, range, pos: index })
+        positions.push(-1)
+      }
+
+      // whatever no new item consumed is gone. Effects are torn down one by one
+      // as always; the DOM goes in runs of neighbours, which is what makes
+      // clearing a long list one mutation instead of one per row
+      const dead = new Set<EachEntry>()
+      previous.forEach(bucket => bucket.forEach(entry => dead.add(entry)))
+      if (dead.size) {
+        dead.forEach(entry => {
+          entry.dead = true
+          entry.fx.dispose()
+        })
+        removeRuns(contiguousRuns(entries, entry => entry.dead === true))
+      }
+
+      let prevNode: Node = win ? win.top : anchor
+      // rows already in order relative to each other stay where they are; the
+      // rest are placed after the row that precedes them in the new order,
+      // which is where the pass has just left `prevNode`
+      const inPlace = longestIncreasingRun(positions)
+      nextEntries.forEach((entry, index) => {
+        if (!inPlace[index] && prevNode.nextSibling !== entry.range.first) moveRangeAfter(entry.range, prevNode)
+        prevNode = entry.range.last
+      })
+
+      // reused entries that changed position: their tracked bindings re-run off
+      // the list notification anyway, but a binding that reads only `$index` or
+      // the named key tracked nothing - refresh them so the move reaches those
+      // too. Untracked, so these runs don't feed this list effect's own deps
+      moved.forEach(entry => untracked(() => entry.fx.refresh()))
+      // after the moves, so a binding that measures its row finds it where it
+      // ends up. A row both moved and swapped is re-run here alone: rerun
+      // covers everything refresh does
+      swapped.forEach(entry => untracked(() => entry.fx.rerun()))
+
+      entries = nextEntries
+    } finally {
+      closeRenderPass(pass)
+    }
+    win?.settled()
+  })
+  // the rows live inside whatever holds this list, as a :if branch does (see
+  // renderConditional): torn down with it, not left subscribed to the store
+  fx.onDispose(() => entries.forEach(entry => entry.fx.dispose()))
+
+  return wrapper
+}
+
+// the first sibling from `from` that is not indentation. The branches of a
+// chain are written on their own lines, so whitespace-only text sits between
+// them in the AST and must not break the chain up. One copy of the rule, used
+// by the renderer that groups a chain and by the validator that checks its
+// grammar - the two can never disagree about what "adjacent" means
+const nextSiblingAt = (nodes: (TemplateNode | string)[], from: number): number => {
+  let at = from
+  while (at < nodes.length && typeof nodes[at] === "string" && !(nodes[at] as string).trim()) at++
+  return at
+}
+
+// The grammar of a conditional chain: `:if`, then any number of `:elseif`,
+// then an optional `:else`, on adjacent sibling elements. Both ways of getting
+// it wrong render *something*, which is why they need saying out loud:
+//
+// - two of the three on one element: the first in precedence order applies and
+//   the rest are control attrs, so they are silently dropped
+// - a branch no chain claimed - no `:if` before it, or one separated from it by
+//   an element (a `:each` row, a component tag, any sibling that isn't
+//   whitespace): it falls through to renderNode, where `:elseif`/`:else` are
+//   control attrs skipped by the attribute walk, and the element renders
+//   **unconditionally**. That one had no diagnostic at all
+//
+// Reported once per definition, from the parse-time walk below
+const warnChainAttrs = (node: TemplateNode) => {
+  const hasIf = ":if" in node.attrs
+  const hasElseif = ":elseif" in node.attrs
+  const hasElse = ":else" in node.attrs
+  if ((hasIf ? 1 : 0) + (hasElseif ? 1 : 0) + (hasElse ? 1 : 0) < 2) return
+  // allocated only on the way to a warning, never on the path that finds none
+  const present = [hasIf ? ":if" : null, hasElseif ? ":elseif" : null, hasElse ? ":else" : null].filter(Boolean)
+  console.warn(
+    `jq79: ${present.join(" and ")} on the same <${tagLabel(node)}> - only ${present[0]} applies; ` +
+    "the branches of a chain are sibling elements, one directive each"
+  )
+}
+
+// `afterClosedChain`: the branch chain immediately before this node ended with
+// an `:else`, so this is a *second* one rather than a stray - which is the
+// difference between a useful message and a puzzling one ("continues no :if"
+// reads as nonsense when there is an :if two lines up)
+const warnOrphanBranch = (node: TemplateNode, afterClosedChain: boolean) => {
+  const attr = ":elseif" in node.attrs ? ":elseif" : ":else"
+  console.warn(
+    afterClosedChain
+      ? `jq79: a second ${attr} on <${tagLabel(node)}> - the chain before it already ended with :else, ` +
+        "which closes it. One :if, any number of :elseif, at most one :else"
+      : `jq79: ${attr} on <${tagLabel(node)}> continues no :if - it renders unconditionally. ` +
+        "A chain is :if, then :elseif, then :else, on adjacent siblings: anything but whitespace between them breaks it"
+  )
+}
+
+// A directive on a *nested* <template> says something it does not mean, in two
+// different ways, and neither is a rendering bug to fix.
+//
+// Bare, the element is native and inert: its children live in .content and
+// never reach the page, so `<template :if="show"><li>uno</li></template>`
+// decides whether an empty <template> is inserted and shows nothing in either
+// state. With a :slot attribute the directive is not merely invisible but
+// *dropped* - partitionSlots finds the node by slotAttrOf and takes its
+// children as the slot's content, and nothing on that path looks at :if, so a
+// :slot filler renders whatever its condition says.
+//
+// The directive is the discriminant, and nothing else is: a bare nested
+// <template> is the legitimate native use and must stay silent. A top-level one
+// never arrives here at all - parseComponentString lifts declarations out
+// before componentPartsFrom runs - so the position needs no exclusion.
+// See RECORD/2026-08-24.template-directive-warning.md
+const TEMPLATE_DIRECTIVES = [":if", ":elseif", ":else", ":each"]
+
+const warnTemplateDirective = (node: TemplateNode, parent: TemplateNode | undefined) => {
+  // an HTML <template> only: inside an <svg> the tag is a plain namespaced
+  // element with ordinary children, so they render and the message below - that
+  // they live in a .content nobody reads - would be false
+  if (node.tag !== "template" || node.ns !== undefined) return
+  const directive = TEMPLATE_DIRECTIVES.find(attr => attr in node.attrs)
+  if (directive === undefined) return
+
+  if (slotAttrOf(node) !== undefined) {
+    // A <template :slot> fills a slot only as a direct child of a component
+    // tag - anywhere else it is misplaced, and misplacedSlotContent says so in
+    // its own words. There the directive is NOT dropped: renderNodes groups the
+    // :if into a chain like any other element's, so a false branch renders
+    // nothing and the message below would be wrong twice over. Say nothing and
+    // leave the position to the diagnostic that is about the position
+    if (parent?.component === undefined) return
+    console.warn(
+      `jq79: ${directive} on <template ${slotAttrOf(node)}> is ignored - a slot is filled with its children as written. ` +
+      `Put ${directive} on the elements inside it, or on the component's tag`
+    )
+    return
+  }
+  console.warn(
+    `jq79: ${directive} on a nested <template> shows nothing - a <template>'s children live in its .content ` +
+    `and never reach the page. Put ${directive} on the elements themselves`
+  )
+}
+
+// The directive names a `:` attribute can be a misspelling OF. Derived from
+// CONTROL_ATTRS rather than written out, plus the two families that are not in
+// it (`:model`, `:slot`) - so there is no second list to keep in step.
+const DIRECTIVE_NAMES = [...CONTROL_ATTRS, ":model", ":slot"].map(attr => attr.slice(1))
+
+// `:iff="ready"` renders the element unconditionally and writes iff="true", and
+// until now said nothing - because since RECORD/2026-08-07.attribute-directive.md
+// an unrecognized `:name` is not an error at all: it BINDS that attribute, which
+// is what makes `:src`, `:disabled` and `:aria-expanded` work. So there is no
+// "unknown directive" to report in general, and the only typo worth a word is
+// one that starts with a directive's own name: `:iff`, `:eachh`, `:classs`.
+//
+// A prefix, deliberately, and not an edit distance: the rule is derived from the
+// directive list itself, so nothing here is a table of near-misses to maintain
+// A name that WAS a directive and is not one any more. Bare removal would be
+// the silent kind: `:attrs` is now an ordinary binding, so it would write
+// attrs="[object Object]" on an element and pass a prop nobody declared to a
+// component. One entry, and the message carries the migration
+const RETIRED_DIRECTIVES: Record<string, string> = {
+  ":attrs": `:attrs was removed in 0.7 - it now binds an attribute called "attrs". ` +
+    `Bind them one at a time (:disabled="x", :title="y"), or :class for classes`,
+}
+
+const warnRetiredDirective = (node: TemplateNode) => {
+  for (const attr in node.attrs) {
+    const message = RETIRED_DIRECTIVES[attr]
+    if (message !== undefined) console.warn(`jq79: ${message}`)
+  }
+}
+
+const warnDirectiveTypo = (node: TemplateNode) => {
+  // on a component tag every `:name` is a prop by design, and on a tag that may
+  // still become one it is a parameter waiting for a definition
+  if (node.component !== undefined || node.tag.includes("-")) return
+
+  for (const attr in node.attrs) {
+    if (!attr.startsWith(":") || isControlAttr(attr) || attr === ":model" || attr.startsWith(":model.")) continue
+    const name = attr.slice(1)
+    // every dotted `:` name that means something was claimed by the line above -
+    // :class. :props. :slot. :html.allowed :model. - so what reaches here with a
+    // dot in it is a modifier list on the wrong sigil: @submit.prevent written
+    // with a colon, which binds an attribute called "submit.prevent" holding the
+    // handler's source text and leaves the form submitting natively. The dot is
+    // structural, not a table of event names to keep in step with the platform;
+    // plannableAttr already computes it, for a different purpose
+    if (name.includes(".")) {
+      console.warn(
+        `jq79: ${attr} is not a directive - it bound an attribute named "${name}". ` +
+        `Dotted modifiers belong to an event: if you meant @${name}, that is the spelling`
+      )
+      continue
+    }
+    const directive = DIRECTIVE_NAMES.find(known => name !== known && name.startsWith(known))
+    if (directive === undefined) continue
+    console.warn(
+      `jq79: ${attr} is not a directive - it bound an attribute named "${name}". ` +
+      `A ":name" jq79 does not recognize binds that attribute (which is what :src and :disabled are). ` +
+      `If you meant :${directive}, that is the spelling`
+    )
+  }
+}
+
+// Checks one node list's chains, and every list below it, against that grammar.
+// Run once per definition from componentPartsFrom, not per render: a template
+// says what it says before any data exists, so a stray :else is reported when
+// the component is defined - once, whatever the list it sits in later renders
+// a thousand rows of, and even if it sits in a branch that never becomes
+// active. Rendering is left alone entirely; nothing below costs an instance
+// anything.
+//
+// The dispatch mirrors renderNodes' loop, because that is what decides which
+// node ends up a branch of what: a :each node is claimed before the chain
+// grouping ever sees it, which is exactly why it breaks a chain
+const validateChains = (nodes: (TemplateNode | string)[], parent?: TemplateNode) => {
+  nodes.forEach(node => {
+    if (typeof node === "string") return
+    // before the loop below, which skips a :each node early - and a
+    // <template :each> is one of the two shapes this reports. The parent comes
+    // with it because a <template :slot> means one thing under a component tag
+    // and something else anywhere else
+    warnTemplateDirective(node, parent)
+    warnRetiredDirective(node)
+    warnDirectiveTypo(node)
+    validateChains(node.children, node)
+  })
+
+  // the chain that ended immediately before this point closed itself with an
+  // :else, so a further branch here is a second one rather than a stray
+  let afterClosedChain = false
+
+  for (let i = 0; i < nodes.length; ) {
+    const node = nodes[i]
+
+    if (typeof node === "string") {
+      if (node.trim()) afterClosedChain = false
+      i++
+      continue
+    }
+
+    // renderEach speaks for a :each element carrying a branch attribute of its
+    // own, and says something more useful than the grammar would
+    if (":each" in node.attrs) {
+      afterClosedChain = false
+      i++
+      continue
+    }
+
+    warnChainAttrs(node)
+
+    if (":if" in node.attrs) {
+      i++
+      // the same walk renderNodes does, so the nodes claimed here are the ones
+      // it will claim: any number of :elseif, then at most one :else
+      const claim = (attr: string): TemplateNode | undefined => {
+        const next = nextSiblingAt(nodes, i)
+        const candidate = nodes[next]
+        if (typeof candidate === "object" && attr in candidate.attrs) {
+          i = next + 1
+          return candidate
+        }
+        return undefined
+      }
+      // a claimed branch never reaches the check above - `:elseif :else` on one
+      // element is claimed as an :elseif and its :else dropped, in silence
+      for (let elseif = claim(":elseif"); elseif; elseif = claim(":elseif")) warnChainAttrs(elseif)
+      const elseNode = claim(":else")
+      if (elseNode) warnChainAttrs(elseNode)
+      // an :else closes the chain. A chain that ended without one cannot be
+      // followed by a stray at all - claim() would have taken it
+      afterClosedChain = elseNode !== undefined
+      continue
+    }
+
+    // no chain claimed this node, so a branch attribute on it is an orphan and
+    // the element renders unconditionally
+    if (":elseif" in node.attrs || ":else" in node.attrs) warnOrphanBranch(node, afterClosedChain)
+    afterClosedChain = false
+    i++
+  }
+}
+
+// The chain a `:if` node heads, and the index the sibling walk resumes at.
+// Both are fixed by the template - the node list is the same array on every
+// render - and renderNodes runs per instance, so a chain inside a :each row was
+// re-grouped, and its two arrays re-allocated, once per row per pass.
+// renderConditional only reads the branches, so one array serves every instance
+type Chain = { branches: ConditionalBranch[]; next: number }
+
+const chains = new WeakMap<TemplateNode, Chain>()
+
+const chainOf = (nodes: (TemplateNode | string)[], node: TemplateNode, from: number): Chain => {
+  const cached = chains.get(node)
+  if (cached) return cached
+
+  const branches: ConditionalBranch[] = [{ expr: node.attrs[":if"], node }]
+  let at = from + 1
+  // the whitespace between the branches is indentation and nothing else, so it
+  // is skipped rather than rendered (nextSiblingAt): only one branch is ever in
+  // the DOM, so there is nothing for it to be a space *between*
+  const claim = (attr: string): TemplateNode | undefined => {
+    const next = nextSiblingAt(nodes, at)
+    const candidate = nodes[next]
+    if (typeof candidate === "object" && attr in candidate.attrs) {
+      at = next + 1
+      return candidate
+    }
+    return undefined
+  }
+
+  for (let elseif = claim(":elseif"); elseif; elseif = claim(":elseif")) {
+    branches.push({ expr: elseif.attrs[":elseif"], node: elseif })
+  }
+  const elseNode = claim(":else")
+  if (elseNode) branches.push({ node: elseNode })
+
+  const chain: Chain = { branches, next: at }
+  chains.set(node, chain)
+  return chain
+}
+
+// renders a list of sibling template nodes (text + elements), grouping
+// consecutive :if/:elseif/:else nodes into a single conditional block
+// `into` renders straight into an element that is not in the document yet -
+// what renderElement does for an element's own children. Every element used to
+// get a DocumentFragment of its own, filled and then emptied into it: for a
+// 10,000-row table that is 70,000 fragments and a second pass over every node,
+// and the intermediate is invisible either way because the element is still
+// detached. Callers that need a standalone chunk (a component's content, an
+// :if branch) omit it and get the fragment
+const renderNodes = <T extends ParentNode>(
+  nodes: (TemplateNode | string)[],
+  scope: Record<string, any>,
+  fx: EffectScope,
+  shadow = false,
+  into?: T
+): T | DocumentFragment => {
+  const fragment = into ?? document.createDocumentFragment()
+  let i = 0
+
+  while (i < nodes.length) {
+    const node = nodes[i]
+
+    if (typeof node === "string") {
+      const textNode = document.createTextNode(node)
+      // static text is most of a template (all of its indentation, for a start):
+      // only text with a {{ expression }} in it needs an effect to stay in sync
+      // the write is guarded: an effect woken by a sibling's change (one entry
+      // of a :each refreshed on a move, a grouped notification) recomputes the
+      // same string it already wrote, and assigning it back is a DOM mutation
+      // the browser has to take seriously
+      if (node.includes("{{")) {
+        const parts = splitText(node)
+        fx.effect(() => {
+          const text = renderText(parts, scope)
+          if (textNode.textContent !== text) textNode.textContent = text
+        })
+      }
+      fragment.appendChild(textNode)
+      i++
+      continue
+    }
+
+    if (":each" in node.attrs) {
+      fragment.appendChild(renderEach(node, scope, fx, shadow))
+      i++
+      continue
+    }
+
+    if (":if" in node.attrs) {
+      const chain = chainOf(nodes, node, i)
+      fragment.appendChild(renderConditional(chain.branches, scope, fx, shadow))
+      i = chain.next
+      continue
+    }
+
+    fragment.appendChild(renderNode(node, scope, fx, shadow))
+    i++
+  }
+
+  return fragment
+}
+
+export const renderComponent = (component: Component79, data: ReactiveDeepData<Record<string, any>>, shadow = false): Node =>
+  renderNodes(component.template, data, createEffectScope(data), shadow)
+
+type ComponentParts = {
+  template: TemplateNode[]
+  scripts: TagBlock[]
+  styles: TagBlock[]
+  // pre-resolved modules for `import(...)` calls in setup scripts, keyed by
+  // the literal specifier. Bundlers (the jq79/vite plugin) fill this so
+  // imports resolve from the bundle instead of being fetched at runtime
+  modules?: Record<string, any>
+  // where this component came from (a URL for fetch(), a path for the vite
+  // plugin). Names the setup scripts in devtools - see scriptSourceUrl
+  filename?: string
+  // the components the file's <template name="..."> blocks declared, by name.
+  // Every component parsed out of one file holds this same map - itself
+  // included - which is what makes a sibling usable without an import, and
+  // what lets a <template name="TreeNode"> render a <TreeNode>
+  siblings?: Record<string, Component79>
+  // which of the file's components this is: a template's name, or undefined
+  // for the file's own. The file is the hot-reload unit, so a reparse hands
+  // each live instance the parts belonging to the component it is
+  name?: string
+}
+
+// <style scoped> support. Every element of the component's own template is
+// stamped with data-jq79="<hash>" and the style's selectors are rewritten to
+// require that attribute, so its rules can't reach anything the component
+// didn't render. Purely a runtime transform (the browser parses the CSS), so
+// it works the same for a bundled component and one loaded with fetch()
+const SCOPE_ATTR = "data-jq79"
+
+// FNV-1a over the source: stable per definition (not per instance), so N
+// instances of the same component share one refcounted <style> in the head
+const scopeHash = (src: string): string => {
+  let hash = 2166136261
+  for (let i = 0; i < src.length; i++) hash = Math.imul(hash ^ src.charCodeAt(i), 16777619)
+  return (hash >>> 0).toString(36)
+}
+
+const stampScope = (nodes: (TemplateNode | string)[], scope: string) => {
+  nodes.forEach(node => {
+    if (typeof node === "string") return
+    node.attrs[SCOPE_ATTR] = scope
+    stampScope(node.children, scope)
+  })
+}
+
+// the scope attribute goes on the selector's last compound - the element the
+// rule actually targets - but *before* a pseudo-element, which must stay last
+// (".a::before" scopes to ".a[data-jq79='x']::before", not "::before[...]").
+// This reads the author's text, not an engine's serialisation, so the CSS2
+// single-colon pseudo-elements are recognised by name: nothing has rewritten
+// ":before" to "::before" for us (see scopeCss)
+const LEGACY_PSEUDO_ELEMENT_RE = /^:(before|after|first-line|first-letter)(?![\w-])/i
+
+// walks `text` at nesting depth 0 - outside (), [], strings and escapes -
+// calling `at(i)` on each such index; `at` returning true stops the walk
+const atTopLevel = (text: string, at: (i: number) => boolean | void) => {
+  let depth = 0
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i]
+    if (char === "\\") i++
+    else if (char === '"' || char === "'") {
+      i++
+      while (i < text.length && text[i] !== char) i += text[i] === "\\" ? 2 : 1
+    } else if (char === "(" || char === "[") depth++
+    else if (char === ")" || char === "]") depth--
+    else if (depth === 0 && at(i)) return
+  }
+}
+
+const scopeSelector = (selector: string, scope: string): string => {
+  let pseudoAt = selector.length
+  atTopLevel(selector, i => {
+    if (selector[i] !== ":") return false
+    if (selector[i + 1] !== ":" && !LEGACY_PSEUDO_ELEMENT_RE.test(selector.slice(i))) return false
+    pseudoAt = i
+    return true
+  })
+  return `${selector.slice(0, pseudoAt)}[${SCOPE_ATTR}="${scope}"]${selector.slice(pseudoAt)}`
+}
+
+// a selector list is split on its top-level commas only: `.a:is(.b, .c)` is
+// one selector. A comment in a selector is removed - CSS reads it as nothing,
+// so `.a/**/.b` is `.a.b` - since the attribute must never land inside one
+const scopeSelectorList = (prelude: string, scope: string): string => {
+  const text = stripCssComments(prelude)
+  const lead = text.match(/^\s*/)![0]
+  const trail = text.match(/\s*$/)![0]
+  const body = text.slice(lead.length, text.length - trail.length)
+  if (!body) return prelude
+  const parts: string[] = []
+  let from = 0
+  atTopLevel(body, i => {
+    if (body[i] === ",") {
+      parts.push(body.slice(from, i))
+      from = i + 1
+    }
+  })
+  parts.push(body.slice(from))
+  return lead + parts.map(part => part.trim() && scopeSelector(part.trim(), scope)).join(", ") + trail
+}
+
+const stripCssComments = (text: string): string => {
+  let out = ""
+  for (let i = 0; i < text.length; ) {
+    const char = text[i]
+    if (char === "/" && text[i + 1] === "*") {
+      const end = text.indexOf("*/", i + 2)
+      i = end === -1 ? text.length : end + 2
+    } else if (char === '"' || char === "'") {
+      let j = i + 1
+      while (j < text.length && text[j] !== char) j += text[j] === "\\" ? 2 : 1
+      out += text.slice(i, j + 1)
+      i = j + 1
+    } else if (char === "\\") {
+      out += text.slice(i, i + 2)
+      i += 2
+    } else {
+      out += char
+      i++
+    }
+  }
+  return out
+}
+
+// A component's name in a selector - `Circle { color: red }` - names the box
+// the component renders in (see renderNestedComponent), so it is rewritten to
+// the tag that box actually has. Same rename componentTagName does for markup,
+// so the author types the prefix in neither place.
+//
+// It runs on the SOURCE, before any CSS parser sees it, and that is not a
+// stylistic choice: in an HTML document a type selector matches
+// case-insensitively, and an engine is free to lowercase it when it serializes
+// `selectorText`. jsdom hands `Circle` back as written; an engine that hands
+// back `circle` would leave a rewrite made there matching nothing - green in
+// this repo's tests and inert in a browser. See
+// RECORD/2026-08-25.the-wrapper-and-the-css-rename.md
+//
+// Only a capitalized name with a lowercase letter in it is a component name
+// here: `DIV`, `A` and `SPAN` are shouty type selectors, which CSS has always
+// matched case-insensitively, and stay elements. That differs from the markup
+// rule on purpose - there, capitalization is the whole claim - and it leaves
+// one corner: a component named with no lowercase letter at all cannot be
+// styled by name
+const COMPONENT_SELECTOR_RE = /(^|[\s>+~,(])([A-Z][A-Za-z0-9]*)(?![\w-])/g
+const HAS_LOWER_RE = /[a-z]/
+
+const renameSelectorNames = (selectors: string): string =>
+  selectors.replace(COMPONENT_SELECTOR_RE, (whole, before: string, name: string) =>
+    HAS_LOWER_RE.test(name) ? `${before}${componentTagName(name)}` : whole
+  )
+
+// at-rules whose block holds rules rather than declarations, so what is inside
+// their braces is selector position again
+const NESTED_AT_RULE_RE = /^\s*@(media|supports|container|layer|scope|document)\b/i
+const AT_RULE_RE = /^\s*@/
+
+// the scan: strings, comments and nesting tracked so a rename only ever lands
+// in selector position. A declaration block is skipped whole (`content: "A"`,
+// `font-family: Georgia` are not selectors), and so is an at-rule's own prelude
+// (`@import url(Foo.css)` names a file, not a component).
+//
+// A string or a comment inside a selector is emitted verbatim and *ends* the
+// chunk being renamed, so `[title="a > Boo"]` keeps its Boo. The at-rule test
+// reads the whole prelude rather than the last chunk, or a `@supports
+// (font-family: "X")` would stop looking like one the moment its string was
+// split off
+const renameComponentSelectors = (css: string): string => {
+  let out = ""
+  let pending = "" // renamable text: selector source since the last verbatim run
+  let prelude = "" // everything since the last delimiter, for the at-rule test
+  const stack: boolean[] = [] // true = the block holds rules, not declarations
+  const inSelectorPosition = () => stack.length === 0 || stack[stack.length - 1]
+
+  const flush = () => {
+    out += inSelectorPosition() && !AT_RULE_RE.test(prelude) ? renameSelectorNames(pending) : pending
+    pending = ""
+  }
+  const verbatim = (text: string) => {
+    flush()
+    out += text
+    prelude += text
+  }
+  const delimiter = (char: string, holdsRules?: boolean) => {
+    flush()
+    out += char
+    prelude = ""
+    if (holdsRules !== undefined) stack.push(holdsRules)
+    else if (char === "}") stack.pop()
+  }
+
+  for (let i = 0; i < css.length; ) {
+    const char = css[i]
+    if (char === "/" && css[i + 1] === "*") {
+      const end = css.indexOf("*/", i + 2)
+      const stop = end === -1 ? css.length : end + 2
+      verbatim(css.slice(i, stop))
+      i = stop
+    } else if (char === '"' || char === "'") {
+      let j = i + 1
+      while (j < css.length && css[j] !== char) j += css[j] === "\\" ? 2 : 1
+      verbatim(css.slice(i, Math.min(j + 1, css.length)))
+      i = j + 1
+    } else if (char === "{") {
+      delimiter("{", NESTED_AT_RULE_RE.test(prelude))
+      i++
+    } else if (char === "}" || char === ";") {
+      delimiter(char)
+      i++
+    } else {
+      pending += char
+      prelude += char
+      i++
+    }
+  }
+  flush()
+  return out
+}
+
+// Scoping rewrites selectors and nothing else, on the SOURCE. It used to parse
+// the block into a CSSStyleSheet and write it back from rule.cssText, which
+// round-trips every declaration through the engine's serialiser - and Chromium
+// serialises `border: var(--w) solid red; border-bottom-width: 0` as a row of
+// empty longhands (`border-top-style: ;` …), so the border vanished once
+// scoped. See RECORD/2026-11-12.scope-the-source-not-the-cssom.md
+//
+// The scan tracks strings, comments and nesting the way renameComponentSelectors
+// does. In rule position (top level, or inside @media and the other at-rules
+// that hold rules) a prelude that is not an at-rule is a selector list and gets
+// scoped; a declaration block is copied whole, nested blocks included - CSS
+// nesting is relative to the parent, which is already scoped. @keyframes holds
+// frames, not rules, so it is copied whole too.
+//
+// Vue's :deep()/::v-deep/>>> escape hatches are not CSS: the browser drops a
+// rule it can't parse when the block is injected, so they are warned about
+// rather than left to vanish
+const scopeCss = (css: string, scope: string): string => {
+  if (/:deep\(|::v-deep|>>>/.test(css)) {
+    console.warn("jq79: :deep()/::v-deep/>>> are not supported in <style scoped>; the rule will be dropped by the browser")
+  }
+  let out = ""
+  let prelude = "" // rule position: the text since the last delimiter
+  const stack: boolean[] = [] // true = the block holds rules, not declarations
+  const holdsRules = () => stack.length === 0 || stack[stack.length - 1]
+
+  for (let i = 0; i < css.length; ) {
+    const char = css[i]
+    let token = char
+    if (char === "/" && css[i + 1] === "*") {
+      const end = css.indexOf("*/", i + 2)
+      token = css.slice(i, end === -1 ? css.length : end + 2)
+    } else if (char === '"' || char === "'") {
+      let j = i + 1
+      while (j < css.length && css[j] !== char) j += css[j] === "\\" ? 2 : 1
+      token = css.slice(i, j + 1)
+    } else if (char === "\\") {
+      token = css.slice(i, i + 2)
+    }
+    i += token.length
+
+    if (!holdsRules()) {
+      out += token
+      if (token === "{") stack.push(false)
+      else if (token === "}") stack.pop()
+    } else if (token === "{") {
+      const bare = stripCssComments(prelude)
+      const atRule = AT_RULE_RE.test(bare)
+      out += (atRule ? prelude : scopeSelectorList(prelude, scope)) + "{"
+      stack.push(atRule && NESTED_AT_RULE_RE.test(bare))
+      prelude = ""
+    } else if (token === "}" || token === ";") {
+      out += prelude + token
+      prelude = ""
+      if (token === "}") stack.pop()
+    } else {
+      prelude += token
+    }
+  }
+  return out + prelude
+}
+
+// converts a string of HTML into an AST representation of the component:
+// - template: the non-script/style top-level elements, as TemplateNodes
+// - scripts/styles: { attrs, content } blocks in source order
+// - siblings: the components its top-level <template name="..."> declared
+const parseComponentString = (component: string): ComponentParts => {
+  // example
+  // <script :setup="{ fname, lname }">
+  //   const fullName = `${fname} ${lname}`
+  // </script>
+  //
+  // <div :title="fullName"></div>
+  // <div class="full-name">
+  //  {{ fullName }}
+  // </div>
+  //
+  // <style>
+  // .full-name {
+  //  color: red;
+  // }
+  // </style>
+
+  // parsed as the content of a <template> so leading <script>/<style> tags
+  // aren't reparented into <head> by the HTML parser. All three pre-DOM string
+  // rewrites run here, and the order is load-bearing: camelCase names ->
+  // kebab-case first (before `:props.<n>` exists to be mangled and while a
+  // self-closing tag is still one occurrence), then `...expr` -> :props.<n>
+  // (which reads the raw camelCase before the parser can lowercase names),
+  // then self-closing tags
+  const prepared = prepareSource(component)
+  const parsedDOM = new DOMParser().parseFromString(`<template>${prepared}</template>`, "text/html")
+  const root = parsedDOM.querySelector("template") as HTMLTemplateElement
+
+  // a top-level <template> declares another component of this file; everything
+  // else is this one's own
+  const own: Element[] = []
+  const declarations: HTMLTemplateElement[] = []
+  Array.from(root.content.children).forEach(el => {
+    if (el.tagName === "TEMPLATE") declarations.push(el as HTMLTemplateElement)
+    else own.push(el)
+  })
+
+  // the file's own component hashes the whole file: every component in it
+  // re-renders on any edit anyway (the file is the hot-reload unit), so a
+  // stamp that changes when a sibling is edited costs nothing, and scopeHash
+  // gets to keep hashing the source it was handed
+  const parts = componentPartsFrom(own, component)
+
+  // one map, shared by reference: it is filled below, after each definition
+  // has already been handed it, so every component of the file sees all the
+  // others *and itself* - which is what makes a recursive component possible
+  const siblings: Record<string, Component79> = {}
+  declarations.forEach(el => {
+    const name = el.getAttribute("name")
+    // ignored rather than fatal, like every other malformed thing here: a bad
+    // save mid-typing must not take the page down, least of all under HMR
+    if (name === null) {
+      console.warn("jq79: a top-level <template> without a name declares nothing and was ignored")
+      return
+    }
+    if (!COMPONENT_NAME_RE.test(name)) {
+      console.warn(
+        `jq79: <template name="${name}"> was ignored - a component name has to be PascalCase, ` +
+        "or no tag could ever reference it (only capitalized names resolve as components)"
+      )
+      return
+    }
+    if (name in siblings) {
+      console.warn(`jq79: two <template name="${name}"> in one file; the second was ignored`)
+      return
+    }
+    // its own source is its own scope: a named template is a shadow root
+    // inside a shadow root, so the file's scoped rules stop at its boundary
+    // and its own stop there too
+    siblings[name] = new Component79({ ...componentPartsFrom(Array.from(el.content.children), el.innerHTML), siblings, name })
+  })
+  if (Object.keys(siblings).length) parts.siblings = siblings
+
+  return parts
+}
+
+// the media types that mark a script as TypeScript, the other spelling of
+// `lang="ts"` (dev/vite.ts, TS_TYPE_RE, says why there are two). The plugin
+// compiles a block marked either way, so either mark still here means the same
+// thing
+const TS_SCRIPT_TYPE_RE = /^(?:text|application)\/(?:x-)?typescript$/i
+
+// the mark a script is still carrying that says the plugin never compiled it,
+// spelled as the author spelled it
+const uncompiledScriptMark = (attrs: Record<string, string>): string | null =>
+  "lang" in attrs ? `lang="${attrs.lang}"`
+    : TS_SCRIPT_TYPE_RE.test(attrs.type?.trim() ?? "") ? `type="${attrs.type}"`
+      : null
+
+// the script/style/markup split of one component's top-level elements, with
+// <style scoped> resolved against the source those elements came from - the
+// whole file for its own component, a <template>'s contents for a named one,
+// so the two get different stamps and neither can style the other
+const componentPartsFrom = (elements: Element[], hashSource: string): ComponentParts => {
+  const scripts: TagBlock[] = []
+  const styles: TagBlock[] = []
+  const template: TemplateNode[] = []
+
+  elements.forEach(el => {
+    const block: TagBlock = { attrs: elementAttrs(el), content: el.textContent ?? "" }
+
+    if (el.tagName === "SCRIPT") scripts.push(block)
+    else if (el.tagName === "STYLE") styles.push(block)
+    else template.push(elementToAST(el))
+  })
+
+  // a TypeScript script is compiled by the jq79/vite plugin, like <style lang>
+  // below, and a mark still here means the same thing: this component never
+  // went through the bundler. It matters more on a script, because the failure
+  // is not always loud - `interface`/`as`/generics throw at compile time, but
+  // `let x: T = v` is a valid labeled statement, so it runs and leaves x
+  // undeclared and non-reactive with nothing in the console
+  scripts.forEach(script => {
+    const mark = uncompiledScriptMark(script.attrs)
+    if (mark) {
+      console.warn(
+        `jq79: <script ${mark}> needs the jq79/vite plugin to compile it. ` +
+        "This component didn't go through the bundler, so its types were never stripped: the script " +
+        "will throw, or - for a plain `let x: T = ...` - silently fail to declare x."
+      )
+    }
+  })
+
+  // <style lang="scss"> is compiled by the jq79/vite plugin, so a `lang` still
+  // here means this component never went through it - it was fetched, loaded
+  // from a URL, or built from an inline string. The browser would drop the
+  // uncompiled source without a word, so say it out loud instead
+  styles.forEach(style => {
+    if ("lang" in style.attrs) {
+      console.warn(
+        `jq79: <style lang="${style.attrs.lang}"> needs the jq79/vite plugin to compile it. ` +
+        "This component didn't go through the bundler, so its styles were left uncompiled and the browser will ignore them."
+      )
+    }
+  })
+
+  // a component's name in a selector becomes the tag its box actually has,
+  // once per definition and in `content` itself, so every path downstream gets
+  // it: document.head, the scoped rewrite below, and a shadow root (which uses
+  // `content` directly). A `lang` block is skipped for the same reason scoping
+  // skips it - it is not CSS yet
+  styles.forEach(style => {
+    if (!("lang" in style.attrs)) style.content = renameComponentSelectors(style.content)
+  })
+
+  // scoping is resolved once, here: the stamped template and the scoped CSS
+  // are what every instance of this definition renders and injects. An
+  // uncompiled `lang` block is left as it was written - rewriting selectors
+  // in something that isn't CSS yet would only garble what devtools shows
+  const isScoped = (style: TagBlock) => "scoped" in style.attrs && !("lang" in style.attrs)
+  if (styles.some(isScoped)) {
+    const scope = scopeHash(hashSource)
+    stampScope(template, scope)
+    styles.forEach(style => {
+      if (isScoped(style)) style.scoped = scopeCss(style.content, scope)
+    })
+  }
+
+  // the template says what it says before any data exists, so its conditional
+  // chains are checked here, once per definition
+  validateChains(template)
+
+  return { template, scripts, styles }
+}
+
+// loads .html URLs as components, delegating anything else to native import().
+// Goes to fetchComponent rather than Component79.fetch because an import wants
+// the component, not the chainable handle the public entry point returns
+const HTML_URL_RE = /\.html?([?#]|$)/
+
+const importResource = (url: string): Promise<any> =>
+  HTML_URL_RE.test(url) ? fetchComponent(url) : import(url)
+
+// a relative specifier means "next to the file that wrote it", so it is
+// resolved against the component's own URL before importResource sees it -
+// neither of that function's two branches would otherwise land there. The
+// native import() inside it resolves against *this module* (dist/jq79.js), and
+// fetch() against the document; a component in a subdirectory gets a 404 from
+// the first and the page's directory from the second.
+//
+// What comes back is always a fully absolute URL, and that is the load-bearing
+// part rather than a detail of formatting. A *path* would be resolved by that
+// same native import() against the library module's ORIGIN - and the library
+// is the one file on the page most likely to come from somewhere else:
+//
+//   page   http://localhost:8024/craft/app.html
+//   jq79   https://jgermade.github.io/jq79/jq79.js
+//   "/craft/services/x.js"  ->  https://jgermade.github.io/craft/services/x.js
+//
+// which is a CORS error naming a host the app never mentioned. Only an
+// absolute URL means the same thing to both branches.
+//
+// For the same reason a *root-absolute* specifier is resolved too, not passed
+// through: `/x.js` means the page's root to whoever wrote it, and the page is
+// the only base under which the two branches agree. Bare specifiers ("lodash")
+// are the exception that stays untouched here - they belong to the import map
+// or the bundler, and resolving one against a base would quietly turn it into
+// a path. A bare *.html* one still reaches the map: fetchComponent asks it,
+// since fetch() cannot (see resolveBare)
+//
+// The base is absolutized first, the way hotKey does and for the same reason:
+// the filename may itself be relative ("./card.html", from an import() in a
+// parent), and a relative URL cannot be a base
+const RESOLVABLE_SPECIFIER_RE = /^(?:\.\.?\/|\/|[a-z][a-z0-9+.-]*:)/i
+
+const resolveSpecifier = (spec: string, filename: string | undefined): string => {
+  if (!RESOLVABLE_SPECIFIER_RE.test(spec)) return spec
+  try {
+    return new URL(spec, new URL(filename ?? "", document.baseURI)).href
+  } catch {
+    return spec
+  }
+}
+
+// ---------------------------------------------------------------------------
+// naming scripts for devtools
+//
+// setup scripts are compiled with new Function (they need `with`, which is a
+// SyntaxError in a module), so no bundler source map can reach them: they show
+// up as an anonymous "VM1234" script, breakpoints don't survive a reload, and
+// stack traces name nothing. A //# sourceURL comment fixes all three - the
+// compiled script takes the component's name, so it is findable in the sources
+// tree, keeps its breakpoints, and appears by name in stack traces.
+//
+// The line numbers it reports are the compiled script's own, not the .html
+// file's: the engine wraps a Function body in a header ("function anonymous(
+// args\n) {\n") that shifts everything down, and no amount of padding can
+// shift code *up* to match a <script> sitting on line 1. Reporting the
+// component's real lines would need a source map, which the runtime doesn't
+// emit today
+// ---------------------------------------------------------------------------
+
+// where a script block came from: the component's filename, and its index
+// among the component's scripts (two scripts in one file need distinct names,
+// or devtools shows only one of them)
+type ScriptLocation = { filename?: string; index?: number }
+
+// what running a script tells its caller: the promise it settles through, and
+// whether it already finished on this stack. `sync` is the fast path the render
+// gate is built on - see runSetupScript
+type ScriptRun = { settled: Promise<unknown>; sync: boolean }
+
+// nothing to name an inline component's scripts after, so they stay anonymous
+const sourceUrlComment = (filename: string | undefined, index: number): string =>
+  filename ? `\n//# sourceURL=${filename}?jq79-script=${index}` : ""
+
+// a script's function, named for devtools. A safe-mode miss throws, as a
+// script that doesn't compile always has - but saying which script, and why
+const compileScript = (params: string[], body: string, at: ScriptLocation): Function => {
+  try {
+    return makeFunction(params, body, sourceUrlComment(at.filename, at.index ?? 0))
+  } catch (error) {
+    if (!(error instanceof SafeEvalMiss)) throw error
+    throw new Error(
+      `jq79: safeEval() is on, and script ${at.index ?? 0} of ${at.filename ?? "a component built from a string"} ` +
+      `${error.reason}. ${error.hint}`
+    )
+  }
+}
+
+// what a <style> block injects into document.head: the scoped rewrite when it
+// has one, the source otherwise. A shadow root uses `content` directly instead
+// - scoping is what a shadow root already does, and doing both would break the
+// `:host` rules only shadow rendering can have (`:host[data-jq79=...]` matches
+// nothing: the host element is outside the template, so it carries no stamp)
+const headStyle = (style: TagBlock): string => style.scoped ?? style.content
+
+// the one rule every component box needs: an element where there was none is a
+// box where there was none, and a component inside a flex or grid parent would
+// otherwise become an inline wrapper holding the real child. `display: contents`
+// removes the box and leaves the children in the parent's layout.
+//
+// `:where()` is load-bearing: it has zero specificity, so any author rule wins
+// without !important and without depending on which stylesheet the browser saw
+// first. `c79-panel { display: flex }` opts a component's box back into being a
+// box, which is the point of naming it.
+//
+// Not refcounted like a component's own styles: it is one constant rule for the
+// whole document, so it is injected on the first box and stays. The
+// isConnected check is what makes it survive a head somebody emptied
+const WRAPPER_STYLE = `:where([${COMPONENT_BOX_ATTR}]) { display: contents }`
+
+// ---------------------------------------------------------------------------
+// styles under safe mode
+//
+// A <style> element is inline style to a CSP, and a `style-src` without
+// 'unsafe-inline' refuses it - checked in Chromium, for a component's <style>
+// and <style scoped> alike, and for the wrapper rule every component box
+// needs. A constructed stylesheet adopted by the document or a shadow root is
+// CSSOM, which no CSP directive governs: in the same browser, under
+// `style-src 'self'`, it applied - in the document, in a shadow root, and
+// after an insertRule - with no violation. So under safe mode, component
+// styles are adopted sheets.
+//
+// Only under safe mode: an adopted sheet cascades after every stylesheet of
+// the document, <link> and <style> alike, which is a different place from the
+// end of <head> - a page that didn't ask keeps the order it has. And only
+// where the browser adopts sheets at all; elsewhere it is <style> elements, as
+// before (RECORD/2026-09-23.no-unsafe-eval.md)
+// ---------------------------------------------------------------------------
+
+const adoptsStyles = (): boolean =>
+  safeEvalOn && typeof Document !== "undefined" && "adoptedStyleSheets" in Document.prototype
+
+const constructedSheet = (css: string): CSSStyleSheet => {
+  const sheet = new CSSStyleSheet()
+  sheet.replaceSync(css)
+  return sheet
+}
+
+const adoptSheet = (target: Document | ShadowRoot, sheet: CSSStyleSheet) => {
+  if (!target.adoptedStyleSheets.includes(sheet)) target.adoptedStyleSheets = [...target.adoptedStyleSheets, sheet]
+}
+
+const unadoptSheet = (target: Document | ShadowRoot, sheet: CSSStyleSheet) => {
+  target.adoptedStyleSheets = target.adoptedStyleSheets.filter(adopted => adopted !== sheet)
+}
+
+let wrapperStyleEl: HTMLStyleElement | null = null
+// one sheet serves every root that adopts it: the document, and each shadow root
+let wrapperSheet: CSSStyleSheet | null = null
+
+const ensureWrapperStyle = () => {
+  if (adoptsStyles()) {
+    adoptSheet(document, wrapperSheet ??= constructedSheet(WRAPPER_STYLE))
+    return
+  }
+  if (wrapperStyleEl?.isConnected) return
+  wrapperStyleEl = document.createElement("style")
+  wrapperStyleEl.textContent = WRAPPER_STYLE
+  document.head.appendChild(wrapperStyleEl)
+}
+
+// document.head styles are shared by content and refcounted, so N instances
+// of the same component (e.g. one per :each item) inject a single <style> tag
+// that goes away when the last instance is destroyed - or, under safe mode, a
+// single adopted sheet
+const styleRegistry = new Map<string, { el?: HTMLStyleElement; sheet?: CSSStyleSheet; count: number }>()
+
+const acquireStyle = (content: string) => {
+  let entry = styleRegistry.get(content)
+  if (!entry) {
+    if (adoptsStyles()) {
+      const sheet = constructedSheet(content)
+      adoptSheet(document, sheet)
+      entry = { sheet, count: 0 }
+    } else {
+      const el = document.createElement("style")
+      el.textContent = content
+      document.head.appendChild(el)
+      entry = { el, count: 0 }
+    }
+    styleRegistry.set(content, entry)
+  }
+  entry.count++
+}
+
+const releaseStyle = (content: string) => {
+  const entry = styleRegistry.get(content)
+  if (entry && --entry.count <= 0) {
+    if (entry.sheet) unadoptSheet(document, entry.sheet)
+    else entry.el?.remove()
+    styleRegistry.delete(content)
+  }
+}
+
+// scripts run inside `with (scriptScope)`, where scriptScope's `has` trap
+// claims ownership of every name that is neither a real global, an injected
+// library helper, nor one of the internal helpers. This makes `with` route ALL
+// other reads/writes through the reactive store - even bare assignments to
+// names never declared with let/const, which would otherwise leak onto
+// globalThis - while `console`, `Promise`, `fetch`, etc. still resolve
+// normally. get/set are deliberately not trapped: they default-forward to
+// `scope` (the reactive proxy), preserving tracking and notify.
+// The body is wrapped in an async IIFE so top-level `await` works: everything
+// up to the first await runs synchronously, and later assignments update the
+// DOM reactively when they happen.
+//
+// Returns whether the body ran to completion synchronously, plus the promise it
+// settles through. renderWith needs the *synchronous* answer - a script that
+// finished in this turn cannot hold anything up, so the template can render on
+// this stack exactly as it always has (see the render gate). Asking the promise
+// instead would defer every render by a microtask, including the overwhelmingly
+// common case of a script with no await in it at all.
+//
+// The flag is set on the code's last line, after the `with` block rather than
+// inside it, so the scope proxy never sees the name - and appended, so the
+// author's line numbers (which sourceUrlComment maps for devtools) don't shift
+const runSetupScript = (code: string, scope: Record<string, any>, effect: (run: () => void) => void, instanceHelpers: Record<string, any> = {}, importer: (url: string) => Promise<any> = importResource, at: ScriptLocation = {}): ScriptRun => {
+  // instanceHelpers are per-component-instance additions (e.g. $emit, which
+  // is bound to this instance's DOM position)
+  const helpers = { ...SETUP_HELPERS, ...instanceHelpers }
+  const scriptScope = new Proxy(scope, {
+    has: (target, key) =>
+      key !== "$__effect" && key !== "$__import" && key !== "$__state" &&
+      (Reflect.has(target, key) || !(key in globalThis) && !(key in helpers)),
+  })
+  const state: { done?: boolean } = {}
+  const result: Promise<void> = compileScript(setupParams(Object.keys(helpers)), setupBody(code), at)(
+    scriptScope, effect, importer, state, ...Object.values(helpers)
+  )
+  result.catch(error => console.error("jq79: error in :setup script", error))
+  trackScript(result)
+  return { settled: result, sync: state.done === true }
+}
+
+// puts a component's declared props on the store, before any script runs and
+// before the first render: the names, so the template can bind to them even
+// when the parent passes nothing, and the defaults, so it binds to something.
+//
+// A prop the parent *did* pass is already on the store (render() seeds it), so
+// a default only fills an `undefined` - which is also what JS destructuring
+// does with the same pattern, so both modes agree. It happens once, at setup:
+// re-applying a default later would need an effect that reads and writes the
+// same key, and that effect would wake itself forever.
+//
+// `null` props means the component declared no signature at all, which is not
+// the same as declaring an empty one: it keeps today's permissive behavior
+const declareProps = (store: Record<string, any>, props: PropDecl[] | null) => {
+  props?.forEach(({ name, default: expr }) => {
+    if (store[name] !== undefined) return
+    store[name] = expr === undefined ? undefined : evalExpr(expr, store)
+  })
+}
+
+// a setup script's signature. A bare `<script :setup>` is a CLOSED signature -
+// the same as `<script :setup="{}">`, declaring zero props and taking none -
+// because the difference between "takes nothing" and "takes anything" should
+// not be a pair of braces somebody didn't type. Permissive is still reachable,
+// it just has to be asked for: `<script :setup="_">`, the same `_` convention
+// factory scripts already use, which parsePropsPattern reads as no signature.
+//
+// Only the empty *value* is closed. An absent attribute (a factory <script>
+// with no :setup at all) stays `null`, so its signature is still read from the
+// factory's first parameter
+// What a script's text compiles to, memoized by that text. Every instance of a
+// definition runs the same scripts, and these passes are pure functions of the
+// string - re-running them per instance was most of a list's render time. The
+// values are shared, so the arrays are frozen on the way in. A throw (the
+// pre-0.4 factory signature) is not cached: it rethrows on every render, as it
+// always did. Kept here, not in transform.ts, because the editor's language
+// server re-reads a script on every keystroke and would grow a map per edit.
+// See RECORD/2026-11-15.cache-script-transforms.md
+const memoByText = <T>(fn: (src: string) => T): ((src: string) => T) => {
+  const cache = new Map<string, T>()
+  return src => {
+    if (cache.has(src)) return cache.get(src)!
+    const value = fn(src)
+    cache.set(src, value)
+    return value
+  }
+}
+const freezeProps = (props: PropDecl[] | null): PropDecl[] | null => {
+  props?.forEach(prop => Object.freeze(prop))
+  if (props) Object.freeze(props)
+  return props
+}
+const factoryCodeOf = memoByText(transformFactoryScript)
+const factoryPropsOf = memoByText(src => freezeProps(parseFactoryProps(src)))
+const setupTransformOf = memoByText(src => {
+  const transform = transformSetupScript(src)
+  Object.freeze(transform.vars)
+  return Object.freeze(transform)
+})
+const signatureOf = memoByText(src => freezeProps(readSetupSignature({ attrs: { ":setup": src }, content: "" })))
+
+const setupSignature = (script: TagBlock): PropDecl[] | null => {
+  const pattern = script.attrs[":setup"]
+  const props = pattern === undefined ? null : signatureOf(pattern)
+  if (!props && script.attrs[":setup"] !== undefined) warnUnreadableSignature(script, script.attrs[":setup"])
+  return props
+}
+
+// script blocks already warned about, keyed by the block itself - parsed once
+// and shared by every instance of a definition, the same reason warnUndeclared
+// keys on the template node. It matters for a smaller reason here too:
+// setupSignature is called three times per render (both declared-name passes
+// and the script loop's declareProps), so even one mount would say it thrice
+const signatureWarned = new WeakSet<TagBlock>()
+
+// a value that isn't a props pattern reads as "declared no signature", which is
+// the most permissive mode there is - so a typo doesn't fail, it quietly opts
+// the component out of the contract it was trying to write. That is now the
+// only accidental route left to permissive: a bare :setup is closed and `_` is
+// the opt-out you have to ask for, so the mode nothing lands in by accident is
+// still reachable by getting it wrong. Both of parsePropsPattern's nulls count
+// - not-an-object (",{ a }", "props") and unbalanced ("{ a, b") - and only `_`
+// is exempt, because intent is the sole thing separating it from the typos
+const warnUnreadableSignature = (script: TagBlock, pattern: string) => {
+  if (pattern.trim() === "_" || signatureWarned.has(script)) return
+  signatureWarned.add(script)
+  console.warn(
+    `jq79: :setup="${pattern}" is not a props pattern, so this component declares no ` +
+    `signature and takes whatever a parent passes - write the props it takes ` +
+    `("{ a, b }"), a bare :setup for none, or "_" to stay open on purpose`
+  )
+}
+
+// the same names, but null when NO script declared a signature at all - the
+// distinction declareProps already keeps, and the only one that can decide
+// whether to filter what a parent passes. `<script :setup>` and
+// `<script :setup="{}">` are both closed signatures that take nothing (see
+// setupSignature); `<script :setup="_">` is the permissive one
+const declaredPropSet = (scripts: TagBlock[]): Set<string> | null => {
+  let names: Set<string> | null = null
+  scripts.forEach(script => {
+    const declarations = factoryPropsOf(script.content) ?? setupSignature(script)
+    if (!declarations) return
+    const into = (names ??= new Set())
+    declarations.forEach(({ name }) => into.add(name))
+  })
+  return names
+}
+
+// drops the props a component didn't declare, so an undeclared name is simply
+// absent from its store rather than quietly present: `{{ label }}` renders
+// empty and `{{ user.name }}` throws on the member access, both at the usage
+// site that got the name wrong. A null signature keeps everything - see
+// declaredPropSet. Silent by design: the main source of extra keys is a
+// `:props` spread of an object wider than the component (`...sdk`), where
+// taking only the declared few is the point, not a mistake to report
+const pickDeclared = (props: Record<string, any>, declared: Set<string> | null): Record<string, any> => {
+  if (declared === null) return props
+  const out: Record<string, any> = {}
+  Object.keys(props).forEach(key => { if (declared.has(key)) out[key] = props[key] })
+  return out
+}
+
+// names already reported by warnUndeclared, keyed by the template node - which
+// is the usage site itself, built once and shared by every instance it ever
+// renders. So a :each over 200 rows says it once, not once per row, and a
+// definition swap doesn't repeat what the last one already said
+const undeclaredWarned = new WeakMap<TemplateNode, Set<string>>()
+
+// a parameter the child's signature doesn't declare is dropped by pickDeclared
+// and never reaches its store - `{{ bar }}` renders empty at the other end of
+// the file. Written parameters only: this is handed the named ones (`:bar`,
+// and the prop each :model binds), never a `:props` spread's keys, because a
+// spread of an object wider than the component is the documented, intended use
+// and taking only the declared few is its point - see pickDeclared. A
+// component with no signature at all declares nothing to compare against
+const warnUndeclared = (node: TemplateNode, name: string, written: string[], declared: Set<string> | null) => {
+  if (declared === null) return
+  const said = undeclaredWarned.get(node) ?? new Set<string>()
+  undeclaredWarned.set(node, said)
+  written.forEach(prop => {
+    if (declared.has(prop) || said.has(prop)) return
+    said.add(prop)
+    console.warn(`jq79: :${prop} is not declared by <${name}> - add it to the :setup signature, or drop it`)
+  })
+}
+
+// `:checked` on a component tag is the directive, not a prop: the prop
+// collection skips every control attribute, so a child that declares
+// `checked` gets nothing and says nothing. Said here, once per usage site, for
+// the case where the author can only have meant the prop - the child declares
+// one of that name. See RECORD/2026-11-12.a-prop-named-like-a-directive.md
+const DIRECTIVE_PROP_NAMES = new Set([":value", ":checked", ":selected", ":text", ":html", ":class"])
+const directivePropsWarned = new WeakSet<TemplateNode>()
+
+const warnDirectiveProps = (node: TemplateNode, name: string, written: string[], declared: Set<string> | null) => {
+  if (declared === null || directivePropsWarned.has(node)) return
+  const clashing = written.filter(prop => declared.has(prop))
+  if (!clashing.length) return
+  directivePropsWarned.add(node)
+  clashing.forEach(prop => console.warn(
+    `jq79: :${prop} on <${name}> is a directive, not a prop - <${name}> never receives its "${prop}". ` +
+    `Rename the prop (${clashing.map(p => `:${p}`).join(", ")} are reserved on a component tag), ` +
+    `or use :model for a value that goes both ways`
+  ))
+}
+
+// the sibling components this one resolves by name, or null when there are
+// none left to resolve. They go on the store's *prototype* rather than in it:
+// the component-key scan walks the chain, so <Row> resolves; they stay out of
+// the data, so Object.keys, snapshots and spreads never see them; and an own
+// key shadows a prototype one, so a prop the parent did pass wins for free
+const siblingsInScope = (
+  siblings: Record<string, Component79> | undefined,
+  declared: Set<string>
+): Record<string, Component79> | null => {
+  if (!siblings) return null
+  // null-prototype, for the same reason storeApi is: `key in scope` must not
+  // start answering true for toString, constructor and the rest
+  const inScope: Record<string, Component79> = Object.create(null)
+  let any = false
+  Object.entries(siblings).forEach(([name, component]) => {
+    if (declared.has(name)) return
+    inScope[name] = component
+    any = true
+  })
+  return any ? inScope : null
+}
+
+// names a component declared as props and the parent passed nothing for. Such
+// a name can never become a component later - there is no binding on the tag
+// to update it - so a <Tag> reading one is a wiring mistake that can be named
+// on sight, unlike the `undefined` of an import still in flight. Symbol-keyed
+// and non-enumerable: it rides the scope chain (so an :each item scope finds
+// it too) without ever showing up as data
+const UNFILLED_PROPS = Symbol("jq79.unfilledProps")
+
+// how many of this render generation's scripts have yet to settle, as a live
+// box rather than a snapshot. Rides the scope chain like UNFILLED_PROPS, and
+// for one reader: a <Tag> naming no component in scope is only a mistake once
+// nothing is left that could still supply the name.
+//
+// The count is not the render gate. A script that called $mounted() released
+// the template and is still running - that is the whole point of the call - so
+// at paint time this can be non-zero, and a name arriving from a factory that
+// awaited $mounted() is exactly the case the count keeps quiet. Read live, so
+// an :if that opens after everything settled is judged against the scripts as
+// they are then, not as they were at the first paint
+//
+// It also names the instance whose render generation it belongs to, so a
+// nested component rendered anywhere in that template - an :each row, slot
+// content - can tell its owner it hasn't painted yet (see holdOwner)
+const PENDING_SCRIPTS = Symbol("jq79.pendingScripts")
+
+type PendingScripts = { count: number; owner: Component79 }
+
+// default-import interop for factory scripts: real modules expose .default,
+// while importing an .html component resolves to the Component79 itself
+const interopDefault = (mod: any) => (mod && mod.default !== undefined ? mod.default : mod)
+
+// runs a factory script: the (rewritten) module body executes in plain
+// lexical strict-mode scope - no `with`, no implicit reactivity - with the
+// library helpers as parameters, then the default export is called with the
+// instance context and a returned object is merged into the store. A fully
+// synchronous body invokes the factory before the first render, matching
+// setup-script timing; bodies with top-level await (static imports included)
+// resolve later and the template updates reactively
+const runFactoryScript = (code: string, scope: Record<string, any>, effect: (run: () => void) => void, instanceHelpers: Record<string, any> = {}, importer: (url: string) => Promise<any> = importResource, at: ScriptLocation = {}): ScriptRun => {
+  const helpers = { ...SETUP_HELPERS, ...instanceHelpers }
+  const $__exports: { default?: (props: Record<string, any>, ctx: Record<string, any>) => any; done?: boolean } = {}
+  const result: Promise<void> = compileScript(factoryParams(Object.keys(helpers)), factoryBody(code), at)(
+    $__exports, interopDefault, importer, ...Object.values(helpers)
+  )
+
+  const logError = (error: any) => console.error("jq79: error in factory script", error)
+  let invoked = false
+  // what invoke() is still waiting on, memoized: it is called from both paths
+  // below and does its work once, but the *second* caller is the one whose
+  // promise is tracked - without this it would see `undefined` and count the
+  // script as settled while an async factory's bindings are still on the way
+  let merging: Promise<void> | undefined
+  const invoke = (): Promise<void> | undefined => {
+    if (invoked) return merging
+    invoked = true
+    const factory = $__exports.default
+    if (typeof factory !== "function") return undefined
+    const merge = (bindings: any) => {
+      if (bindings && typeof bindings === "object") Object.assign(scope, bindings)
+    }
+    // the sync path is invoked straight from render(), so a throwing factory
+    // must be caught here too - not just by the `result` rejection handler
+    try {
+      // props first, ctx second. Both are the store: the pattern destructures
+      // the props it declared (copying, as destructuring does - $props is the
+      // live view for a primitive the parent reassigns later)
+      const returned = factory(scope, { $data: scope, $props: scope, $effect: effect, ...instanceHelpers })
+      if (returned instanceof Promise) merging = returned.then(merge).catch(logError)
+      else merge(returned)
+    } catch (error) {
+      logError(error)
+    }
+    return merging
+  }
+
+  // tracked through the merge, not just the module body: a factory's names
+  // reach the store in `merge`, and a template expression that reads one before
+  // then is not an authoring mistake (see reportExprError)
+  const settled = result.then(invoke, logError)
+  trackScript(settled)
+  if ($__exports.done) invoke() // fully-sync body: factory runs before first render
+  // sync only if the bindings are already on the store: a factory whose body
+  // finished but whose *factory* returned a promise (an async factory, or one
+  // that awaits $mounted()) still has names on the way, and the render gate
+  // must treat it as pending rather than race its merge
+  return { settled, sync: $__exports.done === true && merging === undefined }
+}
+
+// ---------------------------------------------------------------------------
+// hot reload
+//
+// Both delivery paths want the same thing when a .html file changes: reparse
+// it, and re-render every live instance of it in place, keeping its data. The
+// swap lives in the runtime (hotReplace, below) so jq79/dev and the Vite
+// plugin share one implementation instead of two - and so it can reach the
+// private fields it needs (the markers, the holding fragment) rather than
+// poking at them from outside, which is what the plugin used to do.
+//
+// Finding the instances is the part only the runtime can do: a component
+// fetched at runtime is reachable from nothing but the DOM it rendered. So
+// instances register themselves - but only once a page opts in, before the
+// runtime loads. Nothing here costs a bundled app anything: with the registry
+// off, an instance is not tracked at all.
+// ---------------------------------------------------------------------------
+
+const HOT_FLAG = "__JQ79_HMR_ENABLED__"
+const HOT_RUNTIME = "__JQ79_HMR__"
+
+// live instances by filename. WeakRef because a destroyed component that the
+// page has dropped must stay collectable: `:each` churns through clones
+let hotRegistry: Map<string, Set<WeakRef<Component79>>> | null = null
+
+const hotRegister = (instance: Component79) => {
+  if (!hotRegistry || !instance.filename) return
+  let refs = hotRegistry.get(instance.filename)
+  if (!refs) hotRegistry.set(instance.filename, (refs = new Set()))
+  refs.add(new WeakRef(instance))
+}
+
+// the same file reaches the runtime under different names - "./card.html" from
+// an import() in a setup script, "/cards/card.html" from a fetch, "cards/card.
+// html" from the dev server that watched it - and they all have to land on one
+// key. Resolving against the page is what settles them
+const hotKey = (filename: string): string => {
+  try {
+    return new URL(filename, document.baseURI).pathname
+  } catch {
+    return filename
+  }
+}
+
+// swaps the file's new source into every instance that came from `filename`,
+// and returns how many of them were *on the page* and so re-rendered. Zero
+// means the change is not visible anywhere - the file is a page rather than a
+// component, or nothing has mounted it yet - and the caller (a dev server)
+// should fall back to reloading. Definitions and instances that have been
+// destroyed but not yet collected are patched all the same; they just don't
+// count, because nothing on screen changed for them
+export const hotUpdate = (filename: string, src: string): number => {
+  if (!hotRegistry) return 0
+
+  const key = hotKey(filename)
+  // parsed once and shared by every instance - which is already what a
+  // definition and the clones :component makes from it do
+  const parts = parseComponentString(src)
+  // the next fetch of this file - a component mounted after the edit - gets the
+  // edit, not the source the cache held from before it
+  componentCache?.forEach((_, url) => {
+    if (hotKey(url) === key) componentCache!.set(url, Promise.resolve(src))
+  })
+  // the file is the hot-reload unit, so one reparse serves every component it
+  // declares: an instance is handed the parts of the component it *is*, by
+  // name. A name that is no longer in the file (a <template> renamed or
+  // deleted) has no parts to be given, and only a reload can fix the page
+  let orphaned = false
+  const partsFor = (instance: Component79): ComponentParts | null =>
+    instance.name === undefined ? parts : parts.siblings?.[instance.name] ?? null
+
+  let rerendered = 0
+  for (const [name, refs] of hotRegistry) {
+    if (hotKey(name) !== key) continue
+    for (const ref of refs) {
+      const instance = ref.deref()
+      if (!instance) {
+        refs.delete(ref) // collected since the last update
+        continue
+      }
+      const next = partsFor(instance)
+      if (!next) {
+        orphaned = true
+        continue
+      }
+      if (instance.hotReplace(next)) rerendered++
+    }
+    if (!refs.size) hotRegistry.delete(name)
+  }
+  return orphaned ? 0 : rerendered
+}
+
+// starts tracking instances, so hotUpdate can find them. jq79/dev's client
+// calls this through the global handshake at the foot of this file; it is
+// exported so a bundled app - or a test - can opt in directly
+export const enableHotReload = (): void => {
+  hotRegistry ??= new Map()
+  ;(globalThis as any)[HOT_RUNTIME] = { update: hotUpdate }
+}
+
+type EmitListener = (event: CustomEvent, payload: any) => void
+
+// how long a first render may sit behind its scripts before the console says so
+const STUCK_RENDER_DELAY = 3000
+
+// a script that neither returns nor calls $mounted() holds the template
+// forever, and the failure looks like nothing at all: no error, no markup, a
+// component indistinguishable from one nobody mounted. So the wait is loud
+// after a few seconds - and it keeps waiting, because rendering on a timer
+// would make the moment of the first render depend on the machine it runs on.
+//
+// Armed only on the deferred path, so a page of synchronous components creates
+// no timers at all
+const warnIfStuck = (component: Component79, gates: Promise<void>[]) => {
+  const timer = setTimeout(() => {
+    console.warn(
+      `jq79: ${component.name ? `<${component.name}>` : "a component"}${component.filename ? ` (${component.filename})` : ""} ` +
+      `has been waiting ${STUCK_RENDER_DELAY / 1000}s for a :setup script and has rendered nothing. ` +
+      "The template waits until every script returns or calls $mounted() - add an " +
+      "await $mounted() above the slow part to render first and fill in after."
+    )
+  }, STUCK_RENDER_DELAY)
+  // unref where it exists (node/vitest): a pending timer must not be what keeps
+  // a process alive. Browsers have no such notion and no such need
+  ;(timer as any)?.unref?.()
+  Promise.all(gates).then(() => clearTimeout(timer))
+}
+
+// a bare specifier belongs to the import map, and native import() reads one -
+// fetch() never does, so `fetch("@app/card.html")` asks the page's directory
+// for a folder named "@app". A bare URL is resolved here through the same map,
+// with the function import() itself would use, so the component gets the URL
+// its own relative imports, its precompiled script and its HMR key resolve
+// against. That includes a relative path written without "./" ("views/x.html"):
+// it reaches the map too, and changes only if the map names it. One the map
+// does not name throws, and goes on unchanged, as it did before.
+//
+// The map is read as this module sees it: a `scopes` entry applies when it
+// covers jq79.js, not the component. Guarded because the CJS and classic-script
+// builds (jq79.cjs, jq79.global.js) have no import.meta, and there bare URLs go
+// to fetch() as they are
+const resolveBare = (url: string): string => {
+  if (RESOLVABLE_SPECIFIER_RE.test(url)) return url
+  const resolve = (import.meta as { resolve?: (spec: string) => string }).resolve
+  if (typeof resolve !== "function") return url
+  try {
+    return resolve(url)
+  } catch {
+    return url
+  }
+}
+
+// a component's source by the absolute URL it came from, so a file that a
+// page fetches, fetchAll()s and import()s from a dozen setup scripts is
+// downloaded once (Component79.cache). The text, not the component: each
+// fetch still hands back an instance of its own, as it always has - mounting
+// one never touches another. A promise, so two requests in flight share one
+// download; a failed one is dropped, and the next request tries again.
+// Under safeEval()'s worker the entry settles once the precompiled functions
+// are in too, so those load once per file as well
+let componentCache: Map<string, Promise<string>> | null = new Map()
+
+const cacheKey = (url: string): string => {
+  try {
+    return new URL(url, document.baseURI).href.replace(/#.*$/, "")
+  } catch {
+    return url
+  }
+}
+
+const downloadComponent = (url: string): Promise<string> =>
+  // under safeEval()'s worker, the component's functions arrive beside it,
+  // and both have to be in before anyone can render it
+  Promise.all([
+    fetch(url).then(response => {
+      if (!response.ok) throw new Error(`failed to fetch component from ${url}: ${response.status}`)
+      return response.text()
+    }),
+    safeEvalWorker?.then(() => loadPrecompiled(url)),
+  ]).then(([text]) => text)
+
+const componentSource = (url: string): Promise<string> => {
+  if (!componentCache) return downloadComponent(url)
+  const key = cacheKey(url)
+  let text = componentCache.get(key)
+  if (!text) {
+    text = downloadComponent(url)
+    componentCache.set(key, text)
+    const pending = text
+    pending.catch(() => {
+      if (componentCache?.get(key) === pending) componentCache.delete(key)
+    })
+  }
+  return text
+}
+
+const fetchComponent = async (rawUrl: string): Promise<Component79> => {
+  const url = resolveBare(rawUrl)
+  const text = await componentSource(url)
+  // the URL names the component's scripts in devtools, and is where the
+  // browser will look for the source when a breakpoint lands in one
+  return new Component79(text, { filename: url })
+}
+
+// ---------------------------------------------------------------------------
+// preloading (RECORD/2026-11-05.a-preload-scanner.md)
+//
+// Before a definition's scripts first run, every download their top level is
+// sure to ask for starts at once - so `await import("./a.html")` on one line
+// and `await import("./b.html")` on the next are one round trip, not two, and
+// still run in that order. Each specifier resolves as its call would, and
+// lands where that call will look: a component in the cache, a module in the
+// browser's module map (modulepreload fetches and parses, never evaluates)
+// ---------------------------------------------------------------------------
+
+// the script blocks already preloaded: one scan per definition, however many
+// instances render it
+const preloadedScripts = new WeakSet<TagBlock>()
+const preloadedModules = new Set<string>()
+
+const preloadModule = (url: string) => {
+  if (preloadedModules.has(url)) return
+  preloadedModules.add(url)
+  const link = document.createElement("link")
+  link.rel = "modulepreload"
+  const nonce = pageNonce()
+  if (nonce) link.setAttribute("nonce", nonce)
+  link.href = url
+  document.head.append(link)
+}
+
+// a script block's body, quote-aware in its attributes, for a file that is
+// text and not yet a component: what a preloaded child is when it arrives
+const SCRIPT_BODY_RE = /<script\b(?:"[^"]*"|'[^']*'|[^>"'])*>([\s\S]*?)<\/script\s*>/gi
+// the files whose scripts were read for preloads as they arrived: each once,
+// so two components importing each other end there
+const preloadedFiles = new Set<string>()
+
+// one script's preloads, resolved as its calls will be. A component it
+// preloads is read in turn when it arrives - its imports start before it
+// renders, and so on down - against its own URL, and with no modules map:
+// a fetched component has none
+const preloadSource = (source: string, filename: string | undefined, modules: Record<string, any> | undefined) => {
+  for (const { spec, kind } of preloadSpecifiers(source)) {
+    // the bundle already holds it
+    if (kind === "component" && modules && spec in modules) continue
+    // fetch() goes to the cache as written; the imports resolve first, as
+    // importResource is handed them
+    const url = resolveBare(kind === "fetch" ? spec : resolveSpecifier(spec, kind === "component" ? filename : undefined))
+    if (kind === "fetch" || HTML_URL_RE.test(url)) {
+      // with the cache off there is nowhere to keep it, and the real request
+      // would download it again. A failure is the real request's to report
+      if (componentCache) componentSource(url).then(text => preloadFile(text, url), () => {})
+    } else if (RESOLVABLE_SPECIFIER_RE.test(url)) preloadModule(url)
+  }
+}
+
+const preloadFile = (text: string, url: string) => {
+  const key = cacheKey(url)
+  if (preloadedFiles.has(key)) return
+  preloadedFiles.add(key)
+  for (const [, body] of text.matchAll(SCRIPT_BODY_RE)) preloadSource(body, url, undefined)
+}
+
+const preloadScripts = (scripts: TagBlock[], filename: string | undefined, modules: Record<string, any> | undefined) => {
+  for (const script of scripts) {
+    if (preloadedScripts.has(script)) continue
+    preloadedScripts.add(script)
+    preloadSource(script.content, filename, modules)
+  }
+}
+
+// ---------------------------------------------------------------------------
+// safe eval's worker
+//
+// Without a bundler, a component's functions come from jq79-sw.js (src/sw.ts):
+// asked for `<url>?jq79-precompiled`, it fetches the component from the site
+// itself and answers with the script that registers its functions. Asked for
+// with a <script src>, which the CSP judges by URL - the site's own - and
+// carrying the page's nonce where there is one, for a CSP that works by nonce.
+// ---------------------------------------------------------------------------
+
+// set by safeEval() when it registers the worker: settles once the worker
+// controls the page, which is when a `?jq79-precompiled` request reaches it
+let safeEvalWorker: Promise<void> | undefined
+
+const DEFAULT_WORKER_URL = "/jq79-sw.js"
+
+// registers the worker and waits until it controls this page. On a first visit
+// it claims the page as it activates; a page loaded past it (a hard reload)
+// isn't controlled until it asks, so it asks
+const startWorker = async (url: string): Promise<void> => {
+  const container = typeof navigator === "undefined" ? undefined : navigator.serviceWorker
+  if (!container) {
+    throw new Error(
+      "jq79: safeEval() compiles components in a service worker, and this page can't have one - service workers " +
+      "need https (or localhost). Precompile with the jq79/vite plugin instead, or use safeEval({ nonce: true }) " +
+      "on a page whose server issues a nonce."
+    )
+  }
+  let registration: ServiceWorkerRegistration
+  try {
+    registration = await container.register(url)
+  } catch (error) {
+    throw new Error(
+      `jq79: safeEval() couldn't register its service worker at ${url} (${(error as Error).message}). ` +
+      "Serve jq79-sw.js from the jq79 package at your site's root, or pass its URL: safeEval({ worker: \"/path/jq79-sw.js\" })."
+    )
+  }
+  await container.ready
+  if (container.controller) return
+  await new Promise<void>(resolve => {
+    container.addEventListener("controllerchange", () => resolve(), { once: true })
+    if (container.controller) resolve()
+    else registration.active?.postMessage("jq79:claim")
+  })
+}
+
+// a component's precompiled script: the component's own URL (no fragment)
+// with the worker's parameter on it, loaded as a classic <script>
+const loadPrecompiled = (url: string): Promise<void> => {
+  const at = new URL(url, document.baseURI)
+  at.hash = ""
+  at.searchParams.set(PRECOMPILED_PARAM, "")
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script")
+    const nonce = pageNonce()
+    if (nonce) script.setAttribute("nonce", nonce)
+    script.src = at.href
+    script.onload = () => { script.remove(); resolve() }
+    script.onerror = () => {
+      script.remove()
+      reject(new Error(`jq79: the precompiled functions of ${url} did not load, and safeEval() can't render it without them`))
+    }
+    document.head.append(script)
+  })
+}
+
+// a parsed single-file component. Typical lifecycle:
+//
+//   const jq79 = new Component79(src)   // or await Component79.fetch(url)
+//   jq79.on("submit", (e, payload) => {}) // hear this instance's $emit events
+//   jq79.mount("#app", { user })        // render (reactive DOM, scripts, styles) + attach
+//   ...                                 // (mountShadow mounts into a shadow root)
+//   jq79.detach()                       // detach, keeping state - mount() re-attaches
+//      .destroy()                      // dispose effects and remove styles
+export class Component79 {
+  // the version of jq79 this class came from, so a page can tell which build it
+  // loaded (a CDN <script> pins nothing on its own)
+  static readonly version: string = VERSION
+
+  template: TemplateNode[]
+  scripts: TagBlock[]
+  styles: TagBlock[]
+  // pre-resolved modules for setup-script `import(...)` calls (see
+  // ComponentParts.modules); checked before falling back to fetch/import
+  modules?: Record<string, any>
+  // the component's origin, used to name its scripts in devtools
+  filename?: string
+  // the other components declared in the same file, by name (see
+  // ComponentParts.siblings). They are also this definition's own properties,
+  // so `const { Row } = await Component79.fetch(url)` reaches them
+  siblings?: Record<string, Component79>
+  // this component's name inside its file, for the components a <template>
+  // declared; the file's own component has none - it is the default, and a
+  // default is named by whoever imports it
+  name?: string
+  // the content the usage site handed this instance, by slot name (see the
+  // slots section). Not part of a definition - it belongs to the tag that
+  // wrote it - so renderNestedComponent sets it on the instance it creates,
+  // and every render reads it from here: a hot reload re-renders from a data
+  // snapshot, which a symbol on the store would not survive
+  slots?: SlotMap
+  // the writeback half of :model, same story: the function that assigns into
+  // the parent, set by renderNestedComponent before the first render and
+  // called by this instance's $updateModel. Kept outside the render generation
+  // so it survives re-render and hot reload. Absent means no :model on the tag
+  // (or no tag at all - a root mount), which makes every $updateModel a no-op.
+  // Internal: set by the usage site, not part of the public API
+  modelWriteback?: (name: string | undefined, value: any) => boolean
+
+  data: ReactiveDeepData<Record<string, any>> | null = null
+
+  private fx: EffectScope | null = null
+  // holds the rendered nodes while detached; anchors keep this fragment as
+  // their parentNode, so effects keep the (detached) DOM up to date and a
+  // later mount() shows current state
+  private content: DocumentFragment | null = null
+  // markers bracketing the component's output so detach() can collect nodes
+  // that :if/:each inserted next to the anchors after mounting
+  private startMarker: Comment | null = null
+  private endMarker: Comment | null = null
+  // shadow rendering keeps per-instance <style> elements; head rendering goes
+  // through the shared refcounted styleRegistry instead
+  private styleEls: HTMLStyleElement[] = []
+  // under safe mode, a shadow root's styles: the CSS, and the sheets built from
+  // it once there is a shadow root to adopt them (see placeShadowStyles)
+  private shadowCss: string[] | null = null
+  private shadowSheets: CSSStyleSheet[] = []
+  private sheetRoot: ShadowRoot | null = null
+  private ownsSharedStyles = false
+  private useShadow = false
+  private mountRoot: Element | ShadowRoot | DocumentFragment | null = null
+  // settles the $mounted() promise handed to this render generation's scripts
+  private resolveMounted: (() => void) | null = null
+  // whether this generation's template has been built. A render held back by a
+  // script (see the gate in renderWith) has markers but no nodes, and $mounted()
+  // must not resolve on attach alone - a script awaiting it would wake to an
+  // empty component and find nothing to query
+  private renderDone = false
+  // how many components this generation's first render created that haven't
+  // painted yet - a child whose script awaits an import paints after this
+  // template does. $mounted() means the DOM below is there to query, so it
+  // waits for them too (RECORD/2026-10-22.mounted-waits-for-children.md)
+  private held = 0
+  // set by the usage site of a nested instance that hadn't painted when it was
+  // rendered: tells the owner it has, or that it never will (destroyed first)
+  private onPaint: (() => void) | null = null
+  // what this render generation's scripts asked to run when it is torn down
+  // ($destroyed). Created on the first call, and taken by destroy() before
+  // anything else goes, so a hook still sees the DOM and the store
+  private destroyHooks: (() => void)[] | null = null
+  // this generation's $attached / $detached hooks, and whether it has been
+  // told it is on the page. Only an instance that registered one of them is
+  // in pageWatchers, which is what keeps a page that uses neither from paying
+  // for a walk on every mount (see settleAttached)
+  private attachHooks: (() => void)[] | null = null
+  private detachHooks: (() => void)[] | null = null
+  private onPage = false
+  // instance-level listeners for $emit events, registered with on(). Kept
+  // outside the render generation so they survive re-render and destroy()
+  private emitListeners = new Map<string, Set<EmitListener>>()
+
+  constructor(src: string | ComponentParts, options: { modules?: Record<string, any>; filename?: string } = {}) {
+    const parts = typeof src === "string" ? parseComponentString(src) : src
+    this.template = parts.template
+    this.scripts = parts.scripts
+    this.styles = parts.styles
+    this.modules = options.modules ?? (typeof src === "string" ? undefined : src.modules)
+    this.filename = options.filename ?? (typeof src === "string" ? undefined : src.filename)
+    this.siblings = parts.siblings
+    this.name = parts.name
+    this.adoptSiblings()
+    hotRegister(this) // a no-op unless the page enabled hot reload
+  }
+
+  // the parser builds a file's sibling definitions before anyone has told it
+  // where the file came from, so whoever holds the parse hands its origin down
+  // - and keeps doing it after a hot reload, which parses the file afresh.
+  // Without it a reloaded child would have no filename, and an instance with
+  // no filename is not tracked: the next edit would never reach it
+  private adoptSiblings() {
+    if (!this.siblings) return
+    Object.entries(this.siblings).forEach(([name, sibling]) => {
+      sibling.filename ??= this.filename
+      sibling.modules ??= this.modules
+      // the file's own component also *is* the file: its named components hang
+      // off it as properties, which is what `const { Row } = …` reads (and
+      // what the bundler re-exports by name)
+      if (!this.name) (this as any)[name] = sibling
+    })
+  }
+
+  // swaps this component's parsed parts for `src`'s and, if it is on the page,
+  // re-renders it where it stands - seeded with a snapshot of its data, so
+  // props and store values survive (the setup script runs again, so whatever it
+  // initializes is reset). Returns whether it re-rendered: an instance that was
+  // never rendered is a *definition*, and patching its parts is all there is to
+  // do - the clones :component made from it are instances in their own right,
+  // registered under the same filename, and re-render themselves.
+  //
+  // Dev-only, and not part of the public API: jq79/dev and the Vite plugin call
+  // it when a file changes. It re-attaches against the markers rather than
+  // mountRoot on purpose - a nested clone is mounted into a fragment that is
+  // then emptied into the page, so its mountRoot is a stale, detached fragment
+  // while its markers sit where its DOM actually is
+  hotReplace(src: string | ComponentParts): boolean {
+    const parts = typeof src === "string" ? parseComponentString(src) : src
+    // the source just changed, so what was already said about it no longer
+    // applies: without this the author fixes the typo, saves, and the next typo
+    // in the same expression is deduped away against the old one. `compiled`
+    // needs no such reset - it is keyed by expression text, so edited source is
+    // a different key
+    reportedExprErrors.clear()
+    pendingReports.clear()
+    reportedFailedExprs.clear()
+    const marker = this.startMarker
+    const rendered = !!(marker && this.content)
+
+    // where its output sits now, if it is on the page. A rendered-but-detached
+    // instance (markers in the holding fragment) re-renders detached, and a
+    // later mount() attaches the new output - like any update it missed away
+    const live = rendered && marker!.isConnected
+    const parent = live ? (marker!.parentNode as Element | ShadowRoot | DocumentFragment) : null
+    const before = live ? this.endMarker!.nextSibling : null
+    const data = { ...this.data }
+    const shadow = this.useShadow
+
+    // destroy() releases the styles it acquired, so it has to run while
+    // this.styles is still the *old* set - swapping the parts first would leak
+    // the old stylesheet into the head and release a new one nobody holds
+    if (rendered) this.destroy()
+
+    this.template = parts.template
+    this.scripts = parts.scripts
+    this.styles = parts.styles
+    // the file's other components as they are now: the next render resolves
+    // <Row> against these, so a parent picks up an edited child even when the
+    // child's own instances are patched separately
+    this.siblings = parts.siblings
+    this.adoptSiblings()
+    if (!rendered) return false // a definition: its clones re-render themselves
+
+    this.renderWith(data, shadow)
+    if (!parent) return false
+
+    // shadow styles live inline, right before the DOM they style (attach()
+    // appends them ahead of the content), so they go back the same way
+    if (shadow) this.placeShadowStyles(parent, before)
+    parent.insertBefore(this.content!, before)
+    this.mountRoot = parent
+    this.settleMounted()
+    return true
+  }
+
+  // downloads and parses a component, handing back a PendingComponent79: a
+  // handle that can be mounted right away, and that awaits to this component -
+  // so both of these are the whole program
+  //
+  //   Component79.fetch("./app.html").mount("main")
+  //   const app = await Component79.fetch("./app.html")
+  // Reads the debug flags, and sets the ones it is given:
+  //
+  //   Component79.debug()                            // what is on right now
+  //   Component79.debug({ cloneSkeletons: false })   // turn one off
+  //
+  // Returns the flags as they stand after the call, so a caller can put them
+  // back. Global to the module, not per component: these switch how the
+  // renderer works, and a page rendering two ways at once is the one state
+  // nobody could debug
+  static debug(options?: Partial<DebugFlags>): DebugFlags {
+    if (options) {
+      // an expression is compiled once and cached for the life of the page, so
+      // flipping the form it compiles to has to drop what was compiled under
+      // the old one - otherwise "off" leaves every expression already rendered
+      // still running the prologue
+      const scopedBefore = debugFlags.scopedNames
+      for (const key in options) {
+        const value = options[key as keyof DebugFlags]
+        // the key before the value: a typo carrying a boolean - `cloneSkeleton`
+        // for `cloneSkeletons` - used to pass this guard, land in the flags and
+        // come back in the return value, so a caller read "cloning is off" while
+        // it was still on. RECORD/2026-08-25.two-defects-a-review-found.md
+        // hasOwnProperty, not `in`: `in` walks the prototype chain, so
+        // `debug({ toString: false })` passed this guard and landed on the flags
+        if (!Object.prototype.hasOwnProperty.call(debugFlags, key)) {
+          console.warn(`jq79: Component79.debug does not know "${key}" - the flags it has are: ${Object.keys(debugFlags).join(", ")}`)
+        } else if (typeof value === "boolean") debugFlags[key as keyof DebugFlags] = value
+        else console.warn(`jq79: Component79.debug ignored "${key}" - the flags are booleans, and the ones it knows are: ${Object.keys(debugFlags).join(", ")}`)
+      }
+      if (debugFlags.scopedNames !== scopedBefore) compiled.clear()
+    }
+    return { ...debugFlags }
+  }
+
+  // for a page whose CSP has no 'unsafe-eval': from here on the runtime never
+  // calls `new Function`. Opt-in, so a page that doesn't call it behaves
+  // exactly as before; global and one-way, like the CSP it exists for.
+  //
+  //   await Component79.safeEval()                  // precompiled by the worker: a miss is reported
+  //   await Component79.safeEval({ nonce: true })   // no worker: every function built with the page's nonce
+  //
+  // Precompiled functions come first either way (RECORD/2026-09-23.no-unsafe-eval.md).
+  //
+  // The plain form registers jq79-sw.js - served from the site's root, or
+  // wherever `worker` says - and resolves once it controls the page. From
+  // then on a component fetched by URL (Component79.fetch, an import() of an
+  // .html from a script) arrives with its functions, compiled by the worker
+  // from the same file. A component built from a string has no file to
+  // compile, and its misses are reported. `worker: false` registers nothing,
+  // for a page whose functions reach it another way - the jq79/vite plugin's.
+  //
+  // `{ nonce: true }` is for a page whose server issues a fresh nonce per
+  // response: it still turns the component's text into code in the browser, as
+  // eval would, only through a door just jq79 holds the key to. A static host's
+  // nonce never changes, and a nonce everyone knows protects nothing. It
+  // registers no worker unless `worker` asks for one too.
+  //
+  // With no nonce on the page, or no worker to be had, the promise rejects -
+  // and safe mode stays on: a page that asked for no eval never falls back to it
+  static safeEval(options: { nonce?: boolean; worker?: string | false } = {}): Promise<void> {
+    safeEvalOn = true
+    const steps: Promise<void>[] = []
+    if (options.nonce) {
+      const nonce = pageNonce()
+      if (nonce === undefined) {
+        steps.push(Promise.reject(new Error(
+          "jq79: safeEval({ nonce: true }) found no nonce on this page - no <script> carries one. " +
+          "The nonce belongs on the script that loads the page, the one the CSP names."
+        )))
+      } else safeEvalNonce = nonce
+    }
+    const worker = options.worker ?? (options.nonce ? false : DEFAULT_WORKER_URL)
+    if (worker !== false) steps.push(safeEvalWorker ??= startWorker(worker))
+    return Promise.all(steps).then(() => undefined)
+  }
+
+  // whether fetch(), fetchAll(), importAll() and a setup script's import() of an .html
+  // download a file once and reuse its source after that. On by default:
+  //
+  //   Component79.cache()        // true - is it on?
+  //   Component79.cache(false)   // off, and what it held is dropped
+  //   Component79.clearCache()   // stays on, starts empty
+  //
+  // Returns the setting as it stands after the call
+  static cache(enabled?: boolean): boolean {
+    if (enabled === false) { componentCache = null; preloadedFiles.clear() }
+    else if (enabled === true) componentCache ??= new Map()
+    return !!componentCache
+  }
+
+  static clearCache(): void {
+    componentCache?.clear()
+    preloadedFiles.clear()
+  }
+
+  static fetch(url: string): PendingComponent79 {
+    if (Array.isArray(url)) throw new TypeError("Component79.fetch takes one URL; use fetchAll for an array")
+    return new PendingComponent79(fetchComponent(url))
+  }
+
+  // fetches them all at once and resolves to the components in the same order,
+  // so one await destructures them - and, like Promise.all, the first failure
+  // rejects the whole thing. A plain promise, not a handle: mounting a *list*
+  // of components has no single meaning
+  static fetchAll(urls: string[]): Promise<Component79[]> {
+    return Promise.all(urls.map(fetchComponent))
+  }
+
+  // a page's Promise.all([import(…), …]), as a setup script's import() reads
+  // each one: an .html is the component (fetchAll's way, cache included),
+  // anything else the module. The page has no file of its own, so a relative
+  // specifier means the page - never jq79.js, which is what the native import()
+  // in here would otherwise resolve it against (see resolveSpecifier)
+  static importAll<const T extends readonly string[]>(specifiers: T): Promise<ImportedAll<T>> {
+    if (!Array.isArray(specifiers)) throw new TypeError("Component79.importAll takes an array; use import() for one")
+    return Promise.all(specifiers.map(spec => importResource(resolveSpecifier(spec, undefined)))) as Promise<ImportedAll<T>>
+  }
+
+  // subscribes to this instance's $emit events, on top of the DOM CustomEvent
+  // dispatch - so it hears emits even while the component is detached (where
+  // the event has no ancestors to bubble to). Chainable; can be called before
+  // render()
+  on(eventName: string, listener: EmitListener): this {
+    if (!this.emitListeners.has(eventName)) this.emitListeners.set(eventName, new Set())
+    this.emitListeners.get(eventName)!.add(listener)
+    return this
+  }
+
+  off(eventName: string, listener: EmitListener): this {
+    this.emitListeners.get(eventName)?.delete(listener)
+    return this
+  }
+
+  render(data: Record<string, any> = {}): this {
+    return this.renderWith(data, false)
+  }
+
+  // like render(), but styles are injected into a shadow root attached to the
+  // mount target instead of document.head, so they don't leak globally
+  renderShadow(data: Record<string, any> = {}): this {
+    return this.renderWith(data, true)
+  }
+
+  private renderWith(data: Record<string, any>, shadow: boolean): this {
+    this.destroy()
+
+    // what this component can see of its file's other components, and which of
+    // its declared props arrived empty - both decided by the signature, before
+    // the store exists (see siblingsInScope / UNFILLED_PROPS)
+    const declared = declaredPropNames(this.scripts, setupSignature, factoryPropsOf)
+    const siblingScope = siblingsInScope(this.siblings, declared)
+    const raw: Record<string, any> = siblingScope
+      ? Object.assign(Object.create(siblingScope), data)
+      : { ...data }
+    const unfilled = new Set([...declared].filter(name => !(name in data)))
+    if (unfilled.size) Object.defineProperty(raw, UNFILLED_PROPS, { value: unfilled })
+    // the slot content, for the <slot>s the template renders, and the static
+    // map of which names were filled, for the component to ask about
+    // (`<footer :if="$slots.footer">`). Filled at the usage site, so it can
+    // only change when the tag itself re-renders - which builds a new instance
+    if (this.slots) Object.defineProperty(raw, SLOTS, { value: this.slots })
+    // in place before the store wraps it, because the scripts that increment it
+    // run against the store and the template reads it back through the same
+    // scope chain. Read back out of `raw` where it is needed rather than kept
+    // in a local: this frame is on the stack for the whole of the subtree it
+    // renders, so a component nested inside itself pays for it once per level -
+    // and the depth guard at MAX_NESTING_DEPTH only beats a RangeError while
+    // this function stays small (see the note in docs/development.md)
+    Object.defineProperty(raw, PENDING_SCRIPTS, { value: { count: 0, owner: this } as PendingScripts })
+
+    const store = $reactive(raw)
+    const fx = createEffectScope(store)
+    this.data = store
+    this.fx = fx
+    this.useShadow = shadow
+
+    this.startMarker = document.createComment("jq79")
+    this.endMarker = document.createComment("/jq79")
+
+    // $emit dispatches a bubbling CustomEvent from this instance's start
+    // marker, so once mounted it travels up the real DOM and parents can
+    // listen on any ancestor (or with @event-name on a wrapping element).
+    // Captures the marker rather than `this` so a later re-render's scripts
+    // can't dispatch from the wrong generation - the same guard keeps stale
+    // generations from reaching the instance's on() listeners.
+    // The on() channel runs *first* (it's where @event on a component tag is
+    // wired - see wireTagEvent) so its listeners can shape the DOM dispatch:
+    // stopPropagation() there keeps the event off the DOM entirely, and the
+    // event is cancelable so preventDefault() - from either channel - flips
+    // the return to false, telling the emitting child "the parent vetoed"
+    const marker = this.startMarker
+    // model:update used to be the writeback's event name; it is a direct call
+    // now ($updateModel), so an emit under that name reaches nothing. Said
+    // once per generation rather than per keystroke, and said at all because
+    // the alternative is a child whose edits silently stop arriving
+    let warnedModelUpdate = false
+    const $emit = (eventName: string, payload?: any): boolean => {
+      if (eventName === "model:update" && !warnedModelUpdate) {
+        warnedModelUpdate = true
+        console.warn("jq79: $emit('model:update', …) no longer feeds :model - call $updateModel(value) or $updateModel(name, value) instead")
+      }
+      const event = new CustomEvent(eventName, { detail: payload, bubbles: true, composed: true, cancelable: true })
+      if (marker === this.startMarker) {
+        this.emitListeners.get(eventName)?.forEach(listener => listener(event, payload))
+      }
+      // cancelBubble is the spec's legacy name, but it's the only *readable*
+      // accessor for the stop-propagation flag - hence the deprecation hint
+      if (!event.cancelBubble) marker.dispatchEvent(event)
+      return !event.defaultPrevented
+    }
+
+    // `await $mounted()` suspends a setup script until the component is
+    // rendered *and* attached, so code below it can querySelector its own DOM.
+    // If this instance is never mounted, the promise stays pending and the
+    // script's tail never runs.
+    //
+    // Calling it is also how a script releases the first render - see the gate
+    // below - so the two halves of the contract are one call: "put me on the
+    // page, and don't wait for the rest of me"
+    let resolveMounted!: () => void
+    const mounted = new Promise<void>(resolve => { resolveMounted = resolve })
+    this.resolveMounted = resolveMounted
+    this.renderDone = false
+    this.held = 0
+
+    // $destroyed(fn) runs fn when this generation is torn down: destroy(), a
+    // re-render, a hot reload, or a parent's :if/:each removing it - never
+    // detach(), which keeps state for a mount() to resume. Registered after
+    // the generation is gone (a script that awaited past its own destroy), it
+    // runs at once: holding it for a destroy that already happened would leak
+    // exactly what it was written to stop. Returns the unregister
+    const $destroyed = (fn: () => void): (() => void) => {
+      if (typeof fn !== "function") throw new TypeError("jq79: $destroyed expects a function")
+      if (marker !== this.startMarker) {
+        runHook(fn, "$destroyed")
+        return () => {}
+      }
+      return addHook((this.destroyHooks ??= []), fn)
+    }
+    // $attached(fn) runs fn every time this generation goes onto the page -
+    // in the document, rendered - the first mount included; $detached(fn)
+    // every time it leaves, and only after an $attached it balances. A nested
+    // component hears its root's mount and detach (see settleAttached and
+    // notifyDetached). `immediate`, on by default, also runs fn now when the
+    // component is on the page already, so "while I'm on the page" holds
+    // wherever the line sits - above `await $mounted()` or below it. A late
+    // $detached runs at once, as a late $destroyed does; a late $attached has
+    // nothing left to attach
+    const $attached = (fn: () => void, { immediate = true }: { immediate?: boolean } = {}): (() => void) => {
+      if (typeof fn !== "function") throw new TypeError("jq79: $attached expects a function")
+      if (marker !== this.startMarker) return () => {}
+      this.watchPage()
+      const off = addHook((this.attachHooks ??= []), fn)
+      if (immediate && this.onPage) runHook(fn, "$attached")
+      return off
+    }
+    const $detached = (fn: () => void): (() => void) => {
+      if (typeof fn !== "function") throw new TypeError("jq79: $detached expects a function")
+      if (marker !== this.startMarker) {
+        runHook(fn, "$detached")
+        return () => {}
+      }
+      this.watchPage()
+      return addHook((this.detachHooks ??= []), fn)
+    }
+    // the library's $computed, disposed with this generation: one made over a
+    // shared store is otherwise held by that store, and kept recomputing, for
+    // as long as the store lives
+    const $instanceComputed = <T>(get: () => T) => {
+      const computed = $computed(get)
+      $destroyed(() => computed.$dispose())
+      return computed
+    }
+
+    // $self / $$self mirror $ / $$ but only search this instance's own
+    // output: the sibling nodes between its markers. They work detached too
+    // (the holding fragment keeps markers and rendered nodes as siblings),
+    // though the template renders after the scripts run, so they only find
+    // something from post-await code or callbacks
+    const endMarker = this.endMarker
+    // typed as $ / $$ are (QueryOne / QueryAll in dom.ts): a tag name gives
+    // its element, anything else an HTMLElement unless told
+    const $$self = ((selector: string): Element[] => {
+      const found: Element[] = []
+      for (let node: Node | null = marker.nextSibling; node && node !== endMarker; node = node.nextSibling) {
+        if (node instanceof Element) {
+          if (node.matches(selector)) found.push(node)
+          found.push(...Array.from(node.querySelectorAll(selector)))
+        }
+      }
+      return found
+    }) as QueryAll
+    const $self = ((selector: string): Element | null => $$self(selector)[0] ?? null) as QueryOne
+
+    // import() calls whose specifier was pre-resolved by a bundler (the
+    // modules map) get the bundled module; everything else falls back to the
+    // runtime importResource (fetch for .html, native import otherwise),
+    // relative to this component's file. The map is keyed by the literal
+    // specifier the script wrote, so it is consulted *before* resolution -
+    // what the bundler hoisted and what the source says are the same string
+    const modules = this.modules
+    const $import = (url: string): Promise<any> =>
+      modules && url in modules
+        ? Promise.resolve(modules[url])
+        : importResource(resolveSpecifier(url, this.filename))
+    // the plural, as Promise.all of the script's own import()s: relative to
+    // this component and through its modules map, which Component79.importAll
+    // - a page's, static - can't know
+    const $importAll = (specifiers: readonly string[]): Promise<any[]> => {
+      if (!Array.isArray(specifiers)) throw new TypeError("$importAll takes an array; use import() for one")
+      return Promise.all(specifiers.map($import))
+    }
+
+    // the writeback half of :model, from the child's side: one argument is the
+    // value for the default model (the bare :model), two are a name and a
+    // value. Arity is what tells them apart, so the value is never inspected -
+    // an object with `name`/`value` keys is just a value, which is exactly
+    // what a payload-shaped contract could not promise. Returns whether a
+    // bound model took it; no :model at the usage site is a silent no-op,
+    // since a child may be designed to work bound or unbound
+    const $updateModel = (...args: [value?: any] | [name: string, value: any]): boolean => {
+      const [name, value] = args.length > 1 ? args as [string, any] : [undefined, args[0]]
+      // the same stale-generation guard $emit has: destroy() nulls the marker,
+      // so a closure the old child leaked (a timer, a registered callback)
+      // cannot keep writing a parent that replaced it
+      if (marker !== this.startMarker) return false
+      return this.modelWriteback?.(name, value) ?? false
+    }
+
+    // the names a component answers on top of its store: $emit, so an inline
+    // handler can emit without routing through a setup function
+    // (@input="$emit('update', $event.target.value)"), $updateModel, the
+    // writeback a :model binding listens for, and $slots, the static map of
+    // the names the usage site filled, so a wrapper can be dropped when
+    // nothing filled it (<footer :if="$slots.footer">). All reach the
+    // template (through templateScope, below) and both script modes (as
+    // instance helpers), and a same-named store key shadows any of them.
+    // Null-prototype, for the same reason storeApi is: `key in injected` must
+    // not start answering true for toString, constructor and the rest
+    const injected: Record<string, any> = Object.assign(Object.create(null), {
+      $emit,
+      $updateModel,
+      $slots: Object.fromEntries(Object.keys(this.slots ?? {}).map(name => [name, true])),
+    })
+
+    // scripts run before the template renders so `$:` values are initialized;
+    // a `:mounted` script defers entirely until mount() instead (see defer). A
+    // top-level `export default` switches the script to factory mode (plain
+    // lexical JS)
+
+    // what the first render is still waiting for. A script holds the template
+    // back until it returns or calls $mounted() - whichever comes first - so
+    // `let rows = await fetch(...)` renders once, with rows, instead of
+    // rendering empty and filling in. `:mounted` is not a special case here: it
+    // *is* a script that yields on line 0, which is what `defer` above writes.
+    //
+    // One gate per script, not one per instance: a script yielding must not
+    // release the render on behalf of a sibling script that is still fetching
+    const gates: Promise<void>[] = []
+    let allSync = true
+
+    preloadScripts(this.scripts, this.filename, this.modules)
+    this.scripts.forEach((script, index) => {
+      let resolveGate!: () => void
+      gates.push(new Promise<void>(resolve => { resolveGate = resolve }))
+      // whether this gate is already open on *this* stack, which is not the
+      // same as the script having finished: a script that yields immediately
+      // (`await $mounted()` on its first line, which is what `:mounted`
+      // compiles to) never finishes synchronously but holds nothing up either.
+      // Reading the promise instead would push every such render a microtask
+      // later, for no one's benefit
+      let open = false
+      const release = () => { open = true; resolveGate() }
+      // this script's own view of $mounted: the call releases its gate, the
+      // promise it returns is the instance's (one mount, one resolution)
+      const $mounted = () => { release(); return mounted }
+      // the file's other components are passed as parameters of the compiled
+      // script, not just left on the store's prototype: a factory script runs
+      // as plain lexical JS with no `with`, so a bare `Row` in one would
+      // resolve to nothing at all. In setup mode this composes with `with` -
+      // scriptScope's `has` declines any name that is a helper, so the
+      // parameter is what the name resolves to
+      const instanceHelpers = { $mounted, $destroyed, $attached, $detached, $computed: $instanceComputed, $self, $$self, ...injected, $importAll, ...siblingScope }
+      const at: ScriptLocation = { filename: this.filename, index }
+      const deferred = ":mounted" in script.attrs
+      const factoryCode = factoryCodeOf(script.content)
+      const run = ((): ScriptRun => {
+        if (factoryCode !== null) {
+          // a factory publishes its names by returning them, so one that yields
+          // before it returns renders against a store where none of them exist.
+          // In factory mode `:mounted` yields on line 0, which means *always* -
+          // and unlike a setup script there is no way to put the useful half
+          // above the yield. Awaiting $mounted() inside the factory does what
+          // the author meant, and is what the message points at
+          if (deferred) {
+            console.warn(
+              "jq79: :mounted on a factory script renders the template before the factory has returned, " +
+              "so none of its bindings exist yet - await $mounted() inside the factory instead."
+            )
+          }
+          declareProps(store, factoryPropsOf(script.content))
+          const body = deferred ? defer(factoryCode) : factoryCode
+          return runFactoryScript(body, store, run => fx.effect(run), instanceHelpers, $import, at)
+        }
+        const { vars, code } = setupTransformOf(script.content)
+        declareProps(store, setupSignature(script))
+        // pre-declare script vars on the store so `with` resolves assignments
+        // to them (and reads of them) through the reactive proxy
+        vars.forEach(name => { if (!(name in store)) (store as any)[name] = undefined })
+        const body = deferred ? defer(code) : code
+        return runSetupScript(body, store, run => fx.effect(run), instanceHelpers, $import, at)
+      })()
+      // a script that threw has nothing left to contribute, so its rejection
+      // releases the gate exactly as completion does - the error is already
+      // reported by the runner, and holding the template hostage to it would
+      // turn one broken script into a blank component. It also stops counting
+      // as a source of names, for that same reason.
+      //
+      // A script that finished on this stack is counted at zero rather than
+      // incremented and decremented a microtask later: its names are on the
+      // store already, and the promise it settles through does not resolve
+      // until after the synchronous paint - which is every paint, for the
+      // components that have no await in them at all
+      if (run.sync) run.settled.then(release, release)
+      else {
+        const pending: PendingScripts = (raw as any)[PENDING_SCRIPTS]
+        pending.count++
+        const settle = () => { pending.count--; release() }
+        run.settled.then(settle, settle)
+      }
+      if (!run.sync && !open) allSync = false
+    })
+
+    const content = document.createDocumentFragment()
+    // the injected names, served by has/get only - never as own keys - so
+    // Object.keys, snapshot spreads and the component-key scan don't see them,
+    // and every read still forwards through the reactive store, keeping
+    // dependency tracking intact
+    const templateScope = new Proxy(store as Record<string, any>, {
+      has: (target, key) => (typeof key === "string" && key in injected) || Reflect.has(target, key),
+      get: (target, key, receiver) =>
+        typeof key === "string" && key in injected && !Reflect.has(target, key)
+          ? injected[key]
+          : Reflect.get(target, key, receiver),
+    })
+    // the markers go in either way, so render() returns something mountable
+    // whether or not the template has been built yet: they are what detach()
+    // collects between and what the deferred pass inserts before, exactly as
+    // :if/:each anchors already work. That is what keeps render() and mount()
+    // synchronous while the first render itself is allowed to wait
+    content.append(this.startMarker, this.endMarker)
+    this.content = content
+    if (allSync) {
+      // nothing is pending, so the template is built on this stack - the
+      // ordinary case, and byte-for-byte the timing render() has always had.
+      //
+      // Written out rather than routed through the closure below on purpose: a
+      // component that nests itself recurses through here, so one extra frame
+      // per level is one fewer level before the stack gives out - enough, when
+      // this was a shared `paint()`, to overflow *underneath* the depth guard
+      // at MAX_NESTING_DEPTH and turn a named error back into a RangeError
+      this.endMarker.parentNode!.insertBefore(renderNodes(this.template, templateScope, fx, shadow), this.endMarker)
+      this.renderDone = true
+      this.settleMounted()
+    } else {
+      Promise.all(gates).then(() => {
+        // destroy() nulls the markers and a re-render replaces them, so a gate
+        // that opens after either one has nothing left to paint into
+        if (marker !== this.startMarker) return
+        this.endMarker!.parentNode!.insertBefore(renderNodes(this.template, templateScope, fx, shadow), this.endMarker!)
+        this.renderDone = true
+        this.settleMounted()
+        // a held render that paints on the page is this component's attach
+        Component79.settleAttached()
+      })
+      warnIfStuck(this, gates)
+    }
+
+    if (shadow) {
+      // document.head cannot reach into a shadow root, so every component box
+      // rendered inside this one needs the wrapper rule here. It goes last, and
+      // the position carries nothing: :where() has no specificity, so an author
+      // rule wins wherever it sits. What it does buy is that "the shadow root's
+      // style" still means the component's own
+      if (adoptsStyles()) {
+        // sheets, and only once there is a shadow root to adopt them
+        this.shadowCss = [...this.styles.map(style => style.content), WRAPPER_STYLE]
+      } else {
+        const wrapperEl = document.createElement("style")
+        wrapperEl.textContent = WRAPPER_STYLE
+        this.styleEls = [...this.styles.map(style => {
+          const el = document.createElement("style")
+          el.textContent = style.content // the source: a shadow root scopes it already
+          return el
+        }), wrapperEl]
+      }
+    } else {
+      this.styles.forEach(style => acquireStyle(headStyle(style)))
+      this.ownsSharedStyles = true
+    }
+
+    return this
+  }
+
+  // renders (when needed) and attaches in one call: the component is rendered
+  // on the first mount, and re-rendered fresh whenever `data` is passed.
+  // mount(el) on an already-rendered component just re-attaches, keeping its
+  // state - the detach()/mount() round trip. Rendering here keeps whichever
+  // style mode was last used (document.head unless renderShadow/mountShadow
+  // chose a shadow root)
+  mount(parent: Element | ShadowRoot | DocumentFragment | string, data?: Record<string, any>): this {
+    const target = typeof parent === "string" ? $(parent) : parent
+    if (!target) throw new Error(`mount target not found: ${parent}`)
+    if (!this.content || data !== undefined) this.renderWith(data ?? {}, this.useShadow)
+    return this.attach(target)
+  }
+
+  // like mount(), but renders with styles scoped to a shadow root on the
+  // target instead of document.head
+  mountShadow(parent: Element | ShadowRoot | DocumentFragment | string, data?: Record<string, any>): this {
+    const target = typeof parent === "string" ? $(parent) : parent
+    if (!target) throw new Error(`mount target not found: ${parent}`)
+    if (!this.content || data !== undefined || !this.useShadow) this.renderWith(data ?? {}, true)
+    return this.attach(target)
+  }
+
+  private attach(target: Element | ShadowRoot | DocumentFragment): this {
+    if (this.mountRoot) this.detach()
+
+    const root = this.useShadow && target instanceof Element
+      ? target.shadowRoot ?? target.attachShadow({ mode: "open" })
+      : target
+    if (this.useShadow) this.placeShadowStyles(root, null)
+    root.appendChild(this.content!)
+    this.mountRoot = root
+    this.settleMounted()
+    Component79.settleAttached()
+    return this
+  }
+
+  // whether this generation's DOM is in the document, template built - the
+  // one meaning "on the page" has for $attached. Not "attach() was called": a
+  // nested component is mounted into a fragment its parent inserts later, and
+  // a root can be mounted into an element that isn't in the document
+  private isOnPage(): boolean {
+    return this.renderDone && this.startMarker?.isConnected === true
+  }
+
+  // joins pageWatchers on the first $attached/$detached of a generation, with
+  // the state as it is now: a hook registered while on the page must not fire
+  // for an attach that already happened. Off the page, a settle is queued: a
+  // component inserted by its parent's :if, :each or tag is built in a
+  // fragment and put on the page later on this same stack, with no attach()
+  // of its own to say so - one microtask late, never early
+  private watchPage() {
+    if (pageWatchers.has(this)) return
+    pageWatchers.add(this)
+    this.onPage = this.isOnPage()
+    if (!this.onPage) Component79.queueSettle()
+  }
+
+  private static queueSettle() {
+    if (settleQueued) return
+    settleQueued = true
+    queueMicrotask(() => {
+      settleQueued = false
+      Component79.settleAttached()
+    })
+  }
+
+  // tells every watcher that is on the page and hasn't been told, in document
+  // order - a parent before what it rendered, slot content included, because
+  // the DOM is what says where a component is
+  private static settleAttached() {
+    if (pageWatchers.size === 0) return
+    const due = [...pageWatchers].filter(component => !component.onPage && component.isOnPage())
+    Component79.inDocumentOrder(due).forEach(component => {
+      // a hook that ran before this one may have destroyed it
+      if (component.onPage || !pageWatchers.has(component)) return
+      component.onPage = true
+      component.attachHooks?.slice().forEach(fn => runHook(fn, "$attached"))
+    })
+  }
+
+  // tells this component and every watcher whose DOM is under its markers
+  // that they are leaving the page - before anything moves, so the hooks see
+  // the DOM where it was. One whose DOM already left without it (an :if
+  // removes its branch, then destroys what was in it) has only itself to tell
+  private notifyDetached() {
+    if (pageWatchers.size === 0) return
+    let due: Component79[] = []
+    if (this.startMarker?.isConnected) {
+      const top = new Set<Node>()
+      for (let node: Node | null = this.startMarker; node; node = node.nextSibling) {
+        top.add(node)
+        if (node === this.endMarker) break
+      }
+      const under = (node: Node | null): boolean => {
+        for (; node; node = node.parentNode) if (top.has(node)) return true
+        return false
+      }
+      due = Component79.inDocumentOrder([...pageWatchers].filter(component => component.onPage && under(component.startMarker)))
+    } else if (this.onPage) {
+      due = [this]
+    }
+    due.forEach(component => {
+      if (!component.onPage) return
+      component.onPage = false
+      component.detachHooks?.slice().forEach(fn => runHook(fn, "$detached"))
+    })
+  }
+
+  private static inDocumentOrder(components: Component79[]): Component79[] {
+    return components.sort((a, b) =>
+      a.startMarker!.compareDocumentPosition(b.startMarker!) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1)
+  }
+
+  // where a shadow-rendered component's styles go: <style> elements ahead of
+  // its content, as always - or, under safe mode, sheets adopted by the shadow
+  // root. Built on first placement, since only then is there a root; one that
+  // isn't a ShadowRoot (a fragment) can't adopt, and gets elements after all
+  private placeShadowStyles(root: Node, before: Node | null) {
+    if (this.shadowCss && typeof ShadowRoot !== "undefined" && root instanceof ShadowRoot) {
+      if (this.sheetRoot && this.sheetRoot !== root) this.shadowSheets.forEach(sheet => unadoptSheet(this.sheetRoot!, sheet))
+      if (this.shadowSheets.length === 0) this.shadowSheets = this.shadowCss.map(css => css === WRAPPER_STYLE ? (wrapperSheet ??= constructedSheet(css)) : constructedSheet(css))
+      this.shadowSheets.forEach(sheet => adoptSheet(root, sheet))
+      this.sheetRoot = root
+      return
+    }
+    if (this.shadowCss && this.styleEls.length === 0) {
+      this.styleEls = this.shadowCss.map(css => {
+        const el = document.createElement("style")
+        el.textContent = css
+        return el
+      })
+    }
+    this.styleEls.forEach(el => root.insertBefore(el, before))
+  }
+
+  // `await $mounted()` means "rendered and on the page", so it waits for both -
+  // whichever lands last calls this. In the ordinary synchronous flow the render
+  // is already done and this is the attach; for a component whose first render
+  // a script held back, it is the other way round
+  //
+  // "Rendered" includes the components the template created: one whose own
+  // render a script held back counts in `held` until it paints
+  private settleMounted() {
+    if (!this.renderDone || this.held > 0) return
+    const onPaint = this.onPaint
+    this.onPaint = null
+    onPaint?.()
+    if (this.mountRoot) this.resolveMounted?.()
+  }
+
+  // Internal: called by the usage site right after rendering this instance
+  // into `owner`'s template. One that has painted already - every synchronous
+  // component - costs nothing more
+  holdOwner(owner: Component79) {
+    if (this.renderDone && this.held === 0) return
+    owner.held++
+    this.onPaint = () => {
+      owner.held--
+      owner.settleMounted()
+    }
+  }
+
+  // detaches from the DOM while keeping all state; a later mount() re-attaches
+  // with any updates that happened while detached already applied
+  detach(): this {
+    if (!this.mountRoot || !this.content || !this.startMarker || !this.endMarker) return this
+    this.notifyDetached()
+
+    // move everything between the markers (inclusive) back into the holding
+    // fragment - including nodes :if/:each inserted after mounting
+    let node: Node | null = this.startMarker
+    while (node) {
+      const nextNode: Node | null = node.nextSibling
+      this.content.appendChild(node)
+      if (node === this.endMarker) break
+      node = nextNode
+    }
+
+    this.mountRoot = null
+    return this
+  }
+
+  destroy(): this {
+    // first, while everything they might read is still there: leaving the
+    // page ($detached, for this component and what it rendered), then going
+    // ($destroyed). Taken before running, so a hook that destroys again (or
+    // re-renders) finds none
+    this.notifyDetached()
+    pageWatchers.delete(this)
+    this.attachHooks = null
+    this.detachHooks = null
+    this.onPage = false
+    const hooks = this.destroyHooks
+    this.destroyHooks = null
+    hooks?.forEach(fn => runHook(fn, "$destroyed"))
+    // before the children go: each one destroyed unpainted releases this
+    // instance, and that must not resolve a generation that is going away
+    this.resolveMounted = null
+    // and one destroyed before it painted releases its owner, which would
+    // otherwise wait for a paint that is never coming
+    const onPaint = this.onPaint
+    this.onPaint = null
+    onPaint?.()
+    this.detach()
+    this.fx?.dispose()
+    this.fx = null
+    // a store this component was handed (a shared `$reactive`) outlives it, and
+    // holds a listener per store that nested it - drop this instance's
+    this.data?.$dispose()
+    this.styleEls.forEach(el => el.parentNode?.removeChild(el))
+    this.styleEls = []
+    // the wrapper sheet stays: other boxes in that root may need it, as the
+    // wrapper <style> stays in the document
+    if (this.sheetRoot) this.shadowSheets.forEach(sheet => { if (sheet !== wrapperSheet) unadoptSheet(this.sheetRoot!, sheet) })
+    this.shadowCss = null
+    this.shadowSheets = []
+    this.sheetRoot = null
+    if (this.ownsSharedStyles) {
+      this.styles.forEach(style => releaseStyle(headStyle(style)))
+      this.ownsSharedStyles = false
+    }
+    this.content = null
+    this.startMarker = null
+    this.endMarker = null
+    this.renderDone = false
+    this.data = null
+    this.resolveMounted = null
+    return this
+  }
+}
+
+// what Component79.fetch() hands back: a component that hasn't arrived yet.
+//
+// Every method queues onto the fetch and returns the handle, so a whole page
+// is one expression and the calls run in the order they were written:
+//
+//   C79.fetch("./app.html").on("save", persist).mount("main", { user })
+//
+// It is also thenable, resolving to the Component79 itself - which is what
+// keeps `await Component79.fetch(url)` (and importResource, and a handle
+// dropped into Promise.all) working exactly as before. Queued calls keep the
+// resolved value, so awaiting a chain gives the mounted component.
+//
+// The catch: mount() here returns the handle, not the component - there is no
+// component yet to return. That's why the whole lifecycle is on the handle and
+// not just mount(): nobody should have to await merely to destroy something.
+export class PendingComponent79 {
+  // the fetch with every queued call chained onto it, each passing the
+  // component through - so `chain` always settles to the component, however
+  // many calls were queued, and a failure anywhere rejects the rest
+  private chain: Promise<Component79>
+
+  constructor(component: Promise<Component79>) {
+    this.chain = component
+  }
+
+  private queue(action: (component: Component79) => void): this {
+    this.chain = this.chain.then(component => {
+      action(component)
+      return component
+    })
+    return this
+  }
+
+  then<TResult1 = Component79, TResult2 = never>(
+    onfulfilled?: ((value: Component79) => TResult1 | PromiseLike<TResult1>) | null,
+    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null,
+  ): Promise<TResult1 | TResult2> {
+    return this.chain.then(onfulfilled, onrejected)
+  }
+
+  // a chain nobody awaits reports a failed fetch as an unhandled rejection,
+  // like any dropped promise chain - these are for callers who'd rather handle
+  // it. catch() returns a promise, not a handle: the chain ends here
+  catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | null): Promise<Component79 | TResult> {
+    return this.chain.catch(onrejected)
+  }
+
+  finally(onfinally?: (() => void) | null): Promise<Component79> {
+    return this.chain.finally(onfinally)
+  }
+
+  mount(parent: Element | ShadowRoot | DocumentFragment | string, data?: Record<string, any>): this {
+    return this.queue(component => component.mount(parent, data))
+  }
+
+  mountShadow(parent: Element | ShadowRoot | DocumentFragment | string, data?: Record<string, any>): this {
+    return this.queue(component => component.mountShadow(parent, data))
+  }
+
+  render(data: Record<string, any> = {}): this {
+    return this.queue(component => component.render(data))
+  }
+
+  renderShadow(data: Record<string, any> = {}): this {
+    return this.queue(component => component.renderShadow(data))
+  }
+
+  on(eventName: string, listener: EmitListener): this {
+    return this.queue(component => component.on(eventName, listener))
+  }
+
+  off(eventName: string, listener: EmitListener): this {
+    return this.queue(component => component.off(eventName, listener))
+  }
+
+  detach(): this {
+    return this.queue(component => component.detach())
+  }
+
+  destroy(): this {
+    return this.queue(component => component.destroy())
+  }
+}
+
+export { Component79 as C79 }
+
+// a component that takes the props P: what a signature writes for a component
+// it takes as a prop - `:setup="{ Button }: { Button: Component<{ label: string }> }"` -
+// so a type-checker can hold the tags that use it, and the parents that pass
+// one, to P (RECORD/2026-10-01.component-as-prop.md). "~props" is a phantom:
+// never set, only in the types. A function of P, because props are passed *to*
+// a component: one that takes more than P (optionally) is a Component<P>, one
+// that requires something P doesn't have is not
+// E and S name the events a signature listens for and the slots it fills
+// (RECORD/2026-10-01.component-prop-events-and-slots.md): functions of them
+// too, so a component that emits or renders more is one, one that misses a
+// name is not. Their default, never, asks nothing
+export type Component<P = any, E extends string = never, S extends string = never> = Component79 & {
+  readonly "~props"?: (props: P) => void
+  readonly "~emits"?: (event: E) => void
+  readonly "~slots"?: (slot: S) => void
+}
+
+// what importAll resolves to, entry by entry: a literal .html (or .htm) is a
+// component, anything else a module namespace jq79 has no types for
+export type ImportedAll<T extends readonly string[]> = {
+  -readonly [K in keyof T]: T[K] extends `${string}.html` | `${string}.htm` ? Component79 : any
+}
+
+export const parseComponent = (component: string): Component79 => new Component79(component)
+
+// one broken hook must not leave the others' timers running, or the
+// teardown half done: reported, and the rest still run
+const runHook = (fn: () => void, name: string) => {
+  try {
+    fn()
+  } catch (error) {
+    console.error(`jq79: error in a ${name} hook`, error)
+  }
+}
+
+// registers fn on a generation's hook list; the returned function takes it off
+const addHook = (hooks: (() => void)[], fn: () => void): (() => void) => {
+  hooks.push(fn)
+  return () => {
+    const at = hooks.indexOf(fn)
+    if (at !== -1) hooks.splice(at, 1)
+  }
+}
+
+// the instances with an $attached or $detached hook, in this generation -
+// the only ones a mount or a detach has to look at (see settleAttached)
+const pageWatchers = new Set<Component79>()
+let settleQueued = false
+
+// library helpers injected into setup scripts. They behave like extra
+// globals: a same-named scope property (render data or a top-level
+// declaration) shadows them. Their names, in this order, are also
+// SETUP_HELPER_NAMES (source.ts) - what precompile compiles scripts with, so
+// the two change together
+const SETUP_HELPERS: Record<string, any> = { $, $$, $create, $reactive, $toRaw, $batch, Component79, C79: Component79 }
+
+// the hot-reload handshake. jq79/dev serves a classic script that sets the flag
+// below; classic scripts run before deferred module ones, so the flag is always
+// set before this module evaluates. The page's copy of the runtime can come from
+// anywhere - a CDN, an import map, dist/ - and the dev client has no way to
+// import *that* copy, so the runtime hands itself to the client instead
+if (typeof globalThis !== "undefined" && (globalThis as any)[HOT_FLAG]) enableHotReload()
+

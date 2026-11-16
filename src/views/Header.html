@@ -4,10 +4,11 @@
 
   Events: go-home, open-folder, add-roms, sync, select-origin (id),
   close-origin (id), region-order-change (order), open-preferences.
-  `canOpenFolder` / `canAddRoms` / `canSync` say which buttons exist.
+  `canOpenFolder` / `canAddRoms` / `canSync` say which buttons exist; `launcherUrl`, when
+  rom-manager is a launcher's `/roms/`, is the way back to it.
 -->
 <script
-  :setup="{ origins = [], activeOriginId = undefined, showLanding = false, regionOrder = [], hasNode = false, canOpenFolder = false, canAddRoms = false, canSync = false }"
+  :setup="{ origins = [], activeOriginId = undefined, showLanding = false, regionOrder = [], hasNode = false, canOpenFolder = false, canAddRoms = false, canSync = false, launcherUrl = undefined }"
   lang="ts"
 >
   const [BrandLogo, Icon, Tabs, { REGIONS, preferRegion }, { t }] = await $importAll([
@@ -25,6 +26,9 @@
       <BrandLogo class-name="explorer-mark" />
       {{ t('app.name') }}
     </h1>
+    <a :if="launcherUrl" class="header-launcher icon-label" :href="launcherUrl" :title="t('host.launcherTitle')">
+      <Icon name="arrow-left" /> {{ t('host.launcher') }}
+    </a>
     <button :if="canOpenFolder" class="tab-add" @click="$emit('open-folder')" :title="t('tabs.add')">
       <Icon name="plus" />
     </button>

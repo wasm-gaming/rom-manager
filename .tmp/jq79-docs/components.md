@@ -1,0 +1,536 @@
+# Components
+
+> **No compiler, no bundler, no dependencies.** A component is a `.html` file
+> parsed at runtime by the browser's own HTML parser. The library ships as a
+> single file — drop it from a CDN, serve your components from any static host,
+> and the page works. The Vite plugin is optional and only adds bundled imports
+> and HMR; the same `.html` file works in all three delivery modes.
+
+## Lifecycle
+
+```js
+// src: string, or { template, scripts, styles }
+const jq79 = new Component79(src)
+
+// same thing, shorter name
+const jq79 = parseComponent(src)
+
+// subscribe to the component's $emit events
+jq79.on("submit", (e, payload) => {})  
+    .off("submit", listener) // unsubscribe
+
+// render (reactive DOM, setup scripts, styles) + attach
+// el: Element or selector string; data is optional
+jq79.mount(el, data)
+
+// detach, keeping state — mount(el) re-attaches, with
+// any updates that happened while detached applied
+jq79.detach()                          
+   .destroy() // dispose all effects and remove injected styles
+```
+
+- `mount(el, data?)` renders on the first mount, and re-renders fresh whenever `data` is passed. `mount(el)` on an already-rendered component just re-attaches, keeping its state — the `detach()`/`mount()` round trip. Styles go into `document.head`.
+- `mountShadow(el, data?)` instead attaches a shadow root to the target and injects content and styles there, so CSS stays scoped to the component.
+- `render(data)` / `renderShadow(data)` are also available standalone, for rendering while detached (effects keep the detached DOM up to date; a later `mount(el)` attaches it).
+- `jq79.data` is the live reactive store — mutate it from outside and the DOM follows.
+- `on(eventName, (event, payload) => …)` hears the events the component emits with `$emit` — see [setup scripts](setup-scripts.md).
+
+## Props
+
+A component declares the props it takes as a destructuring pattern, written where each script mode already puts its inputs — the `:setup` attribute's value, or the factory's **first parameter**:
+
+```html
+<!-- setup mode -->
+<script :setup="{ label = 'Total', step = 1 }">
+  let count = 0
+  const inc = () => { count += step }
+</script>
+```
+
+```html
+<!-- factory mode: props first, context second -->
+<script>
+export default ({ label = "Total", step = 1 }, { $data }) => {
+  $data.count = 0
+  const inc = () => { $data.count += step }
+  return { inc }
+}
+</script>
+```
+
+One rule explains where any name comes from, and the codebase follows it without exception: **what carries a `$` comes from the library; what doesn't comes from the parent.**
+
+The signature declares the prop names, pre-declares them on the store (so the template can bind to them even when the parent passes nothing), and seeds their defaults **before the first render**. That last part is why the runtime reads the pattern from the source rather than leaving it to JS: in factory mode a default JS applies would only exist inside the function body, and the template would still see `undefined`.
+
+A default fills a prop that is `undefined` — the parent's value always wins — and it is applied **once, at setup**. If the parent later sets the prop to `undefined`, the default does not come back.
+
+**Some names can't be props.** `value`, `checked`, `selected`, `text`, `html` and `class` are directives, and `:checked="on"` on a component tag is the directive, so the child never receives it. jq79 warns when the child declares a prop of one of those names. Pick another name (`on`, `chosen`), or use [`:model`](template-syntax.md#model--two-way-component-binding) for a value that goes both ways:
+
+```html
+<Toggle :checked="on" />   <!-- ✗ Toggle's `checked` is undefined (and jq79 warns) -->
+<Toggle :on="on" />        <!-- ✓ -->
+<Toggle :model="on" />     <!-- ✓ two-way: Toggle reads `model` and calls $updateModel -->
+```
+
+### A signature is a contract both ways
+
+A component that declares a signature takes **only** what it declared. A prop it never named is dropped at the usage site rather than added to its store:
+
+```html
+<!-- Field.html -->
+<script :setup="{ label }"></script>
+<p>[{{ label }}][{{ extra }}]</p>
+```
+
+```html
+<Field :label="'kept'" :extra="'dropped'" />   <!-- renders [kept][] -->
+```
+
+That makes a wrong name fail where it was written: `{{ extra }}` renders empty, and `{{ extra.id }}` throws on the member access. It applies to updates too, not just the first render, and it narrows a spread to the props the component actually takes:
+
+```html
+<Card ...sdk />   <!-- sdk has a dozen keys; Card gets the ones it declared -->
+```
+
+A prop you **wrote** and the component doesn't declare is warned, once per usage site:
+
+```
+jq79: :extra is not declared by <Field> - add it to the :setup signature, or drop it
+```
+
+A **spread's** extra keys are not — narrowing `...sdk` to the few a component takes is the normal case, and the reason to write it.
+
+In VS Code, [the extension in this repo](../editors/vscode/README.md#props-against-the-childs-signature) reports the same thing before anything renders, on the attribute — along with a prop whose value doesn't match the type the signature gives it.
+
+Two things are never filtered:
+
+- **A component with no signature.** A factory's `_`, or `<script :setup="_">`, declares nothing and stays permissive, taking whatever the parent passes.
+- **The root's own `render(data)` / `mount(el, data)`.** That's app state, and it carries the component definitions the template resolves — it isn't props.
+
+### The empty slot is part of the declaration
+
+Position is fixed, so a factory that takes no props still leaves the hole — and which hole it leaves means something:
+
+```js
+export default (_,  { $effect }) => {}   // declares nothing: permissive, takes whatever the parent passes
+export default ({}, { $effect }) => {}   // a closed signature: this component has no props
+export default ({ user })        => {}   // only props — don't write a ctx you don't use
+```
+
+Setup mode reads the same three, in the attribute's value:
+
+```html
+<script :setup="_">          <!-- declares nothing: permissive -->
+<script :setup="{}">         <!-- a closed signature: this component has no props -->
+<script :setup>              <!-- the same closed signature, written short -->
+<script :setup="{ user }">   <!-- takes one prop -->
+```
+
+A **bare `:setup` is closed**, like `{}` — the difference between "takes nothing" and "takes anything" shouldn't be a pair of braces somebody didn't type. Permissive is still there, it just has to be asked for with `_`.
+
+### Destructuring copies (the one asymmetry)
+
+In setup mode a prop name is never a lexical binding — it's a store entry, and `with` re-resolves it on every read, so it stays live.
+
+In factory mode the pattern creates **real JS bindings**, and destructuring copies:
+
+```js
+export default ({ cart, discount = 0 }, { $props, $effect }) => {
+  cart.items.push(item)                 // ✅ live: you copied a reference to the proxy
+  $effect(() => log(discount))          // ❌ frozen: you copied a number
+  $effect(() => log($props.discount))   // ✅ live: read through the object
+}
+```
+
+Objects survive it (every read of `cart.x` still goes through the proxy). Only a **primitive the parent reassigns** goes stale — the parent writes the store key, and your local copy never hears about it. `$props` is the same store under a different name: the live view, for when you need one.
+
+Making the destructured names themselves reactive is what Svelte 5 and Vue 3.5 do, and it needs what they have — a compiler. jq79 doesn't ship a JS parser to the browser, so it doesn't pretend to.
+
+## Slots
+
+Props parameterise a component by data; slots parameterise it by markup. A tag's
+children render inside the component, where it wrote a `<slot>`:
+
+```html
+<Card :title="title">
+  <template :slot.header><h2>{{ title }}</h2></template>
+
+  <p>{{ body }}</p>
+</Card>
+```
+
+The syntax is in [template syntax](template-syntax.md#slot--content-projection).
+What matters here is whose the content is:
+
+- **The parent's.** It is written in the parent's file, so it reads the parent's
+  names, creates its effects on the parent's store, and carries the parent's
+  `scoped` stamp — the parent's styles reach it, the child's do not. The child
+  decides where it goes and whether it goes, never what it says.
+- **Except for what the child declares.** `<slot :item="item" />` passes props to
+  the content, and the content picks them up by naming them: `:slot="{ item }"` on
+  the tag, or on the `<template :slot.name="{ item }">` for a named slot. Those
+  reads run in the child's scope, so the content is reactive to both components at
+  once.
+- **It lives as long as the `<slot>` does.** No `<slot>` for a name and the content
+  never renders at all — nothing of it exists, not even its effects. A `<slot>`
+  behind an `:if` creates them when the branch turns on and disposes them when it
+  turns off.
+- **`$slots`** names what the usage site filled, so a component can drop a wrapper
+  nobody filled (`<footer :if="$slots.footer">`) or branch on it in a script.
+
+## Styles
+
+A `<style>` block goes into `document.head` as-is, shared globally. Add `scoped` and its rules only reach the elements this component rendered:
+
+```html
+<div class="card">
+  <span class="title">{{ title }}</span>
+</div>
+
+<style scoped>
+  .card .title { color: rebeccapurple; }
+</style>
+```
+
+Every element of the component's template is stamped with a `data-jq79="<hash>"` attribute, and the CSS is rewritten to require it:
+
+```css
+.card .title[data-jq79="1a2b3c"] { color: rebeccapurple; }
+```
+
+The hash comes from the component source, so all instances of a definition share one scope and one refcounted `<style>` in the head. The rewrite happens at parse time in the browser, so it works the same whether the component was bundled by the [Vite plugin](vite-plugin.md) or fetched at runtime.
+
+Notes:
+
+- **Scoping stops at the component boundary.** A nested component's elements carry their own scope, not the parent's, so a parent's scoped rules can't style a child's internals. Vue's `:deep()` escape hatch is not supported (it isn't real CSS — the browser drops the rule — and jq79 warns if it sees one).
+- **A component's name is a selector**, and it targets the [box the instance renders in](template-syntax.md#a-component-renders-in-a-box-of-its-own) — the parent gets the box, never what is inside it:
+
+  ```css
+  Chip { margin: 4px }        /*  ->  c79-chip[data-jq79="1a2b3c"] { margin: 4px }  */
+  ```
+
+  It works in a `<style>` without `scoped` too (globally, as written there), and inside `@media`. Only in selector position: `content: "Chip"`, `.Chip`, `#Chip` and `@import url(Chip.css)` are left alone, and so is a shouty type selector — `DIV { }` still means `div`, since CSS matches those case-insensitively. Which leaves one corner: a component named with no lowercase letter in it (`ABC`) can't be styled by name.
+- **A component can't style its own box.** The box belongs to the parent's template, so it carries the parent's stamp and never the child's: `c79-panel { display: flex }` written *inside* Panel does nothing. Write it in Panel's parent, or in a global stylesheet.
+- **Slot content is stamped where it was written**, not where it lands: content the parent passed into a child keeps the parent's stamp, so the parent's rules style it and the child's don't — even though it renders inside the child. Which is the same rule, read from the other side: the stamp follows the file the markup is in.
+- `@keyframes` are left untouched, so animation names are still global: prefix them if two components might collide.
+- Pseudo-elements stay last (`.a::before` → `.a[data-jq79="…"]::before`), and `@media`/`@supports`/`@container` blocks are scoped inside.
+- **Only selectors are rewritten.** Declarations, comments and nested rules are injected exactly as written, so anything that works in a plain `<style>` works scoped (a selector's own comments are the one thing removed).
+- **`mountShadow` ignores `scoped`.** A shadow root already scopes, so it gets the CSS as written — which is also what lets `:host { … }` keep working (the host element is outside the template, so it never carries the stamp, and a scoped `:host[data-jq79="…"]` would match nothing). The same component can be mounted both ways: head-mounted instances get the scoped rewrite, shadow-mounted ones get the source.
+- **`mountShadow` covers the whole tree.** Nested components render inside their parent's shadow root, so their `<style>` goes in there with them (inline, next to the DOM it styles) rather than into `document.head` — which couldn't style them anyway, and would leak their CSS onto the page around the host. The trade-off is that a shadow tree's styles aren't refcounted: N instances of the same child inject N `<style>` tags inside the root, and they go away with them.
+- `mountShadow` remains the stronger option overall: a shadow root also blocks outside CSS from coming *in*, which `scoped` deliberately doesn't.
+- `<style lang="scss">` (and `less`/`stylus`) is compiled by the [Vite plugin](vite-plugin.md#style-lang--css-preprocessors) and composes with `scoped` — but, like [`<script lang="ts">`](vite-plugin.md#script-langts--typescript), it only works for components that go through the bundler, unlike everything else here.
+
+## Several components in one file
+
+A `.html` file is one component — the markup at its top level. A `<template name="…">`
+block declares **another component of the same file**, which every component in the
+file can use by name, with no import:
+
+```html
+<!-- list.html -->
+<script :setup>
+  let rows = ["a", "b"]
+</script>
+
+<ul class="list"><Row :each="label in rows" :label="label" /></ul>
+
+<template name="Row">
+  <script :setup="{ label }"></script>
+  <li class="row">{{ label }}</li>
+</template>
+```
+
+They come out of the file too, so the shape is default plus named — the shape of a
+JS module:
+
+```js
+import List, { Row } from "./list.html"        // through the Vite plugin
+
+const List = await Component79.fetch("./list.html")   // at runtime
+const { Row } = List
+```
+
+The file's own component has no name of its own: it's the default, and a default is
+named by whoever imports it. A component that has to be referenced by name inside
+the file is a `<template name>`.
+
+Inside a `<template>` everything works as it does in a file of its own: `<script>`
+in either mode, `<style>`, props, a signature. Only the top level of the file
+declares — a `<template>` nested in the markup is left alone — and names must be
+PascalCase, which is what lets a tag reference them at all. A `<template>` that
+declares nothing usable is ignored with a warning rather than a throw.
+
+### It can render itself
+
+A named template sees every component in its file, itself included, so a component
+can recurse — which a component in a file of its own can't do:
+
+```html
+<template name="TreeNode">
+  <script :setup="{ node }"></script>
+  <li>
+    {{ node.label }}
+    <ul :if="node.children">
+      <TreeNode :each="child in node.children" :node="child" />
+    </ul>
+  </li>
+</template>
+```
+
+Recursion stops where the data stops. A **cycle** in that data would recurse until
+the JS stack gave out, so the runtime cuts it at 100 levels with a console error
+naming the tag: a truncated tree, not a dead page. A real tree never reaches
+that depth; the limit is there to beat the stack to the punch.
+
+### The signature decides where a name comes from
+
+If two things could answer to `<Button>` — the file's own, and one the parent
+passes — the signature says which, and you can read it off the source:
+
+```html
+<script :setup></script>              <!-- not declared: the file's own -->
+<script :setup="{ Button }">          <!-- declared: the parent's -->
+```
+
+Not declaring it doesn't lock the parent out: a prop it passes still wins, so
+that's the substitutable form, with the file's own as the default. Declaring it is
+a contract — the component is saying this one comes from outside. Use it as a tag
+and pass nothing, and that's an error on the console (and nothing rendered), because
+nothing can arrive later to fill it. A declared name that is never used as a tag is
+nobody's business, and says nothing.
+
+Misspell the tag, though, and there is no name at all to fill — `<Buton>` matches
+neither the file's own nor anything the parent passed, so it
+[throws](template-syntax.md#a-tag-that-names-no-component-throws) and names the
+components that *were* in scope.
+
+In TypeScript, the declaration can also say what the component must take.
+The editor extension then checks both sides: the props given to `<Button>`
+here, and the component a parent passes as `Button`:
+
+```html
+<script :setup="{ Button }: { Button: Component<{ label: string }> }" lang="ts">
+  import type { Component } from "jq79"
+</script>
+```
+
+`Component<{ label: string }, "pressed", "icon">` also says which events it
+listens for and which slots it fills: the component passed has to emit and
+render at least those.
+
+### Styles stop at each template
+
+A named template is a shadow root inside a shadow root: the file is a container,
+not a stylesheet. Its `<style scoped>` reaches its own elements only, and the file's
+scoped rules don't reach into it — a `li { … }` at the top of the file does **not**
+style a `Row` that renders an `<li>`, even though both are in one file that reads
+like one document.
+
+Hot reload treats the file as the unit: an edit anywhere in it re-renders every
+live component that came from it, each with its own new parts.
+
+## Loading remote components
+
+`Component79.fetch(url)` (or `C79.fetch(url)`) downloads a component and mounts
+it, no build step in sight — a whole page in one expression:
+
+```js
+import { C79 } from "https://jgermade.github.io/jq79/jq79.js"
+
+C79.fetch("./app.html").mount(document.querySelector("main"))
+```
+
+`C79` is `Component79` under a shorter name — the same class, the same API.
+Both are exported from the library.
+
+What `fetch` hands back is a *pending* component: `mount`, `mountShadow`,
+`render`, `renderShadow`, `on`, `off`, `detach` and `destroy` all queue onto the
+download and run in the order they were written, so a listener registered before
+`mount` is in place by the time the component renders:
+
+```js
+C79.fetch("/components/user-card.html")
+  .on("save", (event, user) => persist(user))
+  .mount("#app", { userId: 42 })
+```
+
+It's also awaitable, resolving to the component itself — awaiting the chain
+gives you the mounted component:
+
+```js
+const jq79 = await Component79.fetch("/components/user-card.html")
+jq79.mount("#app", { userId: 42 })
+
+const card = await Component79.fetch("/components/user-card.html").mount("#app")
+```
+
+Which you'll want sooner or later, because on a pending component `mount()`
+returns the pending component — there is no component yet for it to return.
+That's the one asymmetry with `new Component79(src).mount(el)`, which hands back
+the component itself. It's also why the whole lifecycle is on the handle: you
+should never have to `await` just to `destroy()` something.
+
+A chain nobody awaits reports a failed download the way a dropped `.then()`
+chain does, as an unhandled rejection. `catch` and `finally` are there for when
+you'd rather handle it:
+
+```js
+C79.fetch("./app.html")
+  .mount("main")
+  .catch(failure => showOfflineNotice(failure))
+```
+
+### Several at once
+
+`fetchAll` takes an array of URLs, fetches them all at once, and resolves to the
+components in the same order, so one `await` destructures them:
+
+```js
+const [Header, UserCard] = await Component79.fetchAll([
+  "/components/header.html",
+  "/components/user-card.html",
+])
+```
+
+It's a plain promise, not a chainable handle: mounting a *list* of components
+has no single meaning. Like `Promise.all`, the first failure rejects the whole
+call — fetch the URLs separately if you want one 404 to leave the rest usable.
+
+`importAll` is the same for anything a setup script can `import()` — components
+and modules in one array, one `await`:
+
+```js
+const [Header, { formatDate }] = await C79.importAll([
+  "./header.html",   // a component, as fetchAll gives it
+  "./dates.js",      // a module, as import() gives it
+])
+```
+
+It's `Promise.all([import(…), …])` with jq79's `import()`: an `.html` is the
+component itself (never `{ default }`), anything else the module. A relative
+specifier is resolved against the page, as `fetch` does — not against the file
+that calls it, which a library can't see. A bare one (`lodash-es`) is left for
+the import map. A bundler never sees these specifiers, so under Vite import
+your modules natively.
+
+Inside a component, use [`$importAll`](setup-scripts.md#imports) instead: the
+same call, relative to the component's own file and bundled by the Vite plugin,
+which a static method on the class can't be.
+
+### The component cache
+
+A URL is downloaded once. `fetch`, `fetchAll`, `importAll` and a setup script's
+`import("./row.html")` keep the source of every file they fetched, by its
+absolute URL, and the next request for it is answered from there — ten
+components that import the same `row.html` make one request. Each call still
+hands back a component of its own: what is cached is the file's text, never an
+instance.
+
+It's on by default:
+
+```js
+Component79.cache()        // true: is it on?
+Component79.cache(false)   // off - every fetch downloads again, and what it held is dropped
+Component79.cache(true)    // back on, empty
+Component79.clearCache()   // stays on, starts empty
+```
+
+A setup script's own downloads [start before its first line runs](setup-scripts.md#imports),
+into this cache. A page's script is one jq79 never reads, so there it's up to
+the page: `fetchAll`, or a hint in the HTML that starts the download before any
+script runs —
+
+```html
+<link rel="preload" href="./app.html" as="fetch" crossorigin>
+```
+
+— which the `fetch()` behind `C79.fetch("./app.html")` picks up from the
+browser's cache (the `crossorigin` is what makes the two requests match).
+
+A failed download isn't cached, so the next request tries again. Under the
+[dev server](dev-server.md), an edited file replaces its cached source, so a
+component mounted after the edit gets the edit too.
+
+### Parsing from a string
+
+`parseComponent(source)` is a shorthand for `new Component79(source)`:
+
+```js
+import { parseComponent } from "jq79"
+
+const jq79 = parseComponent(`<h1>{{ title }}</h1>`)
+jq79.mount("#app", { title: "Hello" })
+```
+
+It does exactly what the constructor does — parse the source, build the AST,
+prepare the definition. Useful when you want to be explicit about what the
+expression does, or when the name `Component79` feels heavy for inline use.
+
+In VS Code, [the extension in this repo](../editors/vscode/README.md#components-written-as-literals)
+colors a literal passed to either one as HTML, and checks it like a `.html`
+file — as long as it is a literal with no `${…}` in it.
+
+## Which build am I running?
+
+`Component79.version` is the version of the package the class came from:
+
+```js
+Component79.version // "0.4.15"
+```
+
+It's baked in at build time, so it's the same string in every build — the ESM
+and CJS bundles, and `window.jq79` from the CDN `<script>`, where nothing else
+says which release the page pulled. Running the library straight from `src/`
+(the tests do) reports `"0.0.0-dev"`, since there is no build to stamp it.
+
+## Switching off an optimization: `Component79.debug()`
+
+Reads the renderer's debug flags, and sets the ones you pass:
+
+```js
+Component79.debug()                                       // { cloneSkeletons: true, scopedNames: true }
+Component79.debug({ cloneSkeletons: false })              // turn one off, get the flags back
+Component79.debug({ cloneSkeletons: false, scopedNames: false })  // both off
+```
+
+Global to the page, not per component — these change how the renderer works,
+and a page rendering two ways at once is the one state nobody can debug. Call it
+before mounting: components already on the page keep the DOM they were built
+with.
+
+### `cloneSkeletons`
+
+**On by default.** Where a subtree's *shape* never varies — the elements, their
+static attributes and their nesting are fixed, and only the values bound into
+them change — jq79 builds that shape once per component definition and gives
+each instance a `cloneNode` of it, instead of walking the template again for
+every instance. Worth about a fifth of the time it takes to build a 1,000-row
+list, and more on a row with more markup in it.
+
+It is meant to be invisible: the same DOM, the same bindings, in the same order.
+If you ever see a page that renders wrong and comes right with
+
+```js
+Component79.debug({ cloneSkeletons: false })
+```
+
+that is a bug in jq79 and a very good bug report — say so in the issue, because
+it names the file.
+
+### `scopedNames`
+
+**On by default.** Resolves template expressions by extracting their free
+identifiers and reading them from the store with a `const` prologue, instead of
+using JavaScript's `with ($scope)` statement. Worth about 63% of a one-name
+evaluation and 72% of a two-name one.
+
+It is meant to be invisible: the same expressions, the same dependencies, the
+same results. If you ever see a page where a template expression reads the wrong
+value and comes right with
+
+```js
+Component79.debug({ scopedNames: false })
+```
+
+that is a bug in the name extractor, and the flag exists to find it. Please
+[report it](https://github.com/jgermade/jq79/issues).

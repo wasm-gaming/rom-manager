@@ -472,3 +472,14 @@ mods:
   errors:
     import: 'The mods could not be added.'
     change: 'The mod could not be changed.'
+
+host:
+  launcher: 'Launcher'
+  launcherTitle: 'Back to the launcher'
+  play: 'Play'
+  playWithMod: 'Play with this mod'
+  migration:
+    running: 'Moving your launcher library in…'
+    progress: 'Moving your launcher library in ({done} of {total})…'
+    done: 'Your launcher library is here: {roms} ROM(s), {mods} mod(s).'
+    failed: 'Your launcher library could not be moved in: {reason}'

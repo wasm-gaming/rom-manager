@@ -1,0 +1,21 @@
+const { chromium } = require('playwright');
+const out = process.argv[2];
+(async () => {
+  const b = await chromium.launch();
+  const p = await b.newPage({ viewport: { width: 1000, height: 600 }, locale: 'es-ES' });
+  p.on('pageerror', (e) => console.log('PAGEERROR', e.message));
+  p.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') console.log('console', m.type(), m.text().slice(0, 300)); });
+  await p.goto('http://localhost:8050/next.html'); await p.waitForTimeout(1500);
+  await p.screenshot({ path: out + '/bench-1.png' });
+  await p.click('.tree-item:has-text("GAMEBOY") .tree-item-left'); await p.waitForTimeout(400);
+  await p.click('.tree-item:has-text("Tetris")'); await p.waitForTimeout(300);
+  await p.keyboard.press('ArrowDown'); await p.waitForTimeout(300);
+  await p.click('.tree-item:has-text("readme")', { modifiers: ['Control'] }); await p.waitForTimeout(300);
+  await p.screenshot({ path: out + '/bench-2.png' });
+  await p.click('.file-tree-actions button >> nth=2'); await p.waitForTimeout(400);
+  await p.screenshot({ path: out + '/bench-3.png' });
+  await p.click('.confirm-dialog .btn-cancel'); await p.waitForTimeout(300);
+  await p.click('.file-tree-actions button >> nth=0'); await p.waitForTimeout(400);
+  await p.screenshot({ path: out + '/bench-4.png' });
+  await b.close();
+})();

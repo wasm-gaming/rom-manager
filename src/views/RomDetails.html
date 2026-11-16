@@ -327,7 +327,7 @@
 
 <!-- One variant of a game: its status, regions, video standards and files. Events: select-file, organize. -->
 <template name="VariantRow">
-  <script :setup="{ variant, stats, cover = undefined, canOrganize = false }" lang="ts">
+  <script :setup="{ variant, stats, cover = undefined, canOrganize = false, play = undefined }" lang="ts">
     const [Icon, { fileNameOf, systemOf }, { validateNeoGeoVariant }, { formatSize }, { t }] = await $importAll([
       '../components/Icon.html',
       '../lib/RomLibraryService',
@@ -348,6 +348,8 @@
       (Boolean(activeUrl && variant.cover === activeUrl) ||
         Boolean(cover?.region && !variant.cover && variant.regions.includes(cover.region)))
     $: displayKey = variant.key === 'Unknown' ? 'World / Arcade' : variant.key
+    /** The launcher's link for this version (its first file's CRC32), when there is a launcher. */
+    $: playHref = play && variant.status !== 'missing' ? play(variant.files.find((file: { path?: string }) => file.path)?.crc) : undefined
 
     const validationOf = (file: { path: string; crc?: string }) => {
       const isNeoGeo = systemOf(file.path) === 'NEOGEO' || file.path.toLowerCase().endsWith('.neo')
@@ -365,6 +367,7 @@
         <span :each="standard in variant.videoStandards" :key="standard" class="tag video" :title="t('details.variants.runsAt', { standard })">{{ standard }}</span>
       </span>
       <span class="variant-count">{{ variant.files.length > 1 ? t('details.variants.files', { count: variant.files.length }) : '' }}</span>
+      <a :if="playHref" class="variant-play icon-label" :href="playHref"><Icon name="play" /> {{ t('host.play') }}</a>
     </div>
     <ul class="variant-files">
       <li :each="file, index in variant.files" :key="file.path || `missing:${index}`" :class="file.path ? 'variant-file' : 'variant-file missing'">
@@ -397,7 +400,15 @@
 <!-- A game: its cover, status, the variants on disk, and the others the catalogue knows. -->
 <template name="GameView">
   <script :setup="{ game, cover = undefined, stats, canOrganize = false, mods = [], modActions = undefined }" lang="ts">
-    const [Icon, GameMods, { systemOf }, { t }] = await $importAll(['../components/Icon.html', './GameMods.html', '../lib/RomLibraryService', '../lib/ui-state'])
+    const [Icon, GameMods, { systemOf }, { t }, { isPlayGermade }, { playUrl }, { gameIdOf }] = await $importAll([
+      '../components/Icon.html',
+      './GameMods.html',
+      '../lib/RomLibraryService',
+      '../lib/ui-state',
+      '../lib/host',
+      '../helpers/launcher',
+      '../helpers/library-index',
+    ])
 
     const STATUS_KEYS: Record<string, string> = {
       complete: 'details.status.complete',
@@ -408,6 +419,11 @@
 
     $: present = game.variants.filter(hasFiles)
     $: missing = game.variants.filter((variant: any) => !hasFiles(variant))
+    /** Hosted by play.germade: the launcher's link for a version (by CRC32), and a mod on it. */
+    $: play = isPlayGermade
+      ? (crc: string | undefined, patch?: string) =>
+          crc ? playUrl({ system: systemOf(game.paths[0]), gameId: gameIdOf(game.title), crc, patch }) : undefined
+      : undefined
     /** The CRC32 of every file here, which is what a BPS / UPS says it is made for. */
     $: versionCrcs = present.flatMap((variant: any) => variant.files.filter((file: any) => file.path).map((file: any) => ({ crc: file.crc })))
 
@@ -441,6 +457,7 @@
         :stats="stats"
         :cover="cover"
         :can-organize="canOrganize"
+        :play="play"
         @select-file="$emit('select-file', $event.detail)"
         @organize="$emit('organize', $event.detail)"
       />
@@ -462,7 +479,7 @@
       </ul>
     </details>
 
-    <GameMods :if="modActions" :game="game" :mods="mods" :versions="versionCrcs" :actions="modActions" />
+    <GameMods :if="modActions" :game="game" :mods="mods" :versions="versionCrcs" :actions="modActions" :play="play" />
   </div>
 </template>
 
