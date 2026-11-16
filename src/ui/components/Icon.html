@@ -9,7 +9,9 @@
   the size of the text it stands among.
 -->
 <script :setup="{ name = 'file', systemId = '', open = false, status = 'missing', className = '' }" lang="ts">
-  const SystemLogo = await import('./SystemLogo.html')
+  // Synchronous on purpose: a tree draws one per row, and a script that awaits
+  // anything makes every one of them a render of its own. (The system folder,
+  // which needs SystemLogo, is SystemFolderIcon.html.)
 
   // Masks and clip paths are referenced by id: one id per instance.
   const uid = Math.random().toString(36).slice(2, 10)
@@ -22,15 +24,6 @@
   <path d="M2.4 6.6a1.6 1.6 0 0 1 1.6-1.6h4.5c.44 0 .86.18 1.16.5l1.5 1.6H20a1.6 1.6 0 0 1 1.6 1.6v9.1a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6z" fill="var(--icon-folder-back)" />
   <path d="M2.4 9.6h19.2v8.2a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6z" fill="var(--icon-folder)" />
 </svg>
-<div :elseif="name === 'system-folder'" class="system-folder-icon">
-  <svg viewBox="0 0 24 24">
-    <path d="M2.4 6.6a1.6 1.6 0 0 1 1.6-1.6h4.5c.44 0 .86.18 1.16.5l1.5 1.6H20a1.6 1.6 0 0 1 1.6 1.6v9.1a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6z" fill="var(--icon-folder-back)" />
-    <path d="M2.4 9.6h19.2v8.2a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6z" fill="var(--icon-folder)" />
-  </svg>
-  <span class="system-folder-badge">
-    <SystemLogo :system-id="systemId" />
-  </span>
-</div>
 <svg :elseif="name === 'game'" viewBox="0 0 24 24">
   <Pad :system-id="systemId" />
 </svg>

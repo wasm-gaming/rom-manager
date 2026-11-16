@@ -1,0 +1,14 @@
+<!-- A folder with the console it holds as a badge: the mark of a system folder browsed as games. -->
+<script :setup="{ systemId = '' }" lang="ts">
+  const SystemLogo = await import('./SystemLogo.html')
+</script>
+
+<div class="system-folder-icon">
+  <svg viewBox="0 0 24 24">
+    <path d="M2.4 6.6a1.6 1.6 0 0 1 1.6-1.6h4.5c.44 0 .86.18 1.16.5l1.5 1.6H20a1.6 1.6 0 0 1 1.6 1.6v9.1a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6z" fill="var(--icon-folder-back)" />
+    <path d="M2.4 9.6h19.2v8.2a1.6 1.6 0 0 1-1.6 1.6H4a1.6 1.6 0 0 1-1.6-1.6z" fill="var(--icon-folder)" />
+  </svg>
+  <span class="system-folder-badge">
+    <SystemLogo :system-id="systemId" />
+  </span>
+</div>

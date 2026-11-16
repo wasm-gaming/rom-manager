@@ -224,9 +224,11 @@
         return [path, url] as const
       }),
     )
-    records = loaded
-    stats = new Map(statEntries)
-    coverUrls = new Map(coverEntries.filter((entry): entry is readonly [string, string] => Boolean(entry[1])))
+    $batch(() => {
+      records = loaded
+      stats = new Map(statEntries)
+      coverUrls = new Map(coverEntries.filter((entry): entry is readonly [string, string] => Boolean(entry[1])))
+    })
   }
 
   const openFolder = async () => {
@@ -278,12 +280,14 @@
     }
     book.indexedSystems = new Set()
     book.grouping = new Set()
-    initialised = new Set()
-    groupedRows = new Map()
-    editing = false
-    game = undefined
-    gameFile = undefined
-    storeService.setActiveOrigin(originId)
+    $batch(() => {
+      initialised = new Set()
+      groupedRows = new Map()
+      editing = false
+      game = undefined
+      gameFile = undefined
+      storeService.setActiveOrigin(originId)
+    })
   }
 
   /** Only a folder of a system the dataset covers can be grouped by game. */
@@ -349,10 +353,12 @@
   /** Forget what was read from a folder whose files have just moved. */
   const invalidateTree = () => {
     book.grouping.clear()
-    groupedRows = new Map()
-    records = new Map()
-    stats = new Map()
-    refreshToken += 1
+    $batch(() => {
+      groupedRows = new Map()
+      records = new Map()
+      stats = new Map()
+      refreshToken += 1
+    })
   }
 
   /** Works out what organizing a folder would do, and shows it. Nothing moves until the user says so. */
@@ -480,17 +486,19 @@
   }
 
   /** A game picked in the tree; its files arrive through the selection. */
-  const gameChange = (selected?: WizardGame) => {
-    editing = false
-    gameFile = undefined
-    game = selected ?? undefined
-  }
+  const gameChange = (selected?: WizardGame) =>
+    $batch(() => {
+      editing = false
+      gameFile = undefined
+      game = selected ?? undefined
+    })
 
   /** Opens one file of the game on screen, which the tree no longer lists. */
-  const selectFile = (path: string) => {
-    editing = false
-    gameFile = path
-  }
+  const selectFile = (path: string) =>
+    $batch(() => {
+      editing = false
+      gameFile = path
+    })
 
   /** Where a file dropped on the details pane would go: the game on screen, or the folder picked. */
   const dropDestination = (): { target: DropTarget; game?: { id: string; system: string } } | undefined => {
@@ -680,8 +688,10 @@
   }
 
   const selectionChange = async (paths: string[]) => {
-    editing = false
-    storeService.setSelection(paths)
+    $batch(() => {
+      editing = false
+      storeService.setSelection(paths)
+    })
     const node = activeNode
     if (!node) return
     try {
@@ -767,14 +777,16 @@
     groupedRows = new Map()
     const affected = selection.some((selected: string) => paths.some((path) => selected === path || selected.startsWith(`${path}/`)))
     if (!affected) return
-    editing = false
-    game = undefined
-    gameFile = undefined
-    storeService.setSelection([])
     releaseCovers()
-    records = new Map()
-    stats = new Map()
-    coverUrls = new Map()
+    $batch(() => {
+      editing = false
+      game = undefined
+      gameFile = undefined
+      storeService.setSelection([])
+      records = new Map()
+      stats = new Map()
+      coverUrls = new Map()
+    })
   }
 
   const deleteFiles = async (paths: string[]) => {
@@ -793,16 +805,17 @@
     refreshToken += 1
   }
 
-  const goHome = () => {
-    storeService.setSelection([])
-    game = undefined
-    gameFile = undefined
-    folder = undefined
-    editing = false
-    notice = undefined
-    organize = undefined
-    showLanding = true
-  }
+  const goHome = () =>
+    $batch(() => {
+      storeService.setSelection([])
+      game = undefined
+      gameFile = undefined
+      folder = undefined
+      editing = false
+      notice = undefined
+      organize = undefined
+      showLanding = true
+    })
 
   /** A game picked in the phone panels: loaded the way the tree loads one. */
   const panelGame = (picked?: WizardGame) => {
